@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>redhat</groupId>
+	<artifactId>jee-migration-example</artifactId>
+	<name>jee-migration-example</name>
+	<description>Project object model for: jee-migration-example</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>jee-migration-example-model</module>
+		<module>jee-migration-example-client</module>
+		<module>jee-migration-example-persistence</module>
+		<module>jee-migration-example-service</module>
+	</modules>
+
+	<properties>
+		<jee-migration-example.version>0.0.1-SNAPSHOT</jee-migration-example.version>
+		<jee-migration-example.model.home>../model</jee-migration-example.model.home>
+		<jee-migration-example.deploy.exploded>true</jee-migration-example.deploy.exploded>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-model</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-model</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-persistence</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-persistence</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-ui</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>redhat</groupId>
+				<artifactId>jee-migration-example-ui</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

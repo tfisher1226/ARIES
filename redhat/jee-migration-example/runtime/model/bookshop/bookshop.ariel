@@ -1,0 +1,389 @@
+import admin.admin_service.aries;
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_persistence.aries;
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+import bookshop.bookshop_supplier_persistence.aries;
+
+network Bookshop2 {
+	set domain("bookshop2");
+	set namespace("bookshop2");
+	import namespace("bookshop2");
+
+	//for example, like travel agent
+    participant Buyer {
+        add channel("Public");
+        add project("admin");
+		set namespace("buyer");
+		import namespace("bookshop2");
+
+        receive orderBooks(OrderRequest orderRequest) {
+        	join transaction("bookReservation");
+        	//set synchronous(true);
+        	
+            invoke Seller.orderBooks(orderRequest) {
+                message OrderAccepted: {
+		            Payment payment = context.getPayment(); 
+		            if (payment != null) {
+                        //invokePurchaseBooks();
+                        //send Seller.purchaseBooks(payment);
+
+                        invoke Seller.purchaseBooks(payment) {
+                            message PurchaseAccepted: {
+                                reply PurchaseAccepted;
+                                done;
+                            }
+                            message PurchaseRejected: {
+                                reply PurchaseRejected;
+                                done;
+                            }
+                        }
+                    }
+					reply OrderAccepted;
+                    done;
+                }
+                message OrderRejected: {
+                    reply OrderRejected;
+                    done;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+        	join transaction("bookReservation");
+
+            invoke Seller.purchaseBooks(purchaseRequest) {
+                message PurchaseAccepted: {
+                    reply PurchaseAccepted;
+                    done;
+                }
+                message PurchaseRejected: {
+                    reply PurchaseRejected;
+                    done;
+                }
+            }
+        }
+
+        invokePurchaseBooks() {
+        }
+    }
+
+	//for example, like airline co.
+    participant Seller {
+		add channel("Protected");
+		set namespace("seller");
+
+        receive orderBooks(OrderRequest orderRequest) {
+          	join transaction("bookReservation");
+            Order order = orderRequest.order;  
+            Set<Book> books = order.books;  
+
+            //QueryRequest queryRequest = new QueryRequest();
+            //queryRequest.setBooks(books);
+
+            invoke SupplierGroup.queryBooks(books) {
+            	set timeout(3min);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BooksAvailable: {
+					bookCache.addToAvailableBooks(books);
+					send SupplierGroup.reserveBooks(books);
+                    order.setBooks(books);
+					reply OrderAccepted(order);
+                    done;
+                }
+                
+                message BooksUnavailable: {
+                    order.setBooks(books);
+                    String reason = "Books Unavailable";
+                    reply OrderRejected(order, reason);
+                    done;
+                }
+				
+                timeout: {
+                    reply OrderRejected(order);
+                    done;
+                }
+
+                exception: {
+                    reply OrderRejected(order);
+                    done;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+        	join transaction("bookReservation");
+            Set<Book> requestedBooks = order.getBooks();
+            Payment payment = purchaseRequest.getPayment();
+            PersonName personName = purchaseRequest.getName();
+
+            //check cache for availability of the requested books
+    		Set<Book> availableBooks = bookCache.getMatchingAvailableBooks(requestedBooks);
+            if (availableBooks.size() == 0) {
+                String reason = "No books available";
+		        reply PurchaseRejected(reason);
+			    done;
+            }
+
+            List<Book> bookOrders = bookCache.getAllBookOrders();
+            if (bookOrders.size() < 4) {
+
+                //remove from cache
+    		    bookCache.removeFromAvailableBooks(availableBooks);
+
+                //pay for books
+                //Invoice invoice = paymentManager.payForBooks(availableBooks, payment);
+                Invoice invoice = factory.createInvoice();
+                invoice.setOrder(order);
+                invoice.setPayment(payment);
+                Date dateTime = new Date();
+                invoice.setDateTime(dateTime);
+                context.setInvoice(invoice);
+
+                Shipment shipment = factory.createShipment();
+                shipment.setOrder(order);
+                shipment.setTime(dateTime);
+                shipment.setDate(dateTime);
+                shipment.setName(personName);
+                shipment.setAddress(address);
+                context.setShipment(shipment);
+
+                //schedule shipment of books
+               	invoke Supplier.shipBooks(shipment, payment) {
+                	set timeout(3min);
+                	//set retry(3, 1hr);
+
+    			    message ShipmentScheduled: {
+            			bookCache.addToBookOrders(shipment.order.books);
+                        //send email to customer
+			        }
+			        message ShipmentComplete: {
+                        //bookOrderLog.addToBookOrders(order);
+    			        reply PurchaseAccepted;
+                        post PurchaseComplete;
+                        done;
+		    	    }
+			        message ShipmentFailed: {
+			            reply PurchaseRejected;
+                        done;
+    			    }
+                    exception: {
+		    	        reply PurchaseRejected(cause);
+                        done;
+                    }
+           	    }
+            }
+		}
+
+        /*
+        private Invoice payForBooks(Set<Book> books, Payment payment) {
+            Invoice invoice = factory.createInvoice();
+            context.setInvoice(invoice);
+            return invoice;
+        }
+        */
+
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    User user; 
+			    List<Book> bookOrders; 
+			    Set<Book> availableBooks; 
+			    Set<Book> unavailableBooks; 
+		    }
+	    }
+    }
+
+	//call this network
+	//make so one can "add" participants
+    group SupplierGroup {
+        set participant("Supplier");
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        add channel("Inventory");
+        add project("admin");
+
+        //receive queryBooks(OrderRequest orderRequest) over Inventory {
+        
+        receive queryBooks(QueryRequest queryRequest) {
+        	join transaction("bookReservation");
+		    Set<Book> books = queryRequest.getBooks();
+		    List<Book> booksInStock = supplierOrderCacheManager.getMatchingBooksInStock(books);
+		    if (booksInStock.size() == 0) {
+			    reply BooksUnavailable;
+		    } else {
+			    reply BooksAvailable(booksInStock);
+		    }
+            done;
+        }
+
+        receive reserveBooks(ReservationRequest reservationRequest) throws ReservationAbortedException {
+            join transaction("bookReservation");
+       	    Set<Book> books = reservationRequest.getBooks();
+           	SupplierOrderCache.removeFromBooksInStock(books);
+   	        BookInventory.addToReservedBooks(books);
+            done;
+        }
+
+        //receive shipBooks(ShipmentRequest shipmentRequest) over Shipment, Inventory {
+        //   invoke Shipper.shipBooks(shipmentRequest) over Shipment {
+
+		//@Synchronous
+		//@Transacted("bookReservation")
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+        	join transaction("bookReservation");
+        	//BookOrderLog.update(shipmentRequest);
+
+            invoke Shipper.shipBooks() {
+				set transaction(required); 
+				set timeout(5min); 
+
+                message ShipmentScheduled: {
+					//BookOrderLog.update(shipmentScheduled);
+                    Shipment shipment = shipmentScheduled.getShipment();
+					reply ShipmentScheduled(shipment);
+                    //done;
+				}
+				
+                message ShipmentComplete: {
+                    //BookOrderLog.update(shipmentComplete);
+                    Shipment shipment = shipmentComplete.getShipment();
+                    Order order = shipment.getOrder();
+                    BookOrderLog.addToBookOrders(order);
+                	//BookOrderLog.log(Payment);
+                	post ShipmentComplete(shipment);
+                	reply ShipmentComplete(shipment);
+                    done;
+	            }
+	            
+                message ShipmentFailed: {
+					//BookOrderLog.update(shipmentFailed);
+                    Shipment shipment = context.getShipment();
+                	reply ShipmentFailed(shipment);
+                    done;
+				}
+
+                exception: {
+					//BookOrderLog.update(cause);
+                	reply ShipmentFailed(cause);
+                    //throw ReservationAbortedException;
+                    done;
+                }
+	        }
+		}
+		
+		/*
+		schedule {
+			invoke 
+		}
+		*/
+		
+		//global
+		cache SupplierOrderCache { 
+			set scope(application); 
+			set transaction(required); 
+			set backingStore(BookOrderLog);
+			items {
+				Map<BookKey, Book> booksInStock;
+                /*
+				List<Book> booksInStock {
+					index(title);
+					index(author);
+				}
+                */
+			}
+		}
+				
+		persist BookInventory {
+			add role("supplier");
+		    add role("administrator");
+			set scope(application); 
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				Map<BookKey, Book> reservedBooks {
+					index(key);
+					index(title);
+					index(author);
+				}
+			}
+		}
+
+		persist BookOrderLog {
+			add role("supplier");
+			set scope(application); 
+		    add role("administrator");
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				List<Order> bookOrders;
+			}
+		}
+    }
+
+    participant Shipper {
+        add channel("Shipment");
+        add project("admin");
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+        	join transaction("bookReservation");
+
+        	//@Timeout(1hour)
+        	listen ShipmentScheduled {
+            	set timeout(1hr);
+
+				//TODO get explicit schedule
+				
+        		reply ShipmentScheduled;
+
+                timeout: {
+	                reply ShipmentFailed(reason);
+                    done;
+                }
+                exception: {
+	                reply ShipmentFailed(cause);
+                    done;
+                }
+			}
+
+        	//@Timeout(2days)
+        	listen ShipmentConfirmed {
+            	set timeout(2day);
+
+                Shipment shipment = context.getShipment();
+                Order order = shipment.getOrder();
+                Payment payment = context.getPayment();
+
+                Invoice invoice = new Invoice();
+                invoice.setOrder(order);
+                invoice.setPayment(payment);
+                Date dateTime = new Date();
+                invoice.setDateTime(dateTime);
+
+	            reply ShipmentComplete(invoice);
+                done;
+
+                timeout: {
+	                reply ShipmentFailed(reason);
+                    done;
+                }
+                exception: {
+	                reply ShipmentFailed(cause);
+                    done;
+                }
+        	}
+        }
+    }
+
+}

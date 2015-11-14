@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>redhat</groupId>
+	<artifactId>jee-migration-example-service</artifactId>
+	<name>jee-migration-example-service</name>
+	<description>Project object model for: jee-migration-example-service</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>ejb</packaging>
+
+	<parent>
+		<groupId>redhat</groupId>
+		<artifactId>jee-migration-example</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<jee-migration-example.model.home>../../model</jee-migration-example.model.home>
+		<jee-migration-example.runtime.home>../../runtime</jee-migration-example.runtime.home>
+	</properties>
+
+	<build>
+		<filters>
+			<filter>src/main/resources/maven/server.properties</filter>
+		</filters>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+						<include>**/*.launch</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>it</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>redhat</groupId>
+			<artifactId>jee-migration-example-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>redhat</groupId>
+			<artifactId>jee-migration-example-model</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>redhat</groupId>
+			<artifactId>jee-migration-example-persistence</artifactId>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>redhat</groupId>
+			<artifactId>jee-migration-example-persistence</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>redhat</groupId>
+			<artifactId>jee-migration-example-client</artifactId>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>redhat</groupId>
+			<artifactId>jee-migration-example-client</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-service-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-service-layer-test</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>testing</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

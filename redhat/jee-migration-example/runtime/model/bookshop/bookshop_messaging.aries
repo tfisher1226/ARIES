@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+
+	<domain>bookshop2</domain>
+	<name>bookshop2</name>
+
+	<listeners>
+		<listener>
+			<name>bookshop</name>
+			<role>user</role>
+			<channel>Public</channel>
+		</listener>
+	</listeners>
+
+	<channels>
+		<channel>
+			<name>Public</name>
+			<sender>
+				<name>*</name>
+				<link>bookshop</link>
+			</sender>
+			<receiver>
+				<name>buyer</name>
+				<link>bookshop</link>
+				<invalid>invalidLink</invalid>
+			</receiver>
+		</channel>
+
+		<channel>
+			<name>Protected</name>
+			<sender>
+				<name>buyer</name>
+				<link>bookshop</link>
+			</sender>
+			<receiver>
+				<name>seller</name>
+				<link>bookshop</link>
+				<invalid>invalidLink</invalid>
+			</receiver>
+		</channel>
+	
+		<channel>
+			<name>Inventory</name>
+			<sender>
+				<name>seller</name>
+				<link>bookshop</link>
+			</sender>
+			<receiver>
+				<name>supplier</name>
+				<link>bookshop</link>
+				<invalid>invalidLink</invalid>
+			</receiver>
+		</channel>
+	
+		<channel>
+			<name>Shipment</name>
+			<sender>
+				<name>supplier</name>
+				<link>bookshop</link>
+			</sender>
+			<receiver>
+				<name>shipper</name>
+				<link>bookshop</link>
+				<invalid>invalidLink</invalid>
+			</receiver>
+		</channel>
+	</channels>
+
+	<links>
+		<link>
+			<name>bookshop</name>
+			<role2 name="user" />
+			<role2 name="manager" />
+			<transport ref="bookshopJMS" />
+			<!--  
+			<transport ref="bookshopEJB" />
+			<transport ref="bookshopHTTP" />
+			<transport ref="bookshopRMI" />
+			-->
+		</link>
+
+		<link>
+			<name>invalidLink</name>
+			<role2 name="system" />
+			<role2 name="manager" />
+			<transport ref="invalidJMS" />
+			<!--  
+			<transport ref="invalidEJB" />
+			<transport ref="invalidHTTP" />
+			<transport ref="bookshopRMI" />
+			-->
+		</link>
+	</links>
+
+	<transports>
+		<rmi-transport>
+			<name>bookshopRMI</name>
+			<port>@aries.port.rmi@</port> 
+		</rmi-transport> 
+		
+		<ejb-transport>
+			<name>bookshopEJB</name>
+			<provider>localJndi</provider> 
+		</ejb-transport> 
+		
+		<jms-transport>
+			<name>bookshopJMS</name>
+			<transferMode>TEXT</transferMode>
+			<provider>hornetq</provider>
+			<maxDeliveryAttempts>3</maxDeliveryAttempts>
+		</jms-transport>
+		
+		<jms-transport>
+			<name>invalidJMS</name>
+			<transferMode>TEXT</transferMode>
+			<provider>hornetq</provider>
+			<maxDeliveryAttempts>3</maxDeliveryAttempts>
+		</jms-transport>
+		
+		<http-transport>
+			<name>bookshopHTTP</name>
+			<context>/bookshop</context>
+		</http-transport>
+	</transports>
+	
+	<provider>
+		<type>JMS</type>
+		<name>hornetq</name>
+		<jndiContext>
+			<userName>testuser</userName>
+			<password>password</password>
+			<connectionUrl>172.18.0.1:9999</connectionUrl>
+			<contextFactory>org.jboss.as.naming.InitialContextFactory</contextFactory>
+			<contextPackages>org.jboss.ejb.client.naming</contextPackages>
+		</jndiContext>
+	</provider>
+</messaging>
+
+
+
+
+	<!--  
+	<link name="Link" transport="sellerInvalid" connectionFactory="">
+
+	<channel name="Public">
+		<sender name="buyer" link="sellerLink" />
+		<receiver name="seller" link="sellerLink" invalid="invalidLink" />
+	</channel>
+	
+	<transports>
+		<jms-transport name="sellerRequestJMSQueue" destinationName="sellerRequestQueue" maxDeliveryAttempts="3" transferMode="TEXT" />
+		<jms-transport name="sellerInvalidJMSQueue" destinationName="sellerInvalidQueue" maxDeliveryAttempts="3" transferMode="TEXT" />
+		
+		<rmi-transport name="sellerOrderBooksRMIQueue" port="@aries.port.rmi@" />
+		<http-transport name="sellerOrderBooksHTTPQueue" context="/bookshop/seller/orderBooks" />
+	</transports>
+
+	<links>
+		<link name="sellerInvalidLink" transport="sellerInvalid" connectionFactory="" >
+		<link name="invalidLink" transport="auditLogRMI">
+			<role2 name="user" />
+			<role2 name="manager" />
+		</link>
+	</links>
+	-->

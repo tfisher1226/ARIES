@@ -1,0 +1,125 @@
+import tmp2-supplier-client.aries;
+
+
+subnet Seller {
+
+    reference SupplierGroup.queryBooks(Set<Books> books);
+    reference SupplierGroup.reserveBooks(Set<Books> books);
+
+    client SupplierGroup.queryBooks(QueryRequest);
+    client SupplierGroup.reserveBooks(ReservationRequest);
+
+
+	//for example, like airline co.
+    participant Seller {
+		add channel("Protected");
+		set namespace("seller");
+
+        receive orderBooks(OrderRequest orderRequest) {
+          	join transaction("bookReservation");
+            Order order = orderRequest.order;  
+            List<Book> books = order.books;  
+
+            //QueryRequest queryRequest = new QueryRequest();
+            //queryRequest.setBooks(books);
+
+            invoke SupplierGroup.queryBooks(books) {
+            	set timeout(3min);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BooksAvailable: {
+					bookCache.addToAvailableBooks(books);
+					send SupplierGroup.reserveBooks(books);
+                    order.setBooks(books);
+					reply OrderAccepted(order);
+                    done;
+                }
+                
+                message BooksUnavailable: {
+                    order.setBooks(books);
+                    String reason = "Books Unavailable";
+                    reply OrderRejected(order, reason);
+                    done;
+                }
+				
+                timeout: {
+                    reply OrderRejected(order);
+                    done;
+                }
+
+                exception: {
+                    reply OrderRejected(order);
+                    done;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+        	join transaction("bookReservation");
+
+            List<Book> requestedBooks = order.getBooks();
+            Payment payment = purchaseRequest.getPayment();
+    		Set<Book> availableBooks = bookCache.getMatchingAvailableBooks(requestedBooks);
+    		bookCache.removeFromAvailableBooks(availableBooks);
+
+            //pay for books
+            //Invoice invoice = paymentManager.payForBooks(availableBooks, payment);
+            Invoice invoice = factory.createInvoice();
+            invoice.setOrder(order);
+            invoice.setPayment(payment);
+            Date dateTime = new Date();
+            invoice.setTime(dateTime);
+            context.setInvoice(invoice);
+
+            Shipment shipment = factory.createShipment();
+            shipment.setOrder(order);
+            shipment.setTime(dateTime);
+            shipment.setDate(dateTime);
+            shipment.setName(name);
+            shipment.setAddress(address);
+            context.setShipment(shipment);
+
+            //schedule shipment of books
+           	invoke Supplier.shipBooks(shipment, payment) {
+            	set timeout(3min);
+            	//set retry(3, 1hr);
+
+			    message ShipmentScheduled: {
+        			bookCache.addToBookOrders(shipment.order.books);
+                    //send email to customer
+			    }
+			    message ShipmentComplete: {
+                    //bookOrderLog.addToBookOrders(order);
+			        reply PurchaseAccepted;
+                    done;
+			    }
+			    message ShipmentFailed: {
+                    //retry Supplier.shipBooks(shipmentRequest);
+			        reply PurchaseRejected;
+                    done;
+			    }
+           	}
+		}
+
+        /*
+        private Invoice payForBooks(List<Book> books, Payment payment) {
+            Invoice invoice = factory.createInvoice();
+            context.setInvoice(invoice);
+            return invoice;
+        }
+        */
+
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    User user; 
+			    List<Book> bookOrders; 
+			    Set<Book> availableBooks; 
+			    Set<Book> unavailableBooks; 
+		    }
+	    }
+    }
+}

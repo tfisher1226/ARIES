@@ -1,0 +1,45 @@
+subnet Shipper {
+
+    participant Shipper {
+        add channel("Shipment");
+		set namespace("shipper");
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+        	join transaction("bookReservation");
+
+        	//@Timeout(1hour)
+        	listen ShipmentScheduled {
+            	set timeout(1hr);
+
+        		reply ShipmentScheduled;
+
+                timeout: {
+	                reply ShipmentFailed(reason);
+                    done;
+                }
+                exception: {
+	                reply ShipmentFailed(cause);
+                    done;
+                }
+			}
+
+        	//@Timeout(2days)
+        	listen ShipmentConfirmed {
+            	set timeout(2day);
+
+                Invoice invoice = context.createInvoice();
+	            reply ShipmentComplete(invoice);
+                done;
+
+                timeout: {
+	                reply ShipmentFailed(reason);
+                    done;
+                }
+                exception: {
+	                reply ShipmentFailed(cause);
+                    done;
+                }
+        	}
+        }
+    }
+}

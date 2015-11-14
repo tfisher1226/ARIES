@@ -1,0 +1,13 @@
+use mysql;
+drop database if exists jeeMigrationExampleTestDB;
+create database jeeMigrationExampleTestDB;
+delete from user where user='jeeMigrationExampleTestManager';
+delete from db where user='jeeMigrationExampleTestManager';
+FLUSH PRIVILEGES;
+create user 'jeeMigrationExampleTestManager'@'localhost' identified by 'jeeMigrationExamplePassword';
+create user 'jeeMigrationExampleTestManager'@'%' identified by 'jeeMigrationExamplePassword';
+-- set password for 'jeeMigrationExampleTestManager' = password('jeeMigrationExamplePassword');
+grant all on jeeMigrationExampleTestDB.* to 'jeeMigrationExampleTestManager';
+grant all on jeeMigrationExampleTestDB.* to 'jeeMigrationExampleTestManager'@'localhost' identified by 'jeeMigrationExamplePassword';
+grant all on jeeMigrationExampleTestDB.* to 'jeeMigrationExampleTestManager'@'%' identified by 'jeeMigrationExamplePassword';
+use jeeMigrationExampleTestDB;

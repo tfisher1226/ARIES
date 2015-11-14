@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>redhat.jee_migration_example.entity</package>
+
+
+	<entity class="redhat.jee_migration_example.entity.ItemStoreEntity">
+		<named-query name="getItemStoreRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from ItemStore x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getItemStoreRecordByKey">
+			<query>
+				<![CDATA[
+					select distinct x from ItemStore x where x.itemKey = :itemKey
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getItemStoreRecordByName">
+			<query>
+				<![CDATA[
+					select distinct x from ItemStore x where x.name = :name
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllItemStoreRecords">
+			<query>
+				<![CDATA[
+					select x from ItemStore x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllItemStoreRecords">
+			<query>
+				<![CDATA[
+					delete from ItemStore x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

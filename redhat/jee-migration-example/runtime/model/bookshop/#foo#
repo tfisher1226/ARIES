@@ -1,0 +1,44 @@
+  OrderAcceptedHandlerUnitTest.testExecute_orderAccepted_NullRequest:87 NoSuchField
+  OrderAcceptedListenerForJMSUnitTest.testExecute_orderAccepted_EmptyCorrelationId:120->runTestExecute_orderAccepted:133->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  OrderAcceptedListenerForJMSUnitTest.testExecute_orderAccepted_EmptyRequest:98->runTestExecute_orderAccepted:133->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  OrderAcceptedListenerForJMSUnitTest.testExecute_orderAccepted_NullCorrelationId:109->runTestExecute_orderAccepted:133->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  OrderAcceptedListenerForJMSUnitTest.testExecute_orderAccepted_NullRequest:88->runTestExecute_orderAccepted:133->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  OrderAcceptedListenerForJMSUnitTest.testExecute_orderAccepted_Success:80->runTestExecute_orderAccepted:133->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_EmptyCorrelationId:124->runTestExecute_orderBooks:161->validateAfterExecution:175 NoSuchField
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_EmptyRequest:102->runTestExecute_orderBooks:161->validateAfterExecution:175 NoSuchField
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_EmptyTransactionId:144->runTestExecute_orderBooks:161->validateAfterExecution:175 NoSuchField
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_NullCorrelationId:113->runTestExecute_orderBooks:161->validateAfterExecution:175 NoSuchField
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_NullRequest:91 NoSuchField is...
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_NullTransactionId:134->runTestExecute_orderBooks:161->validateAfterExecution:175 NoSuchField
+  OrderBooksHandlerUnitTest.testExecute_orderBooks_Success:84->runTestExecute_orderBooks:161->validateAfterExecution:175 NoSuchField
+  OrderRejectedHandlerUnitTest.testExecute_orderRejected_NullRequest:87 NoSuchField
+  OrderRejectedListenerForJMSUnitTest.initializationError » NoClassDefFound LOrd...
+  PurchaseAcceptedHandlerUnitTest.testExecute_purchaseAccepted_NullRequest:87 NoSuchField
+  PurchaseAcceptedListenerForJMSUnitTest.testExecute_purchaseAccepted_EmptyCorrelationId:118->runTestExecute_purchaseAccepted:131->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  PurchaseAcceptedListenerForJMSUnitTest.testExecute_purchaseAccepted_EmptyRequest:98->runTestExecute_purchaseAccepted:131->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  PurchaseAcceptedListenerForJMSUnitTest.testExecute_purchaseAccepted_NullCorrelationId:108->runTestExecute_purchaseAccepted:131->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  PurchaseAcceptedListenerForJMSUnitTest.testExecute_purchaseAccepted_NullRequest:88->runTestExecute_purchaseAccepted:131->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  PurchaseAcceptedListenerForJMSUnitTest.testExecute_purchaseAccepted_Success:80->runTestExecute_purchaseAccepted:131->AbstractUnitTest.validateAfterException:95->AbstractUnitTest.validateExceptionType:99 » AssertionFailure
+  PurchaseBooksHandlerUnitTest.testExecute_purchaseBooks_NullRequest:87 NoSuchField
+  PurchaseBooksListenerForJMSUnitTest.initializationError » NoClassDefFound LPur...
+  PurchaseRejectedHandlerUnitTest.testExecute_purchaseRejected_NullRequest:87 NoSuchField
+  PurchaseRejectedListenerForJMSUnitTest.initializationError » NoClassDefFound L...
+
+
+
+{bookshop2.buyer.orderBooks[sampleCorrelationId].replyToDestinations={
+    OrderRejected=public_bookshop2_buyer_order_rejected_queue,
+    OrderAccepted=public_bookshop2_buyer_order_accepted_queue
+},
+
+OrderRejected[sampleCorrelationId].replyToDestinations={
+    OrderAccepted=public_bookshop2_buyer_order_accepted_queue,
+    OrderRejected=public_bookshop2_buyer_order_rejected_queue}
+}
+
+
+
+{bookshop2.buyer.orderAcceptedReply[sampleCorrelationId]=HornetQTemporaryQueue[09c1127c-d309-4ddf-9c86-15d2425835d5],
+bookshop2.buyer.orderRejectedReply[sampleCorrelationId]=HornetQTemporaryQueue[09c1127c-d309-4ddf-9c86-15d2425835d5]}
+
+{OrderAcceptedReply=bookshop2.ui.buyer.BuyerServiceManager$1@b3616a2, OrderRejectedReply=bookshop2.ui.buyer.BuyerServiceManager$2@c07eb6e}
