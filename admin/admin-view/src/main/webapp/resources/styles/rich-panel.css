@@ -1,0 +1,23 @@
+.tablePanel,
+.treePanel {
+	width: auto; 
+	height: auto; 
+	padding: 0px; 
+	margin: 0px; 
+	overflow-y: scroll;
+}
+
+.tablePanelBody {
+	padding: 0px; 
+	margin: 0px; 
+}
+
+.treePanelBody {
+	padding: 0px; 
+	margin: 4px; 
+	margin-right: 0px; 
+}
+
+.rf-tab-cnt {
+	padding: 0px; 
+}

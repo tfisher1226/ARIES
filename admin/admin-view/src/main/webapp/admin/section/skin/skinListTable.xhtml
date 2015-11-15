@@ -1,0 +1,1446 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}SkinListTablePanel">
+		<ui:include src="skinListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}SkinListTable"
+			value="#{listManager.dataModel}"
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowdblclick="execute#{domain}SelectOpenSkin(#{index}, #{rowItem.skin.id})"
+			style="border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<aries:link
+					value="#{rowItem.skin.name}"
+					onmouseup="execute#{domain}SelectOpenSkin(#{index}, #{rowItem.skin.id})" />
+			</aries:textColumn>
+			
+			<!-- WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Width">
+				<h:outputText value="#{rowItem.skin.width}" />
+			</aries:textColumn>
+			
+			<!-- HEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Height">
+				<h:outputText value="#{rowItem.skin.height}" />
+			</aries:textColumn>
+			
+			<!-- MARGIN -->
+			<aries:textColumn
+				width="100"
+				header="Margin">
+				<h:outputText value="#{rowItem.skin.margin}" />
+			</aries:textColumn>
+			
+			<!-- MARGIN TOP -->
+			<aries:textColumn
+				width="100"
+				header="Margin Top">
+				<h:outputText value="#{rowItem.skin.marginTop}" />
+			</aries:textColumn>
+			
+			<!-- MARGIN LEFT -->
+			<aries:textColumn
+				width="100"
+				header="Margin Left">
+				<h:outputText value="#{rowItem.skin.marginLeft}" />
+			</aries:textColumn>
+			
+			<!-- MARGIN RIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Margin Right">
+				<h:outputText value="#{rowItem.skin.marginRight}" />
+			</aries:textColumn>
+			
+			<!-- MARGIN BOTTOM -->
+			<aries:textColumn
+				width="100"
+				header="Margin Bottom">
+				<h:outputText value="#{rowItem.skin.marginBottom}" />
+			</aries:textColumn>
+			
+			<!-- PADDING -->
+			<aries:textColumn
+				width="100"
+				header="Padding">
+				<h:outputText value="#{rowItem.skin.padding}" />
+			</aries:textColumn>
+			
+			<!-- PADDING TOP -->
+			<aries:textColumn
+				width="100"
+				header="Padding Top">
+				<h:outputText value="#{rowItem.skin.paddingTop}" />
+			</aries:textColumn>
+			
+			<!-- PADDING LEFT -->
+			<aries:textColumn
+				width="100"
+				header="Padding Left">
+				<h:outputText value="#{rowItem.skin.paddingLeft}" />
+			</aries:textColumn>
+			
+			<!-- PADDING RIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Padding Right">
+				<h:outputText value="#{rowItem.skin.paddingRight}" />
+			</aries:textColumn>
+			
+			<!-- PADDING BOTTOM -->
+			<aries:textColumn
+				width="100"
+				header="Padding Bottom">
+				<h:outputText value="#{rowItem.skin.paddingBottom}" />
+			</aries:textColumn>
+			
+			<!-- BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Border Style">
+				<h:outputText value="#{rowItem.skin.borderStyle}" />
+			</aries:textColumn>
+			
+			<!-- BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Border Width">
+				<h:outputText value="#{rowItem.skin.borderWidth}" />
+			</aries:textColumn>
+			
+			<!-- BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Border Color">
+				<h:outputText value="#{rowItem.skin.borderColor}" />
+			</aries:textColumn>
+			
+			<!-- CORNER RADIUS -->
+			<aries:textColumn
+				width="100"
+				header="Corner Radius">
+				<h:outputText value="#{rowItem.skin.cornerRadius}" />
+			</aries:textColumn>
+			
+			<!-- BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Background Color">
+				<h:outputText value="#{rowItem.skin.backgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Background Image">
+				<h:outputText value="#{rowItem.skin.backgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Gradient Color">
+				<h:outputText value="#{rowItem.skin.gradientColor}" />
+			</aries:textColumn>
+			
+			<!-- GRADIENT IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Gradient Image">
+				<h:outputText value="#{rowItem.skin.gradientImage}" />
+			</aries:textColumn>
+			
+			<!-- FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Font Size">
+				<h:outputText value="#{rowItem.skin.fontSize}" />
+			</aries:textColumn>
+			
+			<!-- FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Font Family">
+				<h:outputText value="#{rowItem.skin.fontFamily}" />
+			</aries:textColumn>
+			
+			<!-- FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Font Weight">
+				<h:outputText value="#{rowItem.skin.fontWeight}" />
+			</aries:textColumn>
+			
+			<!-- FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Font Style">
+				<h:outputText value="#{rowItem.skin.fontStyle}" />
+			</aries:textColumn>
+			
+			<!-- FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Font Variant">
+				<h:outputText value="#{rowItem.skin.fontVariant}" />
+			</aries:textColumn>
+			
+			<!-- TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Text Color">
+				<h:outputText value="#{rowItem.skin.textColor}" />
+			</aries:textColumn>
+			
+			<!-- TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Text Decoration">
+				<h:outputText value="#{rowItem.skin.textDecoration}" />
+			</aries:textColumn>
+			
+			<!-- LINK COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Link Color">
+				<h:outputText value="#{rowItem.skin.linkColor}" />
+			</aries:textColumn>
+			
+			<!-- LINK HOVER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Link Hover Color">
+				<h:outputText value="#{rowItem.skin.linkHoverColor}" />
+			</aries:textColumn>
+			
+			<!-- LINK VISITED COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Link Visited Color">
+				<h:outputText value="#{rowItem.skin.linkVisitedColor}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Button Font Family">
+				<h:outputText value="#{rowItem.skin.buttonFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Button Font Size">
+				<h:outputText value="#{rowItem.skin.buttonFontSize}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Button Font Style">
+				<h:outputText value="#{rowItem.skin.buttonFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Button Font Variant">
+				<h:outputText value="#{rowItem.skin.buttonFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Button Font Weight">
+				<h:outputText value="#{rowItem.skin.buttonFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Button Text Color">
+				<h:outputText value="#{rowItem.skin.buttonTextColor}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Button Text Decoration">
+				<h:outputText value="#{rowItem.skin.buttonTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Button Background Color">
+				<h:outputText value="#{rowItem.skin.buttonBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Button Background Image">
+				<h:outputText value="#{rowItem.skin.buttonBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Button Gradient Color">
+				<h:outputText value="#{rowItem.skin.buttonGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Button Border Style">
+				<h:outputText value="#{rowItem.skin.buttonBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Button Border Width">
+				<h:outputText value="#{rowItem.skin.buttonBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Button Border Color">
+				<h:outputText value="#{rowItem.skin.buttonBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON CONTROL COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Button Control Color">
+				<h:outputText value="#{rowItem.skin.buttonControlColor}" />
+			</aries:textColumn>
+			
+			<!-- BUTTON CORNER RADIUS -->
+			<aries:textColumn
+				width="100"
+				header="Button Corner Radius">
+				<h:outputText value="#{rowItem.skin.buttonCornerRadius}" />
+			</aries:textColumn>
+			
+			<!-- HEADER BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Header Background Color">
+				<h:outputText value="#{rowItem.skin.headerBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- HEADER BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Header Background Image">
+				<h:outputText value="#{rowItem.skin.headerBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- HEADER GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Header Gradient Color">
+				<h:outputText value="#{rowItem.skin.headerGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- HEADER BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Header Border Style">
+				<h:outputText value="#{rowItem.skin.headerBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- HEADER BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Header Border Width">
+				<h:outputText value="#{rowItem.skin.headerBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- HEADER BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Header Border Color">
+				<h:outputText value="#{rowItem.skin.headerBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- HEADER FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Header Font Family">
+				<h:outputText value="#{rowItem.skin.headerFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- HEADER FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Header Font Size">
+				<h:outputText value="#{rowItem.skin.headerFontSize}" />
+			</aries:textColumn>
+			
+			<!-- HEADER FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Header Font Style">
+				<h:outputText value="#{rowItem.skin.headerFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- HEADER FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Header Font Variant">
+				<h:outputText value="#{rowItem.skin.headerFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- HEADER FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Header Font Weight">
+				<h:outputText value="#{rowItem.skin.headerFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- HEADER TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Header Text Color">
+				<h:outputText value="#{rowItem.skin.headerTextColor}" />
+			</aries:textColumn>
+			
+			<!-- HEADER TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Header Text Decoration">
+				<h:outputText value="#{rowItem.skin.headerTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Background Color">
+				<h:outputText value="#{rowItem.skin.toolbarBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Background Image">
+				<h:outputText value="#{rowItem.skin.toolbarBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Gradient Color">
+				<h:outputText value="#{rowItem.skin.toolbarGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Border Color">
+				<h:outputText value="#{rowItem.skin.toolbarBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Border Style">
+				<h:outputText value="#{rowItem.skin.toolbarBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Border Width">
+				<h:outputText value="#{rowItem.skin.toolbarBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Font Family">
+				<h:outputText value="#{rowItem.skin.toolbarFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Font Size">
+				<h:outputText value="#{rowItem.skin.toolbarFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Font Style">
+				<h:outputText value="#{rowItem.skin.toolbarFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Font Variant">
+				<h:outputText value="#{rowItem.skin.toolbarFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Font Weight">
+				<h:outputText value="#{rowItem.skin.toolbarFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Text Color">
+				<h:outputText value="#{rowItem.skin.toolbarTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLBAR TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Toolbar Text Decoration">
+				<h:outputText value="#{rowItem.skin.toolbarTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TAB BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Background Color">
+				<h:outputText value="#{rowItem.skin.tabBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Background Image">
+				<h:outputText value="#{rowItem.skin.tabBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TAB GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Gradient Color">
+				<h:outputText value="#{rowItem.skin.tabGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Border Color">
+				<h:outputText value="#{rowItem.skin.tabBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB CORNER RADIUS -->
+			<aries:textColumn
+				width="100"
+				header="Tab Corner Radius">
+				<h:outputText value="#{rowItem.skin.tabCornerRadius}" />
+			</aries:textColumn>
+			
+			<!-- TAB FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Tab Font Family">
+				<h:outputText value="#{rowItem.skin.tabFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TAB FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Font Size">
+				<h:outputText value="#{rowItem.skin.tabFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TAB FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Font Style">
+				<h:outputText value="#{rowItem.skin.tabFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TAB FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Tab Font Weight">
+				<h:outputText value="#{rowItem.skin.tabFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TAB TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Text Color">
+				<h:outputText value="#{rowItem.skin.tabTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Tab Text Decoration">
+				<h:outputText value="#{rowItem.skin.tabTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Background Color">
+				<h:outputText value="#{rowItem.skin.tabActiveBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Background Image">
+				<h:outputText value="#{rowItem.skin.tabActiveBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Gradient Color">
+				<h:outputText value="#{rowItem.skin.tabActiveGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Border Color">
+				<h:outputText value="#{rowItem.skin.tabActiveBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Font Family">
+				<h:outputText value="#{rowItem.skin.tabActiveFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Font Size">
+				<h:outputText value="#{rowItem.skin.tabActiveFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Font Style">
+				<h:outputText value="#{rowItem.skin.tabActiveFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Font Weight">
+				<h:outputText value="#{rowItem.skin.tabActiveFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Text Color">
+				<h:outputText value="#{rowItem.skin.tabActiveTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB ACTIVE TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Tab Active Text Decoration">
+				<h:outputText value="#{rowItem.skin.tabActiveTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Background Color">
+				<h:outputText value="#{rowItem.skin.tabInactiveBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Background Image">
+				<h:outputText value="#{rowItem.skin.tabInactiveBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Gradient Color">
+				<h:outputText value="#{rowItem.skin.tabInactiveGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Border Color">
+				<h:outputText value="#{rowItem.skin.tabInactiveBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Font Family">
+				<h:outputText value="#{rowItem.skin.tabInactiveFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Font Size">
+				<h:outputText value="#{rowItem.skin.tabInactiveFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Font Style">
+				<h:outputText value="#{rowItem.skin.tabInactiveFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Font Weight">
+				<h:outputText value="#{rowItem.skin.tabInactiveFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Text Color">
+				<h:outputText value="#{rowItem.skin.tabInactiveTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB INACTIVE TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Tab Inactive Text Decoration">
+				<h:outputText value="#{rowItem.skin.tabInactiveTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Background Color">
+				<h:outputText value="#{rowItem.skin.tabDisabledBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Background Image">
+				<h:outputText value="#{rowItem.skin.tabDisabledBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Gradient Color">
+				<h:outputText value="#{rowItem.skin.tabDisabledGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Border Color">
+				<h:outputText value="#{rowItem.skin.tabDisabledBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Font Family">
+				<h:outputText value="#{rowItem.skin.tabDisabledFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Font Size">
+				<h:outputText value="#{rowItem.skin.tabDisabledFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Font Style">
+				<h:outputText value="#{rowItem.skin.tabDisabledFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Font Weight">
+				<h:outputText value="#{rowItem.skin.tabDisabledFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Text Color">
+				<h:outputText value="#{rowItem.skin.tabDisabledTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TAB DISABLED TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Tab Disabled Text Decoration">
+				<h:outputText value="#{rowItem.skin.tabDisabledTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TABLE BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Background Color">
+				<h:outputText value="#{rowItem.skin.tableBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Border Color">
+				<h:outputText value="#{rowItem.skin.tableBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Table Border Width">
+				<h:outputText value="#{rowItem.skin.tableBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Background Color">
+				<h:outputText value="#{rowItem.skin.tableCellBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Background Image">
+				<h:outputText value="#{rowItem.skin.tableCellBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Gradient Color">
+				<h:outputText value="#{rowItem.skin.tableCellGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Border Color">
+				<h:outputText value="#{rowItem.skin.tableCellBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Font Family">
+				<h:outputText value="#{rowItem.skin.tableCellFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Font Size">
+				<h:outputText value="#{rowItem.skin.tableCellFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Font Style">
+				<h:outputText value="#{rowItem.skin.tableCellFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Font Variant">
+				<h:outputText value="#{rowItem.skin.tableCellFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Font Weight">
+				<h:outputText value="#{rowItem.skin.tableCellFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Text Color">
+				<h:outputText value="#{rowItem.skin.tableCellTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE CELL TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Table Cell Text Decoration">
+				<h:outputText value="#{rowItem.skin.tableCellTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Background Color">
+				<h:outputText value="#{rowItem.skin.tableHeaderBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Background Image">
+				<h:outputText value="#{rowItem.skin.tableHeaderBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Gradient Color">
+				<h:outputText value="#{rowItem.skin.tableHeaderGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Border Color">
+				<h:outputText value="#{rowItem.skin.tableHeaderBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Font Family">
+				<h:outputText value="#{rowItem.skin.tableHeaderFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Font Size">
+				<h:outputText value="#{rowItem.skin.tableHeaderFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Font Style">
+				<h:outputText value="#{rowItem.skin.tableHeaderFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Font Variant">
+				<h:outputText value="#{rowItem.skin.tableHeaderFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Font Weight">
+				<h:outputText value="#{rowItem.skin.tableHeaderFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Text Color">
+				<h:outputText value="#{rowItem.skin.tableHeaderTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE HEADER TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Table Header Text Decoration">
+				<h:outputText value="#{rowItem.skin.tableHeaderTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Background Color">
+				<h:outputText value="#{rowItem.skin.tableFooterBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Background Image">
+				<h:outputText value="#{rowItem.skin.tableFooterBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Gradient Color">
+				<h:outputText value="#{rowItem.skin.tableFooterGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Border Color">
+				<h:outputText value="#{rowItem.skin.tableFooterBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Font Family">
+				<h:outputText value="#{rowItem.skin.tableFooterFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Font Size">
+				<h:outputText value="#{rowItem.skin.tableFooterFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Font Style">
+				<h:outputText value="#{rowItem.skin.tableFooterFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Font Variant">
+				<h:outputText value="#{rowItem.skin.tableFooterFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Font Weight">
+				<h:outputText value="#{rowItem.skin.tableFooterFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Text Color">
+				<h:outputText value="#{rowItem.skin.tableFooterTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE FOOTER TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Table Footer Text Decoration">
+				<h:outputText value="#{rowItem.skin.tableFooterTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- TABLE SUB HEADER BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Sub Header Background Color">
+				<h:outputText value="#{rowItem.skin.tableSubHeaderBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TABLE SUB FOOTER BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Table Sub Footer Background Color">
+				<h:outputText value="#{rowItem.skin.tableSubFooterBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Background Color">
+				<h:outputText value="#{rowItem.skin.tooltipBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Background Image">
+				<h:outputText value="#{rowItem.skin.tooltipBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Gradient Color">
+				<h:outputText value="#{rowItem.skin.tooltipGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Border Color">
+				<h:outputText value="#{rowItem.skin.tooltipBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Border Style">
+				<h:outputText value="#{rowItem.skin.tooltipBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Border Width">
+				<h:outputText value="#{rowItem.skin.tooltipBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Font Family">
+				<h:outputText value="#{rowItem.skin.tooltipFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Font Size">
+				<h:outputText value="#{rowItem.skin.tooltipFontSize}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Font Style">
+				<h:outputText value="#{rowItem.skin.tooltipFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP FONT VARIANT -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Font Variant">
+				<h:outputText value="#{rowItem.skin.tooltipFontVariant}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Font Weight">
+				<h:outputText value="#{rowItem.skin.tooltipFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Text Color">
+				<h:outputText value="#{rowItem.skin.tooltipTextColor}" />
+			</aries:textColumn>
+			
+			<!-- TOOLTIP TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Tooltip Text Decoration">
+				<h:outputText value="#{rowItem.skin.tooltipTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Background Color">
+				<h:outputText value="#{rowItem.skin.highlightBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Background Image">
+				<h:outputText value="#{rowItem.skin.highlightBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Border Style">
+				<h:outputText value="#{rowItem.skin.highlightBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Border Width">
+				<h:outputText value="#{rowItem.skin.highlightBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Border Color">
+				<h:outputText value="#{rowItem.skin.highlightBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Font Family">
+				<h:outputText value="#{rowItem.skin.highlightFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Font Size">
+				<h:outputText value="#{rowItem.skin.highlightFontSize}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Font Style">
+				<h:outputText value="#{rowItem.skin.highlightFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Font Weight">
+				<h:outputText value="#{rowItem.skin.highlightFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Text Color">
+				<h:outputText value="#{rowItem.skin.highlightTextColor}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Text Decoration">
+				<h:outputText value="#{rowItem.skin.highlightTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- HIGHLIGHT CONTROL COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Highlight Control Color">
+				<h:outputText value="#{rowItem.skin.highlightControlColor}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Focus Background Color">
+				<h:outputText value="#{rowItem.skin.focusBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Focus Background Image">
+				<h:outputText value="#{rowItem.skin.focusBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS GRADIENT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Focus Gradient Color">
+				<h:outputText value="#{rowItem.skin.focusGradientColor}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Focus Border Style">
+				<h:outputText value="#{rowItem.skin.focusBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Focus Border Width">
+				<h:outputText value="#{rowItem.skin.focusBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Focus Border Color">
+				<h:outputText value="#{rowItem.skin.focusBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Focus Font Family">
+				<h:outputText value="#{rowItem.skin.focusFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Focus Font Size">
+				<h:outputText value="#{rowItem.skin.focusFontSize}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Focus Font Style">
+				<h:outputText value="#{rowItem.skin.focusFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Focus Font Weight">
+				<h:outputText value="#{rowItem.skin.focusFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Focus Text Color">
+				<h:outputText value="#{rowItem.skin.focusTextColor}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Focus Text Decoration">
+				<h:outputText value="#{rowItem.skin.focusTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- FOCUS CONTROL COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Focus Control Color">
+				<h:outputText value="#{rowItem.skin.focusControlColor}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Background Color">
+				<h:outputText value="#{rowItem.skin.disabledBackgroundColor}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED BACKGROUND IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Background Image">
+				<h:outputText value="#{rowItem.skin.disabledBackgroundImage}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED BORDER STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Border Style">
+				<h:outputText value="#{rowItem.skin.disabledBorderStyle}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED BORDER WIDTH -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Border Width">
+				<h:outputText value="#{rowItem.skin.disabledBorderWidth}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Border Color">
+				<h:outputText value="#{rowItem.skin.disabledBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED FONT FAMILY -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Font Family">
+				<h:outputText value="#{rowItem.skin.disabledFontFamily}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED FONT SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Font Size">
+				<h:outputText value="#{rowItem.skin.disabledFontSize}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED FONT STYLE -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Font Style">
+				<h:outputText value="#{rowItem.skin.disabledFontStyle}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED FONT WEIGHT -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Font Weight">
+				<h:outputText value="#{rowItem.skin.disabledFontWeight}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED TEXT COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Text Color">
+				<h:outputText value="#{rowItem.skin.disabledTextColor}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED TEXT DECORATION -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Text Decoration">
+				<h:outputText value="#{rowItem.skin.disabledTextDecoration}" />
+			</aries:textColumn>
+			
+			<!-- DISABLED CONTROL COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Disabled Control Color">
+				<h:outputText value="#{rowItem.skin.disabledControlColor}" />
+			</aries:textColumn>
+			
+			<!-- THEME BORDER COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Theme Border Color">
+				<h:outputText value="#{rowItem.skin.themeBorderColor}" />
+			</aries:textColumn>
+			
+			<!-- THEME BACKGROUND COLOR -->
+			<aries:textColumn
+				width="100"
+				header="Theme Background Color">
+				<h:outputText value="#{rowItem.skin.themeBackgroundColor}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

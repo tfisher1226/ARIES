@@ -1,0 +1,58 @@
+.dialog {
+	padding: 0px;
+	margin: 0px;
+}
+
+.dialogHeader {
+	font-size: 12px;
+	font-weight: bold;
+	font-family: arial, helvetica, sans-serif;
+}
+
+.dialogTitle,
+.dialogSubtitle,
+.dialogMessage,
+.dialogText {
+	font-family: arial, helvetica, sans-serif;
+}
+
+.dialogTitle,
+.dialogSubtitle {
+	font-weight: bold;
+}
+
+.dialogMessage,
+.dialogText {
+	font-weight: normal;
+}
+
+.dialogTitle {
+    padding-top: 6px;
+	font-size: 13px;
+}
+
+.dialogSubtitle {
+    padding-top: 6px;
+	font-size: 13px;
+}
+
+.dialogMessage {
+    padding-top: 0px;
+	font-size: 13px;
+}
+
+.dialogText {
+	font-size: 12px;
+}
+
+.dialogHeaderColumn1 {
+	width: auto; 
+	text-align: left;
+	vertical-align: top;
+}
+
+.dialogHeaderColumn2 {
+	width: auto; 
+	text-align: right;
+	vertical-align: top;
+}

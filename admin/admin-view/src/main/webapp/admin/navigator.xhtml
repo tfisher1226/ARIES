@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="240"
+		margin="10px"
+		backgroundColor="inherit">
+
+		<aries:label
+			value="Navigator"
+			height="30" 
+			paddingLeft="8px"
+			onclickXX="alert('#{globals.screenWidth}')"
+			onclickXXX="alert(window.document.body.clientWidth)"
+			backgroundColor="inherit" />
+		
+		<aries:tabPane
+			height="#{height-30}"
+			id="bookshop2NavigatorPane">
+
+			<aries:tab
+				label="Data"
+				icon="/icons/common/Default16.gif"
+				onselect="showAdminModelPane()"
+				targetItem="adminModelPane">
+				
+				<ui:define name="control">
+					<rich:toggleControl targetPanel="bookshop2ViewerPane" targetItem="adminModelPane" event="click" />
+				</ui:define>
+				<ui:include src="navigatorTab_Information.xhtml" />				
+			</aries:tab>
+
+			<aries:tab
+				label="Control"
+				icon="/icons/common/Default16.gif"
+				onselect="showAdminServicePane()"
+				targetItem="adminServicePane">
+				
+				<ui:define name="control">
+					<rich:toggleControl targetPanel="bookshop2ViewerPane" targetItem="adminServicePane" event="click" />
+				</ui:define>
+				<ui:include src="navigatorTab_Services.xhtml" />
+			</aries:tab>
+
+			<!--  
+			<aries:tab
+				label="Messaging"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="navigatorTab_Messaging.xhtml" />				
+			</aries:tab>
+
+			<aries:tab
+				label="Persistence"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="navigatorTab_Persistence.xhtml" />				
+			</aries:tab>
+			-->
+		</aries:tabPane>
+	</aries:panel>
+</ui:composition>

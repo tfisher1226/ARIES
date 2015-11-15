@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+		<c:set var="width" value="100%" /> 
+		<c:set var="height" value="22" /> 
+		<c:set var="borderWidth" value="1px" />
+		
+		<aries:panel
+			width="#{width}"
+			height="#{height}"
+			margin="#{margin}"
+			marginTop="#{marginTop}"
+			marginLeft="#{marginLeft}"
+			marginBottom="#{marginBottom}"
+			marginRight="#{marginRight}"
+			padding="#{padding}"
+			paddingTop="#{paddingTop}"
+			paddingLeft="#{paddingLeft}"
+			paddingBottom="#{paddingBottom}"
+			paddingRight="#{paddingRight}"
+			backgroundColor="#{backgroundColor}"
+			borderWidth="#{borderWidth}"
+			borderStyle="#{borderStyle}"
+			borderColor="#{borderColor}"
+			fontSize="#{fontSize}"
+			fontFamily="#{fontFamily}"
+			fontWeight="#{fontWeight}"
+			textColor="#{textColor}"
+			textDecoration="#{textDecoration}"
+			onclick="#{onclick}">
+			
+			<ui:insert/>
+		</aries:panel>
+	</aries:tag>
+</ui:composition>

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:admin="http://www.aries.org/admin"
+	targetNamespace="http://www.aries.org/admin">
+	
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../C:\workspace\ARIES2\_generator\target\runtime\cache\model\common\aries-common-1.0.aries" />
+	
+	<!--
+		Capability enumeration
+		**********************
+	-->
+	
+	<xs:simpleType name="Capability">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="EXPORT" />
+			<xs:enumeration value="EMAIL" />
+			<xs:enumeration value="PRINT" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		CapabilityName enumeration
+		**************************
+	-->
+	
+	<xs:simpleType name="CapabilityName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="EXPORT" />
+			<xs:enumeration value="EMAIL" />
+			<xs:enumeration value="PRINT" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Event element
+		*************
+	-->
+	
+	<xs:element name="event" type="admin:Event" />
+	<xs:complexType name="Event">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="user" type="admin:User" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Permission element
+		******************
+	-->
+	
+	<xs:element name="permission" type="admin:Permission" />
+	<xs:complexType name="Permission">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="organizationId" type="xs:long" minOccurs="1" />
+				<xs:element name="capabilities" type="admin:Capability" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Preferences element
+		*******************
+	-->
+	
+	<xs:element name="preferences" type="admin:Preferences" />
+	<xs:complexType name="Preferences">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="themeId" type="xs:string" minOccurs="0" />
+				<xs:element name="openNodes" type="common:Map" minOccurs="0" />
+				<xs:element name="selectedNode" type="xs:long" minOccurs="0" />
+				<xs:element name="enableTooltips" type="xs:boolean" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Role element
+		************
+	-->
+	
+	<xs:element name="role" type="admin:Role" />
+	<xs:complexType name="Role">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="roleType" type="admin:RoleType" minOccurs="1" />
+				<xs:element name="conditional" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="groups" type="admin:Role" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		RoleType enumeration
+		********************
+	-->
+	
+	<xs:simpleType name="RoleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MANAGER" />
+			<xs:enumeration value="USER" />
+			<xs:enumeration value="HOST" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		RoleTypeName enumeration
+		************************
+	-->
+	
+	<xs:simpleType name="RoleTypeName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Manager" />
+			<xs:enumeration value="User" />
+			<xs:enumeration value="Host" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Skin element
+		************
+	-->
+	
+	<xs:element name="skin" type="admin:Skin" />
+	<xs:complexType name="Skin">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+				<xs:element name="width" type="xs:string" minOccurs="0" />
+				<xs:element name="height" type="xs:string" minOccurs="0" />
+				<xs:element name="margin" type="xs:string" minOccurs="0" />
+				<xs:element name="marginTop" type="xs:string" minOccurs="0" />
+				<xs:element name="marginLeft" type="xs:string" minOccurs="0" />
+				<xs:element name="marginRight" type="xs:string" minOccurs="0" />
+				<xs:element name="marginBottom" type="xs:string" minOccurs="0" />
+				<xs:element name="padding" type="xs:string" minOccurs="0" />
+				<xs:element name="paddingTop" type="xs:string" minOccurs="0" />
+				<xs:element name="paddingLeft" type="xs:string" minOccurs="0" />
+				<xs:element name="paddingRight" type="xs:string" minOccurs="0" />
+				<xs:element name="paddingBottom" type="xs:string" minOccurs="0" />
+				<xs:element name="borderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="borderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="borderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="cornerRadius" type="xs:string" minOccurs="0" />
+				<xs:element name="backgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="backgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="gradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="gradientImage" type="xs:string" minOccurs="0" />
+				<xs:element name="fontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="fontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="fontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="fontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="fontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="textColor" type="xs:string" minOccurs="0" />
+				<xs:element name="textDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="linkColor" type="xs:string" minOccurs="0" />
+				<xs:element name="linkHoverColor" type="xs:string" minOccurs="0" />
+				<xs:element name="linkVisitedColor" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonControlColor" type="xs:string" minOccurs="0" />
+				<xs:element name="buttonCornerRadius" type="xs:string" minOccurs="0" />
+				<xs:element name="headerBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="headerBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="headerGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="headerBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="headerBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="headerBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="headerFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="headerFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="headerFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="headerFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="headerFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="headerTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="headerTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="toolbarTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tabBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tabGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabCornerRadius" type="xs:string" minOccurs="0" />
+				<xs:element name="tabFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tabFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tabFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tabFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tabTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabActiveTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabInactiveTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tabDisabledTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tableBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableCellTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableHeaderTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableFooterTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="tableSubHeaderBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tableSubFooterBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipFontVariant" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="tooltipTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="highlightControlColor" type="xs:string" minOccurs="0" />
+				<xs:element name="focusBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="focusBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="focusGradientColor" type="xs:string" minOccurs="0" />
+				<xs:element name="focusBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="focusBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="focusBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="focusFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="focusFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="focusFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="focusFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="focusTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="focusTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="focusControlColor" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledBackgroundColor" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledBackgroundImage" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledBorderStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledBorderWidth" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledFontFamily" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledFontSize" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledFontStyle" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledFontWeight" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledTextColor" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledTextDecoration" type="xs:string" minOccurs="0" />
+				<xs:element name="disabledControlColor" type="xs:string" minOccurs="0" />
+				<xs:element name="themeBorderColor" type="xs:string" minOccurs="0" />
+				<xs:element name="themeBackgroundColor" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		User element
+		************
+	-->
+	
+	<xs:element name="user" type="admin:User" />
+	<xs:complexType name="User">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="firstName" type="xs:string" minOccurs="1" />
+				<xs:element name="lastName" type="xs:string" minOccurs="1" />
+				<xs:element name="userName" type="xs:string" minOccurs="1" />
+				<xs:element name="passwordHash" type="xs:string" minOccurs="1" />
+				<xs:element name="passwordSalt" type="xs:string" minOccurs="0" />
+				<xs:element name="emailAccount" type="common:EmailAccount" minOccurs="0" />
+				<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="1" />
+				<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" />
+				<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" />
+				<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" />
+				<xs:element name="roles" type="admin:Role" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="permissions" type="admin:Permission" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+				<xs:element name="preferences" type="admin:Preferences" minOccurs="0" nillable="true" />
+				<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+				<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Users element
+		*************
+	-->
+	
+	<xs:element name="users" type="admin:Users" />
+	<xs:complexType name="Users">
+		<xs:sequence>
+				<xs:element name="records" type="admin:User" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

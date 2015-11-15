@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<application
+	version="5"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:application="http://java.sun.com/xml/ns/javaee/application_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd">
+
+  <description>admin-app</description>
+  <display-name>admin-app</display-name>
+  <module>
+    <java>admin-model-0.0.1-SNAPSHOT.jar</java>
+  </module>
+	
+  <module>
+    <ejb>admin-service-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+	
+  <module>
+    <ejb>admin-data-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+	
+  <module>
+    <ejb>admin-client-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+    <web>
+      <web-uri>admin-view-0.0.1-SNAPSHOT.war</web-uri>
+      <context-root>admin</context-root>
+    </web>
+  </module>
+
+  <module>
+    <ejb>common-service-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+	<ejb>common-client-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+    <ejb>common-cache-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+    <ejb>common-data-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+    <ejb>aries-registry-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+	
+  <module>
+    <ejb>aries-launcher-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+	<ejb>tx-manager-client-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+
+  <module>
+	<ejb>jboss-seam-2.3.1.Final.jar</ejb>
+  </module>
+	
+  <library-directory>lib</library-directory>
+</application>

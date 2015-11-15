@@ -1,0 +1,18 @@
+	<aries:layeredPane
+		name="skinListPanel">
+
+		<aries:label
+			height="30px"
+			marginLeft="8px"
+			text="Skin Element List View" />
+
+		<aries:tabPane>
+			<aries:tab
+				header="Fields"
+				icon="/icons/common/Default16.gif">
+				<aries:panel height="#{globals.screenHeight-200}px">
+					<ui:include src="skinFieldListPanel.xhtml" />
+				</aries:panel>
+			</aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>

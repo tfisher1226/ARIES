@@ -1,0 +1,97 @@
+/*
+*.rf-tab-hdr-tabline-vis {
+    background: #ebf6fd;
+    border: 0;
+    height: 31px;
+    padding: 0;
+}
+
+*.rf-tab-hdr {
+    border: 1px solid #dddddd;
+    padding: 6px 10px 0;
+    margin-right: 3px;
+}
+
+*.rf-tab-hdr-act {
+    background: #ffffff;
+    border-bottom: 0;
+    color: #5F9CD0;
+}
+
+*.rf-tab-hdr-act .rf-tab-lbl {
+    font-weight: bold;
+}
+
+*.rf-tab-hdr-inact {
+    background: #c6cacc url(../images/pmenu_bg.png) left top repeat-x;
+    border: 1px solid #bec3c7;
+}
+
+*.rf-tab-hdr-spcr {
+    border-bottom: 1px solid #dddddd;
+    padding: 0 3px 0 0;
+}
+
+*.rf-tab-lbl {
+    font: normal 12px "Lucida Sans Unicode", "Lucida Grande", Geneva, Verdana, Arial, sans-serif;
+}
+*/
+
+
+.rf-tab-cnt,
+.rf-tab-hdr-tabline-vis.rf-tab-hdr-tabline-top {
+	padding-top: 0px;
+	border-width: 0px;
+	background: #{userSkin.backgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr {
+	background: #{userSkin.tabBackgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-act.rf-tab-hdr-top {
+	border-width: 1px;
+	border-color: #{userSkin.tabActiveBorderColor};
+	background-image: url(#{resource['org.richfaces.images:tabBg.png']});
+	background: #{userSkin.tabActiveBackgroundColor};
+	background: #{userSkin.backgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-inact.rf-tab-hdr-top {
+	padding-top: 0px;
+	border-width: 1px;
+	border-color: #{userSkin.tabInactiveBorderColor};
+	border-bottom-color: #{userSkin.tabActiveBorderColor};
+	background: #{userSkin.tabInactiveBackgroundColor};
+	background: #{userSkin.backgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-dis.rf-tab-hdr-top {
+	/*background-image: url(../org.richfaces.images/tabBg.png);*/
+	background: #{userSkin.tabDisabledBackgroundColor};
+	background: inherit;
+	cursor: default;
+}
+
+*.rf-tab-hdr-tablst {
+	background: #{userSkin.tabBackgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-brd {
+	border: 0px solid #BED6F8;
+	border-top: 0px;
+	height: 0px;
+	background: #C6DEFF;
+}
+
+.rf-tab-hdr-spcr {
+    border-bottom: 1px #{userSkin.borderStyle} #{userSkin.borderColor};
+    padding: 0 3px 0 0;
+	background: inherit;
+}
+

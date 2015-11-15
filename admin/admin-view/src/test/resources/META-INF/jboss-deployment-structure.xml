@@ -1,0 +1,43 @@
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
+
+	<ear-subdeployments-isolated>false</ear-subdeployments-isolated>
+
+	<deployment>
+		<exclusions>
+			<module name="org.jboss.integration.ext-content" />
+		</exclusions>
+
+		<dependencies>
+			<!-- -->
+			<module name="aries.antlr" export="true" />
+			<module name="aries.apache.ant" export="true" />
+			<module name="aries.apache.commons" export="true" />
+			<module name="aries.drools" export="true" />
+			<module name="aries.eclipse.core" export="true" />
+			<module name="aries.eclipse.emf" export="true" />
+			<module name="aries.eclipse.jdt" export="true" />
+			<module name="aries.ehcache" export="true" />
+			<module name="aries.ibm" export="true" />
+			<module name="aries.jboss.ts" export="true" />
+			<module name="aries.jgroups" export="true" />
+			<module name="aries.util" export="true" />
+
+			<module name="org.antlr" export="true" />
+			<module name="org.apache.log4j" export="true" />
+			<module name="org.apache.commons.logging" export="true" />
+			<module name="org.apache.commons.collections" export="true" />
+			<module name="org.apache.xerces" export="true" />
+			<module name="org.dom4j" export="true" />
+			<module name="org.hibernate" export="true" />
+			<module name="org.hibernate.validator" export="true" />
+			<module name="org.hornetq" export="true" />
+			<module name="org.slf4j" export="true" />
+			<module name="org.javassist" export="true" />
+			<module name="org.jboss.as.jmx" export="true" />
+			<module name="javax.el.api" export="true" />
+			<module name="javax.faces.api" export="true" />
+			<module name="javax.servlet.jstl.api" export="true" />
+			<module name="com.sun.jsf-impl" export="true" />
+		</dependencies>
+	</deployment>
+</jboss-deployment-structure> 

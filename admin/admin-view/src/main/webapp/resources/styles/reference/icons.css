@@ -1,0 +1,253 @@
+/*
+ * icons.css - 
+ * 
+ * This file contains CSS classes for application icons.  
+ * Icon classes below are categorized in different ways.  
+ */
+
+/* general */
+.AddIcon {background-image: url("/images/common/Add16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.CheckBoxIcon {background-image: url("/images/common/CheckBox16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.CheckBoxNoBorderIcon {background-image: url("/images/common/CheckBoxNoBorder16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.CollapseIcon {background-image: url("/images/common/Collapse16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.CollapseAllIcon {background-image: url("/images/common/CollapseAll16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ConfigureIcon {background-image: url("/images/common/Configure16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.CopyIcon {background-image: url("/images/common/Copy16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.CutIcon {background-image: url("/images/common/Cut16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.DefaultIcon {background-image: url("/images/common/Default16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.DeleteIcon {background-image: url("/images/common/Delete16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.EditIcon {background-image: url("/images/common/Edit16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ExcelIcon {background-image: url("/images/export/Excel16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ExpandIcon {background-image: url("/images/common/Expand16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ExpandAllIcon {background-image: url("/images/common/ExpandAll16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ExportIcon {background-image: url("/images/common/Export16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.FirstPageIcon {background-image: url("/images/common/FirstPage16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.FirstPageDisabledIcon {background-image: url("/images/common/FirstPageDisabled16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.HelpIcon {background-image: url("/images/common/Help16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ImportIcon {background-image: url("/images/common/Import16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.NewIcon {background-image: url("/images/common/New16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.NewFolderIcon {background-image: url("/images/common/NewFolder16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.NextPageIcon {background-image: url("/images/common/NextPage16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.NextPageDisabledIcon {background-image: url("/images/common/NextPageDisabled16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.OpenIcon {background-image: url("/images/common/Open16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PasteIcon {background-image: url("/images/common/Paste16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PlusIcon {background-image: url("/images/common/Plus16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PointerIcon {background-image: url("/images/common/Pointer16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PreviousPageIcon {background-image: url("/images/common/PreviousPage16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PreviousPageDisabledIcon {background-image: url("/images/common/PreviousPageDisabled16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PrintIcon {background-image: url("/images/common/Print16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PropertiesIcon {background-image: url("/images/common/Properties16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.SaveIcon {background-image: url("/images/common/Save16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.SaveAllIcon {background-image: url("/images/common/SaveAll16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.SearchIcon {background-image: url("/images/common/Search16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.SelectIcon {background-image: url("/images/common/Select16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.SelectAllIcon {background-image: url("/images/common/SelectAll16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.RedoIcon {background-image: url("/images/common/Redo16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.RefreshIcon {background-image: url("/images/common/Refresh16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.RemoveIcon {background-image: url("/images/common/Remove16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.RenameIcon {background-image: url("/images/common/Rename16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.UndoIcon {background-image: url("/images/common/Undo16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ZoomInIcon {background-image: url("/images/common/ZoomIn16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ZoomOutIcon {background-image: url("/images/common/ZoomOut16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* file related */
+.FolderClosedIcon {background-image: url("/images/model/folder-closed.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.FolderOpenIcon {background-image: url("/images/model/folder-open.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ProjectClosedIcon {background-image: url("/images/model/project-closed.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ProjectOpenIcon {background-image: url("/images/model/project-open.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* status related */
+.InfoStatusIcon {background-image: url("/images/icons/status/WindowsInfo.gif"); background-repeat: no-repeat; width: 40px; height: 40px;}
+.PromptStatusIcon {background-image: url("/images/icons/status/WindowsPrompt.gif"); background-repeat: no-repeat; width: 40px; height: 40px;}
+.WarningStatusIcon {background-image: url("/images/icons/status/WindowsWarning.gif"); background-repeat: no-repeat; width: 40px; height: 40px;}
+.ErrorStatusIcon {background-image: url("/images/icons/status/WindowsError.gif"); background-repeat: no-repeat; width: 40px; height: 40px;}
+
+
+
+/*
+ * Graphing icons
+ * -----------------------
+ */
+
+.ShowGridIcon {background-image: url("/images/graph/ShowGrid16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.AngledLineRouterIcon {background-image: url("/images/graph/AngledLineRouter16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.DirectLineRouterIcon {background-image: url("/images/graph/DirectLineRouter16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ForwardOpenArrowIcon {background-image: url("/images/graph/ForwardOpenArrow16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ForwardClosedArrowIcon {background-image: url("/images/graph/ForwardClosedArrow16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.BackwardOpenArrowIcon {background-image: url("/images/graph/BackwardOpenArrow16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.BackwardClosedArrowIcon {background-image: url("/images/graph/BackwardClosedArrow16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.DoubleOpenArrowsIcon {background-image: url("/images/graph/DoubleOpenArrows16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.DoubleClosedArrowsIcon {background-image: url("/images/graph/DoubleClosedArrows16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+
+/*
+ * Modeling icons
+ * -----------------------
+ */
+
+.ModelFileIcon {background-image: url("/images/model/ModelFile16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ModelFolderIcon {background-image: url("/images/model/ModelFolder16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.NewModelFolderIcon {background-image: url("/images/model/NewModelFolder16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* applications */
+.ClientApplicationIcon {background-image: url("/images/model/ClientApplication16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.EnterpriseApplicationIcon {background-image: url("/images/model/EnterpriseApplication16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.StandaloneApplicationIcon {background-image: url("/images/model/StandaloneApplication16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.WebApplicationIcon {background-image: url("/images/model/WebApplication16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.WebstartApplicationIcon {background-image: url("/images/model/WebstartApplication16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* modules */
+.PersistenceBeanArchiveIcon {background-image: url("/images/model/PersistenceBeanArchive16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.EnterpriseBeanArchiveIcon {background-image: url("/images/model/EnterpriseBeanArchive16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* beans */
+.JavaBeanIcon {background-image: url("/images/model/JavaBean16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.EntityBeanIcon {background-image: url("/images/model/EntityBean16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.EnterpriseBeanIcon {background-image: url("/images/model/EnterpriseBean16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.MessageDrivenBeanIcon {background-image: url("/images/model/MessageDrivenBean16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* elements */
+.ApplicationIcon {background-image: url("/images/model/Application16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ContainerIcon {background-image: url("/images/model/Container16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ClusterIcon {background-image: url("/images/model/Cluster16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.LibraryIcon {background-image: url("/images/model/Library16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ModuleIcon {background-image: url("/images/model/Module16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.NodeIcon {background-image: url("/images/model/Node16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.PluginIcon {background-image: url("/images/model/Plugin16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ProcessorIcon {background-image: url("/images/model/Processor16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.QueueIcon {background-image: url("/images/model/Queue16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ReceiverIcon {background-image: url("/images/model/Receiver16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.SenderIcon {background-image: url("/images/model/Sender16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ServerIcon {background-image: url("/images/model/Server16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ServiceIcon {background-image: url("/images/model/Service16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+/* files */
+.EarFileIcon {background-image: url("/images/model/EarFile16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.JarFileIcon {background-image: url("/images/model/JarFile16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.WarFileIcon {background-image: url("/images/model/WarFile16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.TextFileIcon {background-image: url("/images/model/TextFile16.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+
+
+
+
+
+/*
+.alertIcon {background-image: url("/images/general/alert.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.annotatedJavaIcon {background-image: url("/images/general/annotatedJava.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.antIcon {background-image: url("/images/general/ant.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.applicationIcon {background-image: url("/images/general/application.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.arrowDownIcon {background-image: url("/images/general/arrowDown.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.arrowRightIcon {background-image: url("/images/general/arrowRight.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.backIcon {background-image: url("/images/general/back.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.binaryIcon {background-image: url("/images/general/binary.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.bookmark-addIcon {background-image: url("/images/general/bookmark-add.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.bookmark-viewIcon {background-image: url("/images/general/bookmark-view.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.bookmarkIcon {background-image: url("/images/general/bookmark.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.classIcon {background-image: url("/images/general/class.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.collapse-allIcon {background-image: url("/images/general/collapse-all.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.collapsedIcon {background-image: url("/images/general/collapsed.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.comment-addIcon {background-image: url("/images/general/comment-add.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.comment-editIcon {background-image: url("/images/general/comment-edit.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.commentIcon {background-image: url("/images/general/comment.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.compartmentClosedArrowIcon {background-image: url("/images/general/compartmentClosedArrow.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.compartmentOpenArrowIcon {background-image: url("/images/general/compartmentOpenArrow.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.componentIcon {background-image: url("/images/general/component.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.configureIcon {background-image: url("/images/general/configure.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.copyIcon {background-image: url("/images/general/copy.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.cutIcon {background-image: url("/images/general/cut.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.debugIcon {background-image: url("/images/general/debug.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.defaultIcon {background-image: url("/images/general/default.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.deleteIcon {background-image: url("/images/general/delete.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.delete_editIcon {background-image: url("/images/general/delete_edit.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.dependencyIcon {background-image: url("/images/general/dependency.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.downArrowIcon {background-image: url("/images/general/downArrow.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.ecoreModelIcon {background-image: url("/images/general/ecoreModel.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.editIcon {background-image: url("/images/general/edit.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.errorIcon {background-image: url("/images/general/error.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.executeIcon {background-image: url("/images/general/execute.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.expand-allIcon {background-image: url("/images/general/expand-all.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.expandedIcon {background-image: url("/images/general/expanded.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.exportIcon {background-image: url("/images/general/export.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.export_wizIcon {background-image: url("/images/general/export_wiz.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.extensionIcon {background-image: url("/images/general/extension.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.figureBackgroundIcon {background-image: url("/images/general/figureBackground.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.figureBackground2Icon {background-image: url("/images/general/figureBackground2.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.fileIcon {background-image: url("/images/general/file.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.folderIcon {background-image: url("/images/general/folder.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.forwardIcon {background-image: url("/images/general/forward.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.generalizationIcon {background-image: url("/images/general/generalization.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.globeIcon {background-image: url("/images/general/globe.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.goIcon {background-image: url("/images/general/go.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.group-addIcon {background-image: url("/images/general/group-add.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.group-editIcon {background-image: url("/images/general/group-edit.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.groupIcon {background-image: url("/images/general/55 group.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.helpIcon {background-image: url("/images/general/help.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.hierarchyIcon {background-image: url("/images/general/hierarchy.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.homeIcon {background-image: url("/images/general/home.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.importIcon {background-image: url("/images/general/import.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.import_wizIcon {background-image: url("/images/general/import_wiz.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.infoIcon {background-image: url("/images/general/info.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.interfaceIcon {background-image: url("/images/general/interface.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.jar-fileIcon {background-image: url("/images/general/jar-file.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.jarIcon {background-image: url("/images/general/jar.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.javaClassFileIcon {background-image: url("/images/general/javaClassFile.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.javaFileIcon {background-image: url("/images/general/javaFile.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.javaPackageIcon {background-image: url("/images/general/javaPackage.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.libraryIcon {background-image: url("/images/general/library.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.methodIcon {background-image: url("/images/general/method.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newIcon {background-image: url("/images/general/new.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newClassIcon {background-image: url("/images/general/newClass.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newFileIcon {background-image: url("/images/general/newFile.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newFolderIcon {background-image: url("/images/general/newFolder.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newInterfaceIcon {background-image: url("/images/general/newInterface.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newPackageIcon {background-image: url("/images/general/newPackage.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newPackageFolderIcon {background-image: url("/images/general/newPackageFolder.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newProjectIcon {background-image: url("/images/general/newProject.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.newTopicIcon {background-image: url("/images/general/newTopic.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.nextIcon {background-image: url("/images/general/next.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.outlineIcon {background-image: url("/images/general/outline.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.overviewIcon {background-image: url("/images/general/overview.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.packageIcon {background-image: url("/images/general/package.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.pasteIcon {background-image: url("/images/general/paste.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.people-addIcon {background-image: url("/images/general/people-add.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.people-editIcon {background-image: url("/images/general/people-edit.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.people-removeIcon {background-image: url("/images/general/people-remove.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.peopleIcon {background-image: url("/images/general/people.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.person-addIcon {background-image: url("/images/general/person-add.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.person-editIcon {background-image: url("/images/general/person-edit.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.person-removeIcon {background-image: url("/images/general/person-remove.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.personIcon {background-image: url("/images/general/person.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.previousIcon {background-image: url("/images/general/previous.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.printIcon {background-image: url("/images/general/print.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.projectIcon {background-image: url("/images/general/project.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.propertiesIcon {background-image: url("/images/general/properties.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.redoIcon {background-image: url("/images/general/redo.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.refresh-documentIcon {background-image: url("/images/general/refresh-document.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.refreshIcon {background-image: url("/images/general/refresh.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.removeIcon {background-image: url("/images/general/remove.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.renameIcon {background-image: url("/images/general/rename.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.runIcon {background-image: url("/images/general/run.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.samplesIcon {background-image: url("/images/general/samples.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.saveIcon {background-image: url("/images/general/save.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.saveAllIcon {background-image: url("/images/general/saveAll.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.schemaIcon {background-image: url("/images/general/schema.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.searchIcon {background-image: url("/images/general/search.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.selectAllIcon {background-image: url("/images/general/selectAll.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.serverIcon {background-image: url("/images/general/server.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.shortcutIcon {background-image: url("/images/general/shortcut.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.smallArrowDownIcon {background-image: url("/images/general/smallArrowDown.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.smallArrowUpIcon {background-image: url("/images/general/smallArrowUp.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.smallErrorIcon {background-image: url("/images/general/smallError.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.smallWarningIcon {background-image: url("/images/general/smallWarning.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.sort-alphabeticallyIcon {background-image: url("/images/general/sort-alphabetically.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.textIcon {background-image: url("/images/general/text.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.typeIcon {background-image: url("/images/general/type.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.umlModelIcon {background-image: url("/images/general/umlModel.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.undoIcon {background-image: url("/images/general/undo.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.upArrowIcon {background-image: url("/images/general/upArrow.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.variableIcon {background-image: url("/images/general/variable.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.viewIcon {background-image: url("/images/general/view.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.warningIcon {background-image: url("/images/general/warning.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.welcomeIcon {background-image: url("/images/general/welcome.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+.zoomIcon {background-image: url("/images/general/zoom.gif"); background-repeat: no-repeat; width: 16px; height: 16px;}
+*/

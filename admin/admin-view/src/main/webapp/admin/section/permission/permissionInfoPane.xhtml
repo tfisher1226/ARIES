@@ -1,0 +1,37 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}PermissionInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Permission Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Target" label="Target" value="#{permission.target}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Organization" label="Organization" value="#{permission.organization}" />
+			
+			<aries:spacer height="6" />
+			<ui:include src="../action/actionSelectField.xhtml">
+				<ui:param name="label" value="Actions" />
+				<ui:param name="type" value="ActionSelect" />
+				<ui:param name="name" value="permissionActions" />
+				<ui:param name="items" value="#{permissionHelper.getActions(permission)}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Enabled" label="Enabled" value="#{permission.enabled}" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

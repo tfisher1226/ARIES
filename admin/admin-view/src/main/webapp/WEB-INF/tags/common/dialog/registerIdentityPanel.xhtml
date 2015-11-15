@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+		<a4j:outputPanel id="registerIdentityPanel">
+			<h:panelGroup rendered="#{true}">
+			
+				<h:outputLabel styleClass="groupLabel">Identity</h:outputLabel>
+				<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 8px; padding-left: 4px; margin-top: 6px">
+			
+					<aries:spacer width="1" height="1"/>
+					<a4j:outputPanel id="#{panelName}PersonNamePanel">
+						<h:panelGrid styleClass="formPanel" layout="block" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnFillVertical, formColumn"> 
+							<h:outputLabel styleClass="formLabel" style="width: 80px; padding-top: 2px">Name</h:outputLabel>
+							<h:panelGroup styleClass="formPanel" layout="block" style="width: 190px; height: auto; cursor: pointer">
+								<ui:include src="/pages/common/personNameField.xhtml">
+									<ui:param name="personNameFieldLabel" value="#{userObject.firstName} #{userObject.lastName}"/>
+								</ui:include>
+							</h:panelGroup>
+						</h:panelGrid>
+					</a4j:outputPanel>
+			
+					<aries:spacer width="1" height="6"/>
+					<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{panelName}UserIdLabel" styleClass="formLabel" for="#{panelName}UserIdField" style="display: block; width: 80px">User ID</h:outputLabel>
+						<h:inputText id="#{panelName}UserIdField" styleClass="formInput" value="#{userObject != null ? userObject.userId : ''}" style="width: 184px" />
+					</h:panelGrid>
+			
+					<aries:spacer width="1" height="6"/>
+					<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{panelName}PasswordLabel" styleClass="formLabel" for="#{panelName}PasswordField" style="display: block; width: 80px">Password</h:outputLabel>
+						<h:inputText id="#{panelName}PasswordField" styleClass="formInput" value="#{userObject.password}" style="width: 184px" />
+					</h:panelGrid>
+				</h:panelGroup> 
+			</h:panelGroup>
+		</a4j:outputPanel>
+</ui:composition>

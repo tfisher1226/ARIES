@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging-deployment
+	xmlns="urn:jboss:messaging-deployment:1.0">
+
+	<hornetq-server>
+		<jms-destinations>
+
+			<!-- "admin" channel destinations -->
+
+			<jms-queue name="admin_org_aries_registration_service_queue">
+				<entry name="/queue/admin_org_aries_registration_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/admin_org_aries_registration_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="admin_org_aries_role_service_queue">
+				<entry name="/queue/admin_org_aries_role_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/admin_org_aries_role_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="admin_org_aries_skin_service_queue">
+				<entry name="/queue/admin_org_aries_skin_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/admin_org_aries_skin_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="admin_org_aries_user_service_queue">
+				<entry name="/queue/admin_org_aries_user_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/admin_org_aries_user_service_queue" />
+			</jms-queue>
+
+			<!-- "Test" channel destinations -->
+
+			<jms-queue name="test_message_domain_test_destination_queue_a">
+				<entry name="/queue/test_message_domain_test_destination_queue_a" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_a" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_b">
+				<entry name="/queue/test_message_domain_test_destination_queue_b" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_b" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_c">
+				<entry name="/queue/test_message_domain_test_destination_queue_c" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_c" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_d">
+				<entry name="/queue/test_message_domain_test_destination_queue_d" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_d" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_e">
+				<entry name="/queue/test_message_domain_test_destination_queue_e" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_e" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_f">
+				<entry name="/queue/test_message_domain_test_destination_queue_f" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_f" />
+			</jms-queue>
+		</jms-destinations>
+	</hornetq-server>
+</messaging-deployment>

@@ -1,0 +1,8 @@
+#!/bin/sh 
+
+source ./setenv
+
+OPTIONS="--no-create-info --no-create-db --no-autocommit"
+
+$MYSQL_HOME/bin/mysqldump $OPTIONS --user=$USER --password=$PASSWORD $DATABASE > exported-data.sql
+

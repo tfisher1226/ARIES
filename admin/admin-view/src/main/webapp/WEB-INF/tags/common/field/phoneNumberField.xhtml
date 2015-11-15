@@ -1,0 +1,169 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<c:if test="#{empty id}">
+		<c:set var="id" value="#{section}#{type}Field" /> 
+	</c:if>
+	
+	<c:if test="#{empty enabled}">
+		<c:set var="enabled" value="true" /> 
+	</c:if>
+	
+	<c:if test="#{empty compact or compact == false}">
+		<c:set var="fieldBorder" value="border: 1px solid #{userSkin.borderColor}" /> 
+	</c:if>
+
+	<c:if test="#{not empty compact and compact == true}">
+		<c:if test="#{not manager.isEmpty()}">
+			<c:set var="fieldBorder" value="border-width: 0px; border-left: 1px solid #{userSkin.borderColor}" />
+		</c:if>
+		<c:if test="#{manager.isEmpty()}">
+			<c:set var="fieldBorder" value="border: 1px solid #{userSkin.borderColor}; border-top-width: 0px" />
+		</c:if>
+	</c:if>
+
+	<c:if test="#{enabled}">
+	</c:if>
+	
+	<c:if test="#{not enabled}">
+		<c:set var="labelStyleClass" value="disabled" />
+	</c:if>
+
+	<c:if test="#{empty height}">
+		<c:set var="height" value="21px"/> 
+	</c:if>
+	
+	<!--  
+	<c:if test="#{not manager.isEmpty()}">
+		<c:set var="rowCount" value="#{manager.phoneNumberListSize}" />
+		<c:set var="rowValue" value="#{manager.phoneNumberList}" />
+		<c:set var="tableStyle" value="color: black" />
+		<c:set var="tableStyleClass" value="table noGrid noBorder" />
+	</c:if>
+	
+	<c:if test="#{manager.isEmpty()}">
+		<c:set var="rowCount" value="1" />
+		<c:set var="rowValue" value="1" />
+		<c:set var="tableStyle" value="color: gray" />
+		<c:set var="tableStyleClass" value="table noGrid noBorder noSelection" />
+	</c:if>
+	-->
+
+	<!--  
+	<c:set var="rowCount" value="#{manager.isEmpty() ? 1 : manager.valueCount}" />
+	<c:set var="rowValue" value="#{manager.isEmpty() ? 1 : manager.values}" />
+	<c:set var="tableStyle" value="color: #{manager.isEmpty() ? 'gray' : 'black'}" />
+	<c:set var="tableStyleClass" value="table noGrid noBorder #{manager.isEmpty() ? 'noSelection' : ''}" />
+	<c:set var="columnStyle" value="height: 16px; padding: 2px; padding-top: 3px" />
+	-->
+
+	<ui:param name="rowCount" value="#{manager.isEmpty() ? 1 : manager.valueCount}" />
+	<ui:param name="rowValue" value="#{manager.isEmpty() ? 1 : manager.values}" />
+	<ui:param name="tableStyle" value="color: #{manager.isEmpty() ? 'gray' : 'black'}" />
+	<ui:param name="tableStyleClass" value="table noGrid noBorder #{manager.isEmpty() ? 'noSelection' : ''}" />
+	<ui:param name="columnStyle" value="height: 16px; padding: 2px; padding-top: 3px" />
+	
+	<a4j:outputPanel id="#{id}" layout="block" style="width: 100%; height: auto; background-color: red; padding: 0px; #{fieldBorder}">
+		<ui:include src="phoneNumberMenu.xhtml" />
+
+		<rich:dataTable
+			var="unused"
+			rowKeyVar="index"
+			value="#{rowValue}"
+			rows="#{rowCount}"
+			rendered="#{not enabled}"
+			selectionMode="single" 
+			sortMode="single"
+			rowClass="tableRow"
+			headerClass="tableHeader" 
+			activeClass="tableRowActive"
+			selectedClass="tableRowSelected"
+			styleClass="#{tableStyleClass}"
+			style="width: 100%; height: auto; border-width: 0px; background-repeat: no-repeat; background-position: 1px 1px; background-color: #fff; background-image: url(#{resource['org.richfaces.images:inputBackgroundImage.png']}); #{tableStyle}">
+
+			<rich:column rendered="#{not manager.isEmpty()}" sortable="false" width="34px" style="">
+				<h:outputText value="#{phoneNumberHelper.toString(phoneNumber.type)}" styleClass="#{labelStyleClass}" style="font-size: 11px; font-weight: bold"/>
+			</rich:column>
+
+			<rich:column rendered="#{not manager.isEmpty()}" sortable="false" style="#{columnStyle}">
+				<h:outputText value="#{phoneNumberHelper.toString(phoneNumber)}" styleClass="#{labelStyleClass}" />
+			</rich:column>
+
+			<rich:column rendered="#{manager.isEmpty()}" sortable="false" style="#{columnStyle}">
+				<h:outputText value="" styleClass="#{labelStyleClass}" />
+			</rich:column>
+		</rich:dataTable>
+
+		<rich:dataTable
+			var="phoneNumber"
+			rowKeyVar="index"
+			value="#{rowValue}"
+			rows="#{rowCount}"
+			rendered="#{enabled and manager.isEmpty()}"
+			onrowmouseover="highLightField(this, '#{userSkin.highlightBorderColor}')"
+			onrowmouseout="unhighLightField(this, '#{userSkin.borderColor}')"
+			onrowmousedown="focusField(this, '#{userSkin.focusBorderColor}')"
+			onrowmouseup="unfocusField(this, '#{userSkin.borderColor}')"
+			onrowclick="setCursorWait(this); launchPhoneNumberDialog('#{section}', '#{type}', '#{name}')"
+			selectionMode="single"
+			sortMode="single"
+			rowClass="tableRow"
+			headerClass="tableHeader"
+			activeClass="tableRowActive"
+			selectedClass="tableRowSelected"
+			styleClass="#{tableStyleClass}"
+			style="width: 100%; height: auto; border-width: 0px; background-repeat: no-repeat; background-position: 1px 1px; background-color: #fff; background-image: url(#{resource['org.richfaces.images:inputBackgroundImage.png']}); #{tableStyle}}">
+
+			<rich:componentControl 
+				event="rowcontextmenu"
+				target="#{id}Menu" operation="show" />
+
+			<rich:column sortable="false" style="#{columnStyle}">
+				<h:outputText value="" styleClass="#{labelStyleClass}" />
+			</rich:column>
+		</rich:dataTable>
+			
+		<rich:dataTable 
+			var="phoneNumber"
+			rowKeyVar="index"
+			value="#{rowValue}"
+			rows="#{rowCount}"
+			rendered="#{enabled and not manager.isEmpty()}"
+			onrowmouseover="highLightField(this, '#{userSkin.highlightBorderColor}')"
+			onrowmouseout="unhighLightField(this, '#{userSkin.borderColor}')"
+			onrowmousedown="focusField(this, '#{userSkin.focusBorderColor}')"
+			onrowmouseup="unfocusField(this, '#{userSkin.borderColor}')"
+			onrowclick="setCursorWait(this); launchPhoneNumberDialog('#{section}', '#{type}', '#{name}')"
+			selectionMode="single" 
+			sortMode="single"
+			rowClass="tableRow"
+			headerClass="tableHeader" 
+			activeClass="tableRowActive"
+			selectedClass="tableRowSelected"
+			styleClass="#{tableStyleClass}"
+			style="width: 100%; height: auto; border-width: 0px; background-repeat: no-repeat; background-position: 1px 1px; background-color: #fff; background-image: url(#{resource['org.richfaces.images:inputBackgroundImage.png']}); #{tableStyle}}">
+
+			<rich:componentControl
+				event="rowcontextmenu"
+				target="#{id}Menu" operation="show" />
+
+			<rich:column sortable="false" width="34px" style="">
+				<h:outputText value="#{phoneNumber.type}" styleClass="#{labelStyleClass}" style="font-size: 11px; font-weight: bold"/>
+			</rich:column>
+
+			<rich:column sortable="false" style="#{columnStyle}">
+				<h:outputText value="#{phoneNumberHelper.toString(phoneNumber)}" styleClass="#{labelStyleClass}" />
+			</rich:column>
+		</rich:dataTable>
+	</a4j:outputPanel>
+</ui:composition>

@@ -1,0 +1,32 @@
+<settings 
+	xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<localRepository>c:/workspace/.m2/repository</localRepository>
+
+	<interactiveMode>true</interactiveMode>
+
+	<usePluginRegistry>false</usePluginRegistry>
+
+	<offline>true</offline>
+
+	<!--  
+	<server>
+		<id>localhost</id>
+		<username>username</username>
+		<password>{Pz+6YRsDJ8dUJD7XE8=} an encrypted password. Supported since maven 2.1</password>
+	</server>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<jboss.host>localhost</jboss.host>
+				<jboss.deployDir>/opt/jboss/server/default/deploy/</jboss.deployDir>
+				<jboss.deployUrl>scp://root@localhost</jboss.deployUrl>
+			</properties>
+		</profile>
+	</profiles>
+	-->
+</settings>

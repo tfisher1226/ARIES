@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>admin</groupId>
+	<artifactId>admin-service</artifactId>
+	<name>admin-service</name>
+	<description>Project object model for: admin-service</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>ejb</packaging>
+
+	<parent>
+		<groupId>admin</groupId>
+		<artifactId>admin</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<admin.model.home>../model</admin.model.home>
+		<admin.runtime.home>../runtime</admin.runtime.home>
+	</properties>
+
+	<build>
+		<filters>
+			<filter>src/main/resources/maven/server.properties</filter>
+		</filters>
+		
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+						<include>**/*.launch</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-service-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-service-layer-test</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

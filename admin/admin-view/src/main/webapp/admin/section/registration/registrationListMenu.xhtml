@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:region>
+		<aries:outputPane
+			id="#{section}RegistrationListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="#{section}RegistrationListContextMenu"
+				target="#{section}RegistrationListTable">
+				
+				<aries:contextMenuItem
+					value="Edit Registration..."
+					disabled="false"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{registrationListManager}"
+					action="editRegistration"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}RegistrationDialog()"
+					render="#{domain}RegistrationDialog, #{domain}RegistrationDialogPersonNameDialog, #{domain}RegistrationDialogEmailAddressDialog, #{domain}RegistrationDialogPhoneNumberDialog, #{domain}RegistrationDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Edit selected Registration record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="New Registration..."
+					mode="ajax"
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{registrationInfoManager}"
+					action="newRegistration"
+					onclick="setCursorWait(); showProgress('Registration Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}RegistrationDialog()"
+					render="#{domain}RegistrationDialog, #{domain}RegistrationDialogPersonNameDialog, #{domain}RegistrationDialogEmailAddressDialog, #{domain}RegistrationDialogPhoneNumberDialog, #{domain}RegistrationDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Registration record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="Remove Registration..."
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Registration: {lastName}, {firstName}', 'Remove Registration Record from System', 'Do you wish to continue?', 'org.aries.removeRegistration', '#{section}RegistrationListPane')">
+					
+					<aries:tooltip value="Remove selected Registration record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

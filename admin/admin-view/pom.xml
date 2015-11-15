@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>admin</groupId>
+	<artifactId>admin-view</artifactId>
+	<name>admin-view</name>
+	<description>Project object model for: admin-view</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>admin</groupId>
+		<artifactId>admin</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<admin.model.home>../model</admin.model.home>
+		<admin.runtime.home>../runtime</admin.runtime.home>
+	</properties>
+
+	<build>
+		<filters>
+			<filter>src/main/resources/maven/filter.properties</filter>
+		</filters>
+		
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-view</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-client-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-client-layer-test</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-view-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-emf</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jsf</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>richfaces-4</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<!--  
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam-ui</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.seam</groupId>
+			<artifactId>jboss-seam</artifactId>
+			<version>2.3.0.Final</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+		-->
+	</dependencies>
+</project>

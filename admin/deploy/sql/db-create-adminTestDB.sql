@@ -1,0 +1,13 @@
+use mysql;
+drop database if exists adminTestDB;
+create database adminTestDB;
+delete from user where user='adminTestManager';
+delete from db where user='adminTestManager';
+FLUSH PRIVILEGES;
+create user 'adminTestManager'@'localhost' identified by 'adminPassword';
+create user 'adminTestManager'@'%' identified by 'adminPassword';
+-- set password for 'adminTestManager' = password('adminPassword');
+grant all on adminTestDB.* to 'adminTestManager';
+grant all on adminTestDB.* to 'adminTestManager'@'localhost' identified by 'adminPassword';
+grant all on adminTestDB.* to 'adminTestManager'@'%' identified by 'adminPassword';
+use adminTestDB;

@@ -1,0 +1,35 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}PreferencesInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Preferences Information">
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}User" label="User" value="#{preferences.user}" items="#{userList}" defaultLabel="select User" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ThemeId" label="Theme Id" value="#{preferences.themeId}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}OpenNodes" label="Open Nodes" value="#{preferences.openNodes}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputInteger id="#{section}SelectedNode" label="Selected Node" value="#{preferences.selectedNode}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}EnableTooltips" label="Enable Tooltips" value="#{preferences.enableTooltips}" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

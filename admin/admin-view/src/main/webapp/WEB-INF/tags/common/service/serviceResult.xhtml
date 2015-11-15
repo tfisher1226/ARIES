@@ -1,0 +1,26 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:param 
+		name="dialogType" 
+		value="#{instance.module}#{mode}" />
+		
+	<aries:link 
+		size="#{userSkin.fontSize}" 
+		family="courier" 
+		value="#{instance.type}" 
+		rendered="#{empty instance.value}"
+		onmouseup="setCursorWait(this); popupWarning('', '#{serviceId}() execution', 'No result not found')" />
+		
+	<aries:link 
+		size="#{userSkin.fontSize}" 
+		family="courier" 
+		value="#{instance.type}" 
+		rendered="#{not empty instance.value}"
+		onmouseup="setCursorWait(this); launch#{dialogType}Dialog('#{section}', '#{instance.clazz}#{mode}', '#{instance.name}', '#{serviceId}')">
+	</aries:link>	
+		
+</ui:composition>

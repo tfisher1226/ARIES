@@ -1,0 +1,17 @@
+action.package=admin.map
+action.sources=/admin-data/src/main/java
+eclipse.preferences.version=1
+model.package=admin.map
+model.sources=/admin-data/src/main/java
+seam.ear.project=admin-view
+seam.ejb.project=admin-data
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/admin-view/src/main/webapp
+seam.runtime.name=
+seam.settings.changed.by.user=true
+seam.test.creating=false
+seam.test.project=admin-view
+test.package=org.domain.adminview.test
+test.sources=/admin-view/src/main/java

@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+projectArtifactId=admin-view
+projectBranch=
+projectGroupId=admin
+sonarServerUrl=http\://localhost\:9000
+version=1

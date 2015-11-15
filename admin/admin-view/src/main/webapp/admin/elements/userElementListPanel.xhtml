@@ -1,0 +1,50 @@
+	<aries:layeredPane
+		name="userListPanel">
+
+		<aries:label
+			height="30px"
+			marginLeft="8px"
+			text="User Element List View" />
+
+		<aries:tabPane>
+			<aries:tab
+				header="User Identity"
+				icon="/icons/common/Default16.gif">
+				<aries:panel height="#{globals.screenHeight-200}px">
+					<ui:include src="user IdentityPanel.xhtml" />
+				</aries:panel>
+			</aries:tab>
+
+			<aries:tab
+				header="Contact information"
+				icon="/icons/common/Default16.gif">
+				<aries:panel height="#{globals.screenHeight-200}px">
+					<ui:include src="contact informationPanel.xhtml" />
+				</aries:panel>
+			</aries:tab>
+
+			<aries:tab
+				header="Access Control"
+				icon="/icons/common/Default16.gif">
+				<aries:panel height="#{globals.screenHeight-200}px">
+					<ui:include src="access ControlPanel.xhtml" />
+				</aries:panel>
+			</aries:tab>
+
+			<aries:tab
+				header="Settings"
+				icon="/icons/common/Default16.gif">
+				<aries:panel height="#{globals.screenHeight-200}px">
+					<ui:include src="settingsPanel.xhtml" />
+				</aries:panel>
+			</aries:tab>
+
+			<aries:tab
+				header="Miscellaneous"
+				icon="/icons/common/Default16.gif">
+				<aries:panel height="#{globals.screenHeight-200}px">
+					<ui:include src="userFieldListPanel.xhtml" />
+				</aries:panel>
+			</aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>

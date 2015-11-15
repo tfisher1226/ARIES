@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:region>
+		<aries:outputPane
+			id="#{section}PermissionListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="#{section}PermissionListContextMenu"
+				target="#{section}PermissionListTable">
+				
+				<aries:contextMenuItem
+					value="Edit Permission..."
+					disabled="false"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{permissionListManager}"
+					action="editPermission"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}PermissionDialog()"
+					render="#{domain}PermissionDialog, #{domain}PermissionDialogPersonNameDialog, #{domain}PermissionDialogEmailAddressDialog, #{domain}PermissionDialogPhoneNumberDialog, #{domain}PermissionDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Edit selected Permission record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="New Permission..."
+					mode="ajax"
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{permissionInfoManager}"
+					action="newPermission"
+					onclick="setCursorWait(); showProgress('Permission Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}PermissionDialog()"
+					render="#{domain}PermissionDialog, #{domain}PermissionDialogPersonNameDialog, #{domain}PermissionDialogEmailAddressDialog, #{domain}PermissionDialogPhoneNumberDialog, #{domain}PermissionDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Permission record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="Remove Permission..."
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Permission: {lastName}, {firstName}', 'Remove Permission Record from System', 'Do you wish to continue?', 'org.aries.removePermission', '#{section}PermissionListPane')">
+					
+					<aries:tooltip value="Remove selected Permission record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

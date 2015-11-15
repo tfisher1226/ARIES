@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<handler-chains xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee">
+
+	<handler-chain>
+		<handler>
+			<handler-name>SeamHandler</handler-name>
+			<handler-class>org.aries.service.jaxws.JaxwsSeamContextHandler</handler-class>
+		</handler>
+		<handler>
+			<handler-name>TransactionHandler</handler-name>
+			<handler-class>common.tx.handler.service.JaxwsTransactionInterceptor</handler-class>
+		</handler>
+		<handler>
+			<handler-name>ContextHandler</handler-name>
+			<handler-class>common.tx.handler.service.JaxWSHeaderContextProcessor</handler-class>
+		</handler>
+	</handler-chain>
+</handler-chains>

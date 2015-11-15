@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkpoints
+	xmlns="http://www.aries.org/validate"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/validate file:/workspace/ARIES/aries-validate/src/main/resources/schema/aries-validate-1.0.xsd">
+
+
+	<checkpoint>
+		<name>id</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>Id must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>userName</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>UserName must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>user</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/firstName</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/lastName</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/userName</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User/userName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/passwordHash</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User/passwordHash must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User/emailAddress must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/emailAddress/url</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User/emailAddress/url must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/roles</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>User must include one or more roles(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>name</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>Name must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>skin</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>Skin must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$skin/name</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>Skin/name must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+</checkpoints>

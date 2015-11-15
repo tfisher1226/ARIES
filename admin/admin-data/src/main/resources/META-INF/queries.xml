@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>admin.entity</package>
+
+
+	<entity class="admin.entity.RegistrationEntity">
+		<named-query name="getRegistrationRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from Registration x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getRegistrationRecordByUserId">
+			<query>
+				<![CDATA[
+					select distinct x from Registration x where x.user.id = :userId
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllRegistrationRecords">
+			<query>
+				<![CDATA[
+					select x from Registration x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllRegistrationRecords">
+			<query>
+				<![CDATA[
+					delete from Registration x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="admin.entity.RoleEntity">
+		<named-query name="getRoleRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from Role x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getRoleRecordByName">
+			<query>
+				<![CDATA[
+					select distinct x from Role x where x.name = :name
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllRoleRecords">
+			<query>
+				<![CDATA[
+					select x from Role x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getRoleRecordsByRoleType">
+			<query>
+				<![CDATA[
+					select x from Role x where x.roleType = :roleType
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllRoleRecords">
+			<query>
+				<![CDATA[
+					delete from Role x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="admin.entity.SkinEntity">
+		<named-query name="getSkinRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from Skin x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getSkinRecordByName">
+			<query>
+				<![CDATA[
+					select distinct x from Skin x where x.name = :name
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllSkinRecords">
+			<query>
+				<![CDATA[
+					select x from Skin x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllSkinRecords">
+			<query>
+				<![CDATA[
+					delete from Skin x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="admin.entity.UserEntity">
+		<named-query name="getUserRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from User x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getUserRecordByUserName">
+			<query>
+				<![CDATA[
+					select distinct x from User x where x.userName = :userName
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllUserRecords">
+			<query>
+				<![CDATA[
+					select x from User x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getUserRecordsByPersonNameId">
+			<query>
+				<![CDATA[
+					select x from User x where x.personName.id = :personNameId
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllUserRecords">
+			<query>
+				<![CDATA[
+					delete from User x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="title">
+		<!-- TITLE -->
+		<f:facet name="header" style="margin: 0px; padding-left: 0px; text-align: left">
+			<a4j:outputPanel id="#{section}Title">
+				<h:outputLabel styleClass="header11" onclickXX="alert('#{title}')" style="padding-left: 0px; text-align: left; background-color: inherit">#{title}</h:outputLabel>
+			</a4j:outputPanel>
+		</f:facet>
+	
+		<!-- CLOSE ICON -->
+		<f:facet name="controls" style="background-color: inherit">
+			<h:panelGroup layout="block">
+				<h:graphicImage 
+					library="images" 
+					name="/dialog/close.png" 
+					style="cursor: pointer">
+					
+					<a4j:ajax
+						event="mousedown"
+						execute="@this"
+						immediate="true"
+						bypassUpdates="true"
+						limitRender="true"
+						action="#{manager.cancel}"
+						onbegin="hide#{dialog}()"
+						oncomplete="setCursorDefault(eventSource)" />
+				</h:graphicImage>
+			</h:panelGroup>
+		</f:facet>
+	</aries:tag>
+</ui:composition>

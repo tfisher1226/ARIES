@@ -1,0 +1,18 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}RoleListPane">
+		
+		<ui:param name="element" value="Role" />
+		<ui:param name="instanceName" value="role" />
+		<ui:param name="unit" value="#{domain}#{element}" />
+		
+		<ui:include src="roleActions.xhtml" />
+		<ui:include src="roleListToolbar.xhtml" />
+		<ui:include src="roleListTable.xhtml" />
+	</aries:outputPane>
+</ui:composition>

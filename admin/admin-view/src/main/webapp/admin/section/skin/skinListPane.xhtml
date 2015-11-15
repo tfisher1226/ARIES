@@ -1,0 +1,18 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}SkinListPane">
+		
+		<ui:param name="element" value="Skin" />
+		<ui:param name="instanceName" value="skin" />
+		<ui:param name="unit" value="#{domain}#{element}" />
+		
+		<ui:include src="skinActions.xhtml" />
+		<ui:include src="skinListToolbar.xhtml" />
+		<ui:include src="skinListTable.xhtml" />
+	</aries:outputPane>
+</ui:composition>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pages 
+	login-view-id="/login.xhtml"
+	no-conversation-view-id="/main.xhtml"
+	xmlns="http://jboss.com/products/seam/pages"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.3.xsd">
+
+	<!--
+    <page view-id="/index.xhtml">
+        <rewrite pattern="/" />
+    </page>
+	-->
+    
+	<page view-id="/login.xhtml">
+		<begin-conversation join="true"/>
+		
+		<!--  
+		<navigation from-action="#{securityManager.login}">
+			<rule if="#{identity.loggedIn and authenticatedMember ne null}">
+				<redirect view-id="/main.xhtml"/>
+			</rule>
+		</navigation>
+		-->
+		
+		<navigation>
+			<rule if="#{identity.loggedIn}">
+				<!--  
+				<raise-event type="org.sgiusa.userLoggedIn" />
+				-->
+				<redirect view-id="/main.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+
+	<page login-required="true" view-id="/main.xhtml">
+		<begin-conversation join="true"/>
+        <navigation from-action="#{identity.login}">
+            <redirect/>
+        </navigation>
+	</page>
+
+	<!-- 
+	<page view-id="/login.xhtml" action="#{identity.isLoggedIn}">
+		<navigation from-action="#{identity.isLoggedIn}">
+			<rule if-outcome="true">
+				<redirect view-id="/main.xhtml" />
+			</rule>
+			<rule if-outcome="false">
+				<render view-id="/login.xhtml" />
+			</rule>
+		</navigation>
+
+		<navigation>
+			<rule if="#{identity.loggedIn}">
+				<redirect view-id="/main.xhtml" />
+			</rule>
+		</navigation>
+	</page>
+	-->
+
+	<page login-required="true" view-id="/pages/*" />
+	<page login-required="false" view-id="/error.xhtml" />
+
+	<!--  
+    <page view-id="*">
+        <navigation>
+            <rule if-outcome="home">
+                <redirect view-id="/main.xhtml" />
+            </rule>
+        </navigation>
+    </page>
+	-->
+
+    <exception class="java.lang.NullPointerException">
+        <redirect view-id="/error.xhtml">
+            <message severity="warn">Null-pointer</message>
+        </redirect>
+    </exception>
+    
+    <exception class="org.jboss.seam.framework.EntityNotFoundException">
+        <redirect view-id="/error.xhtml">
+            <message severity="warn">Record not found</message>
+        </redirect>
+    </exception>
+    
+    <exception class="javax.persistence.EntityNotFoundException">
+        <redirect view-id="/error.xhtml">
+            <message severity="warn">Record not found</message>
+        </redirect>
+    </exception>
+    
+    <exception class="javax.persistence.EntityExistsException">
+        <redirect view-id="/error.xhtml">
+            <message severity="warn">Duplicate record</message>
+        </redirect>
+    </exception>
+    
+    <exception class="javax.persistence.OptimisticLockException">
+        <end-conversation/>
+        <redirect view-id="/error.xhtml">
+            <message severity="warn">Another user changed the same data, please try again</message>
+        </redirect>
+    </exception>
+    
+    <exception class="org.jboss.seam.security.AuthorizationException">
+        <redirect view-id="/error.xhtml">
+            <message severity="error">You don't have permission to access this resource</message>
+        </redirect>
+    </exception>
+    
+    <exception class="org.jboss.seam.security.NotLoggedInException">
+        <redirect view-id="/login.xhtml">
+            <message severity="info">#{messages['org.jboss.seam.NotLoggedIn']}</message>
+        </redirect>
+    </exception>
+    
+    <exception class="javax.faces.application.ViewExpiredException">
+        <redirect view-id="/error.xhtml">
+            <message severity="warn">Your session has timed out, please log-in again</message>
+        </redirect>
+    </exception>
+
+	<exception class="org.jboss.seam.web.FileUploadException">
+		<redirect view-id="/error.xhtml">
+			<message>#{org.jboss.seam.handledException.message}</message>
+		</redirect>
+	</exception>
+
+    <exception class="org.jboss.seam.ConcurrentRequestTimeoutException" log-level="trace">
+      <http-error error-code="503" />
+    </exception>
+     
+    <exception>
+        <redirect view-id="/error.xhtml">
+            <message severity="error">Unexpected error: #{org.jboss.seam.handledException.message}</message>
+        </redirect>
+    </exception>
+    
+</pages>

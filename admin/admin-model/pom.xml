@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>admin</groupId>
+	<artifactId>admin-model</artifactId>
+	<name>admin-model</name>
+	<description>Project object model for: admin-model</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>admin</groupId>
+		<artifactId>admin</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<admin.model.home>../model</admin.model.home>
+		<admin.runtime.home>../runtime</admin.runtime.home>
+		<admin.model.xsdfile>admin_model.xsd</admin.model.xsdfile>
+		<source.model.home>${workspace.location}/_generator/src/main/resources/model</source.model.home>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.xsd</include>
+						<include>**/*.xjb</include>
+						<include>**/*.properties</include>
+						<include>**/*.aries</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>export-updated-xsd</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- push generated XSD file to central location -->
+								<copy file="src/main/resources/schema/admin/${admin.model.xsdfile}" todir="${source.model.home}/admin" overwrite="true" verbose="true" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-model-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-model-layer-test</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

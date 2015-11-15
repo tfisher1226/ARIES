@@ -1,0 +1,13 @@
+use mysql;
+-- drop database if exists adminDB;
+-- create database adminDB;
+-- delete from user where user='manager';
+-- delete from db where user='manager';
+-- FLUSH PRIVILEGES;
+-- create user 'manager'@'localhost' identified by 'manager';
+-- create user 'manager'@'%' identified by 'manager';
+-- set password for manager = password('manager');
+grant all on adminDB.* to 'manager';
+grant all on adminDB.* to 'manager'@'localhost' identified by 'manager';
+grant all on adminDB.* to 'manager'@'%' identified by 'manager';
+use adminDB;

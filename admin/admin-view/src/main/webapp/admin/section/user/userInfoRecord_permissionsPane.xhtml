@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:panel
+		padding="10px"
+		backgroundColor="inherit">
+		
+		<aries:label
+			height="20"
+			value="Permissions Information"
+			backgroundColor="inherit" />
+		
+		<aries:spacer height="6" />
+		<aries:borderPane
+			width="#{width-22}"
+			height="#{height-46}"
+			backgroundColor="inherit">
+			
+			<ui:include src="../permission/permissionListPane.xhtml">
+				<ui:param name="itemManager" value="#{permissionInfoManager}" />
+				<ui:param name="listManager" value="#{permissionListManager}" />
+			</ui:include>
+		</aries:borderPane>
+	</aries:panel>
+</ui:composition>

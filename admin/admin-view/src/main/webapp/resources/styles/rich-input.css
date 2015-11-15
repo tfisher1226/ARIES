@@ -1,0 +1,57 @@
+.rf-sel-cntr {
+	margin: 0px;
+	padding: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #{userSkin.borderColor};
+    background-color: #fff;
+}
+
+.rf-sel-cntr:hover {
+	border: 1px solid #{userSkin.highlightBorderColor};
+}
+
+.formSelect input.rf-sel-cntr:focus {
+	border: 1px solid #{userSkin.focusBorderColor};
+}
+
+.rf-sel-inp {
+}
+
+input.rf-sel-inp {
+	height: 14px;
+	margin-top: 1px;
+	margin-left: 1px;
+    padding: 2px;
+    padding-top: 3px;
+    padding-left: 1px;
+    vertical-align: bottom;
+	background-position: 0px 0px;
+}
+
+.rf-sel-btn {
+    background-color: #{userSkin.backgroundColor};
+}
+
+.rf-sel-btn-arrow {
+    width: 19px;
+    height: 20px;
+}
+
+.rf-sel-shdw {
+}
+
+.rf-sel-sel {
+	width: auto;
+}
+
+.rf-sel-shdw-t,
+.rf-sel-shdw-l,
+.rf-sel-shdw-b,
+.rf-sel-shdw-r {
+    background-image: none;
+}
+
+input.rf-sel-dflt-lbl {
+    color: #999;
+}

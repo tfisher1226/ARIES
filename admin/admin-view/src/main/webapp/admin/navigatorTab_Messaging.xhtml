@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="#{width-2}" 
+		height="#{height-26}"
+		backgroundColor="inherit">
+	
+		<aries:formPane 
+			width="auto"
+			height="auto"
+			margin="10px"
+			backgroundColor="inherit">
+			 
+			<aries:label type="H5" value="Messaging Configuration" />
+
+			<aries:spacer height="8" />
+			<aries:bullet type="H6" value="admin-messaging" onclick="showSection('adminView_Messaging')" />
+
+			<!--  
+			<aries:spacer height="8" />
+			<aries:indentPane> 
+				<aries:label type="H6" value="Elements" />
+				<aries:bullet type="H6" value="Role" onclick="showSection('roleRecordPane')" />
+				<aries:bullet type="H6" value="User" onclick="showSection('userRecordPane')" />
+			</aries:indentPane>
+			-->
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

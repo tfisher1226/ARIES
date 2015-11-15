@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	xmlns="http://nam/model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<imports>
+		<import file="/admin/admin_model.aries" />
+	</imports>
+
+	<domain>org.aries</domain>
+	<name>admin-data</name>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<unit name="admin">
+		<source ref="admin_ds" />
+		<adapter ref="hibernate" />
+		<transacted use="required" scope="workflow" />
+		<elements>
+			<include namespace="http://www.aries.org/admin" />
+		</elements>
+	</unit>
+
+	<source name="admin_ds">
+		<alias>admin_ds</alias>
+		<type>mysql</type>
+		<userName>%userName%</userName>
+		<password>%password%</password>
+		<connectionUrl>jdbc:mysql://dc1-mysql-01.kattare.com:3306/admin_db</connectionUrl>
+		<driverClass>com.mysql.jdbc.Driver</driverClass>
+		<maxActive>30</maxActive>
+		<maxIdle>30</maxIdle>
+		<maxWait>10</maxWait>
+	</source>
+
+	<adapter name="hibernate">
+		<className>org.hibernate.ejb.HibernatePersistence</className>
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+			<property name="hibernate.show_sql" value="false"/>
+
+			<!-- Connection related -->
+			<property name="hibernate.connection.release_mode" value="after_transaction"/>
+
+			<!-- Transaction related -->
+			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<property name="hibernate.transaction.flush_before_completion" value="true"/>
+			<property name="hibernate.transaction.auto_close_session" value="false"/>
+
+			<!-- Cache related -->
+			<property name="hibernate.cache.use_query_cache" value="true" />
+    		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+
+			<!-- JBoss related -->
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/adminEntityManagerFactory"/>
+		</properties>
+	</adapter>
+</persistence>

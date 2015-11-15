@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<web-app
+	version="3.0"
+	id="ADMIN"
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>admin</display-name>
+
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<security-constraint>
+		<display-name>Restrict raw XHTML Documents</display-name>
+		<web-resource-collection>
+			<web-resource-name>XHTML</web-resource-name>
+			<url-pattern>*.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint />
+	</security-constraint>
+
+	<!--  
+	<security-constraint>
+		<display-name>Restrict XHTML Documents</display-name>
+		<web-resource-collection>
+			<web-resource-name>XHTML</web-resource-name>
+			<url-pattern>*.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>Only allow developer access XHTML pages</description>
+			<role-name>developer</role-name>
+		</auth-constraint>
+	</security-constraint>
+	-->
+  
+
+	<!-- ******************** -->
+	<!--  APPLICATION CONFIG  -->
+	<!-- ******************** -->
+
+	<listener>
+		<listener-class>admin.ui.ServletListener</listener-class>
+	</listener>
+
+
+	<!-- ************* -->
+	<!--  SEAM CONFIG  -->
+	<!-- ************* -->
+
+	<listener>
+		<listener-class>org.jboss.seam.servlet.SeamListener</listener-class>
+	</listener>
+    
+	<filter>
+		<filter-name>Seam Filter</filter-name>
+		<filter-class>org.jboss.seam.servlet.SeamFilter</filter-class>
+		<!--  
+		<init-param>
+			<param-name>createTempFiles</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>maxRequestSize</param-name>
+			<param-value>100000000</param-value>
+		</init-param>
+		-->
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>Seam Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>Seam Resource Servlet</servlet-name>
+		<servlet-class>org.jboss.seam.servlet.SeamResourceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Seam Resource Servlet</servlet-name>
+		<url-pattern>/seam/resource/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Document Store Servlet</servlet-name>
+		<servlet-class>org.jboss.seam.document.DocumentStoreServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Document Store Servlet</servlet-name>
+		<url-pattern>*.xls</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Document Store Servlet</servlet-name>
+		<url-pattern>*.csv</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+    	<servlet-name>Document Store Servlet</servlet-name>
+    	<url-pattern>*.pdf</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- ************ -->
+	<!--  JSF CONFIG  -->
+	<!-- ************ -->
+
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.seam</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+	
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+	
+	<!-- 
+	 	In general serverside state saving is more performant than the client side. 
+		You also get lower page sizes and faster loading times with this. 
+		If your performance is ok, but you have memory problems try to switch 
+		to the client-side state saving.
+	 -->
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.sun.faces.forceLoadConfiguration</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	<!-- 
+		If this is not enough, you could disable serverside state compression. 
+		Compression always takes time. If you have enought memory, try setting this 
+		to false;
+	-->
+
+	<!--  
+	<context-param>
+		<param-name>org.apache.myfaces.COMPRESS_STATE_IN_SESSION</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	-->
+
+	<!-- 
+		Turn off the VDL viewhandler when using JSF 2 with richfaces 3.3.3.Final.
+	-->
+	<!--  
+	<context-param>
+		<param-name>javax.faces.DISABLE_FACELET_JSF_VIEWHANDLER</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.sun.faces.responseBufferSize</param-name>
+		<param-value>500000</param-value>
+	</context-param>
+	-->
+
+	<!--  
+	<context-param>
+		<param-name>com.sun.faces.numberOfViewsInSession</param-name>
+		<param-value>3</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>com.sun.faces.numberOfLogicalViews</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	-->
+
+	<!-- 
+		Tell JBoss that your WAR ships with its own version of JSF 
+		so that JBoss won't use its own.
+	-->
+	<!--
+	<context-param>
+		<param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+		<param-value>true</param-value>
+	</context-param>  
+	-->
+
+
+	<!-- ***************** -->
+	<!--  FACELETS CONFIG  -->
+	<!-- ***************** -->
+
+	<!--
+		Facelets library in the "debug" mode stores information about
+		components and beans up to 5 times for an every user. 
+		You should disable this in production mode!
+	 -->
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<!-- 
+		You should increase response buffer (so as to reduce reallocations 
+		at render time). 500000 is a reasonable value for small webapp.
+	-->
+	<context-param>
+		<param-name>facelets.BUFFER_SIZE</param-name>
+		<param-value>500000</param-value>
+	</context-param>
+
+	<!-- 
+	<context-param>
+		<param-name>facelets.BUILD_BEFORE_RESTORE</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	-->
+
+	<!-- 
+		You should also turn off the facelets refresh trigger in 
+		production environments.
+	<context-param>
+		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
+		<param-value>-1</param-value>
+	</context-param>
+	-->
+
+	<context-param>
+		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+		<param-value>/WEB-INF/tags/aries.taglib.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.FACELETS_RESOURCE_RESOLVER</param-name>
+		<param-value>org.aries.ui.Resolver</param-value>
+	</context-param>
+
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+
+	<!-- ****************** -->
+	<!--  RICHFACES CONFIG  -->
+	<!-- ****************** -->
+
+	<!-- Enables special Facelets debug output during development -->
+	
+	<!--  
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	-->
+
+    <context-param>
+        <param-name>org.richfaces.skin</param-name>
+        <param-value>#{skinBean.skin}</param-value>
+    </context-param>
+
+	<!--
+	<context-param>
+		<param-name>org.richfaces.SKIN</param-name>
+		<param-value>default</param-value>
+	</context-param>
+	-->
+
+	<!--
+	<context-param>
+		<param-name>org.ajax4jsf.SKIN</param-name>
+		<param-value>DEFAULT</param-value>
+	</context-param>
+	-->
+
+	<context-param>
+		<param-name>org.richfaces.enableControlSkinning</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!--
+	-->
+	<context-param>
+		<param-name>org.richfaces.LoadStyleStrategy</param-name>
+		<param-value>ALL</param-value>
+	</context-param>
+	
+	<!--
+	-->
+	<context-param>
+		<param-name>org.richfaces.LoadScriptStrategy</param-name>
+		<param-value>ALL</param-value>
+	</context-param>
+
+    <context-param>
+        <param-name>org.richfaces.resourceOptimization.enabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+	<!--
+		If you use LoadScriptStrategy ALL then turn the compression off.
+	 -->
+	<context-param>
+		<param-name>org.ajax4jsf.COMPRESS_SCRIPT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<!--
+		If you use LoadStyleStrategy ALL then turn the compression off.
+	 -->
+	<context-param>
+		<param-name>org.ajax4jsf.COMPRESS_STYLE</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+    <!-- 
+    	Suppress spurious stylesheets.
+    -->
+
+	<!--  
+    <context-param>
+        <param-name>org.richfaces.CONTROL_SKINNING</param-name>
+        <param-value>enable</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>org.richfaces.CONTROL_SKINNING_CLASSES</param-name>
+        <param-value>enable</param-value>
+    </context-param>
+    -->
+
+    <!-- 
+    	Don't use value of NONE here yet.
+    	Richfaces 3.3.3.Final has bug that is exposed with using NONE.
+    -->
+
+	<context-param>
+		<param-name>org.ajax4jsf.xmlparser.ORDER</param-name>
+		<param-value>NEKO,NONE,TIDY</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.ajax4jsf.xmlparser.NEKO</param-name>
+		<param-value>.*\..*</param-value>
+	</context-param>
+
+	<!--
+	<context-param>
+		<param-name>org.ajax4jsf.xmlparser.NEKO</param-name>
+		<param-value>/pages/organizationSelectDialog.xhtml</param-value>
+	</context-param>
+	-->
+
+	<!--
+		Defines in seconds how long streamed back to browser resources can be cached.
+		default: 86400
+	 -->
+	 
+	 <!--  
+	<context-param>
+		<param-name>org.ajax4jsf.DEFAULT_EXPIRE</param-name>
+		<param-value>1</param-value>
+	</context-param>
+	-->
+
+	<!--
+		Enable the global default ajax4jsf event queue.
+	 -->
+
+	<context-param>
+	   <param-name>org.richfaces.queue.global.enabled</param-name>
+	   <param-value>true</param-value>
+	</context-param>
+
+	<!--  
+	<context-param>
+		<param-name>org.ajax4jsf.VIEW_HANDLERS</param-name>
+		<param-value>org.jboss.seam.jsf.SeamViewHandler</param-value>
+	</context-param>
+	-->
+	
+	<!--  
+	<filter>
+		<display-name>IE9 Filter</display-name>
+		<filter-name>ie9filter</filter-name>
+		<filter-class>org.sgiusa.util.IE9Filter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ie9filter</filter-name>
+		<url-pattern>*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	-->
+
+
+	<!-- ************** -->
+	<!--  JBOSS CONFIG  -->
+	<!-- ************** -->
+
+	<!--  
+	<context-param>
+		<param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
+		<param-value>Mojarra-1.2</param-value>
+	</context-param>
+	-->
+	
+	<!--  
+	<context-param>
+		<param-name>org.jboss.jbossfaces.JSF_CONFIG_NAME</param-name>
+		<param-value>Mojarra-2.0</param-value>
+	</context-param>
+	-->
+
+	<!--  
+	<context-param>
+		<param-name>com.sun.faces.serializationProvider</param-name>
+		<param-value>org.jboss.web.jsf.integration.serialization.JBossSerializationProvider</param-value>
+	</context-param>
+	-->
+
+
+	<!-- ************* -->
+	<!--  MISC CONFIG  -->
+	<!-- ************* -->
+
+    <!-- 
+    	Force this Servlet to use one Thread per connection
+		instead of native API as workaround for (RF-11064)  
+	-->
+    <context-param>
+        <param-name>org.atmosphere.useBlocking</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+</web-app>

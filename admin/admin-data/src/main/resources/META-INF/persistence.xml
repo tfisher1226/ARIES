@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="admin" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/admin_ds</jta-data-source>
+
+		<mapping-file>META-INF/queries.xml</mapping-file>
+
+		<class>admin.entity.PermissionEntity</class>
+		<class>admin.entity.PreferencesEntity</class>
+		<class>admin.entity.RegistrationEntity</class>
+		<class>admin.entity.RoleEntity</class>
+		<class>admin.entity.SkinEntity</class>
+		<class>admin.entity.UserEntity</class>
+		<class>org.aries.common.entity.AttachmentEntity</class>
+		<class>org.aries.common.entity.EmailAccountEntity</class>
+		<class>org.aries.common.entity.EmailAddressEntity</class>
+		<class>org.aries.common.entity.EmailAddressListEntity</class>
+		<class>org.aries.common.entity.EmailBoxEntity</class>
+		<class>org.aries.common.entity.EmailMessageEntity</class>
+		<class>org.aries.common.entity.PersonEntity</class>
+		<class>org.aries.common.entity.PersonNameEntity</class>
+		<class>org.aries.common.entity.PhoneNumberEntity</class>
+		<class>org.aries.common.entity.PropertyEntity</class>
+		<class>org.aries.common.entity.StreetAddressEntity</class>
+		<class>org.aries.common.entity.ZipCodeEntity</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.transaction.jta.platform" value="org.aries.jta.JBossJtaPlatform"/>
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<property name="hibernate.transaction.flush_before_completion" value="true"/>
+			<property name="hibernate.transaction.auto_close_session" value="false"/>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+			<!--  
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/adminEntityManagerFactory"/>
+			<property name="jboss.entity.manager.jndi.name" value="java:/adminEntityManager"/>
+			-->
+		</properties>
+	</persistence-unit>
+</persistence>

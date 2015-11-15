@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>admin</groupId>
+	<artifactId>admin</artifactId>
+	<name>admin</name>
+	<description>Project object model for: admin</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath/> 
+	</parent>
+
+	<modules>
+		<module>admin-model</module>
+		<module>admin-client</module>
+		<module>admin-data</module>
+		<module>admin-service</module>
+		<module>admin-view</module>
+		<module>admin-app</module>
+	</modules>
+
+	<properties>
+		<admin.version>0.0.1.SNAPSHOT</admin.version>
+		<admin.deploy.exploded>true</admin.deploy.exploded>
+		<admin.model.home>model</admin.model.home>
+		<admin.runtime.home>runtime</admin.runtime.home>
+		<source.model.home>${workspace.location}/_generator/src/main/resources/model</source.model.home>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>pre-process</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- pull "common" model sources to local home -->
+								<copy todir="${admin.model.home}/common" overwrite="true" verbose="true">
+									<fileset dir="${source.model.home}/common" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+
+								<!-- pull "admin" model sources to local home -->
+								<copy todir="${admin.model.home}/admin" overwrite="true" verbose="true">
+									<fileset dir="${source.model.home}/admin" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<!-- push local model home sources to runtime home -->
+								<copy todir="${admin.runtime.home}/model" overwrite="true" verbose="true">
+									<fileset dir="${admin.model.home}" casesensitive="yes">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-data</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-data</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-view</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>admin</groupId>
+				<artifactId>admin-view</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

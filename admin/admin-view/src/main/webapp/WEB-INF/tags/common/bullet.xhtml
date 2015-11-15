@@ -1,0 +1,97 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:set var="width" value="auto"/> 
+	<c:set var="height" value="auto"/> 
+
+	<aries:init/>
+	
+	<c:if test="#{empty text}">
+		<c:set var="text" value="not specified"/> 
+	</c:if>
+
+	<c:if test="#{not empty type and type == '2'}">
+		<c:set var="icon" value="/bullets/RoundBullet16.gif"/> 
+	</c:if>
+	
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="/icons/common/ArrowRight15.gif"/> 
+	</c:if>
+	
+	<h:panelGrid 
+		layout="block"
+		cellpadding="0"
+		cellspacing="0"
+		columns="2" 
+		columnClasses="formColumnAlignMiddle, formColumnAlignMiddle"
+		onclickXXX="alert('#{sizeSettings}')" 
+		styleClass="formPanel"
+		style="#{sizeSettings}; #{borderSettings}; #{backgroundSettings}; #{textSettings}">
+
+		<h:graphicImage 
+			library="images" 
+			name="#{icon}" 
+			style="margin-right: 2px" />
+
+		<c:if test="#{empty onclick and empty onmousedown and empty onmouseup}">
+			<h:outputLabel 
+				value="#{text}" 
+				styleClass="#{type} #{styleClass}"
+				style="white-space: nowrap; #{labelStyle}">
+				
+				<ui:insert/>
+			</h:outputLabel>
+		</c:if>
+
+		<c:if test="#{not empty onclick or not empty onmousedown or not empty onmouseup}">
+			<c:if test="#{empty action}">
+			
+				<a href="#" 
+					onclick="#{onclick}"
+					onmousedown="#{onmousedown}" 
+					onmouseup="#{onmouseup}" 
+					style="">
+					#{value}
+				</a>
+				 
+				<!--  
+				<h:commandLink
+					value="#{text}"
+					onclick="#{onclick}"
+					styleClass="#{type} #{styleClass}"
+					style="white-space: nowrap; #{labelStyle}">
+					XXX
+					<ui:insert/>
+				</h:commandLink>
+				-->
+			</c:if>
+		
+			<c:if test="#{not empty action}">
+				<a4j:commandLink
+					execute="@this" 
+					value="#{text}"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					action="#{manager[action]}" 
+					onclick="#{onclick}"
+					oncomplete="#{oncomplete}" 
+					styleClass="#{type} #{styleClass}"
+					style="white-space: nowrap; #{labelStyle}">
+					
+					<ui:insert/>
+				</a4j:commandLink>
+			</c:if>
+		</c:if>
+	</h:panelGrid>
+</ui:composition>

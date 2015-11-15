@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:region>
+		<aries:outputPane
+			id="#{section}SkinListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="#{section}SkinListContextMenu"
+				target="#{section}SkinListTable">
+				
+				<aries:contextMenuItem
+					value="Edit Skin..."
+					disabled="false"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{skinListManager}"
+					action="editSkin"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}SkinDialog()"
+					render="#{domain}SkinDialog, #{domain}SkinDialogPersonNameDialog, #{domain}SkinDialogEmailAddressDialog, #{domain}SkinDialogPhoneNumberDialog, #{domain}SkinDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Edit selected Skin record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="New Skin..."
+					mode="ajax"
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{skinInfoManager}"
+					action="newSkin"
+					onclick="setCursorWait(); showProgress('Skin Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}SkinDialog()"
+					render="#{domain}SkinDialog, #{domain}SkinDialogPersonNameDialog, #{domain}SkinDialogEmailAddressDialog, #{domain}SkinDialogPhoneNumberDialog, #{domain}SkinDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Skin record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="Remove Skin..."
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Skin: {lastName}, {firstName}', 'Remove Skin Record from System', 'Do you wish to continue?', 'org.aries.removeSkin', '#{section}SkinListPane')">
+					
+					<aries:tooltip value="Remove selected Skin record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

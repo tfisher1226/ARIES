@@ -1,0 +1,131 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main-page-template.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+
+		<!-- IMPORTED DIALOGS -->
+		<aries:popupDialog/>
+		<aries:messageDialog/>
+		<aries:progressDialog/>
+		<!--  
+		<aries:themeDialog/>
+		-->
+
+		<!-- APPLICATION DIALOGS -->
+		<aries:include file="/admin/common/personNameDialog.xhtml"/>
+		<aries:include file="/admin/common/emailAddressDialog.xhtml"/>
+		<aries:include file="/admin/common/phoneNumberDialog.xhtml"/>
+		<aries:include file="/admin/common/streetAddressDialog.xhtml"/>
+		
+		<aries:include file="/admin/section/inputDialog.xhtml" manager="#{inputManager}" type="Input" />
+		
+		<aries:include file="/admin/section/user/userInfoDialog.xhtml" manager="#{userInfoManager}" type="User" />
+		<aries:include file="/admin/section/user/userListDialog.xhtml" manager="#{userListManager}" type="UserList" />
+		<aries:include file="/admin/section/user/userSelectDialog.xhtml" manager="#{userSelectManager}" type="User" />
+		
+		<aries:include file="/admin/section/role/roleInfoDialog.xhtml" manager="#{roleInfoManager}" type="Role" />
+		<aries:include file="/admin/section/role/roleListDialog.xhtml" manager="#{roleListManager}" type="RoleList" />
+		<aries:include file="/admin/section/role/roleSelectDialog.xhtml" manager="#{roleSelectManager}" type="Role" />
+
+		<aries:include file="/admin/section/permission/permissionInfoDialog.xhtml" manager="#{permissionInfoManager}" type="Permission" />
+		<aries:include file="/admin/section/permission/permissionListDialog.xhtml" manager="#{permissionListManager}" type="PermissionList" />
+		<aries:include file="/admin/section/action/actionSelectDialog.xhtml" manager="#{actionSelectManager}" type="Action" />
+
+		<!-- APPLICATION DIALOGS 
+		<ui:include src="/admin/section/user/userInfoDialog.xhtml" />
+		<ui:include src="/admin/section/user/userListDialog.xhtml" />
+		<ui:include src="/admin/section/user/userListDialog.xhtml" />
+		<ui:include src="/admin/section/role/roleInfoDialog.xhtml" />
+		-->
+
+		<h:outputScript>
+		function showAdminModelPane() {TogglePanelManager.toggleOnClient('pageForm:bookshop2ViewerPane', 'adminModelPane')}
+		function showAdminServicePane() {TogglePanelManager.toggleOnClient('pageForm:bookshop2ViewerPane', 'adminServicePane')}
+		</h:outputScript>
+
+		<!-- PAGE FORM -->
+		<aries:form id="pageForm">
+
+			<!-- APPLICATION DIALOGS 
+			<ui:include src="/admin/section/role/roleListDialog.xhtml" />
+			<ui:include src="/admin/section/user/userInfoDialog.xhtml" />
+			<ui:include src="/admin/section/permission/permissionInfoDialog.xhtml" />
+			<ui:include src="/admin/section/permission/permissionListDialog.xhtml" />
+			-->
+				
+			<!-- 
+			<ui:include src="admin/section/user/userWizard.xhtml" />
+			<ui:include src="bookshop2/elements/bookDialog.xhtml" />
+			<ui:include src="bookshop2/elements/bookKeyDialog.xhtml" />
+			<ui:include src="bookshop2/elements/orderDialog.xhtml" />
+			<ui:include src="bookshop2/elements/paymentDialog.xhtml" />
+			<ui:include src="bookshop2/elements/invoiceDialog.xhtml" />
+			<ui:include src="bookshop2/elements/receiptDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentDialog.xhtml" />
+			<ui:include src="bookshop2/elements/bookInventoryDialog.xhtml" />
+			<ui:include src="bookshop2/elements/bookShipmentDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentScheduledEventDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentConfirmedEventDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentCompleteEventDialog.xhtml" />
+			<ui:include src="bookshop2/elements/replyToDialog.xhtml" />
+			<ui:include src="bookshop2/elements/orderRequestMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/orderResponseMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/orderAcceptedMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/orderRejectedMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/purchaseRequestMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/purchaseAcceptedMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/purchaseRejectedMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/queryRequestMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/reservationRequestMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/reservationAbortedExceptionDialog.xhtml" />
+			<ui:include src="bookshop2/elements/booksAvailableMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/booksUnavailableMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentRequestMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentScheduledMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentCompleteMessageDialog.xhtml" />
+			<ui:include src="bookshop2/elements/shipmentFailedMessageDialog.xhtml" />
+			-->
+
+			<!--  
+			<ui:include src="sections/user/userWizard.xhtml" />
+			-->
+			
+			<!-- IMPORTED ACTIONS --> 
+			<ui:include src="bookshop2/actions.xhtml"/>
+
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="BOOKSHOP2 Application"
+				titleImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"
+				backgroundImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg" />
+
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="bookshop2/menubar.xhtml"/>
+			
+			<!-- PAGE CONTENT -->
+			<aries:formPane 
+				columns="2"
+				width="#{globals.screenWidth}" 
+				height="#{globals.screenHeight-140}">
+				
+				<ui:include src="bookshop2/navigator.xhtml"/>
+				<ui:include src="bookshop2/viewer.xhtml"/>
+			</aries:formPane>
+
+			<!-- PAGE FOOTER -->
+			<aries:footer/>
+		</aries:form>
+	</ui:define>
+</ui:composition>
