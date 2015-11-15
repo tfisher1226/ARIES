@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- Page Title -->
+	<ui:define name="pageTitle">
+		<span class="pageTitle">
+			<aries:text fontSize="18" fontWeight="bold" value="New Project" />
+		</span>
+	</ui:define>
+
+	<!-- Page Breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{projectPageManager.getBreadcrumbs('project')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+
+	<!-- NAVIGATOR -->
+	<ui:define name="navigator">
+		<span class="navigator">
+			<ui:include src="projectWizardNavigator.xhtml" />
+		</span>
+	</ui:define>
+
+	<!-- Section Breadcrumbs -->
+	<ui:define name="sectionBreadcrumbs">
+		<span class="sectionBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{projectPageManager.getBreadcrumbs('projectWizard')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+
+	<!-- PANEL TITLE --> 
+	<ui:define name="wizardTitle">
+		<aries:spacer height="4" />
+		<aries:text
+			padding="0px"
+			fontSize="16"
+			fontWeight="bold"
+			value="Project #{projectWizard.section}" />
+	</ui:define>
+
+	<!-- PANEL MESSAGES --> 
+	<ui:define name="wizardMessages">
+		<aries:spacer height="12" /> 
+		<aries:messages
+			id="projectMessages" 
+			module="projectWizard" 
+			message="Enter #{projectWizard.section} Information" />
+	</ui:define>
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<div class="content">
+
+			<aries:formPane
+				columns="2"
+				backgroundColor="inherit">
+		
+				<aries:panel 
+					width="#{helper.wizard_middleSection_width}"
+					height="#{helper.wizard_middleSection_height}"
+					borderWidth="1px"
+					borderColor="#aaa"
+					backgroundColor="#f1f1ff">
+	
+					<!-- PANELS --> 
+					<ui:include src="project#{projectWizard.section}Panel.xhtml" />
+		
+					<!-- Control -->
+					<ui:include src="projectWizardControl.xhtml" />
+				</aries:panel>
+				
+				<!-- HELP -->
+				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="domain" value="project" />
+					<ui:param name="section" value="#{projectWizard.section}" />
+				</ui:include>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

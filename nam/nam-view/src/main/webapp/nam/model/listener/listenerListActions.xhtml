@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** listenerListActions
+	  ** a4j:jsFunction methods to support the Listener List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var listenerListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshListenerList(event)
+		  ** Refreshes the current Listener List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshListenerList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{listenerListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Listener Records', 'Refreshing current Listener List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="listenerListActions, listenerListMenu, listenerListToolbar, listenerListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromListenerList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromListenerList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="listenerListActions, listenerListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{listenerListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{listenerListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="listener" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="listenerListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromListenerList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromListenerList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="listenerListActions, listenerListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{listenerListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{listenerListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{listenerWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="listenerListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="listenerListActions, listenerListMenu, listenerListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** listenerListActions
+		  ** Javascript methods to support the Listener List.
+		  -->
+		
+		<a4j:outputPanel
+			id="listenerListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getListenerListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getListenerListRowKey() {
+					if (listenerListState != null)
+						return listenerListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getListenerListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getListenerListRowLabel() {
+					if (listenerListState != null)
+						return listenerListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeListenerListState()
+				  ** Initializes and verifies Listener List state information.
+				  -->
+					
+				function initializeListenerListState() {
+					try {
+						var rowIndex = '#{listenerListManager.selectedRecordIndex}';
+						var recordKey = '#{listenerListManager.selectedRecordKey}';
+						var recordLabel = '#{listenerListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateListenerListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateListenerListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Listener List.
+				  -->
+					
+				function updateListenerListState(event, rowIndex, recordKey, recordLabel) {
+					listenerListState = new Object();
+					listenerListState.rowIndex = rowIndex;
+					//listenerListState.recordId = recordId;
+					listenerListState.recordKey = recordKey;
+					listenerListState.recordLabel = recordLabel;
+					//show(listenerListState);
+				}
+					
+					
+				<!--
+				  ** enableListenerListActions(type)
+				  ** Enables (or disables) Listener List actions based on current client-side state.
+				  -->
+					
+				function enableListenerListActions(type) {
+					//enableButton('listenerListViewButton');
+					enableButton('listenerListNewButton');
+					enableButton('listenerListEditButton');
+					enableButton('listenerListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processListenerListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Listener List.
+				  -->
+					
+				function processListenerListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateListenerListState(event, rowIndex, recordKey, recordLabel);
+					enableListenerListActions('listener');
+					try {
+						executeSelectFromListenerList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processListenerListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Listener List.
+				  -->
+					
+				function processListenerListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Listener Records', 'Preparing Listener ' + recordLabel + ' for editing...');
+						executeActionFromListenerList(rowIndex, recordKey, 'Listener', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('listenerListTable')});
+						if (listenerListState != null) {
+							var label = listenerListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (listenerListState != null) {
+							var label = listenerListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (listenerListState != null) {
+							var label = listenerListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (listenerListState != null)
+						label = listenerListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'listenerListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

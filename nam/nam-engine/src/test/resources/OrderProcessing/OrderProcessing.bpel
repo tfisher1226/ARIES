@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bpel:process 
+	name="purchaseOrderProcess" 
+	exitOnStandardFault="yes"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:lns="http://manufacturing.org/wsdl/purchase" 
+	targetNamespace="http://acme.com/ws-bp/purchase">
+
+	<!--  
+	<bpel:documentation>
+		A simple example of a WS-BPEL process for handling
+		a purchase order.
+	</bpel:documentation>
+	-->
+
+	<bpel:import 
+		importType="http://schemas.xmlsoap.org/wsdl/" 
+		namespace="http://manufacturing.org/wsdl/purchase" location="OrderProcessing.wsdl"/>
+
+	<bpel:partnerLinks>
+		<bpel:partnerLink myRole="purchaseService" name="purchasing" partnerLinkType="lns:purchasingLT" />
+		<bpel:partnerLink myRole="invoiceRequester" name="invoicing" partnerLinkType="lns:invoicingLT" partnerRole="invoiceService" />
+		<bpel:partnerLink myRole="shippingRequester" name="shipping" partnerLinkType="lns:shippingLT" partnerRole="shippingService" />
+		<bpel:partnerLink name="scheduling" partnerLinkType="lns:schedulingLT" partnerRole="schedulingService" />
+	</bpel:partnerLinks>
+
+	<bpel:variables>
+		<bpel:variable messageType="lns:POMessage" name="PO" />
+		<bpel:variable messageType="lns:InvMessage" name="Invoice" />
+		<bpel:variable messageType="lns:orderFaultType" name="POFault" />
+		<bpel:variable messageType="lns:shippingRequestMessage" name="shippingRequest" />
+		<bpel:variable messageType="lns:shippingInfoMessage" name="shippingInfo" />
+		<bpel:variable messageType="lns:scheduleMessage" name="shippingSchedule" />
+	</bpel:variables>
+
+	<bpel:faultHandlers>
+		<bpel:catch 
+			faultMessageType="lns:orderFaultType"
+			faultName="lns:cannotCompleteOrder" 
+			faultVariable="POFault">
+			<bpel:reply 
+				partnerLink="purchasing" 
+				portType="lns:purchaseOrderPT"
+				operation="sendPurchaseOrder" 
+				faultName="bpel:cannotCompleteOrder"
+				variable="POFault" />
+		</bpel:catch>
+	</bpel:faultHandlers>
+
+	<bpel:sequence>
+		<bpel:receive 
+			createInstance="yes" 
+			partnerLink="purchasing"
+			portType="lns:purchaseOrderPT" 
+			operation="sendPurchaseOrder" 
+			variable="PO"/>
+			
+		<bpel:flow>
+			<!--
+			<bpel:documentation>
+				A parallel flow to handle shipping, invoicing and scheduling
+			</bpel:documentation>
+			-->
+			
+			<bpel:links>
+				<bpel:link name="ship-to-invoice" />
+				<bpel:link name="ship-to-scheduling" />
+			</bpel:links>
+			
+			<bpel:sequence>
+				<bpel:assign name="assignCustomerInfo" validateXML="no">
+					<bpel:copy>
+						<bpel:from part="customerInfo" variable="PO" />
+						<bpel:to part="customerInfo" variable="shippingRequest" />
+					</bpel:copy>
+				</bpel:assign>
+			
+				<bpel:invoke 
+					operation="requestShipping"
+					inputVariable="shippingRequest" 
+					outputVariable="shippingInfo" 
+					partnerLink="shipping" 
+					portType="lns:shippingPT">
+					<bpel:sources>
+						<bpel:source linkName="ship-to-invoice" />
+					</bpel:sources>
+				</bpel:invoke>
+			
+				<bpel:receive 
+					operation="sendSchedule" 
+					partnerLink="shipping"
+					portType="lns:shippingCallbackPT" 
+					variable="shippingSchedule">
+					<bpel:sources>
+						<bpel:source linkName="ship-to-scheduling" />
+					</bpel:sources>
+				</bpel:receive>
+			</bpel:sequence>
+			
+			<bpel:sequence>
+				<bpel:invoke 
+					operation="initiatePriceCalculation"
+					inputVariable="PO" 
+					partnerLink="invoicing" 
+					portType="lns:computePricePT" />
+					
+				<bpel:invoke 
+					operation="sendShippingPrice"
+					inputVariable="shippingInfo" 
+					partnerLink="invoicing" 
+					portType="lns:computePricePT">
+					<bpel:targets>
+						<bpel:target linkName="ship-to-invoice" />
+					</bpel:targets>
+				</bpel:invoke>
+				
+				<bpel:receive 
+					operation="sendInvoice" 
+					partnerLink="invoicing"
+					portType="lns:invoiceCallbackPT" 
+					variable="Invoice" />
+			</bpel:sequence>
+			
+			<bpel:sequence>
+				<bpel:invoke 
+					operation="requestProductionScheduling"
+					inputVariable="PO" 
+					partnerLink="scheduling" 
+					portType="lns:schedulingPT" />
+					
+				<bpel:invoke 
+					operation="sendShippingSchedule"
+					inputVariable="shippingSchedule" 
+					partnerLink="scheduling" 
+					portType="lns:schedulingPT">
+					<bpel:targets>
+						<bpel:target linkName="ship-to-scheduling" />
+					</bpel:targets>
+				</bpel:invoke>
+			</bpel:sequence>
+		</bpel:flow>
+		
+		<bpel:reply 
+			partnerLink="purchasing"
+			portType="lns:purchaseOrderPT" 
+			operation="sendPurchaseOrder" 
+			variable="Invoice" />
+	</bpel:sequence>
+</bpel:process>

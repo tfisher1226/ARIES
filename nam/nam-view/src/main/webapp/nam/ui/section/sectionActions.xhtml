@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showSectionListPage()
+		  ** Goes to the Section Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showSectionListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{sectionPageManager.initializeSectionListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Section Records', 'Preparing Section List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showSectionTreePage()
+		  ** Goes to the Section Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showSectionTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{sectionPageManager.initializeSectionTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Section Records', 'Preparing Section Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showSectionManagementPage()
+		  ** Goes to the Section Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showSectionManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{sectionPageManager.initializeSectionManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Section Records', 'Preparing Section related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showSectionWizardPage()
+		  ** Goes to the Section Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showSectionWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{sectionWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Section Records', 'Preparing Section information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{sectionWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{sectionWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewSectionDialog()
+		  ** Launches the Section Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewSectionDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{sectionInfoManager.newSection}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Section Records', 'Creating new Section...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showSectionDialog()"
+			render="sectionModule, sectionDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{sectionInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="sectionListPane" assignTo="#{sectionInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{sectionInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditSectionDialog()
+		  ** Launches the Section Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditSectionDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{sectionInfoManager.editSection}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Section Records', 'Preparing Section information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showSectionDialog()"
+			render="sectionModule, sectionDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{sectionInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="sectionListPane" assignTo="#{sectionInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{sectionInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

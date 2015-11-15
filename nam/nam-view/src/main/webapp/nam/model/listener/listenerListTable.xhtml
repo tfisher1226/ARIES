@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="listenerListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="listenerListMenu.xhtml">
+			<ui:param name="tableId" value="listenerListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="listenerListTable"
+			value="#{listenerListManager.dataModel}"
+			rowCount="#{listenerListManager.dataModel.rowCount}"
+			visible="#{listenerListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processListenerListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processListenerListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
+			tablePanelStyleClass="none">
+			
+			<!-- Name -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.listener.name}" />
+			</aries:textColumn>
+			
+			<!-- Channel -->
+			<aries:textColumn
+				width="100"
+				header="Channel">
+				<h:outputText value="#{rowItem.listener.channel}" />
+			</aries:textColumn>
+			
+			<!-- Link -->
+			<aries:textColumn
+				width="100"
+				header="Link">
+				<h:outputText value="#{rowItem.listener.link}" />
+			</aries:textColumn>
+			
+			<!-- Role -->
+			<aries:textColumn
+				width="100"
+				header="Role">
+				<h:outputText value="#{rowItem.listener.role}" />
+			</aries:textColumn>
+			
+			<!-- NO LOCAL RECEIPT 
+			<aries:textColumn
+				width="100"
+				header="No Local Receipt">
+				<h:outputText value="#{rowItem.listener.noLocalReceipt}" />
+			</aries:textColumn>
+			-->
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

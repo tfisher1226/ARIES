@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="dialog, title, heading, message">
+		<c:if test="#{empty logo}">
+			<c:set var="logo" value="/icons/wizard/default.gif"/> 
+			<c:set var="logo" value="/dialog/default-dialog-logo.gif"/> 
+			<c:set var="library" value="graphics"/> 
+		</c:if>
+		
+		<c:if test="#{empty library}">
+			<c:set var="library" value="graphics"/> 
+		</c:if>
+	
+		<!-- TITLE-BAR -->
+		<aries:dialogTitleBar
+			dialog="#{dialog}"
+			title="#{title}" />
+	
+		<!-- HEADER-BAR -->
+		<a4j:outputPanel 
+			id="#{dialog}Header"
+			onclickXX="alert('#{logo}')"
+			style="display: block; background: url('#{facesContext.externalContext.requestContextPath}/#{iconImage}')">
+			
+			<h:panelGrid 
+				layout="block" 
+				columns="3" 
+				cellpadding="0" 
+				cellspacing="0" 
+				columnClasses="formColumn, formColumnAlignRight" 
+				style="width: 100%; min-height: 70px; background-color: white; overflow: hidden;">
+				
+				<h:panelGrid 
+					layout="block" 
+					columns="1"
+					cellpadding="0" 
+					cellspacing="0"
+					columnClasses="formColumnAlignTop" 
+					style="width: auto; height: 70px; padding: 8px; padding-top: 10px; padding-bottom: 0px; background-color: inherit">
+	
+					<!-- HEADER -->
+					<h:outputText 
+						value="#{heading}" 
+						styleClass="dialogHeader" 
+						style="display: block"/>
+	
+					<!-- MESSAGES -->
+					<h:panelGrid 
+						layout="block" 
+						columns="1"
+						cellpadding="0" 
+						cellspacing="0" 
+						columnClasses="formColumnAlignBottom" 
+						style="width: 100%; height: 32px; max-width: 310px; margin-top: 2px; margin-bottom: 4px; background-color: inherit">
+						
+						<aries:messages 
+							id="#{dialog}Messages" 
+							module="#{dialog}" 
+							message="#{message}" 
+							ajaxRendered="true" />
+					</h:panelGrid>
+				</h:panelGrid>
+				
+				<!-- LOGO -->
+				<c:if test="#{not empty logo}">
+					<h:panelGroup style="background-color: inherit">
+						<h:graphicImage library="#{library}" name="#{logo}"/>
+					</h:panelGroup>
+				</c:if>
+				
+				<!-- NO LOGO -->
+				<c:if test="#{empty logo}">
+					<aries:spacer width="1" height="70" />
+				</c:if>
+			</h:panelGrid>
+		</a4j:outputPanel>
+	
+		<div style="display: block; width: 100%; height: 1px; background-color: #bbb"/>
+		<div style="display: block; width: 100%; height: 1px; background-color: #fff"/>
+	</aries:tag>
+</ui:composition>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>nam.entity</package>
+
+	<entity class="nam.entity.FileEntity">
+		<named-query name="getFileRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from File x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getFileRecordByName">
+			<query>
+				<![CDATA[
+					select distinct x from File x where x.name = :name
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllFileRecords">
+			<query>
+				<![CDATA[
+					select x from File x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getFileRecordsByOwner">
+			<query>
+				<![CDATA[
+					select x from File x where x.owner = :owner
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllFileRecords">
+			<query>
+				<![CDATA[
+					delete from File x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="nam.entity.ProjectEntity">
+		<named-query name="getProjectRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from Project x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getProjectRecordByName">
+			<query>
+				<![CDATA[
+					select distinct x from Project x where x.name = :name
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllProjectRecords">
+			<query>
+				<![CDATA[
+					select x from Project x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getProjectRecordsByOwner">
+			<query>
+				<![CDATA[
+					select x from Project x where x.owner = :owner
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllProjectRecords">
+			<query>
+				<![CDATA[
+					delete from Project x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="nam.entity.WorkspaceEntity">
+		<named-query name="getWorkspaceRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from Workspace x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getWorkspaceRecordByName">
+			<query>
+				<![CDATA[
+					select distinct x from Workspace x where x.name = :name
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllWorkspaceRecords">
+			<query>
+				<![CDATA[
+					select x from Workspace x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllWorkspaceRecords">
+			<query>
+				<![CDATA[
+					delete from Workspace x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

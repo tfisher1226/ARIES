@@ -1,0 +1,19 @@
+#!/bin/sh
+
+ARIES_HOME=c:/workspace/ARIES
+JBOSS_HOME=c:/software/jboss-6.1.0.Final
+JBOSS_SERVER=node03
+
+EAR=nam-app.ear
+EAR_PATH=$ARIES_HOME/nam-app/target/$EAR
+DEPLOY_HOME=$JBOSS_HOME/server/$JBOSS_SERVER/deploy/$EAR
+
+CWD=`pwd`
+rm -rf $DEPLOY_HOME
+mkdir $DEPLOY_HOME
+cp $EAR_PATH $DEPLOY_HOME
+cd $DEPLOY_HOME
+jar xf $EAR
+rm -f $EAR
+rm -rf ../deploy.last/$EAR
+cd $CWD

@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+			<a4j:jsFunction
+			 	name="launchPreferencesDialog"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+		action="#{preferencesInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Preferences Records', 'Preparing requested record...')"
+				oncomplete="setCursorDefault(eventSource); hideProgress(); showPreferencesDialog()"
+		render="preferencesModule, preferencesDialog">
+				
+		<a4j:param name="targetDomain" assignTo="#{preferencesInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{preferencesInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{preferencesInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{preferencesInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{preferencesInfoManager.immediate}" value="false" />
+			</a4j:jsFunction>
+
+	<a4j:outputPanel
+		id="preferencesModule">
+		
+		<a4j:region
+			rendered="#{preferencesInfoManager.visible}">
+			
+			<aries:dialog
+				id="preferencesDialog"
+				action="savePreferences"
+				render="#{preferencesInfoManager.renderList} preferencesListPane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="preferencesInfoPane.xhtml" />
+			</aries:dialog>
+	</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** roleListActions
+	  ** a4j:jsFunction methods to support the Role List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var roleListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshRoleList(event)
+		  ** Refreshes the current Role List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshRoleList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{roleListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Role Records', 'Refreshing current Role List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="roleListActions, roleListMenu, roleListToolbar, roleListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromRoleList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromRoleList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="roleListActions, roleListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{roleListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{roleListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="role" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromRoleList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromRoleList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="roleListActions, roleListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{roleListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{roleListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{roleWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="roleListActions, roleListMenu, roleListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** roleListActions
+		  ** Javascript methods to support the Role List.
+		  -->
+		
+		<a4j:outputPanel
+			id="roleListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getRoleListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getRoleListRowKey() {
+					if (roleListState != null)
+						return roleListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getRoleListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getRoleListRowLabel() {
+					if (roleListState != null)
+						return roleListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeRoleListState()
+				  ** Initializes and verifies Role List state information.
+				  -->
+					
+				function initializeRoleListState() {
+					try {
+						var rowIndex = '#{roleListManager.selectedRecordIndex}';
+						var recordKey = '#{roleListManager.selectedRecordKey}';
+						var recordLabel = '#{roleListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateRoleListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateRoleListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Role List.
+				  -->
+					
+				function updateRoleListState(event, rowIndex, recordKey, recordLabel) {
+					roleListState = new Object();
+					roleListState.rowIndex = rowIndex;
+					//roleListState.recordId = recordId;
+					roleListState.recordKey = recordKey;
+					roleListState.recordLabel = recordLabel;
+					//show(roleListState);
+				}
+					
+					
+				<!--
+				  ** enableRoleListActions(type)
+				  ** Enables (or disables) Role List actions based on current client-side state.
+				  -->
+					
+				function enableRoleListActions(type) {
+					//enableButton('roleListViewButton');
+					enableButton('roleListNewButton');
+					enableButton('roleListEditButton');
+					enableButton('roleListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processRoleListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Role List.
+				  -->
+					
+				function processRoleListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateRoleListState(event, rowIndex, recordKey, recordLabel);
+					enableRoleListActions('role');
+					try {
+						executeSelectFromRoleList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRoleListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Role List.
+				  -->
+					
+				function processRoleListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Role Records', 'Preparing Role ' + recordLabel + ' for editing...');
+						executeActionFromRoleList(rowIndex, recordKey, 'Role', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('roleListTable')});
+						if (roleListState != null) {
+							var label = roleListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (roleListState != null) {
+							var label = roleListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (roleListState != null) {
+							var label = roleListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (roleListState != null)
+						label = roleListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'roleListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

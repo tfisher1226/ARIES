@@ -1,0 +1,156 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="userInterfaceListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="userInterfaceListMenu.xhtml">
+			<ui:param name="tableId" value="userInterfaceListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="userInterfaceListTable"
+			value="#{userInterfaceListManager.dataModel}"
+			rowCount="#{userInterfaceListManager.dataModel.rowCount}"
+			visible="#{userInterfaceListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processUserInterfaceListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processUserInterfaceListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.userInterface.type}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.userInterface.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.userInterface.label}" />
+			</aries:textColumn>
+			
+			<!-- GROUP ID -->
+			<aries:textColumn
+				width="100"
+				header="Group Id">
+				<h:outputText value="#{rowItem.userInterface.groupId}" />
+			</aries:textColumn>
+			
+			<!-- ARTIFACT ID -->
+			<aries:textColumn
+				width="100"
+				header="Artifact Id">
+				<h:outputText value="#{rowItem.userInterface.artifactId}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.userInterface.version}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.userInterface.namespace}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.userInterface.description}" />
+			</aries:textColumn>
+			
+			<!-- LANGUAGES -->
+			<aries:textColumn
+				width="100"
+				header="Languages">
+				<h:outputText value="#{languagesHelper.toString(rowItem.userInterface.languages)}" />
+			</aries:textColumn>
+			
+			<!-- GRAPHICS -->
+			<aries:textColumn
+				width="100"
+				header="Graphics">
+				<h:outputText value="#{graphicsHelper.toString(rowItem.userInterface.graphics)}" />
+			</aries:textColumn>
+			
+			<!-- SECTIONS -->
+			<aries:textColumn
+				width="100"
+				header="Sections">
+				<h:outputText value="#{sectionsHelper.toString(rowItem.userInterface.sections)}" />
+			</aries:textColumn>
+			
+			<!-- LAYOUTS -->
+			<aries:textColumn
+				width="100"
+				header="Layouts">
+				<h:outputText value="#{layoutsHelper.toString(rowItem.userInterface.layouts)}" />
+			</aries:textColumn>
+			
+			<!-- CONTROLS -->
+			<aries:textColumn
+				width="100"
+				header="Controls">
+				<h:outputText value="#{controlsHelper.toString(rowItem.userInterface.controls)}" />
+			</aries:textColumn>
+			
+			<!-- INVOCATIONS -->
+			<aries:textColumn
+				width="100"
+				header="Interactors">
+				<h:outputText value="#{interactorsHelper.toString(rowItem.userInterface.interactors)}" />
+			</aries:textColumn>
+			
+			<!-- CONVERSATIONS -->
+			<aries:textColumn
+				width="100"
+				header="Conversations">
+				<h:outputText value="#{conversationsHelper.toString(rowItem.userInterface.conversations)}" />
+			</aries:textColumn>
+			
+			<!-- CREATOR -->
+			<aries:textColumn
+				width="100"
+				header="Creator">
+				<h:outputText value="#{rowItem.userInterface.creator}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.userInterface.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.userInterface.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

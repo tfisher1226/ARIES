@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:set var="id" value="#{name}" /> 
+
+	<c:if test="#{empty selected or not selected}">
+		<c:set var="radioButtonIcon" value="/icons/button/RadioButtonUnselected22.gif" /> 
+	</c:if>
+
+	<c:if test="#{not empty selected and selected}">
+		<c:set var="radioButtonIcon" value="/icons/button/RadioButtonSelected22.gif" /> 
+	</c:if>
+
+	<h:selectOneRadio 
+		id="#{id}" 
+		value="#{value}"
+		layout="pageDirection" 
+		immediate="true" 
+		onchange=""
+		border="0"
+		converter="#{converter}"
+		enabledClass="#{enabledClass}"
+		disabledClass="#{disabledClass}"
+		onclickXX="alert('#{converter}'); #{onclick}"
+		onclick="#{onclick}"
+		style="">
+
+		<f:selectItem itemLabel="#{label}" itemValue="#{name}" />
+	</h:selectOneRadio>
+</ui:composition>

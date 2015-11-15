@@ -1,0 +1,91 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="projectListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="projectListMenu.xhtml">
+			<ui:param name="tableId" value="projectListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="projectListTable"
+			value="#{projectListManager.dataModel}"
+			rowCount="#{projectListManager.dataModel.rowCount}"
+			visible="#{projectListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processProjectListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processProjectListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.project.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.project.label}" />
+			</aries:textColumn>
+			
+			<!-- DOMAIN -->
+			<aries:textColumn
+				width="100"
+				header="Domain">
+				<h:outputText value="#{rowItem.project.domain}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.project.namespace}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.project.version}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.project.description}" />
+			</aries:textColumn>
+			
+			<!-- CREATOR -->
+			<aries:textColumn
+				width="100"
+				header="Creator">
+				<h:outputText value="#{rowItem.project.creator}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.project.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.project.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

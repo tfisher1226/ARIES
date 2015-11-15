@@ -1,0 +1,135 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="interactorListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="interactorListMenu.xhtml">
+			<ui:param name="tableId" value="interactorListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="interactorListTable"
+			value="#{interactorListManager.dataModel}"
+			rowCount="#{interactorListManager.dataModel.rowCount}"
+			visible="#{interactorListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processInteractorListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processInteractorListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.interactor.name}" />
+			</aries:textColumn>
+			
+			<!-- ROLE -->
+			<aries:textColumn
+				width="100"
+				header="Role">
+				<h:outputText value="#{rowItem.interactor.role}" />
+			</aries:textColumn>
+			
+			<!-- LINK -->
+			<aries:textColumn
+				width="100"
+				header="Link">
+				<h:outputText value="#{rowItem.interactor.link}" />
+			</aries:textColumn>
+			
+			<!-- INVALID -->
+			<aries:textColumn
+				width="100"
+				header="Invalid">
+				<h:outputText value="#{rowItem.interactor.invalid}" />
+			</aries:textColumn>
+			
+			<!-- CHANNEL -->
+			<aries:textColumn
+				width="100"
+				header="Channel">
+				<h:outputText value="#{rowItem.interactor.channel}" />
+			</aries:textColumn>
+			
+			<!-- TARGET -->
+			<aries:textColumn
+				width="100"
+				header="Target">
+				<h:outputText value="#{rowItem.interactor.target}" />
+			</aries:textColumn>
+			
+			<!-- SERVICE -->
+			<aries:textColumn
+				width="100"
+				header="Service">
+				<h:outputText value="#{rowItem.interactor.service}" />
+			</aries:textColumn>
+			
+			<!-- ASYNCHRONOUS -->
+			<aries:textColumn
+				width="100"
+				header="Asynchronous">
+				<h:outputText value="#{rowItem.interactor.asynchronous}" />
+			</aries:textColumn>
+			
+			<!-- TIME TO LIVE -->
+			<aries:textColumn
+				width="100"
+				header="Time To Live">
+				<h:outputText value="#{rowItem.interactor.timeToLive}" />
+			</aries:textColumn>
+			
+			<!-- TRANSACTED -->
+			<aries:textColumn
+				width="100"
+				header="Transacted">
+				<h:outputText value="#{rowItem.interactor.transacted}" />
+			</aries:textColumn>
+			
+			<!-- DURABLE -->
+			<aries:textColumn
+				width="100"
+				header="Durable">
+				<h:outputText value="#{rowItem.interactor.durable}" />
+			</aries:textColumn>
+			
+			<!-- PRIORITY -->
+			<aries:textColumn
+				width="100"
+				header="Priority">
+				<h:outputText value="#{rowItem.interactor.priority}" />
+			</aries:textColumn>
+			
+			<!-- TIMEOUT -->
+			<aries:textColumn
+				width="100"
+				header="Timeout">
+				<h:outputText value="#{rowItem.interactor.timeout}" />
+			</aries:textColumn>
+			
+			<!-- DELIVERY MODE -->
+			<aries:textColumn
+				width="100"
+				header="Delivery Mode">
+				<h:outputText value="#{rowItem.interactor.deliveryMode}" />
+			</aries:textColumn>
+			
+			<!-- INTERACTION -->
+			<aries:textColumn
+				width="100"
+				header="Interaction">
+				<h:outputText value="#{rowItem.interactor.interaction}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

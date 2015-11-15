@@ -1,0 +1,130 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="applicationListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="applicationListMenu.xhtml">
+			<ui:param name="tableId" value="applicationListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="applicationListTable"
+			value="#{applicationListManager.dataModel}"
+			rowCount="#{applicationListManager.dataModel.rowCount}"
+			visible="#{applicationListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processApplicationListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processApplicationListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">			
+			
+			<!-- PROJECT -->
+			<aries:textColumn
+				width="100"
+				header="Project">
+				<h:outputText value="#{rowItem.project.name}" />
+			</aries:textColumn>
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.application.type}" />
+			</aries:textColumn>
+
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<aries:link 
+					value="#{rowItem.application.name}"
+					onmouseup="processApplicationListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.application.label}" />
+			</aries:textColumn>
+			
+			<!-- CONTEXT ROOT -->
+			<aries:textColumn
+				width="120"
+				header="Context Root">
+				<h:outputText value="#{rowItem.application.contextRoot}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.application.namespace}" />
+			</aries:textColumn>
+			
+			<!-- GROUP ID -->
+			<aries:textColumn
+				width="100"
+				header="Group Id">
+				<h:outputText value="#{rowItem.application.groupId}" />
+			</aries:textColumn>
+			
+			<!-- ARTIFACT ID -->
+			<aries:textColumn
+				width="100"
+				header="Artifact Id">
+				<h:outputText value="#{rowItem.application.artifactId}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.application.version}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.application.description}" />
+			</aries:textColumn>
+			
+			<!-- PACKAGING -->
+			<aries:textColumn
+				width="100"
+				header="Packaging">
+				<h:outputText value="#{rowItem.application.packaging}" />
+			</aries:textColumn>
+			
+			<!-- CREATOR -->
+			<aries:textColumn
+				width="100"
+				header="Creator">
+				<h:outputText value="#{rowItem.application.creator}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.application.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.application.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

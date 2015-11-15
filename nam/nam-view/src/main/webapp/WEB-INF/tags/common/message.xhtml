@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="marginLeft">
+		<c:if test="#{empty marginLeft}">
+			<c:set var="marginLeft" value="0px" /> 
+		</c:if>
+
+		<!--  
+		<ui:param name="messageIcon" value="/graphics/icons/status/Info16.gif" /> 
+		<ui:param name="warningIcon" value="/graphics/icons/status/Warning16.gif" /> 
+		<ui:param name="errorIcon" value="/graphics/icons/status/Error16.gif" />
+		--> 
+		
+		<div style="margin-left: #{marginLeft}">
+			<rich:message 
+				for="#{for}"
+				showDetail="false" 
+				showSummary="true" 
+				style="vertical-align: top; font-weight: bold"/>
+				
+			<!--
+			<h:message 
+				for="#{for}"
+				showDetail="false" 
+				showSummary="true" 
+				infoStyle="background-image: url('#{messageIcon}')"
+				warnStyle="background-image: url('#{warningIcon}'); font-weight: normal; color: black"
+				errorStyleXX="background-image: url(#{resource['images:icons/status/Error16.gif']}); background-repeat: no-repeat; height: 16px; font-weight: bold; text-indent: 50px; color: red"
+				style=""/>
+
+			 -->
+		</div>
+	</aries:tag>
+</ui:composition>

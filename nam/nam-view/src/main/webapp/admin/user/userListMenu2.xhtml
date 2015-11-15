@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<!--  
+	<script type="text/javascript" language="javascript">
+	function showUserListContextMenu(event, lastName, firstName) {
+		var menuId = 'userListContextMenu';
+		var menu = #{rich:component(menuId)};
+		menu.doShow(event, {
+			'lastName': lastName, 
+			'firstName': firstName
+		});
+	}
+	</script>
+	-->
+	
+	<aries:region>
+		<aries:outputPanel>
+			<aries:contextMenu 
+				mode="client"
+				id="#{section}UserListContextMenu"
+				target="#{section}UserListTable">
+	
+				<aries:contextMenuItem 
+					value="Edit User..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{userListManager}"
+					action="editUser"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}UserDialog()"
+					render="#{domain}UserDialog, #{domain}UserDialogPersonNameDialog, #{domain}UserDialogEmailAddressDialog, #{domain}UserDialogPhoneNumberDialog, #{domain}UserDialogStreetAddressDialog">
+					<aries:tooltip value="Edit selected User record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New User..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{userInfoManager}"
+					action="newUser"
+					onclick="setCursorWait(); showProgress('User Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}UserDialog()"
+					render="#{domain}UserDialog, #{domain}UserDialogPersonNameDialog, #{domain}UserDialogEmailAddressDialog, #{domain}UserDialogPhoneNumberDialog, #{domain}UserDialogStreetAddressDialog">
+					<aries:tooltip value="Create new User record"/>
+				</aries:contextMenuItem>
+		
+		<!-- 
+					value="Set as archived..." 
+					value="Set as visible..." 
+		 -->
+		
+				<aries:contextMenuItem 
+					value="Remove User..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('User: {lastName}, {firstName}', 'Remove User Record from System', 'Do you wish to continue?', 'org.aries.removeUser', '#{section}UserListPane')">
+					<aries:tooltip value="Remove selected User record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPanel>
+	</aries:region>
+</ui:composition>
+
+<!--
+				onclick="setCursorWait(); showProgress('User Record: {firstName} {lastName}', 'Removing membership information...')"
+				oncomplete="setCursorDefault(); hideProgress(); if (#{!messagesExist}) {checkPromptDeleteUser(#{member.lastName})} else {warnPermissionDenied('UserDialog')}">
+  -->

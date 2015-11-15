@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<definitions 
+	name='OrderingService' 
+	xmlns='http://schemas.xmlsoap.org/wsdl/' 
+	xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+	xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+	xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+	xmlns:tns='http://jboss.org/bpel/ordering' 
+	targetNamespace='http://jboss.org/bpel/ordering'>
+
+	<types>
+		<xs:schema 
+			version='1.0'
+			xmlns:xs='http://www.w3.org/2001/XMLSchema' 
+			xmlns:tns='http://jboss.org/bpel/ordering' 
+			targetNamespace='http://jboss.org/bpel/ordering'>
+
+			<xs:element name='createOrder' type='tns:createOrder' />
+			<xs:element name='createOrderResponse' type='tns:createOrderResponse' />
+			<xs:element name='getItemInfo' type='tns:getItemInfo' />
+			<xs:element name='getItemInfoResponse' type='tns:getItemInfoResponse' />
+			<xs:element name='setState' type='tns:setState' />
+			<xs:element name='setStateResponse' type='tns:setStateResponse' />
+
+			<xs:complexType name='getState'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='orderId' type='xs:long' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='getStateResponse'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='return' type='xs:string' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='setState'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='orderId' type='xs:long' />
+					<xs:element minOccurs='0' name='state' type='xs:string' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='setStateResponse'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='state' type='xs:string' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='createOrder'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='itemId' type='xs:long' />
+					<xs:element name='quantity' type='xs:int' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='createOrderResponse'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='return' type='xs:long' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='getItemInfo'>
+				<xs:sequence>
+					<xs:element minOccurs='0' name='id' type='xs:long' />
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name='getItemInfoResponse'>
+				<xs:sequence>
+					<xs:element name='return' type='xs:int' />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</types>
+
+	<plnk:partnerLinkType name="OrderingService_PartnerLink">
+		<plnk:role name="OrderingService_Provider" portType="tns:OrderingWS" />
+		<plnk:role name="OrderingService_Receiver" portType="tns:OrderingWS" />
+	</plnk:partnerLinkType>
+
+	<message name='GetItemInfoRequest'>
+		<part element='tns:getItemInfo' name='getItemInfo' />
+	</message>
+	
+	<message name='GetItemInfoResponse'>
+		<part element='tns:getItemInfoResponse' name='getItemInfoResponse' />
+	</message>
+	
+	<message name='CreateOrderRequest'>
+		<part element='tns:createOrder' name='createOrder' />
+	</message>
+	
+	<message name='CreateOrderResponse'>
+		<part element='tns:createOrderResponse' name='createOrderResponse' />
+	</message>
+	
+	<message name='SetOrderStateRequest'>
+		<part element='tns:setState' name='setState' />
+	</message>
+	
+	<message name='SetOrderStateResponse'>
+		<part element='tns:setStateResponse' name='setStateResponse' />
+	</message>
+
+	<portType name='OrderingWS'>
+		<operation name='createOrder' 
+			parameterOrder='createOrder'>
+			<input message='tns:CreateOrderRequest' />
+			<output message='tns:CreateOrderResponse' />
+		</operation>
+		
+		<operation name='getItemInfo' 
+			parameterOrder='getItemInfo'>
+			<input message='tns:GetItemInfoRequest' />
+			<output message='tns:GetItemInfoResponse' />
+		</operation>
+		
+		<operation name='setState'>
+			<input message='tns:SetOrderStateRequest' />
+			<output message='tns:SetOrderStateResponse' />
+		</operation>
+	</portType>
+
+	<binding name='OrderingWSBinding' type='tns:OrderingWS'>
+		<soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http' />
+		
+		<operation name='createOrder'>
+			<soap:operation soapAction='' />
+			<input>
+				<soap:body use='literal' />
+			</input>
+			<output>
+				<soap:body use='literal' />
+			</output>
+		</operation>
+		
+		<operation name='getItemInfo'>
+			<soap:operation soapAction='' />
+			<input>
+				<soap:body use='literal' />
+			</input>
+			<output>
+				<soap:body use='literal' />
+			</output>
+		</operation>
+		
+		<operation name='setState'>
+			<soap:operation soapAction='' />
+			<input>
+				<soap:body use='literal' />
+			</input>
+			<output>
+				<soap:body use='literal' />
+			</output>
+		</operation>
+	</binding>
+
+	<service name='OrderingService'>
+		<port binding='tns:OrderingWSBinding' name='OrderingWSPort'>
+			<soap:address location='http://127.0.0.1:8080/Ordering-Ordering-war/OrderingService' />
+		</port>
+	</service>
+</definitions>
+

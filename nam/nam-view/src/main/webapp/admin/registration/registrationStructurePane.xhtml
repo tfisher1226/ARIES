@@ -1,0 +1,171 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:panel>
+		<aries:table 
+			id="registrationRecordStructureTable"
+			value="#{registrationFieldListManager.fieldList}" 
+			rowCount="#{registrationFieldListManager.fieldList.rowCount}"
+			style="border-top-width: 0px; border-left-width: 0px">
+
+			<!-- INDEX -->
+			<aries:tableColumn 
+				width="20px"
+				sortOrder="ascending"
+				sortBy="#{index}"
+				filterValue="#{index}">
+				<h:outputText value="#{index+1}"/>
+			</aries:tableColumn>
+
+			<!-- SELECTOR -->
+			<aries:tableColumn 
+				width="20px">
+				<h:panelGrid columns="2" style="">
+					<h:selectBooleanCheckbox styleClass="formCheckbox" immediate="true" value="#{rowItem.checked}" style="padding: 2px">
+						<a4j:ajax 
+							event="click" 
+							execute="@this"
+							immediate="true"
+							limitRender="true" />
+					</h:selectBooleanCheckbox>
+				</h:panelGrid> 
+			</aries:tableColumn>
+
+			<!-- NAME -->
+			<aries:tableColumn 
+				visible="true" 
+				width="100px"
+				sortable="true"
+				sortBy="#{rowItem.name}"
+				filterValue="#{rowItem.name}">
+				<f:facet name="header">
+					<h:outputText value="Field Name"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.name}"/>
+			</aries:tableColumn>
+
+			<!-- TYPE -->
+			<aries:tableColumn 
+				visible="true" 
+				width="120px"
+				sortable="true"
+				sortBy="#{rowItem.type}"
+				filterValue="#{rowItem.type}">
+				<f:facet name="header">
+					<h:outputText value="Field Type"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.type}"/>
+			</aries:tableColumn>
+
+			<!-- RELATION -->
+			<aries:tableColumn 
+				visible="true" 
+				width="120px"
+				sortable="true"
+				sortBy="#{rowItem.type}"
+				filterValue="#{rowItem.type}">
+				<f:facet name="header">
+					<h:outputText value="Field Type"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.relation}"/>
+			</aries:tableColumn>
+			
+			<!-- TWO-WAY -->
+			<aries:tableColumn 
+				visible="true" 
+				width="60px"
+				sortable="true"
+				sortBy="#{rowItem.minOccurs}"
+				filterValue="#{rowItem.minOccurs}">
+				<f:facet name="header">
+					<h:outputText value="Two-Way"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.twoway}"/>
+			</aries:tableColumn>
+
+			<!-- MIN -->
+			<aries:tableColumn 
+				visible="true" 
+				width="60px"
+				sortable="true"
+				sortBy="#{rowItem.minOccurs}"
+				filterValue="#{rowItem.minOccurs}">
+				<f:facet name="header">
+					<h:outputText value="Min"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.minOccurs}"/>
+			</aries:tableColumn>
+
+			<!-- MAX -->
+			<aries:tableColumn 
+				visible="true" 
+				width="60px"
+				sortable="true"
+				sortBy="#{rowItem.maxOccurs}"
+				filterValue="#{rowItem.maxOccurs}">
+				<f:facet name="header">
+					<h:outputText value="Max"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.maxOccurs}"/>
+			</aries:tableColumn>
+
+			<!-- REQUIRED -->
+			<aries:tableColumn 
+				visible="true" 
+				width="70px"
+				sortable="true"
+				sortBy="#{rowItem.required}"
+				filterValue="#{rowItem.required}">
+				<f:facet name="header">
+					<h:outputText value="Required"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.required}"/>
+			</aries:tableColumn>
+
+			<!-- UNIQUE -->
+			<aries:tableColumn 
+				visible="true" 
+				width="70px"
+				sortable="true"
+				sortBy="#{rowItem.unique}"
+				filterValue="#{rowItem.unique}">
+				<f:facet name="header">
+					<h:outputText value="Unique"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.unique}"/>
+			</aries:tableColumn>
+
+			<!-- MANAGED -->
+			<aries:tableColumn 
+				visible="true" 
+				width="70px"
+				sortable="true"
+				sortBy="#{rowItem.managed}"
+				filterValue="#{rowItem.managed}">
+				<f:facet name="header">
+					<h:outputText value="Managed"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.managed}"/>
+			</aries:tableColumn>
+			
+			<!-- CHANGEABLE -->
+			<aries:tableColumn 
+				visible="true" 
+				width="60px"
+				sortable="true"
+				sortBy="#{rowItem.changeable}"
+				filterValue="#{rowItem.changeable}">
+				<f:facet name="header">
+					<h:outputText value="Changeable"/>
+				</f:facet>
+				<h:outputText value="#{rowItem.changeable}"/>
+			</aries:tableColumn>				
+		</aries:table>
+	</aries:panel>
+</ui:composition>

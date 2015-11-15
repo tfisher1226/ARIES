@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"   
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+      
+    <h:body>
+		<ui:composition>
+
+		<c:if test="#{empty id}">
+			<c:set var="id" value="Tab#{globals.nextId()}" /> 
+		</c:if>
+
+		<!--  
+		<c:if test="#{empty name}">
+			<c:set var="name" value="#{id}" /> 
+		</c:if>
+		-->
+		
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true" /> 
+		</c:if>
+
+		<c:if test="#{empty label}">
+			<c:set var="label" value="Tab Label" /> 
+		</c:if>
+
+		<c:if test="#{empty name}">
+			<c:set var="name" value="#{label}" /> 
+		</c:if>
+		
+		<c:if test="#{empty header}">
+			<c:set var="header" value="#{label}" /> 
+		</c:if>
+		
+		<c:if test="#{empty icon}">
+			<c:set var="icon" value="/icons/common/Default16.gif"/> 
+		</c:if>
+		
+		<c:if test="#{empty switchType}">
+			<c:set var="switchType" value="client"/> 
+		</c:if>
+		
+		<c:if test="#{empty tabHeight}">
+			<c:set var="tabHeight" value="20" /> 
+		</c:if>
+	
+		<c:if test="#{empty fontSize}">
+			<c:set var="fontSize" value="11.8" /> 
+		</c:if>
+		
+		<c:if test="#{empty fontWeight}">
+			<c:set var="fontWeight" value="#{userSkin.tabFontWeight}" /> 
+		</c:if>
+					
+		<c:if test="#{empty fontStyle}">
+			<c:set var="fontStyle" value="#{userSkin.tabFontStyle}" /> 
+		</c:if>
+					
+		<c:if test="#{empty fontFamily}">
+			<c:set var="fontFamily" value="#{userSkin.tabFontFamily}" /> 
+		</c:if>
+		
+		<c:if test="#{empty textColor}">
+			<c:set var="textColor" value="#{userSkin.tabActiveTextColor}" /> 
+		</c:if>
+	
+		<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}; color: #{textColor}" /> 
+	
+		<rich:tab
+		 	name="#{name}"
+		 	header="#{header}"
+		 	rendered="#{rendered}"
+		 	switchType="#{switchType}"
+			headerClass="tabHeaderClass"
+			headerActiveClass="activeTabClass"
+			headerInactiveClass="inactiveTabClass"
+			headerDisabledClass="disabledTabClass"
+			onheaderclickXXX="alert('#{id}');"
+			onheaderclick="#{onheaderclick}"
+			onenter="#{onenter}" 
+			onleave="#{onleave}" 
+			onclick="#{onclick}"
+			oncomplete="#{oncomplete}"
+			style="width: 100%; height: auto; border-width: 0px; background-color: inherit">
+	
+			<!-- TAB AREA -->			
+			<f:facet name="header">
+				<h:panelGrid 
+					layout="block"
+					cellpadding="0"
+					cellspacing="0"
+					columns="3" 
+					columnClasses="formColumnAlignTop, formColumnAlignMiddle, formColumn"
+					styleClass="formPanel" 
+					style="height: #{helper.convert(tabHeight)}; background-color: inherit">
+
+					<ui:insert name="control" />
+
+					<h:graphicImage 
+						library="images" 
+						name="/icons/common/Default16.gif" 
+						onclick=""
+						style="padding-top: 3px; background-color: inherit" />
+						
+					<h:outputText 
+						value="#{label}" 
+						style="padding: 0px 4px; padding-top: 3px; #{textSettings}; display: block; white-space: nowrap; background-color: inherit"/>
+
+					<h:graphicImage 
+						library="graphics" 
+						name="/icons/tabCloseSelected14f.gif"
+						rendered="#{closable}"
+						onclick="setCursorWait(this); #{onclose};"
+						onmouseoutXX="setCursorPointer(this);"
+						style="cursor: pointer; padding-left: 0px">
+						<aries:tooltip value="Close this Tab"/>
+					</h:graphicImage>
+				</h:panelGrid>
+			</f:facet>
+
+			<!-- PANEL AREA -->			
+			<h:panelGroup 
+				layout="block" 
+				style="width: auto; height: auto; border: 1px #{userSkin.borderStyle} #{userSkin.borderColor}; border-width: 1px; border-top-width: 0px; background-color: inherit">
+				
+				<ui:insert/>
+			</h:panelGroup>
+		</rich:tab>
+		</ui:composition>
+	</h:body>
+</html>

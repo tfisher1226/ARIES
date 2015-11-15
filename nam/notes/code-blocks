@@ -1,0 +1,31 @@
+For any given code block there will exist different representations that only together collectively make up the master copy of the source.
+
+One representation will be a template that is fed as input into the code generator that carrys out the generation of the language-specific target source files.
+
+Another representation is a copy of the generated source that is considered the master reference copy of the code block that is used to execute all code analysis test and verifications runs against.
+
+This master reference copy of the code-block in a sense is the true master of the copy of the code even though it is produced by a generator.  This why we seek to generate the generator off the actual source.  We need to tightly couple these two representations so as to consider them as a single representation even though we happen to use Java as the verified language source.  Just as we use Java as source in one code-block, we may wish to use C (or other language like Groovy or Javascript) as the master source of another code block.
+
+Whatever the language of choice may be for a given code-block, the generator ultimately treats them all and considers them all as similar inputs into the generation process.  And as well from a modeling point of view, the language-specific details of the language of choice are abstracted away because the model language is implementation independent.  Therefore for each such language we have a driver that reads in sources written in that language and parses it, analizes it, tests it, verifies it, and finally normalizes the language specific details into the ARIES modeling notation.
+
+You can see that the part of the process that concerns the ARIES notation is really only at the end of a series of steps involving the stpe by step verification runs.  The core system is really the stpe-by-stpe organization of analyses, tests and verifications run against each code block.
+
+
+
+We are taking in a sense a uniform view from end to end of the software deployment lifecycle and organizing executions of analyses, tests and verification steps for the purpose of producing reliable software that can be proved to be correct given a well-defined set of interfaces and constraints.
+
+We believe the most direct route to success in this area in terms of being succeffully and reliably used by common people, is to adopt the usage of a set of well-defined interfaces and constraints that must be simple and easy to understand.  We believe this system will evolve to become the eventual struxcture of source code as it is kept and maintained by organizations in the coming years.  We wish to establish this for the sake of savings in costs for maintaining software by using clearly defined interfaces and constraints that are easy to read, create and maintain.  And that these are implementation independent.
+
+
+the master copy of sources that are maitained by organizations in the future.
+
+
+
+in this area is to provide 
+
+
+
+
+
+
+

@@ -1,0 +1,86 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="channelListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="channelListMenu.xhtml">
+			<ui:param name="tableId" value="channelListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="channelListTable"
+			value="#{channelListManager.dataModel}"
+			rowCount="#{channelListManager.dataModel.rowCount}"
+			visible="#{channelListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processChannelListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processChannelListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.channel.name}" />
+			</aries:textColumn>
+			
+			<!-- HOST -->
+			<aries:textColumn
+				width="100"
+				header="Host">
+				<h:outputText value="#{rowItem.channel.host}" />
+			</aries:textColumn>
+			
+			<!-- PORT -->
+			<aries:textColumn
+				width="100"
+				header="Port">
+				<h:outputText value="#{rowItem.channel.port}" />
+			</aries:textColumn>
+			
+			<!-- JNDI NAME -->
+			<aries:textColumn
+				width="100"
+				header="Jndi Name">
+				<h:outputText value="#{rowItem.channel.jndiName}" />
+			</aries:textColumn>
+			
+			<!-- TRANSFER MODE -->
+			<aries:textColumn
+				width="100"
+				header="Transfer Mode">
+				<h:outputText value="#{rowItem.channel.transferMode}" />
+			</aries:textColumn>
+			
+			<!-- ACKNOWLEDGE MODE -->
+			<aries:textColumn
+				width="100"
+				header="Acknowledge Mode">
+				<h:outputText value="#{rowItem.channel.acknowledgeMode}" />
+			</aries:textColumn>
+			
+			<!-- REDELIVERY DELAY -->
+			<aries:textColumn
+				width="100"
+				header="Redelivery Delay">
+				<h:outputText value="#{rowItem.channel.redeliveryDelay}" />
+			</aries:textColumn>
+			
+			<!-- MAX DELIVERY ATTEMPTS -->
+			<aries:textColumn
+				width="100"
+				header="Max Delivery Attempts">
+				<h:outputText value="#{rowItem.channel.maxDeliveryAttempts}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

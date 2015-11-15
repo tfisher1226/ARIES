@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+    template="/templates/error.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+
+	<h:outputScript>
+	function showMainPage(source) {
+		showPage(source, '/main.seam');
+	}
+	           
+	function showPublicPage(source) {
+		showPage(source, '/public.seam');
+	}
+
+	function showPage(source, page) {
+		setCursorWait(source, page);
+		var url = '#{facesContext.externalContext.requestContextPath}' + page;
+		//alert(url);
+		window.location.href = url;
+	}
+	</h:outputScript>
+	
+    <a4j:jsFunction 
+    	name="requestLogout" 
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"
+    	execute="@this"
+    	action="#{securityManager.logout}"
+    	onbegin="showPublicPage()" />
+    	
+		<!-- PAGE TOOLBAR -->
+		<aries:toolbar type="menubar">
+			<aries:toolbarGroup location="left">
+				<aries:toolItem 
+					mode="client"
+					name="home"
+					label="Home"
+					execute="@this"
+					icon="/icons/common/Home16.gif"
+					tooltip="Go back to home screen" 
+					onmousedown="setCursorWait(this)" 
+					onmouseup="showHomePage()" />
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<aries:toolItem 
+					name="help"
+					label="Help"
+					mode="ajax"
+					execute="@this"
+					icon="/icons/common/Help16.gif"
+					manager="#{navigator}"
+					action="showHelp" 
+					target="_blank" />
+
+				<f:subview rendered="#{identity.loggedIn}">
+					<aries:toolItem
+						id="logoutItem"
+						name="logout"
+						label="Logout"
+						icon="/icons/common/Remove16.gif"
+						mode="client"
+						onmouseup="setCursorWait(this); requestLogout()" />
+				</f:subview>
+			</aries:toolbarGroup>
+		</aries:toolbar>
+
+		<!-- PAGE CONTENT -->
+		<aries:panel 
+			padding="20px">
+			
+			<aries:h2 value="NAM - Problem Detected" />
+			
+			<aries:panel 
+				layout="block" 
+				styleClass="panel">
+				
+				<aries:link 
+					value="Go back to application" 
+					href="javascript:history.back()" />
+				
+				<aries:spacer height="10" />
+				<aries:h3>An exception has occurred and has been logged.</aries:h3>
+		
+				<aries:spacer height="10" />
+				<aries:text>Operations can be reached at <a href="mailto:admin@nam.io">admin@nam.io</a>.</aries:text>
+			</aries:panel>
+		</aries:panel>
+	</ui:define>
+</ui:composition>

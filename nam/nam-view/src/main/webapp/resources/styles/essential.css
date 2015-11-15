@@ -1,0 +1,167 @@
+.domainPanelBody {
+	width: auto; 
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	overflow: auto; 
+	overflow-y: scroll;
+}
+
+
+/*
+ * Button related
+ * --------------
+ */
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled,
+.smallDialogButton,
+.smallDialogButtonDisabled {
+	border: 1px solid #{userSkin.buttonBorderColor} !important;
+	/*background-color: #{richSkin.generalBackgroundColor};*/
+	/*background-image: url('/aries/images/button-background.gif');*/
+	/*background-color: inherit;*/
+	border-radius: #{userSkin.buttonCornerRadius};
+	/*
+	-moz-border-radius: #{userSkin.buttonCornerRadius};
+	-webkit-border-radius: #{userSkin.buttonCornerRadius};
+	*/
+}
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled {
+}
+
+.smallDialogButton,
+.smallDialogButtonDisabled {
+}
+
+.button:hover,
+.dialogButton:hover,
+.smallDialogButton:hover {
+	/*border: 1px solid #479ff9 !important;*/
+	/*background-color: #f5fafa !important;
+	background-image: url('/aries/images/button-background-hover.gif');*/
+	border: 1px solid #{userSkin.highlightBorderColor} !important;
+}
+
+.buttonDisabled,
+.dialogButtonDisabled,
+.smallDialogButtonDisabled {
+	/*border: 1px solid #ccc;*/
+	background-color: #f4f4f4;
+	background-image: url('/aries/images/button-background-disabled.gif');
+}
+
+.buttonLabel,
+.buttonLabelDisabled {
+	font-size: 12px; 
+}
+
+.dialogButtonLabel,
+.dialogButtonLabelDisabled {
+	font-size: 11px; 
+}
+
+.smallDialogButtonLabel,
+.smallDialogButtonLabelDisabled {
+	font-size: 10px; 
+}
+
+.buttonLabel,
+.dialogButtonLabel,
+.smallDialogButtonLabel {
+	padding: 0px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #{richSkin.editorMainTextColor}; 
+}
+
+.buttonLabelDisabled,
+.dialogButtonLabelDisabled,
+.smallDialogButtonLabelDisabled {
+	padding: 0px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #aaa; 
+}
+
+.buttonLabel:hover,
+.dialogButtonLabel:hover,
+.smallDialogButtonLabel:hover {
+	text-decoration: underline;
+	color: #00a;
+}
+
+
+
+/*
+ * Toolbar related
+ * ---------------
+ */
+
+.toolbar {
+	padding-left: 0px;
+	padding-right: 0px;
+	border: 1px solid #C3BBB6;
+}
+
+.toolLabel {
+	font-size: 12px;
+	font-weight: normal;
+	color: darkBlue;
+	color: #006;
+	background: transparent;
+}
+
+.toolButton {
+	border: 1px solid #ccc; 
+}
+	
+.toolbarTypePlain {
+	padding: 1px; 
+	border: 0px; 
+}
+
+.toolbarTypeTab {
+	padding: 1px; 
+	border: 1px solid #ccc; 
+}
+
+.toolbarTypeMenubar {
+	padding: 1px 1px 1px 1px; 
+	border: 1px solid #ccc; 
+	border-top-width: 0px; 
+	border-top-width: 1px; 
+	border-bottom-width: 0px; 
+	border-bottom-width: 1px; 
+}
+
+.toolItem,
+.toolMenu,
+.toolToggleItem,
+.toolToggleItemSelected {
+	text-align: center; 
+	vertical-align: middle;
+	font-size: 12px;
+	font-weight: normal;
+	color: darkBlue;
+}
+
+.toolItem,
+.toolMenu,
+.toolToggleItem {
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.toolItem:hover,
+.toolMenu:hover,
+.toolToggleItem:hover {
+	border: 1px solid #b9d7fc;
+	border: 1px solid #84acdd;
+}

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	version="1.0"
+	jaxb:version="2.0" 
+	attributeFormDefault="qualified" 
+	elementFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:process="http://www.aries.org/nam/process" 
+	targetNamespace="http://www.aries.org/nam/process">
+	
+	<!--  
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.aries.nam.process"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	-->
+
+	<!--  
+	<xs:element name="user" type="process:User"/>
+	<xs:complexType name="User">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:long"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="userId" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="password" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="firstName" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="lastName" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="enabled" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	
+	<xs:element name="activity" type="process:Activity"/>
+	<xs:complexType name="Activity">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" name="id" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="targets" type="process:Targets"/>
+	<xs:complexType name="Targets">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" ref="process:join-condition"/>
+			<xs:element maxOccurs="unbounded" minOccurs="1" ref="process:target"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="target" type="process:Target"/>
+	<xs:complexType name="Target">
+		<xs:attribute name="linkName" type="xs:NCName" use="required"/>
+	</xs:complexType>
+
+	<xs:element name="sources" type="process:Sources"/>
+	<xs:complexType name="Sources">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="1" ref="process:source"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="source" type="process:Source"/>
+	<xs:complexType name="Source">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="0" ref="process:transition-condition"/>
+		</xs:sequence>
+		<xs:attribute name="linkName" type="xs:NCName" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType mixed="true" name="Expression">
+		<xs:sequence>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+		<!--  
+		<xs:attribute name="expressionLanguage" type="xs:anyURI" />
+		-->
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+
+	<xs:element name="join-condition" type="process:Condition"/>
+
+	<xs:element name="transition-condition" type="process:Condition"/>
+	
+	<xs:complexType name="Condition">
+		<xs:complexContent mixed="true">
+			<xs:extension base="process:Expression"/>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="condition" type="tBoolean-expr" />
+	<xs:complexType name="tBoolean-expr">
+		<xs:complexContent mixed="true">
+			<xs:extension base="tExpression" />
+		</xs:complexContent>
+	</xs:complexType>
+	-->	
+
+	<xs:element name="assign" type="process:Assign"/>
+	<xs:complexType name="Assign">
+		<xs:complexContent>
+			<xs:extension base="process:Activity">
+				<xs:sequence>
+					<xs:choice maxOccurs="unbounded">
+						<xs:element maxOccurs="1" minOccurs="1" ref="process:copy"/>
+						<!--  
+						<xs:element ref="extensionAssignOperation" minOccurs="1" maxOccurs="1" />
+						-->
+					</xs:choice>
+				</xs:sequence>
+				<xs:attribute default="false" name="validate" type="xs:boolean" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="copy" type="process:Copy"/>
+	<xs:complexType name="Copy">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" ref="process:from"/>
+			<xs:element maxOccurs="1" minOccurs="1" ref="process:to"/>
+		</xs:sequence>
+		<xs:attribute default="false" name="keepSrcElementName" type="xs:boolean" use="optional"/>
+		<xs:attribute default="false" name="ignoreMissingFromData" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+
+	<xs:element name="from" type="process:From"/>
+	<xs:complexType mixed="true" name="From">
+		<xs:sequence>
+			<!--  
+			<xs:element ref="documentation" minOccurs="0" maxOccurs="unbounded" />
+			-->
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+			<xs:choice minOccurs="0">
+				<xs:element maxOccurs="1" minOccurs="1" ref="process:literal"/>
+				<xs:element maxOccurs="1" minOccurs="1" ref="process:query"/>
+			</xs:choice>
+		</xs:sequence>
+		<!--  
+		<xs:attribute name="expressionLanguage" type="xs:anyURI" />
+		<xs:attribute name="variable" type="BPELVariableName" />
+		<xs:attribute name="part" type="xs:NCName" />
+		<xs:attribute name="property" type="xs:QName" />
+		<xs:attribute name="partnerLink" type="xs:NCName" />
+		<xs:attribute name="endpointReference" type="tRoles" />
+		<xs:anyAttribute namespace="##other" processContents="lax" />
+		-->
+	</xs:complexType>
+
+	<xs:element name="to" type="process:To"/>
+	<xs:complexType mixed="true" name="To">
+		<xs:sequence>
+			<!--  
+			<xs:element ref="documentation" minOccurs="0" maxOccurs="unbounded" />
+			-->
+			<xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax"/>
+			<xs:element maxOccurs="1" minOccurs="0" ref="process:query"/>
+		</xs:sequence>
+		<!--
+		<xs:attribute name="expressionLanguage" type="xs:anyURI" />
+		<xs:attribute name="variable" type="BPELVariableName" />
+		<xs:attribute name="part" type="xs:NCName" />
+		<xs:attribute name="property" type="xs:QName" />
+		<xs:attribute name="partnerLink" type="xs:NCName" />
+		<xs:anyAttribute namespace="##other" processContents="lax" />
+		-->
+	</xs:complexType>
+
+	<xs:element name="literal" type="process:Literal"/>
+	<xs:complexType mixed="true" name="Literal">
+		<xs:sequence>
+			<xs:any maxOccurs="1" minOccurs="0" namespace="##any" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="query" type="process:Query"/>
+	<xs:complexType mixed="true" name="Query">
+		<xs:sequence>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+
+
+	<xs:element name="test">
+		<xs:complexType>
+			<xs:attribute name="condition" type="xs:string" use="required"/>
+			<xs:attribute name="action" type="xs:string" use="required"/>
+			<xs:attribute name="else" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="receive">
+		<xs:complexType>
+			<xs:attribute name="target" type="xs:string" use="required"/>
+			<xs:attribute name="source" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="send">
+		<xs:complexType>
+			<xs:attribute name="target" type="xs:string" use="required"/>
+			<xs:attribute name="source" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="invoke">
+		<xs:complexType>
+			<xs:attribute name="target" type="xs:string" use="required"/>
+			<xs:attribute name="source" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="catch" type="process:Catch"/>
+	<xs:complexType name="Catch">
+		<xs:annotation>
+			<xs:documentation>The "catch" element may contain one or more activities.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="activity" type="process:Activity"/>
+		</xs:sequence>
+		<xs:attribute name="faultName" type="xs:QName"/>
+		<xs:attribute name="faultElement" type="xs:QName"/>
+		<!--  
+		<xs:attribute name="faultVariable" type="BPELVariableName" />
+		<xs:attribute name="faultMessageType" type="xs:QName" />
+		-->
+	</xs:complexType>
+
+	<xs:element name="throw">
+		<xs:complexType>
+			<xs:attribute name="target" type="xs:string" use="required"/>
+			<xs:attribute name="source" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+
+
+
+	<!--  
+    <xs:element name="command" type="command" block="substitution" />
+	<xs:complexType name="command">
+		<xs:attribute name="type" type="xs:string" use="required" />
+		<xs:attribute name="name" type="xs:string" />
+	</xs:complexType>
+
+	<xs:element name="command" type="command" />
+	<xs:complexType name="command" >
+		<xs:all>
+			<xs:element name="catch" type="catch" minOccurs="0" />
+			<xs:element name="assign" type="assign" minOccurs="0" />
+		</xs:all>
+	</xs:complexType>
+	-->
+
+	<!--  
+	<xs:group name="command">
+		<xs:choice>
+			<xs:element ref="catch" />
+			<xs:element ref="assign" />
+			<xs:element ref="test" />
+			<xs:element ref="send" />
+			<xs:element ref="receive" />
+			<xs:element ref="invoke" />
+			<xs:element ref="throw" />
+		</xs:choice>
+	</xs:group>
+	-->
+	
+</xs:schema>

@@ -1,0 +1,194 @@
+/*
+ * Table related
+ * -------------
+ */
+
+.table {
+	border-collapse: collapse;
+}
+
+.table-old {
+	font-size: 12px;
+	border: 0px;
+	border-collapse: collapse;
+	background-color: #fff;
+}
+
+.tablePanel {
+	width: auto; 
+	height: auto; 
+	padding: 0px; 
+	margin: 0px; 
+	overflow-y: scroll;
+}
+
+.tablePanelBody {
+	padding: 0px; 
+	margin: 0px; 
+}
+
+.tableBorder {
+	border: 1px solid #{userSkin.borderColor}; 
+	border-right-width: 0px; 
+	border-bottom-width: 0px
+}
+
+.tableHeader {
+	height: 18px;
+}
+
+.tableHeader,
+.tableHeaderExtended {
+	padding: 4px;
+	text-align: left;
+	border-bottom: 1px solid #C3BBB6;
+	background-color: #f0f0f0;
+	background-color: #f6f6f6;
+}
+
+.tableRow {
+	margin: 0px;
+	padding: 0px;
+	height: 16px;
+	max-height: 16px;
+}
+
+.tableRow2 {
+	margin: 0px;
+	padding: 0px;
+	height: 21px;
+	max-height: 21px;
+}
+
+.tableRowEven {
+	background-color: #FFF;
+	background-color: #FFF;
+}
+
+.tableRowOdd {
+	background-color: #FFF;
+	background-color: #ECF3FE;
+	background-color: #FFEBDA;
+	background-color: #F8F8FF;
+}
+
+.tableRowOddXXX td {
+    padding: 0px;
+	margin: 0px;
+}
+
+.tableRowActive {
+	cursor: pointer;
+	background-color: #ECF3FE;
+	background-color: #FFEBDA;
+	background-color: #E0E0FF;
+	background-color: #FFEBDA;
+}
+
+.tableRowSelected {
+	background-color: #FFEBDA;
+	background-color: #{richSkin.tableHeaderBackgroundColor};
+}
+
+.tableColumn {
+	width: auto; 
+	padding: 4px; 
+	display: block; 
+	background-color: cyan;
+}
+
+.tableCellInput {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.tableCellOutput {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.tableCellSelect {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+	
+.tableCellCheckbox {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.tableScroller {
+    margin: 0px;
+    padding: 0px;
+}
+
+th, 
+td {
+    margin: 0px;
+    padding: 0px;
+}
+
+.table .rf-dt-c {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/*
+.rf-dt,
+.rf-dt-c,
+.rf-dt-nd,
+.rf-dt-hdr-c,
+.rf-dt-ftr-c,
+.rf-dt-shdr-c,
+.rf-dt-sftr-c {
+	border: 0px solid red;
+}
+*/
+
+.noGrid .rf-dt-c {
+	border-width: 0px;
+}
+
+.noTableHeader .rf-dt-thd {  
+	display: none;  
+}  
+
+
+.smallTable {
+	font-size: 11px;
+	border-collapse: collapse;
+	border-bottom: 1px solid #C3BBB6;
+	border-right: 0px solid #C3BBB6;
+	border: 0px;
+	border-collapse: collapse;
+	background-color: #fff;
+}
+
+.smallTableHeader,
+.smallTableHeaderExtended {
+	height: 20px;
+	margin: 0px;
+	padding: 0px;
+	font-size: 11.4px;
+	text-align: left;
+	border-bottom: 1px solid #C3BBB6;
+	background-color: #f6f6f6;
+}
+
+.smallTableRow {
+	height: 12px;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 4px;
+	font-size: 11.4px;
+	border-bottom: 0px solid #C3BBB6;
+}

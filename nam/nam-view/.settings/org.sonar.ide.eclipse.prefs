@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+projectArtifactId=nam-view
+projectBranch=
+projectGroupId=org.aries
+sonarServerUrl=http\://localhost\:9000
+version=1

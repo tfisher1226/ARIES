@@ -1,0 +1,106 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="languageActions.xhtml" />
+	</ui:define>
+	
+	<!-- page title -->
+	<ui:define name="pageTitle">
+		<span class="pageTitle">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="manager" value="#{languagePageManager}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- page breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{languagePageManager.getBreadcrumbs('language')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- navigator -->
+	<ui:define name="navigator">
+		<span class="navigator">
+			<ui:include src="languageWizardNavigator.xhtml" />
+		</span>
+	</ui:define>
+	
+	<!-- wizard breadcrumbs -->
+	<ui:define name="sectionBreadcrumbs">
+		<span class="sectionBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{languagePageManager.getBreadcrumbs('languageWizard')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- wizard title -->
+	<ui:define name="wizardTitle">
+		<span class="wizardTitle">
+			<ui:include src="/common/wizardTitle.xhtml">
+				<ui:param name="manager" value="#{languagePageManager}" />
+				<ui:param name="menu" value="/nam/model/language/languageWizardMenu.xhtml" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- wizard messages -->
+	<ui:define name="wizardMessages">
+		<span class="wizardMessages">
+			<ui:include src="/common/wizardMessages.xhtml">
+				<ui:param name="domain" value="languageWizard" />
+				<ui:param name="message" value="Enter Service #{languageWizard.section}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content"
+			id="languageWizard">
+			
+			<aries:formPane
+				columns="2"
+				marginTop="2px">
+				
+				<aries:panel
+					width="#{helper.wizard_middleSection_width}"
+					height="#{helper.wizard_middleSection_height}"
+					borderWidth="1px"
+					borderColor="#{userSkin.borderColor}"
+					backgroundColor="inherit">
+					
+					<!-- panel -->
+					<ui:include src="languageRecord_#{languageWizard.section}Section.xhtml">
+						<ui:param name="section" value="application" />
+					</ui:include>
+					
+					<!-- control -->
+					<ui:include src="languageWizardControl.xhtml" />
+				</aries:panel>
+				
+				<!-- help -->
+				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="domain" value="language" />
+					<ui:param name="section" value="#{languageWizard.section}" />
+				</ui:include>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

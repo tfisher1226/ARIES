@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="serviceListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="serviceListMenu.xhtml">
+			<ui:param name="tableId" value="serviceListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="serviceListTable"
+			value="#{serviceListManager.dataModel}"
+			rowCount="#{serviceListManager.dataModel.rowCount}"
+			visible="#{serviceListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processServiceListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processServiceListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: 300px; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- DOMAIN -->
+			<aries:textColumn
+				width="100"
+				header="Domain">
+				<h:outputText value="#{rowItem.service.domain}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.service.name}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.service.namespace}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

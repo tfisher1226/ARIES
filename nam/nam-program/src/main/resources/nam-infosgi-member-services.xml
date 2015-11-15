@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<services>
+        <requires module="infosgi-data"/>
+
+	    <service name="getMembers">
+            <scope>application</scope>
+
+			<execution>
+				<action name="getMembers">
+					<processor ref="memberRepository"/>
+			    	<result type="infosgi-member-list"/>
+				</action>
+			</execution>
+		</service>
+
+	    <service name="getMembersByOrganization">
+            <scope>application</scope>
+
+			<execution>
+                <timeout>10000</timeout>
+				<action name="getMembersByOrganization">
+                    <input type="Long" name="organizationId"/>
+					<call name="memberRepository"/>
+					<call name="memberEnrichmentProcessor.enrich"/>
+			    	<result type="infosgi-member-list"/>
+				</action>
+			</execution>
+
+            <transition on="exception" to="Service2"/>
+		</service>
+	</services>
+
+
+	<components>
+    	<component name="enrichMemberRecords">
+            <input type="infosgi-member-list" name="members"/>
+        </component>
+	</components>
+
+
+</model>
+

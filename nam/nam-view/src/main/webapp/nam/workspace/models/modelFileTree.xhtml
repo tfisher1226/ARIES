@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:nam="http://aries.org/nam">
+
+	<a4j:region>
+		<aries:tree
+			id="modelFileTree"
+			manager="#{modelFileTreeManager}">
+
+			<ui:include src="modelFileTreeNodes.xhtml">
+				<ui:param name="onmousedown" value="processModelFileTreeMouseDown(event, '#{rowKey}', '#{item.id}', '#{item.type}', '#{item.label}')" />
+				<ui:param name="oncontextmenu" value="showModelFileTreeMenu(event, '#{item.type}', '#{item.label}')"/>
+				<ui:param name="ontoggle" value="toggleModelFileTreeNode('#{item.id}')" />
+
+				<ui:param name="ondblclick" value="setCursorWait(this); showProgress('', '#{item.label}', 'Retrieving information...'); viewMembers('#{item.id}')"/>
+				<ui:param name="renderList" value="modelFileTreeMenu, modelFileTreeToolbar" />
+			</ui:include>
+		</aries:tree>
+	</a4j:region>
+</ui:composition>

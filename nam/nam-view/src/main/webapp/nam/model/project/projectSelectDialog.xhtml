@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchProjectSelectDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{projectSelectManager.show}"
+		onbegin="setCursorWait(this); showProgress('', 'Project Records', 'Retrieving current records...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showProjectSelectDialog()"
+		render="projectSelectModule, projectSelectDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{projectSelectManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{projectSelectManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{projectSelectManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="projectModule">
+		
+		<a4j:region
+			rendered="#{projectSelectManager.visible}">
+			
+			<aries:dialog
+				id="ProjectDialog">
+				render="#{projectSelectManager.renderList} projectSelectPane">
+				
+				<!-- border -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- dialog content -->
+					<ui:include src="projectSelectPane.xhtml" />
+				</aries:borderPane>
+			</aries:dialog>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

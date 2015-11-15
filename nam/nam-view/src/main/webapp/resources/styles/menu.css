@@ -1,0 +1,40 @@
+.menuItem {
+}
+
+.menuLabel,
+.contextMenuLabel {
+	padding-left: 7px;
+	padding-right: 12px;
+	font-size: 16px; 
+	font-weight: normal;
+	color: #004;
+}
+
+.menuLabel:hover,
+.contextMenuLabel:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.menuIconColumn { 
+	width: auto; 
+	padding-top: 0px; 
+	padding-bottom: 0px; 
+	text-align: right; 
+}
+
+.menuTextColumn { 
+	width: auto; 
+	padding-top: 2px; 
+	padding-left: 2px; 
+	padding-right: 4px; 
+}
+
+.menuItemColumn { 
+	width: auto; 
+	height: 20px; 
+	vertical-align: top; 
+	padding-top: 1px; 
+	padding-bottom: 2px; 
+	padding-left: 4px; 
+}

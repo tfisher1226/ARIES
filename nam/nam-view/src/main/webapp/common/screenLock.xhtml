@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!--
+	  ** applicationListActions
+	  ** a4j:jsFunction methods to support the Application List.
+	  -->
+
+	<a4j:region>
+		<script type="text/javascript">
+			function lockScreen() {
+				#{rich:component('tmpDialog')}.show();
+			}				
+	  
+			function unlockScreen(event) {
+				#{rich:component('tmpDialog')}.hide();
+			}
+		</script>
+
+		<rich:popupPanel 
+			id="tmpDialog"
+			modal="true" 
+			width="1"
+			height="1"
+			shadowDepth="0"
+			domElementAttachment="form"
+			onhideXX="alert(8)"
+			styleClass="dialog">
+		</rich:popupPanel>
+
+	</a4j:region>
+</ui:composition>

@@ -1,0 +1,241 @@
+.title,
+.subtitle,
+.navigation {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.title {
+	padding-top: 20px;
+	font-size: 24px;
+}
+
+.title a {
+	text-decoration: none;
+}
+
+.subtitle {
+	font-size: 18px;
+}
+
+.body {
+	width: 100%; 
+	max-width: 100%; 
+	height: 100%; 
+	margin: 0 auto; 
+	padding: 0 0; 
+	overflow: scroll; 
+	border: 0px solid #ccc; 
+	background-color: inherit;	
+}
+	
+.container {
+	display: block; 
+	width: #{helper.contentWidth}px; 
+	height: #{helper.contentHeight}; 
+	height: auto; 
+	margin: 0 auto; 
+	padding-bottom: 20px;
+	background-color: #edd;
+	background-color: inherit;
+	background-color: #f6f6ff;
+}
+
+.navigator {
+	float: left;
+	display: block;
+	width: auto; 
+	height: auto; 
+	margin-top: 2px;
+	margin-left: #{helper.wizard_leftSection_marginLeft}px; 
+	margin-right: #{helper.wizard_leftSection_marginRight}px; 
+	background-color: #dde;
+	background-color: inherit;
+}
+
+.content,
+.content2 {
+	width: auto;
+	display: block; 
+	margin-top: 2px;
+	text-align: center;
+	background-color: orange;
+	background-color: inherit;
+}
+
+.content {
+	overflow: auto; 
+}
+
+.viewer {
+	display: block; 
+	position: relative; 
+	left: 0px; 
+	right: 0px; 
+	width: auto; 
+	height: auto; 
+	margin: auto; 
+	padding: 0px; 
+	background-color: inherit;
+}
+
+.pageTitle,
+.pageTitle0,
+.pageTitle2,
+.sectionTitle {
+	float: left; 
+	display: block; 
+	margin: 0px; 
+	margin-top: 8px; 
+	text-align: left;
+	background-color: white;
+	background-color: inherit;
+}
+
+.pageTitle {
+	min-width: 170px;
+	margin-left: #{helper.wizard_leftSection_marginLeft}px; 
+	margin-right: #{helper.wizard_leftSection_marginRight}px; 
+}
+
+.pageTitle2 {
+	margin-left: #{helper.wizard_leftSection_marginLeft}px; 
+	margin-right: 10px; 
+}
+
+.pageViews {
+	float: left; 
+	margin-top: 16px; 
+	background-color: inherit;
+}
+
+.pageControls {
+	float: right; 
+	background-color: inherit;
+}
+
+.pageBreadcrumbs {
+	display: block; 
+	padding: 4px;
+	margin-top: 8px; 
+	background-color: #ccf;
+	background-color: inherit;
+}
+
+.sectionBreadcrumbs {
+	float: left; 
+	display: block; 
+	margin-top: 20px; 
+	margin-left: 4px; 
+	background-color: #ccf;
+	background-color: inherit;
+} 
+
+.sectionTitle,
+.sectionMessages {
+	padding-left: 0px;
+}
+
+.sectionHeader {
+	padding: 4px 18px 0px 20px;
+	background-color: inherit;
+}
+
+.sectionBody {
+	height: auto;
+	padding: 20px;
+	padding-top: 4px;
+	display: block; 
+	border-top: 0px solid #{userSkin.borderColor}; 
+	background-color: inherit;
+}
+
+.wizardContent {
+	border-width: 1px;
+	border-radius: 5px;
+	border: 1px solid #{userSkin.borderColor}; 
+	background-color: inherit;
+}
+
+.wizardBody {
+	width: auto;
+	height: auto;
+	padding: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: inherit;
+}
+
+.tableBorder2 {
+	display: block;
+	border: 1px solid #{userSkin.borderColor};
+}
+
+.wizardTitle {
+	background-color: inherit;
+}
+
+.wizardMessages {
+	display: block; 
+	margin-top: 8px;
+	margin-left: 4px;
+	margin-bottom: 10px;
+	background-color: inherit;
+}
+
+.wizardSection {
+	width: auto;
+	height: auto;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-color: inherit;
+}
+
+.reference {
+	width: 280px; 
+	height: auto; 
+	float: left; 
+}
+
+.splitLeft250 {
+	width: auto;
+	width: auto; 
+	margin-left: 256px; 
+	text-align: left;
+}
+
+.splitLeft300 {
+	width: auto;
+	width: auto; 
+	margin-left: 300px; 
+	text-align: left;
+}
+
+
+.section {
+	width: auto;
+	text-align: left;
+}
+
+.panel {
+	width: 500px;
+	padding: 24px;
+	margin-top: 8px;
+	text-align: left;
+	border: 1px solid #C3BBB6;
+}
+
+#status {
+	float: right;
+	padding-right: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: right;
+}
+
+.control {
+	clear: both;
+	padding: 8px;
+	text-align: right;
+}

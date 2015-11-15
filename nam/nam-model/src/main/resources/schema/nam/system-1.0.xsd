@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0" 
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:system="http://www.aries.org/nam/system" 
+	targetNamespace="http://www.aries.org/nam/system">
+
+<!--  
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd" />
+-->	
+	<xs:import namespace="http://www.aries.org/common" />
+
+	<!--  
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.aries.nam.system" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	-->	
+	
+</xs:schema>
+

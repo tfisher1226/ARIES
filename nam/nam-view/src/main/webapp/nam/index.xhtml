@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- PATH -->
+	<ui:define name="path">
+
+		<aries:formPane
+			width="auto" 
+			columns="8"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:link
+				value="Top"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showMainPage(this)" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:text 
+				width="auto"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="--&gt;" 
+				backgroundColor="inherit" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:link
+				value="Applications"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showApplicationsPage(this)" />
+		</aries:formPane>
+	</ui:define>
+
+	<!-- NAVIGATOR -->
+	<ui:define name="navigator">
+		<div class="navigator">
+			<ui:include src="/nam/navigator.xhtml" />
+		</div>
+	</ui:define>
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<div class="content">
+		
+			<aries:panel
+				width="auto"
+				height="auto"
+				backgroundColor="inherit">
+			
+				<aries:formPane 
+					width="600px"
+					height="auto"
+					margin="10px"
+					backgroundColor="#f6f6f6">
+				
+	
+		
+				</aries:formPane>
+			</aries:panel>
+		</div>
+	</ui:define>
+</ui:composition>

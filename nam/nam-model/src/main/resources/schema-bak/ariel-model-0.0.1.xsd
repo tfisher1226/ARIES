@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	jaxb:version="2.0" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	xmlns:common="http://www.aries.org/common/0.0.1"
+	xmlns:aries="http://nam/model/0.0.1" 
+	xmlns:ariel="http://www.aries.org/ariel/model/0.0.1" 
+	targetNamespace="http://www.aries.org/ariel/model/0.0.1">
+
+	<xs:import namespace="http://www.aries.org/common/0.0.1" schemaLocation="aries-common-0.0.1.xsd"/>
+	<xs:import namespace="http://nam/model/0.0.1" schemaLocation="model-0.0.1.xsd"/>
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.ariel.model"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+
+	<!-- 
+		Aries type (document root)
+	-->
+
+	<xs:element name="aries" type="ariel:Aries"/>
+	<xs:complexType name="Aries">
+	</xs:complexType>
+
+
+	<!-- 
+		Protocol type
+	-->
+
+	<xs:element name="protocol" type="ariel:Protocol"/>
+	<xs:complexType name="Protocol">
+	</xs:complexType>
+
+
+	<!-- 
+		Scenario type
+	-->
+
+	<xs:element name="scenario" type="ariel:Scenario"/>
+	<xs:complexType name="Scenario">
+	</xs:complexType>
+
+
+	<!-- 
+		Subscription type
+	-->
+
+	<xs:element name="subscription" type="ariel:Subscription"/>
+	<xs:complexType name="Subscription">
+	</xs:complexType>
+
+
+	<!-- 
+		Invocation type
+	-->
+
+	<xs:element name="invocation" type="ariel:Invocation"/>
+	<xs:complexType name="Invocation">
+	</xs:complexType>
+
+
+	<!-- 
+		Reception type
+	-->
+
+	<xs:element name="reception" type="ariel:Reception"/>
+	<xs:complexType name="Reception">
+	</xs:complexType>
+
+
+	<!-- 
+		Exception type
+	-->
+
+	<xs:element name="exception" type="ariel:Exception"/>
+	<xs:complexType name="Exception">
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+
+
+	<!-- 
+		Information layer root type
+	-->
+
+	<xs:element name="information" type="Information" />
+	<xs:complexType name="Information">
+		<xs:sequence>
+			<xs:element name="import" type="Import" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="domain" type="xs:string" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element name="label" type="xs:string" minOccurs="0" />
+			<xs:element name="version" type="xs:string" minOccurs="0" />
+			<xs:element name="description" type="xs:string" minOccurs="0" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="namespace" />
+			</xs:choice>
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="imported" type="xs:boolean" default="false" />
+		<xs:attribute name="included" type="xs:boolean" default="false" />
+		<xs:attribute name="exposed" type="xs:boolean" default="false" />
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+
+	<!--
+		Cache type
+	-->
+
+	<xs:element name="cache" type="Cache" />
+	<xs:complexType name="Cache">
+		<xs:complexContent>
+			<xs:extension base="Element">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" ref="transacted" />
+					<xs:element minOccurs="0" maxOccurs="1" name="scope" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="level" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" ref="items" />
+					<!--  
+					-->
+				</xs:sequence>
+				<xs:attribute name="ref" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+
+	<!-- 
+		Namespace type
+	-->
+
+	<xs:element name="namespaces">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="file" type="xs:string" />
+					<xs:element ref="namespace" />
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="namespace" type="Namespace" />
+	<xs:complexType name="Namespace">
+		<xs:sequence>
+			<!--  
+			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="prefix" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="uri" type="xs:string" minOccurs="0" maxOccurs="1" />
+			-->
+			<xs:element name="schema" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="filePath" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="imports" type="Namespace" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="annotation" type="Annotation" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="properties" minOccurs="0" maxOccurs="1" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="type" />
+				<xs:element ref="enumeration" />
+				<xs:element ref="element" />
+				<xs:element ref="cache" />
+				<xs:element ref="query" />
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:long" />
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="label" type="xs:string" />
+        <xs:attribute name="prefix" type="xs:string" />
+        <xs:attribute name="uri" type="xs:string" />
+        <xs:attribute name="version" type="xs:string" />
+		<xs:attribute name="global" type="xs:boolean" default="true" />
+		<xs:attribute name="imported" type="xs:boolean" />
+		<xs:attribute name="included" type="xs:boolean" />
+		<xs:attribute name="exported" type="xs:boolean" />
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="idStore" type="IdStore" />
+	<xs:complexType name="IdStore">
+		<xs:sequence>
+		</xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="key" type="xs:string" />
+        <xs:attribute name="initialValue" type="xs:long" default="1" />
+        <xs:attribute name="allocationSize" type="xs:long" default="1" />
+	</xs:complexType>
+	-->
+	
+
+	<!--
+		Elements type
+	-->
+	
+	<xs:element name="elements" type="Elements" />
+	<xs:complexType name="Elements">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="include" />
+				<xs:element ref="class" />
+				<xs:element ref="type" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--
+		Type type
+	-->
+
+	<xs:element name="type" type="Type" />
+	<xs:complexType name="Type">
+		<xs:sequence>
+			<xs:element name="annotations" type="Annotation" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="label" type="xs:string" />
+		<xs:attribute name="plural" type="xs:string" />
+		<xs:attribute name="namespace" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="key" type="xs:string" />
+		<xs:attribute name="structure" type="xs:string" />
+		<xs:attribute name="cached" type="xs:boolean" />
+		<xs:attribute name="public" type="xs:boolean" />
+		<xs:attribute name="description" type="xs:string" />
+	</xs:complexType>
+
+
+	<!--
+		Element type
+	-->
+	
+	<xs:element name="element" type="Element" />
+	<xs:complexType name="Element">
+		<xs:complexContent>
+			<xs:extension base="Type">
+				<xs:sequence>
+					<!-- This is for Model only -->
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element ref="id" />
+						<xs:element ref="item" />
+						<xs:element ref="secret" />
+						<xs:element ref="listItem" />
+						<xs:element ref="setItem" />
+						<xs:element ref="mapItem" />
+						<xs:element ref="grouping" />
+					</xs:choice>
+
+					<!-- These are for everything else -->
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="attribute" type="Attribute" />
+						<xs:element name="reference" type="Reference" />
+						<xs:element name="group" type="Grouping" />
+					</xs:choice>
+
+					<xs:element name="parentType" type="xs:string" minOccurs="0" maxOccurs="1" />
+					<xs:element name="superTypes" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="subTypes" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="referencedBy" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="containedBy" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+
+					<!--  
+					<xs:element name="group" type="Grouping" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="attribute" type="Attribute" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="reference" type="Reference" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="abstract" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+					<xs:element name="interface" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+					<xs:element name="required" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+					<xs:element name="superType" type="xs:string" minOccurs="0" maxOccurs="1" />
+					-->					
+				</xs:sequence>
+				<xs:attribute name="extends" type="xs:string" />
+				<xs:attribute name="abstract" type="xs:boolean" />
+				<xs:attribute name="root" type="xs:boolean" default="false" />
+				<xs:attribute name="transient" type="xs:boolean" default="false" />
+				<xs:attribute name="persisted" type="xs:boolean" default="false" />
+				<xs:attribute name="hierarchical" type="xs:boolean" default="false" />
+				<xs:attribute name="sortable" type="xs:boolean" default="false" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<!--
+		Enumeration type
+	-->
+	
+	<xs:element name="enumeration" type="Enumeration" />
+	<xs:complexType name="Enumeration">
+		<xs:complexContent>
+			<xs:extension base="Type">
+				<xs:sequence>
+					<xs:element name="literal" type="Literal" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="default" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="literal" type="Literal" />
+	<xs:complexType name="Literal">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="value" type="xs:int" />
+		<xs:attribute name="label" type="xs:string" />
+	</xs:complexType>
+	
+	
+	<!--
+		Field type
+	-->
+	
+	<xs:element name="field" type="Field" />
+	<xs:complexType name="Field" abstract="false">
+		<xs:complexContent>
+			<xs:extension base="Type">
+				<xs:attribute name="simple" type="xs:boolean" default="false" />
+				<xs:attribute name="unique" type="xs:boolean" default="false" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+				<xs:attribute name="nillable" type="xs:boolean" default="false" />
+				<xs:attribute name="transient" type="xs:boolean" default="false" />
+				<xs:attribute name="volatile" type="xs:boolean" default="false" />
+				<xs:attribute name="indexed" type="xs:boolean" default="false" />
+				<xs:attribute name="derived" type="xs:boolean" default="false" />
+				<xs:attribute name="changeable" type="xs:boolean" default="true" />
+				<xs:attribute name="unsettable" type="xs:boolean" default="false" />
+				<xs:attribute name="ordered" type="xs:boolean" default="true" />
+				<xs:attribute name="managed" type="xs:boolean" default="true" />
+				<!--  
+				<xs:attribute name="notnull" type="xs:boolean" default="false" />
+				-->
+				<xs:attribute name="minOccurs" type="xs:int" default="0" />
+				<xs:attribute name="maxOccurs" type="xs:int" default="1" />
+				<xs:attribute name="many" type="xs:boolean" default="false" />
+		        <!--
+				<xs:attribute name="enum" type="xs:boolean" />
+		        -->
+				<xs:attribute name="column" type="xs:string" />
+				<xs:attribute name="fetch" type="FetchType" />
+				<xs:attribute name="cascade" type="xs:string" />
+				<xs:attribute name="enact" type="xs:string" />
+				<xs:attribute name="hash" type="HashType" />
+				<xs:attribute name="default" type="xs:string" />
+				<xs:attribute name="useForLabel" type="xs:boolean" default="false" />
+				<xs:attribute name="useForEquals" type="xs:boolean" default="false" />
+				<xs:attribute name="placeholder" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <xs:simpleType name="FetchType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LAZY" />
+			<xs:enumeration value="EAGER" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="CascadeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="MERGE" />
+			<xs:enumeration value="DETACH" />
+			<xs:enumeration value="REFRESH" />
+			<xs:enumeration value="PERSIST" />
+			<xs:enumeration value="REMOVE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="HashType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MD5" />
+			<xs:enumeration value="SHA" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="IdSourceType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="auto" />
+			<xs:enumeration value="identity" />
+			<xs:enumeration value="sequence" />
+			<xs:enumeration value="table" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+		
+	<!--
+		Attribute type
+		Attributes whose types are SimpleTypes (primitives or enums) will map into XSD Attributes unless
+		their multiplicity is greater than 1.  The only exceptions are "HREF" types such as "xs:anyURI" 
+		or "xs:IDREF", which must map into XSD Elements.
+	-->
+	
+	<xs:element name="attribute" type="Attribute" />
+	<xs:complexType name="Attribute">
+		<xs:complexContent>
+			<xs:extension base="Field">
+				<xs:attribute name="id" type="xs:boolean" />
+				<xs:attribute name="ref" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent> 
+	</xs:complexType>
+
+
+	<!--
+		Reference type
+		References that are contained will always map to XSD Elements having Complex Types. 
+		If not contained, a Reference may generate either into an XSD Attribute or an 
+		XSD Element having a SimpleType.  As with Attribute, generation of Reference 
+		is forced into an XSD Element if multiplicity is greater than 1.
+	-->
+	
+	<xs:element name="reference" type="Reference" />
+	<xs:complexType name="Reference">
+		<xs:complexContent>
+			<xs:extension base="Field">
+				<xs:sequence>
+					<!--  
+					<xs:element name="multiple" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" />
+					<xs:element name="contained" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" />
+					<xs:element name="bidirectional" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" />
+					<xs:element name="inverse" type="xs:string" minOccurs="0" maxOccurs="1" default="" />
+					<xs:element name="transient" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" />
+					<xs:element name="volatile" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" />
+					<xs:element name="derived" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false" />
+					-->
+					<xs:element name="itemType" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+
+				<xs:attribute name="relation" type="xs:string" />
+				<xs:attribute name="binding" type="xs:string" default="id" />
+				<xs:attribute name="contained" type="xs:boolean" default="false" />
+				<xs:attribute name="mappedBy" type="xs:string" />
+				<xs:attribute name="twoWay" type="xs:boolean" default="false" />
+				<xs:attribute name="inverse" type="xs:boolean" default="false" />
+				<xs:attribute name="restriction" type="xs:string" />
+				<xs:attribute name="source" type="xs:string" />
+				<xs:attribute name="index" type="xs:string" />
+				<xs:attribute name="ref" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent> 
+	</xs:complexType>
+
+
+	<!--
+		Annotation type
+	-->
+	
+	<xs:element name="annotation" type="Annotation" />
+	<xs:complexType name="Annotation">
+		<xs:sequence>
+			<xs:element name="source" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="details" type="common:Map" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+		
+	<!--
+		Group type
+	-->
+	
+	<xs:element name="grouping" type="Grouping" />
+	<xs:complexType name="Grouping">
+		<xs:sequence>
+			<!-- This is for Model only -->
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="id" />
+				<xs:element ref="item" />
+				<xs:element ref="secret" />
+				<xs:element ref="listItem" />
+				<xs:element ref="setItem" />
+				<xs:element ref="mapItem" />
+			</xs:choice>
+
+			<!-- This are for everything else -->
+			<xs:element name="fields" type="Field" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+	</xs:complexType>
+	
+	
+	<!--
+		Items type
+	-->
+	
+	<xs:element name="items" type="Items" />
+	<xs:complexType name="Items">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="id" />
+				<xs:element ref="item" />
+				<xs:element ref="secret" />
+				<xs:element ref="listItem" />
+				<xs:element ref="setItem" />
+				<xs:element ref="mapItem" />
+			</xs:choice>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="abstractItem" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="dataItem" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="listItem" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="setItem" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="mapItem" />
+			-->
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+
+	<!--
+		Item types
+	-->
+
+	<xs:element name="id" type="Id" />
+	<xs:complexType name="Id">
+		<xs:complexContent>
+			<xs:extension base="Attribute">
+				<xs:attribute name="source" type="IdSourceType" />
+		        <xs:attribute name="initialValue" type="xs:long" default="1" />
+		        <xs:attribute name="allocationSize" type="xs:long" default="1" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:element name="item" type="Item" />
+	<xs:complexType name="Item">
+		<xs:complexContent>
+			<xs:extension base="Reference">
+				<xs:attribute name="ascend" type="xs:boolean" default="true" />
+				<xs:attribute name="descend" type="xs:boolean" default="false" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="listItem" type="ListItem" />
+	<xs:complexType name="ListItem">
+		<xs:complexContent>
+			<xs:extension base="Reference">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="setItem" type="SetItem" />
+	<xs:complexType name="SetItem">
+		<xs:complexContent>
+			<xs:extension base="Reference">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="mapItem" type="MapItem" />
+	<xs:complexType name="MapItem">
+		<xs:complexContent>
+			<xs:extension base="Reference">
+				<!--  
+				<xs:attribute name="key" type="xs:string" />
+				-->
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="secret" type="Secret" />
+	<xs:complexType name="Secret">
+		<xs:complexContent>
+			<xs:extension base="Attribute">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	
+	
+	<!--  
+		Query type
+		**********
+	-->
+
+	<xs:element name="query" type="Query" />
+	<xs:complexType name="Query">
+		<xs:sequence>
+			<xs:element name="from" type="xs:string" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="condition" />
+				<xs:element ref="criteria" />
+			</xs:choice>
+			<xs:element minOccurs="0" ref="orderBy" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="distinct" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+	<xs:element name="condition" type="Condition" />
+	<xs:complexType name="Condition">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="in" />
+				<xs:element ref="like" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="criteria" type="Criteria" />
+	<xs:complexType name="Criteria">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="in" />
+				<xs:element ref="like" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="orderBy" type="OrderBy" />
+	<xs:complexType name="OrderBy">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="item" />
+		</xs:sequence>
+	</xs:complexType>
+	
+
+	<!--  
+		Operators and operator meaning
+		******************************
+		
+		ALL - TRUE if all of a set of comparisons are TRUE.
+	
+		AND - TRUE if both Boolean expressions are TRUE.
+	
+		ANY - TRUE if any one of a set of comparisons are TRUE.
+	
+		BETWEEN - TRUE if the operand is within a range.
+	
+		EXISTS - TRUE if a subquery contains any rows.
+	
+		IN - TRUE if the operand is equal to one of a list of expressions.
+	
+		LIKE - TRUE if the operand matches a pattern.
+	
+		NOT - Reverses the value of any other Boolean operator.
+	
+		OR - TRUE if either Boolean expression is TRUE.
+	
+		SOME - TRUE if some of a set of comparisons are TRUE.
+	-->	
+
+	<xs:element name="like" type="Like" />
+	<xs:complexType name="Like">
+		<xs:attribute name="field" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="required" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+	<xs:element name="in" type="In" />
+	<xs:complexType name="In">
+		<xs:attribute name="field" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="required" type="xs:boolean" default="false" />
+	</xs:complexType>
+	
+	
+</xs:schema>
+

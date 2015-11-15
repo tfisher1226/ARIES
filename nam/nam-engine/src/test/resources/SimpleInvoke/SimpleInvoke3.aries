@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model/0.0.1 c:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>SimpleInvoke</name>
+	<description>Example application for simple service invocation</description>
+
+	<sources>
+		<source name="SimpleInvoke" file="SimpleInvoke.bpel"/>
+	</sources>
+
+	<bindings>
+		<binding name="jms"></binding>
+	</bindings>
+
+	<providers>
+		<provider name="JBossMQ" type="jms">
+            <jndi-name>jboss-jms</jndi-name>
+            <connection-url>localhost:1099</connection-url>
+            <context-factory>org.jnp.interfaces.NamingContextFactory</context-factory>
+
+            <connection-factory>
+                <name>ConnectionFactory</name>
+                <session-type>topic</session-type>
+                <transacted>true</transacted>
+                <max-pool-size>4</max-pool-size>
+                <security-domain>loanQuoteRealm</security-domain>
+                <user-name>admin</user-name>
+                <password>admin</password>
+            </connection-factory>
+		</provider>
+	</providers>
+
+	<channels>
+		<linkType name="intf:myClientCalling_PartnerLinkType" method="jaxws"/>
+		<linkType name="intf2:theExternalService_PartnerLinkType" method="jaxws"/>
+
+		<link name="theClient_PartnerLink" type="intf:myClientCalling_PartnerLinkType" method="jaxws"/>
+		<link name="theExternalService_PartnerLink" type="intf2:theExternalService_PartnerLinkType" method="jaxws"/>
+
+		<link>
+			<method>jaxws</method>
+			<name></name>name>
+			<type></type>
+		</link>
+
+		<channel name="theClient_PartnerLink">
+			<provider>JAXWS</provider>
+            <provider>JBossMQ</provider>  
+			<name>theClient_PartnerLink</name>name>
+			<type>intf:myClientCalling_PartnerLinkType</type>
+		</channel>
+		
+		<channel name="simpleInvokeChannelJMS">
+            <provider>JBossMQ</provider>  
+            <jndi-name>topic/topicB</jndi-name>  
+            <target-queue>creditCheckRequestQueue</target-queue>
+            <invalid-queue>creditCheckRequestInvalidQueue</invalid-queue>
+            <expired-queue>creditCheckRequestExpiredQueue</expired-queue>
+            <no-local-receipt>true</no-local-receipt>
+            <redelivery-delay>10000</redelivery-delay>  
+            <max-delivery-attempts>3</max-delivery-attempts>
+            <connection-factory>ConnectionFactory1</connection-factory>
+		</channel>
+		
+		<channel name="helloWorldChannelWS">
+			<provider>JAXWS</provider>
+			<link>theExternalService_PartnerLink</link>
+			<type>intf2:theExternalService_PartnerLinkType</type>
+		</channel>
+	</channels>
+
+	<links>
+		<channel name="myClientCalling_PartnerLinkType">
+		</channel>
+
+		<role name="myClientCalling_PartnerLinkType">
+		</role>
+		
+		<link name="theClient_PartnerLink">
+			<provider>JAXWS</provider>
+            <provider>JBossMQ</provider>  
+			<name>theClient_PartnerLink</name>name>
+			<channel>myClientCalling_PartnerLinkType</channel>
+		</link>
+
+		<link name="theExternalService_PartnerLink">
+			<channel>theExternalService_PartnerLink</channel>
+			<type>intf2:theExternalService_PartnerLinkType</type>
+		</link>
+	</links>
+
+	<applications>
+		<application>
+			<name>model3</name>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<module>
+				<type>pom</type>
+				<name>model3</name>
+			</module>
+
+			<module>
+				<type>client</type>
+				<packaging>jar</packaging>
+				<name>model3-simple-client</name>
+				<invoker channel="theClient_PartnerLink"/>
+			</module>
+
+			<module>
+				<type>service</type>
+				<packaging>war</packaging>
+				<name>model3-simple-service</name>
+				<service>
+					<listener>theClient_PartnerLink</listener>
+					<listener>theClient_PartnerLink</listener>
+					<invoker channel="theClient_PartnerLink"/>
+					<execution transacted="true">
+						<process>SimpleInvoke</process>
+					</execution>
+				</service>
+			</module>
+
+			<module>
+				<type>model</type>
+				<packaging>jar</packaging>
+				<name>model3-hello-model</name>
+				<namespace>http://simple_invoke/helloworld</namespace>
+			</module>
+
+			<module>
+				<type>client</type>
+				<packaging>jar</packaging>
+				<name>model3-hello-client</name>
+				<invoker>theClient_PartnerLink</invoker>
+			</module>
+			
+			<module>
+				<type>service</type>
+				<packaging>war</packaging>
+				<name>model3-hello-service</name>
+				<service ref="HelloWorldWSService">
+					<listener>theExternalService_PartnerLink</listener>
+					<!--  
+					<execution transacted="true">
+						<action>model3-hello-service</action>
+					</execution>
+					-->
+				</service>
+			</module>
+		</application>
+	</applications>
+</project>

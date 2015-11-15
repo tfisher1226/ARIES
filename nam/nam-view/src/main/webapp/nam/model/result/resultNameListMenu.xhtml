@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:region>
+		<aries:outputPane
+			id="resultNameListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="resultNameListContextMenu"
+				target="resultNameListTable">
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="View Result..."
+					icon="/icons/common/Open16.gif"
+					tooltip="View selected Result record..."
+					onclick="processViewElement(event, 'Result')">
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="Edit Result..."
+					icon="/icons/common/Edit16.gif"
+					tooltip="Edit selected Result record..."
+					onclick="processEditElement(event, 'Result')">
+				</aries:contextMenuItem>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="New Result..."
+						icon="/icons/common/New16.gif"
+						tooltip="Create new Result for selected Project..."
+						onclick="processNewElement(event., 'Result')">
+					</aries:contextMenuItem>
+				</c:if>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="Remove Result"
+						icon="/icons/common/Remove16.gif"
+						tooltip="Remove Result record from the system"
+						onclick="processRemoveElement(event, 'Result')">
+					</aries:contextMenuItem>
+				</c:if>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

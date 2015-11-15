@@ -1,0 +1,107 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="messagingListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="messagingListMenu.xhtml">
+			<ui:param name="tableId" value="messagingListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="messagingListTable"
+			value="#{messagingListManager.dataModel}"
+			rowCount="#{messagingListManager.dataModel.rowCount}"
+			visible="#{messagingListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processMessagingListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processMessagingListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- DOMAIN -->
+			<aries:textColumn
+				width="100"
+				header="Domain">
+				<h:outputText value="#{rowItem.messaging.domain}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.messaging.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.messaging.label}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.messaging.version}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.messaging.description}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.messaging.namespace}" />
+			</aries:textColumn>
+			
+			<!-- IMPORTED -->
+			<aries:textColumn
+				width="100"
+				header="Imported">
+				<h:outputText value="#{rowItem.messaging.imported}" />
+			</aries:textColumn>
+			
+			<!-- INCLUDED -->
+			<aries:textColumn
+				width="100"
+				header="Included">
+				<h:outputText value="#{rowItem.messaging.included}" />
+			</aries:textColumn>
+			
+			<!-- EXPOSED -->
+			<aries:textColumn
+				width="100"
+				header="Exposed">
+				<h:outputText value="#{rowItem.messaging.exposed}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.messaging.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.messaging.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

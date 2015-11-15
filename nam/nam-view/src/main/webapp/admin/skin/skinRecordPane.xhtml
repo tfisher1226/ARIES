@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:layeredPane
+		name="skinRecordPane">
+
+		<aries:label
+			height="30"
+			paddingLeft="8px"
+			value="Skin Record View"
+			backgroundColor="inherit" />
+		
+		<aries:tabPane>
+			<ui:param name="width" value="#{width-2}" />
+			<ui:param name="height" value="#{height-80}" />
+
+			<aries:tab
+				label="Skin List"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="skinListPane.xhtml">
+					<ui:param name="itemManager" value="#{skinInfoManager}" />
+					<ui:param name="listManager" value="#{skinListManager}" />
+				</ui:include>
+			</aries:tab>
+			
+			<aries:tab
+				label="Skin Structure"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="skinStructurePane.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

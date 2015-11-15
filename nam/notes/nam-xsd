@@ -1,0 +1,37 @@
+Note the mechanism used for accessing components in other schemas which have the same targetNamespace: <include>. When accessing components in a schema with a different namespace the <import> element is used, as we saw above in the Heterogeneous Design.
+
+Heterogeneous Namespace Design
+This design approach says to give each schema a different targetNamespace specified explicitely in the schema.
+(all schemas have elementFormDefault="qualified")
+
+Homogeneous Namespace Design
+This design approach says to create a single, umbrella targetNamespace for all the schemas.
+Note that all schemas will have the same targetNamespace specified explicitely in the schema.
+(all schemas have elementFormDefault="qualified")
+
+Chameleon Namespace Design
+This design approach says to give the "main" schema a targetNamespace, and the "supporting" schemas have no targetNamespace.
+a schema is able to access components in schemas that have no targetNamespace, using <include>.
+(all schemas have elementFormDefault="qualified")
+
+Impact of Design Approach on Instance Documents
+Above we have shown how the schemas would be designed using the three design approaches. Let's turn now to the instance document. Does an instance document differ depending on the design approach? All of the above schemas have been designed to expose the namespaces in instance documents (as directed by: elementFormDefault="qualified").   Basically, when a targetNamespace of a schema is specified and elementFormDefault="qualified", then the instance document must list that namespace in its header.
+
+If they had instead all used elementFormDefault="unqualified" then instance documents would all have this form:
+
+    <?xml version="1.0"?>
+    <c:Company xmlns:c="http://www.company.org"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation=
+                              "http://www.company.org
+                               Company.xsd">
+            <Person>
+                    <Name>John Doe</Name>
+                    <SSN>123-45-6789</SSN>
+            </Person>
+            <Product>
+                    <Type>Widget</Type>
+            </Product>
+    </c:Company>
+
+

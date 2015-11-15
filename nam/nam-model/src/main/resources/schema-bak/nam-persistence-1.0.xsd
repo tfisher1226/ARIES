@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-operation-1.0.xsd" />
+	<xs:include schemaLocation="nam-information-1.0.xsd" />
+
+
+	<!--
+		Persistence Layer
+	-->
+
+	<xs:element name="persistence" type="Persistence"/>
+	<xs:complexType name="Persistence">
+		<xs:sequence>
+			<xs:element name="import" type="Import" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="domain" type="xs:string" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element name="version" type="xs:string" minOccurs="0" />
+			<xs:element name="namespace" type="xs:string" minOccurs="0" />
+			<!--  
+			<xs:element name="namespace" type="xs:string" minOccurs="0" />
+			-->
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="resource" />
+				<xs:element ref="provider" />
+				<xs:element ref="adapter" />
+				<xs:element ref="source" />
+				<xs:element ref="unit" />
+				<xs:element ref="cache" />
+				<xs:element ref="repository" />
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string" />
+		<xs:attribute name="imported" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+
+	<!--
+		Repository type
+	-->
+
+	<xs:element name="repository" type="Repository"/>
+	<xs:complexType name="Repository">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" ref="unit"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="interface" type="Interface"/>
+		</xs:all>
+		<xs:attribute name="ref" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+
+
+	<!--
+		Unit type
+	-->
+
+	<xs:element name="units">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="unit"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="unit" type="Unit"/>
+	<xs:complexType name="Unit">
+		<xs:sequence>
+			<xs:element name="source" type="Source" minOccurs="0" maxOccurs="1" />
+			<xs:element name="adapter" type="Adapter" minOccurs="0" maxOccurs="1" />
+			<xs:element name="namespace" type="Namespace" minOccurs="0" maxOccurs="1" />
+			<xs:element name="transacted" type="Transacted" minOccurs="0" maxOccurs="1" />
+			<xs:element name="elements" type="Elements" minOccurs="0" maxOccurs="1" />
+			<xs:element name="queries" type="Query" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="properties" type="Properties" minOccurs="0" maxOccurs="1" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="include" />
+				<xs:element ref="import" />
+			</xs:choice>
+			
+			<!--  
+			<xs:element name="testSource" type="Source" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="schemas" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="namespaces" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="elements" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="adapter" minOccurs="1" maxOccurs="1" />
+			<xs:element ref="properties" minOccurs="0" maxOccurs="1" />
+			-->
+
+			<!--  
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="schema" />
+				<xs:element ref="namespace" />
+				<xs:element ref="common:property" />
+				<xs:element ref="adapter" />
+				<xs:element ref="elements" />
+				<xs:element ref="query" />
+			</xs:choice>
+			-->
+
+			<!--  
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="transacted" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			-->
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" ref="transacted" />
+			<xs:element name="transactionType" type="TransactionType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="namespaces" type="Namespace" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="schemas" type="Schema" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="dataSource" type="DataSource" minOccurs="0" maxOccurs="1" />
+			<xs:element name="testDataSource" type="DataSource" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="properties" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="queries" minOccurs="0" maxOccurs="1" />
+			-->
+			<!--  
+			<xs:element ref="schemas" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="namespaces" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="packages" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element ref="entities" minOccurs="0" maxOccurs="1" />
+			-->
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string" />
+		<xs:attribute name="name" type="xs:string" />
+	</xs:complexType>
+
+
+	<!--
+		DataSource type
+	-->
+
+	<xs:element name="sources">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="source"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="source" type="Source"/>
+	<xs:complexType name="Source">
+		<xs:complexContent>
+			<xs:extension base="Provider">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="driverClass" type="xs:string"/>
+					<xs:element default="10" minOccurs="0" maxOccurs="1" name="maxActive" type="xs:int"/>
+					<xs:element default="30" minOccurs="0" maxOccurs="1" name="maxIdle" type="xs:int"/>
+					<xs:element default="10" minOccurs="0" maxOccurs="1" name="maxWait" type="xs:int"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="adapter" type="Adapter"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- 
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="alias" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="connectionUrl" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="contextFactory" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="packagePrefixes" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="driverClass" type="xs:string"/>
+			<xs:element default="10" minOccurs="0" maxOccurs="1" name="maxActive" type="xs:int"/>
+			<xs:element default="30" minOccurs="0" maxOccurs="1" name="maxIdle" type="xs:int"/>
+			<xs:element default="10" minOccurs="0" maxOccurs="1" name="maxWait" type="xs:int"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="userName" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+		</xs:all>
+		-->
+	</xs:complexType>
+
+    <xs:simpleType name="Vendor">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HSQL"/>
+			<xs:enumeration value="MYSQL"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!--
+		Entity type
+	-->
+
+	<xs:element name="entities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="entity"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="entity" type="Entity"/>
+	<xs:complexType name="Entity">
+		<xs:sequence>
+			<xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="type" use="required"/>
+	</xs:complexType>
+
+	
+	<!--  
+	<xs:element name="data-unit" type="data-unit" />
+
+	<xs:complexType name="data-unit">
+		<xs:sequence>
+			<xs:element name="entity" type="entity" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element ref="property" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+
+		<xs:attribute name="id" type="xs:ID" use="required" />
+
+		<xs:attribute name="name" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="255" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		
+		<xs:attribute name="source" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:maxLength value="255" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+
+		<xs:attribute name="type" type="TransactionType" use="required">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">
+					The type will be used to determine the transactional context
+					(if any) that operations may execute within.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	-->
+
+</xs:schema>
+

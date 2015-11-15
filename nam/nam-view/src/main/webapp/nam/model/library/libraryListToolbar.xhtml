@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="libraryListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="libraryListNewButton"
+				value="New Library..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Library Record"
+				enabled="#{securityGuard.canCreate('library')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Library')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="libraryListEditButton"
+				value="Edit Library..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Library record for edit..."
+				enabled="#{libraryListManager.hasSelection() and securityGuard.canUpdate('library')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Library')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="libraryListRemoveButton"
+				value="Remove Library..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Library record from system..."
+				enabled="#{libraryListManager.hasSelection() and securityGuard.canDelete('library')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Library')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="libraryListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Library information from server"
+				enabled="#{securityGuard.canOpen('library')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshLibraryList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

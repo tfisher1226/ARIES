@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="namespaceListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="namespaceListNewButton"
+				value="New Namespace..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Namespace Record"
+				enabled="#{securityGuard.canCreate('namespace')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Namespace')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="namespaceListEditButton"
+				value="Edit Namespace..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Namespace record for edit..."
+				enabled="#{namespaceListManager.hasSelection() and securityGuard.canUpdate('namespace')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Namespace')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="namespaceListRemoveButton"
+				value="Remove Namespace..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Namespace record from system..."
+				enabled="#{namespaceListManager.hasSelection() and securityGuard.canDelete('namespace')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Namespace')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="namespaceListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Namespace information from server"
+				enabled="#{securityGuard.canOpen('namespace')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshNamespaceList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="faultListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="faultListMenu.xhtml">
+			<ui:param name="tableId" value="faultListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="faultListTable"
+			value="#{faultListManager.dataModel}"
+			rowCount="#{faultListManager.dataModel.rowCount}"
+			visible="#{faultListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processFaultListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processFaultListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
+			tablePanelStyleClass="none">
+			
+			<!-- CODE -->
+			<aries:textColumn
+				width="100"
+				header="Code">
+				<h:outputText value="#{rowItem.fault.code}" />
+			</aries:textColumn>
+			
+			<!-- MESSAGE -->
+			<aries:textColumn
+				width="100"
+				header="Message">
+				<h:outputText value="#{rowItem.fault.message}" />
+			</aries:textColumn>
+			
+			<!-- CAUSE -->
+			<aries:textColumn
+				width="100"
+				header="Cause">
+				<h:outputText value="#{faultHelper.toString(rowItem.fault.cause)}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

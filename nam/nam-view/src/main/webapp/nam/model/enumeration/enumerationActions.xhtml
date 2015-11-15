@@ -1,0 +1,148 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- TODO set only if not provided by parent 
+	<ui:param name="type" value="Enumeration" />
+	<ui:param name="unit" value="#{domain}#{type}" />
+	-->
+	
+	<ui:param name="newAction" value="newEnumeration" />
+	<ui:param name="newActionHeader" value="Enumeration Records" />
+	
+	<ui:param name="editAction" value="editEnumeration" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	
+	<ui:param name="listToolbar" value="enumerationListToolbar" />
+	
+	
+	<h:outputScript target="">
+	function enableEnumerationToolbar() {
+		//alert('#{domain} #{module} #{unit} #{manager}');
+		var toolbar = #{rich:enumeration(listToolbar)};
+		jQuery(toolbar).find(".rf-ddm-itm-dis").hide();
+		jQuery(toolbar).find(".toolItem").show();
+		//showObject(toolbar);
+		//enableToolbar(toolbar);
+	}
+	
+	function selectEnumeration(index, id) {
+		executeSelectEnumeration(index, id);
+		enableEnumerationToolbar();
+		return true;
+	}
+	
+	function openEnumeration(index, id) {
+		executeSelectOpenEnumeration(index, id);
+		enableEnumerationToolbar();
+		return true;
+	}
+	</h:outputScript>
+	
+	
+	<!--
+	  ** Select Enumeration record from list
+	  -->
+	
+	<a4j:jsFunction
+		name="executeSelectEnumeration"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		render="#{listToolbar}">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Select Enumeration record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="executeSelectOpenEnumeration"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', '#{editActionHeader}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showEnumerationPage()"
+		render="">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="enumerationDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="enumerationListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Launch Enumeration dialog in "edit record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="executeOpenEnumeration"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', '#{editActionHeader}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showEnumerationPage()"
+		render="">
+		
+		<a4j:param name="targetDomain" value="#{section}" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="enumerationListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{itemManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Refresh Enumeration record list
+	  -->
+	
+	<a4j:jsFunction
+		name="executeRefreshEnumerationList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{enumerationListManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'Enumeration Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="enumerationListPane">
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Save Enumeration record
+	  -->
+	
+	<!--
+	<a4j:jsFunction
+		name="save#{domain}EnumerationSelection"
+		execute="#{domain}EnumerationDialogModule"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.editEnumeration}"
+		onbegin="setCursorWait(); showProgress('', 'Enumeration Information for: #{enumerationHelper.toString(rowItem.enumeration)}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); show#{domain}EnumerationDialog()"
+		render="#{domain}EnumerationDialogModule, #{domain}EnumerationDialog, #{domain}EnumerationListToolbar">
+		
+		<a4j:param name="selectedRecordIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="selectedRecordId" assignTo="#{listManager.selectedRecordId}" />
+	</a4j:jsFunction>
+	-->
+</ui:composition>

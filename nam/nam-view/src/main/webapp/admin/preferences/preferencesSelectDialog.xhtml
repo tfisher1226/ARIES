@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchPreferencesSelectDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{preferencesSelectManager.show}"
+		onbegin="setCursorWait(this); showProgress('', 'Preferences Records', 'Retrieving current records...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showPreferencesSelectDialog()"
+		render="preferencesSelectModule, preferencesSelectDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{preferencesSelectManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{preferencesSelectManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{preferencesSelectManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="preferencesModule">
+		
+		<a4j:region
+			rendered="#{preferencesSelectManager.visible}">
+			
+			<aries:dialog
+				id="PreferencesDialog">
+				render="#{preferencesSelectManager.renderList} preferencesSelectPane">
+				
+				<!-- border -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- dialog content -->
+					<ui:include src="preferencesSelectPane.xhtml" />
+				</aries:borderPane>
+			</aries:dialog>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

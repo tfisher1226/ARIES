@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+	   
+	    
+	<!--
+		  ** showElementListPage()
+		  ** Goes to the Element Management List Page.
+	  -->
+	
+	<a4j:jsFunction
+		name="showElementListPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		action="#{elementPageManager.initializeElementListPage}"
+		onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Preparing Element List...')">
+	</a4j:jsFunction>
+
+	
+	<!--
+		  ** showElementTreePage()
+		  ** Goes to the Element Management Tree Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showElementTreePage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{elementPageManager.initializeElementTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Preparing Element Tree...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showElementManagementPage()
+		  ** Goes to the Element Management Overview Page.
+	  -->
+	
+	<a4j:jsFunction
+		name="showElementManagementPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		action="#{elementPageManager.initializeElementManagementPage}"
+		onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Preparing Element related information...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showElementWizardPage()
+		  ** Goes to the Element Wizard Page.
+	  -->
+	
+    <a4j:jsFunction 
+		name="showElementWizardPage" 
+    	execute="@this"
+		immediate="true"
+    	bypassUpdates="true"
+		action="#{elementWizard.refresh}"
+		onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Preparing Element information...')">
+	    
+		<!-- these values are passed-in -->
+		<a4j:param name="section" assignTo="#{elementWizard.section}" />
+	
+		<!-- these values are assigned here -->
+		<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{elementWizard.origin}" />
+    </a4j:jsFunction>
+	    
+	    
+	<!--
+		  ** showNewElementDialog()
+		  ** Launches the Element Dialog in "new" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showNewElementDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{elementInfoManager.newElement}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Creating new Element...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showElementDialog()"
+			render="elementModule, elementDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{elementInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="elementListPane" assignTo="#{elementInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{elementInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showEditElementDialog()
+		  ** Launches the Element Dialog in "edit" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showEditElementDialog" 
+			execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{elementInfoManager.editElement}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Preparing Element information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showElementDialog()"
+			render="elementModule, elementDialog">
+		
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{elementInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="elementListPane" assignTo="#{elementInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{elementInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

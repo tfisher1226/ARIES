@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="userInterfaceListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="userInterfaceListNewButton"
+				value="New UserInterface..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new UserInterface Record"
+				enabled="#{securityGuard.canCreate('userInterface')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'UserInterface')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="userInterfaceListEditButton"
+				value="Edit UserInterface..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected UserInterface record for edit..."
+				enabled="#{userInterfaceListManager.hasSelection() and securityGuard.canUpdate('userInterface')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'UserInterface')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="userInterfaceListRemoveButton"
+				value="Remove UserInterface..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected UserInterface record from system..."
+				enabled="#{userInterfaceListManager.hasSelection() and securityGuard.canDelete('userInterface')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'UserInterface')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="userInterfaceListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read UserInterface information from server"
+				enabled="#{securityGuard.canOpen('userInterface')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshUserInterfaceList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

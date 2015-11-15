@@ -1,0 +1,140 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="skinWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Skin Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="skinWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{skinWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{skinWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="skinWizard"
+					padding="2px 4px"
+					offset="true" />
+				
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="skinWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{skinWizard.populateEnabled}"
+					manager="#{skinWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="skinWizardPreviousButton"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
+					rendered="#{skinWizard.backVisible}"
+					enabled="#{skinWizard.backEnabled}"
+					manager="#{skinWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Skin', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="skinWizardNextButton"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					rendered="#{skinWizard.nextVisible}"
+					enabled="#{skinWizard.nextEnabled}"
+					manager="#{skinWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Skin', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="skinWizardFinishButton"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
+					rendered="#{skinWizard.finishVisible}"
+					enabled="#{skinWizard.finishEnabled}"
+					manager="#{skinWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Skin', 'Validating and submitting new Skin...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- cancel button -->
+				<aries:dialogButton
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="skinWizardCancelButton"
+					tooltip="Cancel creation of new Skin"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{skinWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Skin Management', 'Cancelling creation of Skin...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:controlPane>
+</ui:composition>

@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:groupPane
+		width="380"
+		height="140"
+		backgroundColor="inherit"
+		label="Operation Selection">
+		
+		<aries:formPane
+			columns="2"
+			backgroundColor="inherit">
+			
+			<h:selectManyCheckbox
+				layout="pageDirection"
+				converter="operationConverter"
+				value="#{manager.selectedItems1}"
+				enabledClass=""
+				disabledClass=""
+				unselectedClass=""
+				onclickXX="alert('#{domain}')"
+				styleClass="formCheckbox"
+				style="padding-left: 6px; background-color: inherit">
+				
+				<f:selectItems
+					var="operationItem"
+					value="#{manager.itemList1}"
+					itemLabel="#{operationHelper.toString(operationItem)}" />
+			</h:selectManyCheckbox>
+			
+			<h:selectManyCheckbox
+				layout="pageDirection"
+				converter="operationConverter"
+				value="#{manager.selectedItems2}"
+				styleClass="formCheckbox"
+				style="margin-left: 0px; adding-left: 6px; vertical-align: bottom; background-color: inherit">
+				
+				<f:selectItems
+					var="operationItem"
+					value="#{manager.itemList2}"
+					itemLabel="#{operationHelper.toString(operationItem)}" />
+			</h:selectManyCheckbox>
+		</aries:formPane>
+	</aries:groupPane>
+</ui:composition>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+
+	<domain>org.aries</domain>
+	<name>nam</name>
+	
+	<namespace 
+        prefix="nam" 
+        name="nam-model" 
+        uri="http://nam/model">
+
+		<!--
+			Container element
+			*****************
+		 -->
+
+		<element name="Container" root="true">
+			<item name="type" type="ContainerType" useForEquals="true" default="ContainerType.PLAIN" />
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="image" type="xs:string" />
+		</element>
+		
+		<enumeration name="ContainerType">
+			<literal name="PLAIN" label="Plain" />
+			<literal name="CACHING" label="Caching" />
+			<literal name="MESSAGING" label="Messaging" />
+			<literal name="PERSISTENCE" label="Persistence" />
+		</enumeration>
+		
+		
+		<!--
+			Master element
+			**************
+		 -->
+
+		<element name="Master" extends="Node" root="true">
+			<item name="version" type="xs:string" />
+			<item name="dnsDomain" type="xs:string" useForEquals="true" />
+			<item name="dnsIP" type="IPAddress" useForEquals="true" />
+			<item name="bindAddress" type="IPAddress" />
+		</element>
+
+
+		<!--
+			Minion element
+			**************
+		 -->
+
+		<element name="Minion" extends="Node" root="true">
+			<item name="version" type="xs:string" />
+			<item name="dnsDomain" type="xs:string" useForEquals="true" />
+			<item name="dnsIP" type="IPAddress" useForEquals="true" />
+			<item name="bindAddress" type="IPAddress" />
+			<item name="volumeDirectory" type="xs:string" />
+			<listItem name="pods" type="Pod" />
+		</element>
+		
+		
+		<!--
+			Network element
+			***************
+		 -->
+
+		<element name="Networks">
+			<listItem name="networks" type="Network" contained="true" />
+		</element>
+		
+		<element name="Network" root="true" hierarchical="true">
+			<listItem name="imports" type="nam:Import" />
+			<item name="domain" type="xs:string" useForEquals="true" />
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="initialSize" type="xs:integer" />
+			<item name="minSize" type="xs:integer" />
+			<item name="maxSize" type="xs:integer" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Master</itemType>
+				<itemType>Minion</itemType>
+			</listItem>
+			<item name="imported" type="xs:boolean" default="false" />
+			<item name="included" type="xs:boolean" />
+			<item name="exposed" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		
+		<!--
+			Node element
+			************
+		 -->
+
+		<element name="Node" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="nodeIP" type="xs:string" useForEquals="true" />
+			<listItem name="properties" type="Property" contained="true" />
+		</element>
+		
+
+		<!--
+			Pod element
+			***********
+		 -->
+
+		<element name="Pod">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="ipAddress" type="IPAddress" />
+			<!--
+			<listItem name="services" type="Service" />
+			-->
+			<listItem name="containers" type="Container" />
+			<listItem name="volumes" type="Volume" />
+		</element>
+		
+		
+		<!--
+			Replicator element
+			******************
+		 -->
+
+		<element name="Replicator" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<listItem name="pods" type="Pod" />
+		</element>
+				
+		
+		<!--
+			Volume element
+			**************
+		 -->
+
+		<element name="Volume" root="true">
+			<item name="type" type="VolumeType" useForEquals="true" />
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="store" type="xs:string" />
+			<item name="mountPath" type="xs:string" />
+			<item name="store" type="xs:string" />
+			<item name="properties" type="Properties" />
+		</element>
+
+		<enumeration name="VolumeType">
+			<literal name="EMPTY_DIR" />
+			<literal name="HOST_PATH" />
+			<literal name="GCE_PERSISTENT_DISK" />
+			<literal name="AWS_ELASTIC_BLOCK_STORE" />
+		</enumeration>
+		
+	</namespace>
+</information>

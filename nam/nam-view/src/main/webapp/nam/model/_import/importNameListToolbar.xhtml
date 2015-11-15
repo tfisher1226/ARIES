@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="importNameListToolbar">
+	
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="importListNewButton"
+				label="New Import..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Import Record"
+				enabled="#{securityGuard.canCreate('import')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewImport(event, 'Import')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px 2px 2px"
+				offset="false" />
+			
+			<!--  
+			<aries:toolButton
+				id="importListEditButton"
+				label="Edit..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Import record for edit..."
+				enabled="#{importListManager.hasSelection() and securityGuard.canUpdate('import')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditImport(event, 'Import')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px"
+				offset="false" />
+			
+			<aries:toolButton
+				id="importListRemoveButton"
+				value="Remove Import..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Import record from system..."
+				enabled="#{importListManager.hasSelection() and securityGuard.canDelete('import')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveImport(event, 'Import')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px"
+				offset="false" />
+				-->
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="importListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Import information from server"
+				enabled="#{securityGuard.canOpen('import')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshImportNameList(event)"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 2px 2px 1px"
+				offset="false" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

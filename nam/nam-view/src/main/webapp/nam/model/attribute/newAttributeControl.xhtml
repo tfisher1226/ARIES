@@ -1,0 +1,123 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup 
+				location="left"
+				backgroundColor="inherit">
+				
+				<aries:toolButton
+					id="attributeWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Register Dialog"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Display in progress', 'Placeholder for Help Window 2', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup 
+				location="right">
+
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="attributeWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showProgress('#{attributeWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="@this"
+					offset="true" />
+
+				<!-- TODO show this only if app is new -->
+				<aries:dialogButton
+					label="Populate"
+					default="true"
+					mode="ajax"
+					execute="@all"
+					id="attributeWizardTestValuesButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					manager="#{attributeWizard}"
+					action="refresh"
+					onclick="setCursorWait(this); showProgress('#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="attributeMessages"
+					offset="true" />
+					
+				<aries:dialogButton
+					label="Back"
+					default="true"
+					mode="ajax"
+					execute="@all"
+					id="attributeWizardPreviousButton"
+					icon="/icons/arrow/PreviousPage16.gif"
+					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					manager="#{attributeWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					enabled="#{attributeWizard.backEnabled}"
+					render="attributeMessages"
+					offset="true" />
+					
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="attributeWizardNextButton"
+					icon="/icons/arrow/NextPage16.gif"
+					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					manager="#{attributeWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					enabled="#{attributeWizard.nextEnabled}"
+					render="attributeMessages"
+					offset="true" />
+
+				<aries:dialogButton
+					label="Finish"
+					default="true"
+					mode="ajax"
+					execute="@all"
+					id="attributeWizardFinishButton"
+					icon="/icons/common/Default16.gif"
+					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					manager="#{attributeWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					enabled="#{attributeWizard.finishEnabled || true}"
+					render="attributeMessages"
+					offset="true" />
+
+				<aries:dialogButton 
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="attributeWizardCancelButton"	
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Cancel creation of new Attribute"
+					manager="#{attributeWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('#{title}', 'Attribute Management', 'Cancelling creation of Attribute...');"
+					oncomplete="setCursorDefault(); showAttributeManagementPage(this)"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar> 
+	</aries:controlPane>
+</ui:composition>

@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:controlPane>
+			<aries:controlbar>
+				<aries:toolbarGroup 
+					location="left">
+	
+					<aries:toolButton
+						tooltip="Show Help on File Upload Dialog"
+						icon="/icons/help/Help24.gif"
+						mode="client"
+						onclick="popupWarning('BOOKSHOP Help', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')" />
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup 
+					location="right">
+	
+					<aries:dialogButton
+						id="uploadDialogRefresh"
+						default="false"
+						icon="/icons/common/Refresh16.gif"
+						iconDisabled="/icons/common/RefreshDisabled16.gif"
+						manager="#{globals}"
+						action="doNothing"
+						onclick="setCursorWait(this); "
+						oncomplete="setCursorDefault(this); hideProgress()"
+						render="#{dialog}Form" />
+	
+					<aries:dialogButton
+						label="Save"
+						rendered="true"
+						immediate="true"
+						offset="true"
+						icon="/icons/common/SaveSmall16.gif"
+						iconDisabled="/icons/common/SaveDisabled16.gif"
+						manager="#{uploadHandler}"
+						action="#{uploadHandlerAction}"
+						onclick="setCursorWait(this); showProgress('File Upload', 'Processing uploaded data...')"
+						oncomplete="hideProgress(); setCursorDefault(this); if (#{!messages.exist}) hideUploadDialog()" 
+						render="#{uploadHandlerRender}" />
+	
+					<aries:dialogButton
+						label="Cancel"
+						mode="ajax"
+						offset="true"
+						manager="#{globals}"
+						action="doNothing"
+						oncomplete="hideUploadDialog()" />
+				</aries:toolbarGroup>
+			</aries:controlbar> 
+		</aries:controlPane>
+	</aries:tag>
+</ui:composition>

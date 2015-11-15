@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:layeredPane
+		name="userRecordPane">
+		
+		<aries:label 
+			height="30" 
+			marginTop="10px"
+			marginBottom="10px"
+			paddingLeft="8px"
+			value="Record List for: User"
+			backgroundColor="inherit" />
+			
+		<aries:tabPane>
+			<aries:tab
+				width="auto"
+				height="auto"
+				fontSize="12"
+				label="User List"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:param name="width" value="648" />
+				<ui:include src="userListPane.xhtml" />
+			</aries:tab>
+			
+			<aries:tab
+				fontSize="12"
+				label="User Structure"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="userStructurePane.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

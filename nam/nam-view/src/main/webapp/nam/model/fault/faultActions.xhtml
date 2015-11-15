@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showFaultListPage()
+		  ** Goes to the Fault Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showFaultListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{faultPageManager.initializeFaultListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Fault Records', 'Preparing Fault List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showFaultTreePage()
+		  ** Goes to the Fault Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showFaultTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{faultPageManager.initializeFaultTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Fault Records', 'Preparing Fault Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showFaultManagementPage()
+		  ** Goes to the Fault Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showFaultManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{faultPageManager.initializeFaultManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Fault Records', 'Preparing Fault related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showFaultWizardPage()
+		  ** Goes to the Fault Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showFaultWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{faultWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Fault Records', 'Preparing Fault information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{faultWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{faultWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewFaultDialog()
+		  ** Launches the Fault Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewFaultDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{faultInfoManager.newFault}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Fault Records', 'Creating new Fault...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showFaultDialog()"
+			render="faultModule, faultDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{faultInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="faultListPane" assignTo="#{faultInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{faultInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditFaultDialog()
+		  ** Launches the Fault Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditFaultDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{faultInfoManager.editFault}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Fault Records', 'Preparing Fault information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showFaultDialog()"
+			render="faultModule, faultDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{faultInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="faultListPane" assignTo="#{faultInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{faultInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

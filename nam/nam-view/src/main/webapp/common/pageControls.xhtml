@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty pageType}">
+		<c:set var="pageType" value="other" />
+	</c:if>
+
+	<c:if test="#{pageType == 'main'}">
+		<c:set var="marginTop" value="16px" />
+		<c:set var="marginRight" value="20px" />
+	</c:if>
+
+	<c:if test="#{pageType == 'other'}">
+		<c:set var="marginTop" value="10px" />
+		<c:set var="marginRight" value="20px" />
+	</c:if>
+		
+	<!-- collapse button -->
+	<h:panelGroup 
+		id="collapseHelpSection" 
+		class="pageControls"
+		rendered="#{workspaceManager.helpSectionVisible}">
+
+		<aries:dialogButton
+			id="collapseHelpButton"
+			icon="/icons/common/UnSelect16.gif"
+			tooltip="Hide Help Section"
+			padding="6"
+			mode="ajax"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			rendered="#{true}"
+			manager="#{workspaceManager}"
+			action="hideHelpSection"
+			onclick="setCursorWait(source); lockScreen()"
+			oncomplete="location.reload(true)"
+			style="margin-top: #{marginTop}; margin-left: 10px; margin-right: #{marginRight};"
+			offset="false">
+			<a4j:attachQueue requestDelay="0" />
+		</aries:dialogButton>
+	</h:panelGroup>
+
+	<!-- expand button -->
+	<h:panelGroup 
+		id="expandHelpSection" 
+		class="pageControls"
+		rendered="#{not workspaceManager.helpSectionVisible}">
+		
+		<aries:dialogButton
+			id="expandHelpButton"
+			icon="/icons/common/Select16.gif"
+			tooltip="Display Help Section"
+			padding="6"
+			mode="ajax"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			rendered="#{true}"
+			manager="#{workspaceManager}"
+			action="showHelpSection"
+			onclick="setCursorWait(source); lockScreen()"
+			oncomplete="location.reload(true)"
+			style="margin-top: #{marginTop}; margin-left: 10px; margin-right: #{marginRight};"
+			offset="false">
+			<a4j:attachQueue requestDelay="0" />
+		</aries:dialogButton>
+	</h:panelGroup>
+</ui:composition>

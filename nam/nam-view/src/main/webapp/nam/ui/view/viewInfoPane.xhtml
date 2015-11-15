@@ -1,0 +1,37 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}ViewInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="View Information">
+			
+			<ui:include src="../import/importListPane.xhtml">
+				<ui:param name="itemManager" value="#{importInfoManager}" />
+				<ui:param name="listManager" value="#{importListManager}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{view.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Domain" label="Domain" value="#{view.domain}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Controls" label="Controls" value="#{view.controls}" items="#{controlsList}" defaultLabel="select Controls" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Relations" label="Relations" value="#{view.relations}" items="#{relationsList}" defaultLabel="select Relations" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

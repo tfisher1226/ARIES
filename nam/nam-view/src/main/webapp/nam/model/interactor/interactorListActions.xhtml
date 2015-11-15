@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** interactorListActions
+	  ** a4j:jsFunction methods to support the Interactor List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var interactorListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshInteractorList(event)
+		  ** Refreshes the current Interactor List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshInteractorList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{interactorListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Interactor Records', 'Refreshing current Interactor List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="interactorListActions, interactorListMenu, interactorListToolbar, interactorListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromInteractorList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromInteractorList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="interactorListActions, interactorListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{interactorListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{interactorListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="interactor" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="interactorListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromInteractorList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromInteractorList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="interactorListActions, interactorListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{interactorListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{interactorListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{interactorWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="interactorListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="interactorListActions, interactorListMenu, interactorListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** interactorListActions
+		  ** Javascript methods to support the Interactor List.
+		  -->
+		
+		<a4j:outputPanel
+			id="interactorListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getInteractorListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getInteractorListRowKey() {
+					if (interactorListState != null)
+						return interactorListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getInteractorListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getInteractorListRowLabel() {
+					if (interactorListState != null)
+						return interactorListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeInteractorListState()
+				  ** Initializes and verifies Interactor List state information.
+				  -->
+					
+				function initializeInteractorListState() {
+					try {
+						var rowIndex = '#{interactorListManager.selectedRecordIndex}';
+						var recordKey = '#{interactorListManager.selectedRecordKey}';
+						var recordLabel = '#{interactorListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateInteractorListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateInteractorListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Interactor List.
+				  -->
+					
+				function updateInteractorListState(event, rowIndex, recordKey, recordLabel) {
+					interactorListState = new Object();
+					interactorListState.rowIndex = rowIndex;
+					//interactorListState.recordId = recordId;
+					interactorListState.recordKey = recordKey;
+					interactorListState.recordLabel = recordLabel;
+					//show(interactorListState);
+				}
+					
+					
+				<!--
+				  ** enableInteractorListActions(type)
+				  ** Enables (or disables) Interactor List actions based on current client-side state.
+				  -->
+					
+				function enableInteractorListActions(type) {
+					//enableButton('interactorListViewButton');
+					enableButton('interactorListNewButton');
+					enableButton('interactorListEditButton');
+					enableButton('interactorListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processInteractorListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Interactor List.
+				  -->
+					
+				function processInteractorListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateInteractorListState(event, rowIndex, recordKey, recordLabel);
+					enableInteractorListActions('interactor');
+					try {
+						executeSelectFromInteractorList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processInteractorListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Interactor List.
+				  -->
+					
+				function processInteractorListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Interactor Records', 'Preparing Interactor ' + recordLabel + ' for editing...');
+						executeActionFromInteractorList(rowIndex, recordKey, 'Interactor', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('interactorListTable')});
+						if (interactorListState != null) {
+							var label = interactorListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (interactorListState != null) {
+							var label = interactorListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (interactorListState != null) {
+							var label = interactorListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (interactorListState != null)
+						label = interactorListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'interactorListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

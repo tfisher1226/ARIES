@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jaxb:bindings 
+	version="2.1"
+	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+
+    <jaxb:globalBindings>
+    	<xjc:simple />
+		<xjc:serializable uid="1" />
+		<xjc:javaType name="java.util.Date" xmlType="xs:date" adapter="org.aries.adapter.DateAdapter" />
+		<xjc:javaType name="java.util.Date" xmlType="xs:time" adapter="org.aries.adapter.DateAdapter" /> 
+		<xjc:javaType name="java.util.Date" xmlType="xs:dateTime" adapter="org.aries.adapter.DateAdapter" />
+		<xjc:javaType name="java.lang.Boolean" xmlType="xs:boolean" adapter="org.aries.adapter.BooleanAdapter" />
+    </jaxb:globalBindings>
+
+
+	<!--
+	<jaxb:bindings schemaLocation="aries-common-1.0.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="org.aries.common">
+	    	     <jaxb:javadoc>
+	    	     	<![CDATA[<body>
+	    	     		Package level documentation for generated package.
+	    	     	</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+	    </jaxb:schemaBindings>
+	</jaxb:bindings>
+	-->
+	
+	<!-- rename the value element
+	<jaxb:bindings schemaLocation="nam-common-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.common.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+			
+	        <jaxb:bindings node="//xs:complexType[@name='MetaType']">
+	            <jaxb:bindings node=".//xs:attribute[@name='Value']">
+	                <jaxb:property name="ValueAttribute"/>
+	            </jaxb:bindings>
+	        </jaxb:bindings>
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-security-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.security.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-execution-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.execution.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-operation-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.operation.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-messaging-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.messaging.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-persistence-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.persistence.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-information-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.information.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="nam-application-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.application.model">
+	    	     <jaxb:javadoc>
+					<![CDATA[<body>
+						Package level documentation for generated package.
+					</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	-->
+
+	<!--
+	<jaxb:bindings node=".//xs:attribute[@ref='class']">
+		<jaxb:property name="className"/>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="aries-common-1.0.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="org.aries.common">
+	    	     <jaxb:javadoc>
+	    	     	<![CDATA[<body>
+	    	     		Package level documentation for generated package.
+	    	     	</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+	    </jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<jaxb:bindings schemaLocation="aries-validate-1.0.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="org.aries.validate">
+	    	     <jaxb:javadoc>
+	    	     	<![CDATA[<body>
+	    	     		Package level documentation for generated package.
+	    	     	</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+	    </jaxb:schemaBindings>
+	</jaxb:bindings>
+	
+	<jaxb:bindings schemaLocation="system-1.0.xsd">
+		<jaxb:schemaBindings>
+			<jaxb:package name="org.aries.nam.system">
+	    	     <jaxb:javadoc>
+	    	     	<![CDATA[<body>
+	    	     		Package level documentation for generated package.
+	    	     	</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+		</jaxb:schemaBindings>
+	</jaxb:bindings>
+	-->
+	
+			<!--
+			<jaxb:nameXmlTransform>
+				<jaxb:typeName prefix="Xml"/>
+			</jaxb:nameXmlTransform>
+			-->
+
+</jaxb:bindings>

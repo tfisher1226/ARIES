@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showProviderListPage()
+		  ** Goes to the Provider Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showProviderListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{providerPageManager.initializeProviderListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Provider Records', 'Preparing Provider List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showProviderTreePage()
+		  ** Goes to the Provider Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showProviderTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{providerPageManager.initializeProviderTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Provider Records', 'Preparing Provider Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showProviderManagementPage()
+		  ** Goes to the Provider Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showProviderManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{providerPageManager.initializeProviderManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Provider Records', 'Preparing Provider related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showProviderWizardPage()
+		  ** Goes to the Provider Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showProviderWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{providerWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Provider Records', 'Preparing Provider information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{providerWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{providerWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewProviderDialog()
+		  ** Launches the Provider Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewProviderDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{providerInfoManager.newProvider}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Provider Records', 'Creating new Provider...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showProviderDialog()"
+			render="providerModule, providerDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{providerInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="providerListPane" assignTo="#{providerInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{providerInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditProviderDialog()
+		  ** Launches the Provider Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditProviderDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{providerInfoManager.editProvider}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Provider Records', 'Preparing Provider information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showProviderDialog()"
+			render="providerModule, providerDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{providerInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="providerListPane" assignTo="#{providerInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{providerInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<facelet-taglib 
+	version="2.2"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_2.xsd">
+    
+	<namespace>http://aries.org/nam</namespace>
+
+	<tag><tag-name>breadcrumbs</tag-name><source>../../common/breadcrumbs.xhtml</source></tag>
+
+	<!-- Layout-related -->
+	<tag><tag-name>mainRegionMenuTab</tag-name><source>nam/mainRegionMenuTab.xhtml</source></tag>
+	<tag><tag-name>mainRegionPane</tag-name><source>nam/mainRegionPane.xhtml</source></tag>
+	<tag><tag-name>mainRegionTab</tag-name><source>nam/mainRegionTab.xhtml</source></tag>
+	<tag><tag-name>mainRegionTabPane</tag-name><source>nam/mainRegionTabPane.xhtml</source></tag>
+
+	<!-- Tree-related -->
+	<tag><tag-name>domainTree</tag-name><source>nam/domainTree.xhtml</source></tag>
+
+</facelet-taglib>

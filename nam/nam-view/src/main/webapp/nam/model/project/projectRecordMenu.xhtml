@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	
+	<aries:toolbar type="">
+		<aries:toolbarGroup location="right">
+			<ui:include src="/common/addMenuButton.xhtml">
+				<ui:param name="id" value="addMenuButton" />
+				<ui:param name="panel" value="addMenuPanel" />
+			</ui:include>
+		
+			<h:panelGroup id="addMenuPanel" style="display: none">
+				<ui:include src="/common/menuItem.xhtml">
+					<ui:param name="label" value="Application" />
+					<ui:param name="icon" value="/icons/nam/Application16.gif" />
+					<ui:param name="id" value="projectApplicationButton" />
+					<ui:param name="manager" value="#{applicationInfoManager}" />
+					<ui:param name="action" value="newApplication" />
+					<ui:param name="onbegin" value="setCursorWait(event.source); hidePopupMenu(); showProgress('Nam', 'Application Records', 'Creating new Application...')" />
+					<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+				</ui:include>
+
+				<ui:include src="/common/menuItem.xhtml">
+					<ui:param name="label" value="Module" />
+					<ui:param name="icon" value="/icons/nam/Module16.gif" />
+					<ui:param name="id" value="projectModuleButton" />
+					<ui:param name="manager" value="#{moduleInfoManager}" />
+					<ui:param name="action" value="newModule" />
+					<ui:param name="onbegin" value="setCursorWait(event.source); hidePopupMenu(); showProgress('Nam', 'Module Records', 'Creating new Module...')" />
+					<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+				</ui:include>
+
+				<ui:include src="/common/menuItem.xhtml">
+					<ui:param name="label" value="Network" />
+					<ui:param name="icon" value="/icons/nam/Network16.gif" />
+					<ui:param name="id" value="projectNetworkButton" />
+					<ui:param name="manager" value="#{networkInfoManager}" />
+					<ui:param name="action" value="newNetwork" />
+					<ui:param name="onbegin" value="setCursorWait(event.source); hidePopupMenu(); showProgress('Nam', 'Network Records', 'Creating new Network...')" />
+					<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+				</ui:include>
+
+				<ui:include src="/common/menuItem.xhtml">
+					<ui:param name="label" value="Provider" />
+					<ui:param name="icon" value="/icons/nam/Provider16.gif" />
+					<ui:param name="id" value="projectProviderButton" />
+					<ui:param name="manager" value="#{providerInfoManager}" />
+					<ui:param name="action" value="newProvider" />
+					<ui:param name="onbegin" value="setCursorWait(event.source); hidePopupMenu(); showProgress('Nam', 'Provider Records', 'Creating new Provider...')" />
+					<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+				</ui:include>
+			</h:panelGroup>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

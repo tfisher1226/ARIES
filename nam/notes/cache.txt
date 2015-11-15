@@ -1,0 +1,40 @@
+@Entity
+@Table(name = "GRAPPE")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "grappeCache")
+public class Grappe implements Serializable, RegionalAccess {
+   @Id
+   @SequenceGenerator(name = "MAINSEQ", sequenceName = "SQ$MAIN")
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MAINSEQ")
+   private long id;
+
+   private String code;
+   private String name;
+   private boolean status = true;
+
+   @OneToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "TARGET_STORE_ID")
+   @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "grappeStoreCache")
+   private Store targetStore = null;
+
+   @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "subGrappesCache")
+   private Set<Grappe> subGrappes = new HashSet<Grappe>();
+
+   @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.EAGER)
+   @JoinColumn(name = "PARENT_ID")
+   private Grappe parent = null;
+
+   @OneToMany(mappedBy = "logisticsParent", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "grappeLogDependentsCache")
+   private Set<Grappe> logisticsDependents = new HashSet<Grappe>();
+
+   @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH }, fetch = FetchType.EAGER)
+   @JoinColumn(name = "LOGISTICS_PARENT_ID")
+   private Grappe logisticsParent = null;
+
+   public Grappe() {}
+...
+}
+
+
+

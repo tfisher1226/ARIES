@@ -1,0 +1,74 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+		
+		<c:if test="#{empty id}">
+			<c:set var="id" value="toolbar_#{globals.nextId()}" /> 
+		</c:if>
+		
+		<c:if test="#{empty itemSeparator}">
+			<c:set var="itemSeparator" value="none" /> 
+		</c:if>
+	
+		<!--  
+		<c:if test="#{empty styleClass}">
+			<c:set var="styleClass" value="toolbar" /> 
+		</c:if>
+	
+		<c:if test="#{empty contentClass}">
+			<c:set var="contentClass" value="toolbarContent" /> 
+		</c:if>
+	
+		<c:if test="#{empty separatorClass}">
+			<c:set var="separatorClass" value="toolbarSeparator" /> 
+		</c:if>
+		-->
+	
+		<c:if test="#{empty type}">
+			<c:set var="type" value="plain" /> 
+		</c:if>
+	 
+		<c:if test="#{type == 'plain'}">
+			<c:set var="borderSettings" value="border-width: 0px" /> 
+		</c:if>
+	
+		<c:if test="#{type == 'menubar'}">
+			<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
+			<c:set var="borderSettings" value="border: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-left-width: 1px; border-right-width: 1px" /> 
+		</c:if>
+	
+		<c:if test="#{type == 'table'}">
+			<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
+			<c:set var="borderSettings" value="border: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-top-width: 0px; border-left-width: 0px; border-right-width: 1px" /> 
+		</c:if>
+
+		<c:if test="#{type == 'tab'}">
+			<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
+			<c:set var="borderSettings" value="border-bottom: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}" /> 
+		</c:if>
+
+		<rich:toolbar 
+			id="#{id}"
+			itemSeparatorXX="#{itemSeparator}"
+			styleClassXX="toolbar #{styleClass}"
+			contentClassXX="toolbarContent" 
+			separatorClassXX="toolbarSeparator"
+			onclickXX="alert('#{backgroundSettings}')"
+			style="#{paddingSettings}; #{borderSettings};">
+			
+			<ui:insert />
+		</rich:toolbar>
+	</aries:tag>
+</ui:composition>

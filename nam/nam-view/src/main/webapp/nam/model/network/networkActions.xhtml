@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showNetworkListPage()
+		  ** Goes to the Network Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showNetworkListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{networkPageManager.initializeNetworkListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Network Records', 'Preparing Network List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showNetworkTreePage()
+		  ** Goes to the Network Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showNetworkTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{networkPageManager.initializeNetworkTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Network Records', 'Preparing Network Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showNetworkManagementPage()
+		  ** Goes to the Network Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showNetworkManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{networkPageManager.initializeNetworkManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Network Records', 'Preparing Network related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNetworkWizardPage()
+		  ** Goes to the Network Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNetworkWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{networkWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Network Records', 'Preparing Network information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{networkWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{networkWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewNetworkDialog()
+		  ** Launches the Network Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewNetworkDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{networkInfoManager.newNetwork}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Network Records', 'Creating new Network...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showNetworkDialog()"
+			render="networkModule, networkDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{networkInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="networkListPane" assignTo="#{networkInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{networkInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditNetworkDialog()
+		  ** Launches the Network Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditNetworkDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{networkInfoManager.editNetwork}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Network Records', 'Preparing Network information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showNetworkDialog()"
+			render="networkModule, networkDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{networkInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="networkListPane" assignTo="#{networkInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{networkInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

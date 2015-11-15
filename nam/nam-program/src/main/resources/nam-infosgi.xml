@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<name>infosgi</name>
+	<description>infosgi application set</description>
+
+	<applications>
+		<application>
+			<name>server</name>
+			<package>org.sgiusa</package>
+			<namespace>http://www.sgiusa.org/infosgi</namespace>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module name="infosgi" type="pom"/>
+				<module name="infosgi-data" structure="data" type="jar"/>
+				<module name="infosgi-client" structure="client" type="war"/>
+				<module name="infosgi-service" structure="service" type="war">
+					<include module="infosgi-data"/>
+				</module>
+			</modules>
+
+		</application>
+
+		<module>
+			<name>infosgi-service</name>
+			<type>org.aries.service</type>
+			<domain>org.sgiusa</domain>
+			<packaging>war</packaging>
+
+            <include module="common-data" version="0.0.1"/>
+            <include module="infosgi-data" version="0.0.1"/>
+
+			<services domain="org.sgiusa">
+               	<listener id="infosgiListener"/>
+               	<router id="infosgiRouter"/>
+			    <service ref="getMembers"/>
+			    <service ref="getMembersByOrganization"/>
+			</services>
+		</module>
+
+		<module>
+			<name>infosgi-data</name>
+			<type>org.aries.data</type>
+			<domain>org.sgiusa</domain>
+			<packaging>jar</packaging>
+
+            <requires module="common-data" version="0.0.1"/>
+
+			<repository ref="org.sgiusa.memberRepository"/>
+			<repository ref="org.sgiusa.organizationRepository"/>
+			<repository ref="org.sgiusa.userRepository"/>
+		</module>
+
+		<module>
+			<name>infosgi-model</name>
+			<type>org.aries.model</type>
+			<domain>org.sgiusa</domain>
+			<packaging>jar</packaging>
+
+            <reference module="common-model-0.0.1"/>
+
+			<xsd path="infosgi-0.0.1.xsd"/>
+		</module>
+
+		<module>
+			<name>infosgi-ui</name>
+			<type>org.aries.ui</type>
+			<domain>org.sgiusa</domain>
+			<packaging>jar</packaging>
+
+            <include module="common-ui-0.0.1"/>
+
+			<xsd path="infosgi-ui-0.0.1.xsd"/>
+		</module>
+	</applications>
+
+
+	<persistence>
+		<domain>org.sgiusa</domain>
+
+		<unit name="infosgiUnit" source="sgiusaDS" type="JTA">
+			<entity type="org.aries.data.entity.EmailAddress"/>
+			<entity type="org.aries.data.entity.PhoneNumber"/>
+			<entity type="org.aries.data.entity.StreetAddress"/>
+			<entity type="org.sgiusa.entity.Member"/>
+			<entity type="org.sgiusa.entity.Organization"/>
+			<entity type="org.sgiusa.entity.User"/>
+		</unit>
+
+        <repository name="memberRepository">
+			<unit ref="infosgiUnit"/>
+			<interface>
+		        <method name="getMembers" type="member-list"/>
+		        <method name="getMemberById" param="Long" return="Member"/>
+			</interface>
+			<queries>
+		        <query name="getMembers" type="member-list" />
+		        <query name="getMemberById" param="Long" return="Member" />
+			</queries>
+			<mappers>
+		        <mapper name="memberMapper" type="Member" />
+		        <mapper name="emailAddressMapper" type="EmailAddress" />
+		        <mapper name="phoneNumberMapper" type="PhoneNumber" />
+		        <mapper name="streetAddressMapper" type="StreetAddress" />
+			</mappers>
+        </repository>
+	</persistence>
+
+
+	<messaging>
+		<provider name="JBossMQ">
+            <jndi-name>jboss-jms</jndi-name>
+            <connection-url>localhost:1099</connection-url>
+            <context-factory>org.jnp.interfaces.NamingContextFactory</context-factory>
+
+            <connection-factory>
+                <name>bankConnectionFactory</name>
+                <session-type>topic</session-type>
+                <transacted>true</transacted>
+                <max-pool-size>4</max-pool-size>
+                <security-domain>LoanQuoteRealm</security-domain>
+                <user-name>admin</user-name>
+                <password>admin</password>
+            </connection-factory>
+		</provider>
+
+		<channel name="loanQuoteRequestTopic">
+            <provider>JBossMQ</provider>  
+            <jndi-name>topic/topicA</jndi-name>  
+            <redelivery-delay>10000</redelivery-delay>  
+            <max-delivery-attempts>3</max-delivery-attempts>
+            <connection-factory>bankConnectionFactory</connection-factory>
+		</channel>
+
+		<listener name="loanQuoteListener">
+            <receive-channel>loanQuoteRequestTopic</receive-channel>
+            <invalid-message-redirect>loanQuoteInvalidQueue</invalid-message-redirect>
+            <expired-message-redirect>loanQuoteExpiredQueue</expired-message-redirect>
+            <no-local-receipt>true</no-local-receipt>
+            <asynchronous>true</asynchronous>
+		</listener>
+
+		<sender name="loanQuoteSender">
+            <channel>loanQuoteRequestTopic</channel>
+            <delivery-mode>NON_PERSISTENT</delivery-mode>
+            <time-to-live>720000</time-to-live>
+            <priority>true</priority>
+            <durable>true</durable>
+            <timeout>360000</timeout>
+		</sender>
+
+		<invoker name="loanQuoteInvoker">
+            <channel>loanQuoteRequestTopic</channel>
+            <delivery-mode>NON_PERSISTENT</delivery-mode>
+            <timeToLive>720000</timeToLive>
+            <priority>true</priority>
+            <durable>true</durable>
+            <timeout>360000</timeout>
+		</invoker>
+
+		<router name="loanQuoteInvoker">
+		</router>
+	</messaging>
+</model>

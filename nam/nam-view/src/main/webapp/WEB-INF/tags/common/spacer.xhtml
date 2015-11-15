@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="">
+		<c:if test="#{empty width}">
+			<c:set var="width" value="1" /> 
+		</c:if>
+	
+		<c:if test="#{empty height}">
+			<c:set var="height" value="1" /> 
+		</c:if>
+
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true" /> 
+		</c:if>
+		
+		<div style="clear: both; width: #{width}px; padding-top: #{height}px; background-color: inherit" />
+		
+		<!--  
+		<div style="display: inline-block; width: 6px; margin-left: 6px; margin-top: 6px; background-color: red" />
+		
+		<h:graphicImage 
+			library="graphics" 
+			name="spacer.gif"
+			width="#{width}px" 
+			height="#{height}px" 
+			rendered="#{rendered}" />
+			-->
+
+	</aries:tag>
+</ui:composition>

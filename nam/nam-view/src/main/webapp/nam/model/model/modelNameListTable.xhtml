@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:outputPane
+		id="modelNameListTablePanel">
+
+		<!-- context menu -->
+		<ui:include src="modelListMenu.xhtml">
+			<ui:param name="tableId" value="modelNameListTable" />
+		</ui:include>
+		
+		<aries:table
+			id="modelNameListTable"
+			value="#{modelListManager.dataModel}"
+			rowCount="#{modelListManager.dataModel.rowCount}"
+			visible="#{modelListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processModelListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processModelListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
+			styleClass="noTableHeader"
+			tablePanelStyleClass="none"
+			rowClasses="none">
+			
+			<!-- Project Name 
+			<aries:textColumn header="Project">
+				<h:graphicImage library="graphics" name="/icons/nam/Model16.gif" />
+				<h:outputText value="#{rowItem.project.name}" />
+			</aries:textColumn>
+			-->
+			
+			<!-- Model Name -->
+			<aries:textColumn header="Model">
+				<aries:formPane columns="2">
+					<h:outputText value="#{rowItem.model.name}" styleClassXX="toolLabel" style="margin-left: 3px; white-space: nowrap; #{labelStyle}" />
+				</aries:formPane>
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

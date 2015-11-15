@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** adapterListActions
+	  ** a4j:jsFunction methods to support the Adapter List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var adapterListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshAdapterList(event)
+		  ** Refreshes the current Adapter List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshAdapterList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{adapterListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Adapter Records', 'Refreshing current Adapter List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="adapterListActions, adapterListMenu, adapterListToolbar, adapterListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromAdapterList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromAdapterList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="adapterListActions, adapterListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{adapterListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{adapterListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="adapter" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="adapterListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromAdapterList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromAdapterList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="adapterListActions, adapterListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{adapterListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{adapterListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{adapterWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="adapterListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="adapterListActions, adapterListMenu, adapterListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** adapterListActions
+		  ** Javascript methods to support the Adapter List.
+		  -->
+		
+		<a4j:outputPanel
+			id="adapterListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getAdapterListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getAdapterListRowKey() {
+					if (adapterListState != null)
+						return adapterListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getAdapterListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getAdapterListRowLabel() {
+					if (adapterListState != null)
+						return adapterListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeAdapterListState()
+				  ** Initializes and verifies Adapter List state information.
+				  -->
+					
+				function initializeAdapterListState() {
+					try {
+						var rowIndex = '#{adapterListManager.selectedRecordIndex}';
+						var recordKey = '#{adapterListManager.selectedRecordKey}';
+						var recordLabel = '#{adapterListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateAdapterListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateAdapterListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Adapter List.
+				  -->
+					
+				function updateAdapterListState(event, rowIndex, recordKey, recordLabel) {
+					adapterListState = new Object();
+					adapterListState.rowIndex = rowIndex;
+					//adapterListState.recordId = recordId;
+					adapterListState.recordKey = recordKey;
+					adapterListState.recordLabel = recordLabel;
+					//show(adapterListState);
+				}
+					
+					
+				<!--
+				  ** enableAdapterListActions(type)
+				  ** Enables (or disables) Adapter List actions based on current client-side state.
+				  -->
+					
+				function enableAdapterListActions(type) {
+					//enableButton('adapterListViewButton');
+					enableButton('adapterListNewButton');
+					enableButton('adapterListEditButton');
+					enableButton('adapterListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processAdapterListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Adapter List.
+				  -->
+					
+				function processAdapterListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateAdapterListState(event, rowIndex, recordKey, recordLabel);
+					enableAdapterListActions('adapter');
+					try {
+						executeSelectFromAdapterList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processAdapterListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Adapter List.
+				  -->
+					
+				function processAdapterListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Adapter Records', 'Preparing Adapter ' + recordLabel + ' for editing...');
+						executeActionFromAdapterList(rowIndex, recordKey, 'Adapter', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('adapterListTable')});
+						if (adapterListState != null) {
+							var label = adapterListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (adapterListState != null) {
+							var label = adapterListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (adapterListState != null) {
+							var label = adapterListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (adapterListState != null)
+						label = adapterListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'adapterListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

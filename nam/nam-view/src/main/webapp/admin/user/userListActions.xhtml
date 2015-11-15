@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** userListActions
+	  ** a4j:jsFunction methods to support the User List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var userListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshUserList(event)
+		  ** Refreshes the current User List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshUserList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{userListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'User Records', 'Refreshing current User List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="userListActions, userListMenu, userListToolbar, userListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromUserList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromUserList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="userListActions, userListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{userListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{userListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="user" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="userListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromUserList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromUserList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="userListActions, userListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{userListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{userListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{userWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="userListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="userListActions, userListMenu, userListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** userListActions
+		  ** Javascript methods to support the User List.
+		  -->
+		
+		<a4j:outputPanel
+			id="userListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getUserListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getUserListRowKey() {
+					if (userListState != null)
+						return userListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getUserListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getUserListRowLabel() {
+					if (userListState != null)
+						return userListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeUserListState()
+				  ** Initializes and verifies User List state information.
+				  -->
+					
+				function initializeUserListState() {
+					try {
+						var rowIndex = '#{userListManager.selectedRecordIndex}';
+						var recordKey = '#{userListManager.selectedRecordKey}';
+						var recordLabel = '#{userListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateUserListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateUserListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for User List.
+				  -->
+					
+				function updateUserListState(event, rowIndex, recordKey, recordLabel) {
+					userListState = new Object();
+					userListState.rowIndex = rowIndex;
+					//userListState.recordId = recordId;
+					userListState.recordKey = recordKey;
+					userListState.recordLabel = recordLabel;
+					//show(userListState);
+				}
+					
+					
+				<!--
+				  ** enableUserListActions(type)
+				  ** Enables (or disables) User List actions based on current client-side state.
+				  -->
+					
+				function enableUserListActions(type) {
+					//enableButton('userListViewButton');
+					enableButton('userListNewButton');
+					enableButton('userListEditButton');
+					enableButton('userListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processUserListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the User List.
+				  -->
+					
+				function processUserListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateUserListState(event, rowIndex, recordKey, recordLabel);
+					enableUserListActions('user');
+					try {
+						executeSelectFromUserList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processUserListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the User List.
+				  -->
+					
+				function processUserListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'User Records', 'Preparing User ' + recordLabel + ' for editing...');
+						executeActionFromUserList(rowIndex, recordKey, 'User', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('userListTable')});
+						if (userListState != null) {
+							var label = userListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (userListState != null) {
+							var label = userListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (userListState != null) {
+							var label = userListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (userListState != null)
+						label = userListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'userListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

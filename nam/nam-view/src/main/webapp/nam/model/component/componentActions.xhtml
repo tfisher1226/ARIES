@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showComponentListPage()
+		  ** Goes to the Component Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showComponentListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{componentPageManager.initializeComponentListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Component Records', 'Preparing Component List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showComponentTreePage()
+		  ** Goes to the Component Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showComponentTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{componentPageManager.initializeComponentTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Component Records', 'Preparing Component Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showComponentManagementPage()
+		  ** Goes to the Component Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showComponentManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{componentPageManager.initializeComponentManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Component Records', 'Preparing Component related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showComponentWizardPage()
+		  ** Goes to the Component Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showComponentWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{componentWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Component Records', 'Preparing Component information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{componentWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{componentWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewComponentDialog()
+		  ** Launches the Component Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewComponentDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{componentInfoManager.newComponent}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Component Records', 'Creating new Component...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showComponentDialog()"
+			render="componentModule, componentDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{componentInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="componentListPane" assignTo="#{componentInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{componentInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditComponentDialog()
+		  ** Launches the Component Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditComponentDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{componentInfoManager.editComponent}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Component Records', 'Preparing Component information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showComponentDialog()"
+			render="componentModule, componentDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{componentInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="componentListPane" assignTo="#{componentInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{componentInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

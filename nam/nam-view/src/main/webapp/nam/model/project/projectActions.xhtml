@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		    
+		    
+		<!--
+		  ** showProjectListPage()
+		  ** Goes to the Project Management List Page.
+		  -->
+
+		    <a4j:jsFunction 
+			name="showProjectListPage" 
+		    	execute="@this"
+		    	immediate="true"
+		    	bypassUpdates="true"
+			action="#{projectPageManager.initializeProjectListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Preparing Project List...')">
+		    </a4j:jsFunction>
+	
+	
+	<!--
+		  ** showProjectTreePage()
+		  ** Goes to the Project Management Tree Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showProjectTreePage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{projectPageManager.initializeProjectTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Preparing Project Tree...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showProjectManagementPage()
+		  ** Goes to the Project Management Overview Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showProjectManagementPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{projectPageManager.initializeProjectManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Preparing Project related information...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showProjectWizardPage()
+		  ** Goes to the Project Wizard Page.
+	  -->
+	
+	<a4j:jsFunction
+		name="showProjectWizardPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		action="#{projectWizard.refresh}"
+		onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Preparing Project information...')">
+		
+		<!-- these values are passed-in -->
+		<a4j:param name="section" assignTo="#{projectWizard.section}" />
+	
+		<!-- these values are assigned here -->
+		<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{projectWizard.origin}" />
+    </a4j:jsFunction>
+
+
+	<!--
+		  ** showNewProjectDialog()
+		  ** Launches the Project Dialog in "new" mode.
+	  -->
+	
+	<a4j:jsFunction
+		name="showNewProjectDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{projectInfoManager.newProject}"
+		onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Creating new Project...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showProjectDialog()"
+		render="projectModule, projectDialog">
+		
+		<!-- these values are assigned here -->
+		<a4j:param name="targetDomain" value="#{section}" assignTo="#{projectInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="projectListPane" assignTo="#{projectInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{projectInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showEditProjectDialog()
+		  ** Launches the Project Dialog in "edit" mode.
+	  -->
+	
+	<a4j:jsFunction
+		name="showEditProjectDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{projectInfoManager.editProject}"
+		onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Preparing Project information...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showProjectDialog()"
+		render="projectModule, projectDialog">
+	
+		<!-- these values are assigned here -->
+		<a4j:param name="targetDomain" value="#{section}" assignTo="#{projectInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="projectListPane" assignTo="#{projectInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{projectInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="resultListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<!--  
+			<aries:toolButton
+				id="resultListNewButton"
+				value="New Result..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Result Record"
+				enabled="#{securityGuard.canCreate('result')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Result')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="resultListEditButton"
+				value="Edit Result..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Result record for edit..."
+				enabled="#{resultListManager.hasSelection() and securityGuard.canUpdate('result')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Result')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="resultListRemoveButton"
+				value="Remove Result..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Result record from system..."
+				enabled="#{resultListManager.hasSelection() and securityGuard.canDelete('result')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Result')"
+				offset="true" />
+				-->
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="resultListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Result information from server"
+				enabled="#{securityGuard.canOpen('result')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshResultList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

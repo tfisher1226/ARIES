@@ -1,0 +1,59 @@
+import admin.admin_model.aries;
+
+protocol AdminUI {
+	import namespace("admin");
+
+    conversation Registeration {
+        add channel("public");
+
+		receive reserveBooks(ReservationRequest reservationRequest) throws ReservationAbortedException {
+
+		about User {
+	        step submitIdentity(Identity identity) {
+				userRepository.validateIdentity(identity);
+			}
+	
+	        step submitContact(Contact contact) {
+				userRepository.validateIdentity(user);
+			}
+		
+			submit {
+				userRepository.saveIdentity(user);
+			}
+			
+			timeout: {
+				userManager.cancel(user);
+				done;
+			}
+		}		
+	}
+
+
+        invoke SupplierGroup.queryBooks(books) {
+        	set timeout(3min);
+        	set minResponse(4);
+        	set maxResponse(10);
+
+            message BooksAvailable: {
+				bookCache.addToAvailableBooks(books);
+				send SupplierGroup.reserveBooks(books);
+                order.setBooks(books);
+				reply OrderAccepted(order);
+                done;
+            }
+                
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    User user; 
+			    List<Book> bookOrders; 
+			    Set<Book> availableBooks; 
+			    Set<Book> unavailableBooks; 
+		    }
+	    }
+
+    }
+
+}

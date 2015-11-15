@@ -1,0 +1,80 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}ComponentInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Component Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{component.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{component.label}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Type" label="Type" value="#{component.type}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}BaseType" label="Base Type" value="#{component.baseType}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Description" label="Description" value="#{component.description}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{component.namespace}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{component.version}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Element" label="Element" value="#{component.element}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}PackageName" label="Package Name" value="#{component.packageName}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}InterfaceName" label="Interface Name" value="#{component.interfaceName}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ClassName" label="Class Name" value="#{component.className}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Published" label="Published" value="#{component.published}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Cached" label="Cached" value="#{component.cached}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Transacted" label="Transacted" value="#{component.transacted}" items="#{transactedList}" defaultLabel="select Transacted" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Annotations" label="Annotations" value="#{component.annotations}" />
+			
+			<ui:include src="../component/componentListPane.xhtml">
+				<ui:param name="itemManager" value="#{componentInfoManager}" />
+				<ui:param name="listManager" value="#{componentListManager}" />
+			</ui:include>
+			
+			<ui:include src="../operation/operationListPane.xhtml">
+				<ui:param name="itemManager" value="#{operationInfoManager}" />
+				<ui:param name="listManager" value="#{operationListManager}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Fields" label="Fields" value="#{component.fields}" />
+			
+			
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

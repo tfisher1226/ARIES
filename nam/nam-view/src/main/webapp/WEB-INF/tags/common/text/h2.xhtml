@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="fontSize, fontWeight, fontStyle, fontFamily, textColor">
+		<c:set var="paddingBottom" value="10px"/> 
+	
+		<c:if test="#{empty fontSize}">
+			<c:set var="fontSize" value="20" /> 
+		</c:if>
+
+		<c:if test="#{empty fontWeight}">
+			<c:set var="fontWeight" value="bold" /> 
+		</c:if>
+
+		<c:if test="#{empty fontStyle}">
+			<c:set var="fontStyle" value="normal" /> 
+		</c:if>
+
+		<c:if test="#{empty fontFamily}">
+			<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+		</c:if>
+
+		<c:if test="#{empty textColor}">
+			<c:set var="textColor" value="#{userSkin.headerTextColor}" /> 
+		</c:if>
+
+		<c:set var="fontSize" value="20" /> 
+		<c:set var="fontWeight" value="bold" /> 
+		<c:set var="fontStyle" value="normal" /> 
+		<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+		<c:set var="textColor" value="#{userSkin.headerTextColor}" /> 
+		<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}; color: #{textColor}" />
+		
+		<h:panelGroup
+			layout="block"
+			onmouseup="#{onmouseup}" 
+			onmousedown="#{onmousedown}" 
+			onclickXX="alert('#{textSettings}'); #{onclick}"
+			style="width: auto; height: auto; padding-bottom: #{paddingBottom}; #{backgroundSettings}; #{style}; background-color: inherit">	
+
+			<span style="#{textSettings}">#{value}</span>
+		</h:panelGroup>
+	</aries:tag>
+</ui:composition>

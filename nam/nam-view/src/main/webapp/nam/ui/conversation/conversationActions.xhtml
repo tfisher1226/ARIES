@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showConversationListPage()
+		  ** Goes to the Conversation Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showConversationListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{conversationPageManager.initializeConversationListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Conversation Records', 'Preparing Conversation List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showConversationTreePage()
+		  ** Goes to the Conversation Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showConversationTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{conversationPageManager.initializeConversationTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Conversation Records', 'Preparing Conversation Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showConversationManagementPage()
+		  ** Goes to the Conversation Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showConversationManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{conversationPageManager.initializeConversationManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Conversation Records', 'Preparing Conversation related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showConversationWizardPage()
+		  ** Goes to the Conversation Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showConversationWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{conversationWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Conversation Records', 'Preparing Conversation information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{conversationWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{conversationWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewConversationDialog()
+		  ** Launches the Conversation Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewConversationDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{conversationInfoManager.newConversation}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Conversation Records', 'Creating new Conversation...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showConversationDialog()"
+			render="conversationModule, conversationDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{conversationInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="conversationListPane" assignTo="#{conversationInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{conversationInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditConversationDialog()
+		  ** Launches the Conversation Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditConversationDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{conversationInfoManager.editConversation}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Conversation Records', 'Preparing Conversation information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showConversationDialog()"
+			render="conversationModule, conversationDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{conversationInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="conversationListPane" assignTo="#{conversationInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{conversationInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<name>monitor</name>
+	<description>Example application - System monitor</description>
+
+	<applications>
+		<application>
+			<name>bank</name>
+			<package>org.aries</package>
+			<namespace>http://www.aero.org/bank</namespace>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<depends groupId="org.aries" artifactId="event" version="0.0.1-SNAPSHOT"/>
+			<depends groupId="org.aries" artifactId="person" version="0.0.1-SNAPSHOT"/>
+			<depends groupId="org.aries" artifactId="notification" version="0.0.1-SNAPSHOT"/>
+	
+			<modules>
+				<module name="bank" type="pom"/>
+				<module name="bank-client" type="client"/>
+				<module name="bank-service" type="service">
+					<library name="bank-data"/>
+				</module>
+			</modules>
+	
+			<services group="org.aries">
+			    <service name="performStatusCheck" pattern="oneway">
+					<scheduled frequency="periodic" initial-delay="10s"/>
+					<listener id="org.aries.jms"/>
+					
+					<execution sequence="concurrent">
+						<action name="getMemoryUsageState" >
+							<processor name="systemRepository"/>
+					    	<result name="ramStats" type="ram-state-list"/>
+						</action>
+						<action name="getProcessorUsageState" >
+							<processor name="systemRepository"/>
+					    	<result name="cpuStats" type="cpu-state-list"/>
+					    	<result name="processList" type="process-list"/>
+					    	<result name="threadCount" type="int"/>
+						</action>
+					</execution>
+
+					<execution transacted="true">
+						<action name="persistStatus">
+							<transform target="statusRecord">
+						    	<element name="ramStats"/>
+						    	<element name="cpuStats"/>
+						    	<element name="processList"/>
+						    	<element name="threadCount"/>
+							</transform>
+							<processor name="statusRepository" method="persistStatus"/>
+						</action>
+					</execution>
+				</service>
+			</services>
+		</application>
+	</applications>
+
+
+	<messaging>
+	</messaging>
+</model>

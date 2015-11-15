@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model/0.0.1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:intf="http://www.jboss.org/bpel/examples"
+	xmlns:intf2="http://simple_invoke/helloworld"
+	xsi:schemaLocation="http://nam/model/0.0.1 file:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>SimpleInvoke</name>
+	<version>0.0.1.SNAPSHOT</version>
+	
+	<imports>
+		<import file="SimpleInvoke.bpel" type="bpel"/>
+		<import file="HelloWorld.aries" type="aries"/>
+	</imports>
+
+	<links>
+		<link name="theClient_PartnerLink" type="myClientCalling_PartnerLinkType">
+			<role name="me" transferMode="text" portType="intf:SimpleInvoke_PortType">
+				<defaultTransport>ejb</defaultTransport>
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/org.jboss.bpel.examples.SimpleInvoke/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.simpleInvoke.destination@"/>
+				<http-transport type="ws" portType="intf:SimpleInvoke_PortType"/>
+				<handler type="JDBCException" name="exceptionHandler"/>
+			</role>
+
+			<role name="you" transferMode="text" portType="intf:SimpleInvoke_PortType">
+				<defaultTransport>ejb</defaultTransport>
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/org.jboss.bpel.examples.SimpleInvoke/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.simpleInvoke.destination@"/>
+				<http-transport type="ws" portType="intf:SimpleInvoke_PortType"/>
+				<handler type="JDBCException" name="exceptionHandler"/>
+			</role>
+		</link>
+
+		<link name="theExternalService_PartnerLink" type="theExternalService_PartnerLinkType">
+			<role name="callingTheExternalService" transferMode="text" portType="intf2:HelloWorld">
+				<defaultTransport>ejb</defaultTransport>
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/simple_invoke.helloworld.HelloWorld/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.helloWorld.destination@"/>
+				<http-transport type="ws" portType="intf2:HelloWorld"/>
+				<handler type="JDBCException" name="exceptionHandler"/>
+			</role>
+		</link>
+	</links>
+
+	<applications>
+		<application>
+			<name>simple_invoke</name>
+			<groupId>org.simple</groupId>
+			<artifactId>simple_invoke</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module>
+					<type>pom</type>
+					<name>simple_invoke</name>
+				</module>
+	
+				<module>
+					<type>client</type>
+					<name>simple_invoke-client</name>
+					<link name="theClient_PartnerLink" role="you"/>
+					<!--  
+					<links>
+					</links>
+					-->
+				</module>
+				
+				<module>
+					<type>service</type>
+					<name>simple_invoke-service</name>
+					<services>
+						<service ref="SimpleInvoke_PortType">
+							<listener link="theClient_PartnerLink" role="me"/>
+							<link name="theExternalService_PartnerLink" role="callingTheExternalService"/>
+							<dependency groupId="org.simple" artifactId="simple_invoke-hello-client"/>
+							<!--
+							<execution transacted="true">
+								<process name="SimpleInvoke"/>
+							</execution>
+							-->
+						</service>
+					</services>
+				</module>
+			</modules>
+		</application>
+	</applications>
+
+	<!--  
+	<links>
+		<link name="theClient_PartnerLink" type="myClientCalling_PartnerLinkType">
+			<role name="me" transport="ws" transferMode="text" portType="intf:SimpleInvoke_PortType" />
+			<role name="you" transport="ws" transferMode="text" portType="intf:SimpleInvoke_PortType" />
+		</link>
+
+		<link name="theExternalService_PartnerLink" type="theExternalService_PartnerLinkType">
+			<role name="callingTheExternalService" transport="ws" transferMode="text" portType="intf2:HelloWorld" />
+		</link>
+	</links>
+	-->
+</project>

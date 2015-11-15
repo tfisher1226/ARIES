@@ -1,0 +1,154 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.progressColumn1 { width: 50px; height: 50px; vertical-align: top; }
+	.progressColumn2 { width: auto; height: auto; vertical-align: top; }
+	.rich-mpnl-body {
+		margin: 0px;
+		padding: 0px;
+		background-color: #f0f0f0;
+	}
+	</style>
+
+	<h:form>
+	    <a4j:jsFunction 
+			name="showProgressOLD"
+			requestDelay="0"
+			immediate="true" 
+			execute="@this"
+			bypassUpdates="true"
+			oncomplete="Richfaces.showModalPanel('progressDialog')">
+			<a4j:param name="subtitle" assignTo="#{progressDialog_subtitle}"/> 
+			<a4j:param name="message" assignTo="#{progressDialog_message}"/> 
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	immediate="true" 
+	    	execute="@this" 
+	    	name="hideProgressOLD"
+			oncomplete="Richfaces.hideModalPanel('progressDialog')">
+		</a4j:jsFunction>
+	</h:form>
+
+	<script type="text/javascript">
+	function showProgress(subtitle, message) {
+		Richfaces.progressDialog_params = new Object();
+		Richfaces.progressDialog_params.subtitle = subtitle;
+		Richfaces.progressDialog_params.message = message;
+		#{rich:component('progressDialog')}.show();
+		//alert(document.getElementById('progressDialogSubtitle'));
+		//document.getElementById('progressDialogSubtitle').value = subtitle;
+		//document.getElementById('progressDialogMessage').value = message;
+		//#{rich:component('progressDialog')}.show(event, {'progressDialog_subtitle': '{organizationName}', 'progressDialog_message': 'Retrieving members...'})
+	}
+	function initializeProgressDialog(event) {
+		//alert(event.parameters.progressDialog_subtitle);
+		//showObject(document.getElementById('progressDialogForm:progressDialogSubtitle'));
+		document.getElementById('progressDialogForm:progressDialogSubtitle').innerHTML = Richfaces.progressDialog_params.subtitle;
+		document.getElementById('progressDialogForm:progressDialogMessage').innerHTML = Richfaces.progressDialog_params.message;
+	}
+	function hideProgress() {
+		Richfaces.hideModalPanel('progressDialog');
+	}
+	</script>
+
+	<rich:popupPanel 
+		id="progressDialog" 
+		autosized="true" 
+		resizable="false"
+		styleClass="dialog" 
+		onshow="initializeProgressDialog(event)">
+
+		<!-- TITLE -->		
+		<f:facet name="header" style="text-align: left; background-color: #eef;">
+			<h:outputText value="In Progress..."/>
+		</f:facet>
+
+		<!-- CLOSE ICON -->		
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="resource://images/dialog/close.png" style="cursor: pointer;">
+					<rich:componentControl for="progressDialog" operation="hide" event="onclick"/>
+				</h:graphicImage>
+			</h:panelGroup>
+		</f:facet>
+		
+		<!-- CONTENT -->
+		<h:form id="progressDialogForm" style="border-top: 1px solid #C3BBB6; background-color: #f0f0f0;">
+			<h:panelGroup layout="block" style="">
+				<h:panelGroup layout="block" style="">
+
+					<h:panelGrid columns="2" 
+						columnClasses="progressColumn1 progressColumn2" 
+						style="margin-left: auto; margin-right: auto;">
+						
+						<h:panelGroup layout="block" style="width: 64px; height: 64px; padding-top: 0px; padding-left: 0px; vertical-align: top; background-color: #f0f0f0;">
+							<h:graphicImage value="resource://images/icons/status/WindowsInfo64.gif"/>
+						</h:panelGroup>
+
+						<h:panelGroup layout="block">
+							<div class="vspace6"/>
+							<a4j:outputPanel id="progressDialogTextPanel">
+
+								<h:panelGroup layout="block" rendered="#{not empty progressDialog_title}" style="margin-left: 2px; margin-right: 40px; text-align: left;">
+									<div class="vspace10"/>
+									<h:outputText id="progressDialogTitle" value="#{progressDialog_title}" styleClass="dialogTitle"/>
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" rendered="#{not empty progressDialog_subtitle or true}" style="margin-left: 2px; margin-right: 40px; text-align: left;">
+									<div class="vspace10"/>
+									<h:outputText id="progressDialogSubtitle" value="" styleClass="dialogSubtitle"/>
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" rendered="#{not empty progressDialog_message or true}" style="width: 260px; margin-left: 2px; margin-right: 40px; text-align: left;">
+									<div class="vspace8"/>
+									<h:outputText id="progressDialogMessage" value="" styleClass="dialogMessage"/>
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" rendered="#{not empty progressDialog_text}" style="width: 260px; margin-left: 2px; margin-right: 40px; text-align: left;">
+									<div class="vspace8"/>
+									<h:outputText value="#{progressDialog_text}" styleClass="dialogText"/>
+								</h:panelGroup>
+							</a4j:outputPanel>
+							
+							<!-- PROGRESS BAR -->
+							<div class="vspace12"/>
+							<h:panelGroup layout="block" style="margin-left: 2px; margin-right: 12px;">
+								<script type="text/javascript">
+								var progressBar = createBar(300, 15, "#FFFFFF", 1, "#bbb", "#6699CC", 85, 7, 3, "");
+								</script>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGroup>
+
+				<!-- CONTROL --> 
+				<h:panelGroup layout="block" style="padding: 10px 14px 12px 14px">
+					<aries:controlbar>
+						<aries:toolbarGroup location="right">
+							<aries:smallDialogButton
+								value="Cancel"
+								enabled="false"
+								execute="@this"
+								manager="#{progressDialog}"
+								action="cancel"
+								oncomplete="Richfaces.hideModalPanel('progressDialog')"
+								offset="true">
+							</aries:smallDialogButton>
+						</aries:toolbarGroup>
+					</aries:controlbar>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</rich:popupPanel>
+</ui:composition>

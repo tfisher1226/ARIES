@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="attributeListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="attributeListMenu.xhtml">
+			<ui:param name="tableId" value="attributeListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="attributeListTable"
+			value="#{attributeListManager.dataModel}"
+			rowCount="#{attributeListManager.dataModel.rowCount}"
+			visible="#{attributeListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processAttributeListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processAttributeListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

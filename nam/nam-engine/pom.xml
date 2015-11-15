@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>nam-engine</artifactId>
+	<name>nam-engine</name>
+	<description>nam-engine</description>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>nam</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+		<model.local.home>../model</model.local.home>
+		<model.runtime.home>../runtime</model.runtime.home>
+		<model.source.home>${workspace.location}/_generator/src/main/resources/model</model.source.home>
+		<schema.home>src/main/resources/schema</schema.home>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.xsd</include>
+						<include>**/*.xjb</include>
+						<include>**/*.properties</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
+						<include>**/*Tests.java</include>
+						<include>**/*TestCase.java</include>
+						<include>**/*TestCases.java</include>
+					</includes>
+					<!--  
+					<excludes>
+						<exclude>**/org/nam/generator/**</exclude>
+					</excludes>
+					-->
+				</configuration>
+               </plugin>
+               
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>pre-process</id>
+						<phase>process-sources</phase>
+						<configuration>
+							<target>
+								<copy todir="${schema.home}/common" file="${model.source.home}/common/aries-common-1.0.xsd"/>
+								<copy todir="${schema.home}/common" file="${model.source.home}/common/aries-message-1.0.xsd"/>
+								<copy todir="${schema.home}/common" file="${model.source.home}/common/aries-validate-1.0.xsd"/>
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-common-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-security-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-execution-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-information-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-messaging-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-operation-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-persistence-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-application-1.0.xsd" overwrite="true" verbose="true" />
+								<copy todir="${schema.home}/nam" file="${model.source.home}/nam/nam-workspace-1.0.xsd" overwrite="true" verbose="true" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>bpelc</id>
+			<build>
+				<defaultGoal>test</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.aries.maven.plugin</groupId>
+						<artifactId>maven-bpel-plugin</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+						<executions>
+							<execution>
+								<id>bpel-test-compilation</id>
+								<phase>package</phase>
+								<goals>
+									<goal>compile</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<fileSet>
+								<directory>src/main/resources</directory>
+								<includes>
+									<include>SimpleInvoke.bpel</include>
+								</includes>
+							</fileSet>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>wsdl2java</id>
+			<build>
+				<defaultGoal>install</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-codegen-plugin</artifactId>
+						<version>${cxf.version}</version>
+						<executions>
+							<execution>
+								<id>generate-sources</id>
+								<phase>generate-sources</phase>
+								<configuration>
+									<sourceRoot>${basedir}/src/main/generated</sourceRoot>
+									<wsdlOptions>
+										<wsdlOption>
+											<wsdl>${basedir}/src/test/resources/SimpleInvoke/HelloWorldWS.wsdl</wsdl>
+											<!--  
+											<wsdl>${basedir}/src/test/resources/OrderProcessing/OrderProcessing.wsdl</wsdl>
+											<extraargs>
+												<extraarg>-impl</extraarg>
+												<extraarg>-verbose</extraarg>
+											</extraargs>
+											-->
+										</wsdlOption>
+									</wsdlOptions>
+								</configuration>
+								<goals>
+									<goal>wsdl2java</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
+	<dependencies>
+		<!-- COMMONS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- UTIL -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- LOGGING -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>logging</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- TESTING -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>testing</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- JAXB -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JAXWS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxws</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- JDT -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-jdt</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- EMF -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-emf</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- SEAM 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		-->
+
+		<!-- PLEXUS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>plexus</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-validate</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-model</artifactId>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-net</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--  
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon</artifactId>
+			<version>9.1.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-dom</artifactId>
+			<version>9.1.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-xpath</artifactId>
+			<version>9.1.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-xqj</artifactId>
+			<version>9.1.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!--  
+		<dependency>
+			<groupId>org.apache.ode</groupId>
+			<artifactId>ode-utils</artifactId>
+			<version>1.3.5</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>wstx-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ode</groupId>
+			<artifactId>ode-bpel-obj</artifactId>
+			<version>1.3.5</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>wstx-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		-->
+		
+		<!--  
+		<dependency>
+			<groupId>org.apache.ode</groupId>
+			<artifactId>ode-bpel-compiler</artifactId>
+			<version>1.3.5</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.woden</groupId>
+					<artifactId>woden</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jibx</groupId>
+					<artifactId>jibx-bind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jibx</groupId>
+					<artifactId>jibx-run</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.woodstox</groupId>
+					<artifactId>wstx-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon-dom</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon-xpath</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon-xqj</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun</groupId>
+					<artifactId>tools</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		-->
+	</dependencies>
+</project>

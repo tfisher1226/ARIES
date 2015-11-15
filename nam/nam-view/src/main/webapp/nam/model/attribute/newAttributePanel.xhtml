@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		backgroundColor="inherit"
+		styleXX="float: left">
+
+		<!-- VARIABLES --> 
+		<c:set var="backgroundColor" value="inherit" /> 
+
+		<!-- TITLE --> 
+		<ui:define name="wizardTitle">
+			<aries:spacer height="4" />
+			<aries:text
+				padding="0px"
+				fontSize="16"
+				fontWeight="bold"
+				value="Attribute #{attributeWizard.section}" />
+		</ui:define>
+
+		<!-- MESSAGES --> 
+		<ui:define name="wizardMessages">
+			<aries:spacer height="12" /> 
+			<aries:messages
+				id="attributeMessages" 
+				module="attributeWizard" 
+				message="Enter #{attributeWizard.section} Information" />
+		</ui:define>
+		
+		<!-- PANELS --> 
+		<ui:include src="attribute#{attributeWizard.section}Panel.xhtml" />
+	</aries:panel>
+</ui:composition>

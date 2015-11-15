@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty id}">
+		<c:set var="id" value="InputCurrency_#{globals.nextId()}" /> 
+	</c:if>
+
+	<c:if test="#{empty currencyCode}">
+		<c:set var="currencyCode" value="USD" /> 
+	</c:if>
+	
+	<!--  
+	<c:if test="#{empty converter}">
+		<c:set var="converter" value="" /> 
+	</c:if>
+	
+	<c:if test="#{empty validator}">
+		<c:set var="validator" value="" /> 
+	</c:if>
+	-->
+	
+	<aries:fieldWrapper>
+		<h:inputText
+			id="#{id}" 
+			value="#{value}"
+			disabled="#{!enabled}"
+			readonly="#{readonly}"
+			required="#{required}"
+			maxlength="#{maxlength}"
+			autocomplete="#{autocomplete}"
+			onkeydown="#{onkeydown}"
+			styleClass="formInput" 
+			style="width: #{helper.convert(width-labelWidth-6)}; height: 16px; padding: 2px; padding-top: 3px">
+			
+			<f:convertNumber type="currency" currencyCode="#{currencyCode}" />
+
+			<ui:insert />
+		</h:inputText>
+	</aries:fieldWrapper>
+</ui:composition>

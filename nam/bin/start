@@ -1,0 +1,50 @@
+#!/bin/sh
+
+JAVA_HOME=/cygdrive/c/software/jdk1.6.0_26
+JBOSS_HOME=c:/software/jboss-6.1.0.Final
+INSTANCE_HOST=localhost
+INSTANCE_CONFIGURATION=node03
+INSTANCE_ID=3
+
+$JBOSS_HOME/bin/run.sh \
+	-b $INSTANCE_HOST \
+	-c $INSTANCE_CONFIGURATION \
+	-C $JBOSS_HOME/aries/lib \
+	-Djboss.messaging.ServerPeerID=$INSTANCE_ID \
+    -Daries.port.http=8080 \
+    -Daries.port.https=8443 \
+    -Daries.port.ajp=8009 \
+    -Daries.port.rmi=1098 \
+    -Daries.port.jndi=1099 \
+    -Daries.port.jrmp=4444 \
+    -Daries.port.hajndi=1100 \
+    -Daries.port.hajndi.rmi=1101 \
+    -Daries.port.hajndi.discovery=1102 \
+    -Daries.port.jrmpha=4447 \
+    -Daries.port.pooledha=4448 \
+    -Daries.port.iiop=3528 \
+    -Daries.port.snmp.manager=1162 \
+    -Daries.port.snmp.adaptor=1161 \
+    -Daries.port.jmx.jrmp=1090 \
+    -Daries.port.jmx.rmi=1091 \
+    -Daries.port.remote.classloader=8083 \
+    -Daries.port.remoting.invoker=4446 \
+    -Daries.port.remoting.multihome.invoker1=7777 \
+    -Daries.port.remoting.multihome.invoker2=8888 \
+    -Daries.port.jbm=4457 \
+    -Daries.port.hornetq=5445 \
+    -Daries.port.hornetq.ssl=5446 \
+    -Daries.port.hornetq.batch=5455 \
+    -Daries.port.jbossts.recovery=4712 \
+    -Daries.port.jbossts.status=4713 \
+    -Daries.port.jbossts.pidsock=4714 \
+    -Daries.port.tcp=5500 \
+    -Daries.port.tcp.ssl=5501 \
+    -Daries.port.jgroups.udp.bind=55200 \
+    -Daries.port.jgroups.udp.mcast=45688 \
+    -Daries.port.jgroups.udp.fdsock=54200 \
+    -Daries.port.jgroups.tcp.bind=7600 \
+    -Daries.port.jgroups.tcp.mping=45700 \
+    -Daries.port.jgroups.tcp.fdsock=57600 \
+    -Daries.port.jgroups.diag=7500
+

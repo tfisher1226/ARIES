@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:panel
+		padding="10px"
+		backgroundColor="inherit">
+
+		<aries:groupPane
+			width="#{width-22}"
+			height="#{height-2}"
+			backgroundColor="inherit"
+			label="Identity Information">
+			
+			<ui:param name="labelWidth" value="110" />
+			
+			<aries:spacer height="6" />
+			<aries:personName id="#{section}Name" type="Name" label="Name" name="userName" value="#{user.name}" />
+
+			<aries:spacer height="6" />
+			<aries:personName id="#{section}PersonName" type="PersonName" label="Person Name" name="userPersonName" value="#{user.personName}" />
+
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}UserName" label="User Name" value="#{user.userName}" />
+
+			<aries:spacer height="6" />
+			<aries:inputSecret id="#{section}Password" label="Enter Password" value="#{user.password}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Password2" label="Confirm Password" value="#{user.password2}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Enabled" label="Enabled" value="#{user.enabled}" />
+		</aries:groupPane>
+	</aries:panel>
+</ui:composition>

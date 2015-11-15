@@ -1,0 +1,144 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- PATH -->
+	<ui:define name="path">
+
+		<aries:formPane
+			width="auto" 
+			columns="10"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:link
+				value="Top"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showMainPage(this)" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:text 
+				width="auto"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="--&gt;" 
+				backgroundColor="inherit" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:link
+				value="Attributes"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showAttributesPage(this)" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:text 
+				width="auto"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="--&gt;" 
+				backgroundColor="inherit" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:link
+				value="New Attribute"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showNewAttributePage(this)" />
+		</aries:formPane>
+	</ui:define>
+
+	<!-- TITLE -->
+	<ui:define name="pageTitle">
+		<div class="pageTitle">
+			<aries:text fontSize="20" fontWeight="bold" value="New Attribute" />
+		</div>
+	</ui:define>
+
+	<!-- NAVIGATOR -->
+	<ui:define name="navigator">
+		<div class="navigator">
+			<ui:include src="newAttributeNavigator.xhtml" />
+		</div>
+	</ui:define>
+
+	<!-- PANEL TITLE --> 
+	<ui:define name="wizardTitle">
+		<aries:spacer height="4" />
+		<aries:text
+			padding="0px"
+			fontSize="16"
+			fontWeight="bold"
+			value="Attribute #{attributeWizard.section}" />
+	</ui:define>
+
+	<!-- PANEL MESSAGES --> 
+	<ui:define name="wizardMessages">
+		<aries:spacer height="12" /> 
+		<aries:messages
+			id="attributeMessages" 
+			module="attributeWizard" 
+			message="Enter #{attributeWizard.section} Information" />
+	</ui:define>
+
+	
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<div class="content">
+		
+			<aries:formPane
+				columns="2"
+				backgroundColor="inherit">
+		
+				<aries:panel 
+					width="500"
+					height="280"
+					margin="0px"
+					padding="0px"
+					borderWidth="1px"
+					borderColor="#aaa"
+					backgroundColor="inherit">
+
+					<!-- PANELS --> 
+					<ui:include src="attribute#{attributeWizard.section}Panel.xhtml" />
+		
+					<!-- Control -->
+					<ui:include src="newAttributeControl.xhtml" />
+				</aries:panel>
+				
+				<!-- HELP -->
+				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="domain" value="attribute" />
+					<ui:param name="section" value="#{attributeWizard.section}" />
+				</ui:include>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

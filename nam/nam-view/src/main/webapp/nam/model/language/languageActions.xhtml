@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showLanguageListPage()
+		  ** Goes to the Language Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLanguageListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{languagePageManager.initializeLanguageListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Language Records', 'Preparing Language List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showLanguageTreePage()
+		  ** Goes to the Language Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLanguageTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{languagePageManager.initializeLanguageTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Language Records', 'Preparing Language Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showLanguageManagementPage()
+		  ** Goes to the Language Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLanguageManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{languagePageManager.initializeLanguageManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Language Records', 'Preparing Language related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showLanguageWizardPage()
+		  ** Goes to the Language Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showLanguageWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{languageWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Language Records', 'Preparing Language information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{languageWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{languageWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewLanguageDialog()
+		  ** Launches the Language Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewLanguageDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{languageInfoManager.newLanguage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Language Records', 'Creating new Language...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLanguageDialog()"
+			render="languageModule, languageDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{languageInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="languageListPane" assignTo="#{languageInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{languageInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditLanguageDialog()
+		  ** Launches the Language Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditLanguageDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{languageInfoManager.editLanguage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Language Records', 'Preparing Language information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLanguageDialog()"
+			render="languageModule, languageDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{languageInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="languageListPane" assignTo="#{languageInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{languageInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

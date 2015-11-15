@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** referenceListActions
+	  ** a4j:jsFunction methods to support the Reference List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var referenceListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshReferenceList(event)
+		  ** Refreshes the current Reference List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshReferenceList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{referenceListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Reference Records', 'Refreshing current Reference List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="referenceListActions, referenceListMenu, referenceListToolbar, referenceListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromReferenceList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromReferenceList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="referenceListActions, referenceListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{referenceListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{referenceListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="reference" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="referenceListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromReferenceList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromReferenceList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="referenceListActions, referenceListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{referenceListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{referenceListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{referenceWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="referenceListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="referenceListActions, referenceListMenu, referenceListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** referenceListActions
+		  ** Javascript methods to support the Reference List.
+		  -->
+		
+		<a4j:outputPanel
+			id="referenceListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getReferenceListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getReferenceListRowKey() {
+					if (referenceListState != null)
+						return referenceListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getReferenceListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getReferenceListRowLabel() {
+					if (referenceListState != null)
+						return referenceListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeReferenceListState()
+				  ** Initializes and verifies Reference List state information.
+				  -->
+					
+				function initializeReferenceListState() {
+					try {
+						var rowIndex = '#{referenceListManager.selectedRecordIndex}';
+						var recordKey = '#{referenceListManager.selectedRecordKey}';
+						var recordLabel = '#{referenceListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateReferenceListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateReferenceListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Reference List.
+				  -->
+					
+				function updateReferenceListState(event, rowIndex, recordKey, recordLabel) {
+					referenceListState = new Object();
+					referenceListState.rowIndex = rowIndex;
+					//referenceListState.recordId = recordId;
+					referenceListState.recordKey = recordKey;
+					referenceListState.recordLabel = recordLabel;
+					//show(referenceListState);
+				}
+					
+					
+				<!--
+				  ** enableReferenceListActions(type)
+				  ** Enables (or disables) Reference List actions based on current client-side state.
+				  -->
+					
+				function enableReferenceListActions(type) {
+					//enableButton('referenceListViewButton');
+					enableButton('referenceListNewButton');
+					enableButton('referenceListEditButton');
+					enableButton('referenceListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processReferenceListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Reference List.
+				  -->
+					
+				function processReferenceListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateReferenceListState(event, rowIndex, recordKey, recordLabel);
+					enableReferenceListActions('reference');
+					try {
+						executeSelectFromReferenceList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processReferenceListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Reference List.
+				  -->
+					
+				function processReferenceListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Reference Records', 'Preparing Reference ' + recordLabel + ' for editing...');
+						executeActionFromReferenceList(rowIndex, recordKey, 'Reference', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('referenceListTable')});
+						if (referenceListState != null) {
+							var label = referenceListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (referenceListState != null) {
+							var label = referenceListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (referenceListState != null) {
+							var label = referenceListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (referenceListState != null)
+						label = referenceListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'referenceListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

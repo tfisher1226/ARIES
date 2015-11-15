@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process 
+	name="TestAssignCollections"
+	suppressJoinFailure="yes"
+	xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:testing="http://testing"
+	targetNamespace="http://testing" 
+	expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+	queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+	<import 
+		location="TestAssignCollections.wsdl"
+		namespace="http://testing"
+		importType="http://schemas.xmlsoap.org/wsdl/" />
+
+	<variables>
+		<variable messageType="testing:IntegerArrayMessage" name="IntegerArrayMessage"/>
+		<variable messageType="testing:StringArrayMessage" name="StringArrayMessage"/>
+		<variable name="indexCounter" type="xsd:int" />
+	</variables>
+
+	<partnerLinks>
+		<partnerLink 
+			name="test-link"
+			myRole="tester" 
+			partnerRole="tester"
+			partnerLinkType="testing:test-link-type"/>
+	</partnerLinks>
+	
+	<sequence>
+		<receive 
+			operation="receive" 
+			partnerLink="test-link"
+			portType="testing:Receiver" 
+			variable="IntegerArrayMessage"
+			createInstance="yes">
+		</receive>
+
+		<assign name="addToIntegerArray">
+			<copy>
+				<from><literal>number('123')</literal></from>
+				<to part="IntegerArray" variable="IntegerArrayMessage">
+					<query>add(items)</query>
+				</to>
+			</copy>
+		</assign>
+
+		<assign name="assignIntoIntegerArray">
+			<copy>
+				<from><literal>number('123')</literal></from>
+				<to part="IntegerArray" variable="IntegerArrayMessage">
+					<query>items[$indexCounter]</query>
+				</to>
+			</copy>
+		</assign>
+
+		<assign name="assignIntoStringArray">
+			<copy>
+				<from><literal>dummyString</literal></from>
+				<to part="StringArray" variable="StringArrayMessage">
+					<query>items[$indexCounter]</query>
+				</to>
+			</copy>
+		</assign>
+		
+		<!--  
+		<assign name="assignTMP">
+			<copy>
+				<from variable="bookMessage" part="bookInfo" />
+				<to variable="availableBooks">
+					<query>add(elements)</query>
+				</to>
+			</copy>
+		</assign>
+		-->
+	</sequence>
+</process>

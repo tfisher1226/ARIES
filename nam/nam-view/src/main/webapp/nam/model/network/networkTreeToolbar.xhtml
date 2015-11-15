@@ -1,0 +1,169 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel 
+		layout="block" 
+		id="networkTreeToolbar">
+
+		<aries:toolbar type="tab">
+			<aries:toolbarGroup location="left">
+
+				<aries:toolButton 
+					mode="client"
+					id="networkTreeNewProjectButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new Project..."
+					icon="/icons/common/New16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="processNewProject(this)" />
+
+				<aries:toolButton 
+					mode="client"
+					id="networkTreeNewNetworkButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new Network"
+					icon="/icons/nam/Network16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="processNewNetwork(event)" />
+
+				<aries:toolButton 
+					id="networkTreeViewNetworkButton"
+					rendered="#{!securityGuard.checkManager}"
+					tooltip="View information for selected Network"
+					icon="/icons/common/Properties16.gif"
+					iconDisabled="/icons/common/PropertiesDisabled16.gif"
+					enabled="#{not empty selectedNetwork}"
+					manager="#{networkInfoManager}"
+					action="editNetwork"
+					onclick="setCursorWait(this); if (#{empty selectedNetwork}) {setCursorDefault(this); popupAlert('Network Lookup', '', 'An network must be selected'); return false} else {showProgress('{networkName}', 'Retrieving network record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processViewNetwork('#{selectedNetwork.name}', '#{selectedNetwork.level}')"
+					render="NetworkInfoDialog" />
+
+				<aries:toolButton 
+					id="networkTreeEditNetworkButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected Network"
+					icon="/icons/common/Edit16.gif"
+					iconDisabled="/icons/common/EditDisabled16.gif"
+					enabled="#{not empty selectedNetwork}"
+					onclick="processEditNetwork(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected Network"
+					icon="/icons/common/Edit16.gif"
+					manager="#{networkInfoManager}"
+					action="editNetwork"
+					onclick="setCursorWait(this); if (#{empty selectedNetwork}) {setCursorDefault(this); popupAlert('Network Lookup', '', 'An network must be selected'); return false} else {showProgress('{networkName}', 'Retrieving network record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processEditNetwork('#{selectedNetwork.name}', '#{selectedNetwork.level}')"
+					render="NetworkInfoDialog" />
+					-->
+
+				<!--  			
+				<aries:toolButton
+					id="networkTreeMoveNetworkButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Move selected Network to new parent Network"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					enabled="#{not empty selectedNetwork}"
+					execute="@this"
+					manager="#{networkTreeManager}"
+					action="prepareMoveNetwork"
+					onclick="return processMoveNetwork()"
+					linkClass="link" />
+					-->
+
+				<aries:toolButton 
+					mode="client"
+					id="networkTreeRemoveNetworkButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove Network record from system"
+					icon="/icons/common/Remove16.gif"
+					iconDisabled="/icons/common/RemoveDisabled16.gif"
+					enabled="#{not empty selectedNetwork}"
+					onclick="processCheckRemoveNetwork(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove Network record from system"
+					icon="/icons/common/Remove16.gif"
+					manager="#{networkInfoManager}"
+					action="promptDeleteNetwork"
+					onclick="setCursorWait(this); showProgress('Analyzing {networkName}', 'Checking permissions...')"
+					oncomplete="setCursorDefault(this); hideProgress(); if (#{!messages.isMessagesExist('NetworkInfo')}) {checkPromptDeleteNetwork('#{network.name} #{network.level}')} else {warnCannotDeleteNetwork('#{network.name} #{network.level}', '#{messages.getMessage('NetworkInfo')}')}" />
+					-->
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+	
+				<c:if test="#{securityGuard.checkManager}">
+				</c:if>
+				
+				<!--  
+				<aries:toolToggleButton
+					execute="@this"
+					id="showMemberCountLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show member count in labels"
+					selected="#{treeNodeFactory.showMemberCountInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowMemberCountInLabels" 
+			   		render="showMemberCountLabelsButton"
+					linkClass="link" />
+	
+				<aries:toolToggleButton
+					execute="@this"
+					id="showFilterDetailLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show filter detail in labels"
+					selected="#{treeNodeFactory.showFilterDetailInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowFilterDetailInLabels" 
+			   		render="showFilterDetailLabelsButton"
+					linkClass="link" />
+					-->
+							
+				<aries:toolButton
+					id="networkTreeCollapseButton"
+					icon="/icons/common/CollapseAll16.gif"
+					tooltip="Click here to Collapse Networks"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('Nam', 'Collapse Selected Network', 'Not ready at this time')"
+					linkClass="link" />
+					
+				<aries:toolButton
+					id="networkTreeRefreshButton"
+					execute="@this"
+					limitRender="false"
+					icon="/icons/common/Refresh16.gif"
+					tooltip="Re-read Networks from server"
+			   		manager="#{networkTreeManager}" 
+			   		action="refresh"
+					onclick="setCursorWait(this); showProgress('Nam', 'Networks', 'Refreshing Network information...')"
+					oncomplete="setCursorDefault(); hideProgress()"
+			   		render="networkTreePanel"
+					linkClass="link" />
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
+</ui:composition>

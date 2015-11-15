@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://bookshop"
+	targetNamespace="http://bookshop">
+	
+	<xs:element name="bookOrderRequest" type="tns:BookOrderRequest"/>
+	<xs:complexType name="BookOrderRequest">
+		<xs:sequence>
+			<xs:element name="bookOrders" type="tns:BookOrders" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="bookOrderResponse" type="tns:BookOrderResponse"/>
+	<xs:complexType name="BookOrderResponse">
+		<xs:sequence>
+			<xs:element name="bookOrders" type="tns:BookOrders" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="bookOrders" type="tns:BookOrders"/>
+	<xs:complexType name="BookOrders">
+		<xs:sequence>
+			<xs:element name="elements" type="tns:BookOrder" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="bookOrder" type="tns:BookOrder"/>
+	<xs:complexType name="BookOrder">
+		<xs:sequence>
+			<xs:element name="title" type="xs:string" />
+			<xs:element name="author" type="xs:string" />
+			<xs:element name="quantity" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="bookInventory" type="tns:BookInventory"/>
+	<xs:complexType name="BookInventory">
+		<xs:sequence>
+			<xs:element name="books" type="tns:BookInfo" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="books" type="tns:Books"/>
+	<xs:complexType name="Books">
+		<xs:sequence>
+			<xs:element name="elements" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	
+	<xs:element name="bookInfo" type="tns:BookInfo" />
+	<xs:complexType name="BookInfo">
+		<xs:sequence>
+			<xs:element name="title" type="xs:string" />
+			<xs:element name="author" type="xs:string" />
+			<xs:element name="price" type="xs:double" />
+			<xs:element name="quantity" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:simpleType name="BookOrderState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ordered"/>
+			<xs:enumeration value="accepted"/>
+			<xs:enumeration value="purchased"/>
+			<xs:enumeration value="available"/>
+			<xs:enumeration value="unavailable"/>
+			<xs:enumeration value="shipped"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="bookOrderStatus" type="tns:BookOrderStatus"/>
+	<xs:complexType name="BookOrderStatus">
+		<xs:sequence>
+			<xs:element name="title" type="xs:string" />
+			<xs:element name="author" type="xs:string" />
+			<xs:element name="quantity" type="xs:int" />
+			<xs:element name="state" type="tns:BookOrderState" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="bookShipment" type="tns:BookShipment"/>
+	<xs:complexType name="BookShipment">
+		<xs:sequence>
+			<xs:element name="books" type="tns:BookInfo" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

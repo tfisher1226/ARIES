@@ -1,0 +1,8 @@
+<to part="sayHello" variable="inVar">
+	<bpws:from xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:intf="http://www.jboss.org/bpel/examples/wsdl"
+		xmlns:intf2="http://simple_invoke/helloworld" xmlns:tns="http://www.jboss.org/bpel/examples" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+		<intf2:sayHello xmlns:intf2="http://simple_invoke/helloworld">
+			<toWhom xmlns="TOM" />
+		</intf2:sayHello>
+	</bpws:from>
+</to>

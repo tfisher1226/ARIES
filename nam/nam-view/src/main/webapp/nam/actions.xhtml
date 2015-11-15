@@ -1,0 +1,128 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:region>
+		<a4j:jsFunction 
+			name="showMainPageXX" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="false"
+			action="#{pageManager.initializeMainPage}">
+		</a4j:jsFunction>
+	</a4j:region>
+	
+	
+	<h:outputScript>
+	var source;
+	
+	function showHomePage(source) {
+		showPage(source, '/index.html');
+	}
+	           
+	function showPublicPage(source) {
+		showPage(source, '/public.seam');
+	}
+
+	function showMainPage(source) {
+		showPage(source, '/main.seam');
+	}
+	
+	function showNetworksPage(source, section) {
+		showPage(source, '/nam/model/network/networks.seam?section='+section);
+	}
+
+	/*
+	function showNewProjectPage(source, section) {
+		if (section != null)
+			showPage(source, '/nam/model/project/newProject.seam?section='+section);
+		else showPage(source, '/nam/model/project/newProject.seam?section=Identification');
+	}
+
+	function showApplicationManagementPage(source, section) {
+		showPage(source, '/nam/model/application/applications.seam?section='+section);
+	}
+
+	function showNewApplicationPage(source, section) {
+		if (section != null)
+			showPage(source, '/nam/model/application/newApplication.seam?section='+section);
+		else showPage(source, '/nam/model/application/newApplication.seam?section=Identification');
+	}
+
+	function showNewElementPage(source, section) {
+		if (section != null)
+			showPage(source, '/nam/model/element/newElement.seam?section='+section);
+		else showPage(source, '/nam/model/element/newElement.seam');
+	}
+
+	function showNewAttributePage(source, section) {
+		if (section != null)
+			showPage(source, '/nam/model/attribute/newAttribute.seam?section='+section);
+		else showPage(source, '/nam/model/attribute/newAttribute.seam');
+	}
+
+	function showUserPage(source, section) {
+		showPage(source, '/nam/workspace/users/user.seam?section='+section);
+	}
+	
+	function showUsersPage(source, section) {
+		showPage(source, '/nam/workspace/users/users.seam?section='+section);
+	}
+	*/
+
+
+	function showDeploymentsPage(source, section) {
+		showPage(source, '/nam/model/deployment/deployments.seam?section='+section);
+	}
+	
+	function showModelsPage(source) {
+		showPage(source, '/nam/workspace/models/modelManagementPage.seam');
+	}
+
+	function showImportsPage(source) {
+		showPage(source, '/nam/upload.seam');
+	}
+	
+	function showSeamPage(source, page) {
+		showPage(source, page + '.seam');
+	}
+
+	function showPage(source, page) {
+		setCursorWait(source, page);
+		var url = '#{facesContext.externalContext.requestContextPath}' + page;
+		//alert(url);
+		//window.location.href = url;
+		//location.replace(url);
+		//alert(0);
+		//location.reload(true);
+		//location.replace(url);
+		window.location.href = url;
+	}
+
+	function showHelpSection() {
+		set('container', 'width', '1000');
+		showDisplay('mainHelpPane');
+		showDisplay('collapseHelpSection');
+		hideDisplay('expandHelpButton');
+		showDisplay('mainHelpPane');
+	}
+
+	function hideHelpSection() {
+		hideDisplay('mainHelpPane');
+		hideDisplay('collapseHelpButton');
+		showDisplay('expandHelpSection');
+		set('container', 'width', '720');
+	}
+
+	</h:outputScript>
+	
+</ui:composition>

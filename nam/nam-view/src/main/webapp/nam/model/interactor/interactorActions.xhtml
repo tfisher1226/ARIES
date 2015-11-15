@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showInteractorListPage()
+		  ** Goes to the Interactor Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showInteractorListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{interactorPageManager.initializeInteractorListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Interactor Records', 'Preparing Interactor List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showInteractorTreePage()
+		  ** Goes to the Interactor Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showInteractorTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{interactorPageManager.initializeInteractorTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Interactor Records', 'Preparing Interactor Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showInteractorManagementPage()
+		  ** Goes to the Interactor Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showInteractorManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{interactorPageManager.initializeInteractorManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Interactor Records', 'Preparing Interactor related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showInteractorWizardPage()
+		  ** Goes to the Interactor Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showInteractorWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{interactorWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Interactor Records', 'Preparing Interactor information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{interactorWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{interactorWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewInteractorDialog()
+		  ** Launches the Interactor Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewInteractorDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{interactorInfoManager.newInteractor}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Interactor Records', 'Creating new Interactor...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showInteractorDialog()"
+			render="interactorModule, interactorDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{interactorInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="interactorListPane" assignTo="#{interactorInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{interactorInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditInteractorDialog()
+		  ** Launches the Interactor Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditInteractorDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{interactorInfoManager.editInteractor}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Interactor Records', 'Preparing Interactor information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showInteractorDialog()"
+			render="interactorModule, interactorDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{interactorInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="interactorListPane" assignTo="#{interactorInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{interactorInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

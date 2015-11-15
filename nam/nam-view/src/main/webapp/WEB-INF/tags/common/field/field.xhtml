@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty labelWidth}">
+			<c:set var="labelWidth" value="100px"/> 
+		</c:if>
+
+		<c:if test="#{empty height}">
+			<c:set var="height" value="23px"/> 
+		</c:if>
+
+		<c:if test="#{empty label}">
+			<c:set var="label" value="unspecified"/> 
+		</c:if>
+
+		<c:if test="#{empty backgroundColor}">
+			<c:set var="backgroundColor" value="inherit"/> 
+		</c:if>
+		
+		<h:panelGroup 
+			layout="block" 
+			style="background-color: inherit">
+			 
+			<h:panelGroup 
+				layout="block" 
+				style="float: left; width: 100%; height: #{height}; max-height: #{height}; background-color: inherit"> 
+				
+				<h:panelGroup 
+					layout="block" 
+					style="margin-left: #{labelWidth}; background-color: inherit"> 
+				
+					<ui:insert/>
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGrid 
+				layout="block" 
+				cellpadding="0"
+				cellspacing="0"
+				columns="1" 
+				columnClasses="formColumnAlignMiddle" 
+				styleClass="formPanel" 
+				style="float: left; width: #{labelWidth}; margin-left: -100%; height: #{height}; max-height: #{height}; background-color: #{backgroundColor}">
+
+				<h:outputLabel 
+					layout="block" 
+					styleClass="formLabel" 
+					style="width: auto; border-width: 0px; background-color: inherit">#{label}</h:outputLabel>
+			</h:panelGrid>
+		</h:panelGroup>
+	</aries:tag>
+</ui:composition>

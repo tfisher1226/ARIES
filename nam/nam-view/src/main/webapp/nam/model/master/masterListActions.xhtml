@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** masterListActions
+	  ** a4j:jsFunction methods to support the Master List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var masterListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshMasterList(event)
+		  ** Refreshes the current Master List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshMasterList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{masterListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Master Records', 'Refreshing current Master List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="masterListActions, masterListMenu, masterListToolbar, masterListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromMasterList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromMasterList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="masterListActions, masterListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{masterListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{masterListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="master" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="masterListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromMasterList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromMasterList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="masterListActions, masterListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{masterListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{masterListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{masterWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="masterListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="masterListActions, masterListMenu, masterListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** masterListActions
+		  ** Javascript methods to support the Master List.
+		  -->
+		
+		<a4j:outputPanel
+			id="masterListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getMasterListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getMasterListRowKey() {
+					if (masterListState != null)
+						return masterListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getMasterListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getMasterListRowLabel() {
+					if (masterListState != null)
+						return masterListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeMasterListState()
+				  ** Initializes and verifies Master List state information.
+				  -->
+					
+				function initializeMasterListState() {
+					try {
+						var rowIndex = '#{masterListManager.selectedRecordIndex}';
+						var recordKey = '#{masterListManager.selectedRecordKey}';
+						var recordLabel = '#{masterListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateMasterListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateMasterListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Master List.
+				  -->
+					
+				function updateMasterListState(event, rowIndex, recordKey, recordLabel) {
+					masterListState = new Object();
+					masterListState.rowIndex = rowIndex;
+					//masterListState.recordId = recordId;
+					masterListState.recordKey = recordKey;
+					masterListState.recordLabel = recordLabel;
+					//show(masterListState);
+				}
+					
+					
+				<!--
+				  ** enableMasterListActions(type)
+				  ** Enables (or disables) Master List actions based on current client-side state.
+				  -->
+					
+				function enableMasterListActions(type) {
+					//enableButton('masterListViewButton');
+					enableButton('masterListNewButton');
+					enableButton('masterListEditButton');
+					enableButton('masterListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processMasterListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Master List.
+				  -->
+					
+				function processMasterListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateMasterListState(event, rowIndex, recordKey, recordLabel);
+					enableMasterListActions('master');
+					try {
+						executeSelectFromMasterList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processMasterListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Master List.
+				  -->
+					
+				function processMasterListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Master Records', 'Preparing Master ' + recordLabel + ' for editing...');
+						executeActionFromMasterList(rowIndex, recordKey, 'Master', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('masterListTable')});
+						if (masterListState != null) {
+							var label = masterListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (masterListState != null) {
+							var label = masterListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (masterListState != null) {
+							var label = masterListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (masterListState != null)
+						label = masterListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'masterListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

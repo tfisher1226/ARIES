@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty label}">
+		<c:set var="label" value="" /> 
+	</c:if>
+	
+	<c:if test="#{empty enabled}">
+		<c:set var="enabled" value="true" /> 
+	</c:if>
+	
+	<c:if test="#{empty readonly}">
+		<c:set var="readonly" value="false" /> 
+	</c:if>
+	
+	<c:if test="#{empty required}">
+		<c:set var="required" value="false" /> 
+	</c:if>
+	
+	<c:if test="#{empty maxlength}">
+		<c:set var="maxlength" value="1024" /> 
+	</c:if>
+	
+	<c:if test="#{empty autocomplete}">
+		<c:set var="autocomplete" value="false" /> 
+	</c:if>
+	
+	<c:if test="#{empty id}">
+		<c:set var="id" value="InputText_#{globals.nextId()}" /> 
+	</c:if>
+
+	<aries:fieldWrapper>
+		<h:inputTextarea
+			id="#{id}"
+			rows="8"
+			value="#{value}"
+			label="#{label}"
+			disabled="#{!enabled}"
+			readonly="#{readonly}"
+			required="#{required}"
+			maxlength="#{maxlength}"
+			autocomplete="#{autocomplete}"
+			onkeydown="#{onkeydown}"
+			styleClass="browserSpecificInputTextArea formInput" 
+			style="background-color: white">
+	
+			<ui:insert />
+		</h:inputTextarea>
+	</aries:fieldWrapper>
+</ui:composition>

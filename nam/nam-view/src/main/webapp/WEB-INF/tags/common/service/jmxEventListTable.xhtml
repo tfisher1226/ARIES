@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<ui:param name="itemManager" value="#{jmxEventInfoManager}" />
+	<ui:param name="listManager" value="#{jmxEventListManager}" />
+	
+	<aries:outputPane
+		id="#{serviceId}JmxEventListTablePane">
+		<ui:include src="jmxEventListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{serviceId}JmxEventListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0 or true}"
+			onrowdblclick="setCursorWait(); executeOpenSelectedJmxEvent(#{index}, #{rowItem.jmxEvent.sequenceNumber})"
+			style="width: 506px; height: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- SequenceNumber -->
+			<aries:textColumn
+				width="40"
+				header="Seq.">
+				<h:outputText value="#{rowItem.jmxEvent.sequenceNumber}" />
+			</aries:textColumn>
+			
+			<!-- TimeStamp -->
+			<aries:textColumn
+				width="180"
+				header="Time Stamp">
+				<h:outputText value="#{helper.toTimeString(rowItem.jmxEvent.timeStamp)}" />
+			</aries:textColumn>
+			
+			<!-- SourceId 
+			<aries:textColumn
+				width="120"
+				header="Source Id">
+				<h:outputText value="#{rowItem.jmxEvent.sourceId}" />
+			</aries:textColumn>
+			-->
+
+			<!-- EventId -->
+			<aries:textColumn 
+				width="280"
+				header="Event Id">
+				<aries:link 
+					value="#{rowItem.jmxEvent.eventId}"
+					onmouseup="setCursorWait(this); executeOpenSelectedJmxEvent(#{index}, #{rowItem.jmxEvent.sequenceNumber})" />
+			</aries:textColumn>
+			
+			<!-- NotificationId 
+			<aries:textColumn 
+				width="120"
+				header="Notification Id">
+				<aries:link 
+					value="#{rowItem.jmxEvent.notificationId}"
+					onmouseup="setCursorWait(this); executeOpenSelectedJmxEvent(#{index}, #{rowItem.jmxEvent.sequenceNumber})" />
+			</aries:textColumn>
+			-->
+			
+			<!-- Message
+			<aries:textColumn
+				width="80"
+				header="Message">
+				<h:outputText value="#{rowItem.jmxEvent.message}" />
+			</aries:textColumn>
+			-->
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

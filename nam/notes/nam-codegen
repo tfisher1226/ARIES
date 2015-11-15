@@ -1,0 +1,17 @@
+
+
+
+Include comments in javadoc at class level and at method that identify the following:
+-Thread safety or lack thereof
+-Requirements / constraints that exist if/when subclasses of that class are created 
+-heterogeneity vs. homogeneity in collections
+-Lazy / on-demand creation of structures vs. implicit creation vs. explicit creation
+-References using @see annotation
+
+Can browse examples of excellant javadoc from the following:
+-java.security.PermissionCollection
+
+
+
+
+

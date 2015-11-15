@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model/0.0.1 c:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>SimpleInvoke</name>
+	<description>Example application for simple service invocation</description>
+
+	<sources>
+		<source name="SimpleInvoke" file="SimpleInvoke.bpel"/>
+	</sources>
+
+	<linkTypes>
+		<linkType name="intf:myClientCalling_PartnerLinkType" method="jaxws"/>
+		<linkType name="intf2:theExternalService_PartnerLinkType" method="jaxws"/>
+
+		<link name="theClient_PartnerLink" type="intf:myClientCalling_PartnerLinkType"/>
+		<link name="theExternalService_PartnerLink" type="intf:myClientCalling_PartnerLinkType"/>
+	</linkTypes>
+
+	<applications>
+		<application>
+			<name>model3</name>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<module name="model3" type="pom">
+			</module>
+
+			<module name="model3-simple-client" type="client" packaging="jar">
+				<outgoing name="theClient_PartnerLink"/>
+			</module>
+
+			<module name="model3-simple-service" type="service" packaging="war">
+				<service>
+					<channel name="theClient_PartnerLink"/>
+					<process name="SimpleInvoke"/>
+				</service>
+			</module>
+
+			<module name="model3-hello-model" type="model" packaging="jar">
+				<package namespace="http://simple_invoke/helloworld"/>
+			</module>
+
+			<module name="model3-hello-client" type="client" packaging="jar">
+				<outgoing name="theExternalService_PartnerLink" type="intf:myClientCalling_PartnerLinkType"/>
+			</module>
+
+			<module name="model3-hello-service" type="service" packaging="war">
+				<incoming name="theExternalService_PartnerLink" type="intf:myClientCalling_PartnerLinkType"/>
+			</module>
+		</application>
+	</applications>
+</project>

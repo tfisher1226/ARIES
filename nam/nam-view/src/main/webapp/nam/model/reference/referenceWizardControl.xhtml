@@ -1,0 +1,134 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="referenceWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Reference Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="referenceWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{referenceWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{referenceWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="referenceWizard"
+					offset="true" />
+				
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="referenceWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{referenceWizard.populateEnabled}"
+					manager="#{referenceWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="referenceMessages"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="referenceWizardPreviousButton"
+					icon="/icons/arrow/PreviousPage16.gif"
+					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					rendered="#{referenceWizard.backVisible}"
+					enabled="#{referenceWizard.backEnabled}"
+					manager="#{referenceWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Reference', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="referenceMessages"
+					offset="true" />
+				
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="referenceWizardNextButton"
+					icon="/icons/arrow/NextPage16.gif"
+					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					rendered="#{referenceWizard.nextVisible}"
+					enabled="#{referenceWizard.nextEnabled}"
+					manager="#{referenceWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Reference', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="referenceMessages"
+					offset="true" />
+				
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="referenceWizardFinishButton"
+					icon="/icons/common/Default16.gif"
+					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					rendered="#{referenceWizard.finishVisible}"
+					enabled="#{referenceWizard.finishEnabled}"
+					manager="#{referenceWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Reference', 'Validating and submitting new Reference...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="referenceMessages"
+					offset="true" />
+				
+				<!-- cancel button -->
+				<aries:dialogButton
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="referenceWizardCancelButton"
+					tooltip="Cancel creation of new Reference"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{referenceWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Reference Management', 'Cancelling creation of Reference...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:controlPane>
+</ui:composition>

@@ -1,0 +1,191 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	template="/templates/main.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="mainContent.xhtml" />
+	</ui:define>
+	
+	<!-- page title -->
+	<ui:define name="pageTitle">
+		<span class="pageTitle2">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="manager" value="#{pageManager}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- page breadcrumbs 
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{applicationPageManager.getBreadcrumbs('application')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	-->
+	
+	<!-- page views 
+	<ui:define name="pageViews">
+		<span class="pageViews">
+			<ui:include src="/common/pageViews.xhtml">
+				<ui:param name="label" value="Application" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="overviewPage" value="initializeApplicationManagementPage" />
+				<ui:param name="listPage" value="initializeApplicationListPage" />
+				<ui:param name="treePage" value="initializeApplicationTreePage" />
+			</ui:include>
+ 		</span>
+	</ui:define>
+	-->
+
+	<!-- section header -->
+	<ui:define name="sectionHeader">
+	
+		<!-- page title -->
+		<span class="pageTitle2" style="background-color: inherit; margin-top: 16px; margin-bottom: 0px">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="manager" value="#{pageManager}" />
+			</ui:include>
+		</span>
+
+		<!--  
+		<span class="pageControls">
+			<aries:button
+				id="generateButton"
+				label="Generate"
+				icon="/icons/common/Go16.gif"
+				tooltip="Generate Code"
+				padding="6"
+				fontSize="12"
+				mode="client"
+				execute="@none"
+				rendered="#{true}"
+				onclick=""
+				style="margin-left: 10px; margin-right: 60px"
+				offset="false">
+				<a4j:attachQueue requestDelay="0" />
+			</aries:button>
+		</span>
+		-->
+
+		<!-- page controls 
+		<span class="pageControls">
+			<aries:button
+				id="modelButton"
+				label="#{workspaceManager.currentModel}"
+				icon="/icons/nam/Router16.gif"
+				tooltip="Load Model"
+				padding="6"
+				fontSize="13"
+				mode="client"
+				execute="@none"
+				rendered="#{true}"
+				onclick=""
+				style=""
+				offset="false">
+				<a4j:attachQueue requestDelay="0" />
+			</aries:button>
+		</span>
+		-->
+
+		<!-- page controls -->
+		<ui:include src="/common/pageControls.xhtml">
+			<ui:param name="pageType" value="main" />
+		</ui:include>
+	</ui:define>
+	
+	<!-- section messages -->
+	<ui:define name="sectionMessages">
+		<span class="sectionMessages">
+			<ui:include src="/common/sectionMessages.xhtml">
+				<ui:param name="domain" value="applicationManagement" />
+				<ui:param name="message" value="Application Management Overview" />
+			</ui:include>
+		</span>
+	</ui:define>
+
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content" style="">
+
+			<aries:formPane
+				columns="2" 
+				width="100%"
+				height="auto"
+				margin="0px"
+				marginTop="0px"
+				backgroundColor="inherit">
+
+				<aries:panel
+					width="700"
+					height="auto"
+					marginLeft="20px"
+					marginRight="0px"
+					borderWidth="1px"
+					borderColor="#bbb"
+					backgroundColor="white">
+				
+					<aries:formPane
+						columns="3" 
+						columnClass="formColumnAlignTop"
+						width="auto"
+						height="auto"
+						margin="0px"
+						marginTop="10px"
+						paddingBottom="40px"
+						backgroundColor="inherit">
+					
+						<!--
+						
+						Nam is a system of 7 workbenches that together provide a way to architect complex systems in simple but thorough way.  
+						
+						Results in ... 
+						
+						There are 3 ways to build the design of your system...
+						The generation engine requires input... There are 3 ways to provide this input...
+						
+						includes
+						
+						Enterprise engineering is a subdiscipline of systems engineering, which applies the knowledge and methods of systems engineering to the design of businesses. The discipline examines each aspect of the enterprise, including business processes, information flows, and organizational structure.
+
+						Go to Nam Cloud Platform Live  
+						Nam is built with a few simple goals and very powerful ideas. Knowing them helps to understand more easily how Nam works. 
+						 -->
+						<ui:include src="mainDeploymentPanel.xhtml" />
+						<ui:include src="mainDevelopmentPanel.xhtml" />
+						<ui:include src="mainManagementPanel.xhtml" />
+					</aries:formPane>
+				</aries:panel>
+				
+				<aries:panel
+					id="mainHelpPane"
+					width="240"
+					height="300"
+					marginLeft="0px"
+					marginRight="14px"
+					padding="20px"
+					borderWidth="1px"
+					borderColor="#bbb"
+					backgroundColor="inherit"
+					rendered="#{workspaceManager.helpSectionVisible}">
+				
+					<aries:label fontSize="15" fontWeight="bold" value="About Nam" />
+					
+					<aries:spacer width="10" height="10" />
+					<aries:link value="Enterprise Architecture"
+						onmousedown="setCursorWait(this)"
+						onmouseup="setCursorDefault(event.source); replaceContent('popupWindowHandle', 'enterpriseArchitectureView'); _showTestPopup('ECOS Terminology', 'Generation Engine', 'What on earth is it?')" />
+	
+				</aries:panel>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * JBoss, Home of Professional Open Source
+ * Copyright 2009, Red Hat Middleware LLC, and others contributors as indicated
+ * by the @authors tag. All rights reserved.
+ * See the copyright.txt in the distribution for a
+ * full listing of individual contributors.
+ * This copyrighted material is made available to anyone wishing to use,
+ * modify, copy, or redistribute it subject to the terms and conditions
+ * of the GNU Lesser General Public License, v. 2.1.
+ * This program is distributed in the hope that it will be useful, but WITHOUT A
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+ * You should have received a copy of the GNU Lesser General Public License,
+ * v.2.1 along with this distribution; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA  02110-1301, USA.
+ -->
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:bank_0.0.1="http://www.aries.org/bank/0.0.1" xmlns:bpl="http://example.com/loan-approval/" xmlns:examples="http://www.jboss.org/bpel/examples" xmlns:intf="http://example.com/loan-approval/wsdl/" xmlns:loan-approval="http://example.com/loan-approval" xmlns:org.aries="org.aries" xmlns:purchase="http://acme.com/ws-bp/purchase" xmlns:samples="http://www.jboss.org/bpel/samples" xmlns:unit-testAssign1="http://ode/bpel/unit-testAssign1">
+  <process name="org.aries:process1">
+    <process-events generate="all"/>
+    <provide partnerLink="client"/>
+  </process>
+  <process name="bank_0.0.1:bankLoanQuote">
+    <process-events generate="all"/>
+    <provide partnerLink="client"/>
+  </process>
+  <process name="unit-testAssign1:TestAssign">
+    <process-events generate="all"/>
+    <provide partnerLink="TestAssignPartnerLink"/>
+  </process>
+  <process name="examples:SimpleInvoke">
+    <process-events generate="all"/>
+    <provide partnerLink="theClient_PartnerLink"/>
+    <invoke partnerLink="theExternalService_PartnerLink"/>
+  </process>
+  <process name="purchase:purchaseOrderProcess">
+    <process-events generate="all"/>
+    <provide partnerLink="purchasing"/>
+    <provide partnerLink="invoicing"/>
+    <provide partnerLink="shipping"/>
+    <invoke partnerLink="invoicing"/>
+    <invoke partnerLink="shipping"/>
+    <invoke partnerLink="scheduling"/>
+  </process>
+  <process name="samples:Ordering">
+    <process-events generate="all"/>
+    <provide partnerLink="client"/>
+    <invoke partnerLink="ordering"/>
+  </process>
+  <process name="loan-approval:loanApprovalProcess">
+    <process-events generate="all"/>
+    <provide partnerLink="customer"/>
+    <invoke partnerLink="approver"/>
+    <invoke partnerLink="assessor"/>
+  </process>
+</deploy>

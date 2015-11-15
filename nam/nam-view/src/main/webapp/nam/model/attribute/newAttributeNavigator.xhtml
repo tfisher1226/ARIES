@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:nam="http://aries.org/nam">
+
+	<aries:panel
+		width="200"
+		height="100%"
+		margin="0px"
+		marginLeft="20px"
+		backgroundColor="inherit"
+		style="float: left">
+
+		<aries:formPane
+			width="auto"
+			borderWidth="1px"
+			borderColor="#aaa"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<c:set var="section" value="#{attributeWizard.section}" /> 
+			<c:set var="backgroundColor" value="#cfe7f5" /> 
+
+			<aries:indentPane
+				width="140"
+				height="auto"
+				padding="6px"
+				paddingLeft="12px"
+				fontSize="16"
+				fontWeight="bold"
+				backgroundColor="#fff">
+				Steps
+			</aries:indentPane>
+
+			<ui:repeat
+				var="page" 
+				value="#{attributeWizard.pages}">
+				
+				<nam:wizardStep
+					step="#{section}"
+					value="#{page.name}"
+					onclick="setCursorWait(this); showNewAttributePage(this, '#{page.name}')">
+				</nam:wizardStep>
+			</ui:repeat>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

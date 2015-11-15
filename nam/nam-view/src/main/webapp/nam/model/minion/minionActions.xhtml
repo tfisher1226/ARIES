@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showMinionListPage()
+		  ** Goes to the Minion Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMinionListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{minionPageManager.initializeMinionListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Minion Records', 'Preparing Minion List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showMinionTreePage()
+		  ** Goes to the Minion Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMinionTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{minionPageManager.initializeMinionTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Minion Records', 'Preparing Minion Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showMinionManagementPage()
+		  ** Goes to the Minion Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMinionManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{minionPageManager.initializeMinionManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Minion Records', 'Preparing Minion related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showMinionWizardPage()
+		  ** Goes to the Minion Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showMinionWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{minionWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Minion Records', 'Preparing Minion information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{minionWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{minionWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewMinionDialog()
+		  ** Launches the Minion Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewMinionDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{minionInfoManager.newMinion}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Minion Records', 'Creating new Minion...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showMinionDialog()"
+			render="minionModule, minionDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{minionInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="minionListPane" assignTo="#{minionInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{minionInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditMinionDialog()
+		  ** Launches the Minion Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditMinionDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{minionInfoManager.editMinion}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Minion Records', 'Preparing Minion information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showMinionDialog()"
+			render="minionModule, minionDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{minionInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="minionListPane" assignTo="#{minionInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{minionInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

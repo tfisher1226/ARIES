@@ -1,0 +1,11 @@
+
+Configuration, setup and maintenance of environments creates a significant barrier to a well-exercised and maintained test suite
+
+Ideally we want to enable running tests with minimal setup. Data-intensive applications need a database, which are notoriously hard to configure and setup. We'll use a database for our tests, but instead of connecting to an external one the database will start up and run as part of the unit test. This gives us the following:
+
+    * zero setup: no installation, no shared machine, no maintenance, no JDBC urls, no passwords
+    * in-memory and fast
+    * can run anywhere, even when not on a network
+    * clean, with no rogue data that could affect our tests
+    * no deadlocks
+

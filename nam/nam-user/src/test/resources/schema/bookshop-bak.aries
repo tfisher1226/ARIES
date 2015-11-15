@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model/0.0.1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bookshop="http://bookshop"
+	xmlns:seller="http://bookshop/seller"
+	xmlns:supplier="http://bookshop/supplier"
+	xsi:schemaLocation="http://nam/model/0.0.1 file:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>bookshop-demo</name>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<webEnabled>true</webEnabled>
+	<singleProject>true</singleProject>
+
+	<imports>
+		<import file="book-buyer.bpel" type="bpel"/>
+		<import file="book-seller.bpel" type="bpel"/>
+		<import file="book-supplier.bpel" type="bpel"/>
+	</imports>
+
+	<providers>
+		<provider
+			type="jms" 
+			name="@jms.provider.name@"
+			connection-url="@jms.jndi.url@"
+			context-factory="@jms.jndi.context-factory@" 
+			url-pkg-prefixes="@jms.jndi.url-pkg-prefixes@"
+			security-principal="@jms.jndi.username@"
+			security-credentials="@jms.jndi.password@"/>
+	</providers>
+	
+	<messaging>
+		<transports>
+			<http-transport 
+				name="seller-jaxws" 
+				portType="seller:SellerOrderReceiver" />
+
+			<jms-transport
+				name="seller-jms"
+				transferMode="TEXT" 
+				providerName="@jms.provider.name@" 
+				connectionFactory="@jms.provider.connection-factory@"
+				destinationName="@jms.asyncEchoCaller.destination@" />
+		</transports>
+	
+		<links>
+			<link name="buyer-link">
+				<role name="buyer" />
+			</link>
+
+			<link name="seller-link">
+				<transport ref="seller-jms" />
+				<transport ref="seller-ws" />
+				<role name="buyer">
+					<transport ref="seller-jms" userId="*" credential="*" />
+					<transport ref="seller-ws" userId="*" credential="*" />
+				</role>
+				<role name="seller" />
+			</link>
+
+			<link name="supplier-link">
+				<role name="seller" />
+				<role name="supplier" />
+			</link>
+		</links>
+	</messaging>
+
+	<applications>
+		<application>
+			<name>Bookshop Demo</name>
+			<groupId>bookshop</groupId>
+			<artifactId>bookshop-demo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			
+			<modules>
+				<module>
+					<type>service</type>
+					<name>book-buyer-service</name>
+					<namespace>http://bookshop/buyer</namespace>
+					<services domain="buyer">
+						<service name="BookOrderAcceptedCallback">
+							<listener link="buyer-link" role="buyer"/>
+							<process ref="buyerOrderProcess" />
+						</service>
+
+						<service name="BookPaymentAcceptedCallback">
+							<listener link="buyer-link" role="buyer"/>
+							<process ref="buyerOrderProcess" />
+						</service>
+					</services>
+					
+					<processes>
+						<process name="buyerOrderProcess">
+							<transacted type="required" scope="workflow" />
+						</process>
+					</processes>
+				</module>
+
+				<module>
+					<type>service</type>
+					<name>book-seller-service</name>
+					<namespace>http://bookshop/seller</namespace>
+					<services domain="seller">
+						<service name="SellerOrderReceiver">
+							<transacted type="manadatory" scope="workflow" />
+							<listener link="seller-link" role="seller"/>
+							<invoker link="supplier-link" role="seller"/>
+							<process ref="sellerOrderProcess" />
+							<cache ref="sellerOrderCache" />
+							<!-- 
+							<callbacks>
+								<callback name="BookAvailableCallback">
+									<listener link="seller-link" role="buyer"/>
+								</callback>
+								<callback name="BookUnavailableCallback">
+									<listener link="seller-link" role="buyer"/>
+								</callback>
+							</callbacks>
+							-->
+						</service>
+
+						<service name="BookAvailableCallback">
+							<listener link="seller-link" role="buyer"/>
+							<process ref="sellerOrderProcess" />
+							<cache ref="sellerOrderCache" />
+						</service>
+
+						<service name="BookUnavailableCallback">
+							<listener link="seller-link" role="buyer"/>
+							<process ref="sellerOrderProcess" />
+							<cache ref="sellerOrderCache" />
+						</service>
+
+						<service name="SellerPaymentReceiver">
+							<transacted type="manadatory" scope="workflow" />
+							<listener link="seller-link" role="seller"/>
+							<process ref="sellerOrderProcess" />
+						</service>
+
+						<!--  
+						<service name="PaypalPaymentHandler">
+							<listener link="seller-link" role="payment-listener"/>
+							<link name="paypal-link" role="paypal-client"/>
+						</service>
+						-->
+					</services>
+
+					<processes>
+						<process name="sellerOrderProcess">
+							<transacted type="required" scope="workflow" />
+							<cache ref="sellerOrderCache" />
+						</process>
+					</processes>
+					
+					<!--  
+					<persistence>
+						<cache name="sellerOrderCache">
+							<transacted type="required" />
+							<level>application</level>
+							<scope>global</scope>
+							<items>
+								<item name="bookOrdersPlaced" type="bookshop:BookInfo" text="List" />
+							</items>
+						</cache>
+					</persistence>
+					-->
+				</module>
+
+				<module>
+					<type>service</type>
+					<name>book-supplier-service</name>
+					<namespace>http://bookshop/supplier</namespace>
+					<services domain="supplier">
+						<service name="SupplierOrderReceiver">
+							<transacted type="manadatory" scope="event" />
+							<listener link="supplier-link" role="supplier-order-listener"/>
+							<sender link="seller-link" role="book-available-notifier"/>
+							<sender link="seller-link" role="book-unavailable-notifier"/>
+							<process ref="supplierOrderProcess" />
+							<cache ref="supplierOrderCache" />
+						</service>
+					</services>
+
+					<processes>
+						<process name="supplierOrderProcess">
+							<transacted type="required" />
+							<cache ref="supplierOrderCache" />
+						</process>
+					</processes>
+
+					<components>
+						<component name="supplierInventoryManager">
+							<class>bookshop.supplier.SupplierInventoryManager</class>
+						</component>
+					</components>
+
+					<!--  
+					<persistence>
+						<cache name="supplierOrderCache">
+							<transacted type="required" scope="workflow" />
+							<level>application</level>
+							<scope>global</scope>
+							<items>
+								<item name="bookOrdersPlaced" type="bookshop:BookInfo" text="List" />
+								<item key="xs:string" name="booksInStock" type="bookshop:BookInfo" text="Map" />
+							</items>
+						</cache>
+					</persistence>
+					-->					
+				</module>
+			</modules>
+		</application>
+	</applications>
+</project>

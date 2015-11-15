@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showAdapterListPage()
+		  ** Goes to the Adapter Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showAdapterListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{adapterPageManager.initializeAdapterListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Adapter Records', 'Preparing Adapter List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showAdapterTreePage()
+		  ** Goes to the Adapter Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showAdapterTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{adapterPageManager.initializeAdapterTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Adapter Records', 'Preparing Adapter Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showAdapterManagementPage()
+		  ** Goes to the Adapter Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showAdapterManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{adapterPageManager.initializeAdapterManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Adapter Records', 'Preparing Adapter related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showAdapterWizardPage()
+		  ** Goes to the Adapter Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showAdapterWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{adapterWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Adapter Records', 'Preparing Adapter information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{adapterWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{adapterWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewAdapterDialog()
+		  ** Launches the Adapter Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewAdapterDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{adapterInfoManager.newAdapter}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Adapter Records', 'Creating new Adapter...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showAdapterDialog()"
+			render="adapterModule, adapterDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{adapterInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="adapterListPane" assignTo="#{adapterInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{adapterInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditAdapterDialog()
+		  ** Launches the Adapter Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditAdapterDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{adapterInfoManager.editAdapter}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Adapter Records', 'Preparing Adapter information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showAdapterDialog()"
+			render="adapterModule, adapterDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{adapterInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="adapterListPane" assignTo="#{adapterInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{adapterInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

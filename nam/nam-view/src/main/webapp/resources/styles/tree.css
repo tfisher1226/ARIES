@@ -1,0 +1,88 @@
+.treePanel,
+.treePanelContained {
+	width: auto; 
+	height: auto; 
+	padding: 0px; 
+	margin: 0px; 
+}
+
+.treePanelContained {
+	overflow-y: scroll;
+}
+
+.treePanelBody {
+	padding: 0px; 
+	margin: 4px; 
+	margin-right: 0px; 
+}
+
+.tree {
+	padding: 0px; 
+	margin: 0px; 
+	background-color: white; 
+	background-color: #{userSkin.backgroundColor}; 
+	background-color: inherit;
+	border: 0px solid #ccc; 
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-o-user-select: none;
+	color: #004;
+}
+
+.treeNode {
+	padding: 20px; 
+	padding-left: 4px;
+	margin-right: 30px;
+	font-size: 12px;
+}
+
+.treeNodeXXX {
+	padding-left: 3px;
+	border: 1px solid #fff; 
+	text-decoration: none;
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	-moz-user-select: none; 
+	-o-user-select: none;
+	color: #004;
+}
+
+.treeNodeActive {
+	cursor: pointer;
+	background-color: #ECF3FE;
+	background-color: #FFEBDA;
+	background-color: #E0E0FF;
+	background-color: #FFEBDA;
+}
+
+.treeNodeSelected {
+	background-color: #FFEBDA;
+	background-color: #{richSkin.tableHeaderBackgroundColor};
+}
+
+/*
+.treeNodeHighlighted {
+	padding-left: 3px;
+	border: 0px solid #b9d7fc; 
+	border: 1px solid #ccc; 
+	text-decoration: underline;
+	background-color: #ddecff;
+	background-color: #faeccf;
+	background-color: #ffebda;
+	background-color: #efefff;
+	color: #004;
+}
+	
+.treeNodeSelected {
+	padding-left: 3px;
+	border: 1px solid #ccc; 
+	border: 1px solid #84acdd; 
+	background-color: #d3e6ff;
+	background-color: #efefff;
+	background-color: #ddecff;
+	background-color: #{richSkin.additionalBackgroundColor};
+	color: #darkBlue;
+}
+*/
+

@@ -1,0 +1,181 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel 
+		layout="block" 
+		id="modelFileTreeToolbar">
+
+		<aries:toolbar type="tab">
+			<aries:toolbarGroup location="left">
+
+				<aries:toolButton 
+					mode="client"
+					id="modelFileTreeNewModelFileButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new ModelFile"
+					icon="/icons/common/New16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="executeNewModelFile(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager and selectedModelFile.level != 'GROUP'}"
+					tooltip="Create new {childLevel} ModelFile record for {modelFileName}"
+					icon="/icons/common/New16.gif"
+					manager="#{modelFileInfoManager}"
+					action="newModelFile"
+					onclick="setCursorWait(this); if (#{empty selectedModelFile}) {setCursorDefault(this); popupAlert('New Membership Record', '', 'An modelFile must be selected'); return false} else {showProgress('New {childLevel} for {modelFileName}', 'Creating new modelFile record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); showModelFileInfoDialog()"
+					render="ModelFileInfoDialog" />
+
+				<aries:toolButton 
+					mode="client"
+					disabled="#{(empty selectedModelFile or selectedModelFile.level == 'GROUP') and false}"
+					icon="/icons/common/New16.gif"
+					value="New #{modelFileInfoManager.childLevel} for #{selectedModelFile.name}..."
+					tooltip="Create a new #{modelFileInfoManager.childLevel} #{not empty selectedModelFile ? 'for selectedModelFile.name selectedModelFile.level' : ''}"
+					onclick="if (#{not empty selectedModelFile}) {setCursorWait(this); showProgress('New #{modelFileInfoManager.childLevel} for #{selectedModelFile.name} #{selectedModelFile.level}', 'Creating new modelFile record...'); processNewModelFile()}" />
+					-->
+
+				<aries:toolButton 
+					id="modelFileTreeViewModelFileButton"
+					rendered="#{!securityGuard.checkManager}"
+					tooltip="View information for selected ModelFile"
+					icon="/icons/common/Properties16.gif"
+					iconDisabled="/icons/common/PropertiesDisabled16.gif"
+					enabled="#{not empty selectedModelFile}"
+					manager="#{modelFileInfoManager}"
+					action="editModelFile"
+					onclick="setCursorWait(this); if (#{empty selectedModelFile}) {setCursorDefault(this); popupAlert('ModelFile Lookup', '', 'An modelFile must be selected'); return false} else {showProgress('{modelFileName}', 'Retrieving modelFile record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processViewModelFile('#{selectedModelFile.name}', '#{selectedModelFile.level}')"
+					render="ModelFileInfoDialog" />
+
+				<aries:toolButton 
+					id="modelFileTreeEditModelFileButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected ModelFile"
+					icon="/icons/common/Edit16.gif"
+					iconDisabled="/icons/common/EditDisabled16.gif"
+					enabled="#{not empty selectedModelFile}"
+					onclick="executeEditModelFile()" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected ModelFile"
+					icon="/icons/common/Edit16.gif"
+					manager="#{modelFileInfoManager}"
+					action="editModelFile"
+					onclick="setCursorWait(this); if (#{empty selectedModelFile}) {setCursorDefault(this); popupAlert('ModelFile Lookup', '', 'An modelFile must be selected'); return false} else {showProgress('{modelFileName}', 'Retrieving modelFile record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processEditModelFile('#{selectedModelFile.name}', '#{selectedModelFile.level}')"
+					render="ModelFileInfoDialog" />
+					-->
+
+				<!--  			
+				<aries:toolButton
+					id="modelFileTreeMoveModelFileButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Move selected ModelFile to new parent ModelFile"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					enabled="#{not empty selectedModelFile}"
+					execute="@this"
+					manager="#{modelFileTreeManager}"
+					action="prepareMoveModelFile"
+					onclick="return processMoveModelFile()"
+					linkClass="link" />
+					-->
+
+				<aries:toolButton 
+					mode="client"
+					id="modelFileTreeRemoveModelFileButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove ModelFile record from system"
+					icon="/icons/common/Remove16.gif"
+					iconDisabled="/icons/common/RemoveDisabled16.gif"
+					enabled="#{not empty selectedModelFile}"
+					onclick="checkRemoveModelFile()" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove ModelFile record from system"
+					icon="/icons/common/Remove16.gif"
+					manager="#{modelFileInfoManager}"
+					action="promptDeleteModelFile"
+					onclick="setCursorWait(this); showProgress('Analyzing {modelFileName}', 'Checking permissions...')"
+					oncomplete="setCursorDefault(this); hideProgress(); if (#{!messages.isMessagesExist('ModelFileInfo')}) {checkPromptDeleteModelFile('#{modelFile.name} #{modelFile.level}')} else {warnCannotDeleteModelFile('#{modelFile.name} #{modelFile.level}', '#{messages.getMessage('ModelFileInfo')}')}" />
+					-->
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+	
+				<c:if test="#{securityGuard.checkManager}">
+				</c:if>
+				
+				<!--  
+				<aries:toolToggleButton
+					execute="@this"
+					id="showMemberCountLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show member count in labels"
+					selected="#{treeNodeFactory.showMemberCountInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowMemberCountInLabels" 
+			   		render="showMemberCountLabelsButton"
+					linkClass="link" />
+	
+				<aries:toolToggleButton
+					execute="@this"
+					id="showFilterDetailLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show filter detail in labels"
+					selected="#{treeNodeFactory.showFilterDetailInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowFilterDetailInLabels" 
+			   		render="showFilterDetailLabelsButton"
+					linkClass="link" />
+					-->
+							
+				<aries:toolButton
+					id="modelFileTreeCollapseButton"
+					icon="/icons/common/CollapseAll16.gif"
+					tooltip="Click here to Collapse ModelFiles"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('', 'Collapse Selected ModelFile', 'Not ready at this time')"
+					linkClass="link" />
+					
+				<aries:toolButton
+					id="modelFileTreeRefreshButton"
+					execute="@this"
+					limitRender="false"
+					icon="/icons/common/Refresh16.gif"
+					tooltip="Re-read ModelFiles from server"
+			   		manager="#{modelFileTreeManager}" 
+			   		action="refresh"
+					onclick="setCursorWait(this); showProgress('', 'ModelFile Service', 'Refreshing ModelFile Structure...')"
+					oncomplete="setCursorDefault(); hideProgress()"
+			   		render="modelFileTreePanel"
+					linkClass="link" />
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
+</ui:composition>

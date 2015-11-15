@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:nam="http://nam/model" 
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+
+	<!--
+		Security type
+	-->
+
+	<xs:element name="security" type="nam:Security"/>
+	<xs:complexType name="Security">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="user" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="password" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="realm" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="common:property"/>
+		</xs:sequence>
+		<xs:attribute name="runAs" type="xs:string" use="optional"/>
+		<xs:attribute name="rolesAllowed" type="xs:string" use="optional"/>
+		<xs:attribute name="moduleName" type="xs:string" use="optional"/>
+		<xs:attribute name="useCallerIdentity" type="xs:string" use="optional"/>
+		<xs:attribute name="callbackHandler" type="xs:string" use="optional"/>
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="war-security">
+		<xs:complexType>
+			<xs:attribute default="BASIC" name="method" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:NMTOKEN">
+						<xs:enumeration value="BASIC"/>
+						<xs:enumeration value="DIGEST"/>
+						<xs:enumeration value="CLIENT-CERT"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="domain" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Security Domain.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="globals">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="1" name="war-security"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	-->
+	
+</xs:schema>
+

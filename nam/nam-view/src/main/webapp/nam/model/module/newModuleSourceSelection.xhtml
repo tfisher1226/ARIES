@@ -1,0 +1,106 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- Page Includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="moduleActions.xhtml" />
+	</ui:define>
+	
+	<!-- Page Title -->
+	<ui:define name="pageTitle">
+		<div class="pageTitle">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="icon" value="/icons/nam/NewModule16.gif" />
+				<ui:param name="title" value="New Module" />
+			</ui:include>
+		</div>
+	</ui:define>
+	
+	<!-- Page Breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{modulePageManager.getBreadcrumbs('module')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- Section Breadcrumbs -->
+	<ui:define name="sectionBreadcrumbs">
+		<span class="sectionBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{modulePageManager.getBreadcrumbs('moduleWizard')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- wizard title --> 
+	<ui:define name="wizardTitle">
+		<aries:spacer height="4" />
+		<aries:text
+			padding="0px"
+			fontSize="16"
+			fontWeight="bold"
+			value="Module #{moduleWizard.section}" />
+	</ui:define>
+
+	<!-- PANEL MESSAGES --> 
+	<ui:define name="wizardMessages">
+		<aries:spacer height="12" /> 
+		<aries:messages
+			id="wizardMessages" 
+			module="moduleWizard" 
+			message="Select way to create new Module" />
+	</ui:define>
+
+	<ui:define name="sectionHeader">
+		<aries:panel 
+			marginLeft="#{helper.wizard_leftSection_width + helper.wizard_leftSection_marginLeft + helper.wizard_leftSection_marginRight}"
+			backgroundColor="inherit">
+
+			<div class="pageTitle2">
+				<ui:include src="/common/pageTitle.xhtml">
+					<ui:param name="icon" value="/icons/nam/NewModule16.gif" />
+					<ui:param name="title" value="New Module" />
+				</ui:include>
+			</div>
+				
+			<!-- Section Breadcrumbs -->
+			<ui:insert name="sectionBreadcrumbs" />
+		</aries:panel>
+	</ui:define>
+					
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<div class="content">
+		
+			<aries:formPane
+				columns="2"
+				marginTop="2px">
+		
+				<aries:panel 
+					width="#{helper.wizard_middleSection_width}"
+					height="#{helper.wizard_middleSection_height}"
+					marginLeft="#{helper.wizard_leftSection_width + helper.wizard_leftSection_marginLeft + helper.wizard_leftSection_marginRight}"
+					borderWidth="1px"
+					borderColor="#aaa"
+					backgroundColor="inherit">
+
+					<!-- PANELS --> 
+					<ui:include src="newModuleSourceSelectionPanel.xhtml" />
+		
+					<!-- Control -->
+					<ui:include src="moduleWizardControl.xhtml" />
+				</aries:panel>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

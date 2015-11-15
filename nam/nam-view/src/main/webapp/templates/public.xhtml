@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<f:view>
+		<f:metadata>
+			<f:viewAction rendered="#{true}" action="#{adminManager.reset}" />
+		</f:metadata>
+		
+	    <h:head>
+			<!-- HEAD CONTENT --> 
+			<ui:include src="/templates/public-head-content.xhtml"/>
+	    </h:head>
+	    
+	    <h:body class="body">
+	    
+			<!-- PAGE SETUP --> 
+			<ui:include src="/templates/public-body-setup.xhtml"/>
+
+			<!-- GLOBAL QUEUES -->
+			<a4j:queue requestDelay="0" ignoreDupResponses="true"/>
+
+			<!-- LOGIN DIALOG -->
+			<aries:loginDialog
+				title="Identification Required" 
+				heading="NAM LOGIN"/>
+		
+			<!-- REGISTRATION DIALOG 
+			<aries:registerDialog
+				title="Account Registration" 
+				heading="NAM REGISTRATION"/>
+				-->
+			
+			<!-- PAGE FORM -->
+			<aries:form id="publicForm">
+	
+				<!-- POPUP DIALOGS -->
+				<aries:popupDialog/>
+				<aries:messageDialog/>
+				<aries:progressDialog/>
+				<aries:themeDialog/>
+				<ui:include src="/common/popupMenu.xhtml" />
+				<ui:include src="/common/popupWindow.xhtml" />
+				<ui:include src="/common/screenLock.xhtml" />
+
+				<!-- COMMON DIALOGS 
+				<ui:include src="/common/inputDialog.xhtml" />
+				<ui:include src="/common/personNameDialog.xhtml" />
+				<ui:include src="/common/emailAddressDialog.xhtml" />
+				<ui:include src="/common/phoneNumberDialog.xhtml" />
+				<ui:include src="/common/streetAddressDialog.xhtml" />
+				-->
+			
+				<!-- PAGE HEADER -->
+				<aries:header 
+					titleText="Nam"
+					subTitleText="Network and Application Modeler"
+					iconImageXX="/resources/graphics/default-page-icon.jpg" />
+	
+				<!-- MENUBAR -->
+				<ui:include src="/nam/actions.xhtml"/>
+				<ui:include src="/nam/menubar.xhtml"/>
+	
+				<h:panelGroup 
+					layout="block" 
+					style="width: auto; margin-left: 256px; background-color: inherit">
+			
+					<aries:panel
+						width="100%"
+						height="auto"
+						margin="0px">
+	
+						<!-- PAGE CONTENT -->
+	                    <ui:insert name="content">
+	                        Body content missed
+	                    </ui:insert>
+					</aries:panel>
+				</h:panelGroup>
+				
+				<!-- PAGE FOOTER -->
+				<aries:footer backgroundColor="inherit">
+					<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+						&copy; Copyright 2015 ECOS-NET. All rights reserved.
+					</aries:p>
+				</aries:footer>
+			</aries:form>
+	
+			<a4j:outputPanel ajaxRendered="true">
+				<h:form style="display: none" prependId="false">
+					<h:inputHidden id="maximumSeverity" value="#{facesContext.maximumSeverity.ordinal}" />
+				</h:form>
+			</a4j:outputPanel>
+	
+			<!-- PAGE BODY FOLLOWUP --> 
+			<ui:include src="/templates/public-body-followup.xhtml"/>
+	    </h:body>
+	</f:view>
+</html>

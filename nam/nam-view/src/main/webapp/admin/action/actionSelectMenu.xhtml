@@ -1,0 +1,21 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:region>
+		<aries:contextMenu 
+			id="#{section}ActionSelectMenu">
+
+			<aries:contextMenuItem 
+				mode="client"
+				value="Edit Action Selection..."
+				icon="/icons/common/Edit16.gif"
+				onclick="show#{domain}ActionSelectDialog()"
+				render="#{domain}ActionSelectDialog">
+				<aries:tooltip value="View/update Action Selection" />
+			</aries:contextMenuItem>
+		</aries:contextMenu>
+	</aries:region>
+</ui:composition>

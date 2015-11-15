@@ -1,0 +1,19 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:include src="roleTypeSelectMenu.xhtml" />
+
+	<aries:fieldWrapper
+		width="#{width-2}"
+		label="#{label}"
+		labelWidth="90">
+		
+		<aries:listField 
+			id="#{section}#{type}"
+			menuId="#{section}#{type}Menu"
+			dialogId="#{type}Dialog" />
+	</aries:fieldWrapper>
+</ui:composition>

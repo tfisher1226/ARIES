@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchLibrarySelectDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{librarySelectManager.show}"
+		onbegin="setCursorWait(this); showProgress('', 'Library Records', 'Retrieving current records...')"
+		oncomplete="setCursorDefault(this); hideProgress(); showLibrarySelectDialog()"
+		render="librarySelectModule, librarySelectDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{librarySelectManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{librarySelectManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{librarySelectManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="libraryModule">
+		
+		<a4j:region
+			rendered="#{librarySelectManager.visible}">
+			
+			<aries:dialog
+				id="LibraryDialog">
+				render="#{librarySelectManager.renderList} librarySelectPane">
+				
+				<!-- border -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- dialog content -->
+					<ui:include src="librarySelectPane.xhtml" />
+				</aries:borderPane>
+			</aries:dialog>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

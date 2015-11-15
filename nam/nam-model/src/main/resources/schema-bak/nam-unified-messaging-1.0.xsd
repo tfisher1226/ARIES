@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:nam="http://nam/model" 
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-security-1.0.xsd" />
+
+	<!--
+		Messaging Layer
+	-->
+
+	<xs:element name="messaging" type="nam:Messaging"/>
+	<xs:complexType name="Messaging">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:providers"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:transports"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:links"/>
+
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:adapters"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:listeners"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:channels"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:routers"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:interactors"/>
+		</xs:all>
+	</xs:complexType>
+
+
+	<!--
+		Links Type 
+	-->
+
+	<xs:element name="links" type="nam:Links"/>
+	<xs:complexType name="Links">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:link"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+
+	<!--
+		Link Type
+	-->
+
+	<xs:element name="link" type="nam:Link"/>
+	<xs:complexType name="Link">
+		<xs:sequence>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			-->
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:transport"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:role"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="role" type="xs:string"/>
+		<xs:attribute name="type" type="xs:string" default="unused"/>
+	</xs:complexType>
+
+
+	<!--
+		Role Type
+	-->
+	
+	<xs:element name="role" type="nam:Role"/>
+	<xs:complexType name="Role">
+		<xs:sequence>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" name="host" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="port" type="xs:integer"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="jndi-name" type="xs:string"/>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" name="transfer-mode" type="nam:TransferMode"/>
+			<xs:element default="1000" minOccurs="0" maxOccurs="1" name="redelivery-delay" type="xs:integer"/>
+			<xs:element default="3" minOccurs="0" maxOccurs="1" name="max-delivery-attempts" type="xs:integer"/>
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" name="defaultTransport" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="nam:transport"/>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:rmi-transport"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:ejb-transport"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:jms-transport"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:http-transport"/>
+			-->
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="nam:handler"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="portType" type="xs:string"/>
+		<xs:attribute name="provider" type="xs:string"/>
+		<xs:attribute name="connectionFactory" type="xs:string"/>
+		<xs:attribute name="transferMode" type="xs:string"/>
+	</xs:complexType>
+
+	<!--
+		Transports type
+	-->
+
+	<xs:element name="transports" type="nam:Transports"/>
+	<xs:complexType name="Transports">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="nam:rmi-transport"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="nam:ejb-transport"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="nam:http-transport"/>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="nam:jms-transport"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--
+		Transport type
+	-->
+
+	<xs:element name="transport" type="nam:Transport"/>
+	<xs:complexType name="Transport">
+		<xs:attribute name="ref" type="xs:string"/>
+		<xs:attribute name="host" type="xs:string"/>
+		<xs:attribute name="port" type="xs:int"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="type" type="nam:TransportType"/>
+		<xs:attribute name="scope" type="xs:string"/>
+		<xs:attribute name="transacted" type="xs:boolean"/>
+		<xs:attribute name="userId" type="xs:string"/>
+		<xs:attribute name="credential" type="xs:string"/>
+	</xs:complexType>
+
+    <xs:simpleType name="TransportType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RMI"/>
+			<xs:enumeration value="EJB"/>
+			<xs:enumeration value="HTTP"/>
+			<xs:enumeration value="JMS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="rmi-transport" type="nam:RMITransport"/>
+	<xs:complexType name="RMITransport">
+		<xs:complexContent>
+			<xs:extension base="nam:Transport">
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="ejb-transport" type="nam:EJBTransport"/>
+	<xs:complexType name="EJBTransport">
+		<xs:complexContent>
+			<xs:extension base="nam:Transport">
+				<xs:attribute name="jndiName" type="xs:string"/>
+				<xs:attribute name="providerName" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="jms-transport" type="nam:JMSTransport"/>
+	<xs:complexType name="JMSTransport">
+		<xs:complexContent>
+			<xs:extension base="nam:Transport">
+				<xs:attribute name="portType" type="xs:string"/>
+				<xs:attribute name="jndiName" type="xs:string"/>
+				<xs:attribute name="providerName" type="xs:string"/>
+				<xs:attribute name="connectionFactory" type="xs:string"/>
+				<xs:attribute name="destinationName" type="xs:string"/>
+				<xs:attribute name="transferMode" type="nam:TransferMode"/>
+				<xs:attribute name="redeliveryDelay" type="xs:integer" default="1000" />
+				<xs:attribute name="maxDeliveryAttempts" type="xs:integer" default="3" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="http-transport" type="nam:HttpTransport"/>
+	<xs:complexType name="HttpTransport">
+		<xs:complexContent>
+			<xs:extension base="nam:Transport">
+				<xs:attribute name="url" type="xs:string"/>
+				<xs:attribute name="portType" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+
+    <xs:simpleType name="SessionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="QUEUE"/>
+			<xs:enumeration value="TOPIC"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!--
+		Channel Type
+	-->
+
+	<xs:element name="channels">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:channel"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="channel" type="nam:Channel"/>
+	<xs:complexType name="Channel">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="host" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="port" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="jndi-name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="transfer-mode" type="nam:TransferMode" minOccurs="0" maxOccurs="1" />
+			<xs:element name="redelivery-delay" type="xs:integer" minOccurs="0" maxOccurs="1" default="1000" />
+			<xs:element name="max-delivery-attempts" type="xs:integer" minOccurs="0" maxOccurs="1" default="3" />
+			<xs:element ref="nam:adapter" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="properties" minOccurs="0" maxOccurs="1" />
+			<xs:element name="clients" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="services" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="managers" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string"/>
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="roles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	-->
+
+
+	
+
+	<!-- 
+		Listener type
+	-->
+
+	<xs:element name="listeners" type="nam:Listeners"/>
+	<xs:complexType name="Listeners">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:listener"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="listener" type="nam:Listener"/>
+	<xs:complexType name="Listener">
+		<xs:complexContent>
+			<xs:extension base="nam:Interactor">
+				<xs:sequence>
+					<xs:element default="true" minOccurs="0" maxOccurs="1" name="no-local-receipt" type="xs:boolean"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="receive-channel" type="nam:Channel"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="invalid-channel" type="nam:Channel"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="expired-channel" type="nam:Channel"/>
+					<xs:element minOccurs="0" maxOccurs="1" ref="common:property"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent> 
+	</xs:complexType>
+
+	<!--  
+    <xs:element name="abstract-listener" type="nam:listener" abstract="true" />
+    -->
+
+	<!-- 
+		Invoker type
+	-->
+
+	<!--  
+	<xs:element name="invoker" type="nam:Invoker"/>
+	<xs:complexType name="Invoker">
+		<xs:complexContent>
+			<xs:extension base="nam:Interactor">
+			</xs:extension>
+		</xs:complexContent> 
+	</xs:complexType>
+	-->
+
+	<!-- 
+		Sender type
+	-->
+
+	<!--  
+	<xs:element name="sender" type="nam:Sender"/>
+	<xs:complexType name="Sender">
+		<xs:complexContent>
+			<xs:extension base="nam:Interactor">
+			</xs:extension>
+		</xs:complexContent> 
+	</xs:complexType>
+	-->
+
+
+	<!--
+		Router type
+	-->
+
+	<xs:element name="routers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:router"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="router" type="nam:Router"/>
+	<xs:complexType name="Router">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties"/>
+		</xs:all>
+		<xs:attribute name="ref" type="xs:string"/>
+	</xs:complexType>
+	
+
+	<!--
+		Interactor Type
+	-->
+
+	<xs:element name="interactors">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:interactor"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element abstract="false" name="interactor" type="nam:Interactor"/>
+	<xs:complexType name="Interactor">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="interaction" type="nam:Interaction"/>
+			<xs:element default="NON_PERSISTENT" minOccurs="0" maxOccurs="1" name="delivery-mode" type="nam:DeliveryMode"/>
+			<xs:element default="720000" minOccurs="0" maxOccurs="1" name="time-to-live" type="xs:long"/>
+			<xs:element default="false" minOccurs="0" maxOccurs="1" name="asynchronous" type="xs:boolean"/>
+			<xs:element default="false" minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean"/>
+			<xs:element default="false" minOccurs="0" maxOccurs="1" name="durable" type="xs:boolean"/>
+			<xs:element default="false" minOccurs="0" maxOccurs="1" name="priority" type="xs:boolean"/>
+			<xs:element default="360000" minOccurs="0" maxOccurs="1" name="timeout" type="xs:long"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="channel" type="nam:Channel"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="service" type="xs:string"/>
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string"/>
+		<xs:attribute name="link" type="xs:string"/>
+		<xs:attribute name="role" type="xs:string"/>
+		<xs:attribute name="target" type="xs:string"/>
+	</xs:complexType>
+
+    <xs:simpleType name="Interaction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="accept"/>
+			<xs:enumeration value="call"/>
+			<xs:enumeration value="listen"/>
+			<xs:enumeration value="invoke"/>
+			<xs:enumeration value="post"/>
+			<xs:enumeration value="publish"/>
+			<xs:enumeration value="receive"/>
+			<xs:enumeration value="reply"/>
+			<xs:enumeration value="send"/>
+			<xs:enumeration value="subscribe"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="DeliveryMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PERSISTENT"/>
+			<xs:enumeration value="NON_PERSISTENT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--  
+	<xs:element name="invoker" type="nam:Invoker"/>
+	<xs:complexType name="Invoker">
+		<xs:complexContent>
+			<xs:extension base="nam:Interactor">
+				<xs:attribute name="ref" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent> 
+	</xs:complexType>
+	-->
+	
+		
+</xs:schema>
+

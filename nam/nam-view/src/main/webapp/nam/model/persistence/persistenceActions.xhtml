@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showPersistenceListPage()
+		  ** Goes to the Persistence Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showPersistenceListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{persistencePageManager.initializePersistenceListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Persistence Records', 'Preparing Persistence List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showPersistenceTreePage()
+		  ** Goes to the Persistence Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showPersistenceTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{persistencePageManager.initializePersistenceTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Persistence Records', 'Preparing Persistence Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showPersistenceManagementPage()
+		  ** Goes to the Persistence Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showPersistenceManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{persistencePageManager.initializePersistenceManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Persistence Records', 'Preparing Persistence related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showPersistenceWizardPage()
+		  ** Goes to the Persistence Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showPersistenceWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{persistenceWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Persistence Records', 'Preparing Persistence information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{persistenceWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{persistenceWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewPersistenceDialog()
+		  ** Launches the Persistence Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewPersistenceDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{persistenceInfoManager.newPersistence}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Persistence Records', 'Creating new Persistence...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showPersistenceDialog()"
+			render="persistenceModule, persistenceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{persistenceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="persistenceListPane" assignTo="#{persistenceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{persistenceInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditPersistenceDialog()
+		  ** Launches the Persistence Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditPersistenceDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{persistenceInfoManager.editPersistence}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Persistence Records', 'Preparing Persistence information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showPersistenceDialog()"
+			render="persistenceModule, persistenceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{persistenceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="persistenceListPane" assignTo="#{persistenceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{persistenceInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

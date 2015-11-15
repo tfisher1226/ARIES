@@ -1,0 +1,169 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel 
+		layout="block" 
+		id="moduleTreeToolbar">
+
+		<aries:toolbar type="tab">
+			<aries:toolbarGroup location="left">
+
+				<aries:toolButton 
+					mode="client"
+					id="moduleTreeNewProjectButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new Project..."
+					icon="/icons/common/New16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="processNewProject(this)" />
+
+				<aries:toolButton 
+					mode="client"
+					id="moduleTreeNewModuleButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new Module"
+					icon="/icons/nam/Module16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="processNewModule(event)" />
+
+				<aries:toolButton 
+					id="moduleTreeViewModuleButton"
+					rendered="#{!securityGuard.checkManager}"
+					tooltip="View information for selected Module"
+					icon="/icons/common/Properties16.gif"
+					iconDisabled="/icons/common/PropertiesDisabled16.gif"
+					enabled="#{not empty selectedModule}"
+					manager="#{moduleInfoManager}"
+					action="editModule"
+					onclick="setCursorWait(this); if (#{empty selectedModule}) {setCursorDefault(this); popupAlert('Module Lookup', '', 'An module must be selected'); return false} else {showProgress('{moduleName}', 'Retrieving module record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processViewModule('#{selectedModule.name}', '#{selectedModule.level}')"
+					render="ModuleInfoDialog" />
+
+				<aries:toolButton 
+					id="moduleTreeEditModuleButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected Module"
+					icon="/icons/common/Edit16.gif"
+					iconDisabled="/icons/common/EditDisabled16.gif"
+					enabled="#{not empty selectedModule}"
+					onclick="processEditModule(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected Module"
+					icon="/icons/common/Edit16.gif"
+					manager="#{moduleInfoManager}"
+					action="editModule"
+					onclick="setCursorWait(this); if (#{empty selectedModule}) {setCursorDefault(this); popupAlert('Module Lookup', '', 'An module must be selected'); return false} else {showProgress('{moduleName}', 'Retrieving module record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processEditModule('#{selectedModule.name}', '#{selectedModule.level}')"
+					render="ModuleInfoDialog" />
+					-->
+
+				<!--  			
+				<aries:toolButton
+					id="moduleTreeMoveModuleButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Move selected Module to new parent Module"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					enabled="#{not empty selectedModule}"
+					execute="@this"
+					manager="#{moduleTreeManager}"
+					action="prepareMoveModule"
+					onclick="return processMoveModule()"
+					linkClass="link" />
+					-->
+
+				<aries:toolButton 
+					mode="client"
+					id="moduleTreeRemoveModuleButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove Module record from system"
+					icon="/icons/common/Remove16.gif"
+					iconDisabled="/icons/common/RemoveDisabled16.gif"
+					enabled="#{not empty selectedModule}"
+					onclick="processCheckRemoveModule(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove Module record from system"
+					icon="/icons/common/Remove16.gif"
+					manager="#{moduleInfoManager}"
+					action="promptDeleteModule"
+					onclick="setCursorWait(this); showProgress('Analyzing {moduleName}', 'Checking permissions...')"
+					oncomplete="setCursorDefault(this); hideProgress(); if (#{!messages.isMessagesExist('ModuleInfo')}) {checkPromptDeleteModule('#{module.name} #{module.level}')} else {warnCannotDeleteModule('#{module.name} #{module.level}', '#{messages.getMessage('ModuleInfo')}')}" />
+					-->
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+	
+				<c:if test="#{securityGuard.checkManager}">
+				</c:if>
+				
+				<!--  
+				<aries:toolToggleButton
+					execute="@this"
+					id="showMemberCountLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show member count in labels"
+					selected="#{treeNodeFactory.showMemberCountInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowMemberCountInLabels" 
+			   		render="showMemberCountLabelsButton"
+					linkClass="link" />
+	
+				<aries:toolToggleButton
+					execute="@this"
+					id="showFilterDetailLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show filter detail in labels"
+					selected="#{treeNodeFactory.showFilterDetailInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowFilterDetailInLabels" 
+			   		render="showFilterDetailLabelsButton"
+					linkClass="link" />
+					-->
+							
+				<aries:toolButton
+					id="moduleTreeCollapseButton"
+					icon="/icons/common/CollapseAll16.gif"
+					tooltip="Click here to Collapse Modules"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('', 'Collapse Selected Module', 'Not ready at this time')"
+					linkClass="link" />
+					
+				<aries:toolButton
+					id="moduleTreeRefreshButton"
+					execute="@this"
+					limitRender="false"
+					icon="/icons/common/Refresh16.gif"
+					tooltip="Re-read Modules from server"
+			   		manager="#{moduleTreeManager}" 
+			   		action="refresh"
+					onclick="setCursorWait(this); showProgress('', 'Module Service', 'Refreshing Module Structure...')"
+					oncomplete="setCursorDefault(); hideProgress()"
+			   		render="moduleTreePanel"
+					linkClass="link" />
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
+</ui:composition>

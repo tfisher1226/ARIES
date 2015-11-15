@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<aries:formPane
+		columns="1" 
+		width="170"
+		height="auto"
+		margin="0px"
+		marginTop="0px"
+		marginLeft="20px"
+		backgroundColor="inherit">
+	
+		<aries:spacer height="10" />
+		<aries:label fontSize="15" fontWeight="bold" value="Monitoring and" />
+		<aries:label fontSize="15" fontWeight="bold" value="Management" />
+		
+		<aries:spacer height="16" />
+		<aries:button
+			width="140"
+			padding="6"
+			fontSize="14"
+			label="Dashboards"
+			backgroundColor="inherit"
+			icon="/icons/nam/UserInterface16.gif"
+			id="#{section}DashboardsButton"
+	    	immediate="false"
+	    	bypassUpdates="false"
+	    	limitRender="true"
+			execute="@this"
+			manager="#{applicationPageManager}"
+			action="initializeApplicationManagementPage"
+   			onmouseup="setCursorWait(event.source); showProgress('Nam', 'Applications by Project', 'Preparing Applications display...')"
+			offset="false" />
+
+		<aries:spacer height="40" />
+		<aries:label fontSize="15" fontWeight="bold" value="User" />
+		<aries:label fontSize="15" fontWeight="bold" value="Interfaces" />
+
+		<aries:spacer height="16" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="User-Interfaces" />
+			<ui:param name="icon" value="/icons/nam/UserInterface16.gif" />
+			<ui:param name="id" value="mainUserInterfacesButton" />
+			<ui:param name="manager" value="#{userInterfacePageManager}" />
+			<ui:param name="action" value="initializeUserInterfaceManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'User-Interface Management', 'Preparing User-Interface information...')" />
+		</ui:include>
+		
+	</aries:formPane>
+</ui:composition>

@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:region>
+		<aries:outputPane
+			id="timeoutListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="timeoutListContextMenu"
+				target="#{tableId}">
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="View Timeout..."
+					icon="/icons/common/Open16.gif"
+					tooltip="View selected Timeout record..."
+					onclick="processViewElement(event, 'Timeout')">
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="Edit Timeout..."
+					icon="/icons/common/Edit16.gif"
+					tooltip="Edit selected Timeout record..."
+					onclick="processEditElement(event, 'Timeout')">
+				</aries:contextMenuItem>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="New Timeout..."
+						icon="/icons/common/New16.gif"
+						tooltip="Create new Timeout for selected Project..."
+						onclick="processNewElement(event, 'Timeout')">
+					</aries:contextMenuItem>
+				</c:if>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="Remove Timeout"
+						icon="/icons/common/Remove16.gif"
+						tooltip="Remove Timeout record from the system"
+						onclick="processRemoveElement(event, 'Timeout')">
+					</aries:contextMenuItem>
+				</c:if>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

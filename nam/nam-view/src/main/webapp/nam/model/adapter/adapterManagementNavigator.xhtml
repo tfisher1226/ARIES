@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="auto"
+		margin="0px"
+		backgroundColor="inherit">
+		
+		<aries:formPane
+			width="auto"
+			borderWidth="0px"
+			borderColor="#aaa"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Overview" />
+				<ui:param name="icon" value="/icons/nam/Overview16.gif" />
+				<ui:param name="id" value="adapterOverviewButton" />
+				<ui:param name="manager" value="#{adapterPageManager}" />
+				<ui:param name="action" value="initializeDefaultView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Adapters', 'Preparing Adapter overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Domains" />
+				<ui:param name="icon" value="/icons/nam/ComponentDomain16.gif" />
+				<ui:param name="id" value="componentDomainsButton" />
+				<ui:param name="manager" value="#{domainPageManager}" />
+				<ui:param name="action" value="initializeDomainManagementView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Component Domains', 'Preparing Component Domains...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="componentManagementViewer" />
+			</ui:include>
+
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

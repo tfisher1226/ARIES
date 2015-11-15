@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchProjectDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{projectInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Project Records', 'Preparing requested record...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showProjectDialog()"
+		render="projectModule, projectDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{projectInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{projectInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{projectInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{projectInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{projectInfoManager.immediate}" value="false" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="projectModule">
+		
+		<a4j:region
+			rendered="#{projectInfoManager.visible}">
+			
+			<aries:dialog
+				id="projectDialog"
+				action="saveProject"
+				render="#{projectInfoManager.renderList} projectListPane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="projectInfoPane.xhtml" />
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

@@ -1,0 +1,12 @@
+<%@ jet package="org.nam.translated" imports="java.util.* org.nam.generation.model.*" class="BeanGenerator" %>
+<% ModelClass bean = (ModelClass) argument; %>
+<%=BeanHelper.generatePackageName(input)%>
+<%=BeanHelper.generatePackageImports(input)%>
+<%=BeanHelper.generateClassDeclaration(input)%>
+{
+<%=BeanHelper.generateStaticFields(input)%>
+<%=BeanHelper.generateStaticMethods(input)%>
+
+<%=BeanHelper.generateInstanceFields(input)%>
+<%=BeanHelper.generateInstanceConstructors(input)%>
+}

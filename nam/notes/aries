@@ -1,0 +1,34 @@
+
+Aries aims to be good in two main areas: to be the most minimal in terms of work by the developer.  Aries as a system puts constraints on the types of inputs accepted as input from the developer.  There are 5 workbenches of components.  Aries aims to express the wide range of architectural contructs using the most straight-forward and intuitive set of components.  Thereby imposing structure on the types of components provided to the designer as building blocks for him/her to use in the design and architecture of their entprise applications.
+
+It forces the designer to only have "to know" a mall set of very straight-forward conceptual elements to model their systems with.
+
+essential components...
+
+Aries provides organizations with a complete top-down solution for designing, defining, development and implementing complex event processing applications.
+
+
+Sunrise Mountain Chapter (c1020455484302) [original chapter]
+SELECT * FROM `DistrictTable` WHERE name = 'New Horizon' 
+SELECT * FROM `DistrictTable` WHERE name = 'Morning Star' 
+SELECT * FROM `DistrictTable` WHERE name = 'Lake San Marcos'
+SELECT * FROM `DistrictTable` WHERE name = 'Olive' (d1035399282348) (from Melrose Chapter)
+
+Sunrise Chapter (1020455484317) [new chapter]
+SELECT * FROM `DistrictTable` WHERE name = 'Escondido' (d1055179575950) from Sunrise Mountain Chapter)
+SELECT * FROM `DistrictTable` WHERE name = 'Valley Center' (d10000000001561) (from Sunrise Mountain Chapter)
+SELECT * FROM `DistrictTable` WHERE name = 'Sycamore' (d1048433877807) (from Melrose Chapter)
+
+select * from OrganizationTable where chapterId = 'c1020455484302' (Sunrise Mountain)
+SELECT * FROM `ChapterTable` WHERE name = 'Sunrise Mountain' (c1020455484302)
+
+SELECT * FROM `ChapterTable` WHERE id = '1020455484317'
+insert into ChapterTable (`id`, `name`, `abbrv`) values ('c1020455484317', 'Sunrise', '')
+insert into OrganizationTable (`organizationId`, `zoneId`, `regionId`, `areaId`, `chapterId`, `districtId`, `groupId`) values ('o1020455488741', 'z10000000001261', 'r1094171120328', 'a10000000000577', 'c1020455484317', '0', '0')
+
+update OrganizationTable set chapterId='c1020455484302' where districtId='d1035399282348' //Olive (from Melrose Chapter)
+update OrganizationTable set chapterId='c1020455484317' where districtId='d1048433877807' //Sycamore (from Melrose Chapter)
+update OrganizationTable set chapterId='c1020455484317' where districtId='d1055179575950' //Escondido (from Sunrise Mountain Chapter)
+update OrganizationTable set chapterId='c1020455484317' where districtId='d10000000001561' //Valley Center (from Sunrise Mountain Chapter)
+
+

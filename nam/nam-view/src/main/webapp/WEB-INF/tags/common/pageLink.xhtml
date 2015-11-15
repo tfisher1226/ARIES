@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<c:if test="#{empty label}">
+		<c:set var="label" value="not specified"/> 
+	</c:if>
+
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="text20"/> 
+	</c:if>
+
+	<c:if test="#{empty labelStyle}">
+		<c:set var="labelStyle" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty tooltip}">
+		<c:set var="tooltip" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty onclick}">
+		<c:set var="onclick" value=""/> 
+	</c:if>
+
+	<aries:toolbar>
+		<aries:toolbarGroup location="left">
+			<aries:toolItem
+				name="#{label}"
+				label="#{label}"
+				tooltip="#{tooltip}"
+				manager="#{globals}"
+				action="doNothing"
+				oncomplete="showPage('#{target}')"
+				labelClass="#{labelClass}"
+				labelStyle="color: #000099; #{labelStyle}"
+				style="padding: 0px"/>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+
+	<ui:insert/>
+
+	<a4j:commandLink
+		action="#{globals.doNothing}"
+		onclick="setCursorWait(this); #{onclick}"
+		oncomplete="showPage('#{target}'); setCursorDefault(this) #{oncomplete}" 
+		style="text-decoration: none">
+
+		<span class="text link" style="color: blue">
+			[more...]
+		</span>		
+
+		<aries:tooltip value="#{tooltip}"/>
+	</a4j:commandLink>
+</ui:composition>

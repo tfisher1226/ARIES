@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showLayoutListPage()
+		  ** Goes to the Layout Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLayoutListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{layoutPageManager.initializeLayoutListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Layout Records', 'Preparing Layout List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showLayoutTreePage()
+		  ** Goes to the Layout Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLayoutTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{layoutPageManager.initializeLayoutTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Layout Records', 'Preparing Layout Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showLayoutManagementPage()
+		  ** Goes to the Layout Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLayoutManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{layoutPageManager.initializeLayoutManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Layout Records', 'Preparing Layout related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showLayoutWizardPage()
+		  ** Goes to the Layout Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showLayoutWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{layoutWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Layout Records', 'Preparing Layout information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{layoutWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{layoutWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewLayoutDialog()
+		  ** Launches the Layout Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewLayoutDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{layoutInfoManager.newLayout}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Layout Records', 'Creating new Layout...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLayoutDialog()"
+			render="layoutModule, layoutDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{layoutInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="layoutListPane" assignTo="#{layoutInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{layoutInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditLayoutDialog()
+		  ** Launches the Layout Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditLayoutDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{layoutInfoManager.editLayout}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Layout Records', 'Preparing Layout information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLayoutDialog()"
+			render="layoutModule, layoutDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{layoutInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="layoutListPane" assignTo="#{layoutInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{layoutInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

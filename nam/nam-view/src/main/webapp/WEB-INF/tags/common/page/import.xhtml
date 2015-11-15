@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<c:if test="#{empty module}">
+		<c:set var="module" value="" /> 
+	</c:if>
+
+	<c:set var="toolbarId" value="#{domain}#{module}ListToolbar" />
+	
+	<script type="text/javascript">
+	function select#{domain}#{module}(index, id) {
+		//alert('#{domain} #{module} #{type} #{manager}');
+		enableToolbar(#{rich:element(toolbarId)});
+		if (index) {
+			save#{domain}#{module}Selection(index, id);
+		}
+	}
+	</script>
+	
+	<ui:param name="editAction" value="edit#{module}" />
+	<ui:param name="editActionHeader" value="#{module} information for #{itemManager['recordName']}" />
+	
+    <a4j:jsFunction 
+    	name="save#{domain}#{module}Selection"
+    	execute="#{domain}#{module}DialogModule" 
+    	immediate="true" 
+    	bypassUpdates="true" 
+    	limitRender="true"
+    	action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', '#{editActionHeader}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); show#{domain}#{module}Dialog()"
+		render="#{domain}#{module}DialogModule, #{domain}#{module}Dialog, #{domain}#{module}ListToolbar">
+    	<a4j:param name="selectedRecordIndex" assignTo="#{listManager.selectedRecordIndex}" />
+    	<a4j:param name="selectedRecordId" assignTo="#{listManager.selectedRecordId}" />
+	</a4j:jsFunction>
+	
+</ui:composition>

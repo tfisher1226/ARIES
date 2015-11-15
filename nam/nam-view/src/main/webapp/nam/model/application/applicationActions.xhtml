@@ -1,0 +1,142 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:region>
+		
+		
+		<!--
+		  ** showApplicationListPage()
+		  ** Goes to the Application Management List Page.
+		  -->
+
+	    <a4j:jsFunction 
+	    	name="showApplicationListPage" 
+	    	execute="@this"
+	    	immediate="true"
+	    	bypassUpdates="true"
+	    	action="#{applicationPageManager.initializeApplicationListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Preparing Application List...')">
+	    </a4j:jsFunction>
+
+
+		<!--
+		  ** showApplicationTreePage()
+		  ** Goes to the Application Management Tree Page.
+		  -->
+
+	    <a4j:jsFunction 
+	    	name="showApplicationTreePage" 
+	    	execute="@this"
+	    	immediate="true"
+	    	bypassUpdates="true"
+	    	action="#{applicationPageManager.initializeApplicationTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Preparing Application Tree...')">
+	    </a4j:jsFunction>
+
+
+		<!--
+		  ** showApplicationManagementPage()
+		  ** Goes to the Application Management Overview Page.
+		  -->
+
+		<a4j:jsFunction 
+			name="showApplicationManagementPage" 
+	    	execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{applicationPageManager.initializeApplicationManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Preparing Application information...')">
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** showElementManagementPage()
+		  ** Goes to the Element Management Page.
+		  -->
+
+		<a4j:jsFunction 
+			name="showElementManagementPage" 
+	    	execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{elementPageManager.initializeElementManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Element Records', 'Preparing Element information...')">
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** showApplicationWizardPage()
+		  ** Goes to the Application Wizard Page.
+		  -->
+
+		<a4j:jsFunction 
+			name="showApplicationWizardPage" 
+	    	execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{applicationWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Preparing Application information...')">
+
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{applicationWizard.section}" />
+
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{applicationWizard.origin}" />
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** showNewApplicationDialog()
+		  ** Launches the Application Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewApplicationDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{applicationInfoManager.newApplication}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Creating new Application...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showApplicationDialog()"
+			render="applicationModule, applicationDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{applicationInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="applicationListPane" assignTo="#{applicationInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{applicationInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditApplicationDialog()
+		  ** Launches the Application Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditApplicationDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{applicationInfoManager.editApplication}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Preparing Application information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showApplicationDialog()"
+			render="applicationModule, applicationDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{applicationInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="applicationListPane" assignTo="#{applicationInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{applicationInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

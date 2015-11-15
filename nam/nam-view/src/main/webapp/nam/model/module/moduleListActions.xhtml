@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** moduleListActions
+	  ** a4j:jsFunction methods to support the Module List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var moduleListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshModuleList(event)
+		  ** Refreshes the current Module List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshModuleList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{moduleListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Module Records', 'Refreshing current Module List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="moduleListActions, moduleListMenu, moduleListToolbar, moduleListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromModuleList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromModuleList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="moduleListActions, moduleListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{moduleListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{moduleListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="module" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromModuleList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromModuleList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="moduleListActions, moduleListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{moduleListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{moduleListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{moduleWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}" 
+			render="moduleListActions, moduleListMenu, moduleListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** moduleListActions
+		  ** Javascript methods to support the Module List.
+		  -->
+		
+		<a4j:outputPanel
+			id="moduleListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getModuleListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getModuleListRowKey() {
+					if (moduleListState != null)
+						return moduleListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getModuleListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getModuleListRowLabel() {
+					if (moduleListState != null)
+						return moduleListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeModuleListState()
+				  ** Initializes and verifies Module List state information.
+				  -->
+					
+				function initializeModuleListState() {
+					try {
+						var rowIndex = '#{moduleListManager.selectedRecordIndex}';
+						var recordKey = '#{moduleListManager.selectedRecordKey}';
+						var recordLabel = '#{moduleListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateModuleListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateModuleListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Module List.
+				  -->
+					
+				function updateModuleListState(event, rowIndex, recordKey, recordLabel) {
+					moduleListState = new Object();
+					moduleListState.rowIndex = rowIndex;
+					//moduleListState.recordId = recordId;
+					moduleListState.recordKey = recordKey;
+					moduleListState.recordLabel = recordLabel;
+					//show(moduleListState);
+				}
+					
+					
+				<!--
+				  ** enableModuleListActions(type)
+				  ** Enables (or disables) Module List actions based on current client-side state.
+				  -->
+					
+				function enableModuleListActions(type) {
+					//enableButton('moduleListViewButton');
+					enableButton('moduleListNewButton');
+					enableButton('moduleListEditButton');
+					enableButton('moduleListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processModuleListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Module List.
+				  -->
+					
+				function processModuleListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateModuleListState(event, rowIndex, recordKey, recordLabel);
+					enableModuleListActions('module');
+					try {
+						executeSelectFromModuleList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processModuleListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Module List.
+				  -->
+					
+				function processModuleListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Module Records', 'Preparing Module ' + recordLabel + ' for editing...');
+						executeActionFromModuleList(rowIndex, recordKey, 'Module', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('moduleListTable')});
+						if (moduleListState != null) {
+							var label = moduleListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (moduleListState != null) {
+							var label = moduleListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (moduleListState != null) {
+							var label = moduleListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (moduleListState != null)
+						label = moduleListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'moduleListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

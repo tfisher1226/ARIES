@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+	
+	
+	<!--
+		  ** showAttributeListPage()
+		  ** Goes to the Attribute Management List Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showAttributeListPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{attributePageManager.initializeAttributeListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Attribute Records', 'Preparing Attribute List...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showAttributeTreePage()
+		  ** Goes to the Attribute Management Tree Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showAttributeTreePage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{attributePageManager.initializeAttributeTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Attribute Records', 'Preparing Attribute Tree...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showAttributeManagementPage()
+		  ** Goes to the Attribute Management Overview Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showAttributeManagementPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{attributePageManager.initializeAttributeManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Attribute Records', 'Preparing Attribute related information...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showAttributeWizardPage()
+		  ** Goes to the Attribute Wizard Page.
+	  -->
+	
+    <a4j:jsFunction 
+			name="showAttributeWizardPage" 
+    	execute="@this"
+			immediate="true"
+    	bypassUpdates="true"
+			action="#{attributeWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Attribute Records', 'Preparing Attribute information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{attributeWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{attributeWizard.origin}" />
+    </a4j:jsFunction>
+	    
+	    
+	<!--
+		  ** showNewAttributeDialog()
+		  ** Launches the Attribute Dialog in "new" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showNewAttributeDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{attributeInfoManager.newAttribute}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Attribute Records', 'Creating new Attribute...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showAttributeDialog()"
+			render="attributeModule, attributeDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{attributeInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="attributeListPane" assignTo="#{attributeInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{attributeInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showEditAttributeDialog()
+		  ** Launches the Attribute Dialog in "edit" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showEditAttributeDialog" 
+			execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{attributeInfoManager.editAttribute}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Attribute Records', 'Preparing Attribute information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showAttributeDialog()"
+			render="attributeModule, attributeDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{attributeInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="attributeListPane" assignTo="#{attributeInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{attributeInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

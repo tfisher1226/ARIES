@@ -1,0 +1,121 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="namespaceListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="namespaceListMenu.xhtml">
+			<ui:param name="tableId" value="namespaceListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="namespaceListTable"
+			value="#{namespaceListManager.dataModel}"
+			rowCount="#{namespaceListManager.dataModel.rowCount}"
+			visible="#{namespaceListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processNamespaceListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processNamespaceListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- URI -->
+			<aries:textColumn
+				width="100"
+				header="Uri">
+				<h:outputText value="#{rowItem.namespace.uri}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.namespace.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.namespace.label}" />
+			</aries:textColumn>
+			
+			<!-- PREFIX -->
+			<aries:textColumn
+				width="100"
+				header="Prefix">
+				<h:outputText value="#{rowItem.namespace.prefix}" />
+			</aries:textColumn>
+			
+			<!-- SCHEMA -->
+			<aries:textColumn
+				width="100"
+				header="Schema">
+				<h:outputText value="#{rowItem.namespace.schema}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.namespace.version}" />
+			</aries:textColumn>
+			
+			<!-- FILE PATH -->
+			<aries:textColumn
+				width="100"
+				header="File Path">
+				<h:outputText value="#{rowItem.namespace.filePath}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.namespace.description}" />
+			</aries:textColumn>
+			
+			<!-- IMPORTED -->
+			<aries:textColumn
+				width="100"
+				header="Imported">
+				<h:outputText value="#{rowItem.namespace.imported}" />
+			</aries:textColumn>
+			
+			<!-- INCLUDED -->
+			<aries:textColumn
+				width="100"
+				header="Included">
+				<h:outputText value="#{rowItem.namespace.included}" />
+			</aries:textColumn>
+			
+			<!-- EXPOSED -->
+			<aries:textColumn
+				width="100"
+				header="Exposed">
+				<h:outputText value="#{rowItem.namespace.exposed}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.namespace.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.namespace.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

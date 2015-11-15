@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<aries:formPane
+		columns="1" 
+		width="200"
+		height="auto"
+		margin="20px"
+		marginLeft="0px"
+		marginTop="0px"
+		paddingLeft="20px"
+		backgroundColor="inherit">
+	
+		<aries:spacer height="10" />
+		<aries:label fontSize="15" fontWeight="bold" value="Networks and" />
+		<aries:label fontSize="15" fontWeight="bold" value="Deployments" />
+
+		<aries:spacer height="16" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Networks" />
+			<ui:param name="icon" value="/icons/nam/Network16.gif" />
+			<ui:param name="id" value="mainNetworksButton" />
+			<ui:param name="manager" value="#{networkPageManager}" />
+			<ui:param name="action" value="initializeNetworkManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Networks', 'Preparing Network information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Containers" />
+			<ui:param name="icon" value="/icons/nam/Container16.gif" />
+			<ui:param name="id" value="mainContainerButton" />
+			<ui:param name="manager" value="#{containerPageManager}" />
+			<ui:param name="action" value="initializeContainerManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Containers', 'Preparing Container information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Deployments" />
+			<ui:param name="icon" value="/icons/nam/Deployment16.gif" />
+			<ui:param name="id" value="mainDeploymentButton" />
+			<ui:param name="manager" value="#{deploymentPageManager}" />
+			<ui:param name="action" value="initializeDeploymenManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Deployments', 'Preparing Deployment information...')" />
+		</ui:include>
+		
+		<aries:spacer height="40" />
+		<aries:label fontSize="15" fontWeight="bold" value="External" />
+		<aries:label fontSize="15" fontWeight="bold" value="Dependencies" />
+
+		<aries:spacer height="16" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Libraries" />
+			<ui:param name="icon" value="/icons/nam/Library16.gif" />
+			<ui:param name="id" value="mainLibrariesButton" />
+			<ui:param name="manager" value="#{libraryPageManager}" />
+			<ui:param name="action" value="initializeLibraryManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Libraries', 'Preparing Library information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Adapters" />
+			<ui:param name="icon" value="/icons/nam/Adapter16.gif" />
+			<ui:param name="id" value="mainAdaptersButton" />
+			<ui:param name="manager" value="#{adapterPageManager}" />
+			<ui:param name="action" value="initializeAdapterManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Adapters', 'Preparing Adapter information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Providers" />
+			<ui:param name="icon" value="/icons/nam/Provider16.gif" />
+			<ui:param name="id" value="mainProvidersButton" />
+			<ui:param name="manager" value="#{providerPageManager}" />
+			<ui:param name="action" value="initializeProviderManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Provider Management', 'Preparing Provider information...')" />
+		</ui:include>
+	</aries:formPane>
+</ui:composition>

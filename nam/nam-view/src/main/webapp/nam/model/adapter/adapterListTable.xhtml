@@ -1,0 +1,86 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="adapterListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="adapterListMenu.xhtml">
+			<ui:param name="tableId" value="adapterListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="adapterListTable"
+			value="#{adapterListManager.dataModel}"
+			rowCount="#{adapterListManager.dataModel.rowCount}"
+			visible="#{adapterListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processAdapterListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processAdapterListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.adapter.type}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.adapter.name}" />
+			</aries:textColumn>
+			
+			<!-- CLASS NAME -->
+			<aries:textColumn
+				width="100"
+				header="Class Name">
+				<h:outputText value="#{rowItem.adapter.className}" />
+			</aries:textColumn>
+			
+			<!-- TRANSACTED -->
+			<aries:textColumn
+				width="100"
+				header="Transacted">
+				<h:outputText value="#{rowItem.adapter.transacted}" />
+			</aries:textColumn>
+			
+			<!-- MAX THREADS -->
+			<aries:textColumn
+				width="100"
+				header="Max Threads">
+				<h:outputText value="#{rowItem.adapter.maxThreads}" />
+			</aries:textColumn>
+			
+			<!-- CONNECTION POOL -->
+			<aries:textColumn
+				width="100"
+				header="Connection Pool">
+				<h:outputText value="#{connectionPoolHelper.toString(rowItem.adapter.connectionPool)}" />
+			</aries:textColumn>
+			
+			<!-- PROVIDER -->
+			<aries:textColumn
+				width="100"
+				header="Provider">
+				<h:outputText value="#{providerHelper.toString(rowItem.adapter.provider)}" />
+			</aries:textColumn>
+			
+			<!-- PROPERTIES -->
+			<aries:textColumn
+				width="100"
+				header="Properties">
+				<h:outputText value="#{propertiesHelper.toString(rowItem.adapter.properties)}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

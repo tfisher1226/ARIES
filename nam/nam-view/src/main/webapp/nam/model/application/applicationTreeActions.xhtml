@@ -1,0 +1,433 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	
+	<!--
+	  ** applicationTreeActions
+	  ** a4j:jsFunction methods to support the Application Tree.
+	  -->
+
+	<a4j:region>
+		<h:outputScript>
+			var applicationTreeState = null;
+		</h:outputScript>
+
+
+		<!--
+		  ** refreshApplicationTree()
+		  ** Refreshes the current Application Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshApplicationTree" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{applicationTreeManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Application Records', 'Refreshing current Application Tree...');"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="applicationTreeActions, applicationTreeMenu, applicationTreeToolbar, applicationTreePanel">
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** executeSelectFromApplicationTree(rowKey, nodeId)
+		  ** Handles actions generated from a node in the Application Tree.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+		
+	    <a4j:jsFunction 
+			name="executeSelectFromApplicationTree"
+	    	execute="@this" 
+	    	immediate="true"
+			bypassUpdates="true"
+	    	limitRender="true"
+			render="applicationTreeActions, applicationTreeToolbar">
+	    	
+			<!-- these values are passed-in -->
+	    	<a4j:param name="rowKey" assignTo="#{applicationTreeManager.selectedRowKey}" />  
+	    	<a4j:param name="nodeId" assignTo="#{applicationTreeManager.selectedNodeId}" />
+	    	
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="applicationTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** executeActionFromApplicationTree(rowKey, nodeId, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+		
+	    <a4j:jsFunction 
+			name="executeActionFromApplicationTree"
+	    	execute="@this" 
+	    	immediate="true"
+			bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{workspaceManager.executeAction}"
+	    	oncomplete="setCursorDefault(); hideProgress()"
+	    	render="applicationTreeActions, applicationTreeMenu, applicationTreeToolbar">
+	    	
+			<!-- these values are passed-in -->
+	    	<a4j:param name="rowKey" assignTo="#{applicationTreeManager.selectedRowKey}" />  
+	    	<a4j:param name="nodeId" assignTo="#{applicationTreeManager.selectedNodeId}" />
+	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{applicationWizard.section}" />
+	    	
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="applicationTreeEvents" requestDelay="0" />
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** executeActionForApplicationTreeViewer(rowKey, nodeId, type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  ** Refreshes Element view in Application Tree viewer..
+		  -->
+		
+	    <a4j:jsFunction 
+			name="executeActionForApplicationTreeViewer"
+	    	execute="@this" 
+	    	immediate="true"
+			bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+	    	render="applicationTreeActions, applicationTreeMenu, applicationTreeToolbar, applicationTreeViewer">
+	    	
+			<!-- these values are passed-in -->
+	    	<a4j:param name="rowKey" assignTo="#{applicationTreeManager.selectedRowKey}" />  
+	    	<a4j:param name="nodeId" assignTo="#{applicationTreeManager.selectedNodeId}" />
+	    	<a4j:param name="area" assignTo="#{selectionContext.selectedArea}" /> 
+	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+	    	<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />  
+
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="applicationTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** processToggleApplicationTreeNode()
+		  ** Toggles expand/collapse for nodes in Application Tree.
+		  -->
+		  
+	    <a4j:jsFunction 
+	    	name="processToggleApplicationTreeNode" 
+	    	execute="@this" 
+	    	immediate="true"
+	    	limitRender="true">
+					
+			<!-- these values are passed in -->
+	    	<a4j:param name="nodeId" assignTo="#{applicationTreeManager.toggledNodeState}" /> 
+					
+			<!-- provide queue settings -->
+			<a4j:attachQueue requestGroupingId="applicationTreeEvents" requestDelay="0" /> 
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** applicationTreeActions
+		  ** Javascript methods to support the Application Tree.
+		  -->
+
+		<a4j:outputPanel 
+			id="applicationTreeActions">
+		
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getApplicationTreeNodeId()
+				  ** Returns the node ID of the selected node.
+				  -->
+		  
+				function getApplicationTreeNodeId() {
+					if (applicationTreeState != null)
+						return applicationTreeState.nodeId;
+					return null;
+				}
+				
+				
+				<!--
+				  ** getApplicationTreeNodeLabel()
+				  ** Returns the node label of the selected node.
+				  -->
+	
+				function getApplicationTreeNodeLabel() {
+					if (applicationTreeState != null)
+						return applicationTreeState.nodeLabel;
+					return null;
+				}
+		
+	
+				<!--
+				  ** initializeApplicationTreeState()
+				  ** Initializes and verifies Application Tree state information.
+				  -->
+	
+				function initializeApplicationTreeState() {
+					try {
+						var selectedNodeId = '#{applicationTreeManager.selectedNodeId}';
+						var selectedRowKey = '#{applicationTreeManager.selectedRowKey}';
+						
+						if (selectedNodeId != '') {
+							applicationTreeState = new Object();
+							var nodeId = selectedNodeId;
+							var rowKey = selectedRowKey;
+							var nodeArea = '#{applicationTreeManager.selectedNode.area}';
+							var nodeType = '#{applicationTreeManager.selectedNode.type}';
+							var nodeLabel = '#{applicationTreeManager.selectedNode.label}';
+							updateApplicationTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+	
+				
+				<!--
+				  ** updateApplicationTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Updates client-side state information for Application Tree.
+				  -->
+	
+				function updateApplicationTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					applicationTreeState = new Object();
+					applicationTreeState.rowKey = rowKey;
+					applicationTreeState.nodeId = nodeId;
+					applicationTreeState.nodeArea = nodeArea;
+					applicationTreeState.nodeType = nodeType;
+					applicationTreeState.nodeLabel = nodeLabel;
+					applicationTreeState.nodeKey = nodeId;
+					//show(applicationTreeState);
+				}
+				
+	
+				<!--
+				  ** enableApplicationTreeActions(type)
+				  ** Enables (or disables) Application Tree actions based on current client-side state.
+				  -->
+	
+				function enableApplicationTreeActions(type) {
+					enableButton('applicationTreeViewButton');
+					enableButton('applicationTreeNewButton');
+					enableButton('applicationTreeEditButton');
+					enableButton('applicationTreeMoveButton');
+					enableButton('applicationTreeRemoveButton');
+					enableToolbar('applicationTreeRemoveButton');
+				}
+	
+				function enableToolbar(toolbarId) {
+					var fullId = mainFormId + ':' + toolbarId;
+					var buttonEnabled = document.getElementById(fullId);
+					var buttonDisabled = document.getElementById(+'Disabled');
+					if (buttonEnabled != null)
+						buttonEnabled.style.display = 'block';
+					if (buttonDisabled != null)
+						buttonDisabled.style.display = 'none';
+				}
+	
+				<!--
+				  ** processApplicationTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles mouseDown event on the Application Tree.
+				  -->
+	
+				function processApplicationTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateApplicationTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableApplicationTreeActions(nodeArea);
+					try {
+						executeSelectFromApplicationTree(rowKey, nodeId);
+						if (event.which == 3) {
+							showApplicationTreeNodeMenu(event, nodeType);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+	
+	
+				<!--
+				  ** showApplicationTreeNodeMenu(event, nodeType)
+				  ** Displays context-menu for Application Tree node..
+				  -->
+	
+				function showApplicationTreeNodeMenu(event, nodeType) {
+					var typeUncapped = uncapitalize(nodeType);
+					var menuName = mainFormId + ':' + typeUncapped + 'TreeMenu';
+					var menu = RichFaces.component(menuName);
+					if (menu != null) {
+						menu.show(event, {});
+					}
+				}
+
+
+				<!--
+				  ** processApplicationTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles double-click event on the Application Tree.
+				  -->
+	
+				function processApplicationTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateApplicationTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableApplicationTreeActions(nodeArea);
+					
+					try {
+						setCursorWait(event.target); 
+						setCursorWait(event.currentTarget); 
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', nodeType+' '+nodeLabel, 'Preparing '+nodeType+' summary view...');
+						executeActionForApplicationTreeViewer(rowKey, nodeId, nodeArea, nodeType, 'workspaceManager.viewObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+	
+
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element record.  
+				  ** Goes to the Element summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+		
+		
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+	
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target); 
+						setCursorWait(event.currentTarget); 
+						setCursorWait(#{rich:element('applicationTree')});
+						if (applicationTreeState.nodeLabel != null) {
+							var label = applicationTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"' + label + '\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+			
+			
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						if (applicationTreeState.nodeLabel != null) {
+							var label = applicationTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+				
+	
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (applicationTreeState != null)
+						label = applicationTreeState.nodeLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'applicationTree, applicationTreeViewer');
+					setCursorDefault();
+				}
+				
+				
+				<!--
+				  ** NOT_USED
+				  ** processCheckRemoveNode()
+				  ** Prompts user to remove Project tree node from system.
+				  -->
+	
+				function processCheckRemoveNode(type) {
+					if (applicationTreeState == null) {
+						alertNoSelection(type, 'Remove'); 
+						return false;
+					} else {
+						setCursorWait(event.source); 
+						showProgress('Nam', 'Checking removal of '+getApplicationTreeNodeLabel(), 'Checking permissions...');
+						return true;
+					}
+				}
+				
+	
+				<!--
+				  ** NOT_USED
+				  ** alertNoSelection()
+				  ** Alerts user that "action" cannot be done because of no selection.
+				  -->
+	
+				function alertNoSelection(type, action) {
+					var alertTitle = 'Cannot '+action+' '+type;
+					var alertMessage = type+' must be selected';
+					popupAlert('Nam', alertTitle, alertMessage);
+				}
+		
+	
+				<!--
+				  ** warnCannotRemoveNode()
+				  ** Warns user that desired "type" node cannot be removed from Application Tree.
+				  -->
+	
+				function warnCannotRemoveNode(type, reason) {
+					var nodeLabel = getApplicationTreeNodeLabel();
+					var warningTitle = 'Cannot remove \"'+nodeLabel+'\" '+type;
+					popupWarning('Nam', warningTitle, reason);
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

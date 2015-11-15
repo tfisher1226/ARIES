@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:admin="http://admin"
+	xmlns:bookshop="http://bookshop2"
+	xmlns:seller="http://bookshop2/seller"
+	targetNamespace="http://bookshop2/seller">
+	
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+	
+	<xs:import namespace="http://admin" schemaLocation="../admin/admin_model.xsd" />
+	
+	<xs:import namespace="http://bookshop2" schemaLocation="../bookshop/bookshop_information.xsd" />
+	
+	<!--
+		Advertisement element
+		*********************
+	-->
+	
+	<xs:element name="advertisement" type="seller:Advertisement" />
+	<xs:complexType name="Advertisement">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="onSale" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="productId" type="xs:string" minOccurs="1" />
+				<xs:element name="salesPrice" type="xs:double" minOccurs="1" />
+				<xs:element name="saleExpiration" type="xs:date" minOccurs="0" />
+				<xs:element name="firstName" type="xs:string" minOccurs="1" />
+				<xs:element name="lastName" type="xs:string" minOccurs="1" />
+				<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="1" />
+				<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" />
+				<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" />
+				<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+				<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

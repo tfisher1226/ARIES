@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:tns="http://www.aries.org/validate"
+	targetNamespace="http://www.aries.org/validate">
+
+	<xs:element name="checkpoints" type="tns:Checkpoints" />
+	<xs:complexType name="Checkpoints">
+		<xs:sequence>
+			<xs:element name="version" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="checkpoint" type="tns:Checkpoint" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="checkpoint" type="tns:Checkpoint" />
+	<xs:complexType name="Checkpoint">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="forced" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="condition" type="tns:Condition" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="condition" type="tns:Condition" />
+	<xs:complexType name="Condition">
+		<xs:all>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="forced" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<!--  
+			<xs:element name="isTrue" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="isFalse" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="isEqual" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="notNull" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="notEmpty" type="xs:string" minOccurs="0" maxOccurs="1" />
+			-->
+			<xs:element name="expected" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="expression" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="exception" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="and" type="tns:And" minOccurs="0" maxOccurs="1" />
+			<xs:element name="or" type="tns:Or" minOccurs="0" maxOccurs="1" />
+		</xs:all>
+	</xs:complexType>
+	
+	<xs:element name="and" type="tns:And"/>
+	<xs:complexType name="And">
+		<xs:sequence>
+			<xs:element name="expression" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="or" type="tns:Or"/>
+	<xs:complexType name="Or">
+		<xs:sequence>
+			<xs:element name="expression" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="notNull" type="tns:NotNull"/>
+	<xs:complexType name="NotNull">
+		<xs:complexContent>
+			<xs:extension base="tns:Condition">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="notEmpty" type="tns:NotEmpty"/>
+	<xs:complexType name="NotEmpty">
+		<xs:complexContent>
+			<xs:extension base="tns:Condition">
+				<xs:sequence>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	-->
+</xs:schema>

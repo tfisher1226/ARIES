@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/source/main/resources/schema/nam-1.0.xsd">
+
+	<domain>org.aries</domain>
+	<name>common</name>
+	
+	<namespace 
+		prefix="common" 
+		name="common-model" 
+		uri="http://www.aries.org/common" 
+		version="0.0.1-SNAPSHOT">
+		
+		<!--  
+		<cachable>read-write</cachable>
+		-->
+
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+
+		<!-- 
+			Sequence type
+		-->
+	
+		<element name="Sequence" transient="true">
+			<listItem name="items" type="xs:anyType" />
+		</element>
+		
+		
+		<!-- 
+			Map type
+		-->
+	
+		<element name="Map" transient="true">
+			<listItem name="entries" type="MapEntry" />
+		</element>
+		
+		<element name="MapEntry" transient="true">
+			<item name="key" type="xs:anyType" eq="true" />
+			<item name="value" type="xs:anyType" eq="true" />
+		</element>
+		
+	
+		<!-- 
+			Property type
+		-->
+	
+		<element name="Properties" transient="true">
+			<listItem name="properties" type="Property" />
+		</element>
+		
+		<element name="Property">
+			<id name="id" type="xs:long" />
+			<item name="name" type="xs:string" required="true" eq="true" />
+			<item name="value" type="xs:string" eq="true" />
+		</element>
+
+	
+		<!-- 
+			AbstractEvent type
+		-->
+		
+		<element name="AbstractEvent" abstract="true">
+			<id name="id" type="xs:long" />
+			<item name="dateTime" type="xs:dateTime" required="true" eq="true" />
+			<item name="correlationId" type="xs:string" required="true" eq="true" />
+			<item name="transactionId" type="xs:string" />
+			<item name="user" type="AbstractUser" />
+		</element>
+	
+
+		<!-- 
+			AbstractMessage type
+		-->
+
+		<element name="AbstractMessage" abstract="true">
+			<item name="dateTime" type="xs:dateTime" required="true" eq="true" />
+			<item name="correlationId" type="xs:string" required="true" eq="true" />
+			<item name="transactionId" type="xs:string" />
+			<mapItem name="replyToDestinations" type="xs:string" key="xs:string" />
+			<item name="cancelRequest" type="xs:boolean" />
+			<item name="undoRequest" type="xs:boolean" />
+		</element>
+		
+		
+		<!-- 
+			Attachment type
+		-->
+	
+		<element name="Attachment">
+			<id name="id" type="xs:long" />
+			<item name="name" type="xs:string" eq="true" />
+			<item name="size" type="xs:long" />
+			<item name="fileName" type="xs:string" eq="true" />
+			<item name="fileData" type="xs:base64Binary" />
+			<item name="contentType" type="xs:string" />
+		</element>
+	
+	
+		<!-- 
+			AbstractNote type
+		-->
+		
+		<element name="AbstractNote" abstract="true">
+			<id name="id" type="xs:long" />
+			<item name="text" type="xs:string" />
+			<item name="author" type="AbstractUser" relation="manyToOne" required="true" eq="true" />
+			<item name="creationDate" type="xs:dateTime" eq="true" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+	
+		<!-- 
+			Exception type
+		<element name="Exception">
+			<item name="message" type="xs:string" />
+		</element>
+		-->
+		
+		
+		<!-- 
+			Logging related
+		-->
+		
+		<enumeration name="Status">
+			<literal name="INFO" />
+			<literal name="PROMPT" />
+			<literal name="WARNING" />
+			<literal name="ERROR" />
+		</enumeration>
+	
+		<enumeration name="Country">
+			<literal name="USA" />
+			<literal name="CAN" />
+			<literal name="MEX" />
+			<literal name="PR" />
+		</enumeration>
+	
+		<enumeration name="State">
+			<literal name="AL" />
+			<literal name="AK" />
+			<literal name="AZ" />
+			<literal name="AR" />
+			<literal name="CA" />
+			<literal name="CO" />
+			<literal name="CT" />
+			<literal name="DE" />
+			<literal name="FL" />
+			<literal name="GA" />
+			<literal name="HI" />
+			<literal name="ID" />
+			<literal name="IL" />
+			<literal name="IN" />
+			<literal name="IA" />
+			<literal name="KS" />
+			<literal name="KY" />
+			<literal name="LA" />
+			<literal name="ME" />
+			<literal name="MD" />
+			<literal name="MA" />
+			<literal name="MI" />
+			<literal name="MN" />
+			<literal name="MS" />
+			<literal name="MO" />
+			<literal name="MT" />
+			<literal name="NE" />
+			<literal name="NV" />
+			<literal name="NH" />
+			<literal name="NJ" />
+			<literal name="NM" />
+			<literal name="NY" />
+			<literal name="NC" />
+			<literal name="ND" />
+			<literal name="OH" />
+			<literal name="OK" />
+			<literal name="OR" />
+			<literal name="PA" />
+			<literal name="RI" />
+			<literal name="SC" />
+			<literal name="SD" />
+			<literal name="TN" />
+			<literal name="TX" />
+			<literal name="UT" />
+			<literal name="VT" />
+			<literal name="VA" />
+			<literal name="WA" />
+			<literal name="WV" />
+			<literal name="WI" />
+			<literal name="WY" />
+		</enumeration>
+	
+		<enumeration name="Language">
+			<literal name="ENGLISH" />
+			<literal name="SPANISH" />
+			<literal name="FRENCH" />
+			<literal name="ITALIAN" />
+			<literal name="GERMAN" />
+			<literal name="PORTUGUESE" />
+			<literal name="JAPANESE" />
+			<literal name="CHINESE" />
+			<literal name="KOREAN" />
+			<literal name="VIETNAMESE" />
+			<literal name="THAI" />
+			<literal name="OTHER" />
+		</enumeration>
+	
+	
+		<!-- 
+			AbstractUser type
+		-->
+		
+		<element name="AbstractUser" abstract="true">
+			<id name="id" type="xs:long" />
+			<item name="userId" type="xs:string" enact="userPrincipal" required="true" unique="true" eq="true" />
+			<secret name="passwordHash" type="xs:string" enact="userPassword" required="true" />
+			<item name="passwordSalt" type="xs:string" enact="passwordSalt" required="false" />
+			<item name="firstName" type="xs:string" enact="userFirstName" required="true" />
+			<item name="lastName" type="xs:string" enact="userLastName" required="true" />
+			<item name="phoneNumber" type="PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="emailAddress" type="EmailAddress" relation="oneToOne" cascade="all" unique="true" />
+			<item name="enabled" type="xs:boolean" enact="userEnabled" default="true" />
+		</element>
+	
+		<!--  
+		<enumeration name="RoleType">
+			<literal name="MANAGER" />
+			<literal name="USER" />
+			<literal name="HOST" />
+		</enumeration>
+		-->
+	
+		<enumeration name="Capability">
+			<literal name="ALL" />
+			<literal name="NONE" />
+			<literal name="READ" />
+			<literal name="CREATE" />
+			<literal name="UPDATE" />
+			<literal name="DELETE" />
+			<literal name="EXPORT" />
+			<literal name="EMAIL" />
+			<literal name="PRINT" />
+		</enumeration>
+		
+	
+		<!-- 
+			Person type
+		-->
+		
+		<element name="Person">
+			<id name="id" type="xs:long" />
+			<item name="userId" type="xs:string" required="true" eq="true" />
+			<item name="name" type="PersonName" relation="oneToOne" cascade="all" required="true" eq="true" />
+			<item name="phoneNumber" type="PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="emailAddress" type="EmailAddress" relation="oneToOne" cascade="all" />
+			<item name="streetAddress" type="StreetAddress" relation="oneToOne" cascade="all" />
+		</element>
+		
+		
+		<!-- 
+			PersonName type
+		-->
+		
+		<element name="PersonName">
+			<id name="id" type="xs:long" />
+			<item name="lastName" type="xs:string" required="true" eq="true" />
+			<item name="firstName" type="xs:string" required="true" eq="true" />
+			<item name="middleInitial" type="xs:string" eq="true" />
+		</element>
+		
+	
+		<!-- 
+			StreetAddress type
+		-->
+		
+		<element name="StreetAddress">
+			<id name="id" type="xs:long" />
+			<item name="street" type="xs:string" required="true" eq="true" />
+			<item name="city" type="xs:string" required="true" eq="true" />
+			<item name="state" type="State" default="CA" required="true" eq="true" />
+			<item name="zipCode" type="ZipCode" relation="oneToOne" cascade="all" required="true" eq="true" />
+			<item name="country" type="Country" default="USA" required="true" eq="true" />
+			<item name="latitude" type="xs:double" />
+			<item name="longitude" type="xs:double" />
+		</element>
+	
+	
+		<!-- 
+			ZipCode type
+		-->
+		
+		<element name="ZipCode">
+			<id name="id" type="xs:long" />
+			<item name="number" type="xs:string" required="true" eq="true" />
+			<item name="extension" type="xs:string" />
+			<item name="country" type="Country" default="USA" required="true" eq="true" />
+		</element>
+	
+	
+		<!-- 
+			PhoneNumber type
+		-->
+		
+		<element name="PhoneNumber">
+			<id name="id" type="xs:long" />
+			<item name="area" type="xs:string" required="true" eq="true" />
+			<item name="number" type="xs:string" required="true" eq="true" />
+			<item name="extension" type="xs:string" />
+			<item name="country" type="Country" required="true" default="USA" eq="true" />
+			<item name="type" type="PhoneLocation" required="true" default="HOME" />
+			<item name="value" type="xs:string" />
+		</element>
+	
+		<enumeration name="PhoneLocation">
+			<literal name="HOME" />
+			<literal name="WORK" />
+			<literal name="CELL" />
+			<literal name="FAX" />
+			<literal name="OTHER" />
+		</enumeration>
+		
+	
+		<!-- 
+			EmailAddress type
+		-->
+		
+		<element name="EmailAddress">
+			<id name="id" type="xs:long" />
+			<item name="url" type="xs:string" required="true" eq="true" />
+			<item name="userId" type="xs:string" />
+			<item name="firstName" type="xs:string" />
+			<item name="lastName" type="xs:string" />
+			<item name="phoneNumber" type="PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="organization" type="xs:string" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+			<item name="enabled" type="xs:boolean" default="true" />
+		</element>
+	
+		<element name="EmailAddressList">
+			<id name="id" type="xs:long" />
+			<item name="name" type="xs:string" required="true" />
+			<listItem name="addresses" type="EmailAddress" relation="oneToMany" />
+		</element>
+	
+	
+		<!-- 
+			EmailMessage type
+		-->
+		
+		<element name="EmailMessage">
+			<id name="id" type="xs:long" />
+			<item name="content" type="xs:string" />
+			<item name="subject" type="xs:string" />
+			<item name="timestamp" type="xs:dateTime" eq="true" />
+			<item name="sourceId" type="xs:string" eq="true" />
+			<item name="smtpHost" type="xs:string" />
+			<item name="smtpPort" type="xs:string" />
+			<item name="fromAddress" type="EmailAddress" relation="oneToOne" cascade="all" nillable="true" required="true" />
+			<listItem name="toAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="bccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="ccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="replytoAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="adminAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="attachments" type="Attachment" relation="oneToMany" cascade="all" nillable="true" />
+			<item name="sendAsHtml" type="xs:boolean" />
+		</element>
+	
+	
+		<!-- 
+			EmailAccount type
+		-->
+		
+		<element name="EmailAccount">
+			<id name="id" type="xs:long" />
+			<item name="userId" type="xs:string" required="true" unique="true" eq="true" />
+			<secret name="passwordHash" type="xs:string" hash="MD5" required="true" />
+			<item name="passwordSalt" type="xs:string" />
+			<item name="firstName" type="xs:string" />
+			<item name="lastName" type="xs:string" />
+			<listItem name="emailBoxes" type="EmailBox" relation="oneToMany" cascade="all" contained="true" nillable="true" />
+			<item name="enabled" type="xs:boolean" />
+		</element>
+	
+		<element name="EmailBox">
+			<id name="id" type="xs:long" />
+			<item name="type" type="xs:string" eq="true" />
+			<item name="name" type="xs:string" eq="true" />
+			<item name="emailAccount" type="EmailAccount" relation="manyToOne" cascade="all" inverse="true" mappedBy="emailBoxes" />
+			<item name="parentBox" type="EmailBox" relation="oneToOne" cascade="refresh, merge" />
+			<listItem name="messages" type="EmailMessage" relation="oneToMany" cascade="all" nillable="true" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	</namespace>
+</information>
+

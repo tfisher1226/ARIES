@@ -1,0 +1,101 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:outputPane
+		id="userInterfaceListTablePanel">
+		<ui:include src="userInterfaceListMenu.xhtml"/>
+		
+		<aries:table
+			id="userInterfaceListTable"
+			value="#{userInterfaceListManager.dataModel}"
+			rowCount="#{userInterfaceListManager.dataModel.rowCount}"
+			visible="#{userInterfaceListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processUserInterfaceListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processUserInterfaceListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.userInterface.type}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.userInterface.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.userInterface.label}" />
+			</aries:textColumn>
+			
+			<!-- GROUP ID -->
+			<aries:textColumn
+				width="100"
+				header="Group Id">
+				<h:outputText value="#{rowItem.userInterface.groupId}" />
+			</aries:textColumn>
+			
+			<!-- ARTIFACT ID -->
+			<aries:textColumn
+				width="100"
+				header="Artifact Id">
+				<h:outputText value="#{rowItem.userInterface.artifactId}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.userInterface.version}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.userInterface.namespace}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.userInterface.description}" />
+			</aries:textColumn>
+			
+			<!-- CREATOR -->
+			<aries:textColumn
+				width="100"
+				header="Creator">
+				<h:outputText value="#{rowItem.userInterface.creator}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.userInterface.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.userInterface.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

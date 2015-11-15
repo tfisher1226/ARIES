@@ -1,0 +1,297 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+    <a4j:jsFunction 
+    	name="requestLogout" 
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"
+    	execute="@all"
+    	action="#{securityManager.logout}"
+    	onbegin="setCursorWait(); lockScreen()"
+    	oncomplete="showHomePage(null)" />
+    	
+	<aries:toolbar type="menubar">
+		<aries:toolbarGroup location="left">
+			<aries:toolItem
+				id="loginItem"
+				label="Login"
+				icon="/icons/common/Login16.gif"
+				rendered="#{!identity.loggedIn}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="setCursorDefault(event.source); showLoginDialog(this)" />
+
+			<aries:toolItem 
+				label="Home"
+				id="home-item"
+				icon="/icons/common/Home16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client"
+				execute="@this"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showHomePage(this)" />
+
+			<!--  
+			<aries:toolItem 
+				label="Models"
+				id="ModelsToolButton"
+				icon="/icons/nam/Router16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client"
+				execute="@this"
+				manager="#{modelPageManager}"
+				action="initializeModelManagementPage"
+	    		onmouseup="setCursorWait(event.source); showProgress('Nam', 'Model Management', 'Preparing Models display...')" />
+
+			<aries:toolItem 
+				label="Models"
+				id="ModelsToolButton"
+				icon="/icons/nam/Router16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client"
+				execute="@this"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showModelsPage(this)" />
+	    		-->
+			
+			<aries:toolItem 
+				label="Models"
+				id="modelsToolButton"
+				icon="/icons/nam/Router16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="ajax" 
+				execute="@this"
+				manager="#{modelPageManager}"
+				action="initializeModelManagementPage"
+	    		onmouseup="setCursorWait(event.source); showProgress('Nam', 'Models', 'Preparing Model information...')" />
+
+			<aries:toolItem 
+				label="Users"
+				id="usersToolButton"
+				icon="/icons/nam/Users16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="ajax" 
+				execute="@this"
+				manager="#{userPageManager}"
+				action="initializeUserManagementPage"
+	    		onmouseup="setCursorWait(event.source); showProgress('Nam', 'Users', 'Preparing User information...')" />
+								
+			<!--  
+			<aries:toolItem 
+				label="Generate"
+				id="GenerateToolButton"
+				icon="/icons/common/Go16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client" 
+				execute="@none"
+	    		onmouseup="setCursorWait(event.source); replaceContent('popupWindowHandle', 'generationDialog'); " />
+								
+			<aries:toolItem 
+				label="Networks"
+				id="NetworksToolButton"
+				icon="/icons/field/ManyToMany16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client"
+				execute="@this"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showNetworksPage(this)" />
+			
+			<aries:toolItem 
+				label="Applications"
+				id="ApplicationsToolButton"
+				icon="/icons/nam/Application16.gif"
+				rendered="#{identity.loggedIn}"
+				mode="ajax" 
+				execute="@this"
+				manager="#{applicationPageManager}"
+				action="initializeApplicationManagementPage"
+	    		onmouseup="setCursorWait(event.source); showProgress('Nam', 'Applications by Project', 'Preparing Applications display...')" />
+	    		-->
+
+<!-- 
+				manager="#{globals}"
+				action="doNothing"
+ -->			
+
+			<!--  
+			<aries:toolItem 
+				label="Deployments"
+				id="DeploymentsToolButton"
+				icon="/icons/nam/Deployment16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client"
+				execute="@this"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showDeploymentstPage(this)" />
+	    		-->
+			
+			<!--  
+			<aries:toolItem 
+				label="Import"
+				id="home-import"
+				icon="/icons/common/Import16.gif"
+				rendered="#{identity.loggedIn}" 
+				mode="client"
+				execute="@this"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showUploadPage(this)" />
+				-->
+			
+			<!--  
+			<aries:toolItem
+				id="RegisterItem"
+				label="Register"
+				rendered="#{!identity.loggedIn}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="setCursorDefault(event.source); showRegisterDialog(this)" />
+				-->
+			
+			<aries:toolItem 
+				label="Register"
+				id="RegisterToolButton"
+				rendered="#{!identity.loggedIn}" 
+				mode="ajax" 
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				manager="#{registrationInfoManager}"
+				action="newRegistration"
+	    		onmouseup="setCursorWait(event.source); showProgress('Nam', 'User Registration', 'Preparing new User Registration...')" />
+	    		
+			<!--  
+			<aries:toolItem
+				id="RegistrationItem"
+				label="Registration"
+				rendered="#{!identity.loggedIn}"
+				manager="#{globals}"
+				action="doNothing"
+				onmouseup="setCursorWait(this)"
+				oncomplete="setCursorDefault(event.source); showRegistrationDialog()"
+				render="registrationDialog" />
+				-->
+				
+			<!--  
+			<aries:toolItem 
+				name="home"
+				label="Operation"
+				rendered="#{identity.loggedIn}"
+				mode="client"
+				execute="@none"
+				icon="/icons/common/Default16.gif"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="setCursorDefault(event.source); showOperationPane();" />
+				
+			<aries:toolItem 
+				mode="client"
+				name="home"
+				label="Configuration"
+				rendered="#{identity.loggedIn}"
+				execute="@this"
+				icon="/icons/common/Default16.gif"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="setCursorDefault(event.source); showConfigurationPane();" />
+				-->
+		</aries:toolbarGroup>
+
+		<aries:toolbarGroup location="right">
+			<!--  
+			<aries:toolItem 
+				id="testButton"
+				icon="/icons/common/Default16.gif"
+				mode="client"
+				execute="@none"
+				onclick="showSkinAttributeDialog(this); setCursorDefault(this)" />
+				-->
+				
+			<!--  
+			-->
+			<aries:dropDownMenu 
+				label="Preferences"
+				icon="/icons/common/Configure16.gif">
+				
+				<aries:menuItem 
+					value="Change Theme..."
+					tooltip="Change User-Interface Theme"
+					icon="/icons/common/Table16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="setCursorWait(this); launchThemeDialog(); setCursorDefault(this)" />
+
+			</aries:dropDownMenu>
+
+				<!--  
+				<aries:menuItem 
+					value="Manage Skins..."
+					tooltip="Add, Edit, Delete Themes"
+					icon="/icons/common/Table16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="showSkinAttributeDialog(this); setCursorDefault(this)" />
+					-->
+			
+			<aries:dropDownMenu 
+				label="Help"
+				icon="/icons/common/Help16.gif">
+				
+				<aries:menuItem
+					id="resetItem" 
+					name="reset"
+					value="Reset"
+					tooltip="Reset server-side user-state"
+					icon="/icons/common/refresh-document.gif"
+					execute="@this"
+					manager="#{adminManager}"
+					action="reset"
+					onclick="setCursorWait(this); showProgress('BOOKSHOP', 'Server-side user-state', 'Resetting...')"
+					oncomplete="setCursorDefault(this); hideProgress()" 
+					render="nothing" />
+					
+				<aries:menuItem 
+					value="About..."
+					tooltip="About the Nam Application"
+					icon="/icons/common/Speak16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('Nam', 'System Online ', 'The Nam system is a collection of inter-related workbenches that collectively allow one to design and auto-generate Java Applications.')" />
+			</aries:dropDownMenu>
+						
+			<aries:toolItem 
+				id="refreshButton"
+				label="Refresh"
+				icon="/icons/common/Refresh16.gif"
+				tooltip="Refresh the Application display"
+				name="reload"
+				mode="client"
+				execute="@this"
+				onmouseup="setCursorWait(this)" 
+				onclick="location.reload(true)"
+				render="@all" />
+
+			<f:subview rendered="#{identity.loggedIn}">
+				<aries:toolItem
+					id="logoutItem"
+					label="Logout"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@this"
+					onmousedown="setCursorWait(this)" 
+					onmouseup="setCursorWait(this); requestLogout()" />
+			</f:subview>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

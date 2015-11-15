@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging-deployment
+	xmlns="urn:jboss:messaging-deployment:1.0">
+
+	<hornetq-server>
+		<jms-destinations>
+
+			<!-- "Nam" channel destinations -->
+
+			<jms-queue name="nam_user_service_queue">
+				<entry name="/queue/nam_user_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/nam_user_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="nam_role_service_queue">
+				<entry name="/queue/nam_role_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/nam_role_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="nam_registration_service_queue">
+				<entry name="/queue/nam_registration_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/nam_registration_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="nam_skin_service_queue">
+				<entry name="/queue/nam_skin_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/nam_skin_service_queue" />
+			</jms-queue>
+		</jms-destinations>
+	</hornetq-server>
+</messaging-deployment>

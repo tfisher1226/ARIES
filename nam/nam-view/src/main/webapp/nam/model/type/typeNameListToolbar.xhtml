@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="elementNameListToolbar">
+	
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="elementListNewButton"
+				label="New Element..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Element Record"
+				enabled="#{securityGuard.canCreate('element')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Element')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px 2px 2px"
+				offset="false" />
+			
+			<!--  
+			<aries:toolButton
+				id="elementListEditButton"
+				label="Edit..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Element record for edit..."
+				enabled="#{elementListManager.hasSelection() and securityGuard.canUpdate('element')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Element')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px"
+				offset="false" />
+			
+			<aries:toolButton
+				id="elementListRemoveButton"
+				value="Remove Element..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Element record from system..."
+				enabled="#{elementListManager.hasSelection() and securityGuard.canDelete('element')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Element')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px"
+				offset="false" />
+				-->
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="elementListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Element information from server"
+				enabled="#{securityGuard.canOpen('element')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshElementList(event)"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 2px 2px 1px"
+				offset="false" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

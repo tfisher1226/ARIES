@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="typeListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="typeListMenu.xhtml">
+			<ui:param name="tableId" value="typeListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="typeListTable"
+			value="#{typeListManager.dataModel}"
+			rowCount="#{typeListManager.dataModel.rowCount}"
+			visible="#{typeListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processTypeListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processTypeListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.type.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.type.label}" />
+			</aries:textColumn>
+			
+			<!-- PLURAL -->
+			<aries:textColumn
+				width="100"
+				header="Plural">
+				<h:outputText value="#{rowItem.type.plural}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.type.namespace}" />
+			</aries:textColumn>
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.type.type}" />
+			</aries:textColumn>
+			
+			<!-- KEY -->
+			<aries:textColumn
+				width="100"
+				header="Key">
+				<h:outputText value="#{rowItem.type.key}" />
+			</aries:textColumn>
+			
+			<!-- STRUCTURE -->
+			<aries:textColumn
+				width="100"
+				header="Structure">
+				<h:outputText value="#{rowItem.type.structure}" />
+			</aries:textColumn>
+			
+			<!-- CACHED -->
+			<aries:textColumn
+				width="100"
+				header="Cached">
+				<h:outputText value="#{rowItem.type.cached}" />
+			</aries:textColumn>
+			
+			<!-- PUBLIC -->
+			<aries:textColumn
+				width="100"
+				header="Public">
+				<h:outputText value="#{rowItem.type.public}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.type.description}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

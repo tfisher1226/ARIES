@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- section body --> 
+	<h:panelGrid class="sectionBody">
+
+		<!-- page includes -->
+	
+		<!-- section title --> 
+		<ui:insert name="sectionTitle" />
+
+		<!-- section messages 
+		<ui:insert name="sectionMessages" />
+		--> 
+		
+		<aries:spacer height="10" />
+		<aries:formPane
+			columns="2" 
+			width="auto"
+			height="auto">
+					
+			<aries:panel>
+				<aries:panel>
+					<ui:include src="/common/sectionLabel.xhtml">
+						<ui:param name="icon" value="/icons/nam/Conversation16.gif" />
+						<ui:param name="label" value="Conversations" />
+					</ui:include>
+		
+					<aries:spacer height="6" />
+					<!--  
+					<h:panelGroup layout="block" styleClass="tableBorder">
+						<ui:include src="/nam/model/listener/listenerListActions.xhtml" />
+						<ui:include src="/nam/model/listener/listenerListTable.xhtml">
+							<ui:param name="lockOnSelect" value="false" />
+						</ui:include>
+					</h:panelGroup>
+					-->
+				</aries:panel>
+			</aries:panel>
+
+			<aries:panel 
+				marginLeft="20px">
+				
+			</aries:panel>
+		</aries:formPane>
+	</h:panelGrid>
+</ui:composition>

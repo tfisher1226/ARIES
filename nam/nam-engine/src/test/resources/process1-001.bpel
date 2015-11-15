@@ -1,0 +1,64 @@
+<bpel:process 
+	name="process1"
+	suppressJoinFailure="yes"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:tns="org.aries"
+	targetNamespace="org.aries">
+
+    <!-- Import the client WSDL -->
+	<bpel:import location="process1-001.wsdl" namespace="org.aries" 
+		importType="http://schemas.xmlsoap.org/wsdl/" />
+
+    <!-- ================================================================= -->         
+    <!-- PARTNERLINKS                                                      -->
+    <!-- List of services participating in this BPEL process               -->
+    <!-- ================================================================= -->         
+    <bpel:partnerLinks>
+        <bpel:partnerLink
+        	name="client"
+			partnerLinkType="tns:process1"
+			myRole="process1Provider" />
+    </bpel:partnerLinks>
+  
+    <!-- ================================================================= -->         
+    <!-- VARIABLES                                                         -->
+    <!-- List of messages and XML documents used within this BPEL process  -->
+    <!-- ================================================================= -->         
+    <bpel:variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <bpel:variable name="input" messageType="tns:process1RequestMessage" />
+                  
+        <!-- Reference to the message that will be returned to the requester -->
+        <bpel:variable name="output" messageType="tns:process1ResponseMessage" />
+    </bpel:variables>
+
+    <!-- ================================================================= -->         
+    <!-- ORCHESTRATION LOGIC                                               -->
+    <!-- Set of activities coordinating the flow of messages across the    -->
+    <!-- services integrated within this business process                  -->
+    <!-- ================================================================= -->         
+    <bpel:sequence name="main">
+        
+        <!-- Receive input from requester. 
+             Note: This maps to operation defined in process1.wsdl 
+             -->
+        <bpel:receive 
+        	name="receiveInput" 
+        	partnerLink="client"
+			portType="tns:process1"
+			operation="process" 
+			variable="input"
+			createInstance="yes" />
+                 
+        <bpel:empty name="FIX_ME-Add_Business_Logic_Here">
+        </bpel:empty>
+        
+        <!-- Generate reply to synchronous request -->
+        <bpel:reply 
+        	name="replyOutput" 
+			partnerLink="client"
+			portType="tns:process1"
+			operation="process" 
+			variable="output" />
+    </bpel:sequence>
+</bpel:process>

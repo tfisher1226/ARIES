@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="userListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+			
+			<aries:toolButton
+				id="userListNewButton"
+				value="New User..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new User Record"
+				enabled="#{securityGuard.canCreate('user')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'User')"
+				offset="true" />
+				
+			<aries:toolButton
+				id="userListEditButton"
+				value="Edit User..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected User record for edit..."
+				enabled="#{userListManager.hasSelection() and securityGuard.canUpdate('user')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'User')"
+				offset="true" />
+				
+			<aries:toolButton
+				id="userListRemoveButton"
+				value="Remove User..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected User record from system..."
+				enabled="#{userListManager.hasSelection() and securityGuard.canDelete('user')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'User')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="userListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read User information from server"
+				enabled="#{securityGuard.canOpen('user')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshUserList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

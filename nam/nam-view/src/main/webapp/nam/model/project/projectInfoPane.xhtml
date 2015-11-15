@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}ProjectInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Project Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{project.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{project.label}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Domain" label="Domain" value="#{project.domain}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{project.namespace}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{project.version}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Description" label="Description" value="#{project.description}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Creator" label="Creator" value="#{project.creator}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Projects" label="Projects" value="#{project.projects}" items="#{projectsList}" defaultLabel="select Projects" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Applications" label="Applications" value="#{project.applications}" items="#{applicationsList}" defaultLabel="select Applications" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Modules" label="Modules" value="#{project.modules}" items="#{modulesList}" defaultLabel="select Modules" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Providers" label="Providers" value="#{project.providers}" items="#{providersList}" defaultLabel="select Providers" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Networks" label="Networks" value="#{project.networks}" items="#{networksList}" defaultLabel="select Networks" />
+			
+			
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

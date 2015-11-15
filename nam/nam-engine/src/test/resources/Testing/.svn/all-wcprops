@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/asf/!svn/ver/948937/ode/trunk/bpel-test/src/test/resources/bpel/2.0/TestAssignActivity1
+END
+TestAssign.bpel
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/948937/ode/trunk/bpel-test/src/test/resources/bpel/2.0/TestAssignActivity1/TestAssign.bpel
+END
+test.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/947456/ode/trunk/bpel-test/src/test/resources/bpel/2.0/TestAssignActivity1/test.properties
+END
+deploy.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/asf/!svn/ver/948869/ode/trunk/bpel-test/src/test/resources/bpel/2.0/TestAssignActivity1/deploy.xml
+END
+TestAssign.wsdl
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/asf/!svn/ver/948869/ode/trunk/bpel-test/src/test/resources/bpel/2.0/TestAssignActivity1/TestAssign.wsdl
+END

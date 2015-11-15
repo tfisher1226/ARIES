@@ -1,0 +1,326 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	
+	<!--
+	  ** userInterfaceListActions
+	  ** a4j:jsFunction methods to support the UserInterface List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var userInterfaceListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshUserInterfaceList(event)
+		  ** Refreshes the current UserInterface List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshUserInterfaceList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{userInterfaceListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'UserInterface Records', 'Refreshing current UserInterface List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="userInterfaceListActions, userInterfaceListMenu, userInterfaceListToolbar, userInterfaceListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromUserInterfaceList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromUserInterfaceList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			render="userInterfaceListActions, userInterfaceListMenu, userInterfaceListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{userInterfaceListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{userInterfaceListManager.selectedRecordKey}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="userInterfaceListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromUserInterfaceList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromUserInterfaceList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="userInterfaceListActions, userInterfaceListMenu, userInterfaceListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{userInterfaceListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{userInterfaceListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{userInterfaceWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="userInterfaceListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="userInterfaceListActions, userInterfaceListMenu, userInterfaceListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** userInterfaceListActions
+		  ** Javascript methods to support the UserInterface List.
+		  -->
+		
+		<a4j:outputPanel
+			id="userInterfaceListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getUserInterfaceListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getUserInterfaceListRowKey() {
+					if (userInterfaceListState != null)
+						return userInterfaceListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getUserInterfaceListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getUserInterfaceListRowLabel() {
+					if (userInterfaceListState != null)
+						return userInterfaceListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeUserInterfaceListState()
+				  ** Initializes and verifies UserInterface List state information.
+				  -->
+					
+				function initializeUserInterfaceListState() {
+					try {
+						var rowIndex = '#{userInterfaceListManager.selectedRecordIndex}';
+						var recordKey = '#{userInterfaceListManager.selectedRecordKey}';
+						var recordLabel = '#{userInterfaceListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateUserInterfaceListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateUserInterfaceListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for UserInterface List.
+				  -->
+					
+				function updateUserInterfaceListState(event, rowIndex, recordKey, recordLabel) {
+					userInterfaceListState = new Object();
+					userInterfaceListState.rowIndex = rowIndex;
+					//userInterfaceListState.recordId = recordId;
+					userInterfaceListState.recordKey = recordKey;
+					userInterfaceListState.recordLabel = recordLabel;
+					//show(userInterfaceListState);
+				}
+					
+					
+				<!--
+				  ** enableUserInterfaceListActions(type)
+				  ** Enables (or disables) UserInterface List actions based on current client-side state.
+				  -->
+					
+				function enableUserInterfaceListActions(type) {
+					//enableButton('userInterfaceListViewButton');
+					enableButton('userInterfaceListNewButton');
+					enableButton('userInterfaceListEditButton');
+					enableButton('userInterfaceListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processUserInterfaceListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the UserInterface List.
+				  -->
+					
+				function processUserInterfaceListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateUserInterfaceListState(event, rowIndex, recordKey, recordLabel);
+					enableUserInterfaceListActions('userInterface');
+					try {
+						executeSelectFromUserInterfaceList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processUserInterfaceListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the UserInterface List.
+				  -->
+					
+				function processUserInterfaceListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'UserInterface Records', 'Preparing UserInterface ' + recordLabel + ' for editing...');
+						executeActionFromUserInterfaceList(rowIndex, recordKey, 'UserInterface', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('userInterfaceListTable')});
+						if (userInterfaceListState != null) {
+							var label = userInterfaceListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (userInterfaceListState != null) {
+							var label = userInterfaceListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (userInterfaceListState != null) {
+							var label = userInterfaceListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (userInterfaceListState != null)
+						label = userInterfaceListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'userInterfaceListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

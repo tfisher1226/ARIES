@@ -1,0 +1,111 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- Page Includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="/admin/model/registration/registrationActions.xhtml" />
+	</ui:define>
+	
+	<!-- Page Title -->
+	<ui:define name="pageTitle">
+		<div class="pageTitle">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="icon" value="/icons/nam/Users16.gif" />
+				<ui:param name="title" value="#{registrationPageManager.pageTitle}" />
+			</ui:include>
+		</div>
+	</ui:define>
+	
+	<!-- Page Breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{registrationPageManager.getBreadcrumbs('registration')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- navigator -->
+	<ui:define name="navigator">
+		<div class="navigator">
+			<ui:include src="registrationWizardNavigator.xhtml" />
+		</div>
+	</ui:define>
+	
+	<!-- Section Breadcrumbs -->
+	<ui:define name="sectionBreadcrumbs">
+		<span class="sectionBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{registrationPageManager.getBreadcrumbs('registrationWizard')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- wizard title --> 
+	<ui:define name="wizardTitle">
+		<aries:spacer height="4" />
+		<aries:text
+			padding="0px"
+			fontSize="16"
+			fontWeight="bold"
+			value="Registration #{registrationWizard.section}" />
+	</ui:define>
+
+	<!-- PANEL MESSAGES --> 
+	<ui:define name="wizardMessages">
+		<aries:spacer height="12" /> 
+		<aries:messages
+			id="registrationMessages" 
+			module="registrationWizard" 
+			message="Enter #{registrationWizard.section} Information" />
+	</ui:define>
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<div class="content">
+		
+			<!-- Dialogs -->
+			<ui:include src="/common/personNameDialog.xhtml" />
+			<ui:include src="/common/emailAddressDialog.xhtml" />
+			<ui:include src="/common/streetAddressDialog.xhtml" />
+			<ui:include src="/common/phoneNumberDialog.xhtml" />
+			
+			<aries:formPane
+				columns="2"
+				marginLeft="0px"
+				marginTop="2px"
+				backgroundColor="inherit">
+		
+				<aries:panel 
+					width="#{helper.wizard_middleSection_width}"
+					height="#{helper.wizard_middleSection_height}"
+					borderWidth="1px"
+					borderColor="#aaa"
+					backgroundColor="inherit">
+
+					<!-- PANELS --> 
+					<ui:include src="registrationRecord_#{registrationWizard.section}Section.xhtml">
+						<ui:param name="section" value="registration" />
+					</ui:include>
+		
+					<!-- Control -->
+					<ui:include src="registrationWizardControl.xhtml" />
+				</aries:panel>
+				
+				<!-- HELP -->
+				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="domain" value="registration" />
+					<ui:param name="section" value="#{registrationWizard.section}" />
+				</ui:include>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,380 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	
+	<!--
+	  ** importTreeActions
+	  ** a4j:jsFunction methods to support the Import Tree.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var importTreeState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshImportTree()
+		  ** Refreshes the current Import Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshImportTree" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{importTreeManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Import Records', 'Refreshing current Import Tree...');"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="importTreeActions, importTreeMenu, importTreeToolbar, importTreePanel">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromImportTree(rowKey, nodeId)
+		  ** Handles actions generated from a node in the Application Tree.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromImportTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			render="importTreeActions, importTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{importTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{importTreeManager.selectedNodeId}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="importTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromImportTree(rowKey, nodeId, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromImportTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="importTreeActions, importTreeMenu, importTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{importTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{importTreeManager.selectedNodeId}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{importWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="importTreeEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForImportTreeViewer(rowKey, nodeId, type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  ** Refreshes Element view in Import Tree viewer..
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForImportTreeViewer"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="importTreeActions, importTreeMenu, importTreeToolbar, importTreeViewer">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{importTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{importTreeManager.selectedNodeId}" />
+			<a4j:param name="area" assignTo="#{selectionContext.selectedArea}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="importTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** processToggleImportTreeNode()
+		  ** Toggles expand/collapse for nodes in Import Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="processToggleImportTreeNode" 
+			execute="@this" 
+			immediate="true"
+			limitRender="true">
+			
+			<!-- these values are passed in -->
+			<a4j:param name="nodeId" assignTo="#{importTreeManager.toggledNodeState}" /> 
+			
+			<!-- provide queue settings -->
+			<a4j:attachQueue requestGroupingId="importTreeEvents" requestDelay="0" /> 
+		</a4j:jsFunction>
+	
+	
+	<!--
+	  ** importTreeActions
+	  ** Javascript methods to support the Import Tree.
+	  -->
+	
+		<a4j:outputPanel
+			id="importTreeActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getImportTreeNodeId()
+				  ** Returns the node ID of the selected node.
+				  -->
+					
+				function getImportTreeNodeId() {
+					if (importTreeState != null)
+						return importTreeState.nodeId;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getImportTreeNodeLabel()
+				  ** Returns the node label of the selected node.
+				  -->
+					
+				function getImportTreeNodeLabel() {
+					if (importTreeState != null)
+						return importTreeState.nodeLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeImportTreeState()
+				  ** Initializes and verifies Import Tree state information.
+				  -->
+					
+				function initializeImportTreeState() {
+					try {
+						var selectedNodeId = '#{importTreeManager.selectedNodeId}';
+						var selectedRowKey = '#{importTreeManager.selectedRowKey}';
+						
+						if (selectedNodeId != '') {
+							importTreeState = new Object();
+							var nodeId = selectedNodeId;
+							var rowKey = selectedRowKey;
+							var nodeArea = '#{importTreeManager.selectedNode.area}';
+							var nodeType = '#{importTreeManager.selectedNode.type}';
+							var nodeLabel = '#{importTreeManager.selectedNode.label}';
+							updateImportTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateImportTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Updates client-side state information for Import Tree.
+				  -->
+					
+				function updateImportTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					importTreeState = new Object();
+					importTreeState.rowKey = rowKey;
+					importTreeState.nodeId = nodeId;
+					importTreeState.nodeArea = nodeArea;
+					importTreeState.nodeType = nodeType;
+					importTreeState.nodeLabel = nodeLabel;
+					importTreeState.nodeKey = nodeId;
+					//show(importTreeState);
+				}
+					
+					
+				<!--
+				  ** enableImportTreeActions(type)
+				  ** Enables (or disables) Import Tree actions based on current client-side state.
+				  -->
+					
+				function enableImportTreeActions(type) {
+					enableButton('importTreeViewButton');
+					enableButton('importTreeNewButton');
+					enableButton('importTreeEditButton');
+					enableButton('importTreeMoveButton');
+					enableButton('importTreeRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processImportTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles mouseDown event on the Import Tree.
+				  -->
+					
+				function processImportTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateImportTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableImportTreeActions(nodeArea);
+					try {
+						executeSelectFromImportTree(rowKey, nodeId);
+						if (event.which == 3) {
+							showImportTreeNodeMenu(event, nodeType);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** showImportTreeNodeMenu(event, nodeType)
+				  ** Displays context-menu for Import Tree node..
+				  -->
+					
+				function showImportTreeNodeMenu(event, nodeType) {
+					var typeUncapped = uncapitalize(nodeType);
+					var menuName = mainFormId + ':' + typeUncapped + 'TreeMenu';
+					var menu = RichFaces.component(menuName);
+					if (menu != null) {
+						menu.show(event, {});
+					}
+				}
+					
+					
+				<!--
+				  ** processImportTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles double-click event on the Import Tree.
+				  -->
+					
+				function processImportTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateImportTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableImportTreeActions(nodeArea);
+					
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', nodeType+' '+nodeLabel, 'Preparing '+nodeType+' summary view...');
+						executeActionForApplicationTreeViewer(rowKey, nodeId, nodeArea, nodeType, 'workspaceManager.viewObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element record.  
+				  ** Goes to the Element summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('importTree')});
+						if (importTreeState.nodeLabel != null) {
+							var label = importTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"' + label + '\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('importTree')});
+						if (importTreeState.nodeLabel != null) {
+							var label = importTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (importTreeState != null)
+						label = importTreeState.nodeLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'importTree, importTreeViewer');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

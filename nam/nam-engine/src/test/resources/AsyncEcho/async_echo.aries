@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://sample/async_echo_service"
+	xmlns:ns1="http://sample/async_echo"
+	xsi:schemaLocation="http://nam/model file://c:/workspace/ARIES2/aries/nam-model/src/main/resources/schema/nam/nam-1.0.xsd">
+	
+	<name>AsyncEcho</name>
+	<domain>sample</domain>
+	<version>0.0.1.SNAPSHOT</version>
+	
+	<imports>
+		<import file="async_echo.bpel" type="bpel"/>
+	</imports>
+
+	<providers>
+		<provider>
+			<type>jndi</type>
+			<name>@jndi.provider.name@</name>
+			<jndiContext>
+				<userName>@jndi.provider.username@</userName>
+				<password>@jndi.provider.password@</password>
+				<connectionUrl>@jndi.provider.url@</connectionUrl>
+				<contextFactory>@jndi.provider.context-factory@</contextFactory>
+				<contextPackages>@jndi.provider.url-pkg-prefixes@</contextPackages>
+			</jndiContext>
+		</provider>
+	</providers>
+	
+	<extensions>			
+		<messaging>
+			<domain>sample</domain>
+			<name>async_echo</name>
+
+			<listeners>
+				<listener>
+					<name>AsyncEchoCaller</name>
+					<role>AsyncEchoCaller</role>
+					<channel>AsyncEchoCaller</channel>
+				</listener>
+				<listener>
+					<name>asynctestProvider</name>
+					<role>asynctestProvider</role>
+					<channel>asynctestRequester</channel>
+				</listener>
+				<listener>
+					<name>asynctestReplyReceiver</name>
+					<role>asynctestReplyReceiver</role>
+					<channel>asynctestRequester</channel>
+				</listener>
+			</listeners>
+			
+			<channels>
+				<channel>
+					<name>AsyncEchoCaller</name>
+					<sender>
+						<role>AsyncEchoCaller</role>
+						<link>AsyncEchoCaller</link>
+					</sender>
+					<receiver>
+						<role>AsyncEchoCaller</role>
+						<link>AsyncEchoCaller</link>
+					</receiver>
+				</channel>
+				
+				<channel>
+					<name>asynctestRequester</name>
+					<sender>
+						<role>asynctestProvider</role>
+						<link>asynctestRequester</link>
+					</sender>
+					<receiver>
+						<role>asynctestReplyReceiver</role>
+						<link>asynctestRequester</link>
+					</receiver>
+				</channel>
+			</channels>
+			
+			<!-- 
+			<link name="AsyncEchoCaller" type="AsyncEchoCaller">
+				<role2 name="AsyncEchoCaller" transport="ws" transferMode="text" portType="ns1:AsyncEchoCallerPT" />
+				<role2 name="AsyncEchoCallerJMS" transport="jms" transferMode="text" portType="ns1:AsyncEchoCallerPT" provider="@jms.provider.name@" connectionFactory="@jms.provider.connection-factory@"/>
+			</link>
+			-->
+	
+			<links>
+				<link>
+					<name>AsyncEchoCaller</name>
+					<transport ref="async-echo-jms" />
+					<transport ref="async-echo-ws" />
+					<role2 name="AsyncEchoCaller" portType="ns1:AsyncEchoCallerPT" />
+				</link>
+	
+				<link>
+					<name>asynctestRequester</name>
+					<transport ref="async-echo-jms" />
+					<transport ref="async-echo-ws" />
+					<role2 name="asynctestProvider" portType="ns2:AsyncEchoService" />
+					<role2 name="asynctestReplyReceiver" portType="ns1:asynctestCallbackPT" />
+				</link>
+			</links>
+
+			<transports>
+        		<jms-transport>
+					<name>async-echo-jms</name>
+        			<transferMode>TEXT</transferMode>
+        			<provider>@jms.provider.name@</provider>
+        			<destination>@jms.asyncEchoCaller.destination@</destination>
+        			<connectionFactory>@jms.provider.connection-factory@</connectionFactory>
+        		</jms-transport>
+        		
+        		<http-transport>
+					<name>async-echo-ws</name>
+					<portType>ns1:AsyncEchoCallerPT</portType>
+        			<context>/async-echo</context>
+        		</http-transport>
+			</transports>
+		</messaging>
+	</extensions>			
+	
+	<applications>
+		<application>
+			<name>async_echo</name>
+			<groupId>sample</groupId>
+			<artifactId>async_echo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module>
+					<type>service</type>
+					<name>asynch_echo-service</name>
+					<services>
+						<domain>
+							<name>sample</name>
+							<service>
+								<name>AsyncEchoCallerPT</name>
+								<listener ref="AsyncEchoCaller" />
+								<sender>
+									<role>asynctestProvider</role>
+									<channel>asynctestRequester</channel>
+								</sender>
+							</service>
+
+							<service>
+								<name>AsyncEchoService</name>
+								<namespace>http://sample/async_echo_service</namespace>
+								<listener ref="asynctestProvider" />
+								<sender>
+									<role>asynctestReplyReceiver</role>
+									<channel>asynctestRequester</channel>
+								</sender>
+							</service>
+	
+							<service>
+								<name>asynctestCallbackPT</name>
+								<listener ref="asynctestReplyReceiver" />
+							</service>
+						</domain>
+					</services>
+				</module>
+			</modules>
+		</application>
+	</applications>
+</project>

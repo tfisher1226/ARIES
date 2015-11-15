@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. ./setenv
+
+mysql --user=$USER --password=$PASSWORD --host=$HOST < db-user-create.sql
+mysql --user=$USER --password=$PASSWORD --host=$HOST < db-user-grant.sql

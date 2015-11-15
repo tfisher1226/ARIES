@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model/0.0.1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model/0.0.1 file:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>nam</name>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<!--  
+	<imports>
+		<import type="xsd" file="/schema/sgiusa-model-0.0.1.xsd"/>
+	</imports>
+	-->
+
+	<providers>
+		<provider
+			type="jms" 
+			name="@jms.provider.name@"
+			connection-url="@jms.provider.jndi.url@"
+			context-factory="@jms.provider.jndi.context-factory@" 
+			url-pkg-prefixes="@jms.provider.jndi.url-pkg-prefixes@"
+			security-principal="@jms.provider.jndi.username@"
+			security-credentials="@jms.provider.jndi.password@"/>
+	</providers>
+
+	<links>
+		<link name="namLink" type="namLinkType">
+			<role name="user">
+				<rmi-transport port="9345"/>
+				<!--  
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jms.provider.name@" 
+					connectionFactory="@jms.provider.connection-factory@"
+					destinationName="@jms.asyncEchoCaller.destination@"/>
+				-->
+			</role>
+		</link>
+	</links>
+	
+	<applications>
+		<application>
+			<name>nam</name>
+			<groupId>org.aries.nam.service</groupId>
+			<artifactId>nam</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<namespace>http://nam.ui.org/model/0.0.1</namespace>
+
+			<modules>
+				<module>
+					<type>service</type>
+					<name>nam-server</name>
+					<services domain="org.aries.nam">
+						<service name="userService">
+							<listener link="namLink" role="user" />
+							<operation name="getUser" />
+							<operation name="getUsers" />
+							<operation name="saveUser" />
+							<operation name="deleteUser" />
+						</service>
+
+						<service name="modelService">
+							<listener link="namLink" role="user" />
+							<operation name="saveModel" />
+							<operation name="getWorkspace" />
+							<operation name="saveWorkspace" />
+						</service>
+					</services>
+				</module>
+			</modules>
+		</application>
+	</applications>
+</project>

@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:outputPane
+		id="componentNameListTablePanel">
+
+		<!-- context menu -->
+		<ui:include src="componentNameListMenu.xhtml">
+			<ui:param name="tableId" value="componentNameListTable" />
+		</ui:include>
+		
+		<aries:table
+			id="componentNameListTable"
+			value="#{componentListManager.dataModel}"
+			rowCount="#{componentListManager.dataModel.rowCount}"
+			visible="#{componentListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processComponentListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processComponentListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
+			styleClass="noTableHeader"
+			tablePanelStyleClass="none"
+			rowClasses="none">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.component.name}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

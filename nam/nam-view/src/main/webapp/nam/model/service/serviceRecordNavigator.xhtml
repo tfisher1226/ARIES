@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="auto"
+		margin="0px"
+		backgroundColor="inherit">
+		
+		<aries:formPane
+			width="auto"
+			borderWidth="0px"
+			borderColor="#aaa"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Parameters" />
+				<ui:param name="icon" value="/icons/nam/Parameter16.gif" />
+				<ui:param name="id" value="applicationParameterButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeParameterView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Parameter Overview', 'Preparing Parameter overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Results" />
+				<ui:param name="icon" value="/icons/nam/Result16.gif" />
+				<ui:param name="id" value="applicationResultButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeResultView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Result Overview', 'Preparing Result overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Timeouts" />
+				<ui:param name="icon" value="/icons/nam/Timeout16.gif" />
+				<ui:param name="id" value="applicationTimeoutButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeTimeoutView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Timeout Overview', 'Preparing Timeout overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Exceptions" />
+				<ui:param name="icon" value="/icons/nam/Exception16.gif" />
+				<ui:param name="id" value="applicationExceptionButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeExceptionView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Exception Overview', 'Preparing Exception overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

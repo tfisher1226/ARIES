@@ -1,0 +1,13 @@
+use mysql;
+drop database if exists nam_db;
+create database nam_db;
+delete from user where user='nam';
+delete from db where user='nam';
+FLUSH PRIVILEGES;
+create user 'nam'@'localhost' identified by 'password';
+create user 'nam'@'%' identified by 'password';
+set password for nam = password('password');
+grant all on nam_db.* to 'nam';
+grant all on nam_db.* to 'nam'@'localhost' identified by 'password';
+grant all on nam_db.* to 'nam'@'%' identified by 'password';
+use nam_db;

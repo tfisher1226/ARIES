@@ -1,0 +1,81 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+<style>
+.projectRadioButton {
+	padding: 0 24px;
+	margin-left: 8px;
+	padding-top: 4px;
+	padding-bottom: 16px;
+	background-image: url(#{resource['graphics:/icons/common/FolderOpen16.gif']});
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	font-size: 14px;
+}
+</style>
+
+<script>
+function clearProjectSelections(source) {
+	<ui:repeat
+		var="project" 
+		value="#{workspaceManager.projects}">
+
+		clearProjectSelection(source, '#{project.name}');
+	</ui:repeat>
+}
+function clearProjectSelection(source, name) {
+	var id = mainFormId + ':' + name + ':0';
+	var item = document.getElementById(id);
+	if (item)
+		item.checked = source == name;
+	else alert('item not found for: ' +name);
+}
+</script>
+
+	<aries:panel
+		padding="20px"
+		paddingTop="10px"
+		backgroundColor="inherit">
+
+		<!-- WIZARD TITLE -->
+		<ui:insert name="wizardTitle" />
+		 
+		<!-- WIZARD MESSAGES -->
+		<ui:insert name="wizardMessages" />
+
+		<aries:spacer height="6" />
+		<aries:panel>
+
+			<!-- VARIABLES --> 
+			<ui:param name="fontSize" value="13" />
+			<ui:param name="fontWeight" value="normal" />
+
+			<!-- STRUCTURES --> 
+			<ui:param name="user" value="#{adminManager.user}" /> 
+			<ui:param name="manager" value="#{moduleInfoManager}" /> 
+
+			<c:forEach 
+				var="project"
+				items="#{workspaceManager.projects}">
+				
+				<aries:spacer height="8" />
+				<ui:include src="/common/radioButton.xhtml">
+					<ui:param name="label" value="#{project.name}" />
+					<ui:param name="name" value="#{project.name}" />
+					<ui:param name="value" value="#{selectionContext.selectedName}" />
+					<ui:param name="enabledClass" value="projectRadioButton" />
+					<ui:param name="onclick" value="clearProjectSelections('#{project.name}')" />
+				</ui:include>
+			</c:forEach>
+		</aries:panel>
+	</aries:panel>
+</ui:composition>

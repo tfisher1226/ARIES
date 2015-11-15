@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions 
+	name="BankLoan"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+	xmlns:bankService="http://www.aries.org/bank/0.0.1"
+	targetNamespace="http://www.aries.org/bank/0.0.1">
+
+	<wsdl:types>
+		<xs:schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="http://www.aries.org/bank/0.0.1" schemaLocation="bank-0.0.1.xsd" />
+		</xs:schema>
+	</wsdl:types>
+
+	<wsdl:message name="bankLoanQuoteResponseMessage">
+		<wsdl:part name="result" type="bankService:bankLoanQuoteResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="bankLoanQuoteRequestMessage">
+		<wsdl:part name="request" type="bankService:bankLoanQuoteRequest"/>
+	</wsdl:message>
+
+	<wsdl:portType name="bankLoanQuote">
+		<wsdl:operation name="getLoanQuote">
+			<wsdl:input name="bankLoanQuoteRequest" message="bankService:bankLoanQuoteRequestMessage" />
+			<wsdl:output name="bankLoanQuoteResponse" message="bankService:bankLoanQuoteResponseMessage" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="bankLoanQuote">
+        <plnk:role name="bankLoanQuoteProvider" portType="bankService:bankLoanQuote"/>
+    </plnk:partnerLinkType>
+
+	<wsdl:binding name="BankLoanQuoteSoapBinding" type="bankService:bankLoanQuote">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="getLoanQuote">
+			<soap:operation soapAction="" style="rpc" />
+
+			<wsdl:input name="bankLoanQuoteRequest">
+				<soap:body use="literal" namespace="http://www.aries.org/bank/0.0.1" />
+			</wsdl:input>
+
+			<wsdl:output name="bankLoanQuoteResponse">
+				<soap:body use="literal" namespace="http://www.aries.org/bank/0.0.1" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="BankLoanQuoteService">
+		<wsdl:port name="BankLoanQuotePort" binding="bankService:BankLoanQuoteSoapBinding">
+			<soap:address location="http://localhost:@aries.port.http@/BankLoan/BankLoanQuotePort" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

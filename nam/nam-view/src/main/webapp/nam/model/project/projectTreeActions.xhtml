@@ -1,0 +1,380 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	
+	<!--
+	  ** projectTreeActions
+	  ** a4j:jsFunction methods to support the Project Tree.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var projectTreeState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshProjectTree()
+		  ** Refreshes the current Project Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshProjectTree" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{projectTreeManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Project Records', 'Refreshing current Project Tree...');"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="projectTreeActions, projectTreeMenu, projectTreeToolbar, projectTreePanel">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromProjectTree(rowKey, nodeId)
+		  ** Handles actions generated from a node in the Application Tree.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromProjectTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			render="projectTreeActions, projectTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{projectTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{projectTreeManager.selectedNodeId}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromProjectTree(rowKey, nodeId, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromProjectTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="projectTreeActions, projectTreeMenu, projectTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{projectTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{projectTreeManager.selectedNodeId}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{projectWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectTreeEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForProjectTreeViewer(rowKey, nodeId, type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  ** Refreshes Element view in Project Tree viewer..
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForProjectTreeViewer"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="projectTreeActions, projectTreeMenu, projectTreeToolbar, projectTreeViewer">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{projectTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{projectTreeManager.selectedNodeId}" />
+			<a4j:param name="area" assignTo="#{selectionContext.selectedArea}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** processToggleProjectTreeNode()
+		  ** Toggles expand/collapse for nodes in Project Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="processToggleProjectTreeNode" 
+			execute="@this" 
+			immediate="true"
+			limitRender="true">
+			
+			<!-- these values are passed in -->
+			<a4j:param name="nodeId" assignTo="#{projectTreeManager.toggledNodeState}" /> 
+			
+			<!-- provide queue settings -->
+			<a4j:attachQueue requestGroupingId="projectTreeEvents" requestDelay="0" /> 
+		</a4j:jsFunction>
+	
+	
+	<!--
+	  ** projectTreeActions
+	  ** Javascript methods to support the Project Tree.
+	  -->
+	
+		<a4j:outputPanel
+			id="projectTreeActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getProjectTreeNodeId()
+				  ** Returns the node ID of the selected node.
+				  -->
+					
+				function getProjectTreeNodeId() {
+					if (projectTreeState != null)
+						return projectTreeState.nodeId;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getProjectTreeNodeLabel()
+				  ** Returns the node label of the selected node.
+				  -->
+					
+				function getProjectTreeNodeLabel() {
+					if (projectTreeState != null)
+						return projectTreeState.nodeLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeProjectTreeState()
+				  ** Initializes and verifies Project Tree state information.
+				  -->
+					
+				function initializeProjectTreeState() {
+					try {
+						var selectedNodeId = '#{projectTreeManager.selectedNodeId}';
+						var selectedRowKey = '#{projectTreeManager.selectedRowKey}';
+						
+						if (selectedNodeId != '') {
+							projectTreeState = new Object();
+							var nodeId = selectedNodeId;
+							var rowKey = selectedRowKey;
+							var nodeArea = '#{projectTreeManager.selectedNode.area}';
+							var nodeType = '#{projectTreeManager.selectedNode.type}';
+							var nodeLabel = '#{projectTreeManager.selectedNode.label}';
+							updateProjectTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateProjectTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Updates client-side state information for Project Tree.
+				  -->
+					
+				function updateProjectTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					projectTreeState = new Object();
+					projectTreeState.rowKey = rowKey;
+					projectTreeState.nodeId = nodeId;
+					projectTreeState.nodeArea = nodeArea;
+					projectTreeState.nodeType = nodeType;
+					projectTreeState.nodeLabel = nodeLabel;
+					projectTreeState.nodeKey = nodeId;
+					//show(projectTreeState);
+				}
+					
+					
+				<!--
+				  ** enableProjectTreeActions(type)
+				  ** Enables (or disables) Project Tree actions based on current client-side state.
+				  -->
+					
+				function enableProjectTreeActions(type) {
+					enableButton('projectTreeViewButton');
+					enableButton('projectTreeNewButton');
+					enableButton('projectTreeEditButton');
+					enableButton('projectTreeMoveButton');
+					enableButton('projectTreeRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processProjectTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles mouseDown event on the Project Tree.
+				  -->
+					
+				function processProjectTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateProjectTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableProjectTreeActions(nodeArea);
+					try {
+						executeSelectFromProjectTree(rowKey, nodeId);
+						if (event.which == 3) {
+							showProjectTreeNodeMenu(event, nodeType);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** showProjectTreeNodeMenu(event, nodeType)
+				  ** Displays context-menu for Project Tree node..
+				  -->
+					
+				function showProjectTreeNodeMenu(event, nodeType) {
+					var typeUncapped = uncapitalize(nodeType);
+					var menuName = mainFormId + ':' + typeUncapped + 'TreeMenu';
+					var menu = RichFaces.component(menuName);
+					if (menu != null) {
+						menu.show(event, {});
+					}
+				}
+					
+					
+				<!--
+				  ** processProjectTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles double-click event on the Project Tree.
+				  -->
+					
+				function processProjectTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateProjectTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableProjectTreeActions(nodeArea);
+					
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', nodeType+' '+nodeLabel, 'Preparing '+nodeType+' summary view...');
+						executeActionForApplicationTreeViewer(rowKey, nodeId, nodeArea, nodeType, 'workspaceManager.viewObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element record.  
+				  ** Goes to the Element summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('projectTree')});
+						if (projectTreeState.nodeLabel != null) {
+							var label = projectTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"' + label + '\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('projectTree')});
+						if (projectTreeState.nodeLabel != null) {
+							var label = projectTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (projectTreeState != null)
+						label = projectTreeState.nodeLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'projectTree, projectTreeViewer');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

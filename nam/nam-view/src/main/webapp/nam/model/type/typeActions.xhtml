@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showTypeListPage()
+		  ** Goes to the Type Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTypeListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{typePageManager.initializeTypeListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Type Records', 'Preparing Type List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showTypeTreePage()
+		  ** Goes to the Type Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTypeTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{typePageManager.initializeTypeTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Type Records', 'Preparing Type Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showTypeManagementPage()
+		  ** Goes to the Type Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTypeManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{typePageManager.initializeTypeManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Type Records', 'Preparing Type related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showTypeWizardPage()
+		  ** Goes to the Type Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showTypeWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{typeWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Type Records', 'Preparing Type information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{typeWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{typeWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewTypeDialog()
+		  ** Launches the Type Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewTypeDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{typeInfoManager.newType}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Type Records', 'Creating new Type...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showTypeDialog()"
+			render="typeModule, typeDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{typeInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="typeListPane" assignTo="#{typeInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{typeInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditTypeDialog()
+		  ** Launches the Type Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditTypeDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{typeInfoManager.editType}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Type Records', 'Preparing Type information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showTypeDialog()"
+			render="typeModule, typeDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{typeInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="typeListPane" assignTo="#{typeInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{typeInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

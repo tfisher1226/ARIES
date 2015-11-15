@@ -1,0 +1,77 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane 
+		width="500"
+		height="300"
+		id="#{domain}ElementInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Element Information">
+
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Root" label="Root" value="#{element.root}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Abstract" label="Abstract" value="#{element.abstract}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Transient" label="Transient" value="#{element.transient}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Persisted" label="Persisted" value="#{element.persisted}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Hierarchical" label="Hierarchical" value="#{element.hierarchical}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Sortable" label="Sortable" value="#{element.sortable}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Extends" label="Extends" value="#{element.extends}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ParentType" label="Parent Type" value="#{element.parentType}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}SuperTypes" label="Super Types" value="#{element.superTypes}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}SubTypes" label="Sub Types" value="#{element.subTypes}" />
+			
+			<ui:include src="../referencedBy/referencedByListPane.xhtml">
+				<ui:param name="itemManager" value="#{referencedByInfoManager}" />
+				<ui:param name="listManager" value="#{referencedByListManager}" />
+			</ui:include>
+			
+			<ui:include src="../containedBy/containedByListPane.xhtml">
+				<ui:param name="itemManager" value="#{containedByInfoManager}" />
+				<ui:param name="listManager" value="#{containedByListManager}" />
+			</ui:include>
+			
+			<ui:include src="../annotation/annotationListPane.xhtml">
+				<ui:param name="itemManager" value="#{annotationInfoManager}" />
+				<ui:param name="listManager" value="#{annotationListManager}" />
+			</ui:include>
+			
+			<ui:include src="../serializable/serializableListPane.xhtml">
+				<ui:param name="itemManager" value="#{serializableInfoManager}" />
+				<ui:param name="listManager" value="#{serializableListManager}" />
+			</ui:include>
+			
+			<ui:include src="../serializable/serializableListPane.xhtml">
+				<ui:param name="itemManager" value="#{serializableInfoManager}" />
+				<ui:param name="listManager" value="#{serializableListManager}" />
+			</ui:include>
+			
+			
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

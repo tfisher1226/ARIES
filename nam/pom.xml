@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>nam</artifactId>
+	<name>nam</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Nam Application Bom</description>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+
+	<modules>
+		<module>nam-util</module>
+		<module>nam-model</module>
+		<!--  
+		<module>nam-user</module>
+		-->
+		<module>nam-engine</module>
+		<module>nam-client</module>
+		<module>nam-service</module>
+		<module>nam-data</module>
+		<!--  
+		<module>nam-program</module>
+		-->
+		<module>nam-view</module>
+		<module>nam-app</module>
+	</modules>
+
+	<properties>
+		<nam.version>0.0.1-SNAPSHOT</nam.version>
+		<nam.deploy.exploded>true</nam.deploy.exploded>
+
+		<admin.version>0.0.1.SNAPSHOT</admin.version>
+		<admin.deploy.exploded>true</admin.deploy.exploded>
+		
+		<model.local.home>model</model.local.home>
+		<model.runtime.home>runtime</model.runtime.home>
+		<model.source.home>${workspace.location}/_generator/src/main/resources/model</model.source.home>
+	</properties>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>pre-process</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- pull "common" model files to local home -->
+								<copy todir="${model.local.home}/common" overwrite="true" verbose="true">
+									<fileset dir="${model.source.home}/common" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+
+								<!-- pull "admin" model files to local home -->
+								<copy todir="${model.local.home}/admin" overwrite="true" verbose="true">
+									<fileset dir="${model.source.home}/admin" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<!-- pull "nam" model files to local home -->
+								<copy todir="${model.local.home}/nam" overwrite="true" verbose="true">
+									<fileset dir="${model.source.home}/nam" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<!-- pull "bookshop" model files to local home -->
+								<copy todir="${model.local.home}/bookshop" overwrite="true" verbose="true">
+									<fileset dir="${model.source.home}/bookshop" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<!-- push local model home sources to runtime home -->
+								<copy todir="${model.runtime.home}/model" overwrite="true" verbose="true">
+									<fileset dir="${model.local.home}" casesensitive="yes">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-bom</artifactId>
+				<version>${nam.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- 
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.6.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.9.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.resources</artifactId>
+			<version>3.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.eclipse.xsd</groupId>
+			<artifactId>xsd</artifactId>
+			<version>2.2.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.codegen</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.codegen.ecore</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.wtp</groupId>
+			<artifactId>wsdl</artifactId>
+			<version>1.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!--  
+		<dependency>
+			<groupId>org.eclipse.bpel.plugins</groupId>
+			<artifactId>org.eclipse.bpel.common.model</artifactId>
+			<version>${org.eclipse.bpel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.bpel.plugins</groupId>
+			<artifactId>org.eclipse.bpel.model</artifactId>
+			<version>${org.eclipse.bpel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.bpel.plugins</groupId>
+			<artifactId>org.eclipse.bpel.xpath10</artifactId>
+			<version>${org.eclipse.bpel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jbossxb</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-common-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.ws.native</groupId>
+			<artifactId>jbossws-native-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+	</dependencies>
+</project>

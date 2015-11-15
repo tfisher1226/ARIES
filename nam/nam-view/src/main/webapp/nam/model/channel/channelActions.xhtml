@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showChannelListPage()
+		  ** Goes to the Channel Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showChannelListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{channelPageManager.initializeChannelListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Channel Records', 'Preparing Channel List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showChannelTreePage()
+		  ** Goes to the Channel Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showChannelTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{channelPageManager.initializeChannelTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Channel Records', 'Preparing Channel Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showChannelManagementPage()
+		  ** Goes to the Channel Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showChannelManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{channelPageManager.initializeChannelManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Channel Records', 'Preparing Channel related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showChannelWizardPage()
+		  ** Goes to the Channel Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showChannelWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{channelWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Channel Records', 'Preparing Channel information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{channelWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{channelWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewChannelDialog()
+		  ** Launches the Channel Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewChannelDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{channelInfoManager.newChannel}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Channel Records', 'Creating new Channel...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showChannelDialog()"
+			render="channelModule, channelDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{channelInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="channelListPane" assignTo="#{channelInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{channelInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditChannelDialog()
+		  ** Launches the Channel Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditChannelDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{channelInfoManager.editChannel}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Channel Records', 'Preparing Channel information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showChannelDialog()"
+			render="channelModule, channelDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{channelInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="channelListPane" assignTo="#{channelInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{channelInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

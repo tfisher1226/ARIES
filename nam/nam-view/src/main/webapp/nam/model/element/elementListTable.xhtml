@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+		
+	<!-- table panel -->
+	<aries:outputPane
+		id="elementListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="elementListMenu.xhtml">
+			<ui:param name="tableId" value="elementListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="elementListTable"
+			value="#{elementListManager.dataModel}"
+			rowCount="#{elementListManager.dataModel.rowCount}"
+			visible="#{elementListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processElementListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processElementListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- Name -->
+			<aries:textColumn
+				width="130"
+				header="Name">
+				<aries:link 
+					value="#{rowItem.element.name}"
+					onmouseup="executeSelectOpenUser('#{index}', '#{rowItem.element.name}')" />
+			</aries:textColumn>
+
+			<!-- Type -->
+			<aries:textColumn 
+				header="Type"
+				width="400px">
+				<h:outputText value="#{rowItem.element.extends}"/>
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

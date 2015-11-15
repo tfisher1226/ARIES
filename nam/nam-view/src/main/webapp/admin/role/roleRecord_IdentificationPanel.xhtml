@@ -1,0 +1,37 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel>
+		<!-- VARIABLES --> 
+		<ui:param name="fontSize" value="13" />
+		<ui:param name="fontWeight" value="normal" />
+		<ui:param name="labelWidth" value="120" />
+
+		<!-- STRUCTURES --> 
+		<ui:param name="manager" value="#{roleInfoManager}" /> 
+		
+		<aries:text value="#{section}" />
+		<aries:spacer height="6" />
+		<aries:personName id="#{section}PersonName" type="PersonName" label="Name" name="rolePersonName" value="#{manager.role.personName}" />
+
+		<aries:spacer height="6" />
+		<aries:inputText id="#{section}RoleName" label="Role name" value="#{manager.role.roleName}" />
+
+		<aries:spacer height="6" />
+		<aries:inputSecret id="#{section}Password" label="Enter Password" value="#{manager.role.password}" />
+		
+		<aries:spacer height="6" />
+		<aries:inputSecret id="#{section}Password2" label="Confirm Password" value="#{manager.role.password2}" />
+		
+		<aries:spacer height="6" />
+		<aries:inputBoolean id="#{section}Enabled" label="Enabled" value="#{manager.role.enabled}" />
+	</aries:panel>
+</ui:composition>

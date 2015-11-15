@@ -1,0 +1,629 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}SkinInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Skin Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{skin.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Width" label="Width" value="#{skin.width}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Height" label="Height" value="#{skin.height}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Margin" label="Margin" value="#{skin.margin}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}MarginTop" label="Margin Top" value="#{skin.marginTop}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}MarginLeft" label="Margin Left" value="#{skin.marginLeft}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}MarginRight" label="Margin Right" value="#{skin.marginRight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}MarginBottom" label="Margin Bottom" value="#{skin.marginBottom}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Padding" label="Padding" value="#{skin.padding}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}PaddingTop" label="Padding Top" value="#{skin.paddingTop}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}PaddingLeft" label="Padding Left" value="#{skin.paddingLeft}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}PaddingRight" label="Padding Right" value="#{skin.paddingRight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}PaddingBottom" label="Padding Bottom" value="#{skin.paddingBottom}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}BorderStyle" label="Border Style" value="#{skin.borderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}BorderWidth" label="Border Width" value="#{skin.borderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}BorderColor" label="Border Color" value="#{skin.borderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}CornerRadius" label="Corner Radius" value="#{skin.cornerRadius}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}BackgroundColor" label="Background Color" value="#{skin.backgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}BackgroundImage" label="Background Image" value="#{skin.backgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}GradientColor" label="Gradient Color" value="#{skin.gradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}GradientImage" label="Gradient Image" value="#{skin.gradientImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FontSize" label="Font Size" value="#{skin.fontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FontFamily" label="Font Family" value="#{skin.fontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FontWeight" label="Font Weight" value="#{skin.fontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FontStyle" label="Font Style" value="#{skin.fontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FontVariant" label="Font Variant" value="#{skin.fontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TextColor" label="Text Color" value="#{skin.textColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TextDecoration" label="Text Decoration" value="#{skin.textDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}LinkColor" label="Link Color" value="#{skin.linkColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}LinkHoverColor" label="Link Hover Color" value="#{skin.linkHoverColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}LinkVisitedColor" label="Link Visited Color" value="#{skin.linkVisitedColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonFontFamily" label="Button Font Family" value="#{skin.buttonFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonFontSize" label="Button Font Size" value="#{skin.buttonFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonFontStyle" label="Button Font Style" value="#{skin.buttonFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonFontVariant" label="Button Font Variant" value="#{skin.buttonFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonFontWeight" label="Button Font Weight" value="#{skin.buttonFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonTextColor" label="Button Text Color" value="#{skin.buttonTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonTextDecoration" label="Button Text Decoration" value="#{skin.buttonTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonBackgroundColor" label="Button Background Color" value="#{skin.buttonBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonBackgroundImage" label="Button Background Image" value="#{skin.buttonBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonGradientColor" label="Button Gradient Color" value="#{skin.buttonGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonBorderStyle" label="Button Border Style" value="#{skin.buttonBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonBorderWidth" label="Button Border Width" value="#{skin.buttonBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonBorderColor" label="Button Border Color" value="#{skin.buttonBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonControlColor" label="Button Control Color" value="#{skin.buttonControlColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ButtonCornerRadius" label="Button Corner Radius" value="#{skin.buttonCornerRadius}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderBackgroundColor" label="Header Background Color" value="#{skin.headerBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderBackgroundImage" label="Header Background Image" value="#{skin.headerBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderGradientColor" label="Header Gradient Color" value="#{skin.headerGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderBorderStyle" label="Header Border Style" value="#{skin.headerBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderBorderWidth" label="Header Border Width" value="#{skin.headerBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderBorderColor" label="Header Border Color" value="#{skin.headerBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderFontFamily" label="Header Font Family" value="#{skin.headerFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderFontSize" label="Header Font Size" value="#{skin.headerFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderFontStyle" label="Header Font Style" value="#{skin.headerFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderFontVariant" label="Header Font Variant" value="#{skin.headerFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderFontWeight" label="Header Font Weight" value="#{skin.headerFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderTextColor" label="Header Text Color" value="#{skin.headerTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HeaderTextDecoration" label="Header Text Decoration" value="#{skin.headerTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarBackgroundColor" label="Toolbar Background Color" value="#{skin.toolbarBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarBackgroundImage" label="Toolbar Background Image" value="#{skin.toolbarBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarGradientColor" label="Toolbar Gradient Color" value="#{skin.toolbarGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarBorderColor" label="Toolbar Border Color" value="#{skin.toolbarBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarBorderStyle" label="Toolbar Border Style" value="#{skin.toolbarBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarBorderWidth" label="Toolbar Border Width" value="#{skin.toolbarBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarFontFamily" label="Toolbar Font Family" value="#{skin.toolbarFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarFontSize" label="Toolbar Font Size" value="#{skin.toolbarFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarFontStyle" label="Toolbar Font Style" value="#{skin.toolbarFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarFontVariant" label="Toolbar Font Variant" value="#{skin.toolbarFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarFontWeight" label="Toolbar Font Weight" value="#{skin.toolbarFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarTextColor" label="Toolbar Text Color" value="#{skin.toolbarTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ToolbarTextDecoration" label="Toolbar Text Decoration" value="#{skin.toolbarTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabBackgroundColor" label="Tab Background Color" value="#{skin.tabBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabBackgroundImage" label="Tab Background Image" value="#{skin.tabBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabGradientColor" label="Tab Gradient Color" value="#{skin.tabGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabBorderColor" label="Tab Border Color" value="#{skin.tabBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabCornerRadius" label="Tab Corner Radius" value="#{skin.tabCornerRadius}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabFontFamily" label="Tab Font Family" value="#{skin.tabFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabFontSize" label="Tab Font Size" value="#{skin.tabFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabFontStyle" label="Tab Font Style" value="#{skin.tabFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabFontWeight" label="Tab Font Weight" value="#{skin.tabFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabTextColor" label="Tab Text Color" value="#{skin.tabTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabTextDecoration" label="Tab Text Decoration" value="#{skin.tabTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveBackgroundColor" label="Tab Active Background Color" value="#{skin.tabActiveBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveBackgroundImage" label="Tab Active Background Image" value="#{skin.tabActiveBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveGradientColor" label="Tab Active Gradient Color" value="#{skin.tabActiveGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveBorderColor" label="Tab Active Border Color" value="#{skin.tabActiveBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveFontFamily" label="Tab Active Font Family" value="#{skin.tabActiveFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveFontSize" label="Tab Active Font Size" value="#{skin.tabActiveFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveFontStyle" label="Tab Active Font Style" value="#{skin.tabActiveFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveFontWeight" label="Tab Active Font Weight" value="#{skin.tabActiveFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveTextColor" label="Tab Active Text Color" value="#{skin.tabActiveTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabActiveTextDecoration" label="Tab Active Text Decoration" value="#{skin.tabActiveTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveBackgroundColor" label="Tab Inactive Background Color" value="#{skin.tabInactiveBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveBackgroundImage" label="Tab Inactive Background Image" value="#{skin.tabInactiveBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveGradientColor" label="Tab Inactive Gradient Color" value="#{skin.tabInactiveGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveBorderColor" label="Tab Inactive Border Color" value="#{skin.tabInactiveBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveFontFamily" label="Tab Inactive Font Family" value="#{skin.tabInactiveFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveFontSize" label="Tab Inactive Font Size" value="#{skin.tabInactiveFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveFontStyle" label="Tab Inactive Font Style" value="#{skin.tabInactiveFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveFontWeight" label="Tab Inactive Font Weight" value="#{skin.tabInactiveFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveTextColor" label="Tab Inactive Text Color" value="#{skin.tabInactiveTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabInactiveTextDecoration" label="Tab Inactive Text Decoration" value="#{skin.tabInactiveTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledBackgroundColor" label="Tab Disabled Background Color" value="#{skin.tabDisabledBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledBackgroundImage" label="Tab Disabled Background Image" value="#{skin.tabDisabledBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledGradientColor" label="Tab Disabled Gradient Color" value="#{skin.tabDisabledGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledBorderColor" label="Tab Disabled Border Color" value="#{skin.tabDisabledBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledFontFamily" label="Tab Disabled Font Family" value="#{skin.tabDisabledFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledFontSize" label="Tab Disabled Font Size" value="#{skin.tabDisabledFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledFontStyle" label="Tab Disabled Font Style" value="#{skin.tabDisabledFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledFontWeight" label="Tab Disabled Font Weight" value="#{skin.tabDisabledFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledTextColor" label="Tab Disabled Text Color" value="#{skin.tabDisabledTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TabDisabledTextDecoration" label="Tab Disabled Text Decoration" value="#{skin.tabDisabledTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableBackgroundColor" label="Table Background Color" value="#{skin.tableBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableBorderColor" label="Table Border Color" value="#{skin.tableBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableBorderWidth" label="Table Border Width" value="#{skin.tableBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellBackgroundColor" label="Table Cell Background Color" value="#{skin.tableCellBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellBackgroundImage" label="Table Cell Background Image" value="#{skin.tableCellBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellGradientColor" label="Table Cell Gradient Color" value="#{skin.tableCellGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellBorderColor" label="Table Cell Border Color" value="#{skin.tableCellBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellFontFamily" label="Table Cell Font Family" value="#{skin.tableCellFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellFontSize" label="Table Cell Font Size" value="#{skin.tableCellFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellFontStyle" label="Table Cell Font Style" value="#{skin.tableCellFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellFontVariant" label="Table Cell Font Variant" value="#{skin.tableCellFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellFontWeight" label="Table Cell Font Weight" value="#{skin.tableCellFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellTextColor" label="Table Cell Text Color" value="#{skin.tableCellTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableCellTextDecoration" label="Table Cell Text Decoration" value="#{skin.tableCellTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderBackgroundColor" label="Table Header Background Color" value="#{skin.tableHeaderBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderBackgroundImage" label="Table Header Background Image" value="#{skin.tableHeaderBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderGradientColor" label="Table Header Gradient Color" value="#{skin.tableHeaderGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderBorderColor" label="Table Header Border Color" value="#{skin.tableHeaderBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderFontFamily" label="Table Header Font Family" value="#{skin.tableHeaderFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderFontSize" label="Table Header Font Size" value="#{skin.tableHeaderFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderFontStyle" label="Table Header Font Style" value="#{skin.tableHeaderFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderFontVariant" label="Table Header Font Variant" value="#{skin.tableHeaderFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderFontWeight" label="Table Header Font Weight" value="#{skin.tableHeaderFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderTextColor" label="Table Header Text Color" value="#{skin.tableHeaderTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableHeaderTextDecoration" label="Table Header Text Decoration" value="#{skin.tableHeaderTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterBackgroundColor" label="Table Footer Background Color" value="#{skin.tableFooterBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterBackgroundImage" label="Table Footer Background Image" value="#{skin.tableFooterBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterGradientColor" label="Table Footer Gradient Color" value="#{skin.tableFooterGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterBorderColor" label="Table Footer Border Color" value="#{skin.tableFooterBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterFontFamily" label="Table Footer Font Family" value="#{skin.tableFooterFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterFontSize" label="Table Footer Font Size" value="#{skin.tableFooterFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterFontStyle" label="Table Footer Font Style" value="#{skin.tableFooterFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterFontVariant" label="Table Footer Font Variant" value="#{skin.tableFooterFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterFontWeight" label="Table Footer Font Weight" value="#{skin.tableFooterFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterTextColor" label="Table Footer Text Color" value="#{skin.tableFooterTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableFooterTextDecoration" label="Table Footer Text Decoration" value="#{skin.tableFooterTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableSubHeaderBackgroundColor" label="Table Sub Header Background Color" value="#{skin.tableSubHeaderBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TableSubFooterBackgroundColor" label="Table Sub Footer Background Color" value="#{skin.tableSubFooterBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipBackgroundColor" label="Tooltip Background Color" value="#{skin.tooltipBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipBackgroundImage" label="Tooltip Background Image" value="#{skin.tooltipBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipGradientColor" label="Tooltip Gradient Color" value="#{skin.tooltipGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipBorderColor" label="Tooltip Border Color" value="#{skin.tooltipBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipBorderStyle" label="Tooltip Border Style" value="#{skin.tooltipBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipBorderWidth" label="Tooltip Border Width" value="#{skin.tooltipBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipFontFamily" label="Tooltip Font Family" value="#{skin.tooltipFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipFontSize" label="Tooltip Font Size" value="#{skin.tooltipFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipFontStyle" label="Tooltip Font Style" value="#{skin.tooltipFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipFontVariant" label="Tooltip Font Variant" value="#{skin.tooltipFontVariant}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipFontWeight" label="Tooltip Font Weight" value="#{skin.tooltipFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipTextColor" label="Tooltip Text Color" value="#{skin.tooltipTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}TooltipTextDecoration" label="Tooltip Text Decoration" value="#{skin.tooltipTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightBackgroundColor" label="Highlight Background Color" value="#{skin.highlightBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightBackgroundImage" label="Highlight Background Image" value="#{skin.highlightBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightBorderStyle" label="Highlight Border Style" value="#{skin.highlightBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightBorderWidth" label="Highlight Border Width" value="#{skin.highlightBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightBorderColor" label="Highlight Border Color" value="#{skin.highlightBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightFontFamily" label="Highlight Font Family" value="#{skin.highlightFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightFontSize" label="Highlight Font Size" value="#{skin.highlightFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightFontStyle" label="Highlight Font Style" value="#{skin.highlightFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightFontWeight" label="Highlight Font Weight" value="#{skin.highlightFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightTextColor" label="Highlight Text Color" value="#{skin.highlightTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightTextDecoration" label="Highlight Text Decoration" value="#{skin.highlightTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}HighlightControlColor" label="Highlight Control Color" value="#{skin.highlightControlColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusBackgroundColor" label="Focus Background Color" value="#{skin.focusBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusBackgroundImage" label="Focus Background Image" value="#{skin.focusBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusGradientColor" label="Focus Gradient Color" value="#{skin.focusGradientColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusBorderStyle" label="Focus Border Style" value="#{skin.focusBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusBorderWidth" label="Focus Border Width" value="#{skin.focusBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusBorderColor" label="Focus Border Color" value="#{skin.focusBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusFontFamily" label="Focus Font Family" value="#{skin.focusFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusFontSize" label="Focus Font Size" value="#{skin.focusFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusFontStyle" label="Focus Font Style" value="#{skin.focusFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusFontWeight" label="Focus Font Weight" value="#{skin.focusFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusTextColor" label="Focus Text Color" value="#{skin.focusTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusTextDecoration" label="Focus Text Decoration" value="#{skin.focusTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}FocusControlColor" label="Focus Control Color" value="#{skin.focusControlColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledBackgroundColor" label="Disabled Background Color" value="#{skin.disabledBackgroundColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledBackgroundImage" label="Disabled Background Image" value="#{skin.disabledBackgroundImage}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledBorderStyle" label="Disabled Border Style" value="#{skin.disabledBorderStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledBorderWidth" label="Disabled Border Width" value="#{skin.disabledBorderWidth}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledBorderColor" label="Disabled Border Color" value="#{skin.disabledBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledFontFamily" label="Disabled Font Family" value="#{skin.disabledFontFamily}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledFontSize" label="Disabled Font Size" value="#{skin.disabledFontSize}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledFontStyle" label="Disabled Font Style" value="#{skin.disabledFontStyle}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledFontWeight" label="Disabled Font Weight" value="#{skin.disabledFontWeight}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledTextColor" label="Disabled Text Color" value="#{skin.disabledTextColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledTextDecoration" label="Disabled Text Decoration" value="#{skin.disabledTextDecoration}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DisabledControlColor" label="Disabled Control Color" value="#{skin.disabledControlColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ThemeBorderColor" label="Theme Border Color" value="#{skin.themeBorderColor}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ThemeBackgroundColor" label="Theme Background Color" value="#{skin.themeBackgroundColor}" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

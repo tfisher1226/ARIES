@@ -1,0 +1,41 @@
+The goal of this is to be able to build an ear (or war) and deploy it onto various servers (test/production) without the need for modifying the ear (or war) or properties in it before each deployment. We also do not want to be tied to using a particular build system such as Ant or Maven to set the properties for us. The following assumes you are deploying your application under JBoss but a similar approach is possible under other application servers.
+
+Achievinig this goal is broken down into two parts. The first part focues on providing configuration that is required before the system is started. This includes datasource config files and other files like web.xml and application.xml. The second part addresses how to gain access to configuration properties (whether user specific or global) from within the application.
+
+
+Fist part:
+
+To make use of this service we need to configure server/<server-name>/deploy/properties-service.xml You are able to define properties as key/value pairs in this file directly but a better option is to define them in a properties file. To do this set the following:
+
+<attribute name="URLList">
+        ./data/system.properties
+</attribute>
+
+
+The above works well but you may find that it doesn't always work. The reason for this is that sometimes the SystemPropertiesService has not finished initialising before your application is deployed. To fix this we can define your application to be dependent on the SystemPropertiesService.
+
+You need to edit server/<sever-name>/deployers/dependency-deployers-jboss-beans.xml to make it look like the following:
+
+<bean name="DependenciesParserDeployer" class="org.jboss.deployers.vfs.plugins.dependency.DependenciesParserDeployer">
+    <property name="stage"><inject bean="PreParseStage"/></property>
+</bean>
+<bean name="DependenciesMDDeployer" class="org.jboss.deployers.vfs.plugins.dependency.DependenciesMetaDataDeployer">
+    <property name="stage"><inject bean="PreParseStage"/></property>
+</bean>
+<bean name="DeploymentDependenciesDeployer" class="org.jboss.deployers.vfs.plugins.dependency.DeploymentDependencyDeployer">
+    <property name="stage"><inject bean="PreParseStage"/></property>
+</bean>
+<bean name="PreParseStage" class="org.jboss.deployers.spi.deployer.DeploymentStage">
+    <constructor>
+      <parameter class="java.lang.String">PreParse</parameter>
+      <parameter class="java.lang.String">Not Installed</parameter>
+    </constructor>
+</bean>
+
+Now in your ear you need to add a jboss-dependency.xml in the META-INF of your ear.
+
+<dependency xmlns="urn:jboss:dependency:1.0">
+    <item whenRequired="Parse">jboss:type=Service,name=SystemProperties</item>
+</dependency>
+
+This will ensure your application starts after the SystemPropertiesService.

@@ -1,0 +1,140 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup 
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="userWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for User Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup 
+				location="right">
+
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="userWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{userWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{userWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="userWizard"
+					padding="2px 4px"
+					offset="true" />
+
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="userWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{userWizard.populateEnabled}"
+					manager="#{userWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+					
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="userWizardPreviousButton"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
+					rendered="#{userWizard.backVisible}"
+					enabled="#{userWizard.backEnabled}"
+					manager="#{userWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New User', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+					
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="userWizardNextButton"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					rendered="#{userWizard.nextVisible}"
+					enabled="#{userWizard.nextEnabled}"
+					manager="#{userWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New User', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="userWizardFinishButton"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
+					rendered="#{userWizard.finishVisible}"
+					enabled="#{userWizard.finishEnabled}"
+					manager="#{userWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New User', 'Validating and submitting new User...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+
+				<!-- cancel button -->
+				<aries:dialogButton 
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="userWizardCancelButton"	
+					tooltip="Cancel creation of new User"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{userWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'User Management', 'Cancelling creation of User...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar> 
+	</aries:controlPane>
+</ui:composition>

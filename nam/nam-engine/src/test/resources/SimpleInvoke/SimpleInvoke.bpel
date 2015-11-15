@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<process name="SimpleInvoke"
+         targetNamespace="http://www.jboss.org/bpel/examples"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:tns="http://www.jboss.org/bpel/examples"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:intf="http://www.jboss.org/bpel/examples"
+         xmlns:intf2="http://simple_invoke/helloworld"
+         queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+         expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0" 
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+
+	<import 
+		location="SimpleInvoke.wsdl" 
+		namespace="http://www.jboss.org/bpel/examples"
+		importType="http://schemas.xmlsoap.org/wsdl/" />
+
+	<import 
+		location="HelloWorld.wsdl"
+		namespace="http://simple_invoke/helloworld"
+		importType="http://schemas.xmlsoap.org/wsdl/" />
+
+	<partnerLinks>
+		<partnerLink 
+			name="theClient_PartnerLink" 
+			partnerLinkType="intf:myClientCalling_PartnerLinkType" 
+			myRole="me" />
+
+		<partnerLink
+			name="theExternalService_PartnerLink"
+			partnerLinkType="intf2:theExternalService_PartnerLinkType"
+			partnerRole="callingTheExternalService" 
+			initializePartnerRole="yes" />
+	</partnerLinks>
+
+	<variables>
+		<variable name="myVar" messageType="intf:GreetingTarget_Message" />
+		<variable name="inVar" messageType="intf2:HelloWorld_sayHello" />
+		<variable name="outVar" messageType="intf2:HelloWorld_sayHelloResponse" />
+		<variable name="tempVar" type="xsd:string" />
+	</variables>
+
+  <sequence>
+    <receive
+        name="request"
+        partnerLink="theClient_PartnerLink"
+        portType="intf:SimpleInvoke_PortType"
+        operation="sayHelloTo"
+        variable="myVar"
+        createInstance="yes"/>
+
+    <assign name="assignRequestToHelloWorldWS">
+      <!-- Ode requires variable initialization -->
+      <copy>
+        <from><literal><intf2:sayHello><toWhom xmlns=""/>TOM</intf2:sayHello></literal></from>
+        <to variable="inVar" part="sayHello"/>
+      </copy>
+      <!-- now the real copy -->
+      <copy>
+        <from variable="myVar" part="ToWhom"/>
+        <to>$inVar.sayHello/toWhom</to>
+      </copy>
+    </assign>
+
+    <invoke name="ICallTheExternalService"
+            partnerLink="theExternalService_PartnerLink"
+            portType="intf2:HelloWorld"
+            operation="sayHello"
+            inputVariable="inVar"
+            outputVariable="outVar"/>
+
+    <assign name="assignResponseOfHelloWorldWS">
+      <copy>
+        <from>concat($outVar.sayHelloResponse/reply,' and BPEL')</from>
+        <to variable="myVar" part="ToWhom"/>
+      </copy>
+    </assign>
+
+    <reply name="response"
+           partnerLink="theClient_PartnerLink"
+           portType="intf:SimpleInvoke_PortType"
+           operation="sayHelloTo"
+           variable="myVar"/>
+  </sequence>
+</process>

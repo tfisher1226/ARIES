@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:aries="http://www.aries.org/bank/0.0.1" 
+	targetNamespace="http://www.aries.org/bank/0.0.1">
+
+	<xs:element name="bankAccount" type="aries:bankAccount" />
+	<xs:element name="bankLoanQuoteRequest" type="aries:bankLoanQuoteRequest" />
+	<xs:element name="bankLoanQuoteResponse" type="aries:bankLoanQuoteResponse" />
+
+	<xs:complexType name="bankLoanQuoteRequest">
+		<xs:sequence />
+		<xs:attribute name="borrower-ssn" type="xs:string" use="required" />
+		<xs:attribute name="borrower-name" type="xs:string" use="required" />
+		<xs:attribute name="loan-amount" type="xs:double" use="required" />
+		<xs:attribute name="loan-duration" type="xs:int" use="required" />
+		<xs:attribute name="credit-score" type="xs:int" use="required" />
+		<xs:attribute name="credit-history" type="xs:int" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="bankLoanQuoteResponse">
+		<xs:sequence />
+		<xs:attribute name="bank-name" type="xs:string" use="required" />
+		<xs:attribute name="interest-rate" type="xs:double" use="required" />
+		<xs:attribute name="loan-quote" type="xs:string" />
+		<xs:attribute name="result-code" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="bankAccount">
+		<xs:sequence />
+		<xs:attribute name="id" type="xs:long" use="required" />
+		<xs:attribute name="holderSSN" type="xs:string" use="required" />
+		<xs:attribute name="holderName" type="xs:string" use="required" />
+		<xs:attribute name="duration" type="xs:int" />
+		<xs:attribute name="balance" type="xs:double" />
+	</xs:complexType>
+</xs:schema>

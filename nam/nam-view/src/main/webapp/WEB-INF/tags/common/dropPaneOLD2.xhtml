@@ -1,0 +1,120 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:set var="width" value="auto"/> 
+	<c:set var="height" value="auto"/> 
+
+	<aries:tag>
+		<aries:init/>
+
+		<c:set var="formattedValue" value="#{helper.toCamelCase(value)}" /> 
+		<c:set var="dropPaneId" value="DropPane_#{formattedValue}" /> 
+		<c:set var="dropPaneExpandedId" value="DropPaneExpanded_#{formattedValue}" /> 
+		<c:set var="dropPaneCollapsedId" value="DropPaneCollapsed_#{formattedValue}" /> 
+		
+		<c:if test="#{empty href}">
+			<c:set var="href" value="#" /> 
+		</c:if>
+		
+		<c:if test="#{empty value}">
+			<c:set var="value" value="not specified"/> 
+		</c:if>
+
+		<c:if test="#{empty fontSize}">
+			<c:set var="fontSize" value="#{userSkin.fontSize}" /> 
+		</c:if>
+
+		<c:if test="#{empty fontWeight}">
+			<c:set var="fontWeight" value="#{userSkin.fontWeight}" /> 
+		</c:if>
+		
+		<c:if test="#{empty fontFamily}">
+			<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+		</c:if>
+
+		<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-family: #{fontFamily}" /> 
+		
+		<c:if test="#{not empty type and type == '2'}">
+			<c:set var="collapsedIcon" value="/bullets/RoundBullet16.gif"/> 
+		</c:if>
+		
+		<c:if test="#{empty collapsedIcon}">
+			<c:set var="collapsedIcon" value="/icons/common/ArrowRight15.gif"/> 
+		</c:if>
+
+		<c:if test="#{empty expandedIcon}">
+			<c:set var="expandedIcon" value="/icons/common/ArrowDown15.gif"/> 
+		</c:if>
+		
+		<!--  
+		<h:panelGrid 
+			layout="block"
+			cellpadding="0"
+			cellspacing="0"
+			columns="1" 
+			columnClasses="formColumnAlignTop, formColumnAlignTop, formColumnAlignMiddle"
+			onclickXX="alert('#{textSettings}')" 
+			styleClass="formPanel"
+			style="#{sizeSettings}; #{borderSettings}; #{backgroundSettings}; #{textSettings}; background-color: inherit">
+			-->
+
+		<rich:togglePanel
+			id="#{dropPaneId}" 
+			switchType="client"
+			cycledSwitching="false" 
+			activeItem="collapsed">
+
+			<rich:togglePanelItem name="collapsed">
+				<h:graphicImage 
+					library="images" 
+					name="#{collapsedIcon}"
+					style="margin-right: 0px" />
+
+				<aries:namedLink 
+					href="#{href}"
+					id="#{dropPaneCollapsedId}" 
+					onmousedown="#{onmousedown}"
+					onmouseup="#{onmouseup}"
+					onclick="#{rich:component(dropPaneId)}.switchToItem('expanded'); alert(#{rich:element(dropPaneExpandedId)}); #{rich:element(dropPaneExpandedId)}.focus(); #{onclick}; "
+					style="#{labelStyle}; #{textSettings}">#{value}</aries:namedLink>
+			</rich:togglePanelItem>
+
+			<rich:togglePanelItem name="expanded">
+				<h:graphicImage 
+					library="images" 
+					name="#{expandedIcon}"
+					style="margin-right: 0px" />
+					
+				<aries:namedLink 
+					href="#{href}"
+					id="#{dropPaneExpandedId}" 
+					onmousedown="#{onmousedown}"
+					onmouseup="#{onmouseup}"
+					onclick="#{rich:component(dropPaneId)}.switchToItem('collapsed'); #{rich:element(dropPaneCollapsedId)}.focus(); #{onclick};"
+					style="#{labelStyle}; #{textSettings}">#{value}</aries:namedLink>
+
+				<h:panelGrid 
+					layout="block" 
+					cellpadding="0"
+					cellspacing="0" 
+					columns="1"
+					columnClasses="formColumnAlignTop"
+					styleClass="formPanel"
+					style="margin-left: 16px; background-color: red">
+					xx
+					<ui:insert />
+				</h:panelGrid>
+			</rich:togglePanelItem>
+		</rich:togglePanel>
+	</aries:tag>
+</ui:composition>

@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty formId}">
+		<c:set var="formId" value="FormId" /> 
+	</c:if>
+
+	<c:if test="#{empty formRendered}">
+		<c:set var="formRendered" value="true" /> 
+	</c:if>
+
+	<c:if test="#{empty padding}">
+		<c:set var="padding" value="true" /> 
+	</c:if>
+
+	<c:if test="#{empty padding}">
+		<c:set var="padding" value="10px" /> 
+	</c:if>
+	
+	<c:if test="#{not empty padding}">
+		<c:set var="style" value="#{style}; padding: #{padding}" /> 
+	</c:if>
+
+	<c:if test="#{not empty border}">
+		<c:set var="style" value="#{style}; border: #{border}" /> 
+	</c:if>
+
+	<!--  
+	<c:if test="#{not empty border and border == 'true'}">
+		<c:set var="style" value="border: 1px solid #ccc; #{style}" /> 
+	</c:if>
+	-->
+
+	<a4j:outputPanel id="#{formId}">
+		<h:panelGroup 
+			layout="block"
+			rendered="#{formRendered}" 
+			styleClass="formPanel"  
+			onmousedown="alert('#{formId} and #{formRendered}')"
+			style="background-color: inherit; #{style}">
+			JUNK: #{formRendered}
+			<ui:insert/>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

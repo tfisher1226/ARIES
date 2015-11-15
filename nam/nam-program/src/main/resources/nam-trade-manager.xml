@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<name>TradeManager</name>
+	<description>Example application set - Loan Quote Request Processor</description>
+
+	<applications>
+
+        <!-- ************************ -->
+        <!--  Trade Gateway Processor -->
+        <!-- ************************ -->
+
+		<application>
+			<name>trade-gateway</name>
+			<package>org.aries</package>
+			<namespace>http://www.aries.org/trade-gateway</namespace>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module name="gateway" type="pom"/>
+				<module name="gateway-client" structure="client" type="war"/>
+				<module name="gateway-service" structure="service" type="war"/>
+			</modules>
+	
+			<services group="org.aries">
+			    <service name="receiveTrade" transacted="true">
+                	<listener id="tradeGatewayListener"/>
+					<execution name="processInboundTradeMessage">
+						<action name="validateTrade">
+							<input type="Trade" name="trade"/>
+					    	<result type="boolean" name="valid"/>
+						</action>
+						<action name="forwardToConfirmationService">
+							<input type="Trade" name="trade"/>
+						</action>
+						<action name="forwardToPostingService">
+							<input type="Trade" name="trade"/>
+						</action>
+					</execution>
+				</service>
+			</services>
+		</application>
+
+
+        <!-- ************************ -->
+        <!--  Trade Posting Processor -->
+        <!-- ************************ -->
+
+		<application>
+			<name>trade-posting</name>
+			<package>org.aries</package>
+			<namespace>http://www.aries.org/trade-posting</namespace>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module name="posting" type="pom"/>
+				<module name="posting-client" structure="client" type="war"/>
+				<module name="posting-service" structure="service" type="war"/>
+			</modules>
+	
+			<services group="org.aries">
+			    <service name="processMessage" transacted="true">
+                	<listener id="tradePostingListener"/>
+					<execution transaction="true">
+						<action name="validateTrade">
+							<input type="Trade" name="trade"/>
+					    	<result type="boolean" name="valid"/>
+						</action>
+						<action name="forwardToPostingService">
+							<input type="Trade" name="trade"/>
+						</action>
+						<action name="forwardToPostingService">
+							<input type="Trade" name="trade"/>
+						</action>
+					</execution>
+				</service>
+			</services>
+		</application>
+
+
+        <!-- ***************************** -->
+        <!--  Trade Confirmation Processor -->
+        <!-- ***************************** -->
+
+		<application>
+			<name>trade-confirmation</name>
+			<package>org.aries</package>
+			<namespace>http://www.aries.org/trade-confirmation</namespace>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module name="confirmation" type="pom"/>
+				<module name="confirmation-client" structure="client" type="war"/>
+				<module name="confirmation-service" structure="service" type="war"/>
+			</modules>
+	
+			<services group="org.aries">
+			    <service name="processMessage" transacted="true">
+                	<listener id="tradeConfirmationListener"/>
+					<execution transaction="true">
+						<action name="validateTrade">
+							<input type="Trade" name="trade"/>
+					    	<result type="boolean" name="valid"/>
+						</action>
+						<action name="forwardToConfirmationService">
+							<input type="Trade" name="trade"/>
+						</action>
+						<action name="forwardToPostingService">
+							<input type="Trade" name="trade"/>
+						</action>
+					</execution>
+				</service>
+			</services>
+		</application>
+	</applications>
+</model>
+

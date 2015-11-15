@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="sectionListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="sectionListNewButton"
+				value="New Section..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Section Record"
+				enabled="#{securityGuard.canCreate('section')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Section')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="sectionListEditButton"
+				value="Edit Section..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Section record for edit..."
+				enabled="#{sectionListManager.hasSelection() and securityGuard.canUpdate('section')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Section')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="sectionListRemoveButton"
+				value="Remove Section..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Section record from system..."
+				enabled="#{sectionListManager.hasSelection() and securityGuard.canDelete('section')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Section')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="sectionListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Section information from server"
+				enabled="#{securityGuard.canOpen('section')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshSectionList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

@@ -1,0 +1,380 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	
+	<!--
+	  ** modelTreeActions
+	  ** a4j:jsFunction methods to support the Model Tree.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var modelTreeState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshModelTree()
+		  ** Refreshes the current Model Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshModelTree" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{modelTreeManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Model Records', 'Refreshing current Model Tree...');"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="modelTreeActions, modelTreeMenu, modelTreeToolbar, modelTreePanel">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromModelTree(rowKey, nodeId)
+		  ** Handles actions generated from a node in the Application Tree.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromModelTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			render="modelTreeActions, modelTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{modelTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{modelTreeManager.selectedNodeId}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="modelTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromModelTree(rowKey, nodeId, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromModelTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="modelTreeActions, modelTreeMenu, modelTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{modelTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{modelTreeManager.selectedNodeId}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{modelWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="modelTreeEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForModelTreeViewer(rowKey, nodeId, type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  ** Refreshes Element view in Model Tree viewer..
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForModelTreeViewer"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="modelTreeActions, modelTreeMenu, modelTreeToolbar, modelTreeViewer">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{modelTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{modelTreeManager.selectedNodeId}" />
+			<a4j:param name="area" assignTo="#{selectionContext.selectedArea}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="modelTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** processToggleModelTreeNode()
+		  ** Toggles expand/collapse for nodes in Model Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="processToggleModelTreeNode" 
+			execute="@this" 
+			immediate="true"
+			limitRender="true">
+			
+			<!-- these values are passed in -->
+			<a4j:param name="nodeId" assignTo="#{modelTreeManager.toggledNodeState}" /> 
+			
+			<!-- provide queue settings -->
+			<a4j:attachQueue requestGroupingId="modelTreeEvents" requestDelay="0" /> 
+		</a4j:jsFunction>
+	
+	
+	<!--
+	  ** modelTreeActions
+	  ** Javascript methods to support the Model Tree.
+	  -->
+	
+		<a4j:outputPanel
+			id="modelTreeActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getModelTreeNodeId()
+				  ** Returns the node ID of the selected node.
+				  -->
+					
+				function getModelTreeNodeId() {
+					if (modelTreeState != null)
+						return modelTreeState.nodeId;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getModelTreeNodeLabel()
+				  ** Returns the node label of the selected node.
+				  -->
+					
+				function getModelTreeNodeLabel() {
+					if (modelTreeState != null)
+						return modelTreeState.nodeLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeModelTreeState()
+				  ** Initializes and verifies Model Tree state information.
+				  -->
+					
+				function initializeModelTreeState() {
+					try {
+						var selectedNodeId = '#{modelTreeManager.selectedNodeId}';
+						var selectedRowKey = '#{modelTreeManager.selectedRowKey}';
+						
+						if (selectedNodeId != '') {
+							modelTreeState = new Object();
+							var nodeId = selectedNodeId;
+							var rowKey = selectedRowKey;
+							var nodeArea = '#{modelTreeManager.selectedNode.area}';
+							var nodeType = '#{modelTreeManager.selectedNode.type}';
+							var nodeLabel = '#{modelTreeManager.selectedNode.label}';
+							updateModelTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateModelTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Updates client-side state information for Model Tree.
+				  -->
+					
+				function updateModelTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					modelTreeState = new Object();
+					modelTreeState.rowKey = rowKey;
+					modelTreeState.nodeId = nodeId;
+					modelTreeState.nodeArea = nodeArea;
+					modelTreeState.nodeType = nodeType;
+					modelTreeState.nodeLabel = nodeLabel;
+					modelTreeState.nodeKey = nodeId;
+					//show(modelTreeState);
+				}
+					
+					
+				<!--
+				  ** enableModelTreeActions(type)
+				  ** Enables (or disables) Model Tree actions based on current client-side state.
+				  -->
+					
+				function enableModelTreeActions(type) {
+					enableButton('modelTreeViewButton');
+					enableButton('modelTreeNewButton');
+					enableButton('modelTreeEditButton');
+					enableButton('modelTreeMoveButton');
+					enableButton('modelTreeRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processModelTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles mouseDown event on the Model Tree.
+				  -->
+					
+				function processModelTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateModelTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableModelTreeActions(nodeArea);
+					try {
+						executeSelectFromModelTree(rowKey, nodeId);
+						if (event.which == 3) {
+							showModelTreeNodeMenu(event, nodeType);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** showModelTreeNodeMenu(event, nodeType)
+				  ** Displays context-menu for Model Tree node..
+				  -->
+					
+				function showModelTreeNodeMenu(event, nodeType) {
+					var typeUncapped = uncapitalize(nodeType);
+					var menuName = mainFormId + ':' + typeUncapped + 'TreeMenu';
+					var menu = RichFaces.component(menuName);
+					if (menu != null) {
+						menu.show(event, {});
+					}
+				}
+					
+					
+				<!--
+				  ** processModelTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles double-click event on the Model Tree.
+				  -->
+					
+				function processModelTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateModelTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableModelTreeActions(nodeArea);
+					
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', nodeType+' '+nodeLabel, 'Preparing '+nodeType+' summary view...');
+						executeActionForApplicationTreeViewer(rowKey, nodeId, nodeArea, nodeType, 'workspaceManager.viewObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element record.  
+				  ** Goes to the Element summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('modelTree')});
+						if (modelTreeState.nodeLabel != null) {
+							var label = modelTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"' + label + '\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('modelTree')});
+						if (modelTreeState.nodeLabel != null) {
+							var label = modelTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (modelTreeState != null)
+						label = modelTreeState.nodeLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'modelTree, modelTreeViewer');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

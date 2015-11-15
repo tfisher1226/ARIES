@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showMasterListPage()
+		  ** Goes to the Master Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMasterListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{masterPageManager.initializeMasterListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Master Records', 'Preparing Master List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showMasterTreePage()
+		  ** Goes to the Master Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMasterTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{masterPageManager.initializeMasterTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Master Records', 'Preparing Master Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showMasterManagementPage()
+		  ** Goes to the Master Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMasterManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{masterPageManager.initializeMasterManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Master Records', 'Preparing Master related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showMasterWizardPage()
+		  ** Goes to the Master Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showMasterWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{masterWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Master Records', 'Preparing Master information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{masterWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{masterWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewMasterDialog()
+		  ** Launches the Master Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewMasterDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{masterInfoManager.newMaster}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Master Records', 'Creating new Master...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showMasterDialog()"
+			render="masterModule, masterDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{masterInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="masterListPane" assignTo="#{masterInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{masterInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditMasterDialog()
+		  ** Launches the Master Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditMasterDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{masterInfoManager.editMaster}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Master Records', 'Preparing Master information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showMasterDialog()"
+			render="masterModule, masterDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{masterInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="masterListPane" assignTo="#{masterInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{masterInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

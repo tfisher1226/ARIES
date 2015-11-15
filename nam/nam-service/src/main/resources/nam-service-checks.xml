@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkpoints
+	xmlns="http://www.aries.org/validate"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/validate file:/workspace/ARIES/aries-validate/src/main/resources/schema/common/aries-validate-1.0.xsd">
+
+
+	<checkpoint>
+		<name>id</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Id must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>registration</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/userName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/userName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/passwordHash</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/passwordHash must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/name/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/name/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/name/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/name/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/emailAddress must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/emailAddress/url</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user/emailAddress/url must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$registration/user/roles</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Registration/user must include one or more roles(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>userName</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>UserName must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>user</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/userName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/userName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/passwordHash</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/passwordHash must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/name/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/name/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/name/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/name/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/emailAddress must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/emailAddress/url</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User/emailAddress/url must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$user/roles</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>User must include one or more roles(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>name</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Name must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>roleType</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>RoleType must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>role</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Role must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$role/name</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Role/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$role/roleType</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Role/roleType must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$role/permissions</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Role must include one or more permissions(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>skin</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Skin must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$skin/name</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>Skin/name must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+</checkpoints>

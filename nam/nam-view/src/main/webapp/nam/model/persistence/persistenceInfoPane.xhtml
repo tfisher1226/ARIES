@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}PersistenceInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Persistence Information">
+			
+			<ui:include src="../import/importListPane.xhtml">
+				<ui:param name="itemManager" value="#{importInfoManager}" />
+				<ui:param name="listManager" value="#{importListManager}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Domain" label="Domain" value="#{persistence.domain}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{persistence.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{persistence.label}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{persistence.version}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Description" label="Description" value="#{persistence.description}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{persistence.namespace}" />
+			
+			<ui:include src="../serializable/serializableListPane.xhtml">
+				<ui:param name="itemManager" value="#{serializableInfoManager}" />
+				<ui:param name="listManager" value="#{serializableListManager}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Imported" label="Imported" value="#{persistence.imported}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Included" label="Included" value="#{persistence.included}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Exposed" label="Exposed" value="#{persistence.exposed}" />
+			
+			
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

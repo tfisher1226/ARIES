@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/templates/public.xhtml">
+
+	<ui:define name="content">
+
+		<!-- PAGE BODY -->
+		<aries:form id="contactForm">
+		
+			<!-- COMMON DIALOGS -->
+			<aries:messageDialog />
+			<aries:popupDialog />
+			<aries:progressDialog />
+			<aries:themeDialog />
+
+			<!-- USER DIALOGS -->
+			<aries:include file="/admin/common/personNameDialog.xhtml" />
+			<aries:include file="/admin/common/emailAddressDialog.xhtml" />
+			<aries:include file="/admin/common/phoneNumberDialog.xhtml" />
+			<aries:include file="/admin/common/streetAddressDialog.xhtml" />
+			<aries:include file="/admin/common/inputDialog.xhtml" manager="#{inputManager}" type="Input" />
+
+			<!-- REGISTRATION WIZARD -->
+			<aries:include file="/admin/registration/registrationDialog.xhtml"/>
+		
+			<!-- LOGIN DIALOG -->
+			<aries:loginDialog
+				title="Identification Required" 
+				heading="ECOS-NET LOGIN" /> 
+	
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="ecos/menubar.xhtml"/>
+			
+			<!-- PAGE CONTENT -->
+			<h:panelGrid
+				id="#{id}"
+				columns="1"
+				layout="block"
+				cellpadding="0"
+				cellspacing="0"
+				styleClass="formPanel" 
+				columnClasses="formColumnFillBoth" 
+				style="width: 100%; height: 100%; margin-bottom: 28px; #{borderSettings}; #{backgroundSettings}; #{textSettings}; background-color: inherit"
+				onclickX="alert('#{sizeSettings}'); #{onclick}"
+				onclick="#{onclick}"> 
+
+				<h:panelGrid 
+					layout="block"
+					cellpadding="0"
+					cellspacing="0"
+					columns="1" 
+					columnClass="formColumn" 
+					styleClass="formPanel" 
+					style="width: 100%; height: 100%; background-color: inherit">
+					
+					<rich:togglePanel 
+						id="ecosContentPane"
+						switchType="client"
+						activeItem="home"
+						style="width: auto; background-color: inherit">
+	
+						<rich:togglePanelItem
+							name="contact" 
+							style="width: 100%; background-color: inherit">
+						
+							<h:panelGroup
+								layout="block"
+								style="width: auto; background-color: inherit">
+			
+								<ui:include src="ecos/contact.xhtml"/>
+							</h:panelGroup>
+						</rich:togglePanelItem>
+					</rich:togglePanel>
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<!-- PAGE FOOTER -->
+			<aries:footer backgroundColor="inherit">
+				<aries:spacer height="2" />
+				<aries:p marginTop="2px" marginLeft="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+					&copy; Copyright 2015 Evergreen Computational Sciences. All rights reserved.
+				</aries:p>
+			</aries:footer>
+		</aries:form>
+	</ui:define>
+</ui:composition>

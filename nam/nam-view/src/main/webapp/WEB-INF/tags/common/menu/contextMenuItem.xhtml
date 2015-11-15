@@ -1,0 +1,98 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty value}">
+			<c:set var="value" value="none"/> 
+		</c:if>
+	
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true"/> 
+		</c:if>
+		
+		<c:if test="#{empty enabled}">
+			<c:set var="enabled" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty mode}">
+			<c:set var="mode" value="ajax"/> 
+		</c:if>
+	
+		<c:if test="#{empty immediate}">
+			<c:set var="immediate" value="false"/> 
+		</c:if>
+	
+		<c:if test="#{empty bypassUpdates}">
+			<c:set var="bypassUpdates" value="false"/> 
+		</c:if>
+	
+		<c:if test="#{empty limitRender}">
+			<c:set var="limitRender" value="false"/> 
+		</c:if>
+		
+		<c:if test="#{empty execute}">
+			<c:set var="execute" value="@this"/> 
+		</c:if>
+		
+		<c:if test="#{empty render}">
+			<c:set var="render" value="placeholder"/> 
+		</c:if>
+	
+		<c:if test="#{empty icon}">
+			<c:set var="icon" value="/icons/common/Default16.gif"/> 
+		</c:if>
+		
+		<c:if test="#{empty iconDisabled}">
+			<c:set var="iconDisabled" value="/icons/common/Default16.gif"/> 
+		</c:if>
+	
+		<c:if test="#{empty labelClass}">
+			<c:set var="labelClass" value="contextMenuLabel link"/> 
+		</c:if>
+
+		<c:if test="#{empty id}">
+			<c:set var="id" value="contextMenuItem_#{globals.nextId()}" /> 
+		</c:if>
+
+		<rich:menuItem 
+			mode="#{mode}" 
+			rendered="#{rendered}"
+			disabled="#{!enabled}"
+			execute="#{execute}"
+			immediate="#{immediate}"
+			bypassUpdates="#{bypassUpdates}"
+			limitRender="#{limitRender}"
+			ignoreDupResponses="true"
+			action="#{manager[action]}"
+			onmousedown="#{onmousedown};"
+			onmouseup="eventSource = this; setCursorWait(this); #{onmouseup};"
+			onmouseover="#{onmouseover};"
+			onmouseout="#{onmouseout};"
+			onclick="#{onclick};"
+			oncomplete="#{oncomplete};"
+			render="#{render}"
+			styleClass=""
+			style="">
+			
+			<f:facet name="icon">
+				<h:graphicImage library="graphics" name="#{icon}" style="padding-left: 1px; padding-bottom: 1px"/>
+			</f:facet>
+			<c:if test="#{not empty value}">
+				<h:outputText value="#{value}" styleClass="contextMenuLabel link" style=""/>
+			</c:if>
+			<c:if test="#{not empty tooltip}">
+				<aries:tooltip value="#{tooltip}"/> 
+			</c:if>
+		</rich:menuItem>
+	</aries:tag>
+</ui:composition>

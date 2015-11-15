@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+	
+		<c:if test="#{empty maxFilesQuantity}">
+			<c:set var="maxFilesQuantity" value="20" /> 
+		</c:if>
+	
+		<a4j:region>
+			<h:panelGroup layout="block" style="">
+				<div class="groupLabel">File Upload</div>
+				<h:panelGrid layout="block" styleClass="groupPanel" columns="1">
+					<rich:fileUpload 
+						id="#{dialog}Field"
+						execute="@form" 
+						listHeight="64px"
+						immediateUpload="true" 
+						acceptedTypes="#{acceptedTypes}"
+						addControlLabel="Browse for file to upload..."
+		  				doneLabel="File has been uploaded"
+						maxFilesQuantity="#{maxFilesQuantity}"
+						fileUploadListener="#{uploadManager.uploadListener}"
+						onUpload="showProgress('File Upload', 'Uploading file...')"
+						onTypeRejected="alert('Only an application Key-File is accepted');"
+						style="width: 400px; background-color: inherit">
+						<a4j:ajax event="uploadcomplete" execute="@this" oncomplete="hideProgress()" render="#{dialog}Control" />
+						<f:facet name="label">
+							<h:outputText value="{_KB}KB from {KB}KB uploaded - {mm}:{ss}"/>
+						</f:facet>
+					</rich:fileUpload> 
+				</h:panelGrid>
+			</h:panelGroup>
+		</a4j:region>
+	</aries:tag>
+</ui:composition>

@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:region>
+		<aries:outputPane 
+			id="#{section}FieldListContextMenuPane">
+			
+			<aries:contextMenu 
+				mode="client"
+				id="#{section}FieldListContextMenu"
+				target="#{section}FieldListTable">
+	
+				<aries:contextMenuItem 
+					value="Edit Field..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{fieldListManager}"
+					action="editField"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}FieldDialog()"
+					render="#{domain}FieldDialog">
+					
+					<aries:tooltip value="Edit selected Field record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New Field..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{fieldInfoManager}"
+					action="newField"
+					onclick="setCursorWait(); showProgress('Field Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}FieldDialog();"
+					render="#{domain}FieldDialog, #{domain}FieldDialogPersonNameDialog, #{domain}FieldDialogEmailAddressDialog, #{domain}FieldDialogPhoneNumberDialog, #{domain}FieldDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Field record"/>
+				</aries:contextMenuItem>
+		
+				<aries:contextMenuItem 
+					value="Remove Field..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Field: {lastName}, {firstName}', 'Remove Field Record from System', 'Do you wish to continue?', 'org.aries.removeField', '#{section}FieldListPane')">
+					
+					<aries:tooltip value="Remove selected Field record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

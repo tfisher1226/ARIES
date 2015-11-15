@@ -1,0 +1,164 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+
+
+		<a4j:jsFunction 
+			name="newModule0" 
+			immediate="true"
+			execute="@this" 
+			bypassUpdates="true"
+			action="#{modulePageManager.initializeModuleSourceSelectionPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'New Module', 'Creating New Module...')">
+		</a4j:jsFunction>
+	
+		<a4j:jsFunction 
+			name="newModuleTypeSelection" 
+			immediate="true"
+			execute="@this" 
+			bypassUpdates="true"
+			action="#{modulePageManager.initializeModuleTypeSelectionPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'New Module', 'Creating New Module...')">
+		</a4j:jsFunction>
+		
+		<a4j:jsFunction 
+			name="newModule" 
+			immediate="true"
+			execute="@this" 
+			bypassUpdates="true"
+			action="#{moduleInfoManager.newModule}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'New Module', 'Creating New Module...')">
+		</a4j:jsFunction>
+	
+		<a4j:jsFunction 
+			name="editModule" 
+			immediate="true"
+			execute="@this" 
+			bypassUpdates="true"
+			action="#{moduleInfoManager.editModule}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Information', 'Preparing Module for editing...')">
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** showModuleListPage()
+		  ** Goes to the Module Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showModuleListPage" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			action="#{modulePageManager.initializeModuleListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Preparing Module List...')">
+		</a4j:jsFunction>
+	
+		
+		<!--
+		  ** showModuleTreePage()
+		  ** Goes to the Module Management Tree Page.
+		  -->
+	
+		<a4j:jsFunction 
+			name="showModuleTreePage" 
+			execute="@this" 
+	    	immediate="true"
+	    	bypassUpdates="true"
+			action="#{modulePageManager.initializeModuleTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Preparing Module Tree...')">
+	    </a4j:jsFunction>
+		    
+		    
+		<!--
+		  ** showModuleManagementPage()
+		  ** Goes to the Module Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction
+			name="showModuleManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{modulePageManager.initializeModuleManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Preparing Module related information...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showModuleWizardPage()
+		  ** Goes to the Module Wizard Page.
+		  -->
+		
+		<a4j:jsFunction
+			name="showModuleWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{moduleWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Preparing Module information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{moduleWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{moduleWizard.origin}" />
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showNewModuleDialog()
+		  ** Launches the Module Dialog in "new" mode.
+		  -->
+		
+		<a4j:jsFunction
+			name="showNewModuleDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{moduleInfoManager.newModule}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Creating new Module...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showModuleDialog()"
+			render="moduleModule, moduleDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{moduleInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="moduleListPane" assignTo="#{moduleInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{moduleInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showEditModuleDialog()
+		  ** Launches the Module Dialog in "edit" mode.
+		  -->
+		
+		<a4j:jsFunction
+			name="showEditModuleDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{moduleInfoManager.editModule}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Preparing Module information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showModuleDialog()"
+			render="moduleModule, moduleDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{moduleInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="moduleListPane" assignTo="#{moduleInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{moduleInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

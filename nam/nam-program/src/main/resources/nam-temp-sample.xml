@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<name>platform</name>
+	<version>0.0.1</version>
+
+	<applications>
+		<application>
+			<name>generated</name>
+			<package>org.aries</package>
+			<namespace>http://www.aero.org/bank</namespace>
+
+			<dependency groupId="org.aries" artifactId="event" version="0.0.1-SNAPSHOT"/>
+			<dependency groupId="org.aries" artifactId="person" version="0.0.1-SNAPSHOT"/>
+			<dependency groupId="org.aries" artifactId="notification" version="0.0.1-SNAPSHOT"/>
+	
+			<modules>
+				<module name="generated" type="pom"/>
+				<module name="generated-model" type="model"/>
+				<module name="generated-data" type="data">
+					<element name="bankRepository"/>
+				</module>
+				<module name="generated-client" type="client"/>
+				<module name="generated-service" type="service">
+					<library name="generated-data"/>
+				</module>
+				<module name="generated-test" type="test"/>
+				<module name="generated-view" type="view"/>
+			</modules>
+	
+			<services group="org.aries">
+				<listener id="org.aries.rmi"/>
+				<listener id="org.aries.jaxws"/>
+
+			    <service name="getMemberById">
+					<action name="getMemberById"/>
+				</service>
+	
+			    <service name="getMemberList">
+					<execution>
+						<action name="getMemberList" >
+					    	<input name="selector" type="org.aries.Selector"/>
+							<processor name="bankRepository" operation="getMemberList"/>
+					    	<result type="member-list" name="member-list"/>
+						</action>
+					</execution>
+				</service>
+
+			    <service name="saveMember" transacted="true">
+					<execution>
+						<action name="saveMember">
+							<input type="Member"/>
+							<processor name="personRepository" method="saveMember"/>
+						</action>
+					</execution>
+				</service>
+						
+			    <service name="sendNotification" transacted="true">
+					<execution>
+						<action name="sendNotification">
+							<input type="Notification"/>
+							<processor name="notificationSender" method="sendNotification"/>
+							<processor name="eventLog" method="log"/>
+						</action>
+					</execution>
+				</service>
+
+				<!--  
+			    <service name="getStatus">
+					<listener id="org.aries.rmi"/>
+					<listener id="org.aries.jaxws"/>
+					
+					<execution pattern="concurrent">
+						<action name="getMemoryUsageState" >
+							<processor name="statusRepository"/>
+					    	<result name="ramStats" type="ram-usage-record-list"/>
+						</action>
+						<action name="getProcessorUsageState" >
+							<processor name="statusRepository"/>
+					    	<result name="cpuStats" type="cpu-usage-record-list"/>
+						</action>
+					</execution>
+				</service>
+
+			    <service name="performStatusCheck" pattern="oneway">
+					<listener id="org.aries.jms"/>
+					
+					<execution pattern="concurrent">
+						<action name="getMemoryUsageState" >
+							<processor name="systemRepository"/>
+					    	<result name="ramStats" type="ram-state-list"/>
+						</action>
+						<action name="getProcessorUsageState" >
+							<processor name="systemRepository"/>
+					    	<result name="cpuStats" type="cpu-state-list"/>
+					    	<result name="processList" type="process-list"/>
+					    	<result name="threadCount" type="int"/>
+						</action>
+					</execution>
+
+					<execution transacted="true">
+						<action name="persistStatus">
+							<transform target="statusRecord">
+						    	<element name="ramStats"/>
+						    	<element name="cpuStats"/>
+						    	<element name="processList"/>
+						    	<element name="threadCount"/>
+							</transform>
+							<processor name="statusRepository" method="persistStatus"/>
+						</action>
+					</execution>
+				</service>
+
+			    <service name="handleNotificationRequest">
+				</service>
+				-->
+			</services>
+	
+			<actions>
+				<action name="getMemberById" class="org.aries.GetMemberById">
+					<processor name="personRepository" required="true"/>
+				</action>
+
+				<action name="saveMemberAction" class="org.aries.SaveMemberAction" element="member">
+					<processor name="personRepository" method="saveMember"/>
+					<processor name="notificationSender" method="sendNotification"/>
+				</action>
+
+				<action name="sendEmailAction" class="org.aries.SendEmailAction">
+					<processor name="notificationSender" method="sendNotification"/>
+				</action>
+			</actions>
+
+			<components>
+				<component name="eventLog" type="org.aries.event.EventLog" scope="application" auto-create="true">
+				</component>
+				
+				<component name="eventService" type="org.aries.event.EventServiceProxy" scope="application" auto-create="true"/>
+				<component name="personService" type="org.aries.member.PersonServiceProxy" scope="application" auto-create="true"/>
+
+				<component name="notificationSender" type="org.aries.notification.NotificationSender" scope="application" auto-create="true">
+					<sender name="smtpSender"/>
+				</component>
+			</components>
+
+			<elements>
+                <element name="selector" type="org.aries.Selector" scope="event"/>
+			</elements>
+		</application>
+	</applications>
+
+
+	<messaging>
+		<provider type="JMS" name="JBossMQ" />
+		<provider type="HTTP" name="Jaxws"/>
+
+		<channel provider="JBossMQ" name="org.aries.jms" connection-factory="org.aries.ConnectionFactory1">
+			<destination name="incomingRequests" type="QUEUE"/>
+			<destination name="statusEvents" type="TOPIC"/>
+		</channel>
+
+		<channel name="org.aries.jms.status"/>
+		<channel name="org.aries.jms.event"/>
+
+		<channel type="RMI" name="org.aries.rmi" port="@aero.rmi.port@" host="@aero.rmi.host@"/>
+		
+		<channel type="EJB" name="org.aries.ejb"/>
+		<channel type="JMS" name="org.aries.jms"/>
+		<channel type="CORBA" name="org.aries.corba"/>
+		<channel type="HTTP" name="org.aries.jaxws"/>
+		<channel type="SMTP" name="org.aries.smtp"/>
+		<channel type="FTP" name="org.aries.ftp"/>
+
+		<listener channel="org.aries.jaxws">
+		</listener>
+
+		<sender name="smtpSender" channel="org.aries.smtp">
+		</sender>
+
+		<sender name="jaxwsSender" channel="org.aries.jaxws">
+		</sender>
+
+		<invoker name="jaxwsInvoker" channel="org.aries.jaxws">
+		</invoker>
+
+		<invoker name="jmsInvoker" channel="org.aries.jms">
+		</invoker>
+	</messaging>
+
+
+	<resources>
+        <datasource name="personDS" type="JDBC" cached="true" jndi-name="java:comp/env/jdbc/simpleDB"/>
+	</resources>
+	
+	<persistence>
+        <repository name="personRepository">
+			<unit name="personUnit" source="personDS" type="JTA">
+				<entity type="Member"/>
+				<entity type="EmailAddress"/>
+				<entity type="Notification"/>
+				<entity type="Attachment"/>
+			</unit>
+			<interface>
+		        <method name="getAllEmployees" type="member-list" />
+		        <method name="getMemberByBadge" param="String" return="Member" />
+			</interface>
+			<queries>
+		        <query name="getAllEmployees" type="member-list" />
+		        <query name="getMemberByBadge" param="String" return="Member" />
+			</queries>
+			<mappers>
+		        <mapper name="memberMapper" type="Member" />
+		        <mapper name="emailAddressMapper" type="EmailAddress" />
+			</mappers>
+        </repository>
+	</persistence>
+
+	<elements>
+		<!-- Member representation -->
+		<element name="member" type="Member" public="true" cached="true" table="member">
+			<restricted readonly="creator" readwrite="operator" />
+	
+			<field name="id" type="java.lang.Long" column="id" key="true" generated="true" notnull="true">
+	       			<!--  
+	       			<onetomany fetch="eager" cascade="merge, persist" />
+	       			<joincolumn name="item_source_type" reference="item_source_type_name" />
+	       			-->
+			</field>
+	
+			<field name="firstName" type="java.lang.String" column="first_name" notnull="true" required="true"/>
+			<field name="lastName" type="java.lang.String" column="last_name" notnull="true" required="true"/>
+			<field name="emailAddress" type="EmailAddress" column="email_address"/>
+		</element>
+
+		<!-- EmailAddress representation -->
+		<element type="EmailAddress" public="true" cached="true" table="email_address">
+			<field name="id" column="id" type="java.lang.Long" key="true" generated="true" notnull="true"/>
+			<field name="url" type="java.lang.String" column="url" notnull="true" required="true"/>
+			<field name="owner" type="java.lang.String" column="owner"/>
+		</element>
+
+		<!-- Notification representation -->
+		<element type="Notification" public="true" cached="true" table="notification">
+			<field name="id" column="id" type="java.lang.Long" key="true" generated="true" notnull="true"/>
+			<field name="toAddress" type="EmailAddress" column="to_address" notnull="true" required="true"/>
+			<field name="fromAddress" type="EmailAddress" column="from_address" notnull="true" required="true"/>
+			<field name="timestamp" type="java.util.Date" column="timestamp" notnull="true" required="true"/>
+		</element>
+
+		<!-- Attachment representation -->
+		<element type="Attachment" public="true" cached="true" table="attachment">
+			<field name="id" column="id" type="java.lang.Long" key="true" generated="true" notnull="true"/>
+		</element>
+	</elements>
+
+	<resources>
+        <datasource name="simpleDS" type="JDBC" cached="true" jndi-name="java:comp/env/jdbc/simpleDB"/>
+	</resources>
+
+
+	<!-- 
+	<deployment>
+        <server type="tomcat" domain="org.aero" name="member-server"/>
+	</deployment>
+
+	<servers>
+        <server type="tomcat" name="person-server"/>
+		<wars>
+			<war group="org.aero" name="person-service" version="0.0.1-SNAPSHOT"/>
+		</wars>
+		<jars type="common">
+			<jar group="org.aero" name="common-server-tomcat" version="0.0.1-SNAPSHOT" common="true">
+		</jars>
+		<jars type="shared">
+		    <jar group="org.aero" name="common-action" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-cache" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-client" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-data" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-event" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-model" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-service" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-transaction" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-transport" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-util" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-view" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="person-client" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="person-model" version="0.0.1-SNAPSHOT"/>
+		</jars>
+		<ports>
+			<ports type="org.aero" value="8780"/>
+		</ports>
+	</servers>
+	-->
+	
+
+	<messaging>
+        <consumer name="eventSubscriber">
+			<data-unit name="personUnit" source="personDS" type="JTA">
+				<entity type="org.aries.Member"/>
+				<entity type="org.aries.Notification"/>
+				<entity type="org.aries.Attachment"/>
+			</data-unit>
+        </consumer>
+	</messaging>
+</model>

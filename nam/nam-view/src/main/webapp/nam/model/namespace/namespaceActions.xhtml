@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showNamespaceListPage()
+		  ** Goes to the Namespace Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showNamespaceListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{namespacePageManager.initializeNamespaceListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Namespace Records', 'Preparing Namespace List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showNamespaceTreePage()
+		  ** Goes to the Namespace Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showNamespaceTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{namespacePageManager.initializeNamespaceTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Namespace Records', 'Preparing Namespace Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showNamespaceManagementPage()
+		  ** Goes to the Namespace Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showNamespaceManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{namespacePageManager.initializeNamespaceManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Namespace Records', 'Preparing Namespace related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNamespaceWizardPage()
+		  ** Goes to the Namespace Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNamespaceWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{namespaceWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Namespace Records', 'Preparing Namespace information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{namespaceWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{namespaceWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewNamespaceDialog()
+		  ** Launches the Namespace Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewNamespaceDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{namespaceInfoManager.newNamespace}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Namespace Records', 'Creating new Namespace...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showNamespaceDialog()"
+			render="namespaceModule, namespaceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{namespaceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="namespaceListPane" assignTo="#{namespaceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{namespaceInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditNamespaceDialog()
+		  ** Launches the Namespace Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditNamespaceDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{namespaceInfoManager.editNamespace}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Namespace Records', 'Preparing Namespace information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showNamespaceDialog()"
+			render="namespaceModule, namespaceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{namespaceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="namespaceListPane" assignTo="#{namespaceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{namespaceInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

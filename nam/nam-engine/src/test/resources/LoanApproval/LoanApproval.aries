@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model/0.0.1 c:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>LoanApproval</name>
+
+	<messaging>
+		<link name="customer">
+			<transport name="loanServiceJMS"/>
+			<transport name="loanServiceWS"/>
+		</link>
+	
+		<link name="approver">
+			<transport name="loanApproverJMS"/>
+		</link>
+	
+		<link name="assessor">
+			<transport name="riskAssessorEJB"/>
+		</link>
+		
+		<transport name="loanServiceWS">
+			<portType>tns:loanServicePT</portType>
+		</transport>
+
+		<transport name="loanServiceJMS">
+            <provider>JBossMQ</provider>  
+            <jndi-name>topic/topicA</jndi-name>  
+            <target-queue>loanServiceRequestQueue</target-queue>
+            <invalid-queue>loanServiceInvalidQueue</invalid-queue>
+            <expired-queue>loanServiceExpiredQueue</expired-queue>
+            <no-local-receipt>true</no-local-receipt>
+            <redelivery-delay>10000</redelivery-delay>  
+            <max-delivery-attempts>3</max-delivery-attempts>
+            <connection-factory>ConnectionFactory1</connection-factory>
+		</transport>
+
+		<transport name="loanApproverJMS">
+            <provider>JBossMQ</provider>  
+            <jndi-name>topic/topicB</jndi-name>  
+            <target-queue>loanApproverRequestQueue</target-queue>
+            <invalid-queue>loanApproverInvalidQueue</invalid-queue>
+            <expired-queue>loanApproverExpiredQueue</expired-queue>
+            <no-local-receipt>true</no-local-receipt>
+            <redelivery-delay>10000</redelivery-delay>  
+            <max-delivery-attempts>3</max-delivery-attempts>
+            <connection-factory>ConnectionFactory1</connection-factory>
+		</transport>
+		
+		<transport name="riskAssessorEJB">
+			<jndi-name>riskAssessmenService</jndi-name>
+		</transport>
+	</messaging>
+</project>

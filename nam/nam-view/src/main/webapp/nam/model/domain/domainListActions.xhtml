@@ -1,0 +1,209 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+
+	<!--
+	  ** domainNameListTableActions
+	  ** a4j:jsFunction methods to support the Domain List.
+	  -->
+
+	<a4j:region>
+		<h:outputScript>
+			var domainNameTableState = null;
+		</h:outputScript>
+		
+		
+		<!--
+		  ** refreshDomainNameTable(event)
+		  ** Refreshes the current Domain Name List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshDomainNameList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{domainListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Domain Records', 'Refreshing current Domain Name List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="domainNameListActions, domainNameListMenu, domainNameListToolbar, domainNameListPane">
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** executeSelectFromDomainNameTable(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Domain List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+
+	    <a4j:jsFunction 
+			name="executeSelectFromDomainNameTable"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			oncomplete="setCursorDefault(this); unlockScreen()"
+	    	render="domainNameListActions, domainNameListMenu, domainNameListToolbar, applicationNameListTableView, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{domainListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{domainListManager.selectedRecordKey}" />
+
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="domain" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="domainNameListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+		
+	    
+		<!--
+		  ** executeActionFromDomainNameTable(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+
+	    <a4j:jsFunction 
+			name="executeActionFromDomainNameTable"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+	    	render="domainNameListActions, domainNameListMenu, domainNameListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{domainListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{domainListManager.selectedRecordKey}" />
+	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{domainWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="domainNameListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+		  
+		<a4j:jsFunction 
+			name="executeActionForElement"
+	    	execute="@this"
+	    	immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+	    	render="domainNameListActions, domainNameListMenu, domainNameListToolbar">
+	    	
+			<!-- these values are passed-in -->
+	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+	    </a4j:jsFunction>
+	    
+	    
+		<!--
+		  ** domainNameListActions
+		  ** Javascript methods to support the Domain List.
+		  -->
+
+		<a4j:outputPanel 
+			id="domainNameListActions">
+			
+			<h:outputScript>
+				
+				<!--
+				  ** initializeDomainNameTableState()
+				  ** Initializes and verifies Domain List state information.
+				  -->
+	
+				function initializeDomainNameTableState() {
+					try {
+						var rowIndex = '#{domainListManager.selectedRecordIndex}';
+						var recordKey = '#{domainListManager.selectedRecordKey}';
+						var recordLabel = '#{domainListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateDomainNameTableState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+	
+				
+				<!--
+				  ** updateDomainNameTableState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Domain List.
+				  -->
+	
+				function updateDomainNameTableState(event, rowIndex, recordKey, recordLabel) {
+					domainNameTableState = new Object();
+					domainNameTableState.rowIndex = rowIndex;
+					//domainNameTableState.recordId = recordId;
+					domainNameTableState.recordKey = recordKey;
+					domainNameTableState.recordLabel = recordLabel;
+					//show(domainNameTableState);
+				}
+				
+				
+				<!--
+				  ** processDomainNameTableMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Domain List.
+				  -->
+	
+				function processDomainNameTableMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateDomainNameTableState(event, rowIndex, recordKey, recordLabel);
+					try {
+						setCursorWait(event.source); 
+						setCursorWait(event.target); 
+						setCursorWait(event.currentTarget); 
+						//alert(document.body.style.cursor);
+						document.body.style.cursor = 'wait';
+						lockScreen(event);
+						executeSelectFromDomainNameTable(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+				
+				
+				<!--
+				  ** processDomainNameTableDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Domain List.
+				  -->
+	
+				function processDomainNameTableDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target); 
+						setCursorWait(event.currentTarget); 
+						showProgress('Nam', 'Domain Records', 'Preparing Domain ' + recordLabel + ' for editing...');
+						executeActionFromDomainNameTable(rowIndex, recordKey, 'Domain', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

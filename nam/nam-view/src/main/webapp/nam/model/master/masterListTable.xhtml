@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="masterListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="masterListMenu.xhtml">
+			<ui:param name="tableId" value="masterListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="masterListTable"
+			value="#{masterListManager.dataModel}"
+			rowCount="#{masterListManager.dataModel.rowCount}"
+			visible="#{masterListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processMasterListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processMasterListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.master.version}" />
+			</aries:textColumn>
+			
+			<!-- DNS DOMAIN -->
+			<aries:textColumn
+				width="100"
+				header="Dns Domain">
+				<h:outputText value="#{rowItem.master.dnsDomain}" />
+			</aries:textColumn>
+			
+			<!-- DNS I P -->
+			<aries:textColumn
+				width="100"
+				header="Dns I P">
+				<h:outputText value="#{iPAddressHelper.toString(rowItem.master.dnsIP)}" />
+			</aries:textColumn>
+			
+			<!-- BIND ADDRESS -->
+			<aries:textColumn
+				width="100"
+				header="Bind Address">
+				<h:outputText value="#{iPAddressHelper.toString(rowItem.master.bindAddress)}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

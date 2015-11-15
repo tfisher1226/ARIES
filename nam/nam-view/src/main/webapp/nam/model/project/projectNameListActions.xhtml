@@ -1,0 +1,209 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+
+	<!--
+	  ** projectNameListTableActions
+	  ** a4j:jsFunction methods to support the Project List.
+	  -->
+
+	<a4j:region>
+		<h:outputScript>
+			var projectNameTableState = null;
+		</h:outputScript>
+		
+		
+		<!--
+		  ** refreshProjectNameTable(event)
+		  ** Refreshes the current Project Name List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshProjectNameTable" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{projectListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Project Records', 'Refreshing current Project Name List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="projectListActions, projectListMenu, projectListToolbar, projectListPane">
+		</a4j:jsFunction>
+
+
+		<!--
+		  ** executeSelectFromProjectNameTable(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Project List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+
+	    <a4j:jsFunction 
+			name="executeSelectFromProjectNameTable"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			oncomplete="setCursorDefault(this); unlockScreen()"
+	    	render="projectListActions, projectListMenu, projectListToolbar, serviceNameListTableView">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{projectListManager.selectedRecordKey}" />
+
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="project" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+		
+	    
+		<!--
+		  ** executeActionFromProjectNameTable(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+
+	    <a4j:jsFunction 
+			name="executeActionFromProjectNameTable"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+	    	render="projectListActions, projectListMenu, projectListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{projectListManager.selectedRecordKey}" />
+	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{projectWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+		  
+		<a4j:jsFunction 
+			name="executeActionForElement"
+	    	execute="@this"
+	    	immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+	    	render="projectListActions, projectListMenu, projectListToolbar">
+	    	
+			<!-- these values are passed-in -->
+	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+	    </a4j:jsFunction>
+	    
+	    
+		<!--
+		  ** projectListActions
+		  ** Javascript methods to support the Project List.
+		  -->
+
+		<a4j:outputPanel 
+			id="projectListActions">
+			
+			<h:outputScript>
+				
+				<!--
+				  ** initializeProjectNameTableState()
+				  ** Initializes and verifies Project List state information.
+				  -->
+	
+				function initializeProjectNameTableState() {
+					try {
+						var rowIndex = '#{projectListManager.selectedRecordIndex}';
+						var recordKey = '#{projectListManager.selectedRecordKey}';
+						var recordLabel = '#{projectListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateProjectNameTableState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+	
+				
+				<!--
+				  ** updateProjectNameTableState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Project List.
+				  -->
+	
+				function updateProjectNameTableState(event, rowIndex, recordKey, recordLabel) {
+					projectNameTableState = new Object();
+					projectNameTableState.rowIndex = rowIndex;
+					//projectNameTableState.recordId = recordId;
+					projectNameTableState.recordKey = recordKey;
+					projectNameTableState.recordLabel = recordLabel;
+					//show(projectNameTableState);
+				}
+				
+				
+				<!--
+				  ** processProjectNameTableMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Project List.
+				  -->
+	
+				function processProjectNameTableMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateProjectNameTableState(event, rowIndex, recordKey, recordLabel);
+					try {
+						setCursorWait(event.source); 
+						setCursorWait(event.target); 
+						setCursorWait(event.currentTarget); 
+						//alert(document.body.style.cursor);
+						document.body.style.cursor = 'wait';
+						lockScreen(event);
+						executeSelectFromProjectNameTable(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+				
+				
+				<!--
+				  ** processProjectNameTableDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Project List.
+				  -->
+	
+				function processProjectNameTableDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target); 
+						setCursorWait(event.currentTarget); 
+						showProgress('Nam', 'Project Records', 'Preparing Project ' + recordLabel + ' for editing...');
+						executeActionFromProjectNameTable(rowIndex, recordKey, 'Project', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

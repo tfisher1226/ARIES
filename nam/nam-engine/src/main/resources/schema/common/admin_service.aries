@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model" 
+	xmlns:ui="http://nam/ui"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+
+	<imports>
+		<import file="/admin/admin_model.aries" />
+		<import file="/admin/admin_view.aries" />
+	</imports>
+
+	<name>admin</name>
+	<domain>admin</domain>
+	<namespace>http://admin</namespace>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<extensions>
+		<messaging>
+			<domain>admin</domain>
+			<name>admin</name>
+			
+			<listeners>
+				<listener>
+					<name>admin</name>
+					<role>user</role>
+					<channel>admin</channel>
+				</listener>
+			</listeners>
+
+			<channels>
+				<channel>
+					<name>admin</name>
+					<sender>
+						<name>manager</name>
+						<link>adminLink</link>
+					</sender>
+					<receiver>
+						<name>system</name>
+						<link>adminLink</link>
+						<invalid>invalidLink</invalid>
+					</receiver>
+				</channel>
+			</channels>
+		
+			<links>
+				<link>
+					<name>adminLink</name>
+					<role2 name="user" />
+					<role2 name="manager" />
+					<transport ref="adminEJB" />
+					<transport ref="adminRMI" />
+					<transport ref="adminHTTP" />
+					<transport ref="adminJMS" />
+				</link>
+	
+				<link>
+					<name>invalidLink</name>
+					<role2 name="user" />
+					<role2 name="manager" />
+					<transport ref="adminEJB" />
+				</link>
+			</links>
+	
+			<transports>
+				<rmi-transport>
+					<name>adminRMI</name>
+					<port>@aries.port.rmi@</port> 
+				</rmi-transport> 
+				
+				<ejb-transport>
+					<name>adminEJB</name>
+					<provider>localJndi</provider> 
+				</ejb-transport> 
+        		
+        		<jms-transport>
+					<name>adminJMS</name>
+        			<transferMode>TEXT</transferMode>
+        			<provider>hornetq</provider>
+        			<maxDeliveryAttempts>3</maxDeliveryAttempts>
+        		</jms-transport>
+        		
+        		<http-transport>
+					<name>adminHTTP</name>
+        			<context>/admin</context>
+        		</http-transport>
+			</transports>
+			
+			<provider>
+				<name>localJndi</name>
+				<jndiContext>
+					<userName>testuser</userName>
+					<password>password</password>
+					<connectionUrl>172.18.0.1:9999</connectionUrl>
+					<contextFactory>org.jboss.as.naming.InitialContextFactory</contextFactory>
+					<contextPackages>org.jboss.ejb.client.naming</contextPackages>
+				</jndiContext>
+			</provider>
+
+			<provider>
+				<type>JMS</type>
+				<name>hornetq</name>
+				<jndiContext>
+					<userName>testuser</userName>
+					<password>password</password>
+					<connectionUrl>172.18.0.1:9999</connectionUrl>
+					<contextFactory>org.jboss.as.naming.InitialContextFactory</contextFactory>
+					<contextPackages>org.jboss.ejb.client.naming</contextPackages>
+				</jndiContext>
+			</provider>
+		</messaging>
+	</extensions>
+	
+	<applications>
+		<application>
+			<name>admin</name>
+			<groupId>admin</groupId>
+			<artifactId>admin</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<namespace>http://admin</namespace>
+
+			<modules>
+				<module>
+					<type>service</type>
+					<name>admin-service</name>
+					
+					<services>
+						<domain>
+							<name>admin</name>
+							<namespace name="admin" />
+							<persistence ref="admin-data" />
+				
+							<service>
+								<name>registrationService</name>
+								<element>Registration</element>
+								<operation ref="getRegistrationList" />
+								<operation ref="getRegistrationById" />
+								<operation ref="addRegistration" />
+								<operation ref="saveRegistration" />
+								<operation ref="deleteRegistration" />
+								<listener ref="admin" />
+							</service>
+
+							<service>
+								<name>userService</name>
+								<element>User</element>
+								<operation ref="getFromUserList" />
+								<operation ref="getFromUserById" />
+								<operation ref="getFromUserByUserName" />
+								<operation ref="addUser" />
+								<operation ref="saveUser" />
+								<operation ref="deleteUser" />
+								<listener ref="admin" />
+							</service>
+
+							<service>
+								<name>roleService</name>
+								<element>Role</element>
+								<operation ref="getRoleList" />
+								<operation ref="getRoleById" />
+								<operation ref="getRoleByName" />
+								<operation ref="getRoleListByRoleType" />
+								<operation ref="addRole" />
+								<operation ref="saveRole" />
+								<operation ref="deleteRole" />
+								<listener ref="admin" />
+							</service>
+
+							<service>
+								<name>skinService</name>
+								<element>Skin</element>
+								<operation ref="getSkinList" />
+								<operation ref="getSkinById" />
+								<operation ref="getSkinByName" />
+								<operation ref="addSkin" />
+								<operation ref="saveSkin" />
+								<operation ref="deleteSkin" />
+								<listener ref="admin" />
+							</service>
+						</domain>
+					</services>
+				</module>
+
+				<module>
+					<type>data</type>
+					<name>admin-data</name>
+					<persistence>
+						<unit>
+							<name>admin</name>
+							<source ref="admin_ds" />
+							<adapter ref="hibernate" />
+							<transacted use="required" scope="workflow" />
+							<elements>
+								<include namespace="http://admin" />
+							</elements>
+						</unit>
+
+						<source>
+							<type>mysql</type>
+							<name>admin_ds</name>
+							<userName>%userName%</userName>
+							<password>%password%</password>
+							<jndiName>admin_ds</jndiName>
+							<connectionUrl>jdbc:mysql://dc1-mysql-01.kattare.com:3306/admin_db</connectionUrl>
+							<driverClass>com.mysql.jdbc.Driver</driverClass>
+							<maxActive>30</maxActive>
+							<maxIdle>30</maxIdle>
+							<maxWait>10</maxWait>
+						</source>
+
+						<adapter>
+							<name>hibernate</name>
+							<className>org.hibernate.ejb.HibernatePersistence</className>
+							<properties>
+								<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+								<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+								<property name="hibernate.show_sql" value="true"/>
+
+                                <!--
+                                <property name="hibernate.new_generator_mappings" value="true"/>
+                                -->
+
+								<!-- Connection related 
+								<property name="hibernate.connection.release_mode" value="after_transaction"/>
+                                -->
+
+								<!-- Transaction related 
+								<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform" />
+                                -->
+
+								<!-- Transaction related -->
+                                <property name="hibernate.transaction.jta.platform" value="org.aries.jta.JBossJtaPlatform"/>
+								<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+								<property name="hibernate.transaction.flush_before_completion" value="true"/>
+								<property name="hibernate.transaction.auto_close_session" value="false"/>
+					
+								<!-- Cache related -->
+								<property name="hibernate.cache.use_query_cache" value="true" />
+					    		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+								<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+								<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+					
+								<!-- JBoss related -->
+								<property name="jboss.entity.manager.factory.jndi.name" value="java:/adminEntityManagerFactory"/>
+							</properties>
+						</adapter>
+					</persistence>
+				</module>
+
+				<module>
+					<type>view</type>
+					<name>admin-view</name>
+					<namespace>http://admin</namespace>
+					<information ref="admin" />
+					<ui:view ref="admin" />
+				</module>
+				
+				<module>
+					<type>ear</type>
+					<name>admin-app</name>
+				</module>
+			</modules>
+		</application>
+	</applications>
+</project>

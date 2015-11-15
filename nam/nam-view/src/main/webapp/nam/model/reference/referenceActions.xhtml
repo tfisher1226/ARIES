@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+	
+	
+	<!--
+		  ** showReferenceListPage()
+		  ** Goes to the Reference Management List Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showReferenceListPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{referencePageManager.initializeReferenceListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Reference Records', 'Preparing Reference List...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showReferenceTreePage()
+		  ** Goes to the Reference Management Tree Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showReferenceTreePage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{referencePageManager.initializeReferenceTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Reference Records', 'Preparing Reference Tree...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showReferenceManagementPage()
+		  ** Goes to the Reference Management Overview Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showReferenceManagementPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{referencePageManager.initializeReferenceManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Reference Records', 'Preparing Reference related information...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showReferenceWizardPage()
+		  ** Goes to the Reference Wizard Page.
+	  -->
+	
+    <a4j:jsFunction 
+			name="showReferenceWizardPage" 
+    	execute="@this"
+			immediate="true"
+    	bypassUpdates="true"
+			action="#{referenceWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Reference Records', 'Preparing Reference information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{referenceWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{referenceWizard.origin}" />
+    </a4j:jsFunction>
+	    
+	    
+	<!--
+		  ** showNewReferenceDialog()
+		  ** Launches the Reference Dialog in "new" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showNewReferenceDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{referenceInfoManager.newReference}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Reference Records', 'Creating new Reference...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showReferenceDialog()"
+			render="referenceModule, referenceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{referenceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="referenceListPane" assignTo="#{referenceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{referenceInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showEditReferenceDialog()
+		  ** Launches the Reference Dialog in "edit" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showEditReferenceDialog" 
+			execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{referenceInfoManager.editReference}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Reference Records', 'Preparing Reference information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showReferenceDialog()"
+			render="referenceModule, referenceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{referenceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="referenceListPane" assignTo="#{referenceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{referenceInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

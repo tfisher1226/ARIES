@@ -1,0 +1,140 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup 
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="registrationWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Registration Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup 
+				location="right">
+
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="registrationWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{registrationWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{registrationWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="registrationWizard"
+					padding="2px 4px" 
+					offset="true" />
+					
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="registrationWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{registrationWizard.populateEnabled}"
+					manager="#{registrationWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="registrationWizardPreviousButton"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
+					rendered="#{registrationWizard.backVisible}"
+					enabled="#{registrationWizard.backEnabled}"
+					manager="#{registrationWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Registration', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px" 
+					offset="true" />
+					
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="registrationWizardNextButton"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					rendered="#{registrationWizard.nextVisible}"
+					enabled="#{registrationWizard.nextEnabled}"
+					manager="#{registrationWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Registration', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px" 
+					offset="true" />
+
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="registrationWizardFinishButton"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
+					rendered="#{registrationWizard.finishVisible}"
+					enabled="#{registrationWizard.finishEnabled}"
+					manager="#{registrationWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Registration', 'Validating and submitting new Registration...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px" 
+					offset="true" />
+
+				<!-- cancel button -->
+				<aries:dialogButton 
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="registrationWizardCancelButton"	
+					tooltip="Cancel creation of new Registration"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{registrationWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Registration Management', 'Cancelling creation of Registration...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px" 
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar> 
+	</aries:controlPane>
+</ui:composition>

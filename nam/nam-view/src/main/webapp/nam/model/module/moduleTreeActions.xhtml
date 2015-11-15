@@ -1,0 +1,380 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	
+	<!--
+	  ** moduleTreeActions
+	  ** a4j:jsFunction methods to support the Module Tree.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var moduleTreeState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshModuleTree()
+		  ** Refreshes the current Module Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshModuleTree" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{moduleTreeManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Module Records', 'Refreshing current Module Tree...');"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="moduleTreeActions, moduleTreeMenu, moduleTreeToolbar, moduleTreePanel">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromModuleTree(rowKey, nodeId)
+		  ** Handles actions generated from a node in the Application Tree.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromModuleTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			render="moduleTreeActions, moduleTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{moduleTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{moduleTreeManager.selectedNodeId}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromModuleTree(rowKey, nodeId, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromModuleTree"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="moduleTreeActions, moduleTreeMenu, moduleTreeToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{moduleTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{moduleTreeManager.selectedNodeId}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{moduleWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleTreeEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForModuleTreeViewer(rowKey, nodeId, type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queuing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  ** Refreshes Element view in Module Tree viewer..
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForModuleTreeViewer"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="moduleTreeActions, moduleTreeMenu, moduleTreeToolbar, moduleTreeViewer">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="rowKey" assignTo="#{moduleTreeManager.selectedRowKey}" />
+			<a4j:param name="nodeId" assignTo="#{moduleTreeManager.selectedNodeId}" />
+			<a4j:param name="area" assignTo="#{selectionContext.selectedArea}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleTreeEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** processToggleModuleTreeNode()
+		  ** Toggles expand/collapse for nodes in Module Tree.
+		  -->
+			
+		<a4j:jsFunction 
+			name="processToggleModuleTreeNode" 
+			execute="@this" 
+			immediate="true"
+			limitRender="true">
+			
+			<!-- these values are passed in -->
+			<a4j:param name="nodeId" assignTo="#{moduleTreeManager.toggledNodeState}" /> 
+			
+			<!-- provide queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleTreeEvents" requestDelay="0" /> 
+		</a4j:jsFunction>
+	
+	
+	<!--
+	  ** moduleTreeActions
+	  ** Javascript methods to support the Module Tree.
+	  -->
+	
+		<a4j:outputPanel
+			id="moduleTreeActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getModuleTreeNodeId()
+				  ** Returns the node ID of the selected node.
+				  -->
+					
+				function getModuleTreeNodeId() {
+					if (moduleTreeState != null)
+						return moduleTreeState.nodeId;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getModuleTreeNodeLabel()
+				  ** Returns the node label of the selected node.
+				  -->
+					
+				function getModuleTreeNodeLabel() {
+					if (moduleTreeState != null)
+						return moduleTreeState.nodeLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeModuleTreeState()
+				  ** Initializes and verifies Module Tree state information.
+				  -->
+					
+				function initializeModuleTreeState() {
+					try {
+						var selectedNodeId = '#{moduleTreeManager.selectedNodeId}';
+						var selectedRowKey = '#{moduleTreeManager.selectedRowKey}';
+						
+						if (selectedNodeId != '') {
+							moduleTreeState = new Object();
+							var nodeId = selectedNodeId;
+							var rowKey = selectedRowKey;
+							var nodeArea = '#{moduleTreeManager.selectedNode.area}';
+							var nodeType = '#{moduleTreeManager.selectedNode.type}';
+							var nodeLabel = '#{moduleTreeManager.selectedNode.label}';
+							updateModuleTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateModuleTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Updates client-side state information for Module Tree.
+				  -->
+					
+				function updateModuleTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					moduleTreeState = new Object();
+					moduleTreeState.rowKey = rowKey;
+					moduleTreeState.nodeId = nodeId;
+					moduleTreeState.nodeArea = nodeArea;
+					moduleTreeState.nodeType = nodeType;
+					moduleTreeState.nodeLabel = nodeLabel;
+					moduleTreeState.nodeKey = nodeId;
+					//show(moduleTreeState);
+				}
+					
+					
+				<!--
+				  ** enableModuleTreeActions(type)
+				  ** Enables (or disables) Module Tree actions based on current client-side state.
+				  -->
+					
+				function enableModuleTreeActions(type) {
+					enableButton('moduleTreeViewButton');
+					enableButton('moduleTreeNewButton');
+					enableButton('moduleTreeEditButton');
+					enableButton('moduleTreeMoveButton');
+					enableButton('moduleTreeRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processModuleTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles mouseDown event on the Module Tree.
+				  -->
+					
+				function processModuleTreeMouseDown(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateModuleTreeState(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableModuleTreeActions(nodeArea);
+					try {
+						executeSelectFromModuleTree(rowKey, nodeId);
+						if (event.which == 3) {
+							showModuleTreeNodeMenu(event, nodeType);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** showModuleTreeNodeMenu(event, nodeType)
+				  ** Displays context-menu for Module Tree node..
+				  -->
+					
+				function showModuleTreeNodeMenu(event, nodeType) {
+					var typeUncapped = uncapitalize(nodeType);
+					var menuName = mainFormId + ':' + typeUncapped + 'TreeMenu';
+					var menu = RichFaces.component(menuName);
+					if (menu != null) {
+						menu.show(event, {});
+					}
+				}
+					
+					
+				<!--
+				  ** processModuleTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel)
+				  ** Handles double-click event on the Module Tree.
+				  -->
+					
+				function processModuleTreeDoubleClick(event, rowKey, nodeId, nodeArea, nodeType, nodeLabel) {
+					updateModuleTreeState(null, rowKey, nodeId, nodeArea, nodeType, nodeLabel);
+					enableModuleTreeActions(nodeArea);
+					
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', nodeType+' '+nodeLabel, 'Preparing '+nodeType+' summary view...');
+						executeActionForApplicationTreeViewer(rowKey, nodeId, nodeArea, nodeType, 'workspaceManager.viewObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element record.  
+				  ** Goes to the Element summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('applicationTree')});
+						showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('moduleTree')});
+						if (moduleTreeState.nodeLabel != null) {
+							var label = moduleTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"' + label + '\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('moduleTree')});
+						if (moduleTreeState.nodeLabel != null) {
+							var label = moduleTreeState.nodeLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (moduleTreeState != null)
+						label = moduleTreeState.nodeLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'moduleTree, moduleTreeViewer');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

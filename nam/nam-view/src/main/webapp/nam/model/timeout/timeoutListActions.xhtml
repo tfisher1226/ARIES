@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** timeoutListActions
+	  ** a4j:jsFunction methods to support the Timeout List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var timeoutListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshTimeoutList(event)
+		  ** Refreshes the current Timeout List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshTimeoutList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{timeoutListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Timeout Records', 'Refreshing current Timeout List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="timeoutListActions, timeoutListMenu, timeoutListToolbar, timeoutListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromTimeoutList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromTimeoutList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="timeoutListActions, timeoutListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{timeoutListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{timeoutListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="timeout" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="timeoutListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromTimeoutList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromTimeoutList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="timeoutListActions, timeoutListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{timeoutListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{timeoutListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{timeoutWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="timeoutListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="timeoutListActions, timeoutListMenu, timeoutListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** timeoutListActions
+		  ** Javascript methods to support the Timeout List.
+		  -->
+		
+		<a4j:outputPanel
+			id="timeoutListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getTimeoutListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getTimeoutListRowKey() {
+					if (timeoutListState != null)
+						return timeoutListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getTimeoutListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getTimeoutListRowLabel() {
+					if (timeoutListState != null)
+						return timeoutListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeTimeoutListState()
+				  ** Initializes and verifies Timeout List state information.
+				  -->
+					
+				function initializeTimeoutListState() {
+					try {
+						var rowIndex = '#{timeoutListManager.selectedRecordIndex}';
+						var recordKey = '#{timeoutListManager.selectedRecordKey}';
+						var recordLabel = '#{timeoutListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateTimeoutListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateTimeoutListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Timeout List.
+				  -->
+					
+				function updateTimeoutListState(event, rowIndex, recordKey, recordLabel) {
+					timeoutListState = new Object();
+					timeoutListState.rowIndex = rowIndex;
+					//timeoutListState.recordId = recordId;
+					timeoutListState.recordKey = recordKey;
+					timeoutListState.recordLabel = recordLabel;
+					//show(timeoutListState);
+				}
+					
+					
+				<!--
+				  ** enableTimeoutListActions(type)
+				  ** Enables (or disables) Timeout List actions based on current client-side state.
+				  -->
+					
+				function enableTimeoutListActions(type) {
+					//enableButton('timeoutListViewButton');
+					enableButton('timeoutListNewButton');
+					enableButton('timeoutListEditButton');
+					enableButton('timeoutListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processTimeoutListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Timeout List.
+				  -->
+					
+				function processTimeoutListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateTimeoutListState(event, rowIndex, recordKey, recordLabel);
+					enableTimeoutListActions('timeout');
+					try {
+						executeSelectFromTimeoutList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processTimeoutListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Timeout List.
+				  -->
+					
+				function processTimeoutListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Timeout Records', 'Preparing Timeout ' + recordLabel + ' for editing...');
+						executeActionFromTimeoutList(rowIndex, recordKey, 'Timeout', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('timeoutListTable')});
+						if (timeoutListState != null) {
+							var label = timeoutListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (timeoutListState != null) {
+							var label = timeoutListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (timeoutListState != null) {
+							var label = timeoutListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (timeoutListState != null)
+						label = timeoutListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'timeoutListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

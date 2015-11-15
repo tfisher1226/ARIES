@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** conversationListActions
+	  ** a4j:jsFunction methods to support the Conversation List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var conversationListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshConversationList(event)
+		  ** Refreshes the current Conversation List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshConversationList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{conversationListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Conversation Records', 'Refreshing current Conversation List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="conversationListActions, conversationListMenu, conversationListToolbar, conversationListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromConversationList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromConversationList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="conversationListActions, conversationListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{conversationListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{conversationListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="conversation" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="conversationListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromConversationList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromConversationList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="conversationListActions, conversationListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{conversationListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{conversationListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{conversationWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="conversationListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="conversationListActions, conversationListMenu, conversationListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** conversationListActions
+		  ** Javascript methods to support the Conversation List.
+		  -->
+		
+		<a4j:outputPanel
+			id="conversationListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getConversationListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getConversationListRowKey() {
+					if (conversationListState != null)
+						return conversationListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getConversationListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getConversationListRowLabel() {
+					if (conversationListState != null)
+						return conversationListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeConversationListState()
+				  ** Initializes and verifies Conversation List state information.
+				  -->
+					
+				function initializeConversationListState() {
+					try {
+						var rowIndex = '#{conversationListManager.selectedRecordIndex}';
+						var recordKey = '#{conversationListManager.selectedRecordKey}';
+						var recordLabel = '#{conversationListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateConversationListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateConversationListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Conversation List.
+				  -->
+					
+				function updateConversationListState(event, rowIndex, recordKey, recordLabel) {
+					conversationListState = new Object();
+					conversationListState.rowIndex = rowIndex;
+					//conversationListState.recordId = recordId;
+					conversationListState.recordKey = recordKey;
+					conversationListState.recordLabel = recordLabel;
+					//show(conversationListState);
+				}
+					
+					
+				<!--
+				  ** enableConversationListActions(type)
+				  ** Enables (or disables) Conversation List actions based on current client-side state.
+				  -->
+					
+				function enableConversationListActions(type) {
+					//enableButton('conversationListViewButton');
+					enableButton('conversationListNewButton');
+					enableButton('conversationListEditButton');
+					enableButton('conversationListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processConversationListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Conversation List.
+				  -->
+					
+				function processConversationListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateConversationListState(event, rowIndex, recordKey, recordLabel);
+					enableConversationListActions('conversation');
+					try {
+						executeSelectFromConversationList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processConversationListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Conversation List.
+				  -->
+					
+				function processConversationListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Conversation Records', 'Preparing Conversation ' + recordLabel + ' for editing...');
+						executeActionFromConversationList(rowIndex, recordKey, 'Conversation', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('conversationListTable')});
+						if (conversationListState != null) {
+							var label = conversationListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (conversationListState != null) {
+							var label = conversationListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (conversationListState != null) {
+							var label = conversationListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (conversationListState != null)
+						label = conversationListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'conversationListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- Page Includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="/admin/model/user/userActions.xhtml" />
+	</ui:define>
+
+	<!-- Page Breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{userPageManager.getBreadcrumbs('userManagement')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+
+	<!-- Page Title -->
+	<ui:define name="pageTitle">
+		<span class="pageTitle2">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="icon" value="/icons/nam/Users16.gif" />
+				<ui:param name="title" value="Users" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- page views -->
+	<ui:define name="pageViews">
+		<span class="pageViews">
+			<ui:include src="/common/pageViews.xhtml">
+				<ui:param name="label" value="User" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="overviewPage" value="initializeUserManagementPage" />
+				<ui:param name="listPage" value="initializeUserListPage" />
+			</ui:include>
+ 		</span>
+	</ui:define>
+	
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<div class="content2">
+		
+			<aries:panel
+				width="auto"
+				height="auto"
+				backgroundColor="inherit">
+			
+				<aries:formPane 
+					width="auto"
+					height="auto"
+					margin="20px"
+					marginTop="2px">
+
+					<ui:include src="userManagementPanel.xhtml" />
+				
+					<!--  
+					<a4j:log level="ALL" popup="false" width="400" height="200"/> 
+					-->
+				</aries:formPane>
+			</aries:panel>
+		</div>
+	</ui:define>
+</ui:composition>

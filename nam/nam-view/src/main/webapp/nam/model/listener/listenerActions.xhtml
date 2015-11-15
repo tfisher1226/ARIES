@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showListenerListPage()
+		  ** Goes to the Listener Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showListenerListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{listenerPageManager.initializeListenerListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Listener Records', 'Preparing Listener List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showListenerTreePage()
+		  ** Goes to the Listener Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showListenerTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{listenerPageManager.initializeListenerTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Listener Records', 'Preparing Listener Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showListenerManagementPage()
+		  ** Goes to the Listener Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showListenerManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{listenerPageManager.initializeListenerManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Listener Records', 'Preparing Listener related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showListenerWizardPage()
+		  ** Goes to the Listener Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showListenerWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{listenerWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Listener Records', 'Preparing Listener information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{listenerWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{listenerWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewListenerDialog()
+		  ** Launches the Listener Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewListenerDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{listenerInfoManager.newListener}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Listener Records', 'Creating new Listener...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showListenerDialog()"
+			render="listenerModule, listenerDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{listenerInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="listenerListPane" assignTo="#{listenerInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{listenerInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditListenerDialog()
+		  ** Launches the Listener Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditListenerDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{listenerInfoManager.editListener}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Listener Records', 'Preparing Listener information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showListenerDialog()"
+			render="listenerModule, listenerDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{listenerInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="listenerListPane" assignTo="#{listenerInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{listenerInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

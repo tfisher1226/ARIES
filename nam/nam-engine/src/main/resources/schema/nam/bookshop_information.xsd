@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:admin="http://admin"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:bookshop="http://bookshop2"
+	targetNamespace="http://bookshop2">
+	
+	<xs:import namespace="http://admin" schemaLocation="../C:\workspace\ARIES\_generator\target\runtime\cache\model\admin\admin_model.aries" />
+	
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../C:\workspace\ARIES\_generator\target\runtime\cache\model\common\aries-common-1.0.aries" />
+	
+	<!--
+		Book element
+		************
+	-->
+	
+	<xs:element name="book" type="bookshop:Book" />
+	<xs:complexType name="Book">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="barCode" type="xs:long" minOccurs="1" />
+				<xs:element name="author" type="xs:string" minOccurs="1" />
+				<xs:element name="title" type="xs:string" minOccurs="1" />
+				<xs:element name="price" type="xs:double" minOccurs="1" />
+				<xs:element name="quantity" type="xs:int" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		BookCriteria element
+		********************
+	-->
+	
+	<xs:element name="bookCriteria" type="bookshop:BookCriteria" />
+	<xs:complexType name="BookCriteria">
+		<xs:sequence>
+				<xs:element name="author" type="xs:string" minOccurs="1" />
+				<xs:element name="title" type="xs:string" minOccurs="1" />
+				<xs:element name="price" type="xs:double" minOccurs="1" />
+				<xs:element name="quantity" type="xs:int" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		BookKey element
+		***************
+	-->
+	
+	<xs:element name="bookKey" type="bookshop:BookKey" />
+	<xs:complexType name="BookKey">
+		<xs:sequence>
+				<xs:element name="author" type="xs:string" minOccurs="1" />
+				<xs:element name="title" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		BooksAvailableMessage element
+		*****************************
+	-->
+	
+	<xs:element name="booksAvailableMessage" type="bookshop:BooksAvailableMessage" />
+	<xs:complexType name="BooksAvailableMessage">
+		<xs:sequence>
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		BooksUnavailableMessage element
+		*******************************
+	-->
+	
+	<xs:element name="booksUnavailableMessage" type="bookshop:BooksUnavailableMessage" />
+	<xs:complexType name="BooksUnavailableMessage">
+		<xs:sequence>
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Invoice element
+		***************
+	-->
+	
+	<xs:element name="invoice" type="bookshop:Invoice" />
+	<xs:complexType name="Invoice">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="1" />
+				<xs:element name="dateTime" type="xs:dateTime" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Order element
+		*************
+	-->
+	
+	<xs:element name="order" type="bookshop:Order" />
+	<xs:complexType name="Order">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="trackingNumber" type="xs:string" minOccurs="1" />
+				<xs:element name="personName" type="common:PersonName" minOccurs="1" />
+				<xs:element name="count" type="xs:int" minOccurs="1" />
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="dateTime" type="xs:dateTime" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		OrderAcceptedMessage element
+		****************************
+	-->
+	
+	<xs:element name="orderAcceptedMessage" type="bookshop:OrderAcceptedMessage" />
+	<xs:complexType name="OrderAcceptedMessage">
+		<xs:sequence>
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		OrderCriteria element
+		*********************
+	-->
+	
+	<xs:element name="orderCriteria" type="bookshop:OrderCriteria" />
+	<xs:complexType name="OrderCriteria">
+		<xs:sequence>
+				<xs:element name="count" type="xs:int" minOccurs="1" />
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		OrderKey element
+		****************
+	-->
+	
+	<xs:element name="orderKey" type="bookshop:OrderKey" />
+	<xs:complexType name="OrderKey">
+		<xs:sequence>
+				<xs:element name="personName" type="common:PersonName" minOccurs="1" />
+				<xs:element name="dateTime" type="xs:dateTime" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		OrderRejectedMessage element
+		****************************
+	-->
+	
+	<xs:element name="orderRejectedMessage" type="bookshop:OrderRejectedMessage" />
+	<xs:complexType name="OrderRejectedMessage">
+		<xs:sequence>
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="reason" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		OrderRequestMessage element
+		***************************
+	-->
+	
+	<xs:element name="orderRequestMessage" type="bookshop:OrderRequestMessage" />
+	<xs:complexType name="OrderRequestMessage">
+		<xs:sequence>
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="name" type="common:PersonName" minOccurs="0" />
+				<xs:element name="address" type="common:StreetAddress" minOccurs="0" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		OrderResponseMessage element
+		****************************
+	-->
+	
+	<xs:element name="orderResponseMessage" type="bookshop:OrderResponseMessage" />
+	<xs:complexType name="OrderResponseMessage">
+		<xs:sequence>
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="availableBooks" type="bookshop:Book" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="unavailableBooks" type="bookshop:Book" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Payment element
+		***************
+	-->
+	
+	<xs:element name="payment" type="bookshop:Payment" />
+	<xs:complexType name="Payment">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="amount" type="xs:double" minOccurs="1" />
+				<xs:element name="currency" type="xs:string" minOccurs="1" />
+				<xs:element name="salesTax" type="xs:double" minOccurs="1" />
+				<xs:element name="total" type="xs:double" minOccurs="1" />
+				<xs:element name="dateTime" type="xs:dateTime" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		PurchaseAcceptedMessage element
+		*******************************
+	-->
+	
+	<xs:element name="purchaseAcceptedMessage" type="bookshop:PurchaseAcceptedMessage" />
+	<xs:complexType name="PurchaseAcceptedMessage">
+		<xs:sequence>
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="1" />
+				<xs:element name="invoice" type="bookshop:Invoice" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		PurchaseCompleteEvent element
+		*****************************
+	-->
+	
+	<xs:element name="purchaseCompleteEvent" type="bookshop:PurchaseCompleteEvent" />
+	<xs:complexType name="PurchaseCompleteEvent">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+				<xs:element name="invoice" type="bookshop:Invoice" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		PurchaseRejectedMessage element
+		*******************************
+	-->
+	
+	<xs:element name="purchaseRejectedMessage" type="bookshop:PurchaseRejectedMessage" />
+	<xs:complexType name="PurchaseRejectedMessage">
+		<xs:sequence>
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="1" />
+				<xs:element name="reason" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		PurchaseRequestMessage element
+		******************************
+	-->
+	
+	<xs:element name="purchaseRequestMessage" type="bookshop:PurchaseRequestMessage" />
+	<xs:complexType name="PurchaseRequestMessage">
+		<xs:sequence>
+				<xs:element name="name" type="common:PersonName" minOccurs="1" />
+				<xs:element name="address" type="common:StreetAddress" minOccurs="1" />
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		QueryRequestMessage element
+		***************************
+	-->
+	
+	<xs:element name="queryRequestMessage" type="bookshop:QueryRequestMessage" />
+	<xs:complexType name="QueryRequestMessage">
+		<xs:sequence>
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Receipt element
+		***************
+	-->
+	
+	<xs:element name="receipt" type="bookshop:Receipt" />
+	<xs:complexType name="Receipt">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="1" />
+				<xs:element name="total" type="xs:double" minOccurs="1" />
+				<xs:element name="dateTime" type="xs:dateTime" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ReservationAbortedException element
+		***********************************
+	-->
+	
+	<xs:element name="reservationAbortedException" type="bookshop:ReservationAbortedException" />
+	<xs:complexType name="ReservationAbortedException">
+		<xs:sequence>
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="reason" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ReservationRequestMessage element
+		*********************************
+	-->
+	
+	<xs:element name="reservationRequestMessage" type="bookshop:ReservationRequestMessage" />
+	<xs:complexType name="ReservationRequestMessage">
+		<xs:sequence>
+				<xs:element name="books" type="bookshop:Book" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Shipment element
+		****************
+	-->
+	
+	<xs:element name="shipment" type="bookshop:Shipment" />
+	<xs:complexType name="Shipment">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="order" type="bookshop:Order" minOccurs="1" />
+				<xs:element name="date" type="xs:date" minOccurs="1" />
+				<xs:element name="time" type="xs:time" minOccurs="1" />
+				<xs:element name="name" type="common:PersonName" minOccurs="1" />
+				<xs:element name="address" type="common:StreetAddress" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentCompleteEvent element
+		*****************************
+	-->
+	
+	<xs:element name="shipmentCompleteEvent" type="bookshop:ShipmentCompleteEvent" />
+	<xs:complexType name="ShipmentCompleteEvent">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+				<xs:element name="invoice" type="bookshop:Invoice" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentCompleteMessage element
+		*******************************
+	-->
+	
+	<xs:element name="shipmentCompleteMessage" type="bookshop:ShipmentCompleteMessage" />
+	<xs:complexType name="ShipmentCompleteMessage">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+				<xs:element name="invoice" type="bookshop:Invoice" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentConfirmedEvent element
+		******************************
+	-->
+	
+	<xs:element name="shipmentConfirmedEvent" type="bookshop:ShipmentConfirmedEvent" />
+	<xs:complexType name="ShipmentConfirmedEvent">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentFailedMessage element
+		*****************************
+	-->
+	
+	<xs:element name="shipmentFailedMessage" type="bookshop:ShipmentFailedMessage" />
+	<xs:complexType name="ShipmentFailedMessage">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+				<xs:element name="reason" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentRequestMessage element
+		******************************
+	-->
+	
+	<xs:element name="shipmentRequestMessage" type="bookshop:ShipmentRequestMessage" />
+	<xs:complexType name="ShipmentRequestMessage">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+				<xs:element name="payment" type="bookshop:Payment" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentScheduledEvent element
+		******************************
+	-->
+	
+	<xs:element name="shipmentScheduledEvent" type="bookshop:ShipmentScheduledEvent" />
+	<xs:complexType name="ShipmentScheduledEvent">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		ShipmentScheduledMessage element
+		********************************
+	-->
+	
+	<xs:element name="shipmentScheduledMessage" type="bookshop:ShipmentScheduledMessage" />
+	<xs:complexType name="ShipmentScheduledMessage">
+		<xs:sequence>
+				<xs:element name="shipment" type="bookshop:Shipment" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model/0.0.1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:intf="http://www.jboss.org/bpel/examples"
+	xmlns:intf2="http://simple_invoke/helloworld"
+	xsi:schemaLocation="http://nam/model/0.0.1 file:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>HelloWorld</name>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<links>
+		<link name="theExternalService_PartnerLink" type="theExternalService_PartnerLinkType">
+			<role name="callingTheExternalService" transferMode="text" portType="intf2:HelloWorld">
+				<defaultTransport>ejb</defaultTransport>
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/simple_invoke.helloworld.HelloWorld/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.helloWorld.destination@"/>
+				<http-transport type="ws" portType="intf2:HelloWorld"/>
+				<handler type="JDBCException" name="exceptionHandler"/>
+			</role>
+		</link>
+	</links>
+
+	<imports>
+		<import file="HelloWorld.wsdl" type="wsdl"/>
+	</imports>
+	
+	<applications>
+		<application>
+			<name>simple_invoke-hello</name>
+			<groupId>org.simple</groupId>
+			<artifactId>simple_invoke-hello</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module>
+					<type>pom</type>
+					<name>simple_invoke-hello</name>
+				</module>
+	
+				<module>
+					<type>model</type>
+					<name>simple_invoke-hello-model</name>
+					<namespace>http://simple_invoke/helloworld</namespace>
+				</module>
+	
+				<module>
+					<type>client</type>
+					<name>simple_invoke-hello-client</name>
+					<link name="theExternalService_PartnerLink" role="callingTheExternalService"/>
+				</module>
+				
+				<module>
+					<type>service</type> 
+					<name>simple_invoke-hello-service</name>
+					<services>
+						<service ref="HelloWorld">
+							<listener link="theExternalService_PartnerLink" role="callingTheExternalService"/>
+						</service>
+					</services>
+				</module>
+			</modules>
+		</application>
+	</applications>
+
+	<!--  
+	<links>
+		<link name="theExternalService_PartnerLink" type="theExternalService_PartnerLinkType" >
+			<role name="callingTheExternalService" transport="ws" transferMode="text" portType="intf2:HelloWorld" />
+		</link>
+	</links>
+	-->
+</project>

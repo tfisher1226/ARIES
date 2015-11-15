@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-web>
+	<context-root>/nam</context-root>
+	<!-- 
+	<virtual-host>nam</virtual-host>
+	<security-domain>java:/jaas/nam</security-domain> 
+	-->
+</jboss-web>

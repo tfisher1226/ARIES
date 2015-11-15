@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="viewListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="viewListNewButton"
+				value="New View..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new View Record"
+				enabled="#{securityGuard.canCreate('view')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'View')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="viewListEditButton"
+				value="Edit View..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected View record for edit..."
+				enabled="#{viewListManager.hasSelection() and securityGuard.canUpdate('view')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'View')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="viewListRemoveButton"
+				value="Remove View..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected View record from system..."
+				enabled="#{viewListManager.hasSelection() and securityGuard.canDelete('view')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'View')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="viewListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read View information from server"
+				enabled="#{securityGuard.canOpen('view')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshViewList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

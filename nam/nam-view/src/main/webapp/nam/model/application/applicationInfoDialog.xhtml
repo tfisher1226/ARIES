@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchApplicationDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{applicationInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Application Records', 'Preparing requested record...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showApplicationDialog()"
+		render="applicationModule, applicationDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{applicationInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{applicationInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{applicationInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{applicationInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{applicationInfoManager.immediate}" value="false" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="applicationModule">
+		
+		<a4j:region
+			rendered="#{applicationInfoManager.visible}">
+			
+			<aries:dialog
+				id="applicationDialog"
+				action="saveApplication"
+				render="#{applicationInfoManager.renderList} applicationListPane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="applicationInfoPane.xhtml" />
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

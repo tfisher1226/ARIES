@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:validate="http://www.aries.org/validate" 
+	targetNamespace="http://nam/model">
+
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-security-1.0.xsd" />
+	<xs:include schemaLocation="nam-operation-1.0.xsd" />
+	<xs:include schemaLocation="nam-execution-1.0.xsd" />
+	<xs:include schemaLocation="nam-information-1.0.xsd" />
+	<xs:include schemaLocation="nam-messaging-1.0.xsd" />
+	<xs:include schemaLocation="nam-persistence-1.0.xsd" />
+	<xs:include schemaLocation="nam-application-1.0.xsd" />
+	<xs:include schemaLocation="nam-view-1.0.xsd" />
+</xs:schema>
+

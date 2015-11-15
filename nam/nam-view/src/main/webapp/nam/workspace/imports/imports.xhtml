@@ -1,0 +1,99 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	template="/templates/main.xhtml">
+
+	<!-- PATH -->
+	<ui:define name="path">
+
+		<aries:formPane
+			width="auto" 
+			columns="8"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:link
+				value="Top"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showMainPage(this)" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:text 
+				width="auto"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="--&gt;" 
+				backgroundColor="inherit" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:link
+				value="Upload"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showUploadPage(this)" />
+		</aries:formPane>
+	</ui:define>
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+
+		<!-- UPLOAD DIALOG 
+		<aries:uploadDialog
+			title="Upload Project" 
+			heading="Upload Project into Nam"/>
+			-->
+
+		<aries:panel
+			padding="20px" 
+			paddingTop="0px">
+			
+			<aries:h2 backgroundColor="red" value="Upload models" />
+
+			<aries:h4 backgroundColor="red" value="Sample Applications" />
+			
+			<aries:panel
+				marginTop="0px">
+				
+				<ui:include src="uploadPanel.xhtml">
+					<ui:param name="acceptedTypes" value="*.aries, *.ariel, *.wsdl, *.bpel" />
+				</ui:include>
+				
+				<!--  
+				<aries:button
+					padding="4"
+					fontSize="14"
+					label="Open Bookshop Applications"
+					backgroundColor="inherit"
+					icon="/icons/common/Default16.gif"
+					id="#{section}BrowseButton"
+			    	immediate="false"
+			    	bypassUpdates="false"
+			    	limitRender="true"
+    				execute="@region"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="setCursorWait(this); showProgress('Application Repository', 'Sample Applications', 'Preparing to open Bookshop Applications...');"
+					oncomplete="setCursorWait(this), hideProgress(); showUploadDialog()"
+					render="#{section}Header, #{section}Content"
+					offset="true" />
+					-->
+			</aries:panel>
+		</aries:panel>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,169 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel 
+		layout="block" 
+		id="applicationTreeToolbar">
+
+		<aries:toolbar type="tab">
+			<aries:toolbarGroup location="left">
+
+				<aries:toolButton 
+					mode="client"
+					id="applicationTreeNewProjectButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new Project..."
+					icon="/icons/common/New16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="processNewProject(this)" />
+
+				<aries:toolButton 
+					mode="client"
+					id="applicationTreeNewApplicationButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Create new Application"
+					icon="/icons/nam/Application16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					onclick="processNewApplication(event)" />
+
+				<aries:toolButton 
+					id="applicationTreeViewApplicationButton"
+					rendered="#{!securityGuard.checkManager}"
+					tooltip="View information for selected Application"
+					icon="/icons/common/Properties16.gif"
+					iconDisabled="/icons/common/PropertiesDisabled16.gif"
+					enabled="#{not empty selectedApplication}"
+					manager="#{applicationInfoManager}"
+					action="editApplication"
+					onclick="setCursorWait(this); if (#{empty selectedApplication}) {setCursorDefault(this); popupAlert('Application Lookup', '', 'An application must be selected'); return false} else {showProgress('{applicationName}', 'Retrieving application record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processViewApplication('#{selectedApplication.name}', '#{selectedApplication.level}')"
+					render="ApplicationInfoDialog" />
+
+				<aries:toolButton 
+					id="applicationTreeEditApplicationButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected Application"
+					icon="/icons/common/Edit16.gif"
+					iconDisabled="/icons/common/EditDisabled16.gif"
+					enabled="#{not empty selectedApplication}"
+					onclick="processEditApplication(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Edit information for selected Application"
+					icon="/icons/common/Edit16.gif"
+					manager="#{applicationInfoManager}"
+					action="editApplication"
+					onclick="setCursorWait(this); if (#{empty selectedApplication}) {setCursorDefault(this); popupAlert('Application Lookup', '', 'An application must be selected'); return false} else {showProgress('{applicationName}', 'Retrieving application record...')}"
+					oncomplete="setCursorDefault(this); hideProgress(); processEditApplication('#{selectedApplication.name}', '#{selectedApplication.level}')"
+					render="ApplicationInfoDialog" />
+					-->
+
+				<!--  			
+				<aries:toolButton
+					id="applicationTreeMoveApplicationButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Move selected Application to new parent Application"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					enabled="#{not empty selectedApplication}"
+					execute="@this"
+					manager="#{applicationTreeManager}"
+					action="prepareMoveApplication"
+					onclick="return processMoveApplication()"
+					linkClass="link" />
+					-->
+
+				<aries:toolButton 
+					mode="client"
+					id="applicationTreeRemoveApplicationButton"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove Application record from system"
+					icon="/icons/common/Remove16.gif"
+					iconDisabled="/icons/common/RemoveDisabled16.gif"
+					enabled="#{not empty selectedApplication}"
+					onclick="processCheckRemoveApplication(event)" />
+
+				<!--  
+				<aries:toolButton 
+					disabled="false"
+					rendered="#{securityGuard.checkManager}"
+					tooltip="Remove Application record from system"
+					icon="/icons/common/Remove16.gif"
+					manager="#{applicationInfoManager}"
+					action="promptDeleteApplication"
+					onclick="setCursorWait(this); showProgress('Analyzing {applicationName}', 'Checking permissions...')"
+					oncomplete="setCursorDefault(this); hideProgress(); if (#{!messages.isMessagesExist('ApplicationInfo')}) {checkPromptDeleteApplication('#{application.name} #{application.level}')} else {warnCannotDeleteApplication('#{application.name} #{application.level}', '#{messages.getMessage('ApplicationInfo')}')}" />
+					-->
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup location="right">
+				<aries:spacer width="1" height="1" />
+	
+				<c:if test="#{securityGuard.checkManager}">
+				</c:if>
+				
+				<!--  
+				<aries:toolToggleButton
+					execute="@this"
+					id="showMemberCountLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show member count in labels"
+					selected="#{treeNodeFactory.showMemberCountInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowMemberCountInLabels" 
+			   		render="showMemberCountLabelsButton"
+					linkClass="link" />
+	
+				<aries:toolToggleButton
+					execute="@this"
+					id="showFilterDetailLabelsButton"
+					icon="/icons/common/Default16.gif"
+					tooltip="Show filter detail in labels"
+					selected="#{treeNodeFactory.showFilterDetailInLabels}"
+			   		manager="#{treeNodeFactory}" 
+			   		action="toggleShowFilterDetailInLabels" 
+			   		render="showFilterDetailLabelsButton"
+					linkClass="link" />
+					-->
+							
+				<aries:toolButton
+					id="applicationTreeCollapseButton"
+					icon="/icons/common/CollapseAll16.gif"
+					tooltip="Click here to Collapse Applications"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('', 'Collapse Selected Application', 'Not ready at this time')"
+					linkClass="link" />
+					
+				<aries:toolButton
+					id="applicationTreeRefreshButton"
+					execute="@this"
+					limitRender="false"
+					icon="/icons/common/Refresh16.gif"
+					tooltip="Re-read Applications from server"
+			   		manager="#{applicationTreeManager}" 
+			   		action="refresh"
+					onclick="setCursorWait(this); showProgress('', 'Application Service', 'Refreshing Applicational Structure...')"
+					oncomplete="setCursorDefault(); hideProgress()"
+			   		render="applicationTreePanel"
+					linkClass="link" />
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
+</ui:composition>

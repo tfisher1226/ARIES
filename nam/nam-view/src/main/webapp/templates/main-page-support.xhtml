@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+    <a4j:jsFunction 
+    	name="initializeGlobals" 
+    	execute="@this" 
+    	immediate="true" 
+    	bypassUpdates="true" 
+    	limitRender="true">
+		<a4j:param name="w" value="windowWidth" assignTo="#{globals.screenWidth}" noEscape="true"/>
+		<a4j:param name="h" value="windowHeight" assignTo="#{globals.screenHeight}" noEscape="true"/>
+		<a4j:param name="bn" value="browserName" assignTo="#{globals.browserName}" noEscape="true"/>
+		<a4j:param name="bv" value="browserVersion" assignTo="#{globals.browserVersion}" noEscape="true"/>
+	</a4j:jsFunction>
+
+    <a4j:jsFunction 
+    	name="renderSwitch" 
+    	execute="@this"
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"
+    	render="switch">
+    </a4j:jsFunction>
+    
+	<!--  
+	<s:remote include="organizationTreeManager"/>
+	<script type="text/javascript" src="seam/resource/remoting/resource/remote.js"></script>
+	<script type="text/javascript" src="/seam/remoting/interface.js?nam.ui.modelLayoutState"></script>
+	<script type="text/javascript" src="seam/resource/remoting/interface.js?testBean"></script>
+	-->
+</ui:composition>

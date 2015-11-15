@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-security-1.0.xsd" />
+	<xs:include schemaLocation="nam-information-1.0.xsd" />
+
+
+	<!--
+		Interface Type
+	-->
+	
+	<xs:element name="interface" type="Interface"/>
+	<xs:complexType name="Interface">
+		<xs:sequence>
+			<xs:element name="operation" type="Operation" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--
+		Operation Type
+	-->
+
+	<xs:element name="operation" type="Operation"/>
+	<xs:complexType name="Operation">
+		<xs:sequence>
+			<xs:element name="service" type="Service" minOccurs="0" maxOccurs="1" />
+			<xs:element name="parameter" type="Parameter" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="command" type="Command" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="fault" type="Fault" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="result" type="Result" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="role" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:element name="parameter" type="Parameter"/>
+	<xs:complexType name="Parameter">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="key" type="xs:string" />
+		<xs:attribute name="construct" type="xs:string" />
+		<xs:attribute name="use" type="UsageType" default="required" />
+	</xs:complexType>
+
+	<xs:element name="command" type="Command"/>
+	<xs:complexType name="Command">
+		<xs:sequence>
+			<xs:element name="name" type="CommandName" minOccurs="1" maxOccurs="1" />
+			<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="source" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="indent" type="xs:int" minOccurs="0" maxOccurs="1" />
+			<xs:element name="actor" type="xs:anyType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="extends" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="result" type="Result" minOccurs="0" maxOccurs="1" />
+			<xs:element name="parameters" type="Parameter" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="attributes" type="Attribute" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="references" type="Reference" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="commands" type="Command" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="node" type="xs:anyType" minOccurs="0" maxOccurs="1" />
+			<!-- 
+			<xs:element maxOccurs="1" minOccurs="0" name="message" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="cause" type="Fault"/>
+			 -->
+		</xs:sequence>
+	</xs:complexType>
+	
+    <xs:simpleType name="CommandName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="expr"/>
+			<xs:enumeration value="done"/>
+			<xs:enumeration value="call"/>
+			<xs:enumeration value="new"/>
+			<xs:enumeration value="invoke"/>
+			<xs:enumeration value="listen"/>
+			<xs:enumeration value="option"/>
+			<xs:enumeration value="branch"/>
+			<xs:enumeration value="post"/>
+			<xs:enumeration value="reply"/>
+			<xs:enumeration value="send"/>
+			<xs:enumeration value="throw"/>
+			<xs:enumeration value="execute"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--
+    <xs:simpleType name="CommandType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="concurrent"/>
+			<xs:enumeration value="sequential"/>
+		</xs:restriction>
+	</xs:simpleType>
+	-->
+
+	<xs:element name="definition" type="Definition"/>
+	<xs:complexType name="Definition">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="type" type="Type" minOccurs="0" maxOccurs="1" />
+			<xs:element name="target" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="selector" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="parameter" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="isNew" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="fault" type="Fault"/>
+	<xs:complexType name="Fault">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="cause" type="Fault" minOccurs="0" maxOccurs="1" />
+			<xs:element name="superType" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="attributes" type="Attribute" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="references" type="Reference" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="result" type="Result"/>
+	<xs:complexType name="Result">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="construct" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" use="required" />
+		<xs:attribute name="key" type="xs:string" />
+		<xs:attribute name="use" type="UsageType" default="optional" />
+	</xs:complexType>
+	
+</xs:schema>
+

@@ -1,0 +1,383 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:region>
+		<h:outputScript>
+			var modelFileTreeState = null;
+		</h:outputScript>
+
+		<script type="text/javascript">
+		function enableModelFileTreeActions() {
+			enableButton('pageForm:modelFileTreeViewMembersButton');
+			enableButton('pageForm:modelFileTreeNewModelFileButton');
+			//enableButton('pageForm:modelFileTreeViewModelFileButton');
+			enableButton('pageForm:modelFileTreeEditModelFileButton');
+			enableButton('pageForm:modelFileTreeMoveModelFileButton');
+			enableButton('pageForm:modelFileTreeRemoveModelFileButton');
+		}
+		</script>
+		
+	    <a4j:jsFunction 
+	    	name="selectTreeNode" 
+	    	immediate="true"
+	    	limitRender="true"
+	    	render="modelFileTreeState">
+	    	<a4j:param name="selectedRowKey" assignTo="#{modelFileTreeManager.selectedRowKey}" />  
+	    	<a4j:param name="selectedNodeId" assignTo="#{modelFileTreeManager.selectedNodeId}" />
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	name="toggleModelFileTreeNode" 
+	    	immediate="true"
+	    	limitRender="true">
+	    	<a4j:param name="nodeId" assignTo="#{modelFileTreeManager.toggledNodeState}" />  
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	name="buildModels" 
+	    	execute="@this"
+	    	immediate="true" 
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileInfoManager.buildModelFromFile}"
+	    	onbegin="setCursorWait(event.source); showProgress('Nam', 'Generation Service', 'Building models for: \''+getModelFileName()+'\'')"
+	    	oncomplete="setCursorDefault(); hideProgress(); showAlert('Nam', 'Generation Service', 'XXX')"
+	    	render="#{modelFileTree}" />
+
+	    <a4j:jsFunction 
+	    	name="generateSources" 
+	    	execute="@this"
+	    	immediate="true" 
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileInfoManager.generateSources}"
+	    	onbegin="setCursorWait(event.source); showProgress('Nam', 'Generation Service', 'Generating sources from: \''+getModelFileName()+'\'')"
+	    	oncomplete="setCursorDefault(); hideProgress(); showAlert('Nam', 'Generation Service', 'XXX')"
+	    	render="#{modelFileTree}" />
+
+		<!-- 
+		TODO
+	    <a4j:jsFunction 
+	    	name="saveModelFileSelection" 
+	    	immediate="true" 
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	onbegin="setCursorWait(event.source); "
+	    	oncomplete="setCursorDefault(); hide#{dialog}(); "
+	    	render="nothing">
+	    </a4j:jsFunction>
+	    -->
+	    	
+	    <a4j:jsFunction 
+	    	name="executeNewMember" 
+	    	execute="@this"
+	    	immediate="true" 
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{memberInfoManager.newMember(modelFileTreeManager.selectedModelFile)}"
+	    	onbegin="setCursorWait(event.source); showProgress('', getModelFileName(), 'Creating new membership record...')"
+	    	oncomplete="setCursorDefault(); showMemberDialog(); hideProgress()"
+	    	render="#{memberInfoManager.memberDialogs}" />
+
+	    <a4j:jsFunction 
+	    	name="executeViewMembers" 
+	    	execute="@this"
+	    	immediate="true" 
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{mainManager.viewMembers}"
+	    	onbegin="setCursorWait(event.source); showProgress('', getModelFileName(), 'Retrieving members...')"
+	    	oncomplete="setCursorDefault(); hideProgress()"
+	    	render="switch" />
+
+	    <a4j:jsFunction 
+	    	name="executeViewModelFile" 
+	    	immediate="true" 
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileInfoManager.viewModelFile}"
+	    	onbegin="if (modelFileTreeState == null) {alertCannotViewModelFile_NoSelection()} else {setCursorWait(event.source); showProgress('', getModelFileName(), 'Retrieving application record...')"
+	    	oncomplete="if (modelFileTreeState == null) {return} setCursorDefault(); hideProgress(); showModelFileInfoDialog()"
+	    	render="ModelFileInfoDialog" />
+
+	    <a4j:jsFunction 
+	    	name="executeNewModelFile" 
+	    	immediate="true"
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileInfoManager.newModelFile}"
+	    	onbegin="setCursorWait(event.source); showProgress('', 'New ModelFile for User: #{workspaceManager.user.userName}', 'Preparing new ModelFile...')"
+	    	oncomplete="setCursorDefault(); showNewModelFilePage('#{source}')"
+	    	render="">
+	    	<a4j:param name="source" value="" assignTo="#{source}" />
+	    </a4j:jsFunction>
+			    	
+	    <a4j:jsFunction 
+	    	name="executeEditModelFile" 
+	    	immediate="true" 
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileInfoManager.editModelFile}"
+	    	onbegin="if (modelFileTreeState == null) {alertCannotEditModelFile_NoSelection()} else {setCursorWait(event.source); showProgress('', getModelFileName(), 'Retrieving application record...')}"
+	    	oncomplete="if (modelFileTreeState == null) {return} setCursorDefault(); hideProgress(); showModelFileInfoDialog()"
+	    	render="ModelFileInfoDialog" />
+
+	    <a4j:jsFunction 
+	    	name="promptModelFileSelection" 
+	    	immediate="true" 
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileTreeManager.prepareMoveModelFile}"
+	    	onbegin="return processMoveModelFile()" />
+	    	
+	    <a4j:jsFunction 
+	    	name="checkRemoveModelFile" 
+	    	immediate="true" 
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{modelFileInfoManager.promptDeleteModelFile}"
+	    	onbegin="if (modelFileTreeState == null) {alertCannotRemoveModelFile_NoSelection(); return false;} else {setCursorWait(event.source); showProgress('', 'Checking removal of '+getModelFileName(), 'Checking permissions...')}"
+			oncomplete="if (modelFileTreeState == null) {return} setCursorDefault(); hideProgress(); var message = '#{messages.getMessage('ModelFileInfo')}'; processRemoveModelFile(message)" 
+			render="modelFileTreeState" />
+	</a4j:region>
+
+	<a4j:outputPanel 
+		id="modelFileTreeState">
+		
+		<h:outputScript>
+		//var modelFileTreeState = null;
+		
+		//TODO initializemodelFileTreeState();
+		
+		function getModelFileId() {
+			if (modelFileTreeState != null)
+				return modelFileTreeState.nodeId;
+			return null;
+		}
+		
+		function getModelFileName() {
+			if (modelFileTreeState != null)
+				return modelFileTreeState.nodeLabel;
+			return null;
+		}
+
+		function initializeModelFileTreeState() {
+			try {
+				var selectedNodeId = '#{modelFileTreeManager.selectedNodeId}';
+				var selectedRowKey = '#{modelFileTreeManager.selectedRowKey}';
+				
+				if (selectedNodeId != '') {
+					modelFileTreeState = new Object();
+					var nodeId = selectedNodeId;
+					var rowKey = selectedRowKey;
+					var nodeType = '#{modelFileTreeManager.selectedNode.type}';
+					var nodeLabel = '#{modelFileTreeManager.selectedNode.label}';
+					updateModelFileTreeState(null, rowKey, nodeId, nodeType, nodeLabel);
+				}
+			} catch(e) {
+				alert(e);
+			}
+		}
+		
+		function updateModelFileTreeState(event, rowKey, nodeId, nodeType, nodeLabel) {
+			modelFileTreeState = new Object();
+			modelFileTreeState.rowKey = rowKey;
+			modelFileTreeState.nodeId = nodeId;
+			modelFileTreeState.nodeType = nodeType;
+			modelFileTreeState.nodeLabel = nodeLabel;
+			modelFileTreeState.nodeKey = nodeId;
+			//show(modelFileTreeState);
+		}
+		
+		function selectModelFile(event) {
+			try {
+				//TODO add prompt
+	    		event.preventDefault();
+				saveModelFileSelection(modelFileTreeState.nodeKey);
+			} catch (e) {
+				alert(e);
+			}
+		}
+
+		function viewMembers(event) {
+			try {
+		    	if (modelFileTreeState == null) {
+		    		event.preventDefault();
+		    		popupAlert('', 'Membership Lookup', 'An application must be selected'); 
+		    		return false;
+		    	} else {
+		    		executeViewMembers();
+		    		return true;
+		    	}
+			} catch (e) {
+				alert(e);
+			}
+		}
+		
+		function newModelFile(event) {
+			try {
+		    	if (modelFileTreeState == null) {
+		    		event.preventDefault();
+		    		//alertCannotNewModelFile_NoSelection();
+		    		popupAlert('', 'New ModelFile', 'An application must be selected'); 
+		    		return false;
+		    	} else {
+		    		executeNewModelFile();
+		    		return false;
+		    	}
+			} catch (e) {
+				alert(e);
+			}
+		}
+
+		function viewModelFile(event) {
+			try {
+		    	if (modelFileTreeState == null) {
+		    		event.preventDefault();
+		    		popupAlert('', 'View ModelFile', 'An application must be selected'); 
+		    		return false;
+		    	} else {
+		    		executeViewModelFile();
+		    		return true;
+		    	}
+			} catch (e) {
+				alert(e);
+			}
+		}
+
+		function addModelFile(event) {
+			try {
+		    	if (modelFileTreeState == null) {
+		    		event.preventDefault();
+		    		popupAlert('', 'Edit ModelFile', 'An application must be selected'); 
+		    		return false;
+		    	}
+				//TODO add prompt
+	    		event.preventDefault();
+				showProgress('', getModelFileName(), 'Adding new ModelFile record...');
+				executeAddModelFile();
+			} catch (e) {
+				alert(e);
+			}
+		}
+		
+		function editModelFile(event) {
+			try {
+		    	if (modelFileTreeState == null) {
+		    		event.preventDefault();
+		    		popupAlert('', 'Edit ModelFile', 'An application must be selected'); 
+		    		return false;
+		    	}
+		    	executeEditModelFile();
+				return true;
+			} catch (e) {
+				alert(e);
+			}
+		}
+		
+		function saveModelFile(event) {
+			try {
+				//TODO add prompt
+	    		event.preventDefault();
+				showProgress('', getModelFileName(), 'Saving ModelFile record...');
+				executeSaveModelFile();
+			} catch (e) {
+				alert(e);
+			}
+		}
+		
+		function processMoveModelFile() {
+			if (modelFileTreeState == null) {
+				popupAlert('Move ModelFile', '', 'An application must be selected'); 
+				return false;
+			} else {
+				showModelFileTransferModelFileSelectDialog();
+				setCursorDefault();
+				return true;
+			}
+		}
+
+		function processRemoveModelFile(message) {
+			try {
+				if (message == null || message == '') {
+					promptRemoveModelFile();
+				} else {
+					warnCannotRemoveModelFile(message);
+				}
+			} catch(e) {
+				alert(e);
+			}
+		}
+				
+		function processModelFileTreeMouseDown(event, rowKey, nodeId, nodeType, nodeLabel) {
+			updateModelFileTreeState(event, rowKey, nodeId, nodeType, nodeLabel);
+			enableModelFileTreeActions();
+			try {
+				selectTreeNode(rowKey, nodeId);
+				if (event.which == 3) {
+					showTreeMenu(event);
+				}
+			} catch(e) {
+				alert(e);
+			}
+		}
+	
+		function showTreeMenu(event) {
+			//document.getElementById('pageForm:modelFileTree_applicationName').value = applicationName;
+			//var viewMembersMenuItem = #{rich:component('viewMembersMenuItem')};
+			//viewMembersMenuItem.element.context.textContent = "View Members for "+applicationName;
+			//show(hiddenField.element.context.textContent);
+			//jQuery('.headerOut').text('John');
+			//show(modelFileTreeState);
+			
+			var menu = #{rich:component('modelFileTreeMenu')};
+			menu.show(event, {
+				'applicationName': modelFileTreeState.nodeLabel, 
+				'canAdd': 'false'
+			});
+		}
+
+		function alertCannotViewMembers_NoSelection() {
+			popupAlert('', 'View Members', 'ModelFile must be selected');
+		}
+	
+		function alertCannotViewModelFile_NoSelection() {
+			popupAlert('', 'View ModelFile', 'ModelFile must be selected');
+		}
+	
+		function alertCannotNewModelFile_NoSelection() {
+			popupAlert('', 'New ModelFile', 'ModelFile must be selected');
+		}
+	
+		function alertCannotEditModelFile_NoSelection() {
+			popupAlert('', 'Edit ModelFile', 'ModelFile must be selected');
+		}
+	
+		function alertCannotRemoveModelFile_NoSelection() {
+			popupAlert('', 'Remove ModelFile', 'ModelFile must be selected');
+		}
+	
+		function warnCannotRemoveModelFile(reason) {
+			popupWarning(getModelFileName(), 'Cannot remove ModelFile record', reason);
+		}
+	
+		function promptRemoveModelFile() {
+			popupWarningPrompt(getModelFileName(), 'Remove ModelFile record from system', 'Do you wish to continue?', 'deleteModelFile', 'ModelFileTab');
+		}
+		</h:outputScript>
+	</a4j:outputPanel>
+</ui:composition>

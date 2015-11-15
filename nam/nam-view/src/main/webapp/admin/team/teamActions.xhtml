@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showTeamListPage()
+		  ** Goes to the Team Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTeamListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{teamPageManager.initializeTeamListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Team Records', 'Preparing Team List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showTeamTreePage()
+		  ** Goes to the Team Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTeamTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{teamPageManager.initializeTeamTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Team Records', 'Preparing Team Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showTeamManagementPage()
+		  ** Goes to the Team Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTeamManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{teamPageManager.initializeTeamManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Team Records', 'Preparing Team related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showTeamWizardPage()
+		  ** Goes to the Team Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showTeamWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{teamWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Team Records', 'Preparing Team information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{teamWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{teamWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewTeamDialog()
+		  ** Launches the Team Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewTeamDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{teamInfoManager.newTeam}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Team Records', 'Creating new Team...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showTeamDialog()"
+			render="teamModule, teamDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{teamInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="teamListPane" assignTo="#{teamInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{teamInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditTeamDialog()
+		  ** Launches the Team Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditTeamDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{teamInfoManager.editTeam}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Team Records', 'Preparing Team information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showTeamDialog()"
+			render="teamModule, teamDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{teamInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="teamListPane" assignTo="#{teamInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{teamInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

@@ -1,0 +1,134 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="providerWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Provider Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="providerWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{providerWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{providerWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="providerWizard"
+					offset="true" />
+				
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="providerWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{providerWizard.populateEnabled}"
+					manager="#{providerWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="providerMessages"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="providerWizardPreviousButton"
+					icon="/icons/arrow/PreviousPage16.gif"
+					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					rendered="#{providerWizard.backVisible}"
+					enabled="#{providerWizard.backEnabled}"
+					manager="#{providerWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Provider', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="providerMessages"
+					offset="true" />
+				
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="providerWizardNextButton"
+					icon="/icons/arrow/NextPage16.gif"
+					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					rendered="#{providerWizard.nextVisible}"
+					enabled="#{providerWizard.nextEnabled}"
+					manager="#{providerWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Provider', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="providerMessages"
+					offset="true" />
+				
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="providerWizardFinishButton"
+					icon="/icons/common/Default16.gif"
+					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					rendered="#{providerWizard.finishVisible}"
+					enabled="#{providerWizard.finishEnabled}"
+					manager="#{providerWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Provider', 'Validating and submitting new Provider...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="providerMessages"
+					offset="true" />
+				
+				<!-- cancel button -->
+				<aries:dialogButton
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="providerWizardCancelButton"
+					tooltip="Cancel creation of new Provider"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{providerWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Provider Management', 'Cancelling creation of Provider...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:controlPane>
+</ui:composition>

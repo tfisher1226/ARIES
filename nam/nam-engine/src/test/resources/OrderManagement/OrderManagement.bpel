@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bpel:process 
+	name="Ordering"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" 
+	xmlns:ns1="http://jboss.org/bpel/ordering"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.jboss.org/bpel/samples"
+	targetNamespace="http://www.jboss.org/bpel/samples">
+
+    <bpel:import 
+    	importType="http://schemas.xmlsoap.org/wsdl/"
+		namespace="http://jboss.org/bpel/ordering" 
+    	location="OrderingService.wsdl"/>
+
+    <bpel:import 
+    	importType="http://schemas.xmlsoap.org/wsdl/"
+		namespace="http://www.jboss.org/bpel/samples" 
+    	location="OrderingArtifacts.wsdl"/>
+    			 
+    <bpel:partnerLinks>
+        <bpel:partnerLink name="client" partnerLinkType="tns:Ordering" myRole="OrderingProvider"/>
+        <bpel:partnerLink name="ordering" partnerLinkType="ns1:OrderingService_PartnerLink" partnerRole="OrderingService_Provider"/>
+    </bpel:partnerLinks>
+  
+    <bpel:variables>
+    	<bpel:variable name="id"  type="xsd:long"/>
+        <bpel:variable name="newOrder" messageType="tns:NewOrderRequest"/>
+        <bpel:variable name="newOrderResponse" messageType="tns:NewOrderResponse"/>
+		<bpel:variable name="approveRequest" messageType="tns:ApproveOrderRequest"/>
+        <bpel:variable name="createOrderRequest"  messageType="ns1:CreateOrderRequest"/>
+        <bpel:variable name="createOrderResponse" messageType="ns1:CreateOrderResponse"/>
+        <bpel:variable name="setStateRequest" messageType="ns1:SetOrderStateRequest"/>
+        <bpel:variable name="itemInfoRequest" messageType="ns1:GetItemInfoRequest"/>
+        <bpel:variable name="itemInfoResponse" messageType="ns1:GetItemInfoResponse"/>
+        <bpel:variable name="setStateResponse" messageType="ns1:SetOrderStateResponse"/>
+    </bpel:variables>
+
+    <bpel:correlationSets>
+        <bpel:correlationSet name="correlator" properties="tns:sessionId"/>
+    </bpel:correlationSets>
+    
+    <bpel:sequence name="main">
+        <bpel:receive 
+        	name="receiveOrder"
+        	createInstance="yes" 
+			partnerLink="client"
+			portType="tns:OrderingPortType"
+			operation="order" 
+			variable="newOrder"/>
+
+		<bpel:assign validate="no" name="initalizeVariables">
+		
+			<!-- initialize createOrderRequest variable -->
+			<bpel:copy>
+        		<bpel:from>
+        			<bpel:literal>
+        				<ns1:createOrder>
+        					<itemId/>
+        					<quantity/>
+        				</ns1:createOrder>
+        			</bpel:literal>
+        		</bpel:from>
+        		<bpel:to variable="createOrderRequest" part="createOrder"/>
+        	</bpel:copy>
+        	
+			<!-- initialize createOrderResponse variable -->
+        	<bpel:copy>
+                <bpel:from>
+                	<bpel:literal>
+                		<tns:orderResponse>
+  							<orderId/>
+						</tns:orderResponse>
+					</bpel:literal>
+				</bpel:from>
+                <bpel:to variable="newOrderResponse" part="orderResponse"/>
+            </bpel:copy>
+        
+        	<!-- initialize setStateRequest variable -->
+        	<bpel:copy>
+				<bpel:from>
+                    	<bpel:literal>
+                    		<ns1:setState>
+                    			<orderId/>
+                    			<state/>
+                    		</ns1:setState>
+                    	</bpel:literal>
+                	</bpel:from>
+            	<bpel:to variable="setStateRequest" part="setState"/>
+			</bpel:copy>
+			
+			<!-- initialize itemInfoRequest variable -->
+			<bpel:copy>
+                <bpel:from>
+                	<bpel:literal>
+                		<ns1:getItemInfo>
+                			<id/>
+                		</ns1:getItemInfo>
+					</bpel:literal>
+                </bpel:from>
+            	<bpel:to part="getItemInfo" variable="itemInfoRequest"/>
+            </bpel:copy>
+        </bpel:assign>
+        
+        <bpel:assign validate="no" name="assignOrder">
+        	<bpel:copy>
+                <bpel:from part="order" variable="newOrder">
+                    <bpel:query>itemId</bpel:query>
+                </bpel:from>
+                <bpel:to part="createOrder" variable="createOrderRequest">
+                    <bpel:query>itemId</bpel:query>
+                </bpel:to>
+            </bpel:copy>
+            
+            <bpel:copy>
+                <bpel:from part="order" variable="newOrder">
+                    <bpel:query>quantity</bpel:query>
+                </bpel:from>
+                <bpel:to part="createOrder" variable="createOrderRequest">
+                    <bpel:query>quantity</bpel:query>
+                </bpel:to>
+            </bpel:copy>
+        </bpel:assign>
+        
+        <bpel:invoke 
+        	name="createNewOrder" 
+			partnerLink="ordering" 
+			operation="createOrder" 
+			inputVariable="createOrderRequest" 
+			outputVariable="createOrderResponse"/>
+        
+        <bpel:assign validate="no" name="assignId">
+            <bpel:copy>
+                <bpel:from part="createOrderResponse" variable="createOrderResponse">
+                    <bpel:query>return</bpel:query>
+                </bpel:from>
+                <bpel:to variable="id"/>
+            </bpel:copy>
+            
+            <bpel:copy>
+                <bpel:from variable="id"></bpel:from>
+                <bpel:to part="orderResponse" variable="newOrderResponse">
+                    <bpel:query>orderId</bpel:query>
+                </bpel:to>
+            </bpel:copy>
+        </bpel:assign>
+        
+        <bpel:reply 
+        	name="replyId" 
+			partnerLink="client" 
+			portType="tns:OrderingPortType" 
+			operation="order" 
+			variable="newOrderResponse">
+
+            <bpel:correlations>
+                <bpel:correlation set="correlator" initiate="yes"/>
+            </bpel:correlations>
+        </bpel:reply>
+        
+        <bpel:receive 
+        	name="receiveTechnicalApproval" 
+			partnerLink="client" 
+			portType="tns:OrderingPortType" 
+			operation="approve" 
+			variable="approveRequest">
+
+            <bpel:correlations>
+                <bpel:correlation set="correlator" initiate="no"/>
+            </bpel:correlations>
+        </bpel:receive>
+        
+        <bpel:if name="isApproved">
+        	<!-- BOOLEAN is handled as STRING - is this a BUG or what ??? -->
+			<bpel:condition>
+				$approveRequest.orderApproval/approved = 'true'
+			</bpel:condition>
+
+            <bpel:sequence>
+                <bpel:assign validate="no" name="assignStateApproved">
+                	<bpel:copy>
+                        <bpel:from variable="id"/>
+                        <bpel:to part="setState" variable="setStateRequest">
+                        	<bpel:query>orderId</bpel:query>
+                    	</bpel:to>
+                    </bpel:copy> 
+	                <bpel:copy>
+                    	<bpel:from>
+                            <bpel:literal>APPROVED</bpel:literal>
+                        </bpel:from>
+                        <bpel:to part="setState" variable="setStateRequest">
+                            <bpel:query>state</bpel:query>
+                        </bpel:to>
+                    </bpel:copy>
+                </bpel:assign>
+                
+                <bpel:invoke 
+                	name="saveState" 
+					partnerLink="ordering" 
+					portType="ns1:OrderingWS" 
+					operation="setState" 
+					inputVariable="setStateRequest"
+					outputVariable="setStateResponse"/>
+                
+                <bpel:assign validate="no" name="assignItemId">
+                    <bpel:copy>
+                        <bpel:from part="order" variable="newOrder">
+                            <bpel:query>itemId</bpel:query>
+                        </bpel:from>
+                        <bpel:to part="getItemInfo" variable="itemInfoRequest">
+                            <bpel:query>id</bpel:query>
+                        </bpel:to>
+                    </bpel:copy>
+                </bpel:assign>
+                
+                <bpel:invoke 
+                	name="getItemInfo" 
+					partnerLink="ordering" 
+					portType="ns1:OrderingWS" 
+					operation="getItemInfo" 
+					inputVariable="itemInfoRequest" 
+					outputVariable="itemInfoResponse"/>
+                			 
+                <bpel:if name="checkPrice">
+                    <bpel:condition>
+                    	$itemInfoResponse.getItemInfoResponse/return * $newOrder.order/quantity > 10000
+                    </bpel:condition>
+
+                    <bpel:sequence>
+                    	<bpel:receive 
+                    		name="receiveFinanceApprove" 
+							partnerLink="client" 
+							portType="tns:OrderingPortType" 
+							operation="approve" 
+							variable="approveRequest" >
+							
+                            <bpel:correlations>
+                                <bpel:correlation set="correlator" initiate="no"/>
+                            </bpel:correlations>
+                        </bpel:receive>
+
+                        <bpel:if name="isApproved">
+                            <bpel:condition>
+                            	$approveRequest.orderApproval/approved = 'true'
+                            </bpel:condition>
+
+                            <bpel:sequence name="Sequence">
+                            	<bpel:assign validate="no" name="assignStateFinished">
+                            		<bpel:copy>
+					                    <bpel:from variable="id"/>
+					                    <bpel:to part="setState" variable="setStateRequest">
+					                		<bpel:query>orderId</bpel:query>
+					                    </bpel:to>
+					                </bpel:copy> 
+				                    <bpel:copy>
+				                      	<bpel:from>
+				                            <bpel:literal>FINISHED</bpel:literal>
+				                        </bpel:from>
+				                        <bpel:to part="setState" variable="setStateRequest">
+			                                <bpel:query>state</bpel:query>
+			                            </bpel:to>
+				                    </bpel:copy>
+								</bpel:assign>
+									
+                                <bpel:invoke 
+                                	name="saveState" 
+									partnerLink="ordering" 
+									portType="ns1:OrderingWS" 
+									operation="setState" 
+									inputVariable="setStateRequest" 
+									outputVariable="setStateResponse"/>
+                            </bpel:sequence>
+
+                            <bpel:else>
+                                <bpel:sequence>
+                                    <bpel:assign validate="no" name="assignStateRejected">
+                                    	<bpel:copy>
+					                        <bpel:from variable="id"/>
+					                        <bpel:to part="setState" variable="setStateRequest">
+					                        	<bpel:query>orderId</bpel:query>
+					                    	</bpel:to>
+					                    </bpel:copy>
+				                      	<bpel:copy>
+				                        	<bpel:from>
+				                                <bpel:literal>REJECTED</bpel:literal>
+				                            </bpel:from>
+				                            <bpel:to part="setState" variable="setStateRequest">
+				                                <bpel:query>state</bpel:query>
+				                            </bpel:to>
+				                        </bpel:copy>
+									</bpel:assign>
+									
+                                    <bpel:invoke 
+                                    	name="saveState" 
+										partnerLink="ordering" 
+										portType="ns1:OrderingWS" 
+										operation="setState" 
+										inputVariable="setStateRequest" 
+										outputVariable="setStateResponse"/>
+                                </bpel:sequence>
+                            </bpel:else>
+                        </bpel:if>
+                    </bpel:sequence>
+                    
+                    <bpel:else>
+                    	<bpel:sequence>
+	                    	<bpel:assign validate="no" name="assignStateFinished">
+	                    		<bpel:copy>
+                        			<bpel:from variable="id"/>
+                        			<bpel:to part="setState" variable="setStateRequest">
+                        				<bpel:query>orderId</bpel:query>
+                    				</bpel:to>
+                    			</bpel:copy> 
+			                    <bpel:copy>
+		                        	<bpel:from>
+		                                <bpel:literal>FINISHED</bpel:literal>
+		                            </bpel:from>
+								    <bpel:to part="setState" variable="setStateRequest">
+		                                <bpel:query>state</bpel:query>
+		                            </bpel:to>
+								</bpel:copy>
+			                </bpel:assign>
+			                
+			                <bpel:invoke 
+			                	name="saveState" 
+								partnerLink="ordering" 
+								operation="setState" 
+								portType="ns1:OrderingWS" 
+								inputVariable="setStateRequest" 
+								outputVariable="setStateResponse"/>
+                        </bpel:sequence>
+                    </bpel:else>                  
+                </bpel:if>
+            </bpel:sequence>
+            
+            <bpel:else>
+                <bpel:sequence>
+                    <bpel:assign validate="no" name="assignStateRejected">
+                    	<bpel:copy>
+                            <bpel:from variable="id"/>
+                            <bpel:to part="setState" variable="setStateRequest">
+                                <bpel:query>orderId</bpel:query>
+                            </bpel:to>
+                        </bpel:copy>
+                      	<bpel:copy>
+                        	<bpel:from>
+                                <bpel:literal>REJECTED</bpel:literal>
+                            </bpel:from>
+                            <bpel:to part="setState" variable="setStateRequest">
+                                <bpel:query>state</bpel:query>
+                            </bpel:to>
+                        </bpel:copy>
+                    </bpel:assign>
+                
+                    <bpel:invoke 
+                    	name="setState" 
+						partnerLink="ordering" 
+						portType="ns1:OrderingWS" 
+						operation="setState" 
+						inputVariable="setStateRequest" 
+						outputVariable="setStateResponse"/>
+                </bpel:sequence>
+            </bpel:else>
+        </bpel:if>
+        
+        <bpel:exit name="Quit" />
+    </bpel:sequence>
+</bpel:process>

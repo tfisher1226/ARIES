@@ -1,0 +1,85 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="auto"
+		margin="0px"
+		backgroundColor="inherit">
+
+		<aries:formPane
+			width="auto"
+			borderWidth="0px"
+			borderColor="#aaa"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Teams" />
+				<ui:param name="icon" value="/icons/nam/Team16.gif" />
+				<ui:param name="id" value="userTeamsButton" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="action" value="initializeUserTeamsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Teams', 'Preparing Team information...')" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Roles" />
+				<ui:param name="icon" value="/icons/nam/Role16.gif" />
+				<ui:param name="id" value="userRolesButton" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="action" value="initializeUserRolesView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Roles', 'Preparing Role information....')" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Actions" />
+				<ui:param name="icon" value="/icons/nam/Action16.gif" />
+				<ui:param name="id" value="userActionsButton" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="action" value="initializeUserActionsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Actions', 'Preparing Action information....')" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Permissions" />
+				<ui:param name="icon" value="/icons/nam/Permission16.gif" />
+				<ui:param name="id" value="userPermissionsButton" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="action" value="initializeUserPermissionsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Permissions', 'Preparing Permission information....')" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Preferences" />
+				<ui:param name="icon" value="/icons/common/Preferences16.gif" />
+				<ui:param name="id" value="userPreferencesButton" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="action" value="initializeUserPreferencesView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Preferences', 'Preparing Preferences information....')" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Registrations" />
+				<ui:param name="icon" value="/icons/nam/Registration16.gif" />
+				<ui:param name="id" value="userRegistrationsButton" />
+				<ui:param name="manager" value="#{userPageManager}" />
+				<ui:param name="action" value="initializeUserRegistrationsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Registrations', 'Preparing Registration information....')" />
+			</ui:include>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

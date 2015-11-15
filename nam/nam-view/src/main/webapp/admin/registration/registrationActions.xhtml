@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+	    
+	    
+	<!--
+		  ** showRegistrationListPage()
+		  ** Goes to the Registration Management List Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showRegistrationListPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{registrationPageManager.initializeRegistrationListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Registration Records', 'Preparing Registration List...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showRegistrationTreePage()
+		  ** Goes to the Registration Management Tree Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showRegistrationTreePage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{registrationPageManager.initializeRegistrationTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Registration Records', 'Preparing Registration Tree...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showRegistrationManagementPage()
+		  ** Goes to the Registration Management Overview Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showRegistrationManagementPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{registrationPageManager.initializeRegistrationManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Registration Records', 'Preparing Registration related information...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showRegistrationWizardPage()
+		  ** Goes to the Registration Wizard Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showRegistrationWizardPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{registrationWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Registration Records', 'Preparing Registration information...')">
+		
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{registrationWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{registrationWizard.origin}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showNewRegistrationDialog()
+		  ** Launches the Registration Dialog in "new" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showNewRegistrationDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{registrationInfoManager.newRegistration}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Registration Records', 'Creating new Registration...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showRegistrationDialog()"
+			render="registrationModule, registrationDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{registrationInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="registrationListPane" assignTo="#{registrationInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{registrationInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showEditRegistrationDialog()
+		  ** Launches the Registration Dialog in "edit" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showEditRegistrationDialog" 
+			execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{registrationInfoManager.editRegistration}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Registration Records', 'Preparing Registration information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showRegistrationDialog()"
+			render="registrationModule, registrationDialog">
+		
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{registrationInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="registrationListPane" assignTo="#{registrationInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{registrationInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

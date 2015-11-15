@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showServiceListPage()
+		  ** Goes to the Service Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showServiceListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{servicePageManager.initializeServiceListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Service Records', 'Preparing Service List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showServiceTreePage()
+		  ** Goes to the Service Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showServiceTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{servicePageManager.initializeServiceTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Service Records', 'Preparing Service Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showServiceManagementPage()
+		  ** Goes to the Service Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showServiceManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{servicePageManager.initializeServiceManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Service Records', 'Preparing Service related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showServiceWizardPage()
+		  ** Goes to the Service Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showServiceWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{serviceWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Service Records', 'Preparing Service information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{serviceWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{serviceWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewServiceDialog()
+		  ** Launches the Service Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewServiceDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{serviceInfoManager.newService}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Service Records', 'Creating new Service...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showServiceDialog()"
+			render="serviceModule, serviceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{serviceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="serviceListPane" assignTo="#{serviceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{serviceInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditServiceDialog()
+		  ** Launches the Service Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditServiceDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{serviceInfoManager.editService}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Service Records', 'Preparing Service information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showServiceDialog()"
+			render="serviceModule, serviceDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{serviceInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="serviceListPane" assignTo="#{serviceInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{serviceInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

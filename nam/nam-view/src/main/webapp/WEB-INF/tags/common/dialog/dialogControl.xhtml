@@ -1,0 +1,159 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+		<aries:controlPane>
+			<aries:controlbar>
+				<aries:toolbarGroup>
+					<aries:toolButton
+						id="#{dialog}HelpButton"
+						mode="client"
+						title="#{title}"
+						heading="#{heading}"
+						tooltip="Show help on #{title}: #{heading}"
+						icon="/icons/help/Help24.gif"
+						onclick="popupWarning('NAM HELP', 'Placeholder for specific help window', 'Simple help documentation will be provided here');" />
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup 
+					location="right">
+					
+					<!--  
+					<f:ajax>
+					<h:commandLink
+						value="Try me"
+						execute="@region"
+						immediate="true"
+						bypassUpdates="true"
+						limitRender="true"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Refreshing information...');"
+						oncomplete="setCursorDefault(eventSource); hideProgress();"
+						render="#{domain}Content" />
+					</f:ajax>
+					
+					<a4j:commandLink
+						value="Try me3"
+						execute="@none"
+						immediate="true"
+						bypassUpdates="true"
+						limitRender="true"
+						action="#{globals.doNothing}"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Refreshing information...');"
+						oncomplete="setCursorDefault(eventSource); hideProgress();"
+						render="@none">
+					</a4j:commandLink>
+					-->
+					
+					<aries:dialogButton
+						label=""
+						id="#{dialog}RefreshButton"
+						tooltip="Refresh with information from server"
+						icon="/icons/common/Refresh16.gif"
+						iconDisabled="/icons/common/RefreshDisabled16.gif"
+						execute="@region"
+						immediate="false"
+						bypassUpdates="false"
+						limitRender="true"
+						manager="#{manager}"
+						action="refresh"
+						onclickXX="alert('#{dialog}')"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Refreshing information...');"
+						oncomplete="setCursorDefault(eventSource); hideProgress()"
+						render="#{dialog}Header #{dialog}Content"
+						padding="2px 4px"
+						offset="true" />
+	
+					<aries:dialogButton
+						label=""
+						id="#{dialog}PopulateButton"
+						tooltip="Populate fields with test information"
+						icon="/icons/common/Import16.gif"
+						iconDisabled="/icons/common/ImportDisabled16.gif"
+						execute="@region"
+						immediate="false"
+						bypassUpdates="false"
+						limitRender="true"
+						manager="#{manager}"
+						action="populate"
+						onclickXX="alert('#{dialog}')"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Populating with test information...');"
+						oncomplete="setCursorDefault(eventSource); hideProgress()"
+						render="#{dialog}Header #{dialog}Content"
+						padding="2px 4px"
+						offset="true" />
+						
+					<!-- 
+						tooltip="Save changes to server"
+					 -->
+	
+					<aries:dialogButton
+						label="Save"
+						id="#{dialog}SaveButton"
+						rendered="#{not empty action}"
+						icon="/icons/common/Save16.gif"
+						iconDisabled="/icons/common/SaveDisabled16.gif"
+						mode="ajax"
+						execute="@region"
+						immediate="false"
+						bypassUpdates="false"
+						limitRender="false"
+						manager="#{manager}"
+						action="#{action}"
+						onclickXXX="alert('#{render}'); alert('#{manager}'); alert('#{action}')"
+						onclick="setCursorWait(this); showProgress('Nam', '#{heading}', 'Processing request...');"
+						oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); if (!errorsExist()) {hide#{dialog}(); #{oncomplete}}; hideProgress()"
+						render="#{dialog}Header #{dialog}Content #{render}"
+						padding="2px 6px"
+						offset="true" />
+	
+					<aries:dialogButton
+						label="Cancel"
+						id="#{dialog}CancelButton"
+						rendered="#{not empty action}"
+						execute="@this"
+						immediate="true"
+						bypassUpdates="true"
+						limitRender="true"
+						manager="#{manager}"
+						action="cancel"
+						mouseup="setCursorWait(this)"
+						onclick="hide#{dialog}()"
+						onclickXX="alert('#{manager}'); hide#{dialog}()"
+						oncomplete="setCursorDefault(eventSource)"
+						render="#{dialog}Module"
+						padding="2px 6px"
+						offset="true" />
+	
+					<!--
+					<aries:dialogButton
+						label="Cancel"
+						id="#{dialog}CancelButton"
+						rendered="#{not empty action}"
+						execute="@none"
+						mode="client"
+						offset="true"
+						onmouseup="hide#{dialog}()" />
+						-->
+						
+					<aries:dialogButton
+						label="Close"
+						id="#{dialog}CloseButton"
+						rendered="#{empty action}"
+						execute="@none"
+						mode="client"
+						mouseup="setCursorWait(this)"
+						onclick="hide#{dialog}()" 
+						padding="2px 6px"
+						offset="true" />
+				</aries:toolbarGroup>
+			</aries:controlbar> 
+		</aries:controlPane>
+</ui:composition>

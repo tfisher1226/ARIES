@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:groupPane
+		height="150" 
+		backgroundColor="inherit"
+		label="Person Name Information">
+		
+		<ui:param name="width" value="340" />
+		<ui:param name="labelWidth" value="110" />
+			
+		<aries:spacer height="8" />
+		<aries:inputText 
+			id="#{section}FirstName" 
+			label="First name" 
+			labelWidth="84" 
+			value="#{manager.personName.firstName}"
+			onkeydown="return process#{section}KeyDown(event)">
+		</aries:inputText>
+		
+		<aries:spacer height="8" />
+		<aries:inputText 
+			id="#{section}LastName" 
+			label="Last name" 
+			labelWidth="84" 
+			value="#{manager.personName.lastName}"
+			onkeydown="return process#{section}KeyDown(event)">
+		</aries:inputText>
+		
+		<aries:spacer height="8" />
+		<aries:inputText 
+			id="#{section}MiddleInitial" 
+			label="Middle initial" 
+			labelWidth="84" 
+			value="#{manager.personName.middleInitial}"
+			onkeydown="return process#{section}KeyDown(event)">
+		</aries:inputText>
+	</aries:groupPane>
+</ui:composition>
+
+	<!--  
+	<a4j:outputPanel id="#{section}Panel">
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Person Name</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" cellpadding="0" cellspacing="0" columns="1" columnClasses="formColumn" style="margin: 12px 10px 12px 10px">		
+
+					<aries:spacer height="2"/>
+					<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{section}FirstNameLabel" styleClass="formLabel text12" for="#{section}FirstNameField" style="display: block; width: 50px">First</h:outputLabel>
+						<h:inputText id="#{section}FirstNameField" styleClass="formInput" value="#{manager.personName.firstName}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" />
+					</h:panelGrid>
+			
+					<h:panelGroup rendered="#{manager.middleInitialEnabled}">
+						<aries:spacer height="8"/>
+						<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+							<h:outputLabel id="#{section}MiddleNameLabel" styleClass="formLabel text12" for="#{section}MiddleNameField" style="display: block; width: 50px">Middle</h:outputLabel>
+							<h:inputText id="#{section}MiddleNameField" styleClass="formInput" value="#{manager.personName.middleInitial}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" />
+						</h:panelGrid>
+					</h:panelGroup>
+
+					<aries:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{section}LastNameLabel" styleClass="formLabel text12" for="#{section}LastNameField" style="display: block; width: 50px">Last</h:outputLabel>
+						<h:inputText id="#{section}LastNameField" styleClass="formInput" value="#{manager.personName.lastName}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" />
+					</h:panelGrid>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+	-->

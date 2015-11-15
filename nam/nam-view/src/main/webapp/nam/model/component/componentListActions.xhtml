@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** componentListActions
+	  ** a4j:jsFunction methods to support the Component List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var componentListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshComponentList(event)
+		  ** Refreshes the current Component List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshComponentList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{componentListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Component Records', 'Refreshing current Component List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="componentListActions, componentListMenu, componentListToolbar, componentListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromComponentList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromComponentList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="componentListActions, componentListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{componentListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{componentListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="component" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromComponentList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromComponentList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="componentListActions, componentListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{componentListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{componentListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{componentWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="componentListActions, componentListMenu, componentListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** componentListActions
+		  ** Javascript methods to support the Component List.
+		  -->
+		
+		<a4j:outputPanel
+			id="componentListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getComponentListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getComponentListRowKey() {
+					if (componentListState != null)
+						return componentListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getComponentListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getComponentListRowLabel() {
+					if (componentListState != null)
+						return componentListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeComponentListState()
+				  ** Initializes and verifies Component List state information.
+				  -->
+					
+				function initializeComponentListState() {
+					try {
+						var rowIndex = '#{componentListManager.selectedRecordIndex}';
+						var recordKey = '#{componentListManager.selectedRecordKey}';
+						var recordLabel = '#{componentListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateComponentListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateComponentListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Component List.
+				  -->
+					
+				function updateComponentListState(event, rowIndex, recordKey, recordLabel) {
+					componentListState = new Object();
+					componentListState.rowIndex = rowIndex;
+					//componentListState.recordId = recordId;
+					componentListState.recordKey = recordKey;
+					componentListState.recordLabel = recordLabel;
+					//show(componentListState);
+				}
+					
+					
+				<!--
+				  ** enableComponentListActions(type)
+				  ** Enables (or disables) Component List actions based on current client-side state.
+				  -->
+					
+				function enableComponentListActions(type) {
+					//enableButton('componentListViewButton');
+					enableButton('componentListNewButton');
+					enableButton('componentListEditButton');
+					enableButton('componentListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processComponentListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Component List.
+				  -->
+					
+				function processComponentListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateComponentListState(event, rowIndex, recordKey, recordLabel);
+					enableComponentListActions('component');
+					try {
+						executeSelectFromComponentList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processComponentListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Component List.
+				  -->
+					
+				function processComponentListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Component Records', 'Preparing Component ' + recordLabel + ' for editing...');
+						executeActionFromComponentList(rowIndex, recordKey, 'Component', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('componentListTable')});
+						if (componentListState != null) {
+							var label = componentListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (componentListState != null) {
+							var label = componentListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (componentListState != null) {
+							var label = componentListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (componentListState != null)
+						label = componentListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'componentListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

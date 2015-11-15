@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<definitions 
+	name="Ordering" 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://jboss.org/bpel/ordering" 
+	xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" 
+	xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.jboss.org/bpel/samples" 
+	targetNamespace="http://www.jboss.org/bpel/samples">
+
+	<plnk:partnerLinkType name="Ordering">
+		<plnk:role name="OrderingProvider" portType="tns:OrderingPortType" />
+	</plnk:partnerLinkType>
+
+	<vprop:property name="sessionId" type="xsd:long" />
+
+	<vprop:propertyAlias 
+		messageType="tns:ApproveOrderRequest"
+		part="orderApproval" 
+		propertyName="tns:sessionId">
+		<vprop:query>orderId</vprop:query>
+	</vprop:propertyAlias>
+
+	<vprop:propertyAlias 
+		messageType="tns:NewOrderResponse"
+		part="orderResponse" 
+		propertyName="tns:sessionId">
+		<vprop:query>orderId</vprop:query>
+	</vprop:propertyAlias>
+
+	<types>
+		<xsd:schema 
+			attributeFormDefault="unqualified"
+			elementFormDefault="unqualified" 
+			targetNamespace="http://www.jboss.org/bpel/samples">
+
+			<xsd:element name="id">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="value" type="xsd:long" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="order">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="itemId" type="xsd:long" />
+						<xsd:element name="quantity" type="xsd:int" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="orderResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="orderId" type="xsd:long" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="orderApproval">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="orderId" type="xsd:long" />
+						<xsd:element name="correlationId" type="xsd:string" />
+						<xsd:element name="approvalType" type="tns:ApprovalType" />
+						<xsd:element name="approved" type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:simpleType name="ApprovalType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="TECHNICAL" />
+					<xsd:enumeration value="FINANCIAL" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+	</types>
+
+	<message name="NewOrderRequest">
+		<part element="tns:order" name="order" />
+	</message>
+	
+	<message name="NewOrderResponse">
+		<part element="tns:orderResponse" name="orderResponse" />
+	</message>
+	
+	<message name="ApproveOrderRequest">
+		<part element="tns:orderApproval" name="orderApproval" />
+	</message>
+
+	<portType name="OrderingPortType">
+		<operation name="order">
+			<input message="tns:NewOrderRequest" />
+			<output message="tns:NewOrderResponse" />
+		</operation>
+		<operation name="approve">
+			<input message="tns:ApproveOrderRequest" />
+		</operation>
+	</portType>
+
+	<binding name="OrderingBinding" type="tns:OrderingPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		
+		<operation name="order">
+			<soap:operation soapAction="http://www.jboss.org/bpel/samples/order" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+		
+		<operation name="approve">
+			<soap:operation soapAction="http://www.jboss.org/bpel/samples/approve" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+		</operation>
+	</binding>
+
+	<service name="OrderingService">
+		<port binding="tns:OrderingBinding" name="OrderingPort">
+			<soap:address location="http://localhost:8080/orderingWS" />
+		</port>
+	</service>
+</definitions>

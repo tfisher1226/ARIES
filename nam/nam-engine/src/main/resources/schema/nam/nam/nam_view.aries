@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<view
+	xmlns="http://nam/ui" 
+	xmlns:nam="http://nam/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/ui nam-view-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/nam/nam_model.aries" />
+
+	<domain>org.aries</domain>
+	<name>nam</name>
+
+	<relations>
+		<relation>
+			<name>Application</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>
+			<container>Domain</container>
+			<type>Application</type>
+		</relation>
+
+		<relation>
+			<name>Application</name>
+			<pattern>managedBy</pattern>
+			<container>Application</container>
+			<type>Domain</type>
+			<type>Module</type>		
+			<type>Service</type>
+			<type>Element</type>
+			<type>Component</type>
+			<type>Provider</type>
+		</relation>
+
+		<relation>
+			<name>Application</name>
+			<pattern>memberOf</pattern>
+			<container>Application</container>
+			<type>Module</type>		
+			<type>Service</type>
+			<type>Element</type>
+			<type>Component</type>
+			<type>Provider</type>
+		</relation>
+
+		<relation>
+			<name>Attribute</name>
+			<pattern>containedBy</pattern>
+			<container>Element</container>
+			<container>Fault</container>
+			<type>Attribute</type>
+		</relation>
+
+		<relation>
+			<name>Element</name>
+			<pattern>containedBy</pattern>
+			<container>Namespace</container>		
+			<type>Element</type>
+		</relation>
+
+		<relation>
+			<name>Element</name>
+			<pattern>memberOf</pattern>
+			<container>Element</container>
+			<type>Namespace</type>
+			<type>Element</type>	
+			<type>Enumeration</type>	
+			<type>Fault</type>
+		</relation>
+		
+		<relation>
+			<name>Messaging</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>		
+			<type>Messaging</type>
+		</relation>
+
+		<relation>
+			<name>Messaging</name>
+			<pattern>memberOf</pattern>
+			<container>Messaging</container>
+			<type>Overview</type>
+			<type>Import</type>
+			<type>Domain</type>
+			<type>Channel</type>
+			<type>Listener</type>	
+			<type>Transport</type>	
+			<type>Interactor</type>
+			<type>Provider</type>
+		</relation>
+
+		<relation>
+			<name>Model</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>		
+			<type>Model</type>
+		</relation>
+		
+		<relation>
+			<name>Model</name>
+			<pattern>memberOf</pattern>
+			<container>Model</container>
+			<type>Package</type>
+			<type>Import</type>
+		</relation>
+		
+		<relation>
+			<name>Module</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>		
+			<container>Application</container>
+			<type>Module</type>
+		</relation>
+		
+		<relation>
+			<name>Module</name>
+			<pattern>memberOf</pattern>
+			<container>Module</container>
+			<type>Domain</type>
+			<type>Service</type>
+			<type>Element</type>
+			<type>Component</type>
+			<type>Provider</type>
+		</relation>
+
+		<relation>
+			<name>Module</name>
+			<pattern>memberOf</pattern>
+			<container>Module</container>
+			<type>Domain</type>
+			<type>Service</type>
+			<type>Element</type>
+			<type>Component</type>
+			<type>Provider</type>
+		</relation>
+		
+		<relation>
+			<name>Namespace</name>
+			<pattern>containedBy</pattern>
+			<container>Information</container>		
+			<container>Application</container>
+			<type>Namespace</type>
+		</relation>
+		
+		<relation>
+			<name>Network</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>
+			<container>Domain</container>
+			<type>Network</type>
+		</relation>
+
+		<relation>
+			<name>Network</name>
+			<pattern>memberOf</pattern>
+			<container>Network</container>
+			<type>Domain</type>
+			<type>Master</type>
+			<type>Minion</type>
+			<type>Pod</type>
+			<type>Container</type>
+			<type>Service</type>
+			<type>Volume</type>
+		</relation>
+
+		<relation>
+			<name>Persistence</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>		
+			<type>Persistence</type>
+		</relation>
+
+		<relation>
+			<name>Persistence</name>
+			<pattern>memberOf</pattern>
+			<container>Persistence</container>
+			<type>Overview</type>
+			<type>Import</type>
+			<type>Domain</type>
+			<type>Unit</type>
+			<type>Source</type>
+			<type>Adapter</type>
+			<type>Entity</type>	
+			<type>Query</type>	
+			<type>Repository</type>
+			<type>Provider</type>
+		</relation>
+		
+		<relation>
+			<name>Project</name>
+			<pattern>memberOf</pattern>
+			<container>Project</container>
+			<type>Application</type>
+			<type>Module</type>
+			<type>Network</type>
+			<type>Provider</type>
+		</relation>
+		
+		<relation>
+			<name>Provider</name>
+			<pattern>containedBy</pattern>
+			<container>Messaging</container>		
+			<container>Persistence</container>
+			<type>Provider</type>
+		</relation>
+
+		<relation>
+			<name>Provider</name>
+			<pattern>memberOf</pattern>
+			<container>Provider</container>
+			<type>CacheProvider</type>
+			<type>MessagingProvider</type>
+			<type>PersistenceProvider</type>
+		</relation>
+		
+		<relation>
+			<name>Reference</name>
+			<pattern>containedBy</pattern>
+			<container>Element</container>
+			<type>Reference</type>
+		</relation>
+		
+		<relation>
+			<name>Service</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>
+			<container>Application</container>
+			<container>Module</container>		
+			<container>Domain</container>
+			<type>Service</type>
+		</relation>
+
+		<relation>
+			<name>Service</name>
+			<pattern>managedBy</pattern>
+			<container>Service</container>
+			<type>Domain</type>
+			<type>Listener</type>
+			<type>Operation</type>
+			<type>Component</type>
+		</relation>
+		
+		<relation>
+			<name>Service</name>
+			<pattern>memberOf</pattern>
+			<container>Service</container>
+			<type>Listener</type>
+			<type>Operation</type>
+			<type>Component</type>
+		</relation>
+		
+		<relation>
+			<name>User</name>
+			<pattern>containedBy</pattern>
+			<container>Project</container>		
+			<type>User</type>
+		</relation>
+
+		<relation>
+			<name>User</name>
+			<pattern>memberOf</pattern>
+			<container>User</container>
+			<type>Team</type>
+			<type>Role</type>
+			<type>Action</type>
+			<type>Permission</type>
+			<type>Preferences</type>
+			<type>Registration</type>
+		</relation>
+		
+		<relation>
+			<name>UserInterface</name>
+			<pattern>containedBy</pattern>
+			<container>Application</container>
+			<type>UserInterface</type>
+		</relation>
+
+		<relation>
+			<name>UserInterface</name>
+			<pattern>memberOf</pattern>
+			<container>UserInterface</container>
+			<type>Language</type>
+			<type>Graphics</type>
+			<type>Section</type>
+			<type>Layout</type>
+			<type>Control</type>
+			<type>Interactor</type>
+			<type>Conversation</type>
+		</relation>
+	</relations>
+	
+	<controls>
+		<!--
+		<table name="applicationList">
+			<tableColumn width="100" label="Project" value="project.name" /> 
+		</table>
+		-->
+		
+		<tree name="networkTree">
+			<treeNodes>
+
+				<!-- root node -->
+
+				<rootNode type="Project">
+					<subNode type="NetworkDomains" data="Networks" />
+				</rootNode>
+                
+				<!-- folder nodes -->
+
+				<treeNode folder="true" type="NetworkDomains" element="Network" label="Networks" expanded="true">
+					<subNode type="NetworkDomain" data="groupId" />
+				</treeNode>
+
+				<treeNode folder="true" type="Masters" element="Master" label="Control Nodes">
+					<subNode type="Master" />
+				</treeNode>
+
+				<treeNode folder="true" type="Minions" element="Minion" label="Worker Nodes">
+					<subNode type="Minion" />
+				</treeNode>
+
+				<treeNode folder="true" type="Services" element="Service" label="Services">
+					<subNode type="Service" />
+				</treeNode>
+
+				<treeNode folder="true" type="Containers" element="Container" label="Containers">
+					<subNode type="Container" />
+				</treeNode>
+
+				<treeNode folder="true" type="Volumes" element="Volume" label="Volumes">
+					<subNode type="Volume" />
+				</treeNode>
+
+				<!-- domain nodes -->
+
+				<treeNode domain="true" type="NetworkDomain" element="Network" data="domain">
+					<subNode type="Network" />
+				</treeNode>
+
+				<!-- element nodes -->
+
+				<treeNode element="Network">
+					<subNode type="Masters" data="" />
+					<subNode type="Minions" data="" />
+				</treeNode>
+
+				<treeNode element="Master">
+				</treeNode>
+
+				<treeNode element="Minion">
+					<subNode type="Pod" data="" />
+				</treeNode>
+
+				<treeNode element="Pod">
+					<subNode type="Services" data="" />
+					<subNode type="Containers" data="" />
+					<subNode type="Volumes" data="" />
+				</treeNode>
+
+				<treeNode element="Service">
+				</treeNode>
+
+				<treeNode element="Container">
+				</treeNode>
+
+				<treeNode element="Volume">
+				</treeNode>
+			</treeNodes>
+		</tree>
+
+		<tree name="applicationTree">
+			<treeNodes>
+
+				<!-- root node -->
+
+				<rootNode type="Project">
+					<subNode type="ModuleDomains" data="Modules" />
+					<subNode type="ApplicationDomains" data="Applications" />
+				</rootNode>
+
+				<!-- folder nodes -->
+
+				<treeNode folder="true" type="ApplicationDomains" element="Application" label="Applications" expanded="true">
+					<subNode type="ApplicationDomain" data="groupId" />
+				</treeNode>
+
+				<treeNode folder="true" type="ModuleDomains" element="Module" label="Modules" expanded="true">
+					<subNode type="ModuleDomain" data="groupId" />
+				</treeNode>
+
+				<treeNode folder="true" type="Modules" element="Module" label="Modules">
+					<subNode type="Module" />
+				</treeNode>
+
+				<treeNode folder="true" type="Elements" element="Element" label="Elements">
+					<subNode type="Element" />
+				</treeNode>
+				
+				<treeNode folder="true" type="Services" element="Service" label="Services">
+					<subNode type="Service" />
+				</treeNode>
+
+
+				<!-- domain nodes -->
+
+				<treeNode domain="true" type="ApplicationDomain" element="Application" data="groupId">
+					<subNode type="Application" />
+				</treeNode>
+
+				<treeNode domain="true" type="ModuleDomain" element="Module" data="groupId">
+					<subNode type="Module" />
+				</treeNode>
+
+
+				<!-- element nodes -->
+
+				<treeNode element="Application">
+					<subNode type="Modules" data="" />
+					<subNode type="Elements" data="" />
+					<subNode type="Services" data="" />
+				</treeNode>
+
+				<treeNode element="Module">
+					<subNode type="Elements" data="" />
+					<subNode type="Services" data="" />
+				</treeNode>
+
+				<treeNode element="Element">
+				</treeNode>
+				
+				<treeNode element="Service">
+				</treeNode>
+			</treeNodes>
+		</tree>
+
+		<tree name="modelTree">
+			<treeNodes>
+
+				<!-- root node -->
+
+				<rootNode type="Project">
+					<subNode type="ModelDomains" data="Models" />
+				</rootNode>
+
+				<!-- folder nodes -->
+
+				<treeNode folder="true" type="ModelDomains" element="Model" label="Models" expanded="true">
+					<subNode type="ModelDomain" data="package" />
+				</treeNode>
+
+				<treeNode folder="true" type="Models" element="Model" label="Models">
+					<subNode type="Model" />
+				</treeNode>
+
+				<!-- domain nodes -->
+
+				<treeNode domain="true" type="ModelDomain" element="Model" data="package">
+					<subNode type="Model" />
+				</treeNode>
+
+				<!-- element nodes -->
+
+				<treeNode element="Model">
+				</treeNode>
+			</treeNodes>
+		</tree>
+		
+		<tree name="importTree">
+			<treeNodes>
+
+				<!-- root node -->
+
+				<rootNode type="Project">
+					<subNode type="ImportDomains" data="Imports" />
+				</rootNode>
+
+				<!-- folder nodes -->
+
+				<treeNode folder="true" type="ImportDomains" element="Import" label="Imports" expanded="true">
+					<subNode type="ImportDomain" data="uri" />
+				</treeNode>
+
+				<!-- domain nodes -->
+
+				<treeNode domain="true" type="ImportDomain" element="Import" data="uri">
+					<subNode type="Import" />
+				</treeNode>
+
+				<!-- element nodes -->
+
+				<treeNode element="Import">
+				</treeNode>
+			</treeNodes>
+		</tree>
+		
+		
+		<tree name="namespaceTree">
+			<treeNodes>
+
+				<!-- root node -->
+
+				<rootNode type="Project">
+					<subNode type="NamespaceDomains" data="Namespaces" />
+				</rootNode>
+
+
+				<!-- folder nodes -->
+
+				<treeNode folder="true" type="NamespaceDomains" element="Namespace" label="Namespaces" expanded="true">
+					<subNode type="NamespaceDomain" data="uri" />
+				</treeNode>
+
+
+				<!-- domain nodes -->
+
+				<treeNode domain="true" type="NamespaceDomain" element="Namespace" data="uri">
+					<subNode type="Namespace" />
+				</treeNode>
+
+
+				<!-- element nodes -->
+
+				<treeNode element="Namespace">
+				</treeNode>
+			</treeNodes>
+		</tree>
+
+		<tree name="persistenceTree">
+			<treeNodes>
+
+				<!-- root node -->
+
+				<rootNode type="Project">
+					<subNode type="PersistenceDomains" data="Persistence" />
+				</rootNode>
+
+				<!-- folder nodes -->
+
+				<treeNode folder="true" type="PersistenceDomains" element="Persistence" label="Persistences" expanded="true">
+					<subNode type="PersistenceDomain" data="domain" />
+				</treeNode>
+
+				<!-- domain nodes -->
+
+				<treeNode domain="true" type="PersistenceDomain" element="Persistence" data="domain">
+					<subNode type="Persistence" />
+				</treeNode>
+
+				<!-- element nodes -->
+
+				<treeNode element="Persistence">
+				</treeNode>
+			</treeNodes>
+		</tree>
+		
+		<!--
+		<table name="applicationTable">
+			<tableColumns>
+				<tableColumn width="100" label="Project" data="project.name" link="projectView" />
+				<tableColumn width="100" label="Name" data="application.name" link="applicationView" />
+				<tableColumn width="100" label="Namespace" data="application.namespace" />
+				<tableColumn width="100" label="Context Root" data="application.contextRoot" />
+				<tableColumn width="100" label="Group Id" data="application.groupId" />
+				<tableColumn width="100" label="Artifact Id" data="application.artifactId" />
+				<tableColumn width="100" label="Creator" data="application.creator" />
+				<tableColumn width="100" label="Creation Date" data="application.creationDate" />
+				<tableColumn width="100" label="Last Update" data="application.lastUpdate" />
+			</tableColumns>
+		</table>
+		-->
+	</controls>
+	
+	<!--
+	<domain>org.aries</domain>
+	<name>nam</name>
+	
+	<languages>
+		<language name="English" code="en" />
+		<language name="Vietnamese" code="vn" />
+	</languages>
+	
+	<area name="public">
+		<pages>
+			<page name="home">
+				<sections>
+					<section name="nam-model">
+					</section>
+				</sections>
+			</page>
+		</pages>
+	</area>
+	-->
+</view>
+

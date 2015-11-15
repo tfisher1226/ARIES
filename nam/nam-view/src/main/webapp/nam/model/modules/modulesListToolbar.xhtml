@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="modulesListToolbar">
+	
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="modulesListNewButton"
+				value="New Modules..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Modules Record"
+				enabled="#{securityGuard.canCreate('modules')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Modules')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="modulesListEditButton"
+				value="Edit Modules..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Modules record for edit..."
+				enabled="#{modulesListManager.hasSelection() and securityGuard.canUpdate('modules')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Modules')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="modulesListRemoveButton"
+				value="Remove Modules..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Modules record from system..."
+				enabled="#{modulesListManager.hasSelection() and securityGuard.canDelete('modules')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Modules')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="modulesListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Modules information from server"
+				enabled="#{securityGuard.canOpen('modules')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshModulesList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

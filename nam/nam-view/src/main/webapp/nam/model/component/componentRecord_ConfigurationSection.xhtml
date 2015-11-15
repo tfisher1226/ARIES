@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		padding="20px"
+		paddingTop="10px"
+		backgroundColor="inherit">
+
+		<!-- WIZARD TITLE -->
+		<ui:insert name="wizardTitle" />
+		 
+		<!-- WIZARD MESSAGES -->
+		<ui:insert name="wizardMessages" />
+
+		<aries:spacer height="6" />
+		<aries:panel>
+
+			<!-- VARIABLES --> 
+			<ui:param name="fontSize" value="13" />
+			<ui:param name="labelWidth" value="110" />
+			
+			<!-- RECORDS --> 
+			<ui:param name="user" value="#{adminManager.user}" /> 
+			<ui:param name="manager" value="#{componentInfoManager}" /> 
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Component" label="Component" enabled="false" value="#{manager.component.name}" readonly="true" />
+
+			<!--  
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Type" label="Type" value="#{component.type}" items="#{userList}" defaultLabel="select Type" />
+			-->
+		</aries:panel>
+	</aries:panel>
+</ui:composition>

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ARIES_HOME=c:/workspace/ARIES
+APP_HOME=$ARIES_HOME/nam
+
+CWD=`pwd`
+cd $APP_HOME
+mvn -o clean install
+cd $CWD

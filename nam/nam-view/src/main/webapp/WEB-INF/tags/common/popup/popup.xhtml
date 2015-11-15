@@ -1,0 +1,145 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty autosized}">
+			<c:set var="autosized" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty moveable}">
+			<c:set var="moveable" value="true"/> 
+		</c:if>
+
+		<c:if test="#{empty resizeable}">
+			<c:set var="resizeable" value="false"/> 
+		</c:if>
+
+		<c:if test="#{empty id}">
+			<c:set var="id" value="#{name}"/> 
+		</c:if>
+
+		<c:if test="#{empty domain}">
+			<c:set var="domain" value="#{id}"/> 
+		</c:if>
+
+		<c:if test="#{empty section}">
+			<c:set var="section" value="#{id}"/> 
+		</c:if>
+		
+		<c:if test="#{empty popup}">
+			<c:set var="popup" value="#{id}"/> 
+		</c:if>
+	
+		<c:if test="#{empty action}">
+			<c:set var="action" value="submit"/> 
+		</c:if>
+	
+		<c:if test="#{empty render}">
+			<c:set var="render" value="nothing"/> 
+		</c:if>
+	
+		<c:if test="#{empty shadowDepth}">
+			<c:set var="shadowDepth" value="5"/> 
+		</c:if>
+		
+		<c:if test="#{empty followByScroll}">
+			<c:set var="followByScroll" value="true"/> 
+		</c:if>
+		
+		<c:if test="#{empty keepVisualState}">
+			<c:set var="keepVisualState" value="true"/> 
+		</c:if>
+
+		<script type="text/javascript">
+		function show#{popup}() {#{rich:component(popup)}.show(); return false}
+		function hide#{popup}() {#{rich:component(popup)}.hide(); return false}
+
+		var #{popup}_params = new Object();
+		
+		function _show#{popup}(title, heading, content) {
+			//alert('#{popup}');
+			//alert('#{domain}');
+			//alert(title);
+			//alert(renderList);
+			//#{popup}_params = new Object();
+			#{popup}_params.title = title;
+			#{popup}_params.heading = heading;
+			//#{popup}_params.content = content;
+			//#{popup}_params.actionEvent = actionEvent;
+			//#{popup}_params.cancelEnabled = cancelEnabled;
+			//#{popup}_params.progressEnabled = progressEnabled;
+			//#{popup}_params.renderList = renderList;
+			show#{popup}();
+		}
+
+		function _hide#{popup}() {
+			#{popup}_params = null;
+			hide#{popup}();
+		}
+	
+		function _initialize#{popup}(event) {
+			document.getElementById('publicForm:#{popup}_title').innerHTML = #{popup}_params.title;
+			document.getElementById('publicForm:#{popup}_heading').innerHTML = #{popup}_params.heading;
+			//document.getElementById('publicForm:#{popup}_content').innerHTML = #{popup}_params.content;
+			//document.getElementById('pageForm:#{popup}_actionEvent').value = #{popup}_params.actionEvent;
+			//document.getElementById('pageForm:#{popup}_cancelEnabled').value = #{popup}_params.cancelEnabled;
+			//document.getElementById('pageForm:#{popup}_progressEnabled').value = #{popup}_params.progressEnabled;
+			//document.getElementById('publicForm:#{popup}_renderList').value = #{popup}_params.renderList;
+			//alert(document.getElementById('publicForm:#{popup}_title').value);
+			//alert(#{popup}_params.title);
+			//alert(9);
+		}
+		</script>
+		
+		<rich:popupPanel 
+			id="#{popup}" 
+			width="#{width}"
+			height="#{height}"
+			autosized="#{autosized}" 
+			moveable="#{moveable}"
+			resizeable="#{resizeable}"
+			styleClass="dialog"
+			domElementAttachment="form"
+			shadowDepth="#{shadowDepth}"
+			followByScroll="#{followByScroll}"
+			keepVisualState="#{keepVisualState}"
+			onmaskclick="#{rich:component(popup)}.hide()"
+			onshow="_initialize#{popup}(event); #{onshow}">
+	
+			<!-- CONTENT -->
+			<a4j:region id="#{section}Form">
+				<a4j:outputPanel id="#{section}Content">
+					<h:panelGroup layout="block" style="background-color: inherit">
+	
+						<h:panelGroup layout="block" style="width: 100%; height: auto; background-color: inherit">
+							<h:panelGroup layout="block" style="width: auto; height: auto; margin: 0px; background-color: inherit">
+
+								<!--  		
+								<aries:h3 id="#{popup}_title" />
+								<aries:h4 id="#{popup}_heading" />
+								-->
+								
+								<!-- PANEL -->
+								<ui:insert/>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</a4j:outputPanel>
+			</a4j:region>
+
+			<!-- PLACEHOLDERS 
+			<h:inputHidden id="#{popup}_titleXX" value=" " />
+			<h:inputHidden id="#{popup}_renderList" value=" " />
+			-->
+		</rich:popupPanel>
+	</aries:tag>
+</ui:composition>

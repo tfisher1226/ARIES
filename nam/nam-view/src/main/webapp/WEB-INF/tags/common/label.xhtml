@@ -1,0 +1,104 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:set var="width" value="auto"/> 
+	<c:set var="height" value="auto"/>
+	
+	<aries:tag>
+		<aries:init/>
+
+		<c:if test="#{empty id}">
+			<c:set var="id" value="Label_#{globals.nextId()}" /> 
+		</c:if>
+		
+		<c:if test="#{empty href}">
+			<c:set var="href" value="#" /> 
+		</c:if>
+		
+		<c:if test="#{empty fontSize}">
+			<c:set var="fontSize" value="#{userSkin.fontSize}" /> 
+		</c:if>
+			
+		<c:if test="#{empty fontWeight}">
+			<c:set var="fontWeight" value="#{userSkin.fontWeight}" /> 
+		</c:if>
+	
+		<c:if test="#{empty fontStyle}">
+			<c:set var="fontStyle" value="#{userSkin.fontStyle}" /> 
+		</c:if>
+					
+		<c:if test="#{empty fontFamily}">
+			<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+		</c:if>
+		
+		<c:if test="#{empty textColor}">
+			<c:set var="textColor" value="#{userSkin.textColor}" /> 
+		</c:if>
+	
+		<!--  
+		<c:if test="#{not empty type}">
+			<c:set var="textSettings" value="font-size: #{helper.convert(size)}; font-family: #{family}" /> 
+		</c:if>
+		-->
+		
+		<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}; color: #{textColor}" /> 
+		
+		<h:panelGrid 
+			id="#{id}"
+			layout="block"
+			cellpadding="0"
+			cellspacing="0"
+			columns="1" 
+			columnClasses="formColumnAlignMiddle" 
+			styleClass="formPanel"
+			onclickXX="alert('#{marginSettings} #{paddingSettings}')"
+			style="#{dimensionSettings}; #{marginSettings}; #{borderSettings}; word-wrap: break-word; background-color: inherit">
+
+			<c:if test="#{href == '#' and empty onclick and empty oncomplete}">
+				<h:outputLabel 
+					value="#{value}" 
+					onclick="#{onclick}"
+					converter="filterConverter"
+					styleClass="#{type} #{styleClass}"
+					onmousedown="setCursorWait(this); #{onmousedown}"
+					onmouseup="setCursorDefault(event.source); #{onmouseup}"
+					onmouseout="setCursorDefault(event.source); #{onmouseout}"
+					style="white-space: nowrap; #{paddingSettings}; #{textSettings}; #{backgroundSettings}; #{type}">
+					<ui:insert/>
+				</h:outputLabel>
+			</c:if>
+	
+			<c:if test="#{href != '#' or not empty onclick or not empty oncomplete}">
+				<a href="#{href}"
+					onclick="#{onclick}"
+					onmousedown="setCursorWait(this); #{onmousedown}"
+					onmouseup="setCursorDefault(event.source); #{onmouseup}"
+					onmouseout="setCursorDefault(event.source); #{onmouseout}"
+					style="#{paddingSettings}; #{textSettings}">
+					#{value}
+				</a>
+				
+				<!--  
+				<a4j:commandLink 
+					value="#{value}" 
+					onclick="#{onclick}"
+					oncomplete="#{oncomplete}" 
+					styleClass="#{type} #{styleClass}"
+					style="#{paddingSettings}; #{textSettings}">
+					
+					<ui:insert/>
+				</a4j:commandLink>
+				-->
+			</c:if>
+		</h:panelGrid>
+	</aries:tag>
+</ui:composition>

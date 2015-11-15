@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<view
+	xmlns="http://nam/ui" 
+	xmlns:nam="http://nam/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/ui nam-view-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+
+	<domain>admin</domain>
+	<name>admin</name>
+
+	<relations>
+		<relation>
+			<name>User</name>
+			<pattern>memberOf</pattern>
+			<container>User</container>
+			<type>Team</type>
+			<type>Role</type>
+			<type>Action</type>
+			<type>Permission</type>
+			<type>Preferences</type>
+			<type>Registration</type>
+		</relation>
+	</relations>
+	
+	<controls>
+		<!--
+		<table name="applicationList">
+			<tableColumn width="100" label="Project" value="project.name" /> 
+		</table>
+		-->
+	</controls>
+</view>
+

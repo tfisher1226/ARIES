@@ -1,0 +1,14 @@
+action.package=org.aries.nam.util
+action.sources=/nam-util/src/main/java
+eclipse.preferences.version=1
+model.package=org.aries.nam.util
+model.sources=/nam-util/src/main/java
+seam.ejb.project=nam-util
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/nam-view/src/main/webapp
+seam.test.creating=false
+seam.test.project=bookshop2-view
+test.package=nam.test
+test.sources=/nam-view/src/main/java

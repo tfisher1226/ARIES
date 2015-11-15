@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchTeamDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{teamInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Team Records', 'Preparing requested record...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showTeamDialog()"
+		render="teamModule, teamDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{teamInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{teamInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{teamInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{teamInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{teamInfoManager.immediate}" value="false" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="teamModule">
+		
+		<a4j:region
+			rendered="#{teamInfoManager.visible}">
+			
+			<aries:dialog
+				id="teamDialog"
+				action="saveTeam"
+				render="#{teamInfoManager.renderList} teamListPane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="teamInfoPane.xhtml" />
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

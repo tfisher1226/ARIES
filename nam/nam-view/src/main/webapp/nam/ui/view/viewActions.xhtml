@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showViewListPage()
+		  ** Goes to the View Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showViewListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{viewPageManager.initializeViewListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'View Records', 'Preparing View List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showViewTreePage()
+		  ** Goes to the View Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showViewTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{viewPageManager.initializeViewTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'View Records', 'Preparing View Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showViewManagementPage()
+		  ** Goes to the View Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showViewManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{viewPageManager.initializeViewManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'View Records', 'Preparing View related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showViewWizardPage()
+		  ** Goes to the View Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showViewWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{viewWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'View Records', 'Preparing View information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{viewWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{viewWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewViewDialog()
+		  ** Launches the View Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewViewDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{viewInfoManager.newView}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'View Records', 'Creating new View...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showViewDialog()"
+			render="viewModule, viewDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{viewInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="viewListPane" assignTo="#{viewInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{viewInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditViewDialog()
+		  ** Launches the View Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditViewDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{viewInfoManager.editView}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'View Records', 'Preparing View information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showViewDialog()"
+			render="viewModule, viewDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{viewInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="viewListPane" assignTo="#{viewInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{viewInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

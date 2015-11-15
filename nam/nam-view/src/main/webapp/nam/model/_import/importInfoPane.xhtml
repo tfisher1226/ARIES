@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}ImportInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Import Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Dir" label="Dir" value="#{import.dir}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}File" label="File" value="#{import.file}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Type" label="Type" value="#{import.type}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Prefix" label="Prefix" value="#{import.prefix}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{import.namespace}" />
+			
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Include" label="Include" value="#{import.include}" />
+			
+			<ui:include src="../import/importListPane.xhtml">
+				<ui:param name="itemManager" value="#{importInfoManager}" />
+				<ui:param name="listManager" value="#{importListManager}" />
+			</ui:include>
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

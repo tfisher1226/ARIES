@@ -1,0 +1,113 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<!-- 
+		width="#{(helper.contentWidth / 3) - 40}"
+ -->
+
+	<aries:formPane
+		columns="1" 
+		width="200"
+		height="280"
+		margin="0px"
+		marginLeft="auto"
+		marginRight="auto"
+		marginTop="0px"
+		backgroundColor="inherit">	
+	
+		<aries:spacer height="10" />
+		<aries:label fontSize="15" fontWeight="bold" value="Application" />
+		<aries:label fontSize="15" fontWeight="bold" value="Development" />
+
+		<a4j:outputPanel rendered="false">
+			<aries:spacer height="16" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Projects" />
+				<ui:param name="icon" value="/icons/nam/Project16.gif" />
+				<ui:param name="id" value="#{section}ProjectsButton" />
+				<ui:param name="manager" value="#{projectPageManager}" />
+				<ui:param name="action" value="initializeProjectManagementPage" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Projects', 'Preparing Project information...')" />
+			</ui:include>
+		</a4j:outputPanel>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Applications" />
+			<ui:param name="icon" value="/icons/nam/Application16.gif" />
+			<ui:param name="id" value="#{section}ApplicationsButton" />
+			<ui:param name="manager" value="#{applicationPageManager}" />
+			<ui:param name="action" value="initializeApplicationManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Applications', 'Preparing Application information...')" />
+		</ui:include>
+
+		<a4j:outputPanel rendered="true">
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Modules" />
+				<ui:param name="icon" value="/icons/nam/Module16.gif" />
+				<ui:param name="id" value="mainModulesButton" />
+				<ui:param name="manager" value="#{modulePageManager}" />
+				<ui:param name="action" value="initializeModuleManagementPage" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Modules', 'Preparing Module information...')" />
+			</ui:include>
+		</a4j:outputPanel>
+
+		<a4j:outputPanel rendered="false">
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Services" />
+				<ui:param name="icon" value="/icons/nam/Service16.gif" />
+				<ui:param name="id" value="mainServicesButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceManagementPage" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Services', 'Preparing Service information...')" />
+			</ui:include>
+		</a4j:outputPanel>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Elements" />
+			<ui:param name="icon" value="/icons/nam/Element16.gif" />
+			<ui:param name="id" value="mainElementsButton" />
+			<ui:param name="manager" value="#{elementPageManager}" />
+			<ui:param name="action" value="initializeElementManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Elements', 'Preparing Element information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Messaging" />
+			<ui:param name="icon" value="/icons/nam/Messaging16.gif" />
+			<ui:param name="id" value="mainMessagingButton" />
+			<ui:param name="manager" value="#{messagingPageManager}" />
+			<ui:param name="action" value="initializeMessagingManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Messaging', 'Preparing Service information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Caching" />
+			<ui:param name="icon" value="/icons/nam/Cache16.gif" />
+			<ui:param name="id" value="mainCachingButton" />
+			<ui:param name="manager" value="#{cachingPageManager}" />
+			<ui:param name="action" value="initializeCachingManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Caching', 'Preparing Caching information...')" />
+		</ui:include>
+
+		<aries:spacer height="10" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Persistence" />
+			<ui:param name="icon" value="/icons/nam/PersistenceUnit16.gif" />
+			<ui:param name="id" value="mainPersistenceButton" />
+			<ui:param name="manager" value="#{persistencePageManager}" />
+			<ui:param name="action" value="initializePersistenceManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Persistence', 'Preparing Persistence information...')" />
+		</ui:include>
+	</aries:formPane>
+</ui:composition>

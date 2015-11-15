@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+	
+	
+	<!--
+		  ** showSkinListPage()
+		  ** Goes to the Skin Management List Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showSkinListPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{skinPageManager.initializeSkinListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Skin Records', 'Preparing Skin List...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showSkinTreePage()
+		  ** Goes to the Skin Management Tree Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showSkinTreePage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{skinPageManager.initializeSkinTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Skin Records', 'Preparing Skin Tree...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showSkinManagementPage()
+		  ** Goes to the Skin Management Overview Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showSkinManagementPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{skinPageManager.initializeSkinManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Skin Records', 'Preparing Skin related information...')">
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showSkinWizardPage()
+		  ** Goes to the Skin Wizard Page.
+	  -->
+	
+	<a4j:jsFunction
+			name="showSkinWizardPage" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+			action="#{skinWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Skin Records', 'Preparing Skin information...')">
+		
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{skinWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{skinWizard.origin}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showNewSkinDialog()
+		  ** Launches the Skin Dialog in "new" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showNewSkinDialog" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{skinInfoManager.newSkin}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Skin Records', 'Creating new Skin...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showSkinDialog()"
+			render="skinModule, skinDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{skinInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="skinListPane" assignTo="#{skinInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{skinInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+		  ** showEditSkinDialog()
+		  ** Launches the Skin Dialog in "edit" mode.
+	  -->
+	
+	<a4j:jsFunction
+			name="showEditSkinDialog" 
+			execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+			action="#{skinInfoManager.editSkin}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Skin Records', 'Preparing Skin information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showSkinDialog()"
+			render="skinModule, skinDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{skinInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="skinListPane" assignTo="#{skinInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{skinInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

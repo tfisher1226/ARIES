@@ -1,0 +1,86 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:set var="onclick" value="#{onclick}" /> 
+	<c:set var="style" value="cursor: pointer" /> 
+	<c:set var="backgroundColor" value="inherit" /> 
+		
+	<c:if test="#{empty active}">
+		<c:set var="active" value="true" /> 
+	</c:if>
+	
+	<c:if test="#{empty borderTopWidth}">
+		<c:set var="borderTopWidth" value="0px" /> 
+	</c:if>
+	
+	<style>
+		.deadColumn {
+		}
+		.iconColumn {
+			width: 30px;
+			vertical-align: top;	
+			background-color: inherit;
+		}
+		.labelColumn {
+		}
+	</style>
+	
+	<a4j:jsFunction 
+		name="execute#{label}" 
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		action="#{manager[action]}"
+		onbegin="#{onbegin}"
+		oncomplete="#{oncomplete}">
+	</a4j:jsFunction>
+		
+	<aries:formPane 
+		width="200"
+		height="auto"
+		padding="7px"
+		paddingLeft="14px"
+		margin="0px"
+		columns="4" 
+		columnClasses="deadColumn, iconColumn, labelColumn"
+		onmouseover="this.style.backgroundColor='#cfe7f5'"
+		onmouseout="this.style.backgroundColor='white'"
+		onmousedown="setCursorWait(this); #{onmousedown}"
+		onmouseup="#{onmouseup}"
+		onclick="#{onclick}; execute#{label}()"
+		style="#{style}; border-radius: 0px">
+
+		<div style="">
+			<h:graphicImage library="graphics" width="18" height="18" name="#{icon}" />
+		</div>
+		
+		<div style="margin-left: 0px; background-color: red">
+			<aries:text fontSize="14" value="#{label}" backgroundColor="inherit"/>
+		</div>
+	</aries:formPane>
+		
+	<!--  
+	<aries:indentPane
+		height="auto"
+		padding="7px"
+		paddingLeft="24px"
+		borderColor="#aaa"
+		borderTopWidth="#{borderTopWidth}"
+		backgroundColor="#{backgroundColor}"
+		onmouseover="this.style.backgroundColor='#cfe7f5'"
+		onmouseout="this.style.backgroundColor='white'"
+		onclick="#{onclick}"
+		style="#{style}; border-radius: 0px">
+		
+	</aries:indentPane>
+	-->
+</ui:composition>

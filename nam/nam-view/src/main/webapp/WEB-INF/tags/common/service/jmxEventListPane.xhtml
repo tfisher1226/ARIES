@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel
+		id="#{serviceId}JmxEventListPane"
+		layout="block">
+		
+		<a4j:poll 
+			id="poll" 
+			interval="300" 
+			enabled="#{jmxEventManager.running}" 
+			render="#{serviceId}JmxEventListPane" />
+
+		<!--  	
+		<a4j:push
+			id="push"
+			interval="1000" 
+			enabled="#{true}"  
+			eventProducer="#{jmxEventListManager.addListener}"
+			reRender="push,out" />
+			-->
+			
+		<aries:borderPane width="100%">
+			<ui:param name="element" value="JmxEvent" />
+			<ui:param name="instanceName" value="jmxEvent" />
+			<ui:param name="unit" value="#{serviceId}JmxEvent" />
+			<ui:param name="serviceId" value="#{serviceId}" />
+			
+			<ui:include src="jmxEventListActions.xhtml" />
+			<ui:include src="jmxEventListToolbar.xhtml" />
+			<ui:include src="jmxEventListTable.xhtml" />
+		</aries:borderPane>
+	</a4j:outputPanel>
+</ui:composition>

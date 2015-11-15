@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:region>
+		<h:panelGroup
+			id="controlTreeViewer"
+			class="viewer">
+			
+			<aries:formPane
+				width="100%"
+				columns="2"
+				marginTop="0px"
+				backgroundColor="inherit">
+				
+				<aries:panel
+					width="100%"
+					height="#{helper.wizard_middleSection_height}"
+					borderColor="#{userSkin.borderColor}"
+					borderWidth="1px"
+					backgroundColor="inherit">
+					
+					<!-- PANEL -->
+					<ui:param name="sectionType" value="#{controlPageManager.sectionType}" />
+					<ui:param name="sectionName" value="#{controlPageManager.sectionName}" />
+					<ui:param name="sectionFile" value="#{sectionType}View_#{sectionName}Section.xhtml" />
+					<ui:include src="../#{sectionType}/#{sectionFile}" />
+				</aries:panel>
+				
+				<!-- HELP -->
+				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="domain" value="control" />
+					<ui:param name="section" value="#{controlPageManager.sectionName}" />
+				</ui:include>
+			</aries:formPane>
+		</h:panelGroup>
+	</a4j:region>
+</ui:composition>

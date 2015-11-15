@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}RegistrationInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Registration Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Enabled" label="Enabled" value="#{registration.enabled}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}User" label="User" value="#{registration.user}" items="#{userList}" defaultLabel="select User" />
+			
+			<aries:spacer height="6" />
+			<aries:inputInteger id="#{section}LoginCount" label="Login Count" value="#{registration.loginCount}" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

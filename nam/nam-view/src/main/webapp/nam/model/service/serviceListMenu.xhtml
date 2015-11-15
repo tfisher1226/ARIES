@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:region>
+		<aries:outputPane
+			id="serviceListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="serviceListContextMenu"
+				target="#{tableId}">
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="View Service..."
+					icon="/icons/common/Open16.gif"
+					tooltip="View selected Service record..."
+					onclick="processViewElement(event, 'Service')">
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="Edit Service..."
+					icon="/icons/common/Edit16.gif"
+					tooltip="Edit selected Service record..."
+					onclick="processEditElement(event, 'Service')">
+				</aries:contextMenuItem>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="New Service..."
+						icon="/icons/common/New16.gif"
+						tooltip="Create new Service for selected Project..."
+						onclick="processNewElement(event, 'Service')">
+					</aries:contextMenuItem>
+				</c:if>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="Remove Service"
+						icon="/icons/common/Remove16.gif"
+						tooltip="Remove Service record from the system"
+						onclick="processRemoveElement(event, 'Service')">
+					</aries:contextMenuItem>
+				</c:if>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

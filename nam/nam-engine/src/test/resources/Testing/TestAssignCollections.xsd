@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://testing"
+	targetNamespace="http://testing">
+
+	<xs:complexType name='ArrayOfInteger'>
+		<xs:sequence>
+			<xs:element name='items' type='xs:int' maxOccurs='unbounded' />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name='ArrayOfString'>
+		<xs:sequence>
+			<xs:element name='items' type='xs:string' maxOccurs='unbounded' />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

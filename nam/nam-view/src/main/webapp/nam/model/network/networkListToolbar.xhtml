@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="networkListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="networkListNewButton"
+				value="New Network..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Network Record"
+				enabled="#{securityGuard.canCreate('network')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Network')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="networkListEditButton"
+				value="Edit Network..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Network record for edit..."
+				enabled="#{networkListManager.hasSelection() and securityGuard.canUpdate('network')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Network')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="networkListRemoveButton"
+				value="Remove Network..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Network record from system..."
+				enabled="#{networkListManager.hasSelection() and securityGuard.canDelete('network')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Network')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="networkListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Network information from server"
+				enabled="#{securityGuard.canOpen('network')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshNetworkList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

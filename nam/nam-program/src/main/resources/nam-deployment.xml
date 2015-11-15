@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<name>platform</name>
+	<version>0.0.1</version>
+
+
+	<servers>
+		<!-- Person-Server -->
+        <server group="org.aero" name="person-server" version="0.0.1-SNAPSHOT">
+        	<balancer name="defaultBalancer" class="org.aero.server.DefaultBalancer"/>
+        	<applications>
+				<war group="org.aero" name="person-service" version="0.0.1-SNAPSHOT"/>
+        	</applications>
+        	<libraries type="common">
+				<jar group="org.aero" name="common-server-tomcat" version="0.0.1-SNAPSHOT" common="true"/>
+        	</libraries>
+        	<libraries type="shared">
+			    <jar group="org.aero" name="common-action" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-cache" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-client" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-data" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-event" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-model" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-service" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-transaction" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-transport" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-util" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="common-view" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="person-client" version="0.0.1-SNAPSHOT"/>
+			    <jar group="org.aero" name="person-model" version="0.0.1-SNAPSHOT"/>
+        	</libraries>
+        </server>
+	</servers>
+	
+	<!-- INFRASTRUCTURE SERVICE CLUSTER -->
+	<cluster nam="infrastructure-service-cluster">
+        <server group="org.aero" name="event-server" type="tomcat" instances="3" scheme="balanced"/>
+        <server group="org.aero" name="person-server" type="tomcat" instances="3" scheme="balanced"/>
+        <server group="org.aero" name="notification-server" type="tomcat"/>
+        <server group="org.aero" name="management-server" type="tomcat"/>
+	</cluster>
+
+	<!-- ICAMS SERVICE CLUSTER -->
+	<cluster nam="icams-service-cluster">
+        <server group="org.aero" name="icams-server" type="tomcat"/>
+	</cluster>
+
+	<!-- LIBREQ SERVICE CLUSTER -->
+	<cluster nam="libreq-service-cluster">
+        <server group="org.aero" name="libreq-server" type="tomcat"/>
+	</cluster>
+	
+
+	<deployment>
+		<port-range start="8080" end="9999"/>
+		<port-range start="12000" end="12400"/>
+        <cluster type="tomcat" domain="org.aero" name="person-server"/>
+	</deployment>
+
+
+
+	<servers>
+		<ports>
+			<ports type="org.aero" value="8780"/>
+		</ports>
+	
+        <server type="tomcat" name="person-server"/>
+		<wars>
+			<war group="org.aero" name="person-service" version="0.0.1-SNAPSHOT"/>
+		</wars>
+		<jars type="common">
+			<jar group="org.aero" name="common-server-tomcat" version="0.0.1-SNAPSHOT" common="true"/>
+		</jars>
+		<jars type="shared">
+		    <jar group="org.aero" name="common-action" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-cache" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-client" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-data" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-event" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-model" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-service" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-transaction" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-transport" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-util" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="common-view" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="person-client" version="0.0.1-SNAPSHOT"/>
+		    <jar group="org.aero" name="person-model" version="0.0.1-SNAPSHOT"/>
+		</jars>
+		<ports>
+			<ports type="org.aero" value="8780"/>
+		</ports>
+	</servers>
+
+</model>

@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showMessagingListPage()
+		  ** Goes to the Messaging Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMessagingListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{messagingPageManager.initializeMessagingListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Messaging Records', 'Preparing Messaging List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showMessagingTreePage()
+		  ** Goes to the Messaging Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMessagingTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{messagingPageManager.initializeMessagingTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Messaging Records', 'Preparing Messaging Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showMessagingManagementPage()
+		  ** Goes to the Messaging Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showMessagingManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{messagingPageManager.initializeMessagingManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Messaging Records', 'Preparing Messaging related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showMessagingWizardPage()
+		  ** Goes to the Messaging Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showMessagingWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{messagingWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Messaging Records', 'Preparing Messaging information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{messagingWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{messagingWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewMessagingDialog()
+		  ** Launches the Messaging Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewMessagingDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{messagingInfoManager.newMessaging}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Messaging Records', 'Creating new Messaging...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showMessagingDialog()"
+			render="messagingModule, messagingDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{messagingInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="messagingListPane" assignTo="#{messagingInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{messagingInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditMessagingDialog()
+		  ** Launches the Messaging Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditMessagingDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{messagingInfoManager.editMessaging}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Messaging Records', 'Preparing Messaging information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showMessagingDialog()"
+			render="messagingModule, messagingDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{messagingInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="messagingListPane" assignTo="#{messagingInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{messagingInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

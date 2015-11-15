@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="importListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="importListMenu.xhtml">
+			<ui:param name="tableId" value="importListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="importListTable"
+			value="#{importListManager.dataModel}"
+			rowCount="#{importListManager.dataModel.rowCount}"
+			visible="#{importListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processImportListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processImportListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- DIR -->
+			<aries:textColumn
+				width="100"
+				header="Dir">
+				<h:outputText value="#{rowItem.import.dir}" />
+			</aries:textColumn>
+			
+			<!-- FILE -->
+			<aries:textColumn
+				width="100"
+				header="File">
+				<h:outputText value="#{rowItem.import.file}" />
+			</aries:textColumn>
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.import.type}" />
+			</aries:textColumn>
+			
+			<!-- PREFIX -->
+			<aries:textColumn
+				width="100"
+				header="Prefix">
+				<h:outputText value="#{rowItem.import.prefix}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.import.namespace}" />
+			</aries:textColumn>
+			
+			<!-- VALUE -->
+			<aries:textColumn
+				width="100"
+				header="Value">
+				<h:outputText value="#{rowItem.import.value}" />
+			</aries:textColumn>
+			
+			<!-- INCLUDE -->
+			<aries:textColumn
+				width="100"
+				header="Include">
+				<h:outputText value="#{rowItem.import.include}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

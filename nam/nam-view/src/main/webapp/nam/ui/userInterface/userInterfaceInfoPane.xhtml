@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}UserInterfaceInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="UserInterface Information">
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Type" label="Type" value="#{userInterface.type}" items="#{typeList}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{userInterface.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{userInterface.label}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}GroupId" label="Group Id" value="#{userInterface.groupId}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ArtifactId" label="Artifact Id" value="#{userInterface.artifactId}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{userInterface.version}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{userInterface.namespace}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Description" label="Description" value="#{userInterface.description}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Languages" label="Languages" value="#{userInterface.languages}" items="#{languagesList}" defaultLabel="select Languages" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Graphics" label="Graphics" value="#{userInterface.graphics}" items="#{graphicsList}" defaultLabel="select Graphics" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Sections" label="Sections" value="#{userInterface.sections}" items="#{sectionsList}" defaultLabel="select Sections" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Layouts" label="Layouts" value="#{userInterface.layouts}" items="#{layoutsList}" defaultLabel="select Layouts" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Controls" label="Controls" value="#{userInterface.controls}" items="#{controlsList}" defaultLabel="select Controls" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Interactors" label="Interactors" value="#{userInterface.interactors}" items="#{interactorsList}" defaultLabel="select Interactors" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Conversations" label="Conversations" value="#{userInterface.conversations}" items="#{conversationsList}" defaultLabel="select Conversations" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Creator" label="Creator" value="#{userInterface.creator}" />
+			
+			
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

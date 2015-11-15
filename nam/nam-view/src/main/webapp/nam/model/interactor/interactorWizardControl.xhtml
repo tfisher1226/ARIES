@@ -1,0 +1,134 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="interactorWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Interactor Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="interactorWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{interactorWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{interactorWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="interactorWizard"
+					offset="true" />
+				
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="interactorWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{interactorWizard.populateEnabled}"
+					manager="#{interactorWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="interactorWizardPreviousButton"
+					icon="/icons/arrow/PreviousPage16.gif"
+					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					rendered="#{interactorWizard.backVisible}"
+					enabled="#{interactorWizard.backEnabled}"
+					manager="#{interactorWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Interactor', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					offset="true" />
+				
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="interactorWizardNextButton"
+					icon="/icons/arrow/NextPage16.gif"
+					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					rendered="#{interactorWizard.nextVisible}"
+					enabled="#{interactorWizard.nextEnabled}"
+					manager="#{interactorWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Interactor', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					offset="true" />
+				
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="interactorWizardFinishButton"
+					icon="/icons/common/Default16.gif"
+					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					rendered="#{interactorWizard.finishVisible}"
+					enabled="#{interactorWizard.finishEnabled}"
+					manager="#{interactorWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Interactor', 'Validating and submitting new Interactor...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					offset="true" />
+				
+				<!-- cancel button -->
+				<aries:dialogButton
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="interactorWizardCancelButton"
+					tooltip="Cancel creation of new Interactor"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{interactorWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Interactor Management', 'Cancelling creation of Interactor...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:controlPane>
+</ui:composition>

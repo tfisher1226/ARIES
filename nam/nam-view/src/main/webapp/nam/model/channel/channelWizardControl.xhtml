@@ -1,0 +1,134 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="channelWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Channel Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="channelWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{channelWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{channelWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="channelWizard"
+					offset="true" />
+				
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="channelWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{channelWizard.populateEnabled}"
+					manager="#{channelWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="channelMessages"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="channelWizardPreviousButton"
+					icon="/icons/arrow/PreviousPage16.gif"
+					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					rendered="#{channelWizard.backVisible}"
+					enabled="#{channelWizard.backEnabled}"
+					manager="#{channelWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Channel', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="channelMessages"
+					offset="true" />
+				
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="channelWizardNextButton"
+					icon="/icons/arrow/NextPage16.gif"
+					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					rendered="#{channelWizard.nextVisible}"
+					enabled="#{channelWizard.nextEnabled}"
+					manager="#{channelWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Channel', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="channelMessages"
+					offset="true" />
+				
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="channelWizardFinishButton"
+					icon="/icons/common/Default16.gif"
+					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					rendered="#{channelWizard.finishVisible}"
+					enabled="#{channelWizard.finishEnabled}"
+					manager="#{channelWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Channel', 'Validating and submitting new Channel...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="channelMessages"
+					offset="true" />
+				
+				<!-- cancel button -->
+				<aries:dialogButton
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="channelWizardCancelButton"
+					tooltip="Cancel creation of new Channel"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{channelWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Channel Management', 'Cancelling creation of Channel...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:controlPane>
+</ui:composition>

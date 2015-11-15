@@ -1,0 +1,50 @@
+
+jbossts with tomcat:
+http://anonsvn.jboss.org/repos/labs/labs/jbosstm/workspace/jhalliday/tomcat-integration/
+
+<Context ...>
+  ...
+  <Resource name="UserTransaction" auth="Container"
+    type="javax.transaction.UserTransaction"/>
+
+  <ResourceParams name="UserTransaction">
+    <parameter>
+      <name>factory</name>
+      <value>org.hibernate.transaction.JTATransactionFactory</value>
+    </parameter>    
+  </ResourceParams>
+
+  ...
+</Context>
+
+
+<Context ...>
+  ...
+  <Resource name="TransactionManager" auth="Container"
+            type="com.arjuna.ats.jta.TransactionManager"
+     description="TransactionManager"/>
+  ...
+
+  <Resource name="jdbc/TestDB" auth="Container" 
+            type="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" 
+            factory="com.mysql.jdbc.jdbc2.optional.MysqlDataSourceFactory" 
+            user="javauser" 
+            password="javadude" 
+            explicitUrl="true" 
+            url="jdbc:mysql://localhost:3306/javatest?autoReconnect=true"/> 
+</Context>
+
+
+<property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
+
+
+//don't use @Transactional annotation 
+public void doStuff() {   
+       UserTransaction userTx = (UserTransaction) org.jboss.seam.Component.getInstance("org.jboss.seam.transaction.transaction");   
+       userTx.setTransactionTimeout(10 * 60);  //set timeout to 60 * 10 = 600 secs = 10 mins   
+       userTx.begin();    /*If entity manager is created before the transaction is started (ie. via Injection) then it must join the transaction */   
+       entityManager.joinTransaction();    //do stuff        
+       entityManager.persist(user);   
+       entityManager.flush();   //logs will show an insert at this point    
+       userTx.commit();   //or rollback() } 
+}

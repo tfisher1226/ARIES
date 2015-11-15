@@ -1,0 +1,18 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}UserInterfaceListPane">
+		
+		<ui:param name="element" value="UserInterface" />
+		<ui:param name="instanceName" value="userInterface" />
+		<ui:param name="unit" value="#{domain}#{element}" />
+		
+		<ui:include src="userInterfaceActions.xhtml" />
+		<ui:include src="userInterfaceListToolbar.xhtml" />
+		<ui:include src="userInterfaceListTable.xhtml" />
+	</aries:outputPane>
+</ui:composition>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:bank_0.0.1="http://www.aries.org/bank/0.0.1" xmlns:examples="http://www.jboss.org/bpel/examples" xmlns:loan-approval="http://example.com/loan-approval" xmlns:ordering="http://jboss.org/bpel/ordering" xmlns:org.aries="org.aries" xmlns:purchase="http://acme.com/ws-bp/purchase" xmlns:samples="http://www.jboss.org/bpel/samples" xmlns:unit-testAssign1="http://ode/bpel/unit-testAssign1">
+  <process name="samples:Ordering">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="samples:OrderingService" port="OrderingPort"/>
+    </provide>
+    <invoke partnerLink="ordering">
+      <service name="ordering:OrderingService" port="OrderingWSPort"/>
+    </invoke>
+  </process>
+  <process name="org.aries:process1"/>
+  <process name="bank_0.0.1:bankLoanQuote"/>
+  <process name="unit-testAssign1:TestAssign"/>
+  <process name="examples:SimpleInvoke"/>
+  <process name="purchase:purchaseOrderProcess"/>
+  <process name="loan-approval:loanApprovalProcess"/>
+</deploy>

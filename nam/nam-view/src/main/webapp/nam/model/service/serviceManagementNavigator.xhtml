@@ -1,0 +1,109 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="auto"
+		margin="0px"
+		backgroundColor="inherit">
+		
+		<aries:formPane
+			width="auto"
+			borderWidth="0px"
+			borderColor="#aaa"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Overview" />
+				<ui:param name="icon" value="/icons/common/Overview16.gif" />
+				<ui:param name="id" value="serviceOverviewButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeDefaultView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Parameter Overview', 'Preparing Parameter overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Domains" />
+				<ui:param name="icon" value="/icons/nam/ServiceDomain16.gif" />
+				<ui:param name="id" value="serviceDomainsButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceDomainsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Service Domains', 'Preparing Service Domain overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Channels" />
+				<ui:param name="icon" value="/icons/nam/Channel16.gif" />
+				<ui:param name="id" value="serviceChannelsButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceChannelsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Service Channel', 'Preparing Channels overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Listeners" />
+				<ui:param name="icon" value="/icons/nam/Listener16.gif" />
+				<ui:param name="id" value="serviceListenersButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceListenersView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Service Listeners', 'Preparing Listener overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Senders" />
+				<ui:param name="icon" value="/icons/nam/Send16.gif" />
+				<ui:param name="id" value="serviceSendersButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceSendersView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Service Senders', 'Preparing Sender overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+			
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Receivers" />
+				<ui:param name="icon" value="/icons/nam/Receive16.gif" />
+				<ui:param name="id" value="serviceReceiversButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceReceiversView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Service Receivers', 'Preparing Receiver overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+			
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Invokers" />
+				<ui:param name="icon" value="/icons/nam/Invoke16.gif" />
+				<ui:param name="id" value="serviceInvokersButton" />
+				<ui:param name="manager" value="#{servicePageManager}" />
+				<ui:param name="action" value="initializeServiceInvokersView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Service Invokers', 'Preparing Invoker overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="serviceManagementViewer" />
+			</ui:include>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

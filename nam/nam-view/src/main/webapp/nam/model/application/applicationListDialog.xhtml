@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchApplicationDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{applicationListManager.show}"
+		onbegin="setCursorWait(); showProgress('', 'Application Records', 'Retrieving current records...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showApplicationDialog()"
+		render="ApplicationModule, ApplicationDialog">
+		
+		<a4j:param name="targetInstance" assignTo="#{applicationListManager.targetInstance}" />
+		<a4j:param name="targetDomain" assignTo="#{applicationListManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{applicationListManager.targetField}" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="applicationModule">
+		
+		<a4j:region
+			rendered="#{applicationInfoManager.visible}">
+			
+			<aries:dialog
+				id="applicationDialog">
+				
+				<!-- Container -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- Content -->
+					<ui:include src="applicationListPane.xhtml">
+						<ui:param name="itemManager" value="#{applicationInfoManager}" />
+						<ui:param name="listManager" value="#{applicationListManager}" />
+					</ui:include>
+				</aries:borderPane>
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

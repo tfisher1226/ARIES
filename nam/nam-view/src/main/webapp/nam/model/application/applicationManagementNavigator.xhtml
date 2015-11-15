@@ -1,0 +1,151 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="auto"
+		margin="0px"
+		backgroundColor="inherit">
+
+		<aries:formPane
+			width="auto"
+			borderWidth="0px"
+			borderColor="#aaa"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Overview" />
+				<ui:param name="icon" value="/icons/nam/Overview16.gif" />
+				<ui:param name="id" value="applicationOverviewButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeDefaultView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Applications', 'Preparing Application overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Domains" />
+				<ui:param name="icon" value="/icons/nam/ApplicationDomain16.gif" />
+				<ui:param name="id" value="applicationDomainsButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationDomainsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Application Domains', 'Preparing Application Domain information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Modules" />
+				<ui:param name="icon" value="/icons/nam/Module16.gif" />
+				<ui:param name="id" value="applicationModulesButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationModulesView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Modules', 'Preparing Module information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Services" />
+				<ui:param name="icon" value="/icons/nam/Service16.gif" />
+				<ui:param name="id" value="applicationServicesButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationServicesView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Services', 'Preparing Service information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Elements" />
+				<ui:param name="icon" value="/icons/nam/Element16.gif" />
+				<ui:param name="id" value="applicationElementsButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationElementsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Elements', 'Preparing Element information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Components" />
+				<ui:param name="icon" value="/icons/nam/Component16.gif" />
+				<ui:param name="id" value="applicationComponentsButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationComponentsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Components', 'Preparing Component information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+<!-- 
+
+Process
+
+SupplierProcess
+
+Services
+
+QueryBooks
+  Listeners
+  Responses
+    BooksAvailable
+    BooksUnavailable
+ReserveBooks
+  Responses
+    ReservationAbortedException
+ShipBooks
+  Responses
+    ShipmentComplete
+    ShipmentFailed
+    ShipmentScheduled
+
+ShipmentConfirmedExecutor
+ShipmentScheduledExecutor
+
+Persistence
+
+BookOrderLog
+BookOrderLogRepository
+BookOrdersManager
+
+BookInventory
+BookInventoryRepository
+ReservedBooksManager
+
+Caching
+
+SupplierOrderCache
+
+
+ -->
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Providers" />
+				<ui:param name="icon" value="/icons/nam/Provider16.gif" />
+				<ui:param name="id" value="#{section}ProvidersButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationProvidersView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Providers', 'Preparing Provider information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

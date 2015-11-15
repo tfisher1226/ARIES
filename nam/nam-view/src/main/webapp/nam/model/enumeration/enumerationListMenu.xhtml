@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<aries:region>
+		<aries:outputPane 
+			id="#{section}EnumerationListContextMenuPane">
+			
+			<aries:contextMenu 
+				mode="client"
+				id="#{section}EnumerationListContextMenu"
+				target="#{section}EnumerationListTable">
+	
+				<aries:contextMenuItem 
+					value="Edit Enumeration..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{enumerationListManager}"
+					action="editEnumeration"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}EnumerationDialog()"
+					render="#{domain}EnumerationDialog">
+					
+					<aries:tooltip value="Edit selected Enumeration record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New Enumeration..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{enumerationInfoManager}"
+					action="newEnumeration"
+					onclick="setCursorWait(); showProgress('Enumeration Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}EnumerationDialog();"
+					render="#{domain}EnumerationDialog, #{domain}EnumerationDialogPersonNameDialog, #{domain}EnumerationDialogEmailAddressDialog, #{domain}EnumerationDialogPhoneNumberDialog, #{domain}EnumerationDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Enumeration record"/>
+				</aries:contextMenuItem>
+		
+				<aries:contextMenuItem 
+					value="Remove Enumeration..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Enumeration: {lastName}, {firstName}', 'Remove Enumeration Record from System', 'Do you wish to continue?', 'org.aries.removeEnumeration', '#{section}EnumerationListPane')">
+					
+					<aries:tooltip value="Remove selected Enumeration record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

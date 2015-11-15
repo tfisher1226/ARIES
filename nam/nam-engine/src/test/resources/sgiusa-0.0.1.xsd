@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0" 
+	jaxb:version="2.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:common="http://www.aries.org/common/0.0.1"
+	xmlns:sgiusa="http://www.sgiusa.org/model/0.0.1" 
+	targetNamespace="http://www.sgiusa.org/model/0.0.1">
+	
+	<xs:import namespace="http://www.aries.org/common/0.0.1" schemaLocation="aries-common-0.0.1.xsd"/>
+	
+<!--  
+	<xs:import namespace="http://www.aries.org/common/0.0.1" />
+	<xs:import namespace="http://www.aries.org/common/0.0.1" schemaLocation="aries-common-0.0.1.xsd"/>
+	<xs:import namespace="http://www.aries.org/common/0.0.1" schemaLocation="http://aries.org/aries-common-0.0.1.xsd" />
+-->
+
+	<!--
+		User Info
+		********* 
+	 -->
+	
+	<xs:element name="users" type="sgiusa:Users" />
+	<xs:complexType name="Users">
+		<xs:sequence>
+			<xs:element name="record" type="sgiusa:User" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<!-- 
+		<xs:key name="userKey">
+			<xs:selector xpath="sgiusa:users/sgiusa:user" />
+			<xs:field xpath="@id" />
+		</xs:key>
+		<xs:keyref name="aKeyRef" refer="aKey">
+			<xs:selector xpath="referenced" />
+			<xs:field xpath="@id" />
+		</xs:keyref>
+		 -->
+	</xs:complexType>
+	
+	<xs:element name="user" type="sgiusa:User">
+		<xs:unique name="USER_PK">
+			<xs:selector xpath="*/sgiusa:user" />
+			<xs:field xpath="@id" />
+		</xs:unique>
+		<!--  
+		<xsd:key name="PERSON_KEY">
+			<xsd:selector xpath="PERSON" />
+			<xsd:field xpath="PERSON_ID" />
+		</xsd:key>
+		<xsd:keyref name="PERSON_FK" refer="PERSON_ID">
+			<xsd:selector xpath="MAILING_ADDRESS" />
+			<xsd:field xpath="PERSON_ID" />
+		</xsd:keyref>
+		-->
+	</xs:element>
+
+	<xs:complexType name="User">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="password" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAccount" type="common:EmailAccount" maxOccurs="1" minOccurs="1"/>
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userPermissions" type="sgiusa:UserPermission" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<!-- 
+			<xs:element name="emailAccount" type="common:EmailAccount" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="sgiusa:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="divisions" type="sgiusa:Division" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="subDivisions" type="sgiusa:SubDivision" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="activityGroups" type="sgiusa:ActivityGroup" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			-->
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="userPermission" type="sgiusa:UserPermission" />
+	<xs:complexType name="UserPermission">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="sgiusa:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="divisions" type="sgiusa:Division" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="subDivisions" type="sgiusa:SubDivision" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="activityGroups" type="sgiusa:ActivityGroup" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="userRoles" type="sgiusa:UserRole" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="userOperations" type="sgiusa:UserOperation" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="UserRole">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="USER" />
+			<xs:enumeration value="HOST" />
+			<xs:enumeration value="MANAGER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="UserOperation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="PRINT" />
+			<xs:enumeration value="EMAIL" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Member Info
+		*********** 
+	 -->
+
+	<xs:element name="members" type="sgiusa:Members" />
+	<xs:complexType name="Members">
+		<xs:sequence>
+			<xs:element name="record" type="sgiusa:Member" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="member" type="sgiusa:Member" />
+	<xs:complexType name="Member">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="middleInitial" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="workPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="otherPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="sgiusa:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="division" type="sgiusa:Division" minOccurs="0" maxOccurs="1" />
+			<xs:element name="subDivision" type="sgiusa:SubDivision" minOccurs="0" maxOccurs="1" />
+			<xs:element name="activityGroups" type="sgiusa:ActivityGroup" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="leadershipInfo" type="sgiusa:LeadershipInfo" minOccurs="0" maxOccurs="1" />
+			<xs:element name="studyDeptInfo" type="sgiusa:StudyDeptInfo" minOccurs="0" maxOccurs="1" />
+			<xs:element name="statusProfile" type="xs:int" minOccurs="0" maxOccurs="1" />
+			<xs:element name="interests" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="languages" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="joinDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="birthDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="familyInfo" type="sgiusa:FamilyMember" minOccurs="0" maxOccurs="1" />
+			<xs:element name="employer" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="occupation" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="extraField1" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="extraField2" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="notes" type="sgiusa:Note" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="archived" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="visible" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="locatable" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--
+		Organization Info
+		***************** 
+	 -->
+
+	<xs:element name="organization" type="sgiusa:Organization" />
+	<xs:complexType name="Organization">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organizationId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="level" type="sgiusa:OrganizationLevel" minOccurs="0" maxOccurs="1" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="abbrv" type="xs:string" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="parent" type="sgiusa:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="children" type="sgiusa:Organization" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="creator" type="sgiusa:User" minOccurs="0" maxOccurs="1" />
+			<xs:element name="provider" type="sgiusa:User" minOccurs="0" maxOccurs="1" />
+			<xs:element name="accessors" type="sgiusa:User" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="zipCodes" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="OrganizationLevel">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SGIUSA" />
+			<xs:enumeration value="TEAM" />
+			<xs:enumeration value="ZONE" />
+			<xs:enumeration value="REGION" />
+			<xs:enumeration value="AREA" />
+			<xs:enumeration value="CHAPTER" />
+			<xs:enumeration value="DISTRICT" />
+			<xs:enumeration value="GROUP" />
+			<xs:enumeration value="UNIT" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Division">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="YWD" />
+			<xs:enumeration value="YMD" />
+			<xs:enumeration value="YD" />
+			<xs:enumeration value="WD" />
+			<xs:enumeration value="MD" />
+			<xs:enumeration value="ALL" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="DivisionName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="Young Women's Division" />
+			<xs:enumeration value="Young Men's Division" />
+			<xs:enumeration value="Youth Division" />
+			<xs:enumeration value="Woman's Division" />
+			<xs:enumeration value="Men's Division" />
+			<xs:enumeration value="All Divisions" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SubDivision">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="STUDENT" />
+			<xs:enumeration value="HIGH_SCHOOL" />
+			<xs:enumeration value="JR_HIGH_SCHOOL" />
+			<xs:enumeration value="ELEMENTARY_SCHOOL" />
+			<xs:enumeration value="CHILDREN" />
+			<xs:enumeration value="ALL" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="SubDivisionName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Student Division"></xs:enumeration>
+			<xs:enumeration value="High School Division"></xs:enumeration>
+			<xs:enumeration value="Jr. High School Division"></xs:enumeration>
+			<xs:enumeration value="Elementary School Division"></xs:enumeration>
+			<xs:enumeration value="Children's Division"></xs:enumeration>
+			<xs:enumeration value="ALL Sub-Divisions"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="ActivityGroup">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="YOUTH_MUSIC_CORP" />
+			<xs:enumeration value="FIFE_AND_DRUM_CORP" />
+			<xs:enumeration value="BYAKUREN" />
+			<xs:enumeration value="SOKA_GROUP" />
+			<xs:enumeration value="GAJOKAI" />
+			<xs:enumeration value="CHORUS_GROUP" />
+			<xs:enumeration value="STUDY_GROUP" />
+			<xs:enumeration value="PHONE_TOBAN" />
+			<xs:enumeration value="BOOKSTORE_TOBAN" />
+			<xs:enumeration value="CLEANUP_COMMITTEE" />
+			<xs:enumeration value="BUILDING_COMMITTEE" />
+			<xs:enumeration value="WELCOMING_COMMITTEE" />
+			<xs:enumeration value="GOLDEN_STAGE_CREW" />
+			<xs:enumeration value="YOUTH_PEACE_GROUP" />
+			<xs:enumeration value="YOUTH_SUPPORT_GROUP" />
+			<xs:enumeration value="SOKA_SPIRIT_GROUP" />
+			<xs:enumeration value="CULTURE_DEPT" />
+			<xs:enumeration value="SECRETARIET" />
+			<xs:enumeration value="CENTRAL_EXECUTIVE_COMMITTEE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="ActivityGroupName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="Youth Music Corp." />
+			<xs:enumeration value="Fife and Drum Corp." />
+			<xs:enumeration value="Byakuren" />
+			<xs:enumeration value="Soka Group" />
+			<xs:enumeration value="Gajokai" />
+			<xs:enumeration value="Chorus Group" />
+			<xs:enumeration value="Study Group" />
+			<xs:enumeration value="Phone Toban" />
+			<xs:enumeration value="Bookstore Toban" />
+			<xs:enumeration value="Cleanup Committee" />
+			<xs:enumeration value="Building Committee" />
+			<xs:enumeration value="Welcoming Committee" />
+			<xs:enumeration value="Golden Stage Crew" />
+			<xs:enumeration value="Youth Peace Group" />
+			<xs:enumeration value="Youth Support Group" />
+			<xs:enumeration value="Soka Spirit Group" />
+			<xs:enumeration value="Culture Dept." />
+			<xs:enumeration value="Secretariet" />
+			<xs:enumeration value="Central Executive Committee" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Leadership Info
+		*************** 
+	 -->
+
+	<xs:element name="leadershipInfo" type="sgiusa:LeadershipInfo" />
+	<xs:complexType name="LeadershipInfo">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="examPassed" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="examPassedDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="manualSigned" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="manualSignedDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="leadershipRoles" type="sgiusa:LeadershipRole" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="leadershipRole" type="sgiusa:LeadershipRole" />
+	<xs:complexType name="LeadershipRole">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="active" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="level" type="sgiusa:OrganizationLevel" minOccurs="1" maxOccurs="1" />
+			<xs:element name="position" type="sgiusa:Position" minOccurs="1" maxOccurs="1" />
+			<xs:element name="division" type="sgiusa:Division" minOccurs="1" maxOccurs="1" />
+			<xs:element name="subDivision" type="sgiusa:SubDivision" minOccurs="0" maxOccurs="1" />
+			<xs:element name="activityGroup" type="sgiusa:ActivityGroup" minOccurs="0" maxOccurs="1" />
+			<xs:element name="startDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="endDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="Position">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LEADER" />
+			<xs:enumeration value="VICE_LEADER" />
+			<xs:enumeration value="GUIDANCE" />
+			<xs:enumeration value="ADVISOR" />
+			<xs:enumeration value="SENIOR_VICE_LEADER" />
+			<xs:enumeration value="GENERAL_DIRECTOR" />
+			<xs:enumeration value="VICE_GENERAL_DIRECTOR" />
+			<xs:enumeration value="SENIOR_VICE_GENERAL_DIRECTOR" />
+			<xs:enumeration value="SOKA_SPIRIT_COORDINATOR" />
+			<xs:enumeration value="CULTURE_DEPT_COORDINATOR" />
+			<xs:enumeration value="MEMBER_CARE_ADVISOR" />
+			<xs:enumeration value="MEMBERSHIP_STATISTICS_ADMINISTRATOR" />
+			<xs:enumeration value="MEMBERSHIP_DATABASE_ADMINISTRATOR" />
+			<xs:enumeration value="PUBLICATIONS_REPRESENTATIVE" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="PositionName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Leader" />
+			<xs:enumeration value="Vice Leader" />
+			<xs:enumeration value="Guidance" />
+			<xs:enumeration value="Advisor" />
+			<xs:enumeration value="Senior Vice Leader" />
+			<xs:enumeration value="General Director" />
+			<xs:enumeration value="Vice General Director" />
+			<xs:enumeration value="Senior Vice General Director" />
+			<xs:enumeration value="Soka Spirit Coordinator" />
+			<xs:enumeration value="Culture Dept Coordinator" />
+			<xs:enumeration value="Member Care Advisor" />
+			<xs:enumeration value="Membership Statistics Administrator" />
+			<xs:enumeration value="Membership Database Administrator" />
+			<xs:enumeration value="Publications Representative" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Study Dept. Info
+		**************** 
+	 -->
+	 
+	<xs:element name="studyDeptInfo" type="sgiusa:StudyDeptInfo" />
+	<xs:complexType name="StudyDeptInfo">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="studyDeptExams" type="sgiusa:StudyDeptExam" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="studyDeptExam" type="sgiusa:StudyDeptExam" />
+	<xs:complexType name="StudyDeptExam">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="current" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="examLevel" type="sgiusa:StudyDeptExamLevel" minOccurs="0" maxOccurs="1" />
+			<xs:element name="examLanguage" type="sgiusa:StudyDeptLanguage" minOccurs="0" maxOccurs="1" />
+			<xs:element name="examLocation" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="examDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="StudyDeptExamLevel">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ENTRANCE" />
+			<xs:enumeration value="ELEMENTARY" />
+			<xs:enumeration value="INTERMEDIATE" />
+			<xs:enumeration value="ADVANCED" />
+			<xs:enumeration value="GRADUATE" />
+			<xs:enumeration value="POST_GRADUATE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="StudyDeptLanguage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ENGLISH" />
+			<xs:enumeration value="SPANISH" />
+			<xs:enumeration value="FRENCH" />
+			<xs:enumeration value="ITALIAN" />
+			<xs:enumeration value="GERMAN" />
+			<xs:enumeration value="PORTUGUESE" />
+			<xs:enumeration value="JAPANESE" />
+			<xs:enumeration value="CHINESE" />
+			<xs:enumeration value="KOREAN" />
+			<xs:enumeration value="VIETNAMESE" />
+			<xs:enumeration value="THAI" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Membership Info
+		*************** 
+	 -->
+	 
+	<xs:element name="membershipInfo" type="sgiusa:MembershipInfo" />
+	<xs:complexType name="MembershipInfo">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="friendOfSgi" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="gohonzons" type="sgiusa:GohonzonInfo" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="receivedCertificate" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="notActivated" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="notLocatable" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="gohonzonInfo" type="sgiusa:GohonzonInfo" />
+	<xs:complexType name="GohonzonInfo">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="gohonzonType" type="sgiusa:GohonzonType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="receiveDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="returned" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="returnDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="GohonzonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="REGULAR" />
+			<xs:enumeration value="SMALL" />
+			<xs:enumeration value="LARGE" />
+			<xs:enumeration value="FAMILY" />
+			<xs:enumeration value="OMOMORI" />
+			<xs:enumeration value="OKATAGI" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--
+		Personal Info
+		************* 
+	 -->
+	 
+	<xs:element name="emailList" type="sgiusa:EmailList" />
+	<xs:complexType name="EmailList">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="sgiusa:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="divisions" type="sgiusa:Division" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="subDivisions" type="sgiusa:SubDivision" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="activityGroups" type="sgiusa:ActivityGroup" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="emailAddressList" type="sgiusa:User" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="familyMember" type="sgiusa:FamilyMember" />
+	<xs:complexType name="FamilyMember">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="sgiMember" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="familyRelation" type="sgiusa:FamilyRelation" minOccurs="0" maxOccurs="1" />
+			<xs:element name="personName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="FamilyRelation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MOTHER" />
+			<xs:enumeration value="FATHER" />
+			<xs:enumeration value="SISTER" />
+			<xs:enumeration value="BROTHER" />
+			<xs:enumeration value="STEP_SISTER" />
+			<xs:enumeration value="STEP_BROTHER" />
+			<xs:enumeration value="HUSBAND" />
+			<xs:enumeration value="WIFE" />
+			<xs:enumeration value="SON" />
+			<xs:enumeration value="DAUGHTER" />
+			<xs:enumeration value="GRANDMOTHER" />
+			<xs:enumeration value="GRANDFATHER" />
+			<xs:enumeration value="GRANDSON" />
+			<xs:enumeration value="GRANDDAUGHTER" />
+			<xs:enumeration value="MOTHER_IN_LAW" />
+			<xs:enumeration value="FATHER_IN_LAW" />
+			<xs:enumeration value="SON_IN_LAW" />
+			<xs:enumeration value="DAUGHTER_IN_LAW" />
+			<xs:enumeration value="AUNT" />
+			<xs:enumeration value="UNCLE" />
+			<xs:enumeration value="COUSIN" />
+			<xs:enumeration value="NIECE" />
+			<xs:enumeration value="NEPHEW" />
+			<xs:enumeration value="EX_HUSBAND" />
+			<xs:enumeration value="EX_WIFE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="schoolInfo" type="sgiusa:SchoolInfo" />
+	<xs:complexType name="SchoolInfo">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="schoolName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="schoolType" type="sgiusa:SchoolType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="fieldOfStudy" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="startDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="endDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="SchoolType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ELEMENTARY" />
+			<xs:enumeration value="GRAMMER" />
+			<xs:enumeration value="JR_HIGH_SCHOOL" />
+			<xs:enumeration value="HIGH_SCHOOL" />
+			<xs:enumeration value="COLLEGE" />
+			<xs:enumeration value="GRADUATE" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="note" type="sgiusa:Note" />
+	<xs:complexType name="Note">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="author" type="sgiusa:User" minOccurs="0" maxOccurs="1" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--  
+	<xs:complexType name="SubDivision">
+		<xs:sequence>
+			<xs:element name="literal">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="SD"></xs:enumeration>
+						<xs:enumeration value="HSD"></xs:enumeration>
+						<xs:enumeration value="JHSD"></xs:enumeration>
+						<xs:enumeration value="ESD"></xs:enumeration>
+						<xs:enumeration value="CHD"></xs:enumeration>
+						<xs:enumeration value="ALL"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="label" type="subDivisionName"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	-->
+
+	<xs:element name="event" type="sgiusa:Event" />
+	<xs:complexType name="Event">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="organization" type="sgiusa:Organization" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="divisions" type="sgiusa:Division" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="subDivisions" type="sgiusa:SubDivision" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,31 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}NodeInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Node Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}NodeName" label="Node Name" value="#{node.nodeName}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}NodeIP" label="Node I P" value="#{node.nodeIP}" />
+			
+			<ui:include src="../property/propertyListPane.xhtml">
+				<ui:param name="itemManager" value="#{propertyInfoManager}" />
+				<ui:param name="listManager" value="#{propertyListManager}" />
+			</ui:include>
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

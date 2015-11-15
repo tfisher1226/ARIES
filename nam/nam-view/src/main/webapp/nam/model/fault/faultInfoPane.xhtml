@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}FaultInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Fault Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Code" label="Code" value="#{fault.code}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Message" label="Message" value="#{fault.message}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Cause" label="Cause" value="#{fault.cause}" items="#{causeList}" defaultLabel="select Cause" />
+			
+			<ui:include src="../attribute/attributeListPane.xhtml">
+				<ui:param name="itemManager" value="#{attributeInfoManager}" />
+				<ui:param name="listManager" value="#{attributeListManager}" />
+			</ui:include>
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

@@ -1,0 +1,334 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** faultListActions
+	  ** a4j:jsFunction methods to support the Fault List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var faultListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshFaultList(event)
+		  ** Refreshes the current Fault List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshFaultList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{faultListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Fault Records', 'Refreshing current Fault List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="faultListActions, faultListMenu, faultListToolbar, faultListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromFaultList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromFaultList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="faultListActions, faultListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{faultListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{faultListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="fault" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="faultListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromFaultList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromFaultList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="faultListActions, faultListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{faultListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{faultListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{faultWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="faultListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="faultListActions, faultListMenu, faultListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** faultListActions
+		  ** Javascript methods to support the Fault List.
+		  -->
+		
+		<a4j:outputPanel
+			id="faultListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getFaultListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getFaultListRowKey() {
+					if (faultListState != null)
+						return faultListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getFaultListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getFaultListRowLabel() {
+					if (faultListState != null)
+						return faultListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeFaultListState()
+				  ** Initializes and verifies Fault List state information.
+				  -->
+					
+				function initializeFaultListState() {
+					try {
+						var rowIndex = '#{faultListManager.selectedRecordIndex}';
+						var recordKey = '#{faultListManager.selectedRecordKey}';
+						var recordLabel = '#{faultListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateFaultListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateFaultListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Fault List.
+				  -->
+					
+				function updateFaultListState(event, rowIndex, recordKey, recordLabel) {
+					faultListState = new Object();
+					faultListState.rowIndex = rowIndex;
+					//faultListState.recordId = recordId;
+					faultListState.recordKey = recordKey;
+					faultListState.recordLabel = recordLabel;
+					//show(faultListState);
+				}
+					
+					
+				<!--
+				  ** enableFaultListActions(type)
+				  ** Enables (or disables) Fault List actions based on current client-side state.
+				  -->
+					
+				function enableFaultListActions(type) {
+					//enableButton('faultListViewButton');
+					enableButton('faultListNewButton');
+					enableButton('faultListEditButton');
+					enableButton('faultListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processFaultListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Fault List.
+				  -->
+					
+				function processFaultListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateFaultListState(event, rowIndex, recordKey, recordLabel);
+					enableFaultListActions('fault');
+					try {
+						executeSelectFromFaultList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processFaultListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Fault List.
+				  -->
+					
+				function processFaultListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Fault Records', 'Preparing Fault ' + recordLabel + ' for editing...');
+						executeActionFromFaultList(rowIndex, recordKey, 'Fault', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('faultListTable')});
+						if (faultListState != null) {
+							var label = faultListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (faultListState != null) {
+							var label = faultListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (faultListState != null) {
+							var label = faultListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (faultListState != null)
+						label = faultListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'faultListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

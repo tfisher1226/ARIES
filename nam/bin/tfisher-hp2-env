@@ -1,0 +1,39 @@
+#!/bin/sh
+
+## NAM settings for tfisher-hp2
+#
+
+export HOST=localhost
+
+export BINDING_HOST=localhost
+
+export JAVA_HOME=c:/software/jdk1.7.0_80_64
+
+export JBOSS_HOME=c:/software/jboss-eap-6.4-node2
+#export JBOSS_HOME=c:/software/jboss-as-7.1.1.Final-node4
+
+export JBOSS_RUNTIME_HOME=$JBOSS_HOME/standalone
+
+export JBOSS_DEPLOYMENT_HOME=$JBOSS_RUNTIME_HOME/deployments
+
+export JBOSS_CONFIGURATION_HOME=$JBOSS_RUNTIME_HOME/configuration
+
+export NAM_HOME=c:/workspace/ARIES2/nam
+
+export NAM_EAR_HOME=$NAM_HOME/nam-app
+
+export NAM_EAR_FILE=nam-app.ear
+
+export NAM_JMS_FILE=nam-jms.xml
+
+export NAM_DS_FILE=nam-ds.xml
+
+export NAM_LOG_HOME=$NAM_HOME/runtime/log
+
+export NAM_LOG_FILE=$NAM_LOG_HOME/console.log
+
+export ADMIN_JMS_FILE=admin-jms.xml
+
+export ADMIN_DS_FILE=admin-ds.xml
+
+

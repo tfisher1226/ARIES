@@ -1,0 +1,19 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:f="http://xmlns.jcp.org/jsf/core" 
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:outputPane
+		id="#{section}EnumerationListPane">
+		
+		<ui:param name="enumeration" value="Enumeration" />
+		<ui:param name="instanceName" value="enumeration" />
+		<ui:param name="unit" value="#{domain}#{enumeration}" />
+		
+		<ui:include src="enumerationActions.xhtml" />
+		<ui:include src="enumerationListToolbar.xhtml" />
+		<ui:include src="enumerationListTable.xhtml" />
+	</aries:outputPane>
+</ui:composition>

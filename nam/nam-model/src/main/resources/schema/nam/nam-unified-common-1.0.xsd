@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:nam="http://nam/model" 
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd" />
+
+	<!--
+		Import type
+	-->
+	
+	<xs:element name="imports">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:import"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="import" type="nam:Import"/>
+	<xs:complexType name="Import">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The specification of an imported file.
+			</xs:documentation>
+		</xs:annotation>
+		
+		<xs:sequence/>
+		<xs:attribute name="file" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="xs:string"/>
+	</xs:complexType>
+
+
+	<!--
+		Include type
+	-->
+	
+	<xs:element name="include" type="nam:Include"/>
+	<xs:complexType name="Include">
+		<xs:sequence/>
+		<xs:attribute name="groupId" type="xs:string" use="required"/>
+		<xs:attribute name="artifactId" type="xs:string" use="required"/>
+		<xs:attribute name="version" type="xs:string"/>
+		<xs:attribute name="scope" type="xs:string"/>
+	</xs:complexType>
+
+
+	<!--
+		Schema type
+	-->
+
+	<xs:element name="schemas">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:schema"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="schema" type="nam:Schema"/>
+	<xs:complexType name="Schema">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="nam:SchemaType"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="content" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:simpleType name="SchemaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sql"/>
+			<xs:enumeration value="xsd"/>
+			<xs:enumeration value="wsdl"/>
+			<xs:enumeration value="bpmn"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!--
+		Resource type
+	-->
+
+	<xs:element name="resources">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:resource"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+    <xs:element name="resource" type="nam:Resource"/>
+	<xs:complexType name="Resource">
+		<xs:sequence>
+			<xs:element ref="common:property" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string"/>
+		<xs:attribute name="path" type="xs:string"/>
+		<xs:attribute name="url" type="xs:string"/>
+	</xs:complexType>	
+
+
+	<!--
+		Provider Type
+	-->
+
+	<xs:element name="providers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:provider"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="provider" type="nam:Provider"/>
+	<xs:complexType name="Provider">
+		<xs:sequence>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="jndi-name" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="connection-url" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="context-factory" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="url-pkg-prefixes" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+			<xs:element name="default-connection-factory" type="xs:string" minOccurs="1" maxOccurs="1" />
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties"/>
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="type" type="xs:string"/>
+		<xs:attribute name="jndi-name" type="xs:string"/>
+		<xs:attribute name="connection-url" type="xs:string"/>
+		<xs:attribute name="context-factory" type="xs:string"/>
+		<xs:attribute name="url-pkg-prefixes" type="xs:string"/>
+		<xs:attribute name="security-principal" type="xs:string"/>
+		<xs:attribute name="security-credentials" type="xs:string"/>
+	</xs:complexType>
+	
+	
+
+	<!--
+		Adapter Type
+	-->
+
+	<xs:element name="adapters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="nam:adapter"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="adapter" type="nam:Adapter"/>
+	<xs:complexType name="Adapter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="nam:AdapterType"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="max-threads" type="xs:integer"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:provider"/>
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam:connection-pool"/>
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam-security:security"/>
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties"/>
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string"/>
+	</xs:complexType>
+	
+    <xs:simpleType name="AdapterType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RMI"/>
+			<xs:enumeration value="JMS"/>
+			<xs:enumeration value="WS"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="connection-pool" type="nam:ConnectionPool"/>
+	<xs:complexType name="ConnectionPool">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="initial-size" type="xs:integer"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="min-size" type="xs:integer"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="max-size" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--
+		Handler type
+	-->
+
+	<xs:element name="handler" type="nam:Handler"/>
+	<xs:complexType name="Handler">
+		<xs:sequence>
+			<xs:element default="360000" minOccurs="0" maxOccurs="1" name="timeout" type="xs:long"/>
+			<xs:element default="false" minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+		<xs:attribute name="type" type="xs:string"/>
+	</xs:complexType>
+
+
+
+
+
+    <xs:simpleType name="TransferMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TEXT"/>
+			<xs:enumeration value="BINARY"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- 
+		Transacted type
+	-->
+
+	<xs:element name="transacted" type="nam:Transacted"/>
+	<xs:complexType name="Transacted">
+		<xs:attribute name="local" type="xs:boolean" default="false" />
+		<xs:attribute name="use" type="nam:TransactionUsage" />
+		<xs:attribute name="scope" type="nam:TransactionScope" />
+	</xs:complexType>
+
+    <xs:simpleType name="TransactionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="local" />
+			<xs:enumeration value="jta" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="TransactionUsage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mandatory" />
+			<xs:enumeration value="supported" />
+			<xs:enumeration value="required" />
+			<xs:enumeration value="requiresNew" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="TransactionScope">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="event" />
+			<xs:enumeration value="method" />
+			<xs:enumeration value="thread" />
+			<xs:enumeration value="process" />
+			<xs:enumeration value="workflow" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+    <xs:simpleType name="UsageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="required" />
+			<xs:enumeration value="optional" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+
+	
+	
+
+</xs:schema>
+

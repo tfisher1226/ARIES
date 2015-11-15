@@ -1,0 +1,63 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- wizard body -->
+	<aries:panel class="wizardBody">
+		
+		<!-- wizard title -->
+		<ui:insert name="wizardTitle" />
+		
+		<!-- wizard messages -->
+		<ui:insert name="wizardMessages" />
+
+		<!-- wizard section -->
+		<aries:panel class="wizardSection">
+
+			<!-- variables --> 
+			<ui:param name="labelWidth" value="80" />
+
+			<!-- structures --> 
+			<ui:param name="user" value="#{adminManager.user}" /> 
+			<ui:param name="manager" value="#{projectInfoManager}" /> 
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{manager.project.name}" />
+
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{manager.project.name}" />
+
+			<!--  
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}GroupId" label="Group Id" value="#{manager.project.groupId}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ArtifactId" label="Artifact Id" value="#{manager.project.artifactId}" />
+
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{manager.project.namespace}" />
+
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{manager.project.version}" />
+			-->
+
+			<!--  
+			<aries:spacer height="6" />
+			<ui:include src="/admin/model/role/roleSelectField.xhtml">
+				<ui:param name="label" value="Roles" />
+				<ui:param name="type" value="RoleSelect" />
+				<ui:param name="name" value="userRoles" />
+				<ui:param name="items" value="#{userHelper.getRoles(user)}" />
+			</ui:include>
+			-->
+		</aries:panel>
+	</aries:panel>
+</ui:composition>

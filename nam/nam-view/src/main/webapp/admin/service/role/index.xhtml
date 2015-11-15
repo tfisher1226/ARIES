@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<ui:define name="body">
+
+		<!-- Dialogs -->
+		<ui:include src="/common/personNameDialog.xhtml" />
+		<ui:include src="/common/streetAddressDialog.xhtml" />
+		<ui:include src="/admin/model/role/roleDialog.xhtml" />
+		<ui:include src="/admin/model/roleType/roleTypeDialog.xhtml" />
+		<ui:include src="/admin/model/permission/permissionDialog.xhtml" />
+		
+		<aries:formPane
+			width="auto" 
+			columns="2"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:label 
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="Service:" 
+				backgroundColor="inherit" />
+
+			<aries:label 
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="6px"
+				fontSize="13"
+				fontWeight="bold"
+				textColor="darkBlue" 
+				value="Admin - Admin-Service - Role" />
+		</aries:formPane>
+		
+		<aries:tabPane
+			switchType="client" 
+			activeItem="#{navigationDriver.activePage}"
+			onbeforeitemchange="return false">
+	
+			<aries:tab 
+				name="role" 
+				label="Service Invocation">
+	
+				<aries:panel
+					padding="10px"
+					backgroundColor="inherit">
+					
+					<aries:panel 
+						width="auto" 
+						height="auto"
+						backgroundColor="inherit">
+				
+						<aries:formPane 
+							marginTop="10px"
+							columns="1"
+							columnClasses="formColumnFillBoth"
+							backgroundColor="inherit">
+							
+							<aries:serviceCall 
+								serviceId="roleService"
+								manager="#{adminServiceManager}" 
+								render="roleServiceJmxEventListTablePane" />
+						</aries:formPane>
+					</aries:panel>
+					
+					<aries:jmxEventList 
+						serviceId="roleService"
+						manager="#{jmxEventListManager}" />
+				</aries:panel>
+			</aries:tab>
+		</aries:tabPane>
+	</ui:define>
+</ui:composition>

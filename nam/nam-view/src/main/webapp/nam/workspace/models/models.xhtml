@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- PATH -->
+	<ui:define name="path">
+
+		<aries:formPane
+			width="auto" 
+			columns="8"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:link
+				value="Top"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showMainPage(this)" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:text 
+				width="auto"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="--&gt;" 
+				backgroundColor="inherit" />
+				
+			<aries:spacer 
+				width="10" />
+			<aries:link
+				value="Models"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" 
+				onclick="showModelsPage(this)" />
+		</aries:formPane>
+	</ui:define>
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+
+		<aries:panel
+			padding="20px" 
+			paddingTop="0px">
+			
+			<aries:h2 textColor="#004" value="Models" />
+
+			<aries:h4 textColor="#002" value="Model Organization" />
+			
+			<aries:panel
+				marginTop="6px">
+				
+				<ui:include src="modelsPanel.xhtml">
+				</ui:include>
+			</aries:panel>
+		</aries:panel>
+	</ui:define>
+</ui:composition>

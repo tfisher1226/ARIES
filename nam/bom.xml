@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>nam-bom</artifactId>
+	<name>nam-bom</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Nam Application Bom</description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<nam.version>0.0.1-SNAPSHOT</nam.version>
+		<nam.deploy.exploded>true</nam.deploy.exploded>
+		<aries.event.version>0.0.1-SNAPSHOT</aries.event.version>
+		<aries.notification.version>0.0.1-SNAPSHOT</aries.notification.version>
+		<aries.deploy.exploded>false</aries.deploy.exploded>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-model</artifactId>
+				<version>${nam.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-model</artifactId>
+				<version>${nam.version}</version>
+				<type>test-jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-user</artifactId>
+				<version>${nam.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-user</artifactId>
+				<version>${nam.version}</version>
+				<type>test-jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-util</artifactId>
+				<version>${nam.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-client</artifactId>
+				<version>${nam.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-client</artifactId>
+				<version>${nam.version}</version>
+				<type>test-jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-data</artifactId>
+				<version>${nam.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-engine</artifactId>
+				<version>${nam.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-program</artifactId>
+				<version>${nam.version}</version>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-service</artifactId>
+				<version>${nam.version}</version>
+				<type>ejb</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-view</artifactId>
+				<version>${nam.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>event-model</artifactId>
+				<version>${aries.event.version}</version>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>event-client</artifactId>
+				<version>${aries.event.version}</version>
+				<type>jar</type>
+			</dependency>
+
+            <!--
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>notification-model</artifactId>
+				<version>${aries.notification.version}</version>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>notification-client</artifactId>
+				<version>${aries.notification.version}</version>
+				<type>jar</type>
+		    </dependency>
+            -->
+		</dependencies>
+	</dependencyManagement>
+</project>

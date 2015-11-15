@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}MinionInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Minion Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{minion.version}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}DnsDomain" label="Dns Domain" value="#{minion.dnsDomain}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}DnsIP" label="Dns I P" value="#{minion.dnsIP}" items="#{dnsIPList}" defaultLabel="select Dns I P" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}BindAddress" label="Bind Address" value="#{minion.bindAddress}" items="#{bindAddressList}" defaultLabel="select Bind Address" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}VolumeDirectory" label="Volume Directory" value="#{minion.volumeDirectory}" />
+			
+			<ui:include src="../pod/podListPane.xhtml">
+				<ui:param name="itemManager" value="#{podInfoManager}" />
+				<ui:param name="listManager" value="#{podListManager}" />
+			</ui:include>
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

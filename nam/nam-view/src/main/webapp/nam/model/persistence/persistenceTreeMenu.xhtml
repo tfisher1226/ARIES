@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:contextMenu
+		id="persistenceTreeMenu">
+		
+		<c:if test="#{securityGuard.checkManager}">
+			<aries:contextMenuItem
+				mode="client"
+				disabled="false"
+				value="New Module..."
+				icon="/icons/nam/NewModule16.gif"
+				tooltip="Create new Module record for selected Persistence..."
+				onclick="processNewElement(event, 'Module', 'modulePageManager.initializeModuleSourceSelectionPage')" />
+			
+			<aries:contextMenuItem
+				mode="client"
+				disabled="false"
+				value="View Persistence..."
+				icon="/icons/common/Edit16.gif"
+				tooltip="View selected Persistence record..."
+				onclick="processViewElement(event, 'Persistence')" />
+			
+			<aries:contextMenuItem
+				mode="client"
+				disabled="false"
+				value="Edit Persistence..."
+				icon="/icons/common/Edit16.gif"
+				tooltip="Edit selected Persistence record..."
+				onclick="processEditElement(event, 'Persistence')" />
+			
+			<aries:contextMenuItem
+				mode="client"
+				disabled="false"
+				value="Remove Persistence"
+				icon="/icons/common/Remove16.gif"
+				tooltip="Remove Persistence record from the system"
+				onclick="processRemoveElement(event, 'Persistence')" />
+		</c:if>
+	</aries:contextMenu>
+</ui:composition>

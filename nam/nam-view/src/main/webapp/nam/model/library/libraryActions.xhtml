@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showLibraryListPage()
+		  ** Goes to the Library Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLibraryListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{libraryPageManager.initializeLibraryListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Library Records', 'Preparing Library List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showLibraryTreePage()
+		  ** Goes to the Library Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLibraryTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{libraryPageManager.initializeLibraryTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Library Records', 'Preparing Library Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showLibraryManagementPage()
+		  ** Goes to the Library Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showLibraryManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{libraryPageManager.initializeLibraryManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Library Records', 'Preparing Library related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showLibraryWizardPage()
+		  ** Goes to the Library Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showLibraryWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{libraryWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Library Records', 'Preparing Library information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{libraryWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{libraryWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewLibraryDialog()
+		  ** Launches the Library Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewLibraryDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{libraryInfoManager.newLibrary}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Library Records', 'Creating new Library...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLibraryDialog()"
+			render="libraryModule, libraryDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{libraryInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="libraryListPane" assignTo="#{libraryInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{libraryInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditLibraryDialog()
+		  ** Launches the Library Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditLibraryDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{libraryInfoManager.editLibrary}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Library Records', 'Preparing Library information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLibraryDialog()"
+			render="libraryModule, libraryDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{libraryInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="libraryListPane" assignTo="#{libraryInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{libraryInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

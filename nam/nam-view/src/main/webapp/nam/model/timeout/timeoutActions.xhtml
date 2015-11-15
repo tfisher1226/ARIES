@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showTimeoutListPage()
+		  ** Goes to the Timeout Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTimeoutListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{timeoutPageManager.initializeTimeoutListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Timeout Records', 'Preparing Timeout List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showTimeoutTreePage()
+		  ** Goes to the Timeout Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTimeoutTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{timeoutPageManager.initializeTimeoutTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Timeout Records', 'Preparing Timeout Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showTimeoutManagementPage()
+		  ** Goes to the Timeout Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showTimeoutManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{timeoutPageManager.initializeTimeoutManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Timeout Records', 'Preparing Timeout related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showTimeoutWizardPage()
+		  ** Goes to the Timeout Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showTimeoutWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{timeoutWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Timeout Records', 'Preparing Timeout information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{timeoutWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{timeoutWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewTimeoutDialog()
+		  ** Launches the Timeout Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewTimeoutDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{timeoutInfoManager.newTimeout}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Timeout Records', 'Creating new Timeout...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showTimeoutDialog()"
+			render="timeoutModule, timeoutDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{timeoutInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="timeoutListPane" assignTo="#{timeoutInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{timeoutInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditTimeoutDialog()
+		  ** Launches the Timeout Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditTimeoutDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{timeoutInfoManager.editTimeout}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Timeout Records', 'Preparing Timeout information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showTimeoutDialog()"
+			render="timeoutModule, timeoutDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{timeoutInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="timeoutListPane" assignTo="#{timeoutInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{timeoutInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

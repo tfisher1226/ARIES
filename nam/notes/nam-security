@@ -1,0 +1,78 @@
+Problem: 
+
+How do I implement security, one of the most important aspects of today's software applications, into my Java environment when most security implementations are inflexible, proprietary systems?
+
+Goal: Implement Security in the Model
+
+More than ever before, corporations are clamoring to evaluate their security architectures and identify any gaps. The Java platform, and specifically the J2EE platform, provides some of the most robust application-level security available today.
+
+
+Identity
+    -Principle: User
+    -Credentials: Password, Key
+    -Grants: Roles and Groups
+
+Authentication
+    -Proving who we are
+    -Relies on our secret (Password, Key or both)
+
+    In 3 steps:
+    1. Declare an authentication method
+    2. Create a JSF login form
+    3. Write the method
+
+    Active
+    Passive
+      -Built-in redirection
+      -Triggered by event
+
+Authorization
+    -Who shall pass
+    -Resource control
+    -Usage of Permission objects
+
+Example Permission Ojects:
+    -NamedPermission
+    -java.lang.management.LoggingPermission
+    -java.lang.management.ManagementPermission
+
+
+Abstractions to support:
+-Principle
+-Credential
+-Permission
+-PermissionCollection
+-ProtectionDomain
+-SecurityPolicy
+-SecurityManager
+
+
+Different levels of Authorization, different mechanisms of enforcement. Some nested, some not. Containment exists here too.
+
+Involves adding Permission objects into different parts of the Application.
+
+Permission
+Is 3 things:
+1) Target
+2) Action (on the Target)
+3) Recipient (the Performer of the Action)
+Then a Permission Resolver chain 
+-persistence one's (which is where ACL's are checked)
+-rule-based one's (which is where rules get fired)
+-custom one's (where we fire events or notifications)
+
+
+Identity and Permission Management
+
+-User Search
+-User CRUD
+-Role Search
+-Role CRUD
+-Permission Search (Dealing with ACLs)
+-Permission Assignment (Dealing with ACLs)
+    -Grant
+    -Revoke
+
+
+
+

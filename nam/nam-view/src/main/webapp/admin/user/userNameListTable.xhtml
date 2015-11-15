@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:outputPane
+		id="userNameListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="userListMenu.xhtml">
+			<ui:param name="tableId" value="userNameListTable" />
+		</ui:include>
+			
+		<!-- table -->
+		<aries:table
+			id="userNameListTable"
+			value="#{userListManager.dataModel}"
+			rowCount="#{userListManager.dataModel.rowCount}"
+			visible="#{userListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processUserListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processUserListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
+			styleClass="noTableHeader"
+			tablePanelStyleClass="none"
+			rowClasses="none">
+			
+			<!-- Application Name 
+			<aries:textColumn
+				width="100"
+				header="Application">
+				<h:outputText value="#{rowItem.user.name}" />
+			</aries:textColumn>
+			-->
+			
+			<!-- User Name -->
+			<aries:textColumn header="User">
+				<aries:formPane columns="2">
+					<h:graphicImage library="graphics" name="/icons/nam/User16.gif" />
+					<h:outputText value="#{rowItem.user.name}" styleClassXX="toolLabel" style="margin-left: 3px; white-space: nowrap; #{labelStyle}" />
+				</aries:formPane>
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

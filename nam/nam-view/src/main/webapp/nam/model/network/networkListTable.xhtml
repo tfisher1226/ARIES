@@ -1,0 +1,128 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="networkListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="networkListMenu.xhtml">
+			<ui:param name="tableId" value="networkListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="networkListTable"
+			value="#{networkListManager.dataModel}"
+			rowCount="#{networkListManager.dataModel.rowCount}"
+			visible="#{networkListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processNetworkListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processNetworkListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- DOMAIN -->
+			<aries:textColumn
+				width="100"
+				header="Domain">
+				<h:outputText value="#{rowItem.network.domain}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.network.name}" />
+			</aries:textColumn>
+			
+			<!-- LABEL -->
+			<aries:textColumn
+				width="100"
+				header="Label">
+				<h:outputText value="#{rowItem.network.label}" />
+			</aries:textColumn>
+			
+			<!-- VERSION -->
+			<aries:textColumn
+				width="100"
+				header="Version">
+				<h:outputText value="#{rowItem.network.version}" />
+			</aries:textColumn>
+			
+			<!-- DESCRIPTION -->
+			<aries:textColumn
+				width="100"
+				header="Description">
+				<h:outputText value="#{rowItem.network.description}" />
+			</aries:textColumn>
+			
+			<!-- NAMESPACE -->
+			<aries:textColumn
+				width="100"
+				header="Namespace">
+				<h:outputText value="#{rowItem.network.namespace}" />
+			</aries:textColumn>
+			
+			<!-- INITIAL SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Initial Size">
+				<h:outputText value="#{rowItem.network.initialSize}" />
+			</aries:textColumn>
+			
+			<!-- MIN SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Min Size">
+				<h:outputText value="#{rowItem.network.minSize}" />
+			</aries:textColumn>
+			
+			<!-- MAX SIZE -->
+			<aries:textColumn
+				width="100"
+				header="Max Size">
+				<h:outputText value="#{rowItem.network.maxSize}" />
+			</aries:textColumn>
+			
+			<!-- IMPORTED -->
+			<aries:textColumn
+				width="100"
+				header="Imported">
+				<h:outputText value="#{rowItem.network.imported}" />
+			</aries:textColumn>
+			
+			<!-- INCLUDED -->
+			<aries:textColumn
+				width="100"
+				header="Included">
+				<h:outputText value="#{rowItem.network.included}" />
+			</aries:textColumn>
+			
+			<!-- EXPOSED -->
+			<aries:textColumn
+				width="100"
+				header="Exposed">
+				<h:outputText value="#{rowItem.network.exposed}" />
+			</aries:textColumn>
+			
+			<!-- CREATION DATE -->
+			<aries:textColumn
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.network.creationDate}" />
+			</aries:textColumn>
+			
+			<!-- LAST UPDATE -->
+			<aries:textColumn
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.network.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

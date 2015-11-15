@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+	=====================================================================
+
+	Log4j Configuration
+
+	=====================================================================
+-->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+	<!-- ============================== -->
+	<!-- Append messages to the console -->
+	<!-- ============================== -->
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<!--
+			<errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+		-->
+		<param name="Threshold" value="DEBUG" />
+		<param name="Target" value="System.out" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- The default pattern: Date Priority [Category] Message\n -->
+			<param name="ConversionPattern" value="%d{MM/dd/yy HH:mm:ss} %-6p [%t] %c:%L - %m%n" />
+			<!--
+				<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%t][%c{1}]
+				%m%n"/>
+			-->
+		</layout>
+	</appender>
+
+
+	<!-- ================================= -->
+	<!-- Dispatch messages to parent agent -->
+	<!-- ================================= -->
+	<!--
+	<appender name="AGENT"
+		class="com.westernasset.backoffice.agent.LogService"> <param
+		name="Threshold" value="INFO"/> <layout
+		class="org.apache.log4j.PatternLayout"> <param
+		name="ConversionPattern" value="%d{MM/dd/yy HH:mm:ss} %-6p [%t]
+		%c{1}:%L - %m%n"/> </layout> </appender>
+	-->
+
+
+	<!-- ================================= -->
+	<!-- Preserve messages in a local file -->
+	<!-- ================================= -->
+
+	<!--
+		<appender name="FILE"
+		class="org.jboss.logging.appender.RollingFileAppender"> <errorHandler
+		class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
+	-->
+
+	<!-- A time/date based rolling appender -->
+	<appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+		<!--   <param name="File" value="@log4j.file@"/>  -->
+		<param name="File" value="${catalina.base}/logs/tomcat.log" />
+		<param name="Append" value="true" />
+		<param name="MaxBackupIndex" value="10" />
+		<param name="MaxFileSize" value="5MB" />
+
+		<!-- Rollover at midnight each day -->
+		<!--param name="DatePattern" value="'.'yyyy-MM-dd"/-->
+
+		<param name="Threshold" value="DEBUG" />
+
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- The default pattern: Date Priority [Category] Message\n -->
+			<param name="ConversionPattern" value="%d{MM/dd/yy HH:mm:ss} %-6p [%t] %c:%L - %m%n" />
+		</layout>
+	</appender>
+
+
+	<!-- =========================-->
+	<!-- Declare the SMTPAppender -->
+	<!-- =========================-->
+	<!-- 
+	<appender name="EMAIL" class="org.apache.log4j.net.SMTPAppender">
+		<param name="BufferSize" value="4096" />
+		<param name="SMTPHost" value="@smtp.host@" />
+		<param name="From" value="@email.from@" />
+		<param name="To" value="@email.to@" />
+		<param name="Subject" value="[LightHouse] Application Message" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+	-->
+
+
+	<!-- ========================================== -->
+	<!-- Limit categories from Aerospace frameworks -->
+	<!-- ========================================== -->
+
+	<!-- Aerospace top -->
+	<category name="org.aero">
+		<priority value="DEBUG" />
+	</category>
+
+	<!-- Aerospace common framework -->
+	<category name="org.aero.common">
+		<priority value="DEBUG" />
+	</category>
+
+	<!-- Aerospace service framework -->
+	<category name="org.aero.service">
+		<priority value="INFO" />
+	</category>
+
+	<!-- ======================================= -->
+	<!-- Limit categories from imported packages -->
+	<!-- ======================================= -->
+
+	<!-- Limit Apache Commons categories -->
+	<category name="org.apache.commons">
+		<priority value="INFO" />
+	</category>
+
+	<!-- Limit Apache Log4J categories -->
+	<category name="org.apache.log4j">
+		<priority value="WARN"/>
+	</category>
+
+	<!-- Limit Apache Catalina categories -->
+	<category name="org.apache.catalina">
+		<priority value="INFO"/>
+	</category>
+
+	<!-- Limit Apache Tomcat categories -->
+	<category name="org.apache.tomcat">
+		<priority value="INFO"/>
+	</category>
+
+	<!-- Limit Apache Jasper categories -->
+	<category name="org.apache.jasper">
+		<priority value="INFO"/>
+	</category>
+
+	<!-- Limit JNDI Naming categories -->
+	<category name="org.jnp.interfaces.NamingContext">
+		<priority value="INFO"/>
+	</category>
+
+	<!--
+		Increase the priority threshold for the DefaultDS category <category
+		name="DefaultDS"> <priority value="FATAL"/> </category>
+	-->
+
+	<category name="net.sf">
+		<priority value="WARN" />
+	</category>
+
+	<!-- Limit Spring categories -->
+	<category name="org.springframework">
+		<priority value="WARN" />
+	</category>
+
+	<!--  Limit org.jboss.varia category -->
+	<category name="org.jboss.varia"> 
+		<priority value="DEBUG"/>
+	</category>
+
+	<!-- Limit JBoss categories -->
+	<category name="org.jboss"> 
+		<priority value="INFO"/> 
+	</category>
+
+	<!-- Limit JBoss MQ categories -->
+	<category name="org.jboss.mq">
+		<priority value="INFO" />
+	</category>
+
+	<category name="org.jboss.cache">
+		<priority value="WARN" />
+	</category>
+
+	<category name="org.jboss.tm">
+		<priority value="DEBUG" />
+	</category>
+
+	<category name="org.jgroups">
+		<priority value="WARN" />
+	</category>
+
+	<!-- Limit Hibernate categories -->
+	<category name="org.hibernate"><priority value="INFO"/></category>
+	<category name="org.hibernate.jdbc"><priority value="INFO"/></category>
+	<category name="org.hibernate.loader"><priority value="INFO"/></category>
+	<category name="org.hibernate.engine"><priority value="INFO"/></category>
+	<category name="org.hibernate.tool"><priority value="INFO"/></category>
+	<category name="org.hibernate.transaction"><priority value="DEBUG"/></category>
+	<category name="org.hibernate.hql.ast"><priority value="INFO"/></category>
+	<category name="org.hibernate.hql"><priority value="INFO"/></category>
+
+	<!-- Limit RichFaces categories -->
+	<category name="org.richfaces"><priority value="DEBUG"/></category>
+	<category name="org.richfaces.component"><priority value="INFO"/></category>
+	<category name="org.richfaces.convert"><priority value="INFO"/></category>
+
+	<!-- Limit Ajax4Jsf categories -->
+	<category name="org.ajax4jsf"><priority value="DEBUG"/></category>
+	<category name="org.ajax4jsf.io"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.application"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.component"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.context"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.contextkit"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.event"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.renderkit"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.resource"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.javascript"><priority value="INFO"/></category>
+	<category name="org.ajax4jsf.webapp"><priority value="INFO"/></category>
+
+
+	<!-- ======================= -->
+	<!-- Setup the Root category -->
+	<!-- ======================= -->
+
+	<root>
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+		<!-- <appender-ref ref="AGENT" /> -->
+		<!-- <appender-ref ref="EMAIL"/> -->
+	</root>
+</log4j:configuration>
+

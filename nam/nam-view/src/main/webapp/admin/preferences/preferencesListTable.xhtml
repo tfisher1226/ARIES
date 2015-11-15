@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="preferencesListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="preferencesListMenu.xhtml">
+			<ui:param name="tableId" value="preferencesListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="preferencesListTable"
+			value="#{preferencesListManager.dataModel}"
+			rowCount="#{preferencesListManager.dataModel.rowCount}"
+			visible="#{preferencesListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processPreferencesListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processPreferencesListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- USER -->
+			<aries:textColumn
+				width="100"
+				header="User">
+				<aries:link
+					value="#{userHelper.toString(rowItem.preferences.user)}"
+					onmouseup="execute#{domain}SelectOpenPreferences(#{index}, #{rowItem.preferences.id})" />
+			</aries:textColumn>
+			
+			<!-- THEME ID -->
+			<aries:textColumn
+				width="100"
+				header="Theme Id">
+				<h:outputText value="#{rowItem.preferences.themeId}" />
+			</aries:textColumn>
+			
+			<!-- SELECTED NODE -->
+			<aries:textColumn
+				width="100"
+				header="Selected Node">
+				<h:outputText value="#{rowItem.preferences.selectedNode}" />
+			</aries:textColumn>
+			
+			<!-- ENABLE TOOLTIPS -->
+			<aries:textColumn
+				width="100"
+				header="Enable Tooltips">
+				<h:outputText value="#{rowItem.preferences.enableTooltips}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

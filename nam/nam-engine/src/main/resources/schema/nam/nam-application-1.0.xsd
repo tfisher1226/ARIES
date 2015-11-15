@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	xmlns="http://nam/model" 
+	xmlns:ui="http://nam/ui" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:chkpt="http://www.aries.org/validate" 
+	targetNamespace="http://nam/model"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+	<xs:import namespace="http://www.aries.org/validate" schemaLocation="../common/aries-validate-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+	<xs:include schemaLocation="nam-security-1.0.xsd" />
+	<xs:include schemaLocation="nam-operation-1.0.xsd" />
+	<xs:include schemaLocation="nam-execution-1.0.xsd" />
+	<xs:include schemaLocation="nam-messaging-1.0.xsd" />
+	<xs:include schemaLocation="nam-persistence-1.0.xsd" />
+	<xs:include schemaLocation="nam-information-1.0.xsd" />
+	<xs:import namespace="http://nam/ui" schemaLocation="nam-view-1.0.xsd" />
+
+	<!-- 
+		Project type (document root)
+	-->
+
+	<xs:element name="projects" type="Projects" />
+	<xs:complexType name="Projects">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="project" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="projectNames" type="ProjectNames" />
+	<xs:complexType name="ProjectNames">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="projectName" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="project" type="Project" />
+	<xs:complexType name="Project">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="id" type="xs:long" />
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="label" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="domain" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="owner" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="enabled" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="shared" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="webEnabled" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="singleProject" type="xs:boolean" />
+			<!--  
+			<xs:element name="templateHome" type="xs:string" minOccurs="0" maxOccurs="1" />
+			</xs:element>
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" ref="imports" />
+			<xs:element minOccurs="0" maxOccurs="1" name="subProjects" type="Projects" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="configurations" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="applications" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="groups" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="modules" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="providers" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="placeholders" />
+			
+			<!-- 
+			<xs:element minOccurs="0" maxOccurs="1" ref="information" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="messaging" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="persistence" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="namespaces" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="projects" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="links" />
+			-->
+			
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+			<xs:element ref="extensions" minOccurs="1" />
+		</xs:all>
+	</xs:complexType>
+
+	<xs:element name="extensions" type="Extensions" />
+	<xs:complexType name="Extensions">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="information" />
+				<xs:element ref="messaging" />
+				<xs:element ref="persistence" />
+				<xs:element ref="ui:view" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+ 
+	<xs:element name="placeholders">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="project" />
+				<xs:element ref="services" />
+				<xs:element ref="information" />
+				<xs:element ref="persistence" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+    <xs:simpleType name="Tier">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="all" />
+			<xs:enumeration value="ui" />
+			<xs:enumeration value="client" />
+			<xs:enumeration value="service" />
+			<xs:enumeration value="messaging" />
+			<xs:enumeration value="persistence" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- 
+		Configuration type
+	-->
+
+	<xs:element name="configurations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="configuration" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="configuration" type="Configuration" />
+	<xs:complexType name="Configuration">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="groupId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="artifactId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="parent" type="Dependency" />
+			<xs:element minOccurs="0" maxOccurs="1" name="owner" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="content" type="xs:string" />
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" ref="profiles" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties" />
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="ConfigurationType" />
+			-->
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="properties" type="common:Property" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="configurations" type="Configuration" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="dependencies" type="Dependency" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="profiles" type="Profile" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:long" />
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+	<xs:simpleType name="ConfigurationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="pom" />
+		</xs:restriction>
+	</xs:simpleType>
+		
+	
+	<!-- 
+		Profile type
+	-->
+
+	<xs:element name="profiles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="profile" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="profile" type="Profile" />
+	<xs:complexType name="Profile">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+		</xs:all>
+	</xs:complexType>
+		
+
+	<!-- 
+		Dependency type
+	-->
+
+	<xs:element name="dependencies">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="dependency" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="dependency" type="Dependency" />
+	<xs:complexType name="Dependency">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="common:property" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="groupId" type="xs:string" use="required" />
+		<xs:attribute name="artifactId" type="xs:string" use="required" />
+		<xs:attribute name="version" type="xs:string" />
+		<xs:attribute name="description" type="xs:string" />
+		<xs:attribute name="scope" type="DependencyScope" />
+		<xs:attribute name="type" type="DependencyType" />
+	</xs:complexType>
+
+	<xs:simpleType name="DependencyScope">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="compile" />
+			<xs:enumeration value="provided" />
+			<xs:enumeration value="import" />
+			<xs:enumeration value="system" />
+			<xs:enumeration value="test" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="DependencyType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jar" />
+			<xs:enumeration value="ear" />
+			<xs:enumeration value="war" />
+			<xs:enumeration value="ejb" />
+			<xs:enumeration value="sar" />
+			<xs:enumeration value="rar" />
+			<xs:enumeration value="pom" />
+			<xs:enumeration value="test-jar" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!--
+		Application layer
+	-->
+
+	<!-- 
+		Application type
+	-->
+	
+	<xs:element name="applications">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="import" />
+				<xs:element ref="application" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="application" type="Application" />
+	<xs:complexType name="Application">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="ApplicationType" />
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="label" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="groupId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="artifactId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="xs:string" />
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" name="webEnabled" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="singleProject" type="xs:boolean" />
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" name="contextRoot" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="packaging" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="creator" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="resources" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="dependencies" /> 
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" ref="channels" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="configuration" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="listeners" />
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" ref="projectNames" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="modules" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="services" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="processes" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="components" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="information" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="persistence" />
+			<xs:element minOccurs="0" maxOccurs="1" name="userInterfaces" type="ui:UserInterfaces" />
+			<xs:element minOccurs="0" maxOccurs="1" name="content" type="xs:string" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+    <xs:simpleType name="ApplicationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Web" />
+			<xs:enumeration value="Enterprise" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!--
+		Groups Type 
+	-->
+
+	<xs:element name="groups" type="Groups" />
+	<xs:complexType name="Groups">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="group" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--
+		Group Type
+	-->
+	
+	<xs:element name="group" type="Group" />
+	<xs:complexType name="Group">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="participantName" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="unbounded" ref="application" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--
+		Module type
+	-->
+
+	<xs:element name="modules">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="import" />
+				<xs:element ref="module" />
+			</xs:choice>
+			<xs:attribute name="domain" type="xs:string" />
+		</xs:complexType>
+		
+		<!--  
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="module" />
+			</xs:sequence>
+			<xs:attribute name="domain" type="xs:string" />
+		</xs:complexType>
+		-->
+	</xs:element>
+
+	<xs:element name="module" type="Module" />
+	<xs:complexType name="Module">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="ModuleType" />
+			<xs:element minOccurs="0" maxOccurs="1" name="level" type="ModuleLevel" />
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="label" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="groupId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="artifactId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="web-enabled" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="packaging" type="PackageType" />
+			<xs:element minOccurs="0" maxOccurs="1" name="creator" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="dependencies" /> 
+			<xs:element minOccurs="0" maxOccurs="1" ref="configuration" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="interactors" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="resources" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="information" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="services" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="processes" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="components" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="persistence" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="ui:view" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="chkpt:checkpoints" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="id" type="xs:long" />
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+    <xs:simpleType name="ModuleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="pom" />
+			<xs:enumeration value="basic" />
+			<xs:enumeration value="component" />
+			<xs:enumeration value="element" />
+			<xs:enumeration value="model" />
+			<xs:enumeration value="data" />
+			<xs:enumeration value="persistence" />
+			<xs:enumeration value="client" />
+			<xs:enumeration value="service" />
+			<xs:enumeration value="view" />
+			<xs:enumeration value="test" />
+			<xs:enumeration value="war" />
+			<xs:enumeration value="ear" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="ModuleLevel">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="project_level" />
+			<xs:enumeration value="group_level" />
+			<xs:enumeration value="application_level" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="PackageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="jar" />
+			<xs:enumeration value="war" />
+			<xs:enumeration value="ear" />
+			<xs:enumeration value="rar" />
+			<xs:enumeration value="sar" />
+			<xs:enumeration value="none" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+	<!--
+		Service type
+	-->
+
+	<xs:element name="services">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="import" />
+				<xs:element ref="domain" />
+				<xs:element ref="service" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="domain" type="Domain" />
+	<xs:complexType name="Domain">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="Namespace" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="application" />
+				<xs:element ref="module" />
+				<xs:element ref="information" />
+				<xs:element ref="persistence" />
+				<xs:element ref="service" />
+				<xs:element ref="listener" />
+				<xs:element ref="router" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="service" type="Service" />
+	<xs:complexType name="Service">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="label" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="domain" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="element" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="packageName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="interfaceName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="className" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="portType" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="state" type="ServiceState" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" ref="common:property" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="references" type="Namespace" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="transacted" />
+
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="channel" />
+				<xs:element ref="listener" />
+				<xs:element ref="operation" />
+				<xs:element ref="sender" />
+				<xs:element ref="invoker" />
+				<xs:element ref="callback" />
+				<xs:element ref="execution" />
+				<xs:element ref="fault" />
+			</xs:choice>
+
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="channels" type="Channel" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="interactor" type="Interactor" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="operation" type="Operation" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="callback" type="Service" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="execution" type="Execution" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="dependency" type="Dependency" />
+			-->
+
+			<xs:element minOccurs="0" maxOccurs="1" name="process" type="Process" />
+			<xs:element minOccurs="0" maxOccurs="1" name="cache" type="Cache" />
+		</xs:sequence>
+		<!--  
+		<xs:attribute name="class" type="xs:string" />
+		<xs:attribute name="pattern" type="xs:string" />
+		<xs:attribute name="ref" type="xs:string" />
+		-->
+	</xs:complexType>
+
+	<xs:element name="callbacks">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="callback" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="callback" type="Callback" />
+	<xs:complexType name="Callback">
+		<xs:complexContent>
+			<xs:extension base="Service">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="direction" type="Direction" />
+					<xs:element minOccurs="0" maxOccurs="1" name="sendingService" type="Service" />
+					<xs:element minOccurs="0" maxOccurs="1" name="receivingService" type="Service" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:element name="serviceState" type="ServiceState" />
+	<xs:complexType name="ServiceState">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" ref="security" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="variables" type="ServiceVariable" />
+		</xs:sequence>
+		<xs:attribute default="false" name="distributed" type="xs:boolean" />
+	</xs:complexType>
+
+	<xs:element name="serviceVariable" type="ServiceVariable" />
+	<xs:complexType name="ServiceVariable">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="type" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="value" type="xs:anyType" />
+		</xs:sequence>
+		<xs:attribute default="false" name="dirty" type="xs:boolean" />
+	</xs:complexType>
+
+
+	<!--
+		Endpoint type
+	-->
+
+	<!--  
+	<xs:element name="endpoint" type="Endpoint" />
+	<xs:complexType name="Endpoint">
+		<xs:sequence>
+			<xs:element name="address" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="serviceName" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="portName" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="parameters" type="common:Map" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	-->
+
+
+	<!--
+		Component type
+	-->
+	
+	<xs:element name="components">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="component" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="component" type="Component" />
+	<xs:complexType name="Component">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The specification of a Component.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="annotation" type="Annotation" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="field" type="Field" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="extends" type="xs:string" />
+		<xs:attribute name="public" type="xs:boolean" />
+		<xs:attribute name="cached" type="xs:boolean" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+</xs:schema>
+

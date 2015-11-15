@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane 
+		width="500"
+		height="300"
+		id="#{domain}UserInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Identity">
+			<ui:include src="userInfoRecord_identityPane.xhtml" />
+		</aries:tab>
+
+		<aries:tab
+			label="Contact">
+			<ui:include src="userInfoRecord_contactPane.xhtml" />
+		</aries:tab>
+		
+		<aries:tab
+			label="Roles">
+			<ui:include src="userInfoRecord_rolesPane.xhtml" />
+		</aries:tab>
+		
+		<aries:tab
+			label="Permissions">
+			<ui:include src="userInfoRecord_permissionsPane.xhtml" />
+		</aries:tab>
+		
+		<aries:tab
+			label="Settings">
+			<ui:include src="userInfoRecord_settingsPane.xhtml" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

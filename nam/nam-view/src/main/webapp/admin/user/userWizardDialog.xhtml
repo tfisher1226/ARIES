@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:set var="domain" value="UserWizard"/> 
+		<c:set var="dialog" value="UserWizard" /> 
+		
+		<aries:wizard 
+			domain="UserDialog"
+			bean="#{userWizard}"
+			wizardName="UserWizard"
+			wizardForm="UserWizardForm"
+			wizardPanel="UserWizardPanel"
+			wizardMessages="UserWizardMessages"
+			wizardRerender="pageForm">
+	
+			<ui:include src="userRecordIdentityPane.xhtml">
+				<ui:param name="userObject" value="#{userInfoManager.user}" />
+			</ui:include>
+	
+			<ui:include src="userRecordContactPane.xhtml">
+				<ui:param name="userObject" value="#{userInfoManager.user}" />
+			</ui:include>
+		</aries:wizard>
+	</aries:tag>
+</ui:composition>

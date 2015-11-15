@@ -1,0 +1,84 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<script type="text/javascript">
+	function select#{domain}Role(index, id) {
+		enableToolbar(#{rich:element('RoleListToolbar')});
+		if (index) {
+			save#{domain}RoleSelection(index, id);
+		}
+	}
+	</script>
+	
+    <a4j:jsFunction 
+    	name="save#{domain}RoleSelection"
+    	execute="@this" 
+    	immediate="true" 
+    	bypassUpdates="true" 
+    	limitRender="true"
+    	render="#{section}RoleListToolbar">
+    	<a4j:param name="selectedRecordIndex" assignTo="#{listManager.selectedRecordIndex}" />
+    	<a4j:param name="selectedRecordId" assignTo="#{listManager.selectedRecordId}" />
+	</a4j:jsFunction>
+	
+	<aries:outputPane
+		id="#{section}RoleListTablePanel">
+		<ui:include src="roleListMenu.xhtml"/>
+		
+		<aries:table 
+			id="#{section}RoleListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onselect="select#{domain}Role('#{index}', '#{rowItem.role.id}')"
+			style="border-top-width: 0px; border-left-width: 0px">
+
+			<!-- NAME -->
+			<aries:textColumn 
+				width="200"
+				header="Name">
+				
+				<a4j:commandLink 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					value="#{rowItem.role.name}"
+					action="#{manager.editRole(rowItem.role.id)}"
+					onclick="setCursorWait(); showProgress('', 'Role Information for: #{rowItem.role.name}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}RoleDialog()"
+					render="#{roleInfoDialogs}">
+				</a4j:commandLink>
+			</aries:textColumn>
+
+			<!-- RoleType -->
+			<aries:textColumn 
+				width="40"
+				header="Role Type">
+				<h:outputText value="#{rowItem.role.roleType}" />
+			</aries:textColumn>
+			
+			<!-- CONDITIONAL -->
+			<aries:textColumn 
+				width="80"
+				header="Conditional">
+				<h:outputText value="#{rowItem.role.conditional}" />
+			</aries:textColumn>
+
+			<!-- GROUPS -->
+			<aries:textColumn 
+				width="140"
+				header="Groups">
+				<h:outputText value="#{roleHelper.toString(rowItem.role.groups)}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

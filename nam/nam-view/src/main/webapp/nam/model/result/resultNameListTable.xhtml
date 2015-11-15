@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:outputPane
+		id="resultNameListTablePanel">
+		<ui:include src="resultNameListMenu.xhtml"/>
+		
+		<aries:table
+			id="resultNameListTable"
+			value="#{resultListManager.dataModel}"
+			rowCount="#{resultListManager.dataModel.rowCount}"
+			visible="#{resultListManager.dataModel.rowCount > 0}"
+			onrowmousedown="processResultListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processResultListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
+			tablePanelStyleClass="none">
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.result.type}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.result.name}" />
+			</aries:textColumn>
+			
+			<!-- KEY -->
+			<aries:textColumn
+				width="100"
+				header="Key">
+				<h:outputText value="#{rowItem.result.key}" />
+			</aries:textColumn>
+			
+			<!-- CONSTRUCT -->
+			<aries:textColumn
+				width="100"
+				header="Construct">
+				<h:outputText value="#{rowItem.result.construct}" />
+			</aries:textColumn>
+			
+			<!-- REQUIRED -->
+			<aries:textColumn
+				width="100"
+				header="Required">
+				<h:outputText value="#{rowItem.result.required}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

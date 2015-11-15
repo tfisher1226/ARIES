@@ -1,0 +1,362 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** projectListActions
+	  ** a4j:jsFunction methods to support the Project List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var projectListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshProjectList(event)
+		  ** Refreshes the current Project List.
+		  -->
+
+		<a4j:jsFunction 
+			name="refreshProjectList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{projectListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Project Records', 'Refreshing current Project List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="projectListActions, projectListMenu, projectListToolbar, projectListPane">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromProjectList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromProjectList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="projectListActions, projectListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{projectListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="project" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromProjectList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromProjectList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="projectListActions, projectListToolbar, #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{projectListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{projectWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="projectListActions, projectListMenu, projectListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** projectListActions
+		  ** Javascript methods to support the Project List.
+		  -->
+		
+		<a4j:outputPanel
+			id="projectListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getProjectListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getProjectListRowKey() {
+					if (projectListState != null)
+						return projectListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getProjectListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getProjectListRowLabel() {
+					if (projectListState != null)
+						return projectListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeProjectListState()
+				  ** Initializes and verifies Project List state information.
+				  -->
+					
+				function initializeProjectListState() {
+					try {
+						var rowIndex = '#{projectListManager.selectedRecordIndex}';
+						var recordKey = '#{projectListManager.selectedRecordKey}';
+						var recordLabel = '#{projectListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateProjectListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateProjectListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Project List.
+				  -->
+					
+				function updateProjectListState(event, rowIndex, recordKey, recordLabel) {
+					projectListState = new Object();
+					projectListState.rowIndex = rowIndex;
+					//projectListState.recordId = recordId;
+					projectListState.recordKey = recordKey;
+					projectListState.recordLabel = recordLabel;
+					//show(projectListState);
+				}
+					
+					
+				<!--
+				  ** enableProjectListActions(type)
+				  ** Enables (or disables) Project List actions based on current client-side state.
+				  -->
+					
+				function enableProjectListActions(type) {
+					//enableButton('projectListViewButton');
+					enableButton('projectListNewButton');
+					enableButton('projectListEditButton');
+					enableButton('projectListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processProjectListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Project List.
+				  -->
+					
+				function processProjectListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateProjectListState(event, rowIndex, recordKey, recordLabel);
+					enableProjectListActions('project');
+					if (isRightMouseClick(event))
+						return;
+					try {
+						executeSelectFromProjectList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processProjectListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Project List.
+				  -->
+					
+				function processProjectListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Project Records', 'Preparing Project ' + recordLabel + ' for editing...');
+						executeActionFromProjectList(rowIndex, recordKey, 'Project', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+				
+				<!--
+				  ** processProjectListSelectionChanged(event, rowIndex, recordKey, recordLabel)
+				  ** Handles check-box selection changed event on the Project List.
+				  -->
+					
+				function processProjectListSelectionChanged(event, rowIndex, recordKey, recordLabel, source) {
+					try {
+						beginSelect(source);
+						//show(event);
+						//alert(event.target.checked);
+						//alert(event.currentTarget.checked);
+						//alert(recordLabel);
+						//executeSelectFromProjectList(rowIndex, recordKey);
+						//executeActionFromProjectList(rowIndex, recordKey, 'Project', 'workspaceManager.selectObject');
+						executeSelectFromProjectList(rowIndex, recordKey);
+						completeSelect(source);
+						
+						//var table = #{rich:component('applicationNameListTable')}; 
+						//filter(table, 'applicationNameListTable', 'Application', 'shipper');
+					} catch(e) {
+						//completeSelect(source);
+						alert(e);
+					}
+				}
+				
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('projectListTable')});
+						if (projectListState != null) {
+							var label = projectListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (projectListState != null) {
+							var label = projectListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (projectListState != null) {
+							var label = projectListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (projectListState != null)
+						label = projectListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'projectListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

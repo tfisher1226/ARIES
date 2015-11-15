@@ -1,0 +1,114 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty fieldHeight}">
+		<c:set var="fieldHeight" value="auto"/> 
+	</c:if>
+	
+	<c:if test="#{empty labelWidth}">
+		<c:set var="labelWidth" value="100"/> 
+	</c:if>
+
+	<c:if test="#{empty labelHeight}">
+		<c:set var="labelHeight" value="23"/> 
+	</c:if>
+
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true"/> 
+	</c:if>
+	
+	<c:if test="#{empty enabled}">
+		<c:set var="enabled" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty readonly}">
+		<c:set var="readonly" value="#{!enabled}"/> 
+	</c:if>
+
+	<c:if test="#{empty required}">
+		<c:set var="required" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty redisplay}">
+		<c:set var="redisplay" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty maxlength}">
+		<c:set var="maxlength" value="32"/> 
+	</c:if>
+
+	<c:if test="#{empty autocomplete}">
+		<c:set var="autocomplete" value="off"/> 
+	</c:if>
+
+	<c:if test="#{empty backgroundColor}">
+		<c:set var="backgroundColor" value="inherit"/> 
+	</c:if>
+
+	<c:if test="#{empty fontSize}">
+		<c:set var="fontSize" value="12" /> 
+	</c:if>
+
+	<c:if test="#{empty fontWeight}">
+		<c:set var="fontWeight" value="normal" /> 
+	</c:if>
+
+	<c:if test="#{empty fontStyle}">
+		<c:set var="fontStyle" value="normal" /> 
+	</c:if>
+
+	<c:if test="#{empty fontFamily}">
+		<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+	</c:if>
+
+	<c:if test="#{empty textColor}">
+		<c:set var="textColor" value="#{userSkin.textColor}" /> 
+	</c:if>
+
+	<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}; color: #{textColor}" />
+		
+	<h:panelGroup 
+		layout="block" 
+		rendered="#{rendered}"
+		style="width: #{helper.convert(width)}; height: #{helper.convert(fieldHeight)}; max-height: #{helper.convert(fieldHeight)}; margin: 0px; padding: 0px; background-color: inherit">
+		
+		<h:panelGroup 
+			layout="block" 
+			style="float: left; width: #{helper.convert(width)}; height: #{helper.convert(fieldHeight)}; background-color: #{backgroundColor}"> 
+
+			<h:panelGroup 
+				layout="block" 
+				style="width: auto; height: #{helper.convert(fieldHeight)}; max-height: #{helper.convert(fieldHeight)}; margin-left: #{helper.convert(labelWidth)}; background-color: inherit">
+
+				<ui:insert />
+			</h:panelGroup>
+		</h:panelGroup>
+
+		<h:panelGrid 
+			rendered="#{labelWidth != 0}"
+			layout="block" 
+			cellpadding="0"
+			cellspacing="0"
+			columns="1" 
+			columnClasses="formColumnAlignMiddle"
+			styleClass="formPanel" 
+			style="float: left; width: #{helper.convert(labelWidth)}; height: #{helper.convert(labelHeight)}; margin-left: -100%; border-collapse: collapse; background-color: #{backgroundColor}">
+
+			<h:outputLabel 
+				layout="block"
+				for="#{id}"
+				styleClass="formLabel" 
+				style="width: auto; border-width: 0px; padding-top: 4px; #{textSettings}; background-color: inherit">#{label}</h:outputLabel>
+		</h:panelGrid>
+	</h:panelGroup>
+</ui:composition>

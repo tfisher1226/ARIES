@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+		<h:outputStylesheet>
+			.registerLabel {
+				display: block;
+				margin: 0px;
+				padding: 2px;
+				text-align: left;
+				white-space: nowrap;
+			}
+			.registerInput {
+				margin: 0px;
+				padding: 3px;
+				border: 1px solid #9999cc;
+			}
+			.registerInput:hover {
+				border: 1px solid #3399ff;
+			}
+			.registerInput:focus {
+				border: 1px solid #003399;
+			}
+			.groupPanel {
+				margin-top: 4px;
+			}
+		</h:outputStylesheet>
+	
+		<div class="groupLabel text14">Enter user-name and password</div>
+		<a4j:outputPanel id="registerPanel" styleClass="groupPanel" layout="block" style="background-color: inherit">
+			<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 10px; background-color: inherit">		
+				<aries:spacer height="6"/>
+	
+				<h:panelGrid columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 3px">
+					<h:outputLabel id="registerLabel" styleClass="registerLabel text12" for="registerField" style="display: block; width: 90px">User-name</h:outputLabel>
+					<h:inputText id="registerField" styleClass="registerInput text14" value="#{credentials.username}" style="width: 316px"/>
+				</h:panelGrid>
+		
+				<h:panelGrid columns="2" columnClasses="formColumnAlignBottom, formColumnAlignMiddle" style="margin: 3px">
+					<h:outputLabel id="passwordLabel" styleClass="registerLabel text12" for="passwordField" style="display: block; width: 90px">Password</h:outputLabel>
+					<h:inputSecret id="passwordField" styleClass="registerInput text14" value="#{credentials.password}" style="width: 316px"/>
+				</h:panelGrid> 
+	
+				<h:panelGrid columns="4" columnClasses="formColumnAlignBottom, formColumnAlignMiddle, formColumm, formColumm" style="margin: 3px">
+					<h:outputLabel id="keyFileLabel" disabled="true" styleClass="registerLabel text12" for="keyFileField" style="display: block; width: 90px">Key File</h:outputLabel>
+					<h:inputText id="keyFileField" disabled="true" styleClass="registerInput text14" value="#{uploadManager.fileName}" style="width: 276px; margin-right: 3px"/>
+					<!--  
+					<h:commandButton disabled="false" styleClass="formButton" style="width: 25px; height: 25px; margin: 0px" type="button" value="..." 
+						onclick="setCursorWait(this); showUploadDialog(); setCursorDefault(this)"
+						render="registerUploadDialog"/>
+						-->
+					<aries:dialogButton
+						mode="ajax"
+						icon="/icons/common/Search16.gif"
+						iconDisabled="/icons/common/SearchDisabled16.gif"
+						onclick="setCursorWait(this); showUploadDialog()"
+						oncomplete="setCursorDefault(this)"
+						render="registerUploadDialog" />
+				</h:panelGrid> 
+	
+				<!--  
+				<h:panelGrid columns="2" style="margin: 3px; margin-top: 10px">
+					<h:outputLabel id="superUserLabel" for="superUserField" styleClass="registerLabel text12" style="display: block; width: 90px">Super-user</h:outputLabel>
+					<h:selectBooleanCheckbox id="superUserField" styleClass="formCheckbox" value="#{globals.superUser}"/>
+				</h:panelGrid>
+	
+				<h:panelGrid columns="2" style="margin: 3px; margin-top: 6px">
+					<h:outputLabel id="rememberMeLabel" for="rememberMeField" styleClass="registerLabel text12" style="display: block; width: 90px">Remember</h:outputLabel>
+					<h:selectBooleanCheckbox id="rememberMeField" styleClass="formCheckbox" value="#{rememberMe.enabled}" style="padding-top: 4px"/>
+				</h:panelGrid> 
+				--> 
+			</h:panelGrid> 
+		</a4j:outputPanel>
+</ui:composition>

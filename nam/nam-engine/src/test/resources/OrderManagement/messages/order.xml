@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sam="http://www.jboss.org/bpel/samples">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sam:order>
+         <itemId>20</itemId>
+         <quantity>3</quantity>
+      </sam:order>
+   </soapenv:Body>
+</soapenv:Envelope>

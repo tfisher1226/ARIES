@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:region>
+		<aries:outputPane
+			id="layoutListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="layoutListContextMenu"
+				target="#{tableId}">
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="View Layout..."
+					icon="/icons/common/Open16.gif"
+					tooltip="View selected Layout record..."
+					onclick="processViewElement(event, 'Layout')">
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="Edit Layout..."
+					icon="/icons/common/Edit16.gif"
+					tooltip="Edit selected Layout record..."
+					onclick="processEditElement(event, 'Layout')">
+				</aries:contextMenuItem>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="New Layout..."
+						icon="/icons/common/New16.gif"
+						tooltip="Create new Layout for selected Project..."
+						onclick="processNewElement(event, 'Layout')">
+					</aries:contextMenuItem>
+				</c:if>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="Remove Layout"
+						icon="/icons/common/Remove16.gif"
+						tooltip="Remove Layout record from the system"
+						onclick="processRemoveElement(event, 'Layout')">
+					</aries:contextMenuItem>
+				</c:if>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

@@ -1,0 +1,158 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.messageDialogColumn1 { width: 50px; height: 50px; vertical-align: top; }
+	.messageDialogColumn2 { width: auto; height: auto; vertical-align: top; }
+	</style>
+
+	<h:form>
+	    <a4j:jsFunction 
+	    	name="show#{dialogKey}Message"
+	    	immediate="true"
+	    	requestDelay="0" 
+			oncomplete="alert('#{messageDialog_subtitle}'); Richfaces.showModalPanel('#{dialogKey}MessageDialog')"
+			>
+			<a4j:param name="status" assignTo="#{messageDialog_status}"/> 
+			<a4j:param name="title" assignTo="#{messageDialog_title}"/> 
+			<a4j:param name="subtitle" assignTo="#{messageDialog_subtitle}"/> 
+			<a4j:param name="message" assignTo="#{messageDialog_message}"/> 
+			<a4j:param name="actionEvent" assignTo="#{messageDialog.actionEvent}"/> 
+			<a4j:param name="cancelEnabled" assignTo="#{messageDialog_cancelEnabled}"/> 
+			<a4j:param name="progressEnabled" assignTo="#{messageDialog.progressEnabled}"/> 
+			<a4j:param name="rerenderList" assignTo="#{messageDialog.rerenderList}"/> 
+		</a4j:jsFunction>
+		
+	    <a4j:jsFunction 
+	    	immediate="true" 
+	    	execute="@this" 
+	    	name="hide#{dialogKey}MessageOLD"
+			oncomplete="Richfaces.hideModalPanel('#{dialogKey}MessageDialog');">
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	immediate="true" 
+	    	name="get#{dialogKey}MessageDialog"
+			oncomplete="return #{rich:component('#{dialogKey}MessageDialog')};">
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	immediate="true" 
+	    	name="execute#{dialogKey}Action"
+			oncomplete="alert('Testing'); alert('#{messageDialog.rerenderList}'); setCursorDefault(this); hideProgress()"
+			render="#{messageDialog.rerenderList}">
+		</a4j:jsFunction>
+	</h:form>
+		
+	<rich:popupPanel 
+		id="#{dialogKey}MessageDialog" 
+		autosized="true"
+		resizable="false"
+		style="border: 1px solid #999;">
+
+		<!-- TITLE -->		
+		<f:facet name="header" style="text-align: left; background-color: #eef;">
+			<h:outputText value="Alert" style=""/>
+		</f:facet>
+
+		<!-- CLOSE ICON -->
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="resource://images/dialog/close.png" style="cursor: pointer;">
+					<rich:componentControl for="#{dialogKey}MessageDialog" operation="hide" event="onclick"/>
+				</h:graphicImage>
+			</h:panelGroup>
+		</f:facet>
+		
+		<!-- CONTENT -->
+		<h:form style="width: auto; height: auto; border-top: 1px solid #999; background-color: #f0f0f0;">
+			<h:panelGroup style="">
+				<h:panelGroup layout="block" style="background-color: #f0f0f0;">
+					<a4j:outputPanel id="#{dialogKey}MessageDialogTextPanel">
+						<h:panelGrid columns="2" 
+							columnClasses="messageDialogColumn1, messageDialogColumn2" 
+							style="margin-left: auto; margin-right: auto;">
+						
+							<h:panelGroup layout="block" style="width: 64px; height: 64px; max-height: 64px; padding-top: 0px; padding-left: 0px; vertical-align: top; background-color: #f0f0f0;">
+								<h:graphicImage value="resource://images/icons/status/WindowsInfo64.gif" rendered="#{messageDialog_status == 'alert'}"/>
+								<h:graphicImage value="resource://images/icons/status/WindowsPrompt64.gif" rendered="#{messageDialog_status == 'prompt'}"/>
+								<h:graphicImage value="resource://images/icons/status/WindowsWarning64.gif" rendered="#{messageDialog_status == 'warning'}"/>
+								<h:graphicImage value="resource://images/icons/status/WindowsError64.gif" rendered="#{messageDialog_status == 'error'}"/>
+							</h:panelGroup>
+
+							<h:panelGroup layout="block" style="width: 300px; height: auto; background-color: #f0f0f0;">
+								<div class="vspace6"/>
+
+								<h:panelGroup layout="block" rendered="#{not empty messageDialog_title}" style="margin-top: 9px; margin-left: 2px; margin-right: 40px; padding: 0px; text-align: left; background-color: inherit">
+									<h:outputText styleClass="dialogSubtitle" value="#{messageDialog_title}"/>
+								</h:panelGroup>
+		
+								<h:panelGroup layout="block" rendered="#{not empty messageDialog_subtitle}" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left;">
+									<h:outputText styleClass="dialogSubtitle" value="#{messageDialog_subtitle}"/>
+								</h:panelGroup>
+		
+								<h:panelGroup layout="block" rendered="#{not empty messageDialog_message}" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left;">
+									<h:outputText styleClass="dialogMessage" value="#{messageDialog_message}"/>
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" rendered="true" style="margin-left: 2px; margin-right: 20px; text-align: left;">
+									<span class="smallErrorText">
+										<aries:spacer height="6"/>
+										<h:messages/>
+									</span>
+								</h:panelGroup>
+							</h:panelGroup>
+						</h:panelGrid>
+					</a4j:outputPanel>
+				</h:panelGroup>
+
+			<!-- 
+				<h:inputText value="#{messageDialog.actionEvent}" required="true">#{messageDialog_actionEvent}</h:inputText>
+			 -->
+
+				<!-- CONTROL -->
+				<aries:panel style="padding: 0px 14px 12px 14px">
+					<aries:toolbar> 
+						<aries:toolbarGroup location="right">
+							<aries:smallDialogButton
+								rendered="#{messageDialog.actionEvent != 'null'}"
+								value="OK"
+								immediate="true"
+								execute="@this"
+								bypassUpdates="true"
+								limitRender="true"
+								manager="#{messageDialog}"
+								action="execute"
+								onclick="if (#{messageDialog.actionEvent != 'null'}) {setCursorWait(this)} hide#{dialogKey}Message(); if (#{messageDialog.progressEnabled and messageDialog.actionEvent != 'null'}) {showProgress('#{messageDialog_title}', '#{messageDialog_subtitle}', 'Request in progress...')}" 
+								oncomplete="setCursorDefault(this); hideProgress()"
+								render="#{messageDialog.rerenderList}"/>
+
+								<!-- 
+								rendered="#{messageDialog_cancelEnabled == 'true'}"
+								-->
+
+							<aries:smallDialogButton
+								value="#{messageDialog_cancelEnabled == 'true' ? 'Cancel' : 'Close'}"
+								mode="client" 
+								execute="@this" 
+								manager="#{messageDialog}" 
+								action="cancel" 
+								onclick="Richfaces.hideModalPanel('#{dialogKey}MessageDialog')" 
+								offset="true"/> 
+						</aries:toolbarGroup>
+					</aries:toolbar>
+				</aries:panel>
+			</h:panelGroup>
+		</h:form>
+	</rich:popupPanel>	
+</ui:composition>

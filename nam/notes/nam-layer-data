@@ -1,0 +1,11 @@
+
+JPA 2.0
+-------
+
+Foreign Key specification
+Give a name to a Foreign Key on DB
+In order to name the column used in a foreign key, one may specify the name of the column used to create the foreign key, using the @JoinColumn annotation along with the @ManyToOne annotation. The value of the name attribute of the @JoinColumn annotation is used by the JPA provider to map the column name in the table to the entity's attribute.
+
+Some Hibernate still relied upon:
+-At the time of writing this, it is not possible to specify the name of the foreign key constraint using a JPA annotation or configuration parameter in the OR mapping files.  We instead use Hibernate for this.
+

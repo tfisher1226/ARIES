@@ -1,0 +1,48 @@
+.rf-trn {
+    padding: 0px;
+	border-width: 0px; 
+	border-right-width: 1px;
+	border-color: red;  
+	background-color: white;
+}
+
+.rf-trn-cnt {
+	margin-right: 12px;
+	width: 100%;
+    padding: 0px;
+	border: 1px solid white;
+	border: 1px solid #{userSkin.backgroundColor};  
+}
+
+.rf-trn-cnt:hover {
+	width: 100%;
+    margin: 0px;
+    padding: 0px;
+	border: 1px solid #ccc; 
+	background-color: #FFEBDA;
+	cursor: pointer;
+}
+
+.rf-trn>.rf-trn-sel {
+	border: 1px solid #84acdd; 
+}
+
+/*
+.rf-trn-sel.rf-trn {
+	border-color: blue; 
+}
+*/
+
+.rf-trn-sel,
+.rf-trn-sel:hover {
+	width: 100%;
+	background-image: none;
+	background-color: #d3e6ff;
+	background-color: #efefff;
+	background-color: #ddecff;
+	background-color: #{richSkin.additionalBackgroundColor};
+	background-color: transparent;
+	background-color: #ddecff;
+	color: darkBlue;
+}
+

@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="conversationListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="conversationListNewButton"
+				value="New Conversation..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Conversation Record"
+				enabled="#{securityGuard.canCreate('conversation')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Conversation')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="conversationListEditButton"
+				value="Edit Conversation..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Conversation record for edit..."
+				enabled="#{conversationListManager.hasSelection() and securityGuard.canUpdate('conversation')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Conversation')"
+				offset="true" />
+			
+			<aries:toolButton
+				id="conversationListRemoveButton"
+				value="Remove Conversation..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Conversation record from system..."
+				enabled="#{conversationListManager.hasSelection() and securityGuard.canDelete('conversation')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Conversation')"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="conversationListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Conversation information from server"
+				enabled="#{securityGuard.canOpen('conversation')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshConversationList(event)"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

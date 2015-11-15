@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:region>
+		<aries:outputPane
+			id="preferencesListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="preferencesListContextMenu"
+				target="#{tableId}">
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="View Preferences..."
+					icon="/icons/common/Open16.gif"
+					tooltip="View selected Preferences record..."
+					onclick="processViewElement(event, 'Preferences')" />
+					
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="Edit Preferences..."
+					icon="/icons/common/Edit16.gif"
+					tooltip="Edit selected Preferences record..."
+					onclick="processEditElement(event, 'Preferences')" />
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="New Preferences..."
+						icon="/icons/common/New16.gif"
+						tooltip="Create new Preferences for selected Project..."
+						onclick="processNewElement(event, 'Preferences')" />
+				</c:if>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="Remove Preferences"
+						icon="/icons/common/Remove16.gif"
+						tooltip="Remove Preferences record from the system"
+						onclick="processRemoveElement(event, 'Preferences')">
+					</aries:contextMenuItem>
+				</c:if>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

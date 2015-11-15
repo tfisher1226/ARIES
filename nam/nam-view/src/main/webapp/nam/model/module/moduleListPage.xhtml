@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="moduleActions.xhtml" />
+		<ui:include src="moduleListActions.xhtml" />
+	</ui:define>
+	
+	<!-- page title -->
+	<ui:define name="pageTitle">
+		<span class="pageTitle2">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="manager" value="#{modulePageManager}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- page controls -->
+	<ui:define name="pageControls">
+		<ui:include src="/common/pageControls.xhtml" />
+	</ui:define>
+	
+	<!-- page breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{modulePageManager.getBreadcrumbs('moduleList')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- page views -->
+	<ui:define name="pageViews">
+		<span class="pageViews">
+			<ui:include src="/common/pageViews.xhtml">
+				<ui:param name="label" value="Module" />
+				<ui:param name="manager" value="#{modulePageManager}" />
+				<ui:param name="overviewPage" value="initializeModuleManagementPage" />
+				<ui:param name="listPage" value="initializeModuleListPage" />
+				<ui:param name="treePage" value="initializeModuleListPage" />
+			</ui:include>
+			</span>
+	</ui:define>
+	
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content2">
+			
+			<aries:panel
+				width="auto"
+				height="auto"
+				backgroundColor="inherit">
+				
+				<aries:formPane
+					width="auto"
+					height="auto"
+					margin="20px"
+					marginTop="2px">
+					
+					<!-- container -->
+					<aries:borderPane
+						width="auto"
+						height="auto">
+						
+						<!-- module list -->
+						<aries:outputPane
+							id="moduleListPane">
+							
+							<ui:include src="moduleListToolbar.xhtml" />
+							<ui:include src="moduleListTable.xhtml" />
+						</aries:outputPane>
+					</aries:borderPane>
+					
+					<!--
+					<a4j:log level="ALL" popup="false" width="400" height="200"/>
+					-->
+				</aries:formPane>
+			</aries:panel>
+		</div>
+	</ui:define>
+</ui:composition>

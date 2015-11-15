@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<aries:region>
+		<aries:outputPane
+			id="operationNameListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="operationNameListContextMenu"
+				target="operationNameListTable">
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="View Operation..."
+					icon="/icons/common/Open16.gif"
+					tooltip="View selected Operation record..."
+					onclick="processViewElement(event, 'Operation')">
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					mode="client"
+					disabled="false"
+					value="Edit Operation..."
+					icon="/icons/common/Edit16.gif"
+					tooltip="Edit selected Operation record..."
+					onclick="processEditElement(event, 'Operation')">
+				</aries:contextMenuItem>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="New Operation..."
+						icon="/icons/common/New16.gif"
+						tooltip="Create new Operation for selected Project..."
+						onclick="processNewElement(event., 'Operation')">
+					</aries:contextMenuItem>
+				</c:if>
+				
+				<c:if test="#{securityGuard.checkManager}">
+					<aries:contextMenuItem
+						mode="client"
+						disabled="false"
+						value="Remove Operation"
+						icon="/icons/common/Remove16.gif"
+						tooltip="Remove Operation record from the system"
+						onclick="processRemoveElement(event, 'Operation')">
+					</aries:contextMenuItem>
+				</c:if>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showControlListPage()
+		  ** Goes to the Control Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showControlListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{controlPageManager.initializeControlListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Control Records', 'Preparing Control List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showControlTreePage()
+		  ** Goes to the Control Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showControlTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{controlPageManager.initializeControlTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Control Records', 'Preparing Control Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showControlManagementPage()
+		  ** Goes to the Control Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showControlManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{controlPageManager.initializeControlManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Control Records', 'Preparing Control related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showControlWizardPage()
+		  ** Goes to the Control Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showControlWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{controlWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Control Records', 'Preparing Control information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{controlWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{controlWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewControlDialog()
+		  ** Launches the Control Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewControlDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{controlInfoManager.newControl}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Control Records', 'Creating new Control...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showControlDialog()"
+			render="controlModule, controlDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{controlInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="controlListPane" assignTo="#{controlInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{controlInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditControlDialog()
+		  ** Launches the Control Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditControlDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{controlInfoManager.editControl}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Control Records', 'Preparing Control information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showControlDialog()"
+			render="controlModule, controlDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{controlInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="controlListPane" assignTo="#{controlInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{controlInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

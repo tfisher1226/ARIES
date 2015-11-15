@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showPodListPage()
+		  ** Goes to the Pod Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showPodListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{podPageManager.initializePodListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Pod Records', 'Preparing Pod List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showPodTreePage()
+		  ** Goes to the Pod Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showPodTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{podPageManager.initializePodTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Pod Records', 'Preparing Pod Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showPodManagementPage()
+		  ** Goes to the Pod Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showPodManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{podPageManager.initializePodManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Pod Records', 'Preparing Pod related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showPodWizardPage()
+		  ** Goes to the Pod Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showPodWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{podWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Pod Records', 'Preparing Pod information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{podWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{podWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewPodDialog()
+		  ** Launches the Pod Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewPodDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{podInfoManager.newPod}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Pod Records', 'Creating new Pod...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showPodDialog()"
+			render="podModule, podDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{podInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="podListPane" assignTo="#{podInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{podInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditPodDialog()
+		  ** Launches the Pod Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditPodDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{podInfoManager.editPod}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Pod Records', 'Preparing Pod information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showPodDialog()"
+			render="podModule, podDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{podInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="podListPane" assignTo="#{podInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{podInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

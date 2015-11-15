@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model
+	xmlns="http://www.aries.org/nam/1.0.0" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/nam/1.0.0 nam-v1_0_0.xsd">
+
+	<name>LoanQuote</name>
+	<description>Example application set - Loan Quote Request Processor</description>
+
+	<applications>
+		<application>
+			<name>bank</name>
+			<package>org.aries</package>
+			<namespace>http://www.aries.org/loan-quote-bank</namespace>
+            <version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<module ref="bank" type="pom"/>
+				<module ref="bank-data" type="data" packaging="jar"/>
+				<module ref="bank-client" type="client" packaging="war"/>
+				<module ref="bank-service" type="service" packaging="war"/>
+			</modules>
+		</application>
+	</applications>
+
+
+	<modules>
+		<module>
+			<name>bank-service</name>
+			<type>org.aries.service</type>
+			<domain>org.aries.bank</domain>
+			<packaging>war</packaging>
+
+            <include module="common-data" version="0.0.1"/>
+            <include module="bank-data" version="0.0.1"/>
+
+			<services domain="org.aries.bank">
+               	<listener id="bankListener"/>
+               	<router id="bankRouter"/>
+
+			    <service name="getLoanQuote" transacted="true">
+                	<router id="loanQuoteRouter"/>
+                	<listener id="loanQuoteListener"/>
+					<execution name="">
+						<action name="getLoanQuote">
+							<input type="string" name="ssn"/>
+					    	<result type="double" name="interestRate"/>
+							<processor name="creditInfoRepository" method="saveMember"/>
+						</action>
+						<action name="formatLoanQuote">
+							<input type="String" name="ssn"/>
+							<input type="String" name="bankName"/>
+							<input type="double" name="interestRate"/>
+							<result type="String" name="loanQuote"/>
+						</action>
+					</execution>
+				</service>
+			</services>
+		</module>
+
+		<module>
+			<name>bank-data</name>
+			<type>org.aries.data</type>
+			<domain>org.aries.bank</domain>
+			<packaging>jar</packaging>
+
+            <depends domain="org.aries" name="common-data" version="0.0.1"/>
+			<repository ref="org.aries.bank.bankRepository"/>
+		</module>
+
+		<module>
+			<name>bank-model</name>
+			<type>org.aries.model</type>
+			<domain>org.aries.bank</domain>
+			<packaging>jar</packaging>
+
+            <depends domain="org.aries" name="common-model"/>
+			<resource type="xsd" path="bank-0.0.1.xsd"/>
+		</module>
+	</modules>
+
+
+	<messaging>
+		<provider name="JBossMQ" transacted="true">
+            <jndi-name>jboss-jms</jndi-name>
+            <connection-url>localhost:1099</connection-url>
+            <context-factory>org.jnp.interfaces.NamingContextFactory</context-factory>
+
+            <connection-factory>
+                <name>bankConnectionFactory</name>
+                <session-type>topic</session-type>
+                <transacted>true</transacted>
+                <max-pool-size>4</max-pool-size>
+                <security-domain>LoanQuoteRealm</security-domain>
+                <user-name>admin</user-name>
+                <password>admin</password>
+            </connection-factory>
+		</provider>
+
+		<channel name="loanQuoteRequestTopic">
+            <provider>JBossMQ</provider>  
+            <jndi-name>topic/topicA</jndi-name>  
+            <redelivery-delay>10000</redelivery-delay>  
+            <max-delivery-attempts>3</max-delivery-attempts>
+            <connection-factory>bankConnectionFactory</connection-factory>
+		</channel>
+
+		<listener name="loanQuoteListener">
+            <receive-channel>loanQuoteRequestTopic</receive-channel>
+            <invalid-message-redirect>loanQuoteInvalidQueue</invalid-message-redirect>
+            <expired-message-redirect>loanQuoteExpiredQueue</expired-message-redirect>
+            <no-local-receipt>true</no-local-receipt>
+            <asynchronous>true</asynchronous>
+		</listener>
+
+		<sender name="loanQuoteSender">
+            <channel>loanQuoteRequestTopic</channel>
+            <delivery-mode>NON_PERSISTENT</delivery-mode>
+            <time-to-live>720000</time-to-live>
+            <priority>true</priority>
+            <durable>true</durable>
+            <timeout>360000</timeout>
+		</sender>
+
+		<invoker name="loanQuoteInvoker">
+            <channel>loanQuoteRequestTopic</channel>
+            <delivery-mode>NON_PERSISTENT</delivery-mode>
+            <timeToLive>720000</timeToLive>
+            <priority>true</priority>
+            <durable>true</durable>
+            <timeout>360000</timeout>
+		</invoker>
+
+		<router name="loanQuoteInvoker">
+		</router>
+	</messaging>
+</model>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:chkpt="http://www.aries.org/validate" 
+	xmlns:nam="http://nam/model" 
+	xmlns:process="http://www.aries.org/nam/process" 
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="c:/workspace/ARIES/common-model/source/main/resources/schema/common/aries-common-1.0.xsd" />
+	<xs:import namespace="http://www.aries.org/validate" schemaLocation="c:/workspace/ARIES/aries-validate/source/main/resources/schema/aries-validate-1.0.xsd" />
+	<xs:import namespace="http://www.aries.org/nam/process" schemaLocation="c:/workspace/ARIES/nam-model/source/main/resources/schema/process-1.0.xsd" />
+
+	<!-- 
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="c:/workspace/ARIES/common-model/source/main/resources/schema/common/aries-common-1.0.xsd" />
+	<xs:import namespace="http://www.aries.org/validate" schemaLocation="c:/workspace/ARIES/aries-validate/source/main/resources/schema/aries-validate-1.0.xsd" />
+	<xs:import namespace="http://www.aries.org/validate" schemaLocation="c:/workspace/ARIES/aries-validate/source/main/resources/schema/aries-validate-0.0.1.xsd" />
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="c:/workspace/ARIES/common-model/source/main/resources/schema/common/aries-common-0.0.1.xsd" />
+	xmlns:nam-system="http://www.aries.org/nam/system"
+	<xs:import namespace="http://www.aries.org/nam/system" />
+	<xs:import namespace="http://www.aries.org/nam/system" schemaLocation="system-0.0.1.xsd" />
+ 	-->
+
+	<!--  
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.aries.nam.model"/>
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	-->
+
+	
+</xs:schema>
+

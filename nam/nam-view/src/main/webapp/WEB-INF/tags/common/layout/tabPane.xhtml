@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"   
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+      
+    <h:body>
+		<ui:composition>
+
+		<c:if test="#{empty id}">
+			<c:set var="id" value="TabPane_#{globals.nextId()}" /> 
+		</c:if>
+
+		<c:if test="#{empty switchType}">
+			<c:set var="switchType" value="client"/> 
+		</c:if>
+
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true" /> 
+		</c:if>
+		
+		<!--
+		activeItem="#{activeItem}" 
+		tabHeaderClass="tabHeaderClass"
+		tabContentClass="tabContentClass"
+		tabActiveClass="tabActiveClass"
+		tabInactiveClass="tabInactiveClass"
+		tabDisabledClass="tabDisabledClass"
+		 -->	
+	
+		<a4j:region>
+			<rich:tabPanel 
+				switchType="#{switchType}"
+				activeItem="#{activeItem}"
+				rendered="#{rendered}"
+				cycledSwitching="true"
+				onclickXX="alert('#{borderSettings}')"
+				onbeforeitemchangeXX="return false;"
+				onbeforeitemchange="#{onbeforeitemchange}"
+				style="#{sizeSettings}; #{marginSettings}; #{borderSettings}; #{backgroundSettings}; #{textSettings}; #{style}">
+				
+				<ui:insert/>
+			</rich:tabPanel>
+		</a4j:region>
+		</ui:composition>
+	</h:body>
+</html>

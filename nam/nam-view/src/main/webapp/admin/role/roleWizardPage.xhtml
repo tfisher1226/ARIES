@@ -1,0 +1,111 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="roleActions.xhtml" />
+	</ui:define>
+	
+	<!-- page title -->
+	<ui:define name="pageTitle">
+		<span class="pageTitle">
+			<ui:include src="/common/pageTitle.xhtml">
+				<ui:param name="manager" value="#{rolePageManager}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- page controls -->
+	<ui:define name="pageControls">
+		<ui:include src="/common/pageControls.xhtml" />
+	</ui:define>
+	
+	<!-- page breadcrumbs -->
+	<ui:define name="pageBreadcrumbs">
+		<span class="pageBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{rolePageManager.getBreadcrumbs('role')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- navigator -->
+	<ui:define name="navigator">
+		<span class="navigator">
+			<ui:include src="roleWizardNavigator.xhtml" />
+		</span>
+	</ui:define>
+	
+	<!-- wizard breadcrumbs -->
+	<ui:define name="sectionBreadcrumbs">
+		<span class="sectionBreadcrumbs">
+			<ui:include src="/common/breadcrumbs.xhtml">
+				<ui:param name="breadcrumbs" value="#{rolePageManager.getBreadcrumbs('roleWizard')}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- wizard title -->
+	<ui:define name="wizardTitle">
+		<span class="wizardTitle">
+			<ui:include src="/common/wizardTitle.xhtml">
+				<ui:param name="manager" value="#{rolePageManager}" />
+				<ui:param name="menu" value="/admin/role/roleWizardMenu.xhtml" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- wizard messages -->
+	<ui:define name="wizardMessages">
+		<span class="wizardMessages">
+			<ui:include src="/common/wizardMessages.xhtml">
+				<ui:param name="domain" value="roleWizard" />
+				<ui:param name="message" value="Enter Service #{roleWizard.section}" />
+			</ui:include>
+		</span>
+	</ui:define>
+	
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content"
+			id="roleWizard">
+			
+			<aries:formPane
+				columns="2">
+				
+				<aries:panel
+					width="#{helper.wizard_middleSection_width - 16}"
+					height="#{helper.wizard_middleSection_height}"
+					borderWidth="1px"
+					borderColor="#{userSkin.borderColor}"
+					backgroundColor="white">
+					
+					<!-- panel -->
+					<ui:include src="roleRecord_#{roleWizard.section}Section.xhtml">
+						<ui:param name="section" value="role" />
+					</ui:include>
+					
+					<!-- control -->
+					<ui:include src="roleWizardControl.xhtml" />
+				</aries:panel>
+				
+				<!-- help -->
+				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="layout" value="other" />
+					<ui:param name="domain" value="role" />
+					<ui:param name="section" value="#{roleWizard.section}" />
+				</ui:include>
+			</aries:formPane>
+		</div>
+	</ui:define>
+</ui:composition>

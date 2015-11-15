@@ -1,0 +1,595 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:treeNode
+		nodeType="FOLDER"
+		render="configurationSetupPanel"
+		iconCollapsed="/icons/nam/Attribute16.gif"
+		iconExpanded="/icons/nam/Attribute16.gif"
+		iconLeaf="/icons/nam/Attribute16.gif"
+		nodeClass="folderNode"
+		labelStyle="font-size: 12px; font-weight: bold">
+	</aries:treeNode>
+	
+	<aries:treeNode
+		nodeType="TEMP"
+		render="configurationSetupPanel"
+		icon="/icons/nam/FolderOpen16.gif"
+		iconLeaf="/icons/nam/FolderOpen16.gif"
+		labelStyle="font-size: 13px">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="GROUP"
+		render="configurationSetupPanel"
+		icon="/icons/nam/ApplicationDomain16.gif"
+		iconLeaf="/icons/nam/ApplicationDomain16.gif"
+		labelStyle="font-size: 13px">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="Project"
+		acceptedTypes="Project"
+		iconCollapsed="/icons/common/Project16.gif"
+		iconExpanded="/icons/common/ProjectOpen16.gif"
+		iconLeaf="/icons/common/Default16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncontextmenu="showProjectTreeMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showApplicationDomainView('projectPanel')"
+		render="projectPanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+	
+	<aries:treeNode
+		nodeType="Configuration"
+		acceptedTypes="Module"
+		icon="/icons/nam/MavenFile16.gif"
+		iconLeaf="/icons/nam/MavenFile16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncontextmenu="showConfigurationContextMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showApplicationDomainView('configurationPanel')"
+		render="configurationPanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+	
+	<aries:treeNode
+		nodeType="Application"
+		acceptedTypes="Module"
+		icon="/icons/nam/Application16.gif"
+		iconLeaf="/icons/nam/Application16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncontextmenu="showApplicationTreeMenu(event, '#{item.type}', '#{item.label}')"
+		oncomplete="showApplicationDomainView('applicationPanel')"
+		render="applicationPanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="Namespace"
+		acceptedTypes="Element"
+		manager="#{namespaceManager}"
+		action="editNamespace"
+		icon="/icons/nam/Namespace16.gif"
+		iconLeaf="/icons/nam/Namespace16.gif"
+		dropListener="#{informationTreeManager.dropListener}"
+		oncontextmenu="showNamespaceContextMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showInformationDomainView('namespacePanel')"
+		ondblclick="Richfaces.showModalPanel('elementDialog')"
+		render="informationDomainToolbar, namespacePanel">
+	</aries:treeNode> 
+	
+	<aries:treeNode
+		nodeType="Element"
+		acceptedTypes="Field"
+		manager="#{elementManager}"
+		action="editElement"
+		icon="/icons/nam/Element16.gif"
+		iconLeaf="/icons/nam/Element16.gif"
+		dropListener="#{informationTreeManager.dropListener}"
+		oncontextmenu="showElementContextMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showInformationDomainView('elementPanel')"
+		render="informationDomainToolbar, elementPanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="Attribute"
+		acceptedTypes="Annotation"
+		icon="/icons/nam/Attribute16.gif"
+		iconLeaf="/icons/nam/Attribute16.gif"
+		dropListener="#{informationTreeManager.dropListener}"
+		oncontextmenu="showAttributeContextMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showInformationDomainView('attributePanel')"
+		render="informationDomainToolbar, attributeSetupPanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="Reference"
+		acceptedTypes="Annotation"
+		icon="/icons/nam/Reference16.gif"
+		iconLeaf="/icons/nam/Reference16.gif"
+		dropListener="#{informationTreeManager.dropListener}"
+		oncontextmenu="showReferenceContextMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showInformationDomainView('referencePanel')"
+		render="informationDomainToolbar, referenceSetupPanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+
+	<!-- 
+	<rich:treeNode 
+		type="Application"
+		dragType="dragType"
+		acceptedTypes="Module"
+		dropListener="#{applicationTreeManager.dropListener}"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/ModuleTypeEAR16.gif"
+		iconLeaf="/icons/nam/ModuleTypeEAR16.gif"
+		onclick="setCursorWait(this)"
+		oncomplete="setCursorDefault(this); showApplicationDomainView('applicationPanel')"
+		render="applicationSetupPanel"
+		styleClass="treeNode">
+		<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal" />
+		<rich:componentControl event="onContextMenu" for="applicationContextMenuId" operation="show" />
+		<ui:include src="/aries/application/applicationContextMenu.xhtml" />
+	</rich:treeNode>
+	-->
+
+	<aries:treeNode
+		nodeType="EAR_MODULE"
+		acceptedTypes="Module"
+		icon="/icons/nam/ModuleTypeEAR16.gif"
+		iconLeaf="/icons/nam/ModuleTypeEAR16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncontextmenu="showApplicationTreeMenu(event, '#{item.type}', '#{item.label}')"
+		oncomplete="showApplicationDomainView('earModulePanel')"
+		render="earModulePanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode>
+	
+	<aries:treeNode
+		nodeType="SERVICE_MODULE"
+		acceptedTypes="DataSource"
+		icon="/icons/nam/ModuleTypeService16.gif"
+		iconLeaf="/icons/nam/ModuleTypeService16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncontextmenu="showServiceModuleContextMenu(event, '#{item.label}', '#{item.type}')"
+		oncomplete="showApplicationDomainView('serviceModulePanel')"
+		render="serviceModuleSetupPanel"
+		labelStyle="font-size: 12px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="POM_MODULE"
+		acceptedTypes="Service"
+		icon="/icons/nam/Module16.gif"
+		iconLeaf="/icons/nam/Module16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncomplete="showApplicationDomainView('pomModulePanel')"
+		oncontextmenu="showPomModuleContextMenu(event, '#{item.label}', '#{item.type}')"
+		render="pomModuleSetupPanel"
+		labelStyle="font-size: 12px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="CLIENT_MODULE"
+		acceptedTypes="Service"
+		icon="/icons/nam/ModuleTypeClient16.gif"
+		iconLeaf="/icons/nam/ModuleTypeClient16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncomplete="showApplicationDomainView('clientModulePanel')"
+		oncontextmenu="showClientModuleContextMenu(event, '#{item.label}', '#{item.type}')"
+		render="moduleSetupPanel"
+		labelStyle="font-size: 12px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="MODEL_MODULE"
+		acceptedTypes="DataSource"
+		icon="/icons/nam/ModuleTypeModel16.gif"
+		iconLeaf="/icons/nam/ModuleTypeModel16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncomplete="showApplicationDomainView('modelModulePanel')"
+		oncontextmenu="showModelModuleContextMenu(event, '#{item.label}', '#{item.type}')"
+		render="modelModuleSetupPanel"
+		labelStyle="font-size: 12px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="DATA_MODULE"
+		acceptedTypes="DataSource"
+		icon="/icons/nam/ModuleTypePersistedData16.gif"
+		iconLeaf="/icons/nam/ModuleTypePersistedData16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncomplete="showApplicationDomainView('dataModulePanel')"
+		oncontextmenu="showDataModuleContextMenu(event, '#{item.label}', '#{item.type}')"
+		render="dataModuleSetupPanel"
+		labelStyle="font-size: 12px; color: #002">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="Service"
+		acceptedTypes="Service"
+		iconCollapsed="/icons/nam/Service16.gif"
+		iconExpanded="/icons/nam/Service16.gif"
+		iconLeaf="/icons/common/Service16.gif"
+		dropListener="#{applicationTreeManager.dropListener}"
+		oncontextmenu="alert('oncontextmenu'); showServiceContextMenu(event, '#{item.label}', '#{item.type}')"
+		ondblclick="alert('ondblclick')"
+		onclickXX="alert('onclick'); setCursorWait(this); showApplicationDomainView('servicePanel')"
+		oncomplete="alert('oncomplete'); showApplicationDomainView('servicePanel')"
+		render="servicePanel"
+		labelStyle="font-size: 13px; color: #002">
+	</aries:treeNode> 
+	
+	<rich:treeNode 
+		type="Execution"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Execution16.gif"
+		iconLeaf="/icons/nam/Execution16.gif"
+		ondblclick=""
+		onclick=""
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+	</rich:treeNode>
+				
+	<rich:treeNode 
+		type="Action"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Action16.gif"
+		iconLeaf="/icons/nam/Action16.gif"
+		ondblclick=""
+		onclick=""
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+	</rich:treeNode>
+				
+	<rich:treeNode 
+		type="Input"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/PersistenceFile16.gif"
+		iconLeaf="/icons/nam/PersistenceFile16.gif"
+		ondblclick=""
+		onclick=""
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="Output"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/PersistenceFile16.gif"
+		iconLeaf="/icons/nam/PersistenceFile16.gif"
+		ondblclick=""
+		onclick=""
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+	</rich:treeNode>
+
+	
+	<rich:treeNode 
+		type="XSD_RESOURCE"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Schema16.gif"
+		iconLeaf="/icons/nam/Schema16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showApplicationDomainView('xsdPanel'); setCursorDefault(this); "
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+	
+	<rich:treeNode 
+		type="WSDL_RESOURCE"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Schema16.gif"
+		iconLeaf="/icons/nam/Schema16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showApplicationDomainView('wsdlPanel'); setCursorDefault(this); "
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+	
+	<rich:treeNode 
+		type="BPMN_RESOURCE"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Schema16.gif"
+		iconLeaf="/icons/nam/Schema16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showApplicationDomainView('bpmnPanel'); setCursorDefault(this); "
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+	
+	
+	<rich:treeNode 
+		type="PersistenceProvider"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Provider16.gif"
+		iconLeaf="/icons/nam/Provider16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showPersistenceDomainView('persistenceProviderPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="PersistenceAdapter"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Adapter16.gif"
+		iconLeaf="/icons/nam/Adapter16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showPersistenceDomainView('persistenceAdapterPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+	
+	<rich:treeNode 
+		type="DataSource"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/DataSource16.gif"
+		iconLeaf="/icons/nam/DataSource16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showApplicationDomainView('dataSourcePanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+	
+	<rich:treeNode 
+		type="PersistenceUnit"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/PersistenceUnit16.gif"
+		iconLeaf="/icons/nam/PersistenceUnit16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showPersistenceDomainView('persistenceUnitPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="Repository"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Repository16.gif"
+		iconLeaf="/icons/nam/Repository16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showPersistenceDomainView('repositoryPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="EntityBean"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/EntityBean16.gif"
+		iconLeaf="/icons/nam/EntityBean16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showPersistenceDomainView('entityBeanPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+	
+	
+	<rich:treeNode 
+		type="MessagingProvider"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Provider16.gif"
+		iconLeaf="/icons/nam/Provider16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showMessagingDomainView('messagingProviderPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="MessagingAdapter"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Adapter16.gif"
+		iconLeaf="/icons/nam/Adapter16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showMessagingDomainView('messagingAdapterPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="Channel"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Channel16.gif"
+		iconLeaf="/icons/nam/Channel16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showMessagingDomainView('channelPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="Listener"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Listener16.gif"
+		iconLeaf="/icons/nam/Listener16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showMessagingDomainView('listenerPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="Router"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Router16.gif"
+		iconLeaf="/icons/nam/Router16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showMessagingDomainView('routerPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+
+	<rich:treeNode 
+		type="Invoker"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		nodeClass="link"
+		icon="/icons/nam/Invoke16.gif"
+		iconLeaf="/icons/nam/Invoke16.gif"
+		ondblclick=""
+		onclick="setCursorWait(this); showMessagingDomainView('endpointPanel')"
+		oncomplete="setCursorDefault(this)"
+		style="-webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none;">
+		<div class="vspace2">
+			<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		</div>
+	</rich:treeNode>
+</ui:composition>
+
+
+
+		<!-- 
+		<ui:include src="/aries/configuration/configurationContextMenu.xhtml" />
+		<rich:componentControl event="onContextMenu" for="configurationContextMenuId" operation="show" />
+		<rich:toggleControl value="#{item.label}" for="pageForm:switch" 
+			action="#{configurationManager.setSelection(item.label)}"
+			immediate="true" 
+			ajaxSingle="true"
+			onclick="setCursorWait(this)"
+			oncomplete="setCursorDefault(this)"
+			render="componentNavigatorView"
+			switchToState="configurationPanel" style="padding-left: 2px"/>
+			-->
+	
+		<!--  
+		oncomplete="showApplicationDomainView('applicationPanel'); "
+
+		<rich:toggleControl value="#{item.label}" for="pageForm:switch" immediate="true" ajaxSingle="true" switchToState="applicationPanel" render="applicationSetupPanel" style="padding-left: 2px"/>
+		<rich:toggleControl value="#{item.label}" for="pageForm:switch" immediate="true" ajaxSingle="true" switchToState="applicationPanel" style="padding-left: 2px"/>
+
+		onclick="alert('#{item.object.artifactId}'); var xx = #{item.object}; alert(xx)"
+		oncomplete="showApplicationDomainView('applicationPanel')"
+
+		<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+
+		render="componentNavigatorView"
+
+		#{rich:element('form:input')}.focus();
+		
+		oncomplete="showObject(#{conversationContext.get('nam.selectedApplication')})"
+
+		<rich:toggleControl value="#{item.label}" for="pageForm:switch" 
+			immediate="true" 
+			ajaxSingle="true"
+			
+			oncomplete="setCursorPointer(this); setCursorDefault()"
+			switchToState="applicationPanel" style="padding-left: 2px"/>
+
+		onclick="setApplicationDomainView('applicationPanel')"
+		oncomplete="refreshApplicationDomainView(); setCursorDefault(this)"
+		<h:outputText value="#{item.label}" style="padding-left: 4px; font-size: 13px; font-weight: normal"/>
+		-->
+	

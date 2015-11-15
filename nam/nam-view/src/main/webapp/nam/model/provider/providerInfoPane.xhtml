@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}ProviderInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Provider Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Type" label="Type" value="#{provider.type}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{provider.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Store" label="Store" value="#{provider.store}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}UserName" label="User Name" value="#{provider.userName}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Password" label="Password" value="#{provider.password}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}JndiName" label="Jndi Name" value="#{provider.jndiName}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}JndiContext" label="Jndi Context" value="#{provider.jndiContext}" items="#{jndiContextList}" defaultLabel="select Jndi Context" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}ConnectionUrl" label="Connection Url" value="#{provider.connectionUrl}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Transacted" label="Transacted" value="#{provider.transacted}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Properties" label="Properties" value="#{provider.properties}" items="#{propertiesList}" defaultLabel="select Properties" />
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

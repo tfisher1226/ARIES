@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<deployment>
+	<node name="node1">
+		<server name="server1" type="tomcat6">
+			<property name="homeLocation" value="c:/software/apache-tomcat-6.0.26"/>
+			<property name="httpPort" value="18880"/>
+			<property name="rmiPort" value="18801"/>
+			<property name="jmxPort" value="18802"/>
+			<property name="shutdownPort" value="18803"/>
+	
+			<application name="person-service">
+				<property name="warFile" value="person-service.war"/>
+				<property name="homeLocation" value="c:/workspace/AEROSPACE/person-service/target"/>
+			</application>
+		</server>
+	</node>
+</deployment>

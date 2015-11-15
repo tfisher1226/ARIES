@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	xmlns="http://nam/model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+
+	<import file="bookshop_seller_information.aries" />
+
+	<domain>bookshop2</domain>
+	<name>bookshop2-seller</name>
+	
+	<!--  
+	<unit name="bookshop">
+		<source ref="BookshopDS" />
+		<adapter ref="hibernate" />
+		<transacted use="required" scope="workflow" />
+		<elements>
+			<include namespace="http://www.aries.org/common" />
+			<include namespace="http://bookshop/seller" />
+		</elements>
+	</unit>
+	-->
+
+	<source>
+		<type>mysql</type>
+		<name>bookshop2_seller_ds</name>
+		<store>bookshop2_seller_db</store>
+		<userName>%userName%</userName>
+		<password>%password%</password>
+		<jndiName>bookshop2_seller</jndiName>
+		<connectionUrl>jdbc:mysql://dc1-mysql-01.kattare.com:3306/bookshop2_seller_db</connectionUrl>
+		<driverClass>com.mysql.jdbc.Driver</driverClass>
+		<maxActive>30</maxActive>
+		<maxIdle>30</maxIdle>
+		<maxWait>10</maxWait>
+	</source>
+
+	<!--  
+	<cache name="eventLog">
+		<transacted use="required" scope="workflow" />
+		<level>application</level>
+		<scope>local</scope>
+		<items>
+			<listItem name="events" type="sgiusa:Event" />
+			<mapItem name="eventsByUserId" type="sgiusa:Event" key="xs:string" />
+		</items>
+	</cache>
+	-->
+</persistence>
