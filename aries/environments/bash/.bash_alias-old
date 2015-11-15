@@ -1,3 +1,0 @@
-set ll='ls -alF'
-set pd='pushd'
-set pop='popd'
