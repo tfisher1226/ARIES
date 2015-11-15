@@ -1,0 +1,14 @@
+
+
+
+application
+-set name
+-set namespace
+
+-reference project
+-import project
+-reference namespace
+-import namespace
+-add channel
+
+-add service

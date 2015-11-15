@@ -1,0 +1,200 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+    <a4j:jsFunction 
+    	name="requestLogout" 
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"
+    	execute="@this"
+    	action="#{identity.logout}"
+    	onbegin="setCursorWait(event.source)" />
+    	
+	<aries:toolbar type="menubar">
+		<aries:toolbarGroup location="left">
+			<aries:toolItem 
+				mode="client"
+				name="home"
+				label="ECOS"
+				execute="@this"
+				icon="/icons/common/Home16.gif"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="setCursorDefault(event.source); showHomePage(this)" />
+				
+			<!--  
+			<aries:toolItem 
+				mode="client"
+				name="home"
+				label="About us"
+				execute="@this"
+				icon="/icons/common/Group16.gif"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="setCursorDefault(event.source); showAboutPage(this)" />
+				-->
+				
+			<aries:dropDownMenu 
+				label="Documents"
+				icon="/icons/common/Project16.gif">
+				
+				<aries:menuItem 
+					value="ECOS Flyer..."
+					tooltip="View the Flyer for ECOS"
+					icon="/icons/common/File16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="setCursorWait(this); showFlyer(); setCursorDefault(this)" />
+			</aries:dropDownMenu>
+			
+			<aries:dropDownMenu 
+				label="Preferences"
+				icon="/icons/common/Configure16.gif">
+				
+				<aries:menuItem 
+					value="Change Theme..."
+					tooltip="Change User-Interface appearance"
+					icon="/icons/common/CopyDisabled16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="setCursorWait(this); showThemeDialog(this); setCursorDefault(this)" />
+
+				<!--  
+				<aries:menuItem 
+					value="Manage Skins..."
+					tooltip="Add, Edit, Delete Themes"
+					icon="/icons/common/Table16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="showSkinAttributeDialog(this); setCursorDefault(this)" />
+					-->
+			</aries:dropDownMenu>
+
+			<aries:toolItem 
+				mode="client"
+				name="contact"
+				label="Contact us"
+				execute="@this"
+				icon="/icons/common/Speak16.gif"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="setCursorDefault(event.source); showContactPage(this);">
+				<!--  
+				<rich:toggleControl
+					targetPanel="ecosContentPane" 
+					targetItem="contact" 
+					event="click" />
+					-->
+			</aries:toolItem>
+			
+			<!--  
+            <a4j:commandLink 
+            	value="Contact us" 
+            	onmousedown="setCursorWait(this)" 
+				onmouseup="setCursorDefault(event.source); var element = #{rich:element('gMap')}; forceRedraw(element);">
+				<rich:toggleControl
+					targetPanel="ecosContentPane" 
+					targetItem="contact"
+					event="mouseup" />
+            </a4j:commandLink>
+            -->
+		</aries:toolbarGroup>
+
+		<aries:toolbarGroup location="right">
+			<!--  
+			<aries:toolItem 
+				id="testButton"
+				icon="/icons/common/Default16.gif"
+				mode="client"
+				execute="@none"
+				onclick="showSkinAttributeDialog(this); setCursorDefault(this)" />
+				-->
+
+			<!--
+			<aries:toolItem
+				mode="client"
+				id="registerItem"
+				label="Register"
+				tooltip="Register to access our modeling system" 
+				icon="/icons/common/Cache16.gif"
+				rendered="#{!identity.loggedIn}"
+				onmousedown="setCursorWait(this)"
+				onmouseup="setCursorDefault(event.source); showRegistrationDialog()"
+				render="registrationDialogXX" />
+				-->
+
+<!-- 
+				onclick="setCursorWait(this); showProgress('ECOS-NET Administration', 'User Registration', 'Preparing new account...')"
+				oncomplete="setCursorDefault(event.source); hideProgress(); showRegistrationDialog()"
+ -->			
+
+			<aries:toolItem
+				mode="client"
+				id="loginItem"
+				label="Login"
+				tooltip="Login to access your home environment" 
+				icon="/icons/common/Export16.gif"
+				rendered="#{!identity.loggedIn}"
+				onmousedown="setCursorWait(this)"
+				onmouseup="setCursorDefault(event.source); showLoginDialog()"
+				render="LoginDialogXX" />
+				
+			<aries:dropDownMenu 
+				label="Help"
+				icon="/icons/common/Help16.gif">
+				
+				<aries:menuItem
+					id="resetItem" 
+					name="reset"
+					value="Reset"
+					tooltip="Reset server-side user-state"
+					icon="/icons/common/refresh-document.gif"
+					execute="@this"
+					manager="#{adminManager}"
+					action="reset"
+					onclick="setCursorWait(this); showProgress('ECOS-NET Admin', 'Server-side user-state', 'Resetting...')"
+					oncomplete="setCursorDefault(this); hideProgress()" 
+					render="nothing" />
+				
+				<!-- 
+				<aries:menuItem 
+					value="About..."
+					tooltip="About ECOS-NET"
+					icon="/icons/common/Speak16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('ECOS-NET', 'ECOS Application Management', 'This is a placeholder for the About Screen')" />
+					-->
+			</aries:dropDownMenu>
+			
+			<aries:toolItem 
+				id="refreshButton"
+				label="Refresh"
+				icon="/icons/common/Refresh16.gif"
+				tooltip="Refresh the display"
+				name="reload"
+				mode="client"
+				execute="@none"
+				onmouseup="setCursorWait(this)" 
+				onclick="showPublicPage()" />
+				
+			<f:subview rendered="#{identity.loggedIn}">
+				<aries:toolItem
+					mode="client"
+					id="logoutItem"
+					label="Logout"
+					icon="/icons/common/Remove16.gif"
+					onmouseup="setCursorWait(this); requestLogout()" />
+			</f:subview>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

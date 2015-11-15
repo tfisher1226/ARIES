@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:panel
+		width="auto"
+		height="auto"
+		backgroundColor="inherit">
+
+		<aries:formPane 
+			columns="2"
+			backgroundColor="inherit">
+			
+			<aries:panel width="auto" margin="10px">
+				<aries:text fontSize="14">
+					Depending on the unique design, content and configuration of the target system, various capabilities will be enabled. Some of these are:
+	  
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Service Invocation" onclick="" href="#jboss-a-mq" />
+					&ndash; Several ways of invoking services are supported: Web&ndash;services, REST&ndash;services, JMS MDB, EJB, RMI, as well as CORBA.
+					
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Enterprise Messaging" onclick="" href="#jboss-a-mq" />
+					&ndash; JMS based constructs are generated to implement specific Messaging Architectures.
+					
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Distributed Caching" onclick="" href="#jboss-a-mq" />
+					&ndash; Configuration is the key.  Defaults are provided and may be customized at generation time, and at runtime.
+					
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Data Persistence" onclick="" href="#jboss-a-mq" />
+					&ndash; JPA based data layer implementation is generated along with SQL schema. Custom relationships and queries may be added in the model.
+					
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Transactional Processing" onclick="" href="#jboss-a-mq" />
+					&ndash; Generated service and process components will execute within short-term as well as long-term transactions.
+					&mdash;
+					
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Event Propagation" onclick="" href="#jboss-hornetq" />
+					&mdash; persistence, subscription and monitoring is supported
+					
+					<aries:spacer height="10" />
+					<aries:link fontSize="14" value="Application event logging" onclick="" href="#jboss-data-grid" />
+					&mdash;
+				</aries:text>
+			</aries:panel>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

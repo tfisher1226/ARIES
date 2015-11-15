@@ -1,0 +1,21 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="usage-of-jboss-pane">
+		
+		<aries:tabPane>
+			<aries:tab
+				width="auto"
+				fontSize="14"
+				label="Usage of JBoss"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="usage-of-jboss-content.xhtml" />
+    	    </aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

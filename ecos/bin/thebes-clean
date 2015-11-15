@@ -1,0 +1,7 @@
+#!/bin/sh
+
+. ./thebes-env
+
+rm -rf $JBOSS_HOME/standalone/data
+rm -rf $JBOSS_HOME/standalone/log
+rm -rf $JBOSS_HOME/standalone/tmp

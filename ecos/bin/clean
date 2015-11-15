@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#!/bin/sh
+
+HOME=..
+CWD=`pwd`
+cd $HOME
+cd $HOME/ecos; mvn clean
+#cd $HOME/ecos; mvn -o clean
+cd $CWD

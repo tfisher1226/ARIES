@@ -1,0 +1,46 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}RegistrationListTablePanel">
+		<ui:include src="registrationListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}RegistrationListTable"
+			value="#{listManager.dataModel}"
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowdblclick="execute#{domain}SelectOpenRegistration(#{index}, #{rowItem.registration.id})"
+			style="border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- ENABLED -->
+			<aries:textColumn
+				width="100"
+				header="Enabled">
+				<h:outputText value="#{rowItem.registration.enabled}" />
+			</aries:textColumn>
+			
+			<!-- USER -->
+			<aries:textColumn
+				width="100"
+				header="User">
+				<aries:link
+					value="#{userHelper.toString(rowItem.registration.user)}"
+					onmouseup="execute#{domain}SelectOpenRegistration(#{index}, #{rowItem.registration.id})" />
+			</aries:textColumn>
+			
+			<!-- LOGIN COUNT -->
+			<aries:textColumn
+				width="100"
+				header="Login Count">
+				<h:outputText value="#{rowItem.registration.loginCount}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

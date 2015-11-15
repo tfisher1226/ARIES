@@ -1,0 +1,49 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:formPane 
+		width="400" 
+		id="#{domain}InputPane"
+		backgroundColor="inherit">
+
+		<aries:spacer height="2" />
+		<ui:param name="labelWidth" value="60" />
+		<ui:param name="element" value="#{manager.instance}" />
+			
+		<aries:inputText 
+			label="Name"
+			id="InputName_#{element.name}"
+			readonly="true"
+			enabled="false"
+			value="#{element.name}" />
+			
+		<aries:spacer height="8" />
+		<aries:inputText 
+			label="Type"
+			id="InputType_#{element.name}"
+			readonly="true"
+			enabled="false"
+			value="#{element.type}" />
+
+		<aries:spacer height="8" />
+		<aries:inputText 
+			label="Value"
+			id="InputValue_Long_#{element.name}"
+			value="#{element.value}"
+			rendered="#{element.clazz eq 'Long'}">
+			<f:converter converterId="longConverter" />
+		</aries:inputText>
+
+		<aries:inputText 
+			label="Value"
+			id="InputValue_Text_#{element.name}"
+			value="#{element.value}"
+			rendered="#{element.clazz eq 'String'}" />
+	</aries:formPane>
+</ui:composition>

@@ -1,0 +1,119 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+				
+	<aries:borderPane 
+		width="auto"
+		height="auto"
+		backgroundColor="inherit">
+
+		<aries:panel margin="10px">
+			<aries:label fontSize="20" value="Automated Generation of Software - Applications and User-Interfaces" />
+			<aries:spacer height="8" />
+
+			<aries:label fontSize="16" fontWeight="bold" textColorXX="#{userSkin.headerTextColor}" value="Demonstration by Example" />
+			<aries:spacer height="2" />
+		</aries:panel>
+		
+		<aries:formPane 
+			height="auto"
+			margin="10px"
+			columns="3"
+			columnClass="width26pct"
+			backgroundColor="inherit">
+			
+			<aries:panel width="auto" margin="0px" backgroundColor="inherit">
+				<aries:bh4 value="Immediate value to be gained" />
+
+				<aries:p fontSize="13">
+					We are eager to demonstrate our approach using specific examples. 
+				</aries:p>
+				
+				<aries:h6 value="Standard implementation" />
+				<aries:p fontSize="13">
+					After inspecting, building, and running example generated systems, 
+					and after running generated tests, we believe your organization will 
+					agree - there is much immediate value to be gained and at reasonable cost.
+				</aries:p>
+				
+				<aries:p fontSize="13">
+					Example systems are listed at the right, and, the sequence of steps 
+					involved in each demo is listed at the far right.
+				</aries:p>
+				
+				<aries:bh4 value="Example systems to demonstrate" />
+				<aries:p fontSize="13">
+					Below is a brief example set of applications and systems that 
+					we demonstrate to highlight various capabilities.
+				</aries:p>
+
+				<aries:bh5 value="Hello world application" />
+				<aries:p fontSize="13" marginTop="4px">
+					Automatic generation of a small "hello world" application
+					with a database, local cache and simple service and UI.
+				</aries:p>
+				
+				<aries:bh5 value="BPEL model driven application" />
+				<aries:p fontSize="13" marginTop="4px">
+					Automatic generation of a small BPEL model driven application
+					(also with a database, cache and simple service and UI).
+				</aries:p>
+			</aries:panel>
+
+			<aries:panel width="auto" marginLeft="10px" backgroundColor="inherit">
+				<aries:bh4 value="Example systems to demonstrate, cont..." />
+				<aries:p fontSize="13" marginTop="4px">
+					Realistic production-quality systems involve many various and different moving parts. 
+					We provide several demonstrations of such systems.
+				</aries:p>
+				
+				<aries:bh5 value="Small distributed application system" />
+				<aries:p fontSize="13" marginTop="4px">
+					Automatic generation of a small distributed system of interrelated applications. 
+					This demo highlights the scope of generated outputs for a distributed system.
+				</aries:p>
+				<aries:p fontSize="13" marginTop="4px">
+					This demo involves the following:
+				</aries:p>
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Different types of services" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Different types of invocation methods" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Multiple databases having different levels of permissions" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Distributed shared caching with different levels of access" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Different ways of representing logic: BPEL, ARIEL, hand-code" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Integration with previously existing code" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Integration with hand-written components" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Integration with external payment system" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Organization of integration and system tests" />
+			</aries:panel>
+
+			<aries:panel width="auto" marginLeft="10px" backgroundColor="inherit">
+				<aries:bh4 value="Demonstration steps for each example system" />
+
+				<aries:p fontSize="13">
+					The following steps will be used to highlight different parts of each demo.
+				</aries:p>
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Start with an empty directory" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Start with an empty Maven repository" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Generation Engine reads input files and generates output" />
+
+				<aries:h6 value="After generation of output:" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Execute initial population of Maven repository" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Execute full build on generated modules" />
+
+				<aries:h6 value="After execution of full build:" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Observe population of Maven repository" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Observe organization of 3rd party dependencies" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="View generated Maven 'site' of each application" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Execute generated system in production-like mode" />
+					
+				<aries:h6 value="After execution of applications:" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="View generated UI of generated application(s)" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Review the input files used to generate the output" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Use generated UI to exercise application services" />
+				<aries:bullet fontSize="12" marginLeft="0px" textColor="#{userSkin.headerTextColor}" value="Use generated UI to exercise management functions" />
+			</aries:panel>
+		</aries:formPane>
+	</aries:borderPane>
+</ui:composition>

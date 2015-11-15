@@ -1,0 +1,38 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:module
+		domain="#{domain}UserDialog"
+		section="#{domain}UserDialog"
+		name="#{domain}UserDialog"
+		render="#{domain}UserListPane">
+
+		<ui:define name="imports">
+			<!-- Imported Dialogs -->
+			<ui:include src="/admin/common/personNameDialog.xhtml"/>
+			<ui:include src="/admin/common/emailAddressDialog.xhtml"/>
+		</ui:define>
+
+		<aries:dialog 
+			id="#{name}"
+			manager="#{userInfoManager}"
+			action="saveUser">
+
+			<!-- Imported Dialogs 
+			<ui:include src="/admin/common/phoneNumberDialog.xhtml"/>
+			<ui:include src="/admin/common/streetAddressDialog.xhtml"/>
+			<ui:include src="/admin/section/role/roleInfoDialog.xhtml" />
+			<ui:include src="/admin/section/role/roleSelectDialog.xhtml" />
+			<ui:include src="/admin/section/permission/permissionInfoDialog.xhtml" />
+			-->
+			
+			<!-- Dialog Content -->
+			<ui:include src="userInfoPane.xhtml" />
+		</aries:dialog>
+	</aries:module>
+</ui:composition>

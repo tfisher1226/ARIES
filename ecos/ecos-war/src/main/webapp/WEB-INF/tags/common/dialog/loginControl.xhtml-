@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup layout="block" style="width: 100%; height: 47px; max-height: 47px; background-color: inherit">
+		<div style="display: block; width: 100%; height: 1px; background-color: #bbb"/>
+		<div style="display: block; width: 100%; height: 1px; background-color: #fff"/>
+		<div style="display: block; width: 100%; height: 9px"/>
+		<div style="display: block; width: auto; height: 24px; padding: 0px 10px 0px 6px">
+
+		<rich:toolbar
+			id="loginToolbar" 
+			itemSeparator="none"
+			styleClass="controlbar"
+			contentClass="controlbarContent" 
+			separatorClass="controlbarSeparator"
+			style="border-width: 0px; background-image: none; background-color: #f0f0f0">
+
+			<aries:toolbarGroup location="left">
+				<aries:toolButton
+					tooltip="Show Help for Login Dialog"
+					manager="#{globals}"
+					action="doNothing"
+					icon="resource://images/icons/common/Help24.gif"
+					onclick="showAlert('Display in progress', 'Placeholder for Help Window 2', 'Simple and brief help documentation will be provided here')"
+					oncomplete="setCursorDefault()"/>
+			</aries:toolbarGroup>
+
+			<rich:toolbarGroup location="right">
+				<!--  
+				<a4j:commandLink
+					id="loginButtonXXX"
+					type="submit"
+					value="LoginXX"
+					action="#{globals.doNothing}"
+					onclick=""
+					oncomplete="alert('#{messagesExist}')"
+					render="loginDialogMessagesXX" >
+					<h:graphicImage url="resource://images/icons/common/Export16.gif" />
+				</a4j:commandLink>
+				-->
+
+				<aries:dialogButton
+					id="loginButton"
+					value="Login"
+					default="true"
+					immediate="false"
+					ajaxSingle="false"
+					icon="resource://images/icons/common/Export16.gif"
+					iconDisabled="resource://images/icons/common/ExportDisabled16.gif"
+					manager="#{identity}"
+					action="login"
+					onclick="setCursorWait(this); showProgress('#{dialogTitle}', 'Authenticating user...')"
+					oncomplete="setCursorDefault(); hideProgress(); if (#{!messages.exist}) hideLoginDialog()" />
+
+				<aries:dialogButton
+					value="Cancel"
+					mode="client"
+					onclick="hideLoginDialog()"
+					rendered="true"
+					enabled="true"
+					offset="true">
+				</aries:dialogButton>
+			</rich:toolbarGroup>
+		</rich:toolbar>
+		</div>
+	</h:panelGroup>
+</ui:composition>

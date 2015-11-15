@@ -1,0 +1,14 @@
+action.package=admin.client.userService
+action.sources=/admin-client/src/main/java
+eclipse.preferences.version=1
+model.package=admin.client.userService
+model.sources=/admin-client/src/main/java
+seam.ejb.project=admin-client
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/bookshop2-view/src/main/webapp
+seam.test.creating=false
+seam.test.project=bookshop2-view
+test.package=bookshop2.test
+test.sources=/bookshop2-view/src/main/java

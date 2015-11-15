@@ -1,0 +1,169 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf/"
+	template="/templates/public-page-template.xhtml">
+
+	<ui:define name="content">
+
+		<!-- COMMON DIALOGS -->
+		<aries:themeDialog />
+
+		<!-- USER DIALOGS -->
+		<aries:include file="/admin/common/personNameDialog.xhtml" />
+		<aries:include file="/admin/common/emailAddressDialog.xhtml" />
+		<aries:include file="/admin/common/phoneNumberDialog.xhtml" />
+		<aries:include file="/admin/common/streetAddressDialog.xhtml" />
+		<aries:include file="/admin/common/inputDialog.xhtml" manager="#{inputManager}" type="Input" />
+
+		<!-- LOGIN DIALOG -->
+		<aries:loginDialog
+			title="Identification Required" 
+			heading="ECOS-NET LOGIN" />
+	
+		<aries:registerDialog
+			title="Account Registration" 
+			heading="BOOKSHOP2 REGISTRATION"/>
+
+		<!-- REGISTRATION WIZARD
+		<aries:include file="/admin/registration/registrationDialog.xhtml"/>
+		-->
+		
+		<!-- KEYFILE UPLOAD DIALOG 
+		<aries:uploadDialog 
+			dialogKey="Login"
+			uploadableTypes="zip, ZIP"
+			uploadHandler="#{uploadManager}"
+			uploadHandlerAction="authenticateUploadedKeyfile"
+			uploadHandlerRender="loginUploadMessages, keyFileField"
+			logo="/infosgi-dialog-left.gif" />
+			-->
+
+		<!-- PAGE BODY -->
+		<h:form id="publicForm">
+
+			<aries:dialog2
+				id="TestDialog"
+				width="520"
+				domain="Public"
+				oncomplete="">
+				<h:panelGroup id="testDialogHandle" layout="block" style="width: 300px">
+				</h:panelGroup>
+			</aries:dialog2>
+
+			<aries:popup
+				id="TestPopup"
+				width="520"
+				domain="Public"
+				oncomplete="">
+				<h:panelGroup id="testPopupHandle" layout="block" style="width: 300px">
+				</h:panelGroup>
+			</aries:popup>
+
+			<!--  
+			-->
+			<a4j:outputPanel id="ECOSMap" style="position: absolute; top: -500px; visibility: hidden">
+				<gmaps4jsf:map
+					id="gMap"
+				    zoom="10" 
+					width="200px" 
+					height="200px"
+					latitude="34.122379"
+					longitude="-118.107027"	
+					jsVariable="map"
+					partiallyTriggered="false"
+					enableScrollWheelZoom="true"
+					renderOnWindowLoad="true">
+					 
+					<gmaps4jsf:marker
+						latitude="34.122379"
+						longitude="-118.107027" />
+				</gmaps4jsf:map>
+			</a4j:outputPanel>
+
+			<!-- POPUP DIALOGS -->
+			<aries:messageDialog />
+			<aries:popupDialog />
+			<aries:progressDialog />
+
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="ecos/menubar.xhtml"/>
+
+			<!-- PAGE CONTENT -->
+			<aries:formPane
+				width="100%"
+				height="auto"
+				columns="1"
+				columnClasses="formColumnAlignTop"
+				backgroundColor="inherit">
+			
+				<aries:layerPane
+					id="ecosContentPane"
+					width="100%"
+					height="auto"
+					activeItem="home">
+
+					<aries:layeredPane
+						width="auto"
+						marginTop="6px"
+						marginBottom="10px"
+						name="home">
+						<ui:include src="ecos/navigator.xhtml"/>
+						<ui:include src="ecos/viewer.xhtml"/>
+					</aries:layeredPane>
+
+					<aries:layeredPane
+						width="100%"
+						marginTop="6px"
+						name="contact">			
+						<ui:include src="ecos/contact.xhtml"/>
+					</aries:layeredPane>
+				</aries:layerPane>
+			</aries:formPane>
+
+			<!-- PAGE FOOTER -->
+			<aries:footer backgroundColor="inherit">
+				<aries:spacer height="2" />
+				<aries:p marginTop="2px" marginLeft="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+					&copy; Copyright 2015 Evergreen Computational Sciences. All rights reserved.
+				</aries:p>
+			</aries:footer>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+
+			
+			<!-- PAGE CONTENT 
+			<h:panelGrid
+				id="publicContent"
+				columns="1"
+				layout="block"
+				cellpadding="0"
+				cellspacing="0"
+				styleClass="formPanel" 
+				columnClasses="formColumnFillBoth" 
+				style="width: 100%; height: auto; margin-bottom: 28px; #{borderSettings}; #{backgroundSettings}; #{textSettings}; background-color: inherit"
+				onclickX="alert('#{sizeSettings}'); #{onclick}"
+				onclick="#{onclick}"> 
+				-->
+				
+				<!--  
+					<rich:togglePanel 
+						id="ecosContentPane"
+						switchType="client"
+						activeItem="home"
+						style="width: auto; height: auto; background-color: inherit">
+				-->
+				
+<!-- 
+							<div style="margin: 10px 0px; background-color: inherit">	
+							</div>
+ -->
+ 
+ 

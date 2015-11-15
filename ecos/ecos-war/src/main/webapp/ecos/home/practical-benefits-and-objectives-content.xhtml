@@ -1,0 +1,222 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+				
+	<aries:borderPane
+		width="auto"
+		height="auto"
+		backgroundColor="inherit">
+
+		<aries:panel margin="10px">
+			<aries:label fontSize="20" value="Automated Generation of Software - Applications and User-Interfaces" />
+			<aries:spacer height="8" />
+
+			<aries:label fontSize="16" fontWeight="bold" value="Practical Benefits and Objectives" />
+			<aries:spacer height="2" />
+		</aries:panel>
+		
+		<aries:formPane 
+			width="auto"
+			height="auto"
+			margin="10px"
+			columns="3"
+			columnClass="width20pct"
+			backgroundColor="inherit">
+			
+			<aries:panel 
+				width="auto" 
+				backgroundColor="inherit">
+
+				<aries:bh4 value="Up and running fast" />
+				<aries:p fontSize="13">
+					It is straight-forward to design and auto-generate 
+					a fully functional application system, and be up 
+					and running within hours (or even minutes).
+				</aries:p>
+
+				<aries:bh4 value="Thorough implementation" />
+				<aries:p fontSize="13">
+					We emphasize a practical and thorough 
+					implementation based on standards and best-practices. 
+				</aries:p>
+				
+				<aries:h6 value="Integration of technologies" />
+				<aries:p fontSize="13">
+					Most systems today involve the integration of multiple technologies and subsystems.
+					This is a valid risk since many integrations are detailed and need to be done carefully.  
+				</aries:p>
+				<aries:p fontSize="13">
+					Our generated systems are carefully implemented to properly integrate required 
+					technologies and API's, enabling all working together on one platform.
+					<!--  
+					Each area is carefully and thoroughly implemented.
+					-->  
+				</aries:p>
+
+				<aries:h6 value="Supporting infrastructure" />
+				<aries:p fontSize="13">
+					Configuration files, management components, tests
+					and testing infrastructure are created along with 
+					generated implementation.
+				</aries:p>
+				
+				<aries:bh4 value="Savings in costs" />
+				<aries:p fontSize="13">
+					The savings in cost is immeasurable. The quality and 
+					thoroughness of the resulting generated application 
+					system, management components, user-interface(s), and 
+					tests far outweighs any efforts that could be done by hand.
+				</aries:p>
+				
+				<!--  
+				<aries:h5 value="Hand-coding not needed" />
+				<aries:p fontSize="13">
+					Thorough system implementation can be auto-generated
+					without the need for hand-coding.  BPEL and ARIEL
+					files can be used to represent custom logic.
+				</aries:p>
+				-->
+				
+				<aries:h5 value="" />
+				<aries:p fontSize="13">
+				</aries:p>
+				
+				<aries:h5 value="" />
+				<aries:p fontSize="13">
+				</aries:p>
+			</aries:panel>
+
+			<aries:panel 
+				width="auto"
+				marginLeft="10px" 
+				backgroundColor="inherit">
+
+				<aries:bh4 value="Automatically created tests" />
+				<aries:p fontSize="13">
+					By default, auto-generation creates multiple levels of tests 
+					for each primary component of the target system.
+				</aries:p>
+				<aries:p fontSize="13">
+					Unit-tests are created to use
+					<aries:link value="JUnit" href="" />.
+					Multiple levels of integration tests and system tests 
+					are created to use JUnit together with the valuable 
+					<aries:link value="Arquillian" href="http://arquillian.org" /> and
+					<aries:link value="Byteman" href="http://byteman.jboss.org" />.
+				</aries:p>
+
+				<aries:h6 value="Systematic test cases" />
+				<aries:p fontSize="13">
+					A comprehensive and structured approach for testing 
+					is needed for the purpose of being thorough and effective 
+					in detecting and reducing potential problems.  
+					Tests are made up of systematically 
+					created and <i>highly-specific test cases</i>. 		
+				</aries:p>				
+
+				<aries:h6 value="Multiple test environments" />
+				<aries:p fontSize="13">
+					Tests are structured to run in <i>multiple test contexts</i>.
+					This is important since certain conditions and certain 
+					errors may only likely occur in one test environment,
+					while not in others - such problems can otherwise
+					be very hard to detect and fix.
+				</aries:p>				
+				
+				<!--  
+				<aries:p fontSize="13">
+					Hand-coding is often desired to represent 
+					<i>business logic</i> because it is perceived as 
+					the easiest, most expedient way to do so.
+					However more and more, organziations are 
+					using BPEL and other model-driven approaches.
+				</aries:p>	
+				-->
+				
+				<!--  
+				<aries:h5 value="Practcal usage of BPEL" />
+				<aries:p fontSize="13">
+					BPEL (and ARIEL) files can be used to represent custom 
+					logic.  The generation engine will read BPEL and ARIEL
+					files, and auto-generate simple and straight-forward
+					Java code along with corresponding tests.
+				</aries:p>
+				-->
+				
+				<!-- 
+				<aries:h5 value="Management of generated assets" />
+				<aries:p fontSize="13">
+				</aries:p>
+
+				<aries:h5 value="Management of dependencies" />
+				<aries:p fontSize="13">
+				External 3rd party dependencies
+				as well as dependencies upon generated assets.
+				</aries:p>
+				
+				<aries:h6 value="" />
+				<aries:p fontSize="13">
+				</aries:p>
+				-->
+			</aries:panel>
+
+			<aries:panel 
+				width="auto" 
+				marginLeft="10px" 
+				backgroundColor="inherit">
+				
+				<aries:bh4 value="Easy integration of hand-coding" />
+				<aries:p fontSize="13">
+					Although hand-coding is <i>not</i> needed, 
+					it <i>is</i> prefereble at times and <i>is</i>
+					completely easy to integrate into the auto-generated system.
+				</aries:p>
+
+				<aries:bh4 value="Easy integration with external systems" />
+				<aries:p fontSize="13">
+					It is straight-forward to integrate with external systems 
+					such as a gateways, incoming message streams, data-sources or 
+					external processing or payment systems.
+				</aries:p>
+				
+				<aries:bh4 value="Accelerated experimentation and comparison" />
+				<aries:p fontSize="13">
+					Sample target systems of varying types can be designed, 
+					generated, built, tested and experimented with, and compared 
+					against each other, in nearly the quickest possible turnaround times.  
+				</aries:p>
+				
+				<aries:h6 value="Enable easy mixing and matching of different approaches" />
+				<aries:p fontSize="13">
+					This allows an organization to try-out various potential 
+					solutions in different environments and in different contexts
+					- mixing and matching different approaches, constructs, services and 
+					communication methods.
+				</aries:p>
+				
+				<!--  
+				<aries:h5 value="Autogenerated Infrastructure" />
+
+				<aries:h5 value="Security in distributed environment" />
+				<aries:p fontSize="13">
+				</aries:p>
+
+				<aries:h6 value="Users and Roles" />
+				<aries:p fontSize="13">
+				</aries:p>
+
+				<aries:h6 value="Permission management" />
+				<aries:p fontSize="13">
+				</aries:p>
+
+				<aries:h6 value="User management" />
+				<aries:p fontSize="13">
+				</aries:p>
+				-->
+			</aries:panel>
+		</aries:formPane>
+	</aries:borderPane>
+</ui:composition>

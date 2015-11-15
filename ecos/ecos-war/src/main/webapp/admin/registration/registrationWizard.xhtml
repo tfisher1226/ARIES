@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<!-- CONTENT -->
+	<aries:layerPane
+		id="registrationWizard"
+		width="#{width-270}"
+		height="#{height}"
+		margin="10px"
+		marginLeft="0px"
+		backgroundColor="inherit"
+		activeItem="#{adminManager.activeSection}">
+
+		<!-- WIZARD PAGES -->
+		<ui:include src="registrationWizardIdentityPane.xhtml" />
+		<ui:include src="registrationWizardContactPane.xhtml" />
+		<ui:include src="registrationWizardSubmitPane.xhtml" />
+	</aries:layerPane>
+	
+	<!-- CONTROL 
+	<h:panelGrid 
+		layout="block" 
+		cellpadding="0" 
+		cellspacing="0" 
+		columns="1" 
+		columnClasses="formColumn" 
+		style="width: 100%; height: auto; min-height: 50px; max-height: 50px; background-color: inherit">
+		
+		<ui:include src="wizardControl.xhtml">
+			<ui:param name="title" value="#{title}" />
+			<ui:param name="heading" value="#{heading}" />
+			<ui:param name="render" value="#{render}" />
+		</ui:include>
+	</h:panelGrid>
+	-->
+</ui:composition>

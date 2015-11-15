@@ -1,0 +1,109 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}UserListTablePanel">
+		<ui:include src="userListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}UserListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowdblclick="execute#{domain}SelectOpenUser(#{index}, #{rowItem.user.id})"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn 
+				width="100"
+				header="Name">
+				<h:outputText value="#{personNameHelper.toString(rowItem.user.name)}" />
+			</aries:textColumn>
+			
+			<!-- PERSON NAME -->
+			<aries:textColumn
+				width="100"
+				header="Person Name">
+				<h:outputText value="#{personNameHelper.toString(rowItem.user.personName)}" />
+			</aries:textColumn>
+			
+			<!-- USER NAME -->
+			<aries:textColumn
+				width="100"
+				header="User Name">
+				<aries:link 
+					value="#{rowItem.user.userName}"
+					onmouseup="execute#{domain}SelectOpenUser(#{index}, #{rowItem.user.id})" />
+			</aries:textColumn>
+
+			<!-- PASSWORD SALT -->
+			<aries:textColumn
+				width="100"
+				header="Password Salt">
+				<h:outputText value="#{rowItem.user.passwordSalt}" />
+			</aries:textColumn>
+			
+			<!-- ENABLED -->
+			<aries:textColumn
+				width="100"
+				header="Enabled">
+				<h:outputText value="#{rowItem.user.enabled}" />
+			</aries:textColumn>
+			
+			<!-- EMAIL ADDRESS -->
+			<aries:textColumn 
+				width="100"
+				header="Email Address">
+				<h:outputText value="#{emailAddressHelper.toString(rowItem.user.emailAddress)}" />
+			</aries:textColumn>
+
+			<!-- STREET ADDRESS -->
+			<aries:textColumn 
+				width="100"
+				header="Street Address">
+				<h:outputText value="#{streetAddressHelper.toString(rowItem.user.streetAddress)}" />
+			</aries:textColumn>
+			
+			<!-- HOME PHONE -->
+			<aries:textColumn 
+				width="100"
+				header="Home Phone">
+				<h:outputText value="#{phoneNumberHelper.toString(rowItem.user.homePhone)}" />
+			</aries:textColumn>
+
+			<!-- CELL PHONE -->
+			<aries:textColumn 
+				width="100"
+				header="Cell Phone">
+				<h:outputText value="#{phoneNumberHelper.toString(rowItem.user.cellPhone)}" />
+			</aries:textColumn>
+
+			<!-- PREFERENCES -->
+			<aries:textColumn 
+				width="100"
+				header="Preferences">
+				<h:outputText value="#{preferencesHelper.toString(rowItem.user.preferences)}" />
+			</aries:textColumn>
+
+			<!-- CREATION DATE -->
+			<aries:textColumn 
+				width="100"
+				header="Creation Date">
+				<h:outputText value="#{rowItem.user.creationDate}" />
+			</aries:textColumn>
+
+			<!-- LAST UPDATE -->
+			<aries:textColumn 
+				width="100"
+				header="Last Update">
+				<h:outputText value="#{rowItem.user.lastUpdate}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

@@ -1,0 +1,30 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:panel
+		padding="10px"
+		backgroundColor="inherit">
+
+		<aries:groupPane
+			width="#{width-22}"
+			height="#{height-2}"
+			backgroundColor="inherit"
+			label="Role Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" labelWidth="90" value="#{role.name}" />
+
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}RoleType" label="Role Type" labelWidth="90" value="#{role.roleType}" items="#{roleTypeList}" defaultLabel="select Role Type" />
+
+			<aries:spacer height="6" />
+			<aries:selectBooleanCheckbox id="#{section}Enabled" label="Enabled" labelWidth="90" value="#{role.conditional}" />
+
+			<aries:spacer height="6" />
+			<aries:selectBooleanCheckbox id="#{section}Conditional" label="Conditional" labelWidth="90" value="#{role.enabled}" />
+		</aries:groupPane>
+	</aries:panel>
+</ui:composition>

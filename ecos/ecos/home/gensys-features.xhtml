@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:groupPane
+		width="380" 
+		height="140"
+		backgroundColor="#eef"
+		label="Features of generated system">
+	
+<p/>
+Depending on the unique design, content and configuration of the target system, various capabilities will be enabled. Some of these are:
+
+<p/>
+Service Invocation - Several ways of invoking services are supported: Web-services, REST-services, JMS MDB, EJB, RMI, as well as CORBA.
+
+<p/>
+Enterprise Messaging -
+<aries:link value="JMS" onmouseup="http://en.wikipedia.org/wiki/Enterprise_messaging_system" />
+based constructs are generated to implement specific
+<aries:link value="Messaging Architectures" onmouseup="http://en.wikipedia.org/wiki/Enterprise_messaging_system" />
+.
+Well established
+<aries:link value="Integration Patterns" onmouseup="http://en.wikipedia.org/wiki/Enterprise_messaging_system" />
+are generated when needed.
+
+<p/>
+Distributed Caching – Configuration is the key.  Defaults are provided and may be customized at generation time, and at runtime.
+ 
+<p/>
+Data Persistence – JPA based data layer implementation is generated along with SQL schema. Custom relationships and queries may be added in the model.
+
+<p/>
+Transaction Support – Generated service and process components will execute within short-term as well as long-term transactions.
+
+<p/>
+Event Propagation – Application event logging, persistence, subscription and monitoring is supported.
+
+<p/>
+	</aries:groupPane>
+</ui:composition>

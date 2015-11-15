@@ -1,0 +1,133 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:groupPane
+		width="400"
+		height="180" 
+		label="Phone Number Information">
+		
+		<a4j:outputPanel rendered="#{!manager.homePhoneEmpty or true}">
+			<aries:spacer height="6" />
+			<aries:inputText 
+				id="#{section}HomePhone" 
+				label="Home" 
+				labelWidth="70" 
+				value="#{manager.homePhone}"
+				onkeydown="return process#{section}KeyDown(event)">
+				<f:converter converterId="common.phoneNumberConverter" />
+				<f:validator validatorId="common.phoneNumberValidator" />
+			</aries:inputText>
+		</a4j:outputPanel>
+		
+		<a4j:outputPanel rendered="#{!manager.workPhoneEmpty or true}">
+			<aries:spacer height="6" />
+			<aries:inputText 
+				id="#{section}WorkPhone" 
+				label="Work" 
+				labelWidth="70" 
+				value="#{manager.workPhone}"
+				onkeydown="return process#{section}KeyDown(event)">
+				<f:converter converterId="common.phoneNumberConverter" />
+				<f:validator validatorId="common.phoneNumberValidator" />
+			</aries:inputText>
+		</a4j:outputPanel>
+		
+		<a4j:outputPanel rendered="#{!manager.cellPhoneEmpty or true}">
+			<aries:spacer height="6" />
+			<aries:inputText 
+				id="#{section}CellPhone" 
+				label="Cell" 
+				labelWidth="70" 
+				value="#{manager.cellPhone}"
+				onkeydown="return process#{section}KeyDown(event)">
+				<f:converter converterId="common.phoneNumberConverter" />
+				<f:validator validatorId="common.phoneNumberValidator" />
+			</aries:inputText>
+		</a4j:outputPanel>
+
+		<a4j:outputPanel rendered="#{!manager.otherPhoneEmpty or true}">
+			<aries:spacer height="6" />
+			<aries:inputText 
+				id="#{section}OtherPhone" 
+				label="Other" 
+				labelWidth="70" 
+				value="#{manager.otherPhone}"
+				onkeydown="return process#{section}KeyDown(event)">
+				<f:converter converterId="common.phoneNumberConverter" />
+				<f:validator validatorId="common.phoneNumberValidator" />
+			</aries:inputText>
+		</a4j:outputPanel>
+	</aries:groupPane>
+</ui:composition>
+
+	<!--  
+	<ui:repeat 
+		var="phoneNumber" 
+		value="#{manager.phoneNumberList}">
+		<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-bottom: 8px">
+			<h:outputLabel id="#{section}#{phoneNumber.type}PhoneLabel" styleClass="formLabel text12" for="#{section}#{phoneNumber.type}PhoneField" style="display: block; width: 50px">#{phoneNumber.type}</h:outputLabel>
+			<h:inputText id="#{section}#{phoneNumber.type}PhoneField" styleClass="formInput text12" value="#{phoneNumber}" style="width: 300px"
+				converter="common.phoneNumberConverter" 
+				validator="common.phoneNumberValidator"/>
+		</h:panelGrid>
+	</ui:repeat>
+	-->
+
+	<!--  
+	<a4j:outputPanel>
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Phone Number Information</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 12px 8px 12px 8px">		
+
+					<a4j:outputPanel rendered="#{!manager.homePhoneEmpty or true}">
+						<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 8px">
+							<h:outputLabel id="#{section}HomePhoneLabel" styleClass="formLabel text12" for="#{section}HomePhoneField" style="display: block; width: 50px">Home</h:outputLabel>
+							<h:inputText id="#{section}HomePhoneField" styleClass="formInput text12" value="#{manager.homePhone}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" 
+								converter="common.phoneNumberConverter" 
+								validator="common.phoneNumberValidator"/>
+						</h:panelGrid>
+					</a4j:outputPanel>
+
+					<a4j:outputPanel rendered="#{!manager.workPhoneEmpty or true}">
+						<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 8px">
+							<h:outputLabel id="#{section}WorkPhoneLabel" styleClass="formLabel text12" for="#{section}WorkPhoneField" style="display: block; width: 50px">Work</h:outputLabel>
+							<h:inputText id="#{section}WorkPhoneField" styleClass="formInput text12" value="#{manager.workPhone}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" 
+								converter="common.phoneNumberConverter" 
+								validator="common.phoneNumberValidator"/>
+						</h:panelGrid>
+					</a4j:outputPanel>
+
+					<a4j:outputPanel rendered="#{!manager.cellPhoneEmpty or true}">
+						<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 8px">
+							<h:outputLabel id="#{section}CellPhoneLabel" styleClass="formLabel text12" for="#{section}CellPhoneField" style="display: block; width: 50px">Cell</h:outputLabel>
+							<h:inputText id="#{section}CellPhoneField" styleClass="formInput text12" value="#{manager.cellPhone}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" 
+								converter="common.phoneNumberConverter" 
+								validator="common.phoneNumberValidator"/>
+						</h:panelGrid>
+					</a4j:outputPanel>
+
+					<a4j:outputPanel rendered="#{!manager.otherPhoneEmpty or true}">
+						<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 8px">
+							<h:outputLabel id="#{section}OtherPhoneLabel" styleClass="formLabel text12" for="#{section}OtherPhoneField" style="display: block; width: 50px">Other</h:outputLabel>
+							<h:inputText id="#{section}OtherPhoneField" styleClass="formInput text12" value="#{manager.otherPhone}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px"
+								converter="common.phoneNumberConverter" 
+								validator="common.phoneNumberValidator"/>
+						</h:panelGrid>
+					</a4j:outputPanel>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+	-->

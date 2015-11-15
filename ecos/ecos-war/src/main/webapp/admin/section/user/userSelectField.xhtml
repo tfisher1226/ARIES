@@ -1,0 +1,20 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:include src="userSelectMenu.xhtml" />
+
+	<aries:fieldWrapper
+		width="#{width-2}"
+		label="#{label}"
+		labelWidth="80">
+		
+		<aries:listField 
+			id="#{section}#{type}"
+			dialogId="#{type}Dialog" 
+			menuId="#{section}#{type}Menu"
+			manager="#{userSelectManager}" />
+	</aries:fieldWrapper>
+</ui:composition>

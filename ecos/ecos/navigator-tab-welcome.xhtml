@@ -1,0 +1,138 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+<!-- 
+		height="#{height-26}"
+			height="auto"
+ -->
+
+	<aries:panel
+		width="#{width}" 
+		height="#{height}"
+		backgroundColor="inherit">
+
+		<aries:panel 
+			width="auto"
+			height="auto"
+			margin="8px"
+			backgroundColor="inherit">
+			
+			<aries:label fontSize="18" value="Enterprise Application Systems" onclick="showSection('welcome-pane')" href="#welcome-pane" />
+			<aries:spacer height="10" />
+
+			<aries:label fontSize="14" fontWeight="bold" textColor="#{userSkin.headerTextColor}" value="Automated Generation" onclick="showSection('welcome-pane')" href="#welcome-pane" />
+			<aries:spacer height="10" />
+
+			<!--  
+			<aries:dropPane fontSize="13" value="Applicable use-cases" onclick="showSection('applicable-use-cases-pane')" href="#applicable-use-cases-pane" />
+			<aries:spacer height="10" />
+			-->
+
+			<aries:dropPane fontSize="13" value="Practical benefits and objectives" onclick="showSection('practical-benefits-and-objectives-pane')" href="#practical-benefits-and-objectives-pane" />
+			<aries:spacer height="10" />
+
+			<aries:dropPane fontSize="13" value="Unlimited in potential at a predictable cost" onclick="showSection('unprecedented-value-and-cost-pane')" href="#unprecedented-value-and-cost-pane" />
+			<aries:spacer height="10" />
+
+			<aries:dropPane fontSize="13" value="Achieving reduced and bounded risk" onclick="showSection('reduced-and-bounded-risk-pane')" href="#reduced-and-bounded-risk" />
+			<aries:spacer height="10" />
+
+			<aries:dropPane fontSize="13" value="Demonstration by example" onclick="showSection('demonstration-by-example-pane')" href="#demonstration-by-example-pane" />
+			<aries:spacer height="10" />
+
+			<!--  
+			<aries:dropPane fontSize="13" value="List of deliverables" onclick="showSection('list-of-deliverables-pane')" href="#list-of-deliverables-pane" />
+			<aries:spacer height="10" />
+
+			<aries:h4 value="Generated Implementation" />
+
+			<aries:dropPane fontSize="13" value="Usage of JBoss" onclick="showSection('usage-of-jboss-pane')" href="#usage-of-jboss-pane" />
+			<aries:spacer height="10" />
+			-->
+
+			<!--  
+			<aries:dropPane 
+				fontSize="13" 
+				value="Enterprise platform" 
+				href="#enterprise-platform-pane"
+				onclick="showSection('enterprise-platform-pane'); #{rich:component('enterprise-platform-tabpane')}.switchToItem('Enterprise Platform')">
+				
+				<aries:spacer height="8" />
+				<aries:bullet 
+					fontSize="12" 
+					value="Usage of Java"
+					href="#usage-of-java-pane"  
+					onclick="showSection('enterprise-platform-pane'); #{rich:component('enterprise-platform-tabpane')}.switchToItem('Usage of Java');" />
+					
+				<aries:spacer height="8" />
+				<aries:bullet 
+					fontSize="12" 
+					value="Usage of JBoss" 
+					href="#usage-of-jboss-pane"
+					onclick="showSection('usage-of-jboss-pane')" />
+			</aries:dropPane>
+			<aries:spacer height="10" />
+			-->
+
+			<!--  
+			<aries:dropPane fontSize="13" value="Creation of target system" onclick="showSection('creation-of-target-system-pane')" href="#creation-of-target-system-pane" />
+			<aries:spacer height="10" />
+
+			<aries:dropPane fontSize="13" value="Modules and archives" onclick="showSection('modules-and-archives-pane')" href="#modules-and-archives-pane" />
+			<aries:spacer height="10" />
+
+			<aries:dropPane 
+				fontSize="13" 
+				value="System Architecture" 
+				href="#generated-system-architecture-pane"
+				onclick="showSection('generated-system-architecture-pane'); #{rich:component('generated-system-architecture-tabpane')}.switchToItem('Generated System Architecture')">
+				
+				<aries:spacer height="8" />
+				<aries:bullet 
+					fontSize="12" 
+					value="Features"
+					href="#features-of-generated-systems"  
+					onclick="showSection('generated-system-architecture-pane'); #{rich:component('generated-system-architecture-tabpane')}.switchToItem('Features');" />
+					
+				<aries:spacer height="8" />
+				<aries:bullet 
+					fontSize="12" 
+					value="Capabilities" 
+					href="#capabilities-of-generated-systems"
+					onclick="showSection('generated-system-architecture-pane'); #{rich:component('generated-system-architecture-tabpane')}.switchToItem('Capabilities');" />
+					-->
+					
+				<!--  
+				<aries:spacer height="8" />
+				<aries:bullet 
+					fontSize="12" 
+					value="User interface" 
+					href="#capabilities-of-generated-systems"
+					onclick="showSection('generated-system-architecture-pane'); #{rich:component('generated-system-architecture-tabpane')}.switchToItem('User Interfaces');" />
+					-->
+			
+			<!--
+			</aries:dropPane>
+			<aries:spacer height="10" />
+
+			<aries:dropPane fontSize="13" value="User interface" onclick="showSection('generated-user-interface-pane')" href="#generated-user-interface-pane" />
+			<aries:spacer height="10" />
+
+			<aries:dropPane fontSize="13" value="Verification of behavior" onclick="showSection('verification-of-essential-behavior-pane')" href="#verification-of-essential-behavior-pane" />
+			<aries:spacer height="10" />
+
+			<aries:h4 value="System Representation" />
+			<aries:dropPane fontSize="13" value="Building systems of arbitrary size and complexity" onclick="showSection('modeling-scalable-systems-pane')" href="#modeling-scalable-systems-pane" />
+			<aries:spacer height="10" />
+			-->
+		</aries:panel>
+	</aries:panel>
+</ui:composition>

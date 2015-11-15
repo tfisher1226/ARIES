@@ -1,0 +1,175 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+				
+	<aries:borderPane 
+		width="auto"
+		height="auto"
+		backgroundColor="inherit">
+
+		<aries:panel margin="10px">
+			<aries:label fontSize="20" value="Automated Generation of Software - Applications and User-Interfaces" />
+			<aries:spacer height="8" />
+
+			<aries:label fontSize="16" fontWeight="bold" textColorXX="#{userSkin.headerTextColor}" value="Dramatically Reduced and Bounded Risk" />
+			<aries:spacer height="2" />
+		</aries:panel>
+		
+		<aries:formPane 
+			width="auto"
+			height="auto"
+			margin="10px"
+			columns="3"
+			columnClass="width20pct"
+			backgroundColor="inherit">
+			
+			<aries:panel width="auto" margin="0px" backgroundColor="inherit">
+				<aries:bh4 value="Structured approach" />
+				<aries:p fontSize="13">
+					Unprecedented value results from identifying risks, 
+					working to reduce each risk and working to make each 
+					risk more predictable.
+				</aries:p>
+				<aries:p fontSize="13"> 
+					Identification and management of <i>risks</i> are the 
+					main concerns in every software project.
+					<!--  
+					Effective understanding and analysis of risks 
+					will enable short-term (and especially long-term) 
+					success.
+					-->
+				</aries:p>
+				
+				<aries:h5 value="Identification of risks" />
+				<aries:p fontSize="13">
+					We identify fundamental <i>risks</i> 
+					involved in creating an enterprise application system.
+					We describe each risk and address how we make it
+					become more predictable.
+				</aries:p>
+				<aries:p fontSize="13">
+					See section: <aries:link fontSize="13" value="Unprecedented Value at Predictable Cost" onclick="showSection('unprecedented-value-and-cost-pane')" />
+					for the breakdown of <i>costs</i> and how we address each of them. 
+				</aries:p>
+				
+				<aries:bh4 value="Making risks predictable" />
+				<aries:p fontSize="13">
+					We reduce several critical types of risk. 
+					The end-result is greater overall predictability 
+					(as well as increased quality and reliability).
+				</aries:p>
+
+				<aries:bullet fontSize="13" fontWeight="bold" textColor="#{userSkin.headerTextColor}" value="Risk of missing scheduled milestones" />
+				<aries:p fontSize="13">
+				</aries:p>
+
+				<aries:bullet fontSize="13" fontWeight="bold" textColor="#{userSkin.headerTextColor}" value="Risk of missing allocated budgets" />
+				<aries:p fontSize="13">
+				</aries:p>
+			</aries:panel>
+
+			<aries:panel width="auto" marginLeft="10px" backgroundColor="inherit">
+				<!--  
+				<aries:bh4 value="Making risks predictable, cont..." />
+				-->
+
+				<aries:bh4 value="Risks with software implementation" />
+				<aries:p fontSize="13">
+					This includes risk of loss due to the following: 
+				</aries:p>
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Incomplete planning" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Improper implementation" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Unexpected failure of implemented components" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Inability to properly integrate required technologies" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Unforseen or unexpected conditions or behaviors" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Lack of training or relevant experience of current team of developers" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Lack of adequate communication among current team of developers" />
+				<aries:spacer height="4" />
+					
+				<aries:p fontSize="13">
+					Automating development of complex software components
+					reduces risk across the board in all areas of implementation.
+				</aries:p>
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Application infrastucture" onclickXX="alert(9)"/>
+				<!-- 
+				include security vulnerabilities
+				 -->
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Business-logic components" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Persistence layer components" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Distributed communications" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Transaction infrastucture" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Local and remote caching" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Performance management" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Testing infrastructure" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Management components" />
+				<aries:spacer height="4" />
+
+				<aries:bh5 marginLeft="0px" value="Solution: Generation of Fully Executable Application System" />
+				<aries:p fontSize="13">
+					Automating development of complex software components
+					reduces risk across the board in all areas of implementation.
+				</aries:p>
+			</aries:panel>
+
+			<aries:panel width="auto" marginLeft="10px" backgroundColor="inherit">
+				<!--  
+				<aries:h5 value="Making risks predictable, cont..." />
+				-->
+
+				<aries:bh4 fontSize="13" fontWeight="bold" value="Risks with testing and verification" />
+				<aries:p fontSize="13">
+					The risks are possible problems that might endanger the objectives of the project.
+					The risks here It is the possibility of a negative or undesirable outcome.
+				</aries:p>
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Incomplete ranges of tests" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Lack of systematic coverage" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Improper implementation of tests" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Failures of implemented tests" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Failures in specific environment(s)" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Lack of similarity of test environement with production environment" />
+				<aries:spacer height="4" />
+
+				<aries:bh5 marginLeft="0px" value="Solution: Systematic Analysis of Behavior and Corresponding Generation of Tests" />
+				<aries:p fontSize="13" marginLeft="0px">
+					It is essential to rely upon a computational approach to 
+					systematically auto-generate necessary tests, at necessary levels, 
+					using necessary contexts, and tests cases.
+				</aries:p>
+
+				<aries:bh4 fontSize="13" fontWeight="bold" value="Risks with version management" />
+				<aries:p fontSize="13">
+				</aries:p>
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Lack of thorough version upgrade process" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Deployment of incorrect version" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Lack of organization of managed versions" />
+				<aries:spacer height="4" />
+
+				<aries:bh5 value="Solution: Proper Usage of Repository Management" />
+				<aries:p fontSize="13">
+					Relying upon a proprly configured repository manager such as
+					<aries:link fontSize="13" value="Nexus" href="http://www.sonatype.com/nexus/product-overview" />
+					is an adequate approach.
+				</aries:p>
+				
+				<aries:bh4 fontSize="13" fontWeight="bold" value="Risks with dependency management" />
+				<aries:p fontSize="13">
+					Proper management of external 3rd party dependencies is a huge challenge and is not easily accomplished.
+				</aries:p>
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Missing dependencies" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Conflicts in dependencies" />
+				<aries:bullet fontSize="12" textColor="#{userSkin.headerTextColor}" value="Upgrading of dependencies" />
+				<aries:spacer height="4" />
+				
+				<aries:bh5 value="Solution: Proper Usage of Maven" />
+				<aries:p fontSize="13">
+					Relying upon hierachies of Maven <i>bom</i> 
+					files as well as information provided by Maven is an effective approach 
+					to managing dependencies and systematically detecting and eliminating missing 
+					dependencies and hidden conflicts.
+				</aries:p>
+			</aries:panel>
+		</aries:formPane>
+	</aries:borderPane>
+</ui:composition>

@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="resource://images/icons/common/Default16.gif"/> 
+	</c:if>
+	
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="contextMenuLabel"/> 
+	</c:if>
+	
+	<c:if test="#{empty iconStyle}">
+		<c:set var="iconStyle" value=""/> 
+	</c:if>
+
+	<rich:menuGroup 
+		value="#{value}" 
+		labelClass="#{labelClass}"
+		icon="#{icon}" 
+		iconStyle="padding-left: 2px; padding-right: 5px; #{iconStyle}">
+	
+		<ui:insert/>
+	</rich:menuGroup>
+</ui:composition>

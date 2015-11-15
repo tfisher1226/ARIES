@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+				
+	<aries:panel
+		width="auto"
+		height="auto"
+		backgroundColor="inherit">
+
+		<aries:formPane 
+			width="auto"
+			height="auto"
+			margin="10px"
+			columns="3"
+			columnClass="width20pct"
+			backgroundColor="inherit">
+			
+			<aries:panel width="auto" margin="0px" backgroundColor="inherit">
+				<aries:h4 value="No replacement for testing" />
+				<aries:p fontSize="13">
+					The generation of software cannot be complete unless 
+					its behavior can be accurately verified. To realize this, 
+					the engine generates different levels of tests, and 
+					components that check (and test) themselves at runtime.
+				</aries:p>
+				
+				<aries:text fontSize="13">
+					3 ways of running and testing the generated application system in production-like mode.  
+				</aries:text>
+			</aries:panel>
+
+			<aries:panel width="auto" marginLeft="10px" backgroundColor="inherit">
+				<aries:h4 value="Integration and system tests" />
+				<aries:p fontSize="13">
+					In addition to unit tests, multiple types of integration 
+					tests and system tests are generated for each module and 
+					setup to run in multiple test contexts. 
+				</aries:p>
+				
+				<aries:h5 value="Highly-specific test cases" />
+				<aries:p fontSize="13">
+					A computational approach is used to systematically 
+					establish test cases that are highly specific to each component.
+				</aries:p>
+
+				<aries:h5 value="Multiple test contexts" />
+				<aries:p fontSize="13">
+					It is important that tests run successfully in different 
+					test contexts and different environments.  This is immeasurable 
+					in value since certain conditions and certain errors may only 
+					likely occur in one test environment, while not in others. 
+					Such problems can be very hard to detect and fix.
+				</aries:p>
+			</aries:panel>
+
+			<aries:panel width="auto" marginLeft="10px" backgroundColor="inherit">
+				<aries:h4 value="Self-checking components" />
+
+				<aries:p fontSize="13">
+				For runtime interactions, associated components will 
+				"check themselves", enforce access control and validate 
+				inputs and expected outputs for consistency.
+				</aries:p>
+			</aries:panel>
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

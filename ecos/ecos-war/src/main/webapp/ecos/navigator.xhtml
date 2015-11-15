@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<div onclick="#{onclick}" 
+		styleClass="formPanel" 
+		style="width: 210px; height: auto; float: left; background-color: inherit"> 
+		
+		<!--  
+		<div style="display: block; width: auto; height: 10px; margin: 0px 0px 12px 0px; background-color: #ccccff"/>
+		-->
+		
+		<div style="display: block; width: 100%; height: 10px; margin: 0px 0px 12px 0px; background-color: #ccccff"/>
+		
+		<aries:borderPane
+			height="auto"
+			id="ecosNavigatorPane"
+			backgroundColor="inherit">
+
+			<ui:include src="navigator-tab-welcome.xhtml" />				
+		</aries:borderPane>
+			
+		<!--  
+		<aries:tabPane
+			height="auto"
+			id="ecosNavigatorPane">
+
+			<aries:tab
+				margin="0px"
+				fontSize="13"
+				label="Welcome"
+				icon="/icons/common/Default16.gif"
+				onselect="showAdminModelPane()"
+				targetItem="ecosViewerPane">
+				
+				<ui:define name="control">
+					<rich:toggleControl
+						event="click" 
+						targetPanel="ecosViewerPane" 
+						targetItem="welcomePane" />
+				</ui:define>
+
+				<ui:include src="navigator-tab-welcome.xhtml" />				
+			</aries:tab>
+		</aries:tabPane>
+		-->
+	</div>
+</ui:composition>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ecos</groupId>
+	<artifactId>ecos</artifactId>
+	<name>ecos</name>
+	<description>Project object model for ecos</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+
+	<modules>
+		<module>ecos-war</module>
+		<module>ecos-ear</module>
+	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Snapshots</name>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<ecos.deploy.exploded>true</ecos.deploy.exploded>
+		<ecos.version>0.0.1-SNAPSHOT</ecos.version>
+		<ecos.runtime.home>runtime</ecos.runtime.home>
+		<ecos.model.home>model</ecos.model.home>
+		<source.model.home>${workspace.location}/_generator/src/main/resources/model</source.model.home>
+	</properties>
+
+	<build>
+		<filters>
+			<filter>src/main/resources/maven/server.properties</filter>
+		</filters>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>pre-process</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- pull "common" model sources to local home -->
+								<copy todir="${ecos.model.home}/common" verbose="true" overwrite="true">
+									<fileset dir="${source.model.home}/common" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+
+								<!-- pull "admin" model sources to local home -->
+								<copy todir="${ecos.model.home}/admin" verbose="true" overwrite="true">
+									<fileset dir="${source.model.home}/admin" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+
+								<!-- pull "ecos" model sources to local home -->
+								<copy todir="${ecos.model.home}/bookshop" verbose="true" overwrite="true">
+									<fileset dir="${source.model.home}/bookshop" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<copy todir="${ecos.runtime.home}/model" verbose="true" overwrite="true">
+									<fileset dir="${ecos.model.home}" casesensitive="yes">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>ecos</groupId>
+				<artifactId>ecos-war</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>ecos</groupId>
+				<artifactId>ecos-war</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

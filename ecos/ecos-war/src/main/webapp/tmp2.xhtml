@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        
+	<ui:composition
+		xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:m="http://code.google.com/p/gmaps4jsf/"
+		template="/templates/tmp-template.xhtml">
+		
+	    <ui:define name="js">
+	        <script type="text/javascript"
+	                src="https://maps.googleapis.com/maps/api/js?sensor=true">
+	        </script>
+	    </ui:define>
+	    
+	    <ui:define name="title">
+	        This is the new title
+	    </ui:define>
+	    
+	    <ui:define name="content">
+	        <h1>Simple Map with a marker and an InfoWindow</h1>
+	
+	        <h:form id="form" style="background-color: blue">
+	            <m:map width="500" height="450px" latitude="37.13" longitude="22.43" enableScrollWheelZoom="true">
+	                <m:marker>
+	                    <m:htmlInformationWindow htmlText="This is Sparta, Greece"/>
+	                </m:marker>
+	            </m:map>
+	        </h:form>
+	    </ui:define>
+	</ui:composition>

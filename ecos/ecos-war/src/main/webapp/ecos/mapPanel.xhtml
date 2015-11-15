@@ -1,0 +1,37 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf/">
+
+	<c:if test="#{empty zoom}">
+		<c:set var="zoom" value="11"/> 
+	</c:if>
+	
+	<a4j:outputPanel
+		id="#{name}MapPanel"
+		layout="block"
+		style="width: #{width}; height: #{height}; border: 1px solid #ccc">
+		
+		<gmaps4jsf:map 
+			width="#{width}" 
+			height="#{height}"
+			zoom="#{zoom}"
+			address="#{address}"
+			submitOnClick="false"
+			partiallyTriggered="true"
+			enableScrollWheelZoom="false"
+			rendered="#{not empty address}">
+			  
+			<gmaps4jsf:marker>
+				<gmaps4jsf:htmlInformationWindow htmlText="#{address}" />
+			</gmaps4jsf:marker>
+		</gmaps4jsf:map>
+	</a4j:outputPanel>
+</ui:composition>

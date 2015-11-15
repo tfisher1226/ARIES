@@ -1,0 +1,103 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main-page-template.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+
+		<!-- IMPORTED DIALOGS -->
+		<aries:themeDialog/>
+
+		<!-- COMMON DIALOGS -->
+		<aries:include file="/admin/common/personNameDialog.xhtml" />
+		<aries:include file="/admin/common/emailAddressDialog.xhtml" />
+		<aries:include file="/admin/common/phoneNumberDialog.xhtml" />
+		<aries:include file="/admin/common/streetAddressDialog.xhtml" />
+		<aries:include file="/admin/common/inputDialog.xhtml" manager="#{inputManager}" type="Input" />
+		
+		<!-- MANAGEMENT DIALOGS for http://admin -->
+		<aries:include file="/admin/section/action/actionSelectDialog.xhtml" manager="#{actionSelectManager}" type="Action" />
+		<aries:include file="/admin/section/permission/permissionInfoDialog.xhtml" manager="#{permissionInfoManager}" type="Permission" />
+		<aries:include file="/admin/section/permission/permissionListDialog.xhtml" manager="#{permissionListManager}" type="PermissionList" />
+		<aries:include file="/admin/section/preferences/preferencesInfoDialog.xhtml" manager="#{preferencesInfoManager}" type="Preferences" />
+		<aries:include file="/admin/section/preferences/preferencesListDialog.xhtml" manager="#{preferencesListManager}" type="PreferencesList" />
+		<aries:include file="/admin/section/registration/registrationInfoDialog.xhtml" manager="#{registrationInfoManager}" type="Registration" />
+		<aries:include file="/admin/section/registration/registrationListDialog.xhtml" manager="#{registrationListManager}" type="RegistrationList" />
+		<aries:include file="/admin/section/role/roleInfoDialog.xhtml" manager="#{roleInfoManager}" type="Role" />
+		<aries:include file="/admin/section/role/roleListDialog.xhtml" manager="#{roleListManager}" type="RoleList" />
+		<aries:include file="/admin/section/role/roleSelectDialog.xhtml" manager="#{roleSelectManager}" type="Role" />
+		<aries:include file="/admin/section/roleType/roleTypeSelectDialog.xhtml" manager="#{roleTypeSelectManager}" type="RoleType" />
+		<aries:include file="/admin/section/skin/skinInfoDialog.xhtml" manager="#{skinInfoManager}" type="Skin" />
+		<aries:include file="/admin/section/skin/skinListDialog.xhtml" manager="#{skinListManager}" type="SkinList" />
+		<aries:include file="/admin/section/skin/skinSelectDialog.xhtml" manager="#{skinSelectManager}" type="Skin" />
+		<aries:include file="/admin/section/user/userInfoDialog.xhtml" manager="#{userInfoManager}" type="User" />
+		<aries:include file="/admin/section/user/userListDialog.xhtml" manager="#{userListManager}" type="UserList" />
+		<aries:include file="/admin/section/user/userSelectDialog.xhtml" manager="#{userSelectManager}" type="User" />
+
+		<h:outputScript>
+		function showAdminModelPane() {TogglePanelManager.toggleOnClient('pageForm:ecosViewerPane', 'adminModelPane')}
+		function showAdminServicePane() {TogglePanelManager.toggleOnClient('pageForm:ecosViewerPane', 'adminServicePane')}
+		</h:outputScript>
+
+		
+		<!--  
+		<ui:include src="sections/user/userWizard.xhtml" />
+		-->
+			
+		<!-- PAGE FORM -->
+		<aries:form id="pageForm">
+
+			<aries:dialog2
+				id="TestDialog"
+				width="520"
+				domain="Public"
+				oncomplete="">
+				<h:panelGroup id="testDialogHandle" layout="block" style="width: 300px">
+				</h:panelGroup>
+			</aries:dialog2>
+			
+			<aries:popup
+				id="TestPopup"
+				width="520"
+				domain="Public"
+				oncomplete="">
+				<h:panelGroup id="testPopupHandle" layout="block" style="width: 300px">
+				</h:panelGroup>
+			</aries:popup>
+			
+			<!-- POPUP DIALOGS -->
+			<aries:popupDialog/>
+			<aries:messageDialog/>
+			<aries:progressDialog/>
+		
+			<!-- IMPORTED ACTIONS --> 
+			<ui:include src="ecos/actions.xhtml"/>
+
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="ECOS-NET"
+				titleImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"
+				backgroundImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"/>
+
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="ecos/menubar.xhtml"/>
+			
+			<!-- PAGE CONTENT -->
+			<aries:formPane 
+				columns="2"
+				width="#{globals.screenWidth}" 
+				height="#{globals.screenHeight-140}">
+				
+				<ui:include src="ecos/navigator.xhtml"/>
+				<ui:include src="ecos/viewer.xhtml"/>
+			</aries:formPane>
+
+			<!-- PAGE FOOTER -->
+			<aries:footer/>
+		</aries:form>
+	</ui:define>
+</ui:composition>

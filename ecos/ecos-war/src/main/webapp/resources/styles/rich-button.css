@@ -1,0 +1,37 @@
+.controlPane .rf-ddm-itm,
+.buttonPane .rf-ddm-itm {
+	margin: 0px;
+	padding: 2px;
+	padding-top: 2px;
+	padding-bottom: 1px;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	/*
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	*/
+	background-color: #{richSkin.additionalBackgroundColor}; 
+}
+
+.controlPane .rf-ddm-itm-dis,
+.buttonPane .rf-ddm-itm-dis {
+	margin: 0px;
+	padding: 2px;
+	padding-top: 2px;
+	padding-bottom: 1px;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	/*
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	*/
+	background-color: #{userSkin.disabledBackgroundColor}; 
+}
+
+.rf-ddm-itm-ic {
+    margin: 0px;
+}

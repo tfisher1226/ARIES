@@ -1,0 +1,36 @@
+/*
+.rf-ddm-lst {
+    min-width: 100px !important;
+}
+
+.rf-ctx-lst {
+    min-width: 100px !important;
+}
+
+.rf-ctx-lst {
+    border: 1px solid; /*#bfbfc0*/ /*panelBorderColor*/
+    border-color: '#{richSkin.panelBorderColor}';
+    background-color: '#{richSkin.additionalBackgroundColor}'; /*#e7f2fb;/  /*additionalBackgroundColor*/
+    min-width: 250px;
+}
+*/
+
+.rf-ddm-pos {
+	top: 30px !important;
+    left: -2px !important;
+}
+	
+.rf-ddm-lst {
+	/*
+    border: 1px solid;
+    border-color: '#{richSkin.panelBorderColor}';
+    */
+}
+
+/*
+    border: 1px solid; /*#bfbfc0*/ /*panelBorderColor*/
+    border-color: '#{richSkin.panelBorderColor}';
+    border-radius: '#{richSkin.panelBorderRadius}';
+    background-color: '#{richSkin.additionalBackgroundColor}'; /*#e7f2fb;/  /*additionalBackgroundColor*/
+    min-width: 250px;
+*/

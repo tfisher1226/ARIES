@@ -1,0 +1,106 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf/">
+
+	<ui:include src="mapDialog.xhtml" />
+
+	<aries:formPane
+		width="100%"
+		height="auto"
+		marginTop="10px"
+		columns="3"
+		columnClasses="width26pct, width30pct, width26pct"
+		backgroundColor="inherit"
+		style="">
+		
+		<aries:panel width="auto" height="auto" margin="10px" backgroundColor="#eef">
+			<div style="display: block; width: 100%; height: 10px; margin: 10px 0px; background-color: #ccccff"/>
+			<aries:h4 value="Header" />
+		</aries:panel>
+
+		<aries:panel width="auto" height="100%" margin="10px" backgroundColor="#eef">
+			<div style="display: block; width: 100%; height: 10px; margin: 10px 0px; background-color: #ccccff"/>
+			<aries:h1 fontWeight="normal" value="Contact us at ECOS" />
+			
+			<aries:spacer height="10" />			
+			<aries:p fontSize="15">
+				To learn more how Rozene can contribute to your organization or project, 
+				and to help us direct your inquiry to the most appropriate person, 
+				please complete the form provided below.
+			</aries:p>
+
+			<aries:p fontSize="15">
+				Rozene strongly respects our client's desires to maintain privacy and confidentiality, 
+				and will not share your information with any third-party organization. 
+				<!--will exercise nondisclosure agreements when appropriate-->
+			</aries:p>
+		</aries:panel>
+
+		<aries:panel width="auto" margin="10px" backgroundColor="#eef">
+			<div style="display: block; width: 100%; height: 10px; margin: 10px 0px; background-color: #ccccff"/>
+			
+			<rich:panel style="width: auto; height: auto; background-color: #f0f0f0">
+				<div class="vspace2"/>
+				<div class="text16" style="font-weight: normal; text-decoration: none; color: #000099">
+				Our Address
+				</div>
+	
+				<div class="vspace3"/>
+				<div class="text13" style="display: block; font-weight: normal; color: #000">
+				<br/>Evergreen Computational Sciences
+				<br/>1455 San Marino Ave, suite B
+				<br/>San Marino, CA 91108
+				</div>
+
+				<div class="text13" style="display: block; font-weight: normal; color: #000">
+				<br/><b size="-1">Phone:</b> (213) 379-3806
+				<br/><b size="-1">Email:</b> <a href="mailto:info@ecos-net.com?subject=ECOS-NET Information Request">info@ecos-net.com</a>
+				</div>
+
+				<aries:spacer height="20"/>
+				
+				<h:panelGroup
+					id="ECOSMapPanel"
+					layout="block"
+					style="width: 200px; height: 200px; border: 1px solid #ccc">
+					
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" style="width: auto; text-align: right">
+					<div class="vspace6"/>
+
+					<h:panelGrid layout="block" columns="2" style="">
+						<rich:inputNumberSlider
+							id="mapZoomSlider" 
+							showInput="false" 
+							minValue="1" 
+							maxValue="18" 
+							value="10" 
+							onchange="show(#{rich.element('mapZoomSlider')}); map.setZoom(this.value)" 
+							style="width: auto">
+							<aries:tooltip value="Drag to Zoom" />
+						</rich:inputNumberSlider>
+					</h:panelGrid>
+
+					<a4j:commandLink 
+						execute="@this"
+						onbegin=""
+						oncomplete="var element = #{rich:element('gMap')}; element.style.display = 'block'; forceRedraw(element);" 
+						render="ECOSMapPanel">
+						<div class="text12 link">[click to expand]</div>
+						<aries:tooltip value="Show expanded map in new window" />
+					</a4j:commandLink>
+				</h:panelGroup>
+			</rich:panel>
+		</aries:panel>
+	</aries:formPane>
+</ui:composition>

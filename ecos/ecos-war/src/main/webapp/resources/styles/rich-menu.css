@@ -1,0 +1,34 @@
+.rf-ddm-pos {
+	top: 30px !important;
+    left: -2px !important;
+    bottom: 2px !important;
+}
+
+*.rf-ddm-lbl, 
+*.rf-ddm-lbl-dis {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+*.rf-ddm-lbl-dec {
+	font-weight: normal;
+}
+
+*.rf-ddm-lst {
+    min-width: 10px !important;
+}
+
+
+*.rf-ctx-lbl, 
+*.rf-ctx-lbl-dis {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+*.rf-ctx-lbl-dec {
+	font-weight: normal;
+}
+
+*.rf-ctx-lst {
+    min-width: 10px !important;
+}

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+	version="2.2"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+	<application>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>bg</supported-locale>
+			<supported-locale>de</supported-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>fr</supported-locale>
+			<supported-locale>tr</supported-locale>
+		</locale-config>
+
+		<!-- 
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler> 
+		<el-resolver>org.jboss.seam.el.SeamELResolver</el-resolver> 
+		<navigation-handler>org.jboss.seam.jsf.SeamNavigationHandler</navigation-handler> 
+		<message-bundle>org.jboss.seam.core.SeamResourceBundle</message-bundle> 
+		-->
+	</application>
+	
+	<!--  
+	<managed-bean>
+		<managed-bean-name>admin.permissionListSorter</managed-bean-name>
+		<managed-bean-class>ecos.ui.permission.PermissionListSorter</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	-->
+
+	<lifecycle>
+		<!-- 
+		<phase-listener>org.jboss.seam.jsf.SeamPhaseListener</phase-listener> 
+		<phase-listener>org.jboss.seam.document.DocumentStorePhaseListener</phase-listener> 
+		-->
+		<phase-listener>ecos.ui.TracingListener</phase-listener>
+	</lifecycle>
+	
+	<!--  
+	<render-kit>
+		<render-kit-id>Aries</render-kit-id>
+		<renderer>
+			<description>@author Tom Fisher</description>
+			<component-family>org.aries.Panel</component-family>
+			<renderer-type>org.richfaces.StatusRenderer</renderer-type>
+			<renderer-class>org.aries.ui.MyPanelGridRenderer</renderer-class>
+			<renderer-extension>
+				<cdk:renders-children>false</cdk:renders-children>
+			</renderer-extension>
+		</renderer>
+	</render-kit>
+	-->
+
+	<component>
+		<component-type>org.aries.Panel</component-type>
+		<component-class>org.aries.ui.MyPanelGridRenderer</component-class>
+		<attribute>
+			<attribute-name>backgroundColor</attribute-name>
+			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+
+		<!-- 
+		<property>
+			<display-name>Component Identifier</display-name>
+			<icon />
+			<property-name>id</property-name>
+			<property-class>java.lang.String</property-class>
+			<property-extension>
+				<cdk:generate>false</cdk:generate>
+				<cdk:hidden>false</cdk:hidden>
+				<cdk:literal>false</cdk:literal>
+				<cdk:pass-through>false</cdk:pass-through>
+				<cdk:read-only>false</cdk:read-only>
+				<cdk:required>false</cdk:required>
+			</property-extension>
+		</property>
+		-->
+	</component>
+
+</faces-config>

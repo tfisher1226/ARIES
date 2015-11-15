@@ -1,0 +1,30 @@
+-- use admin_db;
+
+insert into `email_address` (id, enabled, url, first_name, last_name) values (1, true, 'manager', 'Manager', 'Manager');
+insert into `email_address` (id, enabled, url, first_name, last_name) values (2, true, 'tfisher@kattare.com', 'Tom','Fisher');
+
+insert into `user` (id, user_name, password_hash, first_name, last_name, email_address_id, enabled) values (1, 'manager', 'm', 'Manager', 'Manager', 1, true);
+insert into `user` (id, user_name, password_hash, first_name, last_name, email_address_id, enabled) values (2, 'tfisherXX', '!Hello2u', 'Tom', 'Fisher', 2, true);
+
+INSERT INTO `role` (id, conditional, role_type) VALUES (1, false, 'MANAGER');
+INSERT INTO `role` (id, conditional, role_type) VALUES (2, true, 'USER');
+INSERT INTO `role` (id, conditional, role_type) VALUES (3, true, 'HOST');
+
+INSERT INTO `user_role` (user_id, role_id) VALUES (1, 1);
+-- INSERT INTO `user_role` (user_id, role_id) VALUES (0, 2);
+-- INSERT INTO `user_role` (user_id, role_id) VALUES (0, 3);
+INSERT INTO `user_role` (user_id, role_id) VALUES (2, 1);
+INSERT INTO `user_role` (user_id, role_id) VALUES (2, 2);
+-- INSERT INTO `user_role` (user_id, role_id) VALUES (1, 3);
+
+INSERT INTO `permission` (id, user_id, enabled, organization_id) VALUES (4, 2, 1, 5);
+INSERT INTO `permission` (id, user_id, enabled, organization_id) VALUES (5, 2, 1, 6);
+INSERT INTO `permission` (id, user_id, enabled, organization_id) VALUES (6, 2, 1, 3);
+
+INSERT INTO `user_permission` (user_id, permission_id) VALUES (2, 4);
+INSERT INTO `user_permission` (user_id, permission_id) VALUES (2, 5);
+INSERT INTO `user_permission` (user_id, permission_id) VALUES (2, 6);
+
+INSERT INTO `permission_capability` (permission_id, capabilities) VALUES (4, 'ALL');
+INSERT INTO `permission_capability` (permission_id, capabilities) VALUES (5, 'ALL');
+INSERT INTO `permission_capability` (permission_id, capabilities) VALUES (6, 'ALL');

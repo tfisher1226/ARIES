@@ -1,0 +1,109 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/templates/error-page-template.xhtml">
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<aries:form id="errorForm">
+			<aries:toolbar type="menubar">
+				<aries:toolbarGroup location="left">
+					<aries:toolItem 
+						mode="client"
+						name="home"
+						label="Home"
+						execute="@this"
+						icon="/icons/common/Home16.gif"
+						tooltip="Go back to home screen" 
+						onmousedown="setCursorWait(this)" 
+						onmouseup="showPublicPage()" />
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup location="right">
+					<aries:dropDownMenu 
+						label="Help"
+						icon="/icons/common/Help16.gif">
+						
+						<aries:menuItem
+							id="resetItem" 
+							name="reset"
+							value="Reset"
+							tooltip="Reset server-side user-state"
+							icon="/icons/common/refresh-document.gif"
+							execute="@this"
+							manager="#{adminManager}"
+							action="reset"
+							onclick="setCursorWait(this); showProgress('ECOS-NET Admin', 'Server-side user-state', 'Resetting...')"
+							oncomplete="setCursorDefault(this); hideProgress()" 
+							render="nothing" />
+						
+						<!-- 
+						<aries:menuItem 
+							value="About..."
+							tooltip="About ECOS-NET"
+							icon="/icons/common/Speak16.gif"
+							rendered="true"
+							mode="client"
+							execute="@none"
+							onclick="popupAlert('ECOS-NET', 'ECOS Application Management', 'This is a placeholder for the About Screen')" />
+							-->
+					</aries:dropDownMenu>
+
+					<aries:toolItem 
+						id="refreshButton"
+						label="Refresh"
+						icon="/icons/common/Refresh16.gif"
+						tooltip="Refresh the display"
+						name="reload"
+						mode="client"
+						execute="@none"
+						onmouseup="setCursorWait(this)" 
+						onclick="showPublicPage()" />
+				
+					<aries:toolItem
+						id="logoutItem"
+						name="logout"
+						label="Logout"
+						execute="@this"
+						rendered="#{identity.loggedIn}"
+						icon="/icons/common/Remove16.gif"
+						manager="#{identity}"
+						action="logout" 
+						onclick="waitCursor('logoutItem')" />
+				</aries:toolbarGroup>
+			</aries:toolbar>
+
+			<aries:outputPane id="errorHeaderBar" layout="block" style="padding: 12px">
+				<div class="title">
+					Problem detected on ECOS-NET 
+				</div>
+				
+				<br/>	
+				<h:panelGroup layout="block" styleClass="panel">
+					<a href="javascript:history.back()">Go back to ECOS Network main page</a>
+					
+					<div class="vspace10"/>
+					<h3>An exception has occurred and has been logged.</h3>
+			
+					<div class="vspace10"/>
+					<h:panelGroup layout="block" rendered="#{messagesExist or true}">
+						<div class="vspace6"/>
+						<h:panelGrid columns="3" columnClasses="formColumn, formColumn">
+							<ui:repeat value="#{messages.getMessages()}" var="message">
+								<h:graphicImage library="images" name="#{dialogMessageStyleFactory.styleForSeverity(message.severity).iconUrl}" style="vertical-align: top"/>
+								<h:outputText value="#{message.detail}" styleClass="#{dialogMessageStyleFactory.styleForSeverity(message.severity).styleClass}" style="padding-left: 8px; vertical-align: top"/>.
+								<span class="hspace4"/>
+							</ui:repeat>
+						</h:panelGrid>
+					</h:panelGroup>
+				
+					<div class="vspace10"/>
+					<h3>Operations can be reached at <a href="mailto:admin@ecos-net.com">admin@ecos-net.com</a>.</h3>
+				</h:panelGroup>
+			</aries:outputPane>
+		</aries:form>
+	</ui:define>
+</ui:composition>

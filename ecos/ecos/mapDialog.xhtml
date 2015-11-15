@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:seam="http://jboss.com/schema/seam/taglib"
+	xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf/">
+	
+	<c:set var="section" value="#{domain}MapDialog"/> 
+	<c:set var="dialog" value="#{domain}MapDialog"/>
+	
+	<script type="text/javascript">
+	function show#{dialog}() {#{rich:component(dialog)}.show()}
+	function hide#{dialog}() {#{rich:component(dialog)}.hide()}
+	</script>
+	
+	<a4j:region>
+		<rich:popupPanel
+			id="#{dialog}" 
+			autosized="true" 
+			domElementAttachment="form"
+			trimOverlayedElements="true"
+			keepVisualState="false"
+			styleClass="dialog">
+
+			<!-- TITLE -->
+			<aries:dialogTitleBar
+				title="Street Address Location for #{member.firstName} #{member.lastName}" />
+
+			<!-- CONTENT -->
+			<a4j:region id="#{section}Form">
+				<a4j:outputPanel id="#{section}Content">
+
+					<ui:include src="mapPanel.xhtml">
+						<ui:param name="name" value="#{dialogKey}" />
+						<ui:param name="width" value="640px" />
+						<ui:param name="height" value="480px" />
+						<ui:param name="zoom" value="13" />
+						<ui:param name="address" value="#{streetAddressManager.toString()}" />
+					</ui:include>
+				</a4j:outputPanel>
+			</a4j:region>
+		</rich:popupPanel>
+	</a4j:region>
+</ui:composition>
+

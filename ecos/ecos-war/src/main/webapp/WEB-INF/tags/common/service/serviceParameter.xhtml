@@ -1,0 +1,17 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:param 
+		name="dialogType" 
+		value="#{instance.module}#{mode}Dialog" />
+				
+	<aries:link 
+		size="#{userSkin.fontSize}" 
+		family="courier" 
+		value="#{instance.type}" 
+		onmouseup="setCursorWait(this); launch#{dialogType}('#{dialogType}', '#{instance.clazz}#{mode}', '#{instance.name}', '#{serviceId}')" />
+		
+</ui:composition>

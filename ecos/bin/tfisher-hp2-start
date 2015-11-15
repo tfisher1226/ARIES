@@ -1,0 +1,10 @@
+#!/bin/sh
+
+source ./tfisher-hp2-env
+
+$JBOSS_HOME/bin/standalone.sh \
+	-b $BINDING_HOST \
+	-bmanagement $BINDING_HOST \
+	--properties=startup.properties \
+	--server-config=standalone.xml > $ECOS_LOG_FILE 2>&1 &
+

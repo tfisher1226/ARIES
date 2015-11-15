@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:groupPane
+		width="400"
+		height="180" 
+		label="Street Address Information">
+		
+		<aries:spacer height="6" />
+		<aries:inputText 
+			id="#{section}Street" 
+			label="Street" 
+			labelWidth="60" 
+			value="#{manager.streetAddress.street}"
+			onkeydown="return process#{section}KeyDown(event)">
+		</aries:inputText>
+		
+		<aries:spacer height="6" />
+		<aries:inputText 
+			id="#{section}City" 
+			label="City" 
+			labelWidth="60" 
+			value="#{manager.streetAddress.city}"
+			onkeydown="return process#{section}KeyDown(event)">
+		</aries:inputText>
+		
+		<aries:spacer height="6" />
+		<aries:inputText 
+			id="#{section}State" 
+			label="State" 
+			labelWidth="60" 
+			value="#{manager.streetAddress.state}"
+			onkeydown="return process#{section}KeyDown(event)">
+		</aries:inputText>
+		
+		<aries:spacer height="6" />
+		<aries:inputText 
+			id="#{section}ZipCode" 
+			label="Zip-code" 
+			labelWidth="60" 
+			converter="#{common.zipCodeConverter}"
+			validator="#{common.zipCodeValidator}"
+			value="#{manager.streetAddress.zipCode}"
+			onkeydown="return process#{section}KeyDown(event)">
+			<f:converter converterId="common.zipCodeConverter" />
+			<f:validator validatorId="common.zipCodeValidator" />
+		</aries:inputText>
+	</aries:groupPane>
+</ui:composition>
+	
+	<!--  
+	<a4j:outputPanel>
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Home Address</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 12px 8px 12px 8px">		
+
+					<aries:spacer height="2"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{section}AddressLabel" styleClass="formLabel" for="#{section}AddressField" style="display: block; width: 50px">Street</h:outputLabel>
+						<h:inputText id="#{section}AddressField" styleClass="formInput" value="#{manager.streetAddress.street}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" />
+					</h:panelGrid>
+			
+					<aries:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{section}CityLabel" styleClass="formLabel" for="#{section}CityField" style="display: block; width: 50px">City</h:outputLabel>
+						<h:inputText id="#{section}CityField" styleClass="formInput" value="#{manager.streetAddress.city}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" />
+					</h:panelGrid>
+
+					<aries:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{section}StateLabel" styleClass="formLabel" for="#{section}StateField" style="display: block; width: 50px">State</h:outputLabel>
+						<h:inputText id="#{section}StateField" styleClass="formInput" value="#{manager.streetAddress.state}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" />
+					</h:panelGrid>
+
+					<aries:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="#{section}ZipLabel" styleClass="formLabel" for="#{section}ZipField" style="display: block; width: 50px">Zip</h:outputLabel>
+						<h:inputText id="#{section}ZipField" styleClass="formInput" value="#{manager.streetAddress.zipCode}" style="width: 300px; height: 16px; padding: 2px; padding-top: 3px" 
+							converter="common.zipCodeConverter"
+							validator="common.zipCodeValidator"/>
+					</h:panelGrid>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+	-->

@@ -1,0 +1,59 @@
+*.rf-ddm-itm {
+	margin: 0px;
+	padding: 2px;
+	padding-top: 2px;
+	padding-bottom: 1px;
+}
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled,
+.smallDialogButton,
+.smallDialogButtonDisabled {
+	text-align: center;
+	vertical-align: middle;
+	background-color: #{richSkin.additionalBackgroundColor}; 
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+/*
+*.rf-ddm-itm {
+	margin: 0px;
+	padding: 0px;
+	background-color: blue;
+	border-collapse: collapse;
+}
+
+*.rf-ddm-itm-unsel {
+	background-color: pink;
+}
+
+*.rf-ddm-itm-lbl,
+*.rf-ddm-itm-lbl.td, 
+*.rf-ddm-itm-lbl.th {
+	margin: 0px;
+	padding: 0px;
+	background-color: cyan;
+}
+
+*.rf-ddm-itm-ic {
+	margin: 0px;
+	padding: 0px;
+	background-color: red;
+}
+
+*.rf-tb-cntr,
+*.rf-tb-cntr.td, 
+*.rf-tb-cntr.th {
+	margin: 0px;
+	padding: 0px;
+	background-color: purple;
+}
+*/
+
+
+

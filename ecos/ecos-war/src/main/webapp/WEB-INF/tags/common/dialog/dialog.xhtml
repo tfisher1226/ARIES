@@ -1,0 +1,193 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!--
+		The parameters "domain", "name", "manager" and "action" are required. 
+	 -->
+
+	<aries:tag param="title, heading, message">
+		<c:set var="dialog" value="#{id}"/> 
+		<!--  
+		<c:set var="section" value="#{id}"/>
+		-->
+
+		<c:if test="#{empty title}">
+			<c:set var="title" value="#{manager.title}"/> 
+		</c:if>
+
+		<c:if test="#{empty heading}">
+			<c:set var="heading" value="#{manager.header}"/> 
+		</c:if>
+
+		<c:if test="#{empty message}">
+			<c:set var="message" value="#{manager.dialogMessage}"/> 
+		</c:if>
+
+		<!--  
+		<c:set var="title" value="#{manager.title}" /> 
+		<c:set var="heading" value="#{manager.header}" /> 
+		<c:set var="message" value="#{manager.dialogMessage}" /> 
+		-->
+	
+		<c:set var="zIndex" value="#{manager.ZIndex}" /> 
+	
+		<c:if test="#{empty autosized}">
+			<c:set var="autosized" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty resizeable}">
+			<c:set var="resizeable" value="false"/> 
+		</c:if>
+	
+		<c:if test="#{empty moveable}">
+			<c:set var="moveable" value="true"/> 
+		</c:if>
+
+		<!--  
+		<c:if test="#{empty action}">
+			<c:set var="action" value="submit"/> 
+		</c:if>
+		-->
+	
+		<c:if test="#{empty render}">
+			<c:set var="render" value="nothing"/> 
+		</c:if>
+	
+		<c:if test="#{empty keepVisualState}">
+			<c:set var="keepVisualState" value="true"/> 
+		</c:if>
+
+		<c:if test="#{empty zIndex}">
+			<c:set var="zIndex" value="100"/> 
+		</c:if>
+		
+		<!--  
+		<c:if test="#{empty margin}">
+			<c:set var="margin" value="12px" /> 
+		</c:if>
+		-->
+	
+		<c:if test="#{empty logo}">
+			<c:set var="logo" value="default-dialog-icon.jpg"/> 
+		</c:if>
+		
+		<c:if test="#{empty controlPane}">
+			<c:set var="controlPane" value="dialogControl.xhtml"/> 
+		</c:if>
+		
+		<script type="text/javascript">
+		function show#{dialog}() {#{rich:component(dialog)}.show()}
+		function hide#{dialog}() {#{rich:component(dialog)}.hide()}
+		</script>
+	
+		<!--  
+	    <a4j:jsFunction execute="@this" name="show#{dialog}XXX" onbegin="#{rich:component(dialog)}.show()" render="#{dialog}" />
+	    <a4j:jsFunction execute="@this" name="hide#{dialog}XXX" onbegin="#{rich:component(dialog)}.hide()" />
+		<a4j:jsFunction execute="@this" name="render#{dialog}" render="#{dialog}" />
+		-->
+		
+		<ui:param name="saveButton" value="#{section}SaveButton" /> 
+		
+		<script type="text/javascript">
+		function process#{dialog}KeyDown(event) {
+			if (event.keyCode == 13) {
+				var button = #{rich:element(saveButton)};
+				//var button = document.getElementById('#{actionButton}');
+				if (button != null)
+					button.click(); 
+				return false;
+			} 
+			if (event.keyCode == 27) {
+				#{rich:component(dialog)}.hide(); 
+				return false;
+			}
+			return true;
+		}
+		</script>
+		
+		<rich:popupPanel 
+			id="#{dialog}"
+			renderedXX="#{manager.visible}"
+			zindex="#{manager.ZIndex}"
+			autosized="#{autosized}"
+			resizeable="#{resizeable}" 
+			moveable="#{moveable}"
+			domElementAttachment="form"
+			trimOverlayedElements="true"
+			keepVisualState="#{keepVisualState}"
+			styleClass="dialog">
+	
+			<!-- HEADER -->
+			<aries:dialogHeaderBar
+				title="#{title}"
+				heading="#{heading}"
+				message="#{message}"
+				logo="#{logo}" />
+			
+			<!--  
+			<ui:include src="dialogHeaderBar.xhtml">
+				<ui:param name="logo" value="#{logo}" />
+			</ui:include>
+			-->
+			
+			<!-- CONTENT -->
+			<a4j:region id="#{section}Region">
+				<a4j:outputPanel id="#{section}Content">
+					<h:panelGroup layout="block" style="background-color: inherit">
+	
+						<h:panelGroup 
+							layout="block" 
+							style="width: 100%; height: auto; background-color: inherit">
+							
+							<h:panelGrid 
+								layout="block" 
+								columns="1" 
+								cellpadding="0" 
+								cellspacing="0" 
+								columnClasses="formColumn"
+								onclickXX="alert('#{height}')"
+								styleClass="layoutPane"  
+								style="height: auto; margin: 12px; background-color: inherit"> 
+
+								<!-- PANEL -->
+								<ui:insert/>
+							</h:panelGrid>
+
+							<!--  
+							<h:panelGroup layout="block" style="width: auto; height: auto; margin: 12px 12px 12px 12px; background-color: inherit">
+								<ui:insert/>
+							</h:panelGroup>
+							-->
+						
+							<!-- CONTROL -->
+							<h:panelGrid 
+								layout="block" 
+								cellpadding="0" 
+								cellspacing="0" 
+								columns="1" 
+								columnClasses="formColumn" 
+								style="width: 100%; height: auto; min-height: 50px; max-height: 50px; background-color: inherit">
+								
+								<ui:include src="#{controlPane}">
+									<ui:param name="title" value="#{title}" />
+									<ui:param name="heading" value="#{heading}" />
+									<ui:param name="render" value="#{render}" />
+								</ui:include>
+							</h:panelGrid>
+						</h:panelGroup>
+					</h:panelGroup>
+				</a4j:outputPanel>
+			</a4j:region>
+		</rich:popupPanel>
+	</aries:tag>
+</ui:composition>

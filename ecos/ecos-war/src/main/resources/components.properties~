@@ -1,0 +1,2 @@
+jndiPattern bookshop2-app/\#{ejbName}/remote
+distributable false

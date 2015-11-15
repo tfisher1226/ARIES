@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-web>
+	<context-root>/ecos</context-root>
+	<!-- 
+	<virtual-host>ecos</virtual-host>
+	<security-domain>java:/jaas/ecos</security-domain> 
+	-->
+</jboss-web>

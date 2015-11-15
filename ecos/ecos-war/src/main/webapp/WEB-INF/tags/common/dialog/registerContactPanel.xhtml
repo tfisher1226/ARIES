@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		backgroundColor="inherit">
+			
+		<aries:groupPane
+			height="160"
+			backgroundColor="inherit"
+			label="Contact Information">
+			
+			<ui:param name="width" value="400" />
+			<ui:param name="labelWidth" value="110" />
+			
+			<aries:spacer height="8" />	
+			<aries:emailAddress id="#{section}EmailAddress" type="EmailAddress" label="Email Address" name="userEmailAddress" value="#{userObject.emailAddress}" />
+
+			<aries:spacer height="8" />	
+			<aries:streetAddress id="#{section}StreetAddress" type="StreetAddress" label="Street Address" name="userStreetAddress" value="#{userObject.streetAddress}" />
+			
+			<aries:spacer height="8" />	
+			<aries:phoneNumber id="#{section}PhoneNumbers" type="PhoneNumbers" label="Phone Number(s)" name="userPhoneNumbers" value="#{userHelper.getPhoneNumbers(userObject)}" />
+		</aries:groupPane>
+	</aries:panel>
+</ui:composition>

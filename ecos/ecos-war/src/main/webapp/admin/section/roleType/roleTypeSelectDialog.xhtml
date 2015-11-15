@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+    <a4j:jsFunction 
+    	name="launch#{type}SelectDialog"
+    	execute="@this"
+    	immediate="true" 
+    	bypassUpdates="true"
+    	limitRender="true"
+    	action="#{manager.show}"
+		onbegin="setCursorWait()"
+		oncomplete="setCursorDefault(this); show#{type}SelectDialog()"
+		render="#{type}SelectModule, #{type}SelectDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	<aries:region
+		id="#{type}SelectModule"
+		parent="#{section}"
+		domain="#{type}Select"
+		section="#{type}SelectDialog"
+		rendered="#{manager.visible}">
+		
+		<h:form id="#{section}Form">
+			<aries:region>
+				<aries:dialog
+					id="#{section}"
+					action="submit"
+					render="#{manager.renderList}">
+					
+					<!-- Dialog Content -->
+					<ui:include src="roleTypeSelectPane.xhtml" />
+				</aries:dialog>
+			</aries:region>
+		</h:form>
+	</aries:region>
+</ui:composition>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	xmlns="http://nam/model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<domain>bookshop2</domain>
+	<name>bookshop2</name>
+
+	<adapter name="hibernate">
+		<className>org.hibernate.ejb.HibernatePersistence</className>
+		<properties>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+
+			<!-- Transaction related -->
+			<property name="hibernate.transaction.jta.platform" value="org.aries.jta.JBossJtaPlatform"/>
+			<!--  
+			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossStandAloneJtaPlatform"/>
+			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
+			-->
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<property name="hibernate.transaction.flush_before_completion" value="true"/>
+			<property name="hibernate.transaction.auto_close_session" value="false"/>
+
+			<!-- Cache related -->
+			<property name="hibernate.cache.use_query_cache" value="true" />
+    		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+
+			<!-- JBoss related -->
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/${entityManagerFactoryName}"/>
+
+			<!-- Connection pool related -->
+			<property name="hibernate.c3p0.min_size" value="5" />
+			<property name="hibernate.c3p0.max_size" value="20" />
+			<property name="hibernate.c3p0.timeout" value="500" />
+			<property name="hibernate.c3p0.max_statements" value="50" />
+			<property name="hibernate.c3p0.idle_test_period" value="2000" />
+		</properties>
+	</adapter>
+</persistence>

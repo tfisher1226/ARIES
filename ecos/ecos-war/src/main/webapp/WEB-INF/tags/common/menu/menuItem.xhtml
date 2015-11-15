@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty value}">
+			<c:set var="value" value="none"/> 
+		</c:if>
+		
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true"/> 
+		</c:if>
+		
+		<c:if test="#{empty disabled}">
+			<c:set var="disabled" value="false"/> 
+		</c:if>
+	
+		<c:if test="#{empty mode}">
+			<c:set var="mode" value="ajax"/> 
+		</c:if>
+	
+		<c:if test="#{empty immediate}">
+			<c:set var="immediate" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty bypassUpdates}">
+			<c:set var="bypassUpdates" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty limitRender}">
+			<c:set var="limitRender" value="true"/> 
+		</c:if>
+		
+		<c:if test="#{empty execute}">
+			<c:set var="execute" value="@this"/> 
+		</c:if>
+		
+		<c:if test="#{empty render}">
+			<c:set var="render" value="nothing"/> 
+		</c:if>
+	
+		<!--  
+		<c:if test="#{empty icon}">
+			<c:set var="icon" value="/icons/common/Default16.gif"/> 
+		</c:if>
+		
+		<c:if test="#{empty iconDisabled}">
+			<c:set var="iconDisabled" value="/icons/common/Default16.gif"/> 
+		</c:if>
+		-->
+		
+		<c:if test="#{empty labelClass}">
+			<c:set var="labelClass" value="contextMenuLabel link"/> 
+		</c:if>
+		
+		<!-- 
+			icon="#{icon}"
+			iconDisabled="#{iconDisabled}"
+		-->	
+	
+		<rich:menuItem 
+			rendered="#{rendered}"
+			disabled="#{disabled}"
+			mode="#{mode}" 
+			immediate="#{immediate}"
+			execute="#{execute}"
+			bypassUpdates="#{bypassUpdates}"
+			limitRender="#{limitRender}"
+			ignoreDupResponses="true"
+			action="#{manager[action]}"
+			onclick="#{onclick}"
+			oncomplete="#{oncomplete}"
+			render="#{render}"
+			styleClass="menuItem"
+			style="">
+			
+			<f:facet name="icon">
+				<h:graphicImage library="images" name="#{icon}" style="padding-left: 1px; padding-bottom: 1px"/>
+			</f:facet>
+			
+			<h:outputText value="#{value}" styleClass="menuLabel link"/>
+			
+			<aries:tooltip value="#{tooltip}"/>
+		</rich:menuItem>
+	</aries:tag>
+</ui:composition>

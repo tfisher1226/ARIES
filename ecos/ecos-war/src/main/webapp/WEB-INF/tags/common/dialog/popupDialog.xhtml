@@ -1,0 +1,244 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.popupDialogColumn1 { width: 50px; height: 50px; vertical-align: top; }
+	.popupDialogColumn2 { width: auto; height: auto; vertical-align: top; }
+	</style>
+
+	<script type="text/javascript">
+	//<![CDATA[ 
+	
+	function _showPopup(status, title, subtitle, message, actionEvent, cancelEnabled, progressEnabled, renderList) {
+		popupDialog_params = new Object();
+		popupDialog_params.status = status;
+		popupDialog_params.title = title;
+		popupDialog_params.subtitle = subtitle;
+		popupDialog_params.message = message;
+		popupDialog_params.actionEvent = actionEvent;
+		popupDialog_params.cancelEnabled = cancelEnabled;
+		popupDialog_params.progressEnabled = progressEnabled;
+		popupDialog_params.renderList = renderList;
+		#{rich:component('popupDialog')}.show();
+	}
+	
+	function _hidePopup() {
+		popupDialog_params = null;
+		#{rich:component('popupDialog')}.hide();
+	}
+
+	function _initializePopupDialog(event) {
+		#{rich:element('popupDialog_status_alert')}.style.display = "none";
+		#{rich:element('popupDialog_status_prompt')}.style.display = "none";
+		#{rich:element('popupDialog_status_warning')}.style.display = "none";
+		#{rich:element('popupDialog_status_error')}.style.display = "none";
+
+		if (popupDialog_params.status == 'alert') {
+			#{rich:element('popupDialog_status_alert')}.style.display = "block";
+		} else if (popupDialog_params.status == 'prompt') {
+			#{rich:element('popupDialog_status_prompt')}.style.display = "block";
+		} else if (popupDialog_params.status == 'warning') {
+			#{rich:element('popupDialog_status_warning')}.style.display = "block";
+		} else if (popupDialog_params.status == 'error') {
+			#{rich:element('popupDialog_status_error')}.style.display = "block";
+		}
+
+		if (popupDialog_params.title != '')
+			#{rich:element('popupDialog_titlePane')}.style.display = "block";
+		else #{rich:element('popupDialog_titlePane')}.style.display = "none";
+
+		if (popupDialog_params.subtitle != '')
+			#{rich:element('popupDialog_subtitlePane')}.style.display = "block";
+		else #{rich:element('popupDialog_subtitlePane')}.style.display = "none";
+
+		if (popupDialog_params.message != '')
+			#{rich:element('popupDialog_messagePane')}.style.display = "block";
+		else #{rich:element('popupDialog_messagePane')}.style.display = "none";
+		
+		if (popupDialog_params.actionEvent == '') 
+			#{rich:element('PopupDialogOKButton')}.style.display = "block";
+		else #{rich:element('PopupDialogOKButton')}.style.display = "none";
+		
+		//alert(popupDialog_params.actionEvent);
+		if (popupDialog_params.actionEvent != '') 
+			#{rich:element('PopupDialogActionButton')}.style.display = "block";
+		else #{rich:element('PopupDialogActionButton')}.style.display = "none";
+		
+		//alert(popupDialog_params.cancelEnabled);
+		if (popupDialog_params.actionEvent != '' && popupDialog_params.cancelEnabled) 
+			#{rich:element('PopupDialogCancelButton')}.style.display = "block";
+		else #{rich:element('PopupDialogCancelButton')}.style.display = "none";
+
+		if (popupDialog_params.actionEvent != '' && !popupDialog_params.cancelEnabled) 
+			#{rich:element('PopupDialogCloseButton')}.style.display = "block";
+		else #{rich:element('PopupDialogCloseButton')}.style.display = "none";
+		
+		#{rich:element('popupDialog_title')}.innerHTML = popupDialog_params.title;
+		#{rich:element('popupDialog_subtitle')}.innerHTML = popupDialog_params.subtitle;
+		#{rich:element('popupDialog_message')}.innerHTML = popupDialog_params.message;
+		#{rich:element('popupDialog_actionEvent')}.value = popupDialog_params.actionEvent;
+		#{rich:element('popupDialog_cancelEnabled')}.value = popupDialog_params.cancelEnabled;
+		#{rich:element('popupDialog_progressEnabled')}.value = popupDialog_params.progressEnabled;
+		#{rich:element('popupDialog_renderList')}.value = popupDialog_params.renderList;
+	}
+	function executePopupDialogTarget() {
+		var actionEvent = document.getElementById('pageForm:popupDialog_actionEvent').value;
+		var renderList = document.getElementById('pageForm:popupDialog_renderList').value;
+		if (popupDialog_params.progressEnabled)
+			showProgress(popupDialog_params.title, popupDialog_params.subtitle, 'Request in progress...');
+		_executeTarget(actionEvent, renderList);
+	}
+	//]]>
+	</script>
+	
+	<aries:tag>
+		<aries:init/>
+		
+	    <a4j:jsFunction 
+	    	name="_executeTarget" 
+	    	action="#{messageDialog.execute}" 
+	    	oncomplete="setCursorDefault(this); hideProgress(); _hidePopup()"
+	    	render="#{messageDialog.renderList}">
+	    	<a4j:param name="actionEvent" assignTo="#{messageDialog.actionEvent}" />
+	    	<a4j:param name="renderList" assignTo="#{messageDialog.renderList}" />
+		</a4j:jsFunction>
+	
+	    <a4j:jsFunction 
+	    	name="_renderTargets" 
+	    	render="#{messageDialog.renderList}" 
+	    	onbeginXXX="alert('#{messageDialog.renderList}')">
+	    	<a4j:param name="renderList" assignTo="#{messageDialog.renderList}" />
+		</a4j:jsFunction>
+		
+		<rich:popupPanel 
+			id="popupDialog"
+			zindex="2000"
+			modal="true" 
+			autosized="true"
+			resizable="false"
+			styleClass="dialog"
+			domElementAttachment="body"
+			onbeforeshow="_initializePopupDialog(event)">
+	
+			<!-- TITLE -->		
+			<f:facet name="header" style="text-align: left; background-color: inherit;">
+				<h:outputText value="Header" />
+			</f:facet>
+	
+			<!-- CLOSE ICON -->
+			<f:facet name="controls">
+				<h:panelGroup>
+					<h:graphicImage library="images" name="/dialog/close.png" style="cursor: pointer" onclick="setCursorDefault(); _hidePopup()" />
+				</h:panelGroup>
+			</f:facet>
+	
+			<!-- CONTENT -->
+			<a4j:region id="popupDialogForm" >
+				<h:panelGroup layout="block" style="border-top: 1px solid #C3BBB6">
+					<h:panelGroup layout="block" style="background-color: #{userSkin.backgroundColor}">
+						<a4j:outputPanel id="popupDialogContentPane">
+	
+							<h:panelGrid 
+								columns="2"
+								cellpadding="0"
+								cellspacing="0" 
+								columnClasses="popupDialogColumn1, popupDialogColumn2" 
+								style="margin-left: auto; margin-right: auto;">
+							
+								<h:panelGroup layout="block" style="width: 64px; height: 64px; max-height: 64px; padding-top: 0px; padding-left: 0px; vertical-align: top; background-color: inherit">
+									<h:graphicImage id="popupDialog_status_alert" library="images" name="/icons/status/WindowsInfo64.gif" style="display: none"/>
+									<h:graphicImage id="popupDialog_status_prompt" library="images" name="/icons/status/WindowsPrompt64.gif" style="display: none"/>
+									<h:graphicImage id="popupDialog_status_warning" library="images" name="/icons/status/WindowsWarning64.gif" style="display: none"/>
+									<h:graphicImage id="popupDialog_status_error" library="images" name="/icons/status/WindowsError64.gif" style="display: none"/>
+								</h:panelGroup>
+	
+								<a4j:outputPanel id="popupDialogTextPanel">
+									<h:panelGroup layout="block" style="width: 300px; height: auto; background-color: inherit">
+										<div class="vspace6"/>
+		
+										<h:panelGroup id="popupDialog_titlePane" layout="block" style="margin-top: 9px; margin-left: 2px; margin-right: 40px; padding: 0px; text-align: left; background-color: inherit">
+											<h:outputText id="popupDialog_title" styleClass="dialogTitle" value=""/>
+										</h:panelGroup>
+				
+										<h:panelGroup id="popupDialog_subtitlePane" layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left;">
+											<h:outputText id="popupDialog_subtitle" styleClass="dialogSubtitle" value=""/>
+										</h:panelGroup>
+				
+										<h:panelGroup id="popupDialog_messagePane" layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left;">
+											<h:outputText id="popupDialog_message" styleClass="dialogMessage" value=""/>
+										</h:panelGroup>
+			
+										<!--  
+										<h:panelGroup layout="block" style="margin-left: 2px; margin-right: 20px; text-align: left;">
+											<span class="smallErrorText">
+												<aries:spacer height="6"/>
+												<h:messages/>
+											</span>
+										</h:panelGroup>
+										-->
+									</h:panelGroup>
+								</a4j:outputPanel>
+							</h:panelGrid>
+						</a4j:outputPanel>
+					</h:panelGroup>
+	
+					<!-- CONTROL -->
+					<aries:panel width="100%">
+						<aries:controlbar margin="12px">
+							<aries:toolbarGroup location="right">
+
+								<aries:smallDialogButton
+									id="PopupDialogCloseButton"
+									label="Close"
+									mode="client" 
+									execute="@none" 
+									onclick="_hidePopup()" 
+									offset="true"/> 
+
+								<aries:smallDialogButton
+									id="PopupDialogActionButton"
+									label="OK"
+									mode="client"
+									execute="@none"  
+									onclick="setCursorWait(this); executePopupDialogTarget(); _hidePopup()"  />
+
+								<aries:smallDialogButton
+									id="PopupDialogCancelButton"
+									label="Cancel"
+									mode="client" 
+									execute="@none" 
+									onclick="_hidePopup()" 
+									offset="true"/> 
+
+								<aries:smallDialogButton
+									id="PopupDialogOKButton"
+									label="OK"
+									mode="client" 
+									execute="@none" 
+									onclick="_hidePopup()" 
+									offset="true"/> 
+							</aries:toolbarGroup>
+						</aries:controlbar>
+					</aries:panel>
+				</h:panelGroup>
+			</a4j:region>
+	
+			<!-- PLACEHOLDERS -->
+			<h:inputHidden id="popupDialog_actionEvent" value=" " />
+			<h:inputHidden id="popupDialog_cancelEnabled" value=" " />
+			<h:inputHidden id="popupDialog_progressEnabled" value=" " />
+			<h:inputHidden id="popupDialog_renderList" value=" " />
+		</rich:popupPanel>	
+	</aries:tag>
+</ui:composition>
+

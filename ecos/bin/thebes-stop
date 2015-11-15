@@ -1,0 +1,7 @@
+#!/bin/sh
+
+. ./thebes-env
+
+$JBOSS_HOME/bin/jboss-cli.sh --connect controller=$BINDING_HOST:9999 ":shutdown"
+
+#ps -e | grep jboss | grep -v grep | awk '{print $1}' | xargs kill

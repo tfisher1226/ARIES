@@ -1,0 +1,8 @@
+#!/bin/sh
+
+HOME=..
+CWD=`pwd`
+cd $HOME
+cd $HOME/ecos; mvn install
+#cd $HOME/ecos; mvn -o -DskipTests=true install
+cd $CWD

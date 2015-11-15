@@ -1,0 +1,96 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<!--  
+	<h:outputScript>
+	--> 
+	<script type="text/javascript">
+	//<![CDATA[
+	
+	function showHomePage(parent) {
+		showContentSection('home');
+	}
+
+	function showAboutPage(parent) {
+		//showContentSection('about');
+		showSection('about-pane')
+	}
+
+	function showFlyerPage(parent) {
+		showContentSection('flyer');
+	}
+
+	function showContactPage(parent) {
+		try {
+			var mapElement = #{rich:element('ECOSMap')};
+			var panelElement = #{rich:element('ECOSMapPanel')};
+			mapElement.offsetHeight;
+			mapElement.style.position = 'static';
+			mapElement.style.visibility = 'visible';
+			panelElement.appendChild(mapElement);
+			/*
+			*/
+			showContentSection('contact');
+			
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	function showDialog2() {
+		_showTestDialog("Hello");
+	}
+	
+	function showPublicPage() {
+		window.location.href = '/ecos/public.seam'
+		//window.open('/public.seam');
+	}
+	
+	function showFlyer() {
+		window.open('/ecos/homeMap.seam', '_blank');
+	}
+
+	function showMap() {
+		window.open('https://maps.google.com/?q=@34.122379,-118.107027', '_blank');
+	}
+	
+	function showContentSection(sectionName) {
+		#{rich:component('ecosContentPane')}.switchToItem(sectionName);
+	}
+	
+	function showSection(sectionName) {
+		#{rich:component('ecosViewerPane')}.switchToItem(sectionName);
+		saveUserAction(sectionName);
+	}
+
+	function showSectionAndTab(sectionName, tabPaneId, tabId, tabLabel) {
+		showSection(sectionName);
+		showTab(tabPaneId, tabId, tabLabel);
+	}
+
+	function showTab(tabPaneId, tabId, tabLabel) {
+		try {
+			//alert(tabPaneId);
+			//#{rich:component(tabPaneId)}.switchToItem(tabId);
+			//alert(RichFaces);
+			//RichFaces.switchTab(tabPaneId, tabId, tabLabel);
+		} catch(e) {
+			alert(e);
+		}
+	}
+	
+	function showLayeredPane(parentName, sectionName) {
+		#{rich:component('ecosViewerPane')}.switchToItem(sectionName);
+	}
+
+
+	//]]>
+	</script>
+	<!--  
+	</h:outputScript>
+	-->
+</ui:composition>

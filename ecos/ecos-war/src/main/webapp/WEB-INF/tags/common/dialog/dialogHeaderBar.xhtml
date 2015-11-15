@@ -1,0 +1,91 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="title, heading, message">
+		<c:if test="#{empty logo}">
+			<c:set var="logo" value="/icons/wizard/default.gif"/> 
+			<c:set var="logo" value="/dialog/default-dialog-logo.gif"/> 
+			<c:set var="logo" value="images"/> 
+		</c:if>
+		
+		<c:if test="#{empty library}">
+			<c:set var="library" value="graphics"/> 
+		</c:if>
+	
+		<!-- TITLE-BAR -->
+		<aries:dialogTitleBar
+			title="#{title}" />
+	
+		<!-- HEADER-BAR -->
+		<a4j:outputPanel 
+			onclickXX="alert('#{logo}')"
+			id="#{section}Header">
+			
+			<h:panelGrid 
+				layout="block" 
+				columns="3" 
+				cellpadding="0" 
+				cellspacing="0" 
+				columnClasses="formColumn, formColumnAlignRight" 
+				style="width: 100%; min-height: 70px; background-color: white; overflow: hidden;">
+				
+				<h:panelGrid 
+					layout="block" 
+					columns="1" 
+					cellpadding="0" 
+					cellspacing="0" 
+					columnClasses="formColumnAlignBottom" 
+					style="width: auto; height: 66px; padding: 6px; padding-top: 8px; padding-bottom: 0px; background-color: inherit">
+	
+					<!-- HEADER -->
+					<h:outputText 
+						value="#{heading}" 
+						styleClass="dialogHeader" 
+						style="display: block"/>
+	
+					<!-- MESSAGES -->
+					<h:panelGrid
+						layout="block" 
+						columns="1" 
+						cellpadding="0"
+						cellspacing="0"
+						columnClasses="formColumnAlignBottom" 
+						style="width: 100%; height: 30px; max-width: 400px; background-color: inherit">
+						
+						<aries:messages 
+							id="#{section}Messages" 
+							module="#{domain}" 
+							message="#{message}" 
+							ajaxRendered="true" />
+					</h:panelGrid>
+				</h:panelGrid>
+
+				
+				<!-- LOGO -->
+				<c:if test="#{not empty logo}">
+					<h:panelGroup style="background-color: inherit">
+						<h:graphicImage library="#{library}" name="#{logo}"/>
+					</h:panelGroup>
+				</c:if>
+				
+				<!-- NO LOGO -->
+				<c:if test="#{empty logo}">
+					<aries:spacer width="1" height="70" />
+				</c:if>
+			</h:panelGrid>
+		</a4j:outputPanel>
+	
+		<div style="display: block; width: 100%; height: 1px; background-color: #bbb"/>
+		<div style="display: block; width: 100%; height: 1px; background-color: #fff"/>
+	</aries:tag>
+</ui:composition>

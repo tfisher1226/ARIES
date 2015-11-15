@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+		<aries:controlPane>
+			<aries:controlbar>
+				<aries:toolbarGroup 
+					location="left">
+					
+					<aries:toolButton
+						tooltip="Show Help for Login Dialog"
+						icon="/icons/common/Help24.gif"
+						mode="client"
+						onclick="popupAlert('ECOS-NET HELP', 'Placeholder for Help Window', 'Simple help documentation will be generated here')" />
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup 
+					location="right" 
+					padded="false">
+	
+					<aries:dialogButton
+						id="#{section}RefreshButton"
+				    	immediate="true"
+				    	limitRender="false"
+				    	bypassUpdates="true"
+	    				execute="#{section}Form"
+						icon="/icons/common/Refresh16.gif"
+						iconDisabled="/icons/common/RefreshDisabled16.gif"
+						manager="#{globals}"
+						action="doNothing"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Refreshing information...');"
+						oncomplete="setCursorDefault(this); hideProgress()"
+						render="#{section}Content"
+						offset="true" />
+
+					<!--  	
+					<aries:dialogButton
+						id="#{section}LoginButton"
+						label="Login"
+						default="false"
+						mode="client"
+						icon="/icons/common/Export16.gif"
+						iconDisabled="/icons/common/ExportDisabled16.gif"
+						onmouseup="setCursorWait(this); executeLogin()"
+						offset="true" />
+						
+					<a4j:commandButton
+						value="Login"
+				    	immediate="true"
+				    	limitRender="false"
+				    	bypassUpdates="false"
+				    	execute="#{section}Form"
+				    	action="#{identity.login}"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...');"
+						oncomplete="setCursorDefault(eventSource); hideProgress(); if (#{!messages.isFlagsExist(domain)}) {hideLoginDialog()}"
+						render="#{section}Content" />
+						-->
+
+<!-- 
+						iconDisabled="/icons/common/ExportDisabled16.gif"
+ -->
+ 
+					<aries:dialogButton
+						label="Login"
+						id="#{section}LoginButton"
+						icon="/icons/common/Export16.gif"
+						iconDisabled="/icons/common/Export16.gif"
+	    				execute="#{section}Form"
+						manager="#{securityManager}"
+						action="login"
+						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...')"
+						oncomplete="setCursorDefault(this); hideProgress()"
+						render="#{section}Header, #{section}Content"
+						offset="true" />
+						
+					<aries:dialogButton
+						id="#{section}CancelButton"
+						label="Cancel"
+						mode="client"
+						onclick="hideLoginDialog();"
+						offset="true" />
+				</aries:toolbarGroup>
+			</aries:controlbar> 
+		</aries:controlPane>
+</ui:composition>

@@ -1,0 +1,33 @@
+
+
+NAM is a rapid development tool used to build
+distributed components, applications and user-interfaces.
+
+Similar to other tools like Forge,
+NAM generates Maven based Java applications.
+
+1) It helps Java developers quickly get started with application development.
+
+
+In addition to this, NAM provides the ability to appropriately and clearly define the interactions among components of the distributed environment.
+
+This essential structure allows many important and essential benefits, end-to-end local and global security, runtime checking...
+
+
+As an organization, we are setup to come there and meet with you to understand your needs.  Then we go offsite and produce results, then back to demo what we have, including tests.
+
+
+agent
+-set name
+-set namespace
+
+-reference project
+-import project
+-reference namespace
+-import namespace
+-add channel
+
+-add service
+
+
+

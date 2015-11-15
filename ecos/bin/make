@@ -1,0 +1,16 @@
+#!/bin/sh
+
+HOME=..
+CWD=`pwd`
+cd $HOME
+cd $HOME/bookshop2; mvn -o -N install
+cd $HOME/bookshop2-buyer; mvn -o -N install
+cd $HOME/bookshop2-seller; mvn -o -N install
+cd $HOME/bookshop2-supplier; mvn -o -N install
+cd $HOME/bookshop2-shipper; mvn -o -N install
+
+cd $HOME/bookshop2-model; mvn -o -DskipTests=true install
+cd $HOME/bookshop2-buyer; mvn -o -DskipTests=true install
+cd $HOME/bookshop2-seller; mvn -o -DskipTests=true install
+cd $HOME/bookshop2-supplier; mvn -o -DskipTests=true install
+cd $HOME/bookshop2-shipper; mvn -o -DskipTests=true install

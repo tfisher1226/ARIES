@@ -1,0 +1,40 @@
+#!/bin/sh
+
+#
+# ECOS settings for tfisher-hp2
+#
+
+export HOST=localhost
+
+export BINDING_HOST=localhost
+
+export JAVA_HOME=c:/software/jdk1.7.0_80_64
+#export JAVA_HOME=c:/software/jdk1.6.0_38_x86_64
+
+export JBOSS_HOME=c:/software/jboss-eap-6.4
+#export JBOSS_HOME=c:/software/jboss-as-7.1.1.Final-node2
+
+export JBOSS_RUNTIME_HOME=$JBOSS_HOME/standalone
+
+export JBOSS_DEPLOYMENT_HOME=$JBOSS_RUNTIME_HOME/deployments
+
+export JBOSS_CONFIGURATION_HOME=$JBOSS_RUNTIME_HOME/configuration
+
+export ECOS_HOME=c:/workspace/ARIES2/ecos
+
+export ECOS_EAR_HOME=$ECOS_HOME/ecos-ear
+
+export ECOS_EAR_FILE=ecos-ear.ear
+
+export ECOS_JMS_FILE=ecos-jms.xml
+
+export ECOS_DS_FILE=ecos-ds.xml
+
+export ECOS_LOG_HOME=$ECOS_HOME/runtime/log
+
+export ECOS_LOG_FILE=$ECOS_LOG_HOME/console.log
+
+export ADMIN_JMS_FILE=admin-jms.xml
+
+export ADMIN_DS_FILE=admin-ds.xml
+

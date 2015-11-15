@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:x="http://aries.org/jsf/composite/components">
+
+<h:head>
+    <title>INFOSGI</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <!--  
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=8;FF=3;OtherUA=4" />
+    -->
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="pragma" content="no-cache" /> 
+    <meta http-equiv="expires" content="0" />
+    <meta name="copyright" content="&copy; 2010, 2011 SGI-USA. All Rights Reserved." />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="robots" content="all" /> 
+
+	<!--
+	<link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+	<link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/mobile/slidfast.css" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/js/mobile/slidfast.js"></script>
+	-->
+
+	<!--
+	<h:outputStylesheet library="styles" name="button.css" />
+	<h:outputStylesheet library="styles" name="dialog.css" />
+	<h:outputStylesheet library="styles" name="toolbar.css" />
+
+	<h:outputStylesheet library="styles" name="rich.css" />
+	<h:outputStylesheet library="styles" name="button.css"/>
+	<h:outputStylesheet library="styles" name="aries.css"/>
+	<h:outputStylesheet library="styles" name="base.css"/>
+	<h:outputStylesheet library="styles" name="text.css"/>
+	<h:outputStylesheet library="styles" name="icons.css"/>
+	<h:outputStylesheet library="styles" name="content.css"/>
+	<h:outputStylesheet library="styles" name="header.css"/>
+	<h:outputStylesheet library="styles" name="footer.css"/>
+	<h:outputStylesheet library="styles" name="dialog.css"/>
+	<h:outputStylesheet library="styles" name="message.css"/>
+	<h:outputStylesheet library="styles" name="menu.css"/>
+	<h:outputStylesheet library="styles" name="table.css"/>
+	<h:outputStylesheet library="styles" name="tabpane.css"/>
+	<h:outputStylesheet library="styles" name="tree.css"/>
+	<h:outputStylesheet library="styles" name="toolbar.css"/>
+	<h:outputStylesheet library="styles" name="widget.css"/>
+	<h:outputStylesheet library="styles" name="nam.css"/>
+	-->
+	
+	<h:outputStylesheet library="styles" name="base.css" />
+	<h:outputStylesheet library="styles" name="text.css"/>
+	<h:outputStylesheet library="styles" name="form.css"/>
+	<h:outputStylesheet library="styles" name="layout.css"/>
+	<h:outputStylesheet library="styles" name="dialog.css" />
+	<h:outputStylesheet library="styles" name="message.css" />
+	<h:outputStylesheet library="styles" name="essential.css" />
+
+	<h:outputScript library="scripts" name="aries.js" />
+	<h:outputScript library="scripts" name="browser.js" />
+	<h:outputScript library="scripts" name="cursor.js" />
+	<h:outputScript library="scripts" name="dialog.js" />
+	<h:outputScript library="scripts" name="initialize.js" />
+	<h:outputScript library="scripts" name="progress.js" />
+	<h:outputScript library="scripts" name="popup.js" />
+	<h:outputScript library="scripts" name="table.js" />
+	<h:outputScript library="scripts" name="util.js" />
+
+	<ui:include src="login-page-support.xhtml" />
+</h:head>
+
+<h:body onload="initializePage()" style="overflow: hidden">
+
+	<!-- GLOBAL QUEUES -->
+	<a4j:queue name="org.sgiusa.queue" disabled="false" sizeExceededBehavior="dropNew" requestDelay="0" ignoreDupResponses="true"/>
+	<a4j:queue name="org.richfaces.queue.global" disabled="false" requestDelay="0" ignoreDupResponses="true" />
+
+	<!-- COMMON DIALOGS -->
+	<aries:messageDialog />
+	<aries:progressDialog />
+	
+	<!-- HEADER -->
+	<ui:include src="/includes/header.xhtml"/>
+
+	<!-- CONTENT -->
+	<div id="content" style="clear: both">
+		<ui:insert name="content"/>
+	</div>
+
+	<h:outputStylesheet library="styles" name="rich-button.css" />
+	<h:outputStylesheet library="styles" name="rich-menu.css" />
+	<h:outputStylesheet library="styles" name="rich-fileUpload.css" />
+	<h:outputStylesheet library="styles" name="rich-popupPanel.css" />
+	<h:outputStylesheet library="styles" name="rich-toolbar.css" />
+</h:body>
+</html>

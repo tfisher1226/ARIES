@@ -1,0 +1,20 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="verification-of-essential-behavior-pane">
+		
+		<aries:tabPane>
+			<aries:tab
+				fontSize="14"
+				label="Verification of Essential Behavior"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="verification-of-behavior-content.xhtml" />
+    	    </aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

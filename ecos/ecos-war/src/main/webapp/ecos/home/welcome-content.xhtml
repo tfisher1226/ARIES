@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:panel 
+		width="auto" 
+		height="auto"
+		backgroundColor="inherit">
+
+		<aries:formPane 
+			columns="2" 
+			height="auto"
+			marginRight="0px"
+			backgroundColor="inherit">
+
+			<aries:panel 
+				width="auto" 
+				marginRight="10px" 
+				backgroundColor="inherit">
+				
+				<aries:h4 value="Practical and Effective Auto-Generation" />
+				<aries:p fontSize="13">
+					We help organizations create 
+					<aries:link value="Java Enterprise Application Systems" 
+						href="http://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition" />
+					in a practical, thorough and cost-effective way.
+				</aries:p>
+
+				<aries:p fontSize="13">
+					We focus on 
+					<aries:link value="application architecture" href="http://en.wikipedia.org/wiki/Applications_architecture" /> 
+					and <aries:link value="network architecture" href="http://en.wikipedia.org/wiki/Distributed_computing" /> 
+					and how to <b>automatically generate</b> practical and standard Java Enterprise Application 
+					Systems in a straight-forward way. We demonstrate this by example.
+				</aries:p>
+
+				<aries:p fontSize="13">
+					A <aries:link value="generation engine"
+						onmousedown="setCursorWait(this)"
+						onmouseup="setCursorDefault(event.source); replaceContent('testPopupHandle', 'generationEngineNode'); _showTestPopup('ECOS Terminology', 'Generation Engine', 'What on earth is it?')" />
+					reads an architectural specification and automatically creates 
+					executable and testable distributed 
+					<aries:link value="applications" onclick="showTestDialog()" />.
+				</aries:p>
+				
+				<aries:p fontSize="13">
+					Auto-generated systems will run on
+					<aries:link value="RedHat" href="http://www.redhat.com/en" />
+					<aries:link value="JBoss" href="http://jbossas.jboss.org" />
+					standalone, or on clustered or cloud-ready
+					<aries:link value="JBoss EAP servers" href="http://jbossas.jboss.org" />.
+				</aries:p>
+			</aries:panel>
+
+			<aries:panel 
+				width="auto" 
+				marginLeft="0px">
+				
+				<aries:spacer height="2" />
+				<aries:label fontSize="16" fontWeight="bold" textColor="#{userSkin.headerTextColor}" value="Accelerate Experimentation and Comparison of Solutions" />
+		
+				<aries:spacer height="8" />
+				<aries:borderPane>
+				<h:graphicImage 
+					library="graphics" 
+					name="/ecos/ecos-engine.jpg"
+					style="border: 1px solid #ccc" />
+				</aries:borderPane>
+			</aries:panel>
+		</aries:formPane>
+	</aries:panel>
+
+	<h:panelGroup id="generationEngineNode" style="display: none">
+		<aries:h4 value="Generation Engine" />
+		<aries:p fontSize="13">
+			TODO
+		</aries:p>
+	</h:panelGroup>
+	
+	<h:panelGroup id="testableDistributedApplicationsNode" style="display: none">
+		<aries:h4 value="Testable Distributed Applications" />
+		<aries:p fontSize="13">
+			TODO
+		</aries:p>
+	</h:panelGroup>
+</ui:composition>

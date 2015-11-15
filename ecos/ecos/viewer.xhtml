@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup 
+		layout="block" 
+		style="width: auto; margin-left: 220px; background-color: inherit">
+
+	<!--  
+	<aries:panel 
+		width="auto"
+		marginLeft="220px" 
+		backgroundColor="#ade"
+		style="">
+		-->
+		
+		<aries:layerPane
+			id="ecosViewerPane"
+			width="auto"
+			height="auto"			
+			activeItem="#{adminManager.activeSection}"
+			styleXX="min-width: auto">
+	
+			<!-- Main panes -->
+			<ui:include src="/ecos/home/welcome-pane.xhtml" />
+			<ui:include src="/ecos/home/about-pane.xhtml" />
+			<ui:include src="/ecos/home/contact-pane.xhtml" />
+			
+			<!-- Content panes -->
+			<ui:include src="/ecos/home/practical-benefits-and-objectives-pane.xhtml" />
+			<ui:include src="/ecos/home/unprecedented-value-and-cost-pane.xhtml" />
+			<ui:include src="/ecos/home/demonstration-by-example-pane.xhtml" />
+			<ui:include src="/ecos/home/reduced-and-bounded-risk-pane.xhtml" />
+			<ui:include src="/ecos/home/list-of-deliverables-pane.xhtml" />
+			<ui:include src="/ecos/home/modeling-scalable-systems-pane.xhtml" />
+			<ui:include src="/ecos/home/creation-of-target-system-pane.xhtml" />
+			<ui:include src="/ecos/home/modules-and-archives-pane.xhtml" />
+			<ui:include src="/ecos/home/generated-system-architecture-pane.xhtml" />
+			<ui:include src="/ecos/home/generated-user-interface-pane.xhtml" />
+			<ui:include src="/ecos/home/verification-of-behavior-pane.xhtml" />
+			<ui:include src="/ecos/home/usage-of-java-pane.xhtml" />
+			<ui:include src="/ecos/home/usage-of-jboss-pane.xhtml" />
+			
+			<!-- Services panes 
+			<ui:include src="/ecos/home/services-pane.xhtml" />
+			-->
+		</aries:layerPane>
+	</h:panelGroup>
+</ui:composition>

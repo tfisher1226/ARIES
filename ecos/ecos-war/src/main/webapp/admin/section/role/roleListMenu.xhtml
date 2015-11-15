@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:region>
+		<aries:outputPane
+			id="#{section}RoleListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="#{section}RoleListContextMenu"
+				target="#{section}RoleListTable">
+				
+				<aries:contextMenuItem
+					value="Edit Role..."
+					disabled="false"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{roleListManager}"
+					action="editRole"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}RoleDialog()"
+					render="#{domain}RoleDialog">
+					
+					<aries:tooltip value="Edit selected Role record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="New Role..."
+					mode="ajax"
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{roleInfoManager}"
+					action="newRole"
+					onclick="setCursorWait(); showProgress('Role Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}RoleDialog()"
+					render="#{domain}RoleDialog, #{domain}RoleDialogPersonNameDialog, #{domain}RoleDialogEmailAddressDialog, #{domain}RoleDialogPhoneNumberDialog, #{domain}RoleDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Role record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="Remove Role..."
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Role: {lastName}, {firstName}', 'Remove Role Record from System', 'Do you wish to continue?', 'org.aries.removeRole', '#{section}RoleListPane')">
+					
+					<aries:tooltip value="Remove selected Role record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="generated-system-architecture-pane">
+		
+		<aries:tabPane
+			id="generated-system-architecture-tabpane">
+			
+			<aries:tab
+				fontSize="13"
+				id="generated-system-architecture-tab"
+				label="Generated System Architecture"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="generated-system-architecture-content.xhtml" />
+    	    </aries:tab>
+
+			<aries:tab
+				fontSize="13"
+				id="capabilities-of-generated-systems-tab"
+				label="Capabilities"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="capabilities-of-generated-systems-content.xhtml" />
+    	    </aries:tab>
+
+			<aries:tab
+				fontSize="13"
+				id="features-of-generated-systems-tab"
+				label="Features"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="features-of-generated-systems-content.xhtml" />
+    	    </aries:tab>
+    	    
+			<aries:tab
+				fontSize="13"
+				id="user-interface-tab"
+				label="User-Interface"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="user-interface-content.xhtml" />
+    	    </aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

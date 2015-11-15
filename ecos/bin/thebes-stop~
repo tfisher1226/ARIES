@@ -1,0 +1,20 @@
+#!/bin/sh
+
+#HOST=localhost
+#HOST=db-info.org
+#HOST=thebes.kattare.com
+
+#PORT=1090
+
+#JAVA_HOME=/usr/local/jdk1.6.0_24
+JAVA_HOME=c:/software/jdk1.6.0_38_x86_64
+
+#JBOSS_HOME=/home2/s/sgiusa/software/jboss-as-7.1.1.Final
+JBOSS_HOME=c:/software/jboss-as-7.1.1.Final-node1
+
+#$JBOSS_HOME/bin/shutdown.sh --host=$HOST -s jnp://$HOST:1099 -u admin -p password
+#$JBOSS_HOME/bin/shutdown.sh --host=$HOST --port=$PORT -S
+
+$JBOSS_HOME/bin/jboss-cli.sh --connect ":shutdown"
+
+#ps -e | grep jboss | grep -v grep | awk '{print $1}' | xargs kill

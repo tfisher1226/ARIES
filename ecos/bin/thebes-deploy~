@@ -1,0 +1,12 @@
+#!/bin/sh
+
+HOST=sgiusa@thebes.kattare.com
+
+JBOSS_HOME=/home2/s/sgiusa/software/jboss-as-7.1.1.Final
+
+EAR_HOME=/c/workspace/ARIES/infosgi/project/infosgi-ear
+
+EAR_FILE=$EAR_HOME/target/infosgi-ear.ear
+
+scp $EAR_FILE $HOST:$JBOSS_HOME/standalone/deployments
+

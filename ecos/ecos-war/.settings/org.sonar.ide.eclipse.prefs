@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+projectArtifactId=ecos-war
+projectBranch=
+projectGroupId=ecos
+sonarServerUrl=http\://localhost\:9000
+version=1

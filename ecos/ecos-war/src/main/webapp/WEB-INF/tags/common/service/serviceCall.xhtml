@@ -1,0 +1,101 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+                   xmlns:f="http://java.sun.com/jsf/core">
+
+	<aries:spacer height="6" />
+
+	<ui:param name="serviceIdCapped" value="#{helper.capitalize(serviceId)}" />
+	<c:set var="serviceIdUncapped" value="#{helper.uncapitalize(serviceId)}" />
+	
+	<a4j:region 
+		id="#{serviceId}_Region">
+		
+		<aries:formPane
+			id="#{serviceId}_Pane"
+			width="auto" 
+			height="auto"
+			columns="30"
+			align="middle"
+			domain="#{serviceId}"
+			backgroundColor="inherit">
+	
+			<aries:smallDialogButton
+				label="Run"
+				id="#{section}#{serviceIdCapped}Button"
+				icon="/icons/common/Execute16.gif"
+				execute="#{serviceId}_Region"
+				immediate="false"
+				bypassUpdates="false"
+				limitRender="true"
+				manager="#{manager}"
+				action="execute#{serviceIdCapped}"
+				onclick="setCursorWait(this); showProgress('', 'Calling #{serviceId}()', 'Processing request...');"
+				oncomplete="setCursorDefault(this); hideProgress()" 
+				render="#{serviceId}_Pane, #{serviceId}_Messages">
+				
+				<a4j:param name="targetService" assignTo="#{manager.targetService}" value="#{domain}" />
+			</aries:smallDialogButton>
+	
+			<aries:spacer width="8" />
+			<aries:label width="auto" height="auto" fontSize="#{userSkin.fontSize}" fontFamily="#{userSkin.fontFamily}" value="As"/>
+			
+			<aries:spacer width="8" />
+			<aries:selectOneMenu 
+				id="#{serviceIdCapped}TransportType" 
+				size="normal"
+				label="" 
+				width="80" 
+				labelWidth="0" 
+				items="#{transportTypes}" 
+				value="#{manager.transportTypes[serviceId]}">
+				<f:converter converterId="transportTypeConverter"/>
+			</aries:selectOneMenu>
+			
+			<aries:spacer width="2" />
+			<c:if test="#{manager.hasResult(serviceId) == false}">
+				<aries:label width="auto" height="auto" fontSize="#{userSkin.fontSize}" fontFamily="courier" value="void"/>
+			</c:if>
+			
+			<!-- result included here -->
+			<c:if test="#{manager.hasResult(serviceId) == true}">
+				<aries:serviceResult instance="#{manager.getResult(serviceId)}" /> 
+			</c:if>
+	
+			<aries:spacer width="8" />
+			<div style="display: block; padding-bottom: 6px; background-color: red">
+				<aries:label width="auto" height="auto" fontSize="#{userSkin.fontSize}" fontFamily="courier" value="#{serviceId}" />
+			
+			<aries:spacer width="1" />
+				<aries:label width="auto" height="auto" fontSize="#{userSkin.fontSize}" fontFamily="courier" value="("/>
+			<aries:spacer width="1" />
+	
+			<!-- parameters included here -->
+			<ui:repeat value="#{manager.getParameterNames(serviceId)}" var="name">
+				<aries:serviceParameter instance="#{manager.getParameter(serviceId, name)}" mode="#{manager.getMode(serviceId)}"/> 
+			</ui:repeat>
+			
+			<aries:spacer width="1" />
+				<aries:label width="auto" height="auto" fontSize="#{userSkin.fontSize}" fontFamily="courier" value=")"/>
+			</div>
+		</aries:formPane>
+
+	<!--  
+	<aries:spacer height="1" />
+	<aries:formPane
+		width="auto" 
+		height="auto"
+		columns="3"
+		align="bottom"
+		backgroundColor="inherit">
+			
+		<aries:spacer width="90" />
+		<aries:messages id="#{serviceId}_Messages" module="#{serviceId}" />
+	</aries:formPane>
+	-->
+	</a4j:region>
+</ui:composition>

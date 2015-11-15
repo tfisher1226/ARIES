@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}RoleListTablePanel">
+		<ui:include src="roleListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}RoleListTable"
+			value="#{listManager.dataModel}"
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowdblclick="execute#{domain}SelectOpenRole(#{index}, #{rowItem.role.id})"
+			style="border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<aries:link
+					value="#{rowItem.role.name}"
+					onmouseup="execute#{domain}SelectOpenRole(#{index}, #{rowItem.role.id})" />
+			</aries:textColumn>
+			
+			<!-- ROLE TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Role Type">
+				<h:outputText value="#{rowItem.role.roleType}" />
+			</aries:textColumn>
+			
+			<!-- CONDITIONAL -->
+			<aries:textColumn
+				width="100"
+				header="Conditional">
+				<h:outputText value="#{rowItem.role.conditional}" />
+			</aries:textColumn>
+			
+			<!-- ENABLED -->
+			<aries:textColumn
+				width="100"
+				header="Enabled">
+				<h:outputText value="#{rowItem.role.enabled}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

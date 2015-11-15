@@ -1,0 +1,8 @@
+jboss.partition.name=jbossas7clusterColocated
+jboss.modules.system.pkgs=org.jboss.byteman
+com.arjuna.ats.jta.supportSubtransactions=true
+admin.application_runtime_home=c:/workspace/ARIES2/ecos/runtime
+tx-manager.application_runtime_home=c:/workspace/ARIES2/ecos/runtime
+ecos.application_runtime_home=c:/workspace/ARIES2/ecos/runtime
+
+	

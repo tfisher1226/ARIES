@@ -1,0 +1,24 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf"
+	template="/templates/tmp-template.xhtml">
+
+	<ui:define name="content">
+
+		<h:form id="form">
+					<gmaps4jsf:map 
+						width="180px" 
+						height="180px"
+						latitude="30.01" 
+						longitude="31.14"
+						renderOnWindowLoad="true">
+					</gmaps4jsf:map>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

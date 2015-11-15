@@ -1,0 +1,28 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		width="auto"
+		name="welcome-pane"
+		backgroundColor="inherit"
+		style="">
+		
+		<aries:tabPane
+			width="auto"
+			backgroundColor="inherit">
+			
+			<aries:tab
+				width="auto"
+				height="auto"
+				fontSize="13"
+				label="Automated Generation of Enterprise Application Systems"
+				icon="/icons/common/Default16.gif">
+				
+				<ui:include src="welcome-content.xhtml" />
+    	    </aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>
