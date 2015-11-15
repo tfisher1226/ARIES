@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:x="http://java.sun.com/jsf/composite/components"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+	<composite:interface>
+		<composite:attribute name="name" type="java.lang.String" default="" />
+		<composite:attribute name="icon" type="java.lang.String" default="" />
+		<composite:attribute name="label" type="java.lang.String" default="" />
+		<composite:attribute name="tooltip" type="java.lang.String" default="" />
+		<composite:attribute name="enabled" type="boolean" default="true" />
+		<composite:attribute name="rendered" type="boolean" default="true" />
+		<composite:attribute name="immediate" type="boolean" default="false" />
+		<composite:attribute name="mode" type="java.lang.String" default="ajax" />
+		<composite:attribute name="limitRender" type="boolean" default="false" />
+		<composite:attribute name="bypassUpdates" type="boolean" default="false" />
+		<composite:attribute name="execute" type="java.lang.String" default="@none" />
+		<composite:attribute name="onclick" type="java.lang.String" default="" />
+		<composite:attribute name="oncomplete" type="java.lang.String" default="" />
+		<composite:attribute name="render" type="java.lang.String" default="" />
+		
+		<composite:attribute name="labelStyle" type="java.lang.String" default="" />
+		<composite:attribute name="styleClass" type="java.lang.String" default="" />
+		
+		<!--  
+		<composite:attribute name="action" method-signature="void action()" required="true" />
+		<composite:attribute name="onclick" type="javax.el.ValueExpression" default="" />
+		<composite:attribute name="oncomplete" type="javax.el.ValueExpression" default="" />
+		<composite:attribute name="render" type="java.lang.String" default="" />
+
+		<composite:attribute name="manager" default="#{globals}" />
+		<composite:attribute name="operation" default="doNothing" />
+		<composite:attribute name="action" default="#{globals.doNothing}" />
+		<composite:attribute name="execute" type="java.lang.String" default="" />
+		<composite:attribute name="render" type="java.lang.String" default="" />
+		-->
+	</composite:interface>
+
+	<composite:implementation>
+		<rich:menuItem
+			disabled="false"
+			rendered="#{cc.attrs.rendered}"
+			mode="ajax"
+			immediate="#{cc.attrs.immediate}"
+			execute="#{cc.attrs.execute}"
+			bypassUpdates="#{cc.attrs.bypassUpdates}"
+			limitRender="#{cc.attrs.limitRender}"
+			action="#{globals.doNothing}"
+			onclick="setCursorWait(this); #{cc.attrs.onclick}"
+			oncomplete="#{cc.attrs.oncomplete}; setCursorDefault(this)"
+			render="#{cc.attrs.render}"
+			styleClass="toolItem" 
+			style="padding: 4px">
+
+			<f:facet name="icon">
+				<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+					<h:panelGrid layout="block" columns="3" columnClasses="formColumnAlignMiddle, formColumnAlignBottom" 
+						style="width: 200px; margin: 0px; padding: 0px; border-width: 0px; border-collapse: collapse; background-color: inherit">
+						
+						<!--  
+						<c:if test="#{empty cc.attrs.icon}">
+							<div class="hspace3" />
+						</c:if>
+						-->
+						
+						<c:if test="#{not empty cc.attrs.icon}">
+							<h:panelGroup style="padding-left: 2px; background-color: cyan">
+								<h:graphicImage value="#{cc.attrs.icon}" />
+								<c:if test="#{not empty cc.attrs.label}">
+									<!-- TODO 
+									<aries:spacer width="4"/>
+									-->
+								</c:if>
+							</h:panelGroup>
+						</c:if>
+						<c:if test="#{not empty cc.attrs.label}">
+							<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+								<h:outputText value="#{cc.attrs.label}" styleClass="toolLabel" style="padding-right: 2px; vertical-align: bottom; white-space: nowrap; #{cc.attrs.labelStyle}"/>
+								<c:if test="#{not empty cc.attrs.icon}">
+									<!-- TODO  
+									<aries:spacer width="1"/>
+									-->
+								</c:if>
+							</h:panelGroup>
+						</c:if>
+					</h:panelGrid>
+				</h:panelGroup>
+			</f:facet>
+			
+			<aries:tooltip value="#{cc.attrs.tooltip}"/>
+		</rich:menuItem>
+	</composite:implementation>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<name>audit-log</name>
+	<domain>org.aries.auditLog</domain>
+	<namespace>http://www.aries.org/audit_log</namespace>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<imports>
+		<import file="audit_log_artifacts.aries" />
+		<import file="audit_log_information.aries" />
+		<import file="audit_log_persistence.aries" />
+		<import file="audit_log_messaging.aries" />
+	</imports>
+
+    <modules>
+        <module ref="audit-log-service" />
+        <module ref="audit-log-data" />
+    </modules>
+</project>

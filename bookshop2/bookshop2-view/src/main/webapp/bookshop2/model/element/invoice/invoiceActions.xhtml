@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:param name="newAction" value="newInvoice" />
+	<ui:param name="editAction" value="editInvoice" />
+	<ui:param name="newActionHeader" value="Invoice Records" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	<ui:param name="itemManager" value="#{invoiceInfoManager}" />
+	<ui:param name="listManager" value="#{invoiceListManager}" />
+	
+	<!--
+	  ** Launch InvoiceDialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="newInvoice"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{invoiceInfoManager.newInvoice}"
+		onbegin="setCursorWait(); showProgress('', 'Invoice Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); showInvoiceDialog()"
+		render="InvoiceModule, InvoiceListPane">
+		
+		<a4j:param name="targetDomain" value="InvoiceDialog" assignTo="#{invoiceInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="InvoiceListPane" assignTo="#{invoiceInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="invoiceList" assignTo="#{invoiceInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+
+
+	<a4j:jsFunction 
+		name="selectInvoice" 
+		immediate="true" 
+		limitRender="true" 
+		onbegin="enableInvoiceListToolbar()"
+		renderXX="InvoiceListToolbar">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+
+	<script type="text/javascript">
+	function enableInvoiceListToolbar() {
+		enableButton('InvoiceListEditButton');
+		enableButton('InvoiceListRemoveButton');
+	}
+	</script>
+
+	<!--
+	  ** Select Invoice record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="openSelectedInvoice"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', 'Invoice Records', 'Opening record for edit...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); #{rich:component('InvoiceDialog')}.show()"
+		render="InvoiceModule">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="InvoiceDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="InvoiceListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="invoiceList" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+
+
+	<!--
+	  ** Refresh Invoice record list
+	  -->
+
+	<a4j:jsFunction
+		name="refreshInvoiceList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'Invoice Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{domain}InvoiceListTablePane">
+	</a4j:jsFunction>
+	
+</ui:composition>

@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
+
+<!--  
+				<aries:spacer height="8" />
+				#{manager.order.trackingNumber}
+
+				<h:inputText
+					value="#{manager.order.trackingNumber}"
+					style="background-color: inherit">
+			
+					<f:validateRequired />
+					<f:validateLength minimum="2" maximum="24" />
+				</h:inputText>
+-->
+	
+	<aries:tabPane 
+		id="#{section}OrderPane">
+		
+		<aries:tab 
+			width="380"
+			height="160"
+			label="Input">
+
+			<aries:panel
+				padding="10px"
+				backgroundColor="inherit">
+				
+				<ui:param name="labelWidth" value="110" />
+				
+				<aries:spacer height="10" />
+				<aries:personName id="#{section}PersonName" type="PersonName" label="Person Name" name="personName" value="#{manager.order.personName}" />
+
+				<aries:spacer height="8" />
+				<aries:inputText id="#{section}TrackingNumber" label="Tracking Number" value="#{manager.order.trackingNumber}" />
+
+				<aries:spacer height="4" />
+				<aries:message for="#{section}TrackingNumber" marginLeft="#{labelWidth}px" />
+				<aries:spacer height="4" />
+
+				<aries:inputText id="#{section}Count" label="Count" value="#{manager.order.count}" />
+
+				<aries:spacer height="8" />
+				<aries:inputDate id="#{section}DateTime" label="Date" value="#{manager.order.dateTime}" />
+			</aries:panel>
+   	    </aries:tab>
+
+   	    <aries:tab
+   	    	width="400"
+			height="136" 
+			label="Orders">
+   	    
+			<aries:panel
+				padding="0px"
+				backgroundColor="inherit">
+
+				<ui:include src="../../book/bookListPane.xhtml" />
+			</aries:panel>
+   	    </aries:tab>
+	</aries:tabPane>
+</ui:composition>

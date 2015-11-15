@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!--
+		The parameters "domain", "name", "manager" and "action" are required. 
+	 -->
+
+	<aries:tag>
+		<c:set var="section" value="#{id}"/>
+		<c:set var="dialog" value="#{id}"/> 
+		
+		<c:set var="title" value="#{manager.title}"/> 
+		<c:set var="heading" value="#{manager.header}"/> 
+
+		<c:if test="#{empty autosized}">
+			<c:set var="autosized" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty moveable}">
+			<c:set var="moveable" value="true"/> 
+		</c:if>
+
+		<c:if test="#{empty action}">
+			<c:set var="action" value="submit"/> 
+		</c:if>
+	
+		<c:if test="#{empty render}">
+			<c:set var="render" value="nothing"/> 
+		</c:if>
+	
+		<c:if test="#{empty keepVisualState}">
+			<c:set var="keepVisualState" value="true"/> 
+		</c:if>
+	
+		<script type="text/javascript">
+		function show#{dialog}() {#{rich:component(dialog)}.show()}
+		function hide#{dialog}() {#{rich:component(dialog)}.hide()}
+		</script>
+		
+		<rich:popupPanel 
+			id="#{dialog}" 
+			autosized="#{autosized}" 
+			moveable="#{moveable}"
+			styleClass="dialog"
+			domElementAttachment="form"
+			onbeforeshowXXX="alert(9)"
+			keepVisualState="#{keepVisualState}">
+			
+			<!-- CONTENT -->
+			<a4j:region id="#{section}Form">
+				<a4j:outputPanel id="#{section}Content">
+					<h:panelGroup layout="block" style="background-color: inherit">
+	
+						<h:panelGroup layout="block" style="width: 100%; height: auto; background-color: inherit">
+							<h:panelGroup layout="block" style="width: auto; height: auto; margin: 12px 12px 12px 12px; background-color: inherit">
+		
+								<!-- PANEL -->
+								<ui:insert/>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</a4j:outputPanel>
+			</a4j:region>
+		</rich:popupPanel>
+	</aries:tag>
+</ui:composition>

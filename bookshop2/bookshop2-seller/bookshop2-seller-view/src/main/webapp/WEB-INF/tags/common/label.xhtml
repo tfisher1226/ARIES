@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+
+		<c:if test="#{not empty type}">
+			<c:set var="textSettings" value=" " /> 
+		</c:if>
+		
+		<h:panelGrid 
+			layout="block"
+			cellpadding="0"
+			cellspacing="0"
+			columns="1" 
+			columnClasses="formColumnAlignMiddle" 
+			styleClass="formPanel"
+			onclickXX="alert('#{marginTop}'); alert('#{style}');"
+			style="#{sizeSettings}; #{borderSettings}; #{backgroundSettings}">
+
+			<c:if test="#{empty onclick and empty oncomplete}">
+				<h:outputLabel 
+					value="#{value}" 
+					onclickXX="alert('#{type}')"
+					styleClass="#{type} #{styleClass}"
+					style="white-space: nowrap; #{textSettings}">
+					
+					<ui:insert/>
+				</h:outputLabel>
+			</c:if>
+	
+			<c:if test="#{not empty onclick or not empty oncomplete}">
+				<a4j:commandLink 
+					value="#{value}" 
+					onclick="#{onclick}"
+					oncomplete="#{oncomplete}" 
+					styleClass="#{type} #{styleClass}"
+					style="#{textSettings}">
+					
+					<ui:insert/>
+				</a4j:commandLink>
+			</c:if>
+		</h:panelGrid>
+	</aries:tag>
+</ui:composition>

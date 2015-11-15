@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:toolbar type="menubar">
+		<aries:toolbarGroup location="left">
+			<f:subview rendered="#{!identity.loggedIn}">
+				<aries:toolItem
+					id="loginItem"
+					label="Login"
+					icon="/icons/common/Import16.gif"
+					manager="#{globals}"
+					action="doNothing"
+					onmouseup="setCursorWait(this)"
+					oncomplete="setCursorDefault(event.source); showLoginDialog()"
+					render="LoginDialog" />
+			</f:subview>
+		
+			<aries:toolItem
+				id="resetItem" 
+				name="reset"
+				label="Reset"
+				execute="@this"
+				manager="#{bookshop2.mainManager}"
+				action="reset"
+				onclick="setCursorWait(this); showProgress('bookshop2_title Administration', 'Server-side user-state', 'Resetting...')"
+				oncomplete="setCursorDefault(this); hideProgress()" 
+				render="nothing" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup location="right">
+			<aries:toolItem 
+				id="testButton"
+				icon="/icons/common/Default16.gif"
+				mode="client"
+				execute="@none"
+				onclick="showSkinAttributeDialog(this); setCursorDefault(this)" />
+				
+			<aries:dropDownMenu 
+				label="Preferences"
+				icon="/icons/common/Configure16.gif">
+				
+				<aries:menuItem 
+					value="Change Skin..."
+					tooltip="Change User-Interface Theme"
+					icon="/icons/common/Table16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="showThemeDialog(this); setCursorDefault(this)" />
+
+				<aries:menuItem 
+					value="Manage Skins..."
+					tooltip="Add, Edit, Delete Themes"
+					icon="/icons/common/Table16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="showSkinAttributeDialog(this); setCursorDefault(this)" />
+			</aries:dropDownMenu>
+			
+			<aries:dropDownMenu 
+				label="Help"
+				icon="/icons/common/Help16.gif">
+				
+				<aries:menuItem 
+					value="About..."
+					tooltip="About the bookshop2_title Application"
+					icon="/icons/common/Speak16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="popupAlert('bookshop2_title Application', 'Data Management Helper', 'This is a placeholder for the About Screen')" />
+			</aries:dropDownMenu>
+
+			<aries:toolItem 
+				id="refreshButton"
+				icon="/icons/common/Refresh16.gif"
+				tooltip="Refresh the Application display"
+				name="reload"
+				mode="client"
+				execute="@all"
+				onclick="location.reload(true)"
+				render="@all" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

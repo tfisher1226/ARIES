@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<modules
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="audit_log_services.aries" />
+	<import file="audit_log_persistence.aries" />
+
+	<module>
+		<type>service</type>
+		<name>audit-log-service</name>
+
+		<services>
+			<domain name="org.aries.auditLog">
+            	<namespace name="auditLog" />
+	            <service ref="logService" />
+			</domain>
+		</services>
+	</module>
+
+	<module>
+		<type>data</type>
+		<name>audit-log-data</name>
+
+		<persistence>
+			<unit ref="auditLog" />
+			<source ref="auditLogDS" />
+			<adapter ref="hibernate" />
+		</persistence>
+	</module>
+</modules>

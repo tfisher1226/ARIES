@@ -1,0 +1,73 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="skinServicePane">
+
+		<aries:label 
+			height="30" 
+			marginLeft="8px"
+			value="Skin Service View" />
+		
+		<aries:tabPane>
+			<aries:tab
+				label="Services"
+				icon="/icons/common/Default16.gif">
+				
+				<aries:panel 
+					width="#{width-2}"
+					height="#{height-56}"
+					backgroundColor="inherit">
+
+					<aries:text
+						margin="10px"
+						backgroundColor="inherit">
+
+					    <p>
+						The <b>skin-service</b> module contains the following methods.
+					    </p>
+					</aries:text>
+    				
+					<aries:formPane 
+						margin="10px"
+						width="#{width-42}"
+						height="#{height-42}"
+						backgroundColor="inherit">
+						
+						<aries:indentPane> 
+							<aries:serviceCall manager="#{skinServiceManager}" serviceId="getSkinList" />
+							<aries:serviceCall manager="#{skinServiceManager}" serviceId="getSkinById" />
+							<aries:serviceCall manager="#{skinServiceManager}" serviceId="getSkinBySkinName" />
+							<aries:serviceCall manager="#{skinServiceManager}" serviceId="addSkin" />
+							<aries:serviceCall manager="#{skinServiceManager}" serviceId="saveSkin" />
+							<aries:serviceCall manager="#{skinServiceManager}" serviceId="deleteSkin" />
+						</aries:indentPane>
+					</aries:formPane>
+				</aries:panel>
+    	    </aries:tab>
+ 
+			<aries:tab
+				label="Protection"
+				icon="/icons/common/Default16.gif">
+				
+				<aries:panel
+					width="#{width-2}"
+					height="#{height-56}">
+
+					<aries:text
+						margin="10px"
+						backgroundColor="inherit">
+
+					    <p>
+						The following protection mechanisms are configured for the <b>admin-service</b> module.
+					    </p>
+    					<br/>
+					</aries:text>
+				</aries:panel>
+    	    </aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

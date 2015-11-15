@@ -1,0 +1,171 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<!-- TODO set only if not provided by parent 
+	<ui:param name="type" value="User" />
+	<ui:param name="unit" value="#{domain}#{type}" />
+	-->
+	
+	<ui:param name="element" value="User" />
+	
+	<ui:param name="newAction" value="new#{element}" />
+	<ui:param name="newActionHeader" value="#{element} Records" />
+	
+	<ui:param name="editAction" value="edit#{element}" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	
+	<ui:param name="listToolbar" value="#{element}ListToolbar" />
+	
+	
+	<h:outputScript target="">
+	function enable#{domain}Toolbar() {
+		//alert('#{domain} #{module} #{unit} #{manager}');
+		var toolbar = #{rich:element(listToolbar)};
+		jQuery(toolbar).find(".rf-ddm-itm-dis").hide();
+		jQuery(toolbar).find(".toolItem").show();
+		//showObject(toolbar);
+		//enableToolbar(toolbar);
+	}
+	
+	function select#{domain}#{element}(index, id) {
+		execute#{domain}Select#{element}(index, id);
+		enable#{domain}Toolbar();
+		return true;
+	}
+	
+	function open#{domain}#{element}(index, id) {
+		execute#{domain}SelectOpen#{element}(index, id);
+		enable#{domain}Toolbar();
+		return true;
+	}
+	</h:outputScript>
+	
+	
+	<!--
+	  ** Select User record from list
+	  -->
+	
+	<a4j:jsFunction
+		name="execute#{domain}Select#{element}"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		render="#{listToolbar}">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Select User record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="execute#{domain}SelectOpen#{element}"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', '#{editActionHeader}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); show#{element}Dialog()"
+		render="#{element}Module, #{element}Dialog">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="#{element}Dialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{element}ListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Launch User dialog in "edit record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="execute#{domain}Open#{element}"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', '#{editActionHeader}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); show#{element}Dialog()"
+		render="#{element}Module, #{element}Dialog">
+		
+		<a4j:param name="targetDomain" value="#{section}" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{element}ListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{itemManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Launch User dialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="execute#{domain}New#{element}"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{itemManager[newAction]}"
+		onbegin="setCursorWait(); showProgress('', 'User Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(this); hideProgress(); launch#{element}Dialog()"
+		render="#{element}Module, #{element}Dialog">
+		
+		<a4j:param name="targetDomain" value="#{section}" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{element}ListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{itemManager.targetInstance}" />
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Refresh User record list
+	  -->
+	
+	<a4j:jsFunction
+		name="execute#{domain}Refresh#{element}List"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'User Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{section}UserListPane">
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Save User record
+	  -->
+	
+	<!--
+	<a4j:jsFunction
+		name="save#{domain}UserSelection"
+		execute="#{domain}UserDialogModule"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.editUser}"
+		onbegin="setCursorWait(); showProgress('', 'User Information for: #{userHelper.toString(rowItem.user)}', 'Preparing for edit...')"
+		oncomplete="setCursorDefault(this); hideProgress(); show#{domain}UserDialog()"
+		render="#{domain}UserDialogModule, #{domain}UserDialog, #{domain}UserListToolbar">
+		
+		<a4j:param name="selectedRecordIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="selectedRecordId" assignTo="#{listManager.selectedRecordId}" />
+	</a4j:jsFunction>
+	-->
+</ui:composition>

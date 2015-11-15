@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkpoints
+	xmlns="http://www.aries.org/validate"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/validate file:/workspace/ARIES/aries-validate/src/main/resources/schema/aries-validate-1.0.xsd">
+
+
+</checkpoints>

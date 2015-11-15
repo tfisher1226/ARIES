@@ -1,0 +1,146 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:panel>
+			<aries:toolbar>
+				<aries:toolbarGroup location="left">
+					<aries:toolButton
+						immediate="true"
+						mode="client"
+						execute="@this"
+						bypassUpdates="true"
+						tooltip="Show help for #{bean.title} Wizard"
+						manager="#{globals}"
+						action="doNothing"
+						icon="resource://images/icons/common/Help24.gif"
+						onclick="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"
+						render="#{wizardPanel}"
+						rendered="true"
+						enabled="true">
+					</aries:toolButton>
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup location="right">
+					<aries:dialogButton
+						default="false"
+						icon="resource://images/icons/common/Refresh16.gif"
+						iconDisabled="resource://images/icons/common/RefreshDisabled16.gif"
+						manager="#{globals}"
+						action="doNothing"
+						onclick="setCursorWait(this); showProgress('#{bean.title}', 'Re-rendering current page...')"
+						oncomplete="setCursorDefault(); hideProgress()"
+						render="#{wizardPanel}, #{wizardMessages}"
+						rendered="true"
+						offset="true">
+					</aries:dialogButton>
+					
+					<aries:dialogButton
+						label="Back"
+						default="false"
+						icon="resource://images/icons/common/Back16.gif"
+						iconDisabled="resource://images/icons/common/BackDisabled16.gif"
+						enabled="#{bean.backEnabled}"
+						manager="#{bean}"
+						action="back"
+						onclick="setCursorWait(this)"
+						oncomplete="setCursorDefault()"
+						render="#{wizardPanel}"
+						rendered="true"
+						offset="true">
+					</aries:dialogButton>
+					
+					<aries:dialogButton
+						label="Next"
+						default="true"
+						immediate="false"
+						ajaxSingle="false"
+						bypassUpdates="false"
+						limitRender="true"
+						icon="resource://images/icons/common/Forward16.gif"
+						iconDisabled="resource://images/icons/common/ForwardDisabled16.gif"
+						enabled="#{bean.nextEnabled}"
+						manager="#{bean}"
+						action="next"
+						onclick="setCursorWait(this)"
+						oncomplete="setCursorDefault()"
+						render="#{wizardPanel}, #{wizardMessages}"
+						rendered="true"
+						offset="true">
+					</aries:dialogButton>
+					
+					<aries:dialogButton
+						label="Finish"
+						default="false"
+						immediate="false"
+						ajaxSingle="false"
+						bypassUpdates="false"
+						limitRender="true"
+						icon="resource://images/icons/common/Approve16.gif"
+						iconDisabled="resource://images/icons/common/ApproveDisabled16.gif"
+						enabled="#{bean.finishEnabled}"
+						manager="#{bean}"
+						action="finish"
+						onclick="setCursorWait(this); showProgress('#{bean.title}', 'Creating #{bean.title}...')"
+						oncomplete="setCursorDefault(); Richfaces.hideModalPanel('progressDialog'); if (#{!messages.messagesExist}) {#{wizardRenderer}(); Richfaces.hideModalPanel('#{wizardName}')}"
+						render="#{wizardPanel}, #{wizardMessages}"
+						rendered="true"
+						offset="true">
+					</aries:dialogButton>
+	
+					<aries:dialogButton
+						label="Cancel"
+						mode="client"
+						onclick="#{rich:component(wizardName)}.hide()"
+						rendered="true"
+						enabled="true"
+						offset="true">
+					</aries:dialogButton>
+				</aries:toolbarGroup>
+			</aries:toolbar>
+		</aries:panel>
+	</aries:tag>
+</ui:composition>
+				
+	<!-- 
+	<rich:menuItem
+		mode="ajax"
+		immediate="false"
+		ajaxSingle="false"
+		bypassUpdates="false"
+		limitRender="false"
+		action="#{bean['next']}"
+		onmousedown="this.style.paddingTop=4; this.style.paddingBottom=2; this.style.paddingLeft=11; this.style.paddingRight=9"
+		onmouseup="this.style.paddingTop=3; this.style.paddingBottom=3; this.style.paddingLeft=10; this.style.paddingRight=10"
+		onmouseout="this.style.paddingTop=3; this.style.paddingBottom=3; this.style.paddingLeft=10; this.style.paddingRight=10"
+		onclick="setCursorWait(this)"
+		oncomplete="setCursorDefault()"
+		render="#{wizardPanel}"
+		styleClass="dialogButton"
+		style="padding: 0px 6px; background-color: #f0f0f0">
+
+		<f:facet name="icon">
+			<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+				<center>
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumnAlignBottom" style="margin: 0px; padding: 0px; border-width: 0px; background-color: inherit">
+				<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+					<h:graphicImage value="resource://images/icons/common/Forward16.gif" />
+					<aries:spacer width="2"/>
+				</h:panelGroup>
+				<h:outputText value="Next8" styleClass="dialogButtonLabel" />
+				</h:panelGrid>
+				</center>
+			</h:panelGroup>
+		</f:facet>
+	</rich:menuItem>
+	-->
+	

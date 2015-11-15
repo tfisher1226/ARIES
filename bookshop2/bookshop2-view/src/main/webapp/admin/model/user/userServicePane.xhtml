@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="userServicePane">
+
+		<aries:label 
+			height="30" 
+			marginTop="10px"
+			marginBottom="10px"
+			paddingLeft="8px"
+			value="Services for Element: User" />
+			
+		<aries:tabPane>
+			<aries:tab
+				label="Services"
+				icon="/icons/common/Default16.gif">
+				
+				<aries:panel 
+					backgroundColor="inherit">
+
+					<aries:formPane 
+						margin="10px"
+						backgroundColor="inherit">
+
+							<aries:p
+								backgroundColor="inherit">
+								The user-service module contains the following methods.
+							</aries:p>
+    				
+							<aries:serviceCall manager="#{userServiceManager}" serviceId="getUserList" />
+							<aries:serviceCall manager="#{userServiceManager}" serviceId="getUserById" />
+							<aries:serviceCall manager="#{userServiceManager}" serviceId="getUserByUserName" />
+							<aries:serviceCall manager="#{userServiceManager}" serviceId="addUser" />
+							<aries:serviceCall manager="#{userServiceManager}" serviceId="saveUser" />
+							<aries:serviceCall manager="#{userServiceManager}" serviceId="deleteUser" />
+					</aries:formPane>
+				</aries:panel>
+    	    </aries:tab>
+ 
+			<aries:tab
+				label="Protection"
+				icon="/icons/common/Default16.gif">
+				
+				<aries:panel>
+					<aries:p
+						margin="10px"
+						backgroundColor="inherit">
+						The following protection mechanisms are configured for the admin-service module.
+					</aries:p>
+				</aries:panel>
+    	    </aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

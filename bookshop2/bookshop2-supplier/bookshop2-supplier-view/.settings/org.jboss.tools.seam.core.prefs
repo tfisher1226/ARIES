@@ -1,0 +1,8 @@
+action.package=admin.incoming.userService
+action.sources=/admin-service/src/main/java
+eclipse.preferences.version=1
+model.package=admin.incoming.userService
+model.sources=/admin-service/src/main/java
+seam.ejb.project=admin-service
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1

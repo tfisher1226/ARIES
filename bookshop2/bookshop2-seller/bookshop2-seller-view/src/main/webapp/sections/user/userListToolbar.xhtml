@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="userListToolbar">
+		<aries:toolbar type="tab">
+			<aries:toolbarGroup location="left">
+			
+				<!--  
+				<h:outputText value="Records per page" styleClass="text11" style="padding-left: 4px; padding-right: 6px"/>
+	       		<h:inputText value="#{memberRecordsPerPage}" converter="common.integerConverter" style="font-size: 11px; width: 20px; border: 1px solid #C3BBB6">
+	       			<a4j:ajax event="onkeyup" render="membershipListTable" execute="@this"/>
+	       		</h:inputText>
+				<span class="hspace4"/>
+	       		-->
+	
+				<aries:toolButton
+					value="User..."
+					tooltip="Create new User Record"
+					icon="/icons/common/Role16.gif"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					manager="#{userInfoManager}"
+					action="newUser"
+					onclick="setCursorWait(); showProgress('', 'User Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(this); hideProgress(); showUserDialog()"
+					render="UserDialog"
+					offset="true" />
+	
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup location="right">
+				<!--  
+				<aries:toolButton
+					tooltip="Export User List to PDF"
+					icon="/icons/export/PDF16.gif"
+			   		manager="#{org.sgiusa.exportManager}" 
+			   		action="exportToPDF" 
+			   		render="detailView"
+					linkClass="text16 link"
+					target="_blank"
+					offset="true"/>
+	
+				<aries:toolButton
+					tooltip="Export User List to Excel"
+					icon="/icons/export/Excel16.gif"
+			   		manager="#{userListManager}" 
+			   		action="exportToXLS" 
+			   		render="administrationViewPanel"
+					linkClass="text16 link"
+					target="_blank"
+					offset="true"/>
+					-->
+	
+				<aries:toolButton 
+					value="User..."
+					tooltip="Send E-mail to selected Users"
+					icon="/icons/common/message.gif"
+					disabled="false"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					target="_blank"
+			   		manager="#{emailManager}" 
+			   		action="sendEmailToList" 
+			   		render="userListTab"
+					onclick="popupAlert('E-Mail Service', 'Send E-mail Message to Users', 'Not ready at this time')"
+					linkClass="text16 link"
+					offset="true"/>
+							
+				<aries:toolButton
+					icon="/icons/common/Refresh16.gif"
+					tooltip="Re-read information from server"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+			   		manager="#{userListManager}"
+			   		action="refresh" 
+					onclick="setCursorWait(this); showProgress('', 'User Service', 'Refreshing User List...')"
+					oncomplete="setCursorDefault(this); hideProgress()"
+			   		render="userListTab"
+					linkClass="text16 link"/>
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
+</ui:composition>

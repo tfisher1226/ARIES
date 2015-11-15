@@ -1,0 +1,176 @@
+<facelet-taglib 
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+
+	<namespace>http://aries.org/jsf</namespace>
+	
+<!-- 
+	<namespace>http://bookshop/jsf</namespace>
+ -->	
+
+	<tag>
+		<tag-name>myValidator</tag-name>
+		<validator>
+			<validator-id>myValidator</validator-id>
+		</validator>
+	</tag>
+
+	<tag>
+		<tag-name>log</tag-name>
+		<handler-class>org.aries.ui.tag.LogTagHandler</handler-class>
+		<attribute>
+			<name>message</name>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+		
+	<tag>
+		<tag-name>tag</tag-name>
+		<handler-class>org.aries.ui.tag.IsolatedTagHandler</handler-class>
+
+		<!--  
+		<attribute>
+			<attribute-name>backgroundColor</attribute-name>
+			<attribute-class>java.lang.String</attribute-class>
+		</attribute>
+		<component>
+			<component-type>org.aries.Panel</component-type>
+			<source>common/panel.xhtml</source>
+		</component>
+			<renderer-type>org.aries.PanelRenderer</renderer-type>
+			<component-type>javax.faces.HtmlPanelGrid</component-type>
+			<source>common/panel.xhtml</source>
+			<component-class>org.aries.ui.UIPanel</component-class>
+			<handler-class>org.aries.ui.MyComponentHandler</handler-class>
+		-->
+	</tag>
+
+    <!-- common -->
+	<tag><tag-name>bar</tag-name><source>common/bar.xhtml</source></tag>
+	<tag><tag-name>bullet</tag-name><source>common/bullet.xhtml</source></tag>
+	<tag><tag-name>controlbar</tag-name><source>common/controlbar.xhtml</source></tag>
+	<tag><tag-name>controlPane</tag-name><source>common/controlPane.xhtml</source></tag>
+	<tag><tag-name>label</tag-name><source>common/label.xhtml</source></tag>
+	<tag><tag-name>link</tag-name><source>common/link.xhtml</source></tag>
+	<tag><tag-name>commandLink</tag-name><source>common/commandLink.xhtml</source></tag>
+	<tag><tag-name>text</tag-name><source>common/text.xhtml</source></tag>
+	<tag><tag-name>messages</tag-name><source>common/messages.xhtml</source></tag>
+	<tag><tag-name>spacer</tag-name><source>common/spacer.xhtml</source></tag>
+	<tag><tag-name>tooltip</tag-name><source>common/tooltip.xhtml</source></tag>
+	<tag><tag-name>function</tag-name><source>common/function.xhtml</source></tag>
+	<tag><tag-name>init</tag-name><source>common/init.xhtml</source></tag>
+	<tag><tag-name>style</tag-name><source>common/style.xhtml</source></tag>
+
+    <!-- page related -->
+	<tag><tag-name>import</tag-name><source>common/page/import.xhtml</source></tag>
+	<tag><tag-name>include</tag-name><source>common/page/include.xhtml</source></tag>
+	<tag><tag-name>activate</tag-name><source>common/page/activate.xhtml</source></tag>
+	<tag><tag-name>region</tag-name><source>common/page/region.xhtml</source></tag>
+	<tag><tag-name>form</tag-name><source>common/page/form.xhtml</source></tag>
+	<tag><tag-name>header</tag-name><source>common/page/header.xhtml</source></tag>
+	<tag><tag-name>footer</tag-name><source>common/page/footer.xhtml</source></tag>
+	<tag><tag-name>module</tag-name><source>common/page/module.xhtml</source></tag>
+	
+	<!-- layout related -->
+	<tag><tag-name>borderPane</tag-name><source>common/layout/borderPane.xhtml</source></tag>
+	<tag><tag-name>borderedTab</tag-name><source>common/layout/borderedTab.xhtml</source></tag>
+	<tag><tag-name>formPane</tag-name><source>common/layout/formPane.xhtml</source></tag>
+	<tag><tag-name>groupPane</tag-name><source>common/layout/groupPane.xhtml</source></tag>
+	<tag><tag-name>indentPane</tag-name><source>common/layout/indentPane.xhtml</source></tag>
+	<tag><tag-name>insetPane</tag-name><source>common/layout/insetPane.xhtml</source></tag>
+	<tag><tag-name>layerPane</tag-name><source>common/layout/layerPane.xhtml</source></tag>
+	<tag><tag-name>layeredPane</tag-name><source>common/layout/layeredPane.xhtml</source></tag>
+	<tag><tag-name>outputPane</tag-name><source>common/layout/outputPane.xhtml</source></tag>
+	<tag><tag-name>panel</tag-name><source>common/layout/panel.xhtml</source></tag>
+	<tag><tag-name>rowPane</tag-name><source>common/layout/rowPane.xhtml</source></tag>
+	<tag><tag-name>tab</tag-name><source>common/layout/tab.xhtml</source></tag>
+	<tag><tag-name>tabPane</tag-name><source>common/layout/tabPane.xhtml</source></tag>
+	<tag><tag-name>bulletList</tag-name><source>common/layout/bulletList.xhtml</source></tag>
+
+	<!-- field related -->
+	<tag><tag-name>field</tag-name><source>common/field/field.xhtml</source></tag>
+	<tag><tag-name>fieldWrapper</tag-name><source>common/field/fieldWrapper.xhtml</source></tag>
+	<tag><tag-name>inputText</tag-name><source>common/field/inputText.xhtml</source></tag>
+	<tag><tag-name>inputSecret</tag-name><source>common/field/inputSecret.xhtml</source></tag>
+	<tag><tag-name>inputBoolean</tag-name><source>common/field/inputBoolean.xhtml</source></tag>
+	<tag><tag-name>inputInteger</tag-name><source>common/field/inputInteger.xhtml</source></tag>
+	<tag><tag-name>selectBooleanCheckbox</tag-name><source>common/field/selectBooleanCheckbox.xhtml</source></tag>
+	<tag><tag-name>selectOneMenu</tag-name><source>common/field/selectOneMenu.xhtml</source></tag>
+	<tag><tag-name>listField</tag-name><source>common/field/listField.xhtml</source></tag>
+	<tag><tag-name>fontSelectField</tag-name><source>common/field/fontSelectField.xhtml</source></tag>
+	<tag><tag-name>colorSelectField</tag-name><source>common/field/colorSelectField.xhtml</source></tag>
+	<tag><tag-name>borderSelectField</tag-name><source>common/field/borderSelectField.xhtml</source></tag>
+	<tag><tag-name>backgroundSelectField</tag-name><source>common/field/backgroundSelectField.xhtml</source></tag>
+
+	<tag><tag-name>personName</tag-name><source>common/field/personName.xhtml</source></tag>
+	<tag><tag-name>personNameField</tag-name><source>common/field/personNameField.xhtml</source></tag>
+	<tag><tag-name>phoneNumber</tag-name><source>common/field/phoneNumber.xhtml</source></tag>
+	<tag><tag-name>phoneNumberField</tag-name><source>common/field/phoneNumberField.xhtml</source></tag>
+	<tag><tag-name>emailAddress</tag-name><source>common/field/emailAddress.xhtml</source></tag>
+	<tag><tag-name>emailAddressField</tag-name><source>common/field/emailAddressField.xhtml</source></tag>
+	<tag><tag-name>streetAddress</tag-name><source>common/field/streetAddress.xhtml</source></tag>
+	<tag><tag-name>streetAddressField</tag-name><source>common/field/streetAddressField.xhtml</source></tag>
+
+    <!-- button related -->
+	<tag><tag-name>button</tag-name><source>common/button/button.xhtml</source></tag>
+	<tag><tag-name>dialogButton</tag-name><source>common/button/dialogButton.xhtml</source></tag>
+	<tag><tag-name>smallDialogButton</tag-name><source>common/button/smallDialogButton.xhtml</source></tag>
+	<tag><tag-name>saveButton</tag-name><source>common/button/saveButton.xhtml</source></tag>
+	<tag><tag-name>saveAllButton</tag-name><source>common/button/saveAllButton.xhtml</source></tag>
+
+    <!-- dialog related -->
+	<tag><tag-name>dialog</tag-name><source>common/dialog/dialog.xhtml</source></tag>
+	<tag><tag-name>dialog2</tag-name><source>common/dialog/dialog2.xhtml</source></tag>
+	<tag><tag-name>dialogControl</tag-name><source>common/dialog/dialogControl.xhtml</source></tag>
+	<tag><tag-name>dialogControl2</tag-name><source>common/dialog/dialogControl2.xhtml</source></tag>
+	<tag><tag-name>dialogHeaderBar</tag-name><source>common/dialog/dialogHeaderBar.xhtml</source></tag>
+	<tag><tag-name>dialogTitleBar</tag-name><source>common/dialog/dialogTitleBar.xhtml</source></tag>
+	<tag><tag-name>loginDialog</tag-name><source>common/dialog/loginDialog.xhtml</source></tag>
+	<tag><tag-name>registerDialog</tag-name><source>common/dialog/registerDialog.xhtml</source></tag>
+	<tag><tag-name>messageDialog</tag-name><source>common/dialog/messageDialog.xhtml</source></tag>
+	<tag><tag-name>progressDialog</tag-name><source>common/dialog/progressDialog.xhtml</source></tag>
+	<tag><tag-name>popupDialog</tag-name><source>common/dialog/popupDialog.xhtml</source></tag>
+	<tag><tag-name>themeDialog</tag-name><source>common/dialog/themeDialog.xhtml</source></tag>
+	<tag><tag-name>uploadDialog</tag-name><source>common/dialog/uploadDialog.xhtml</source></tag>
+	<tag><tag-name>plainDialog</tag-name><source>common/dialog/plainDialog.xhtml</source></tag>
+	<tag><tag-name>window</tag-name><source>common/dialog/window.xhtml</source></tag>	
+
+    <!-- menu related -->
+	<tag><tag-name>contextMenu</tag-name><source>common/menu/contextMenu.xhtml</source></tag>
+	<tag><tag-name>contextMenuGroup</tag-name><source>common/menu/contextMenuGroup.xhtml</source></tag>
+	<tag><tag-name>contextMenuItem</tag-name><source>common/menu/contextMenuItem.xhtml</source></tag>
+	<tag><tag-name>dropDownMenu</tag-name><source>common/menu/dropDownMenu.xhtml</source></tag>
+	<tag><tag-name>menuItem</tag-name><source>common/menu/menuItem.xhtml</source></tag>
+	<tag><tag-name>menuPanel</tag-name><source>common/menu/menuPanel.xhtml</source></tag>
+
+    <!-- popup related -->
+	<tag><tag-name>popup</tag-name><source>common/popup/popup.xhtml</source></tag>
+
+    <!-- table related -->
+	<tag><tag-name>table</tag-name><source>common/table/table.xhtml</source></tag>
+	<tag><tag-name>tableColumn</tag-name><source>common/table/tableColumn.xhtml</source></tag>
+	<tag><tag-name>textColumn</tag-name><source>common/table/textColumn.xhtml</source></tag>
+	<tag><tag-name>linkColumn</tag-name><source>common/table/linkColumn.xhtml</source></tag>
+
+    <!-- toolbar related -->
+	<tag><tag-name>toolbar</tag-name><source>common/toolbar/toolbar.xhtml</source></tag>
+	<tag><tag-name>toolbarGroup</tag-name><source>common/toolbar/toolbarGroup.xhtml</source></tag>
+	<tag><tag-name>toolButton</tag-name><source>common/toolbar/toolButton.xhtml</source></tag>
+	<tag><tag-name>toolItem</tag-name><source>common/toolbar/toolItem.xhtml</source></tag>
+	<tag><tag-name>toolToggleButton</tag-name><source>common/toolbar/toolToggleButton.xhtml</source></tag>
+
+    <!-- tree related -->
+	<tag><tag-name>tree</tag-name><source>common/tree/tree.xhtml</source></tag>
+	<tag><tag-name>treeNode</tag-name><source>common/tree/treeNode.xhtml</source></tag>
+
+    <!-- wizard related -->
+	<tag><tag-name>wizard</tag-name><source>common/wizard/wizard.xhtml</source></tag>
+	<tag><tag-name>wizardControl</tag-name><source>common/wizard/wizardControl.xhtml</source></tag>
+	
+    <!-- service related -->
+	<tag><tag-name>serviceCall</tag-name><source>common/service/serviceCall.xhtml</source></tag>
+	<tag><tag-name>serviceParameter</tag-name><source>common/service/serviceParameter.xhtml</source></tag>
+	<tag><tag-name>serviceResult</tag-name><source>common/service/serviceResult.xhtml</source></tag>
+</facelet-taglib>

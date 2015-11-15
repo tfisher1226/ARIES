@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:region>
+		<aries:outputPane 
+			id="#{domain}OrderListContextMenuPane">
+			
+			<aries:contextMenu 
+				mode="client"
+				id="#{domain}OrderListContextMenu"
+				target="#{domain}OrderListTable">
+	
+				<aries:contextMenuItem 
+					value="Edit Order..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{orderListManager}"
+					action="editOrder"
+					onclick="setCursorWait(); showProgress('Order Records', 'Preparing for edit...')"
+					onclickXXX="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}OrderDialog()"
+					render="#{domain}OrderDialog">
+					
+					<aries:tooltip value="Edit selected Order record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New Order..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{orderInfoManager}"
+					action="newOrder"
+					onclick="setCursorWait(); showProgress('Order Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}OrderDialog();"
+					render="#{domain}OrderDialog">
+					
+					<aries:tooltip value="Create new Order record"/>
+				</aries:contextMenuItem>
+		
+				<aries:contextMenuItem 
+					value="Remove Order..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Order Records', 'Remove Order from System', 'Do you wish to continue?', 'org.aries.removeOrder', '#{domain}OrderListPane')"
+					onclickXXX="popupPrompt('Order: {lastName}, {firstName}', 'Remove Order Record from System', 'Do you wish to continue?', 'org.aries.removeOrder', '#{domain}OrderListPane')">
+					
+					<aries:tooltip value="Remove selected Order record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

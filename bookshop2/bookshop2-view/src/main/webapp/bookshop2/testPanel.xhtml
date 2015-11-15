@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:panelGrid
+		layout="block"
+		cellpadding="0"
+		cellspacing="0"
+		columns="1"
+		columnClasses="formColumn" 
+		styleClass="formPanel"
+		style="">
+		
+		<h:outputLabel 
+			value="Enter user-name and password" 
+			style="font-size: 12" />
+
+		<div style="width: 446; height: 156; padding: 10px; margin-top: 6px; border: 1px solid #ddd; display: block">
+			<div class="vspace8" />
+			<div style="display: block">
+				<h:outputLabel 
+					value="User-name"
+					style="font-size: 12" />
+					
+				<h:inputText 
+					id="#{section}UserId" 
+					value="#{credentials.username}"
+					styleClass="formInput" 
+					style="background-color: inherit" />
+			</div>
+	
+			<div class="vspace3" />
+			<h:message for="#{section}UserId" />
+			<div class="vspace3" />
+
+			<div style="display: block">
+				<h:outputLabel 
+					value="Password"
+					style="font-size: 12" />
+					
+				<h:inputText 
+					id="#{section}Password" 
+					value="#{credentials.password}"
+					styleClass="formInput" 
+					style="background-color: inherit" />
+			</div>
+
+			<div class="vspace3" />
+			<h:message for="#{section}Password" />
+			<div class="vspace10" />
+		</div>
+	</h:panelGrid>
+</ui:composition>

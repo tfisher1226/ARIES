@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty dialogKey}">
+		<c:set var="dialogKey" value="OrganizationSelect"/> 
+	</c:if>
+
+	<c:if test="#{empty dialog}">
+		<c:set var="dialog" value="OrganizationSelectDialog"/> 
+	</c:if>
+
+	<c:if test="#{empty dialogBean}">
+		<c:set var="dialogBean" value="#{organizationSelectManager}"/> 
+	</c:if>
+
+	<c:if test="#{empty dialogRender}">
+		<c:set var="dialogRender" value="nothing"/> 
+	</c:if>
+
+	<script type="text/javascript">
+	function selectOrganization#{dialog}(rowKey, nodeId) {
+		_selectOrganization#{dialog}(rowKey, nodeId);
+	}
+	</script>
+		
+    <a4j:jsFunction 
+    	immediate="true"
+    	name="_selectOrganization#{dialog}">
+    	<a4j:param name="selectedRowKey" assignTo="#{organizationSelectManager.selectedRowKey}" />  
+    	<a4j:param name="selectedNodeId" assignTo="#{organizationSelectManager.selectedNodeId}" />  
+	</a4j:jsFunction>
+
+	<a4j:region>
+		<aries:dialog2 
+			dialogWidth="392"
+			dialogHeight="370"
+			oncomplete="#{oncomplete}">
+
+			<h:panelGroup layout="block">
+				<ui:include src="organizationSelectTree.xhtml"/>
+			</h:panelGroup>
+		</aries:dialog2>
+	</a4j:region>
+</ui:composition>

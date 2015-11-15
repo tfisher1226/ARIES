@@ -1,0 +1,175 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+		
+		<c:if test="#{empty sortMode}">
+			<c:set var="sortMode" value="single"/> 
+		</c:if>
+	
+		<c:if test="#{empty selectionMode}">
+			<c:set var="selectionMode" value="single"/> 
+		</c:if>
+	
+		<c:if test="#{empty rowClass}">
+			<c:set var="rowClass" value="tableRowXXX"/> 
+		</c:if>
+	
+		<c:if test="#{empty rowClasses}">
+			<c:set var="rowClasses" value="odd-row, even-row"/> 
+		</c:if>
+	
+		<c:if test="#{empty headerClass}">
+			<c:set var="headerClass" value="tableHeader"/> 
+		</c:if>
+	
+		<c:if test="#{empty activeClass}">
+			<c:set var="activeClass" value="tableRowActive"/> 
+		</c:if>
+	
+		<c:if test="#{empty selectedClass}">
+			<c:set var="selectedClass" value="tableRowSelected"/> 
+		</c:if>
+	
+		<c:if test="#{empty styleClass}">
+			<c:set var="styleClass" value="table"/> 
+		</c:if>
+	
+		<a4j:region>
+	 		<a4j:outputPanel 
+	 			id="#{id}TablePanel">
+	 		
+				<rich:panel 
+					styleClass="tablePanel"
+					bodyClass="tablePanelBody"
+					onclick="#{onclick}"
+					style="width: #{width}px; height: #{height}px; max-height: #{height}px; padding: 0px; border-width: 0px">
+					
+					<h:panelGroup
+						layout="block"
+						rendered="#{empty value or value.rowCount == 0}"
+						style="width: #{width}; height: 30px; padding-top: 4px; padding-left: 2px">
+						<h:outputText styleClass="formLabelSoft" value="No records to display" />
+					</h:panelGroup>
+			
+					<a4j:outputPanel 
+						rendered="#{not empty value and value.rowCount > 0}">
+						
+						<rich:dataTable 
+							id="#{id}"
+							var="rowItem"
+							rowKeyVar="index"
+							value="#{value}" 
+							rows="#{rowCount}"
+							selectionMode="#{selectionMode}"
+							onrowmouseover="highLightRow(this); #{onrowmouseover}"
+							onrowmouseout="unhighLightRow(this); #{onrowmouseout}"
+							onrowmousedown="selectRow(this); #{onrowmousedown}"
+							onrowclick="#{onrowclick}"
+							rowClasses="tableRowOdd, tableRowEven"
+							headerClass="#{headerClass}" 
+							styleClass="table"
+							style="width: #{width-17}px; height: auto; max-height: #{height}px; #{style}">
+							
+							<ui:insert/>
+							
+							<!--  
+							activeClass="#{activeClass}"
+							selectedClass="#{selectedClass}"
+			
+							<a4j:ajax 
+								event="rowclick"
+								execute="@none"
+								render="@none"
+								immediate="true"
+								bypassUpdates="true">
+								<a4j:param value="#{rowItem.record.id}" assignTo="#{memberListManager.selectedMemberId}" noEscape="false"/>
+							</a4j:ajax>
+			
+							onbegin="selectMember('#{index}', '#{rowItem.record.id}')">
+							rendered="#{memberListManager.memberList.rowCount > 0}"
+							onRowMouseOver="memberListTableHighlighter.processTableRowMouseOver(this)"
+							onRowMouseOut="memberListTableHighlighter.processTableRowMouseOut(this)"
+							<rich:componentControl 
+								event="rowcontextmenu"
+								target="membershipContextMenu#{tabId}" operation="show">
+								<f:param value="#{rowItem.record.firstName}" name="firstName"/>
+								<f:param value="#{rowItem.record.lastName}" name="lastName"/>
+							</rich:componentControl>
+							-->
+			
+							<!--  
+							<a4j:ajax 
+								event="onRowContextMenu" 
+								immediate="true"
+								execute="@none"
+								bypassUpdates="true"
+								limitRender="true"
+								oncomplete="showMemberListContextMenu(event, #{rowItem.record.lastName}, #{rowItem.record.firstName}, #{tabId})">
+								<a4j:param value="#{rowItem.record}" assignTo="#{member}"/>
+							</a4j:ajax>
+							-->
+			
+							<!--  					
+							<a4j:ajax 
+								event="onRowDblClick" 
+								action="#{memberInfoManager.editMember}"
+								onsubmit="setCursorWait(); showProgress('#{rowItem.record.lastName}, #{rowItem.record.firstName}', 'Preparing for edit...')"
+								oncomplete="setCursorDefault(this); showMemberDialog(); hideProgress()"
+								render="memberDialog">
+								<f:setPropertyActionListener target="#{memberInfoManager.member}" value="#{rowItem.record}" />
+							</a4j:ajax>
+			
+							<a4j:ajax 
+								event="onRowMouseDown" 
+								immediate="true"
+								execute="@none"
+								bypassUpdates="true"
+								limitRender="true"
+								onsubmit="memberListTableHighlighter.processTableRowMouseDown(this)">
+								<f:setPropertyActionListener target="#{memberInfoManager.member}" value="#{rowItem.record}" />
+							</a4j:ajax>
+							-->
+				
+							<!--  
+							<f:facet name="footer">
+								<rich:datascroller 
+									id="memberListTableScroller" 
+									pagesVar="pages"
+									fastControls="auto"
+									renderIfSinglePage="false" 
+									tableClass="tableScroller"
+									style="background-color: white">
+				                    <f:facet name="pages">
+				                        <h:panelGroup>
+				                        	<aries:spacer width="20px"/>
+				                            <h:outputText value=" Page "/>
+				                            <h:selectOneMenu value="#{memberListManager.memberListPageIndex}" 
+				                                onchange="#{rich:component('memberListTableScroller')}.switchToPage(this.value)">
+				                                <f:selectItems value="#{memberListManager.pagesToScroll}" />
+				                            </h:selectOneMenu>
+				                            <h:outputText value=" of #{pages} "/>
+				                        	<aries:spacer width="20px"/>
+				                        </h:panelGroup>
+				                    </f:facet>
+								</rich:datascroller>
+							</f:facet>
+							-->
+						</rich:dataTable>
+					</a4j:outputPanel>
+				</rich:panel>
+			</a4j:outputPanel>
+		</a4j:region>
+	</aries:tag>
+</ui:composition>

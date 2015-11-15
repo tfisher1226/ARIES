@@ -1,0 +1,15 @@
+action.package=bookshop2.buyer.client.orderBooks
+action.sources=/bookshop2-buyer-client/src/main/java
+eclipse.preferences.version=1
+model.package=bookshop2.buyer.client.orderBooks
+model.sources=/bookshop2-buyer-client/src/main/java
+seam.ear.project=bookshop2-buyer-view
+seam.ejb.project=bookshop2-buyer-client
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/bookshop2-buyer-view/src/main/webapp
+seam.test.creating=false
+seam.test.project=bookshop2-buyer-view
+test.package=org.domain.bookshop2buyerview.test
+test.sources=/bookshop2-buyer-view/src/main/java

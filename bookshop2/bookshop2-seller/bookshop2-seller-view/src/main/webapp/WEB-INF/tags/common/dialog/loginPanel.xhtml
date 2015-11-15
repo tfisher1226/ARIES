@@ -1,0 +1,113 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:groupPane
+		width="460px" 
+		label="Enter user-name and password">
+
+		<!--  						
+		<h:inputText 
+			id="#{section}UserId" 
+			value="#{credentials.username}"
+			styleClass="90px" 
+			style="width: 100%" />
+			-->
+
+		<aries:inputTextField 
+			id="#{section}UserId" 
+			label="User-name" 
+			labelWidth="90px" 
+			value="#{credentials.username}" 
+			onkeydown="return processKeyDownFor#{dialog}(event.keyCode)">
+			<f:validateRequired />
+		</aries:inputTextField>
+
+		<h:message for="#{section}UserId" style="color:red" />
+
+		<aries:inputSecretField 
+			id="#{section}Password" 
+			label="Password" 
+			labelWidth="90px"
+			value="#{credentials.password}" 
+			onkeydown="return processKeyDownFor#{dialog}(event.keyCode)">
+			<f:validateRequired />
+		</aries:inputSecretField>
+
+		<h:message for="#{section}Password" style="color:red" />
+
+		<aries:inputTextField 
+			id="#{section}KeyFile" 
+			label="Key-file" 
+			labelWidth="90px" 
+			readonly="true"
+			value="#{uploadManager.fileName}" />
+
+		<aries:selectBooleanCheckboxField
+			id="#{section}RememberMe" 
+			label="Remember"
+			labelWidth="90px" 
+			value="#{rememberMe.enabled}" />
+	</aries:groupPane>
+
+		<!--  
+		<div class="groupLabel text14">Enter user-name and password</div>
+		<a4j:outputPanel id="loginPanel" styleClass="groupPanel" layout="block" style="background-color: inherit">
+			<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 10px; background-color: inherit">		
+				<aries:spacer height="6"/>
+	
+				<h:panelGrid columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 3px">
+					<h:outputLabel id="loginLabel" styleClass="formLabel" for="loginField" style="display: block; width: 90px">User-name</h:outputLabel>
+					<h:inputText id="loginField" styleClass="formInput" value="#{credentials.username}" style="width: 316px; background-color: inherit" 
+						onkeydown="return processKeyDownFor#{dialog}(event.keyCode)" />
+				</h:panelGrid>
+		
+				<aries:spacer height="2"/>
+				<h:panelGrid columns="2" columnClasses="formColumnAlignBottom, formColumnAlignMiddle" style="margin: 3px; background-color: inherit">
+					<h:outputLabel id="passwordLabel" styleClass="formLabel" for="passwordField" style="display: block; width: 90px">Password</h:outputLabel>
+					<h:inputSecret id="passwordField" styleClass="formInput" value="#{credentials.password}" style="width: 316px; background-color: inherit"
+						onkeydown="return processKeyDownFor#{dialog}(event.keyCode)" />
+				</h:panelGrid> 
+	
+				<aries:spacer height="2"/>
+				<h:panelGrid columns="4" columnClasses="formColumnAlignBottom, formColumnAlignMiddle, formColumm, formColumm" style="margin: 3px; background-color: inherit">
+					<h:outputLabel id="keyFileLabel" disabled="true" styleClass="formLabel" for="keyFileField" style="display: block; width: 90px">Key-file</h:outputLabel>
+					<h:inputText id="keyFileField" disabled="true" styleClass="formInput" value="#{uploadManager.fileName}" style="width: 290px; margin-right: 4px; background-color: inherit"/>
+
+					<h:panelGroup layout="block" styleClass="buttonPane">
+						<aries:dialogButton
+							mode="ajax"
+							manager="#{globals}"
+							action="doNothing"
+							enabled="false"
+							icon="/icons/common/Search16.gif"
+							iconDisabled="/icons/common/Search16.gif"
+							onclick="setCursorWait(this)"
+							oncomplete="setCursorDefault(); showUploadDialog()"
+							render="loginUploadDialog" 
+							style="" />
+					</h:panelGroup>
+				</h:panelGrid> 
+	
+				<h:panelGrid columns="2" style="margin: 3px; margin-top: 10px">
+					<h:outputLabel id="superUserLabel" for="superUserField" styleClass="loginLabel text12" style="display: block; width: 90px">Super-user</h:outputLabel>
+					<h:selectBooleanCheckboxField id="superUserField" styleClass="formCheckbox" value="#{globals.superUser}"/>
+				</h:panelGrid>
+	
+				<aries:spacer height="2"/>
+				<h:panelGrid columns="2" style="margin: 3px">
+					<h:outputLabel id="rememberMeLabel" for="rememberMeField" styleClass="formLabel" style="display: block; width: 90px">Remember</h:outputLabel>
+					<h:selectBooleanCheckboxField id="rememberMeField" styleClass="formCheckbox" value="#{rememberMe.enabled}" style=""/>
+				</h:panelGrid> 
+			</h:panelGrid> 
+		</a4j:outputPanel>
+		-->
+</ui:composition>

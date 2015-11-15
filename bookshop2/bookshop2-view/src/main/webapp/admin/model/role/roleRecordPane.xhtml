@@ -1,0 +1,35 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="roleRecordPane">
+
+		<aries:label
+			height="30"
+			paddingLeft="8px"
+			value="Role Record View"
+			backgroundColor="inherit" />
+		
+		<aries:tabPane>
+			<ui:param name="width" value="#{width-2}" />
+			<ui:param name="height" value="#{height-80}" />
+
+			<aries:tab
+				label="Role List"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="../role/roleListPane.xhtml">
+					<ui:param name="manager" value="#{roleListManager}" />
+				</ui:include>
+			</aries:tab>
+			
+			<aries:tab
+				label="Role Structure"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="roleStructurePane.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

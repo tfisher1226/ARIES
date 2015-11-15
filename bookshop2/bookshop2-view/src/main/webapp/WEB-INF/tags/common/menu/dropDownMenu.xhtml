@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty disabled}">
+			<c:set var="disabled" value="false"/> 
+		</c:if>
+		
+		<c:if test="#{empty hideDelay}">
+			<c:set var="hideDelay" value="100" /> 
+		</c:if>
+	
+		<c:if test="#{empty mode}">
+			<c:set var="mode" value="ajax" /> 
+		</c:if>
+	
+		<rich:dropDownMenu 
+			rendered="true"
+			disabled="#{disabled}"
+			mode="#{mode}"
+			hideDelay="#{hideDelay}" 
+			styleClass="toolbarMenu" 
+			style="padding: 2px 6px; text-align: left">
+			
+			<f:facet name="label">
+				<h:panelGroup layout="block" style="">
+					<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignBottom, formColumnAlignBottom" style="border-collapse: collapse">
+						<c:if test="#{empty icon}">
+							<aries:spacer width="3" height="16"/>
+						</c:if>
+						<c:if test="#{not empty icon}">
+							<h:panelGroup layout="block" style="padding: 2px; padding-right: 4px; background-color: inherit">
+								<h:graphicImage library="images" name="#{icon}" />
+							</h:panelGroup>
+						</c:if>
+						<c:if test="#{not empty label}">
+							<h:panelGroup layout="block" style="margin-bottom: 2px; background-color: inherit">
+								<h:outputText value="#{label}" styleClass="toolLabel" style="padding-right: 2px; vertical-align: bottom; #{labelStyle}; white-space: nowrap"/>
+							</h:panelGroup>
+						</c:if>
+					</h:panelGrid>
+				</h:panelGroup>
+			</f:facet>
+	
+			<ui:insert/>
+		</rich:dropDownMenu>
+	</aries:tag>
+</ui:composition>

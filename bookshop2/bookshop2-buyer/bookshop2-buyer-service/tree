@@ -1,0 +1,34 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building bookshop2-buyer-service 0.0.1-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[WARNING] The POM for org.jboss.naming:jnp-client:jar:5.0.5.Final is missing, no dependency information available
+[WARNING] The POM for org.jboss.naming:jnpserver:jar:5.0.5.Final is missing, no dependency information available
+[WARNING] The POM for org.eclipse.wst:wsdl:jar:1.2.105 is missing, no dependency information available
+[WARNING] The POM for org.jboss.seam:jboss-seam:jar:2.3.0.Final is missing, no dependency information available
+[WARNING] The POM for org.jboss.seam:jboss-seam-mail:jar:2.3.0.Final is missing, no dependency information available
+[WARNING] The POM for org.jboss.seam:jboss-seam-debug:jar:2.3.0.Final is missing, no dependency information available
+[WARNING] The POM for org.jboss.el:jboss-el:jar:1.0_02.CR6 is missing, no dependency information available
+[WARNING] The POM for org.drools:drools-api:jar:5.0.1 is missing, no dependency information available
+[WARNING] The POM for org.drools:drools-core:jar:5.0.1 is missing, no dependency information available
+[WARNING] The POM for org.drools:drools-compiler:jar:5.0.1 is missing, no dependency information available
+[WARNING] The POM for org.drools:drools-decisiontables:jar:5.0.1 is missing, no dependency information available
+Downloading: http://repository.jboss.org/maven2/apache-xerces/xml-apis/2.9.1/xml-apis-2.9.1.pom
+Downloading: http://repository.jboss.org/maven2/apache-xerces/xercesImpl/2.9.1/xercesImpl-2.9.1.pom
+Downloading: http://repository.jboss.org/maven2/wutka-dtdparser/dtdparser121/1.2.1/dtdparser121-1.2.1.pom
+Downloading: http://repository.jboss.org/maven2/sun-jaxb/jaxb-api/2.1.9/jaxb-api-2.1.9.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.053s
+[INFO] Finished at: Thu Nov 07 18:06:12 PST 2013
+[INFO] Final Memory: 24M/618M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project bookshop2-buyer-service: Could not resolve dependencies for project bookshop2:bookshop2-buyer-service:ejb:0.0.1-SNAPSHOT: Failed to collect dependencies for [org.aries:admin-model:jar:0.0.1-SNAPSHOT (provided), bookshop2:bookshop2-model:jar:0.0.1-SNAPSHOT (provided), bookshop2:bookshop2-model:jar:tests:0.0.1-SNAPSHOT (test), bookshop2:bookshop2-buyer-client:jar:0.0.1-SNAPSHOT (provided), bookshop2:bookshop2-buyer-client:jar:tests:0.0.1-SNAPSHOT (test), bookshop2:bookshop2-seller-client:jar:0.0.1-SNAPSHOT (provided), org.aries.pom:aries-platform-service-layer:pom:0.0.1-SNAPSHOT (provided), org.aries.pom:aries-platform-service-layer-test:pom:0.0.1-SNAPSHOT (test), org.aries.pom:aries-platform-client-layer:pom:0.0.1-SNAPSHOT (provided), org.aries.pom:aries-platform-client-layer-test:pom:0.0.1-SNAPSHOT (test), org.aries:tx-manager-api:pom:0.0.1-SNAPSHOT (provided), org.aries:tx-manager-test-api:pom:0.0.1-SNAPSHOT (test), org.aries.pom:arquillian:pom:0.0.1-SNAPSHOT (test), org.jboss.as:jboss-as-arquillian-container-managed:jar:7.1.1.Final (test), org.jboss.arquillian.protocol:arquillian-protocol-servlet:jar:1.1.1.Final (test), xml-apis:xml-apis:jar:1.3.04 (compile)]: No versions available for org.eclipse.debug:org.eclipse.debug.core:jar:[3.6.0,4.0.0) within specified range -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException

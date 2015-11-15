@@ -1,0 +1,19 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:outputPanel
+		id="#{section}ReceiptListPane"
+		layout="block">
+		
+		<ui:param name="element" value="Receipt" />
+		<ui:param name="instanceName" value="receipt" />
+		<ui:param name="unit" value="#{domain}Receipt" />
+		
+		<ui:include src="receiptListToolbar.xhtml" />
+		<ui:include src="receiptListTable.xhtml" />
+	</a4j:outputPanel>
+</ui:composition>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging-deployment
+	xmlns="urn:jboss:messaging-deployment:1.0">
+
+	<hornetq-server>
+		<jms-destinations>
+
+			<!-- "Public" channel destinations -->
+
+			<jms-queue name="public_bookshop2_buyer_order_books_queue">
+				<entry name="/queue/public_bookshop2_buyer_order_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/public_bookshop2_buyer_order_books_queue" />
+			</jms-queue>
+
+			<jms-queue name="public_bookshop2_buyer_order_accepted_queue">
+				<entry name="/queue/public_bookshop2_buyer_order_accepted_queue" />
+				<entry name="java:jboss/exported/jms/queue/public_bookshop2_buyer_order_accepted_queue" />
+			</jms-queue>
+
+			<jms-queue name="public_bookshop2_buyer_purchase_accepted_queue">
+				<entry name="/queue/public_bookshop2_buyer_purchase_accepted_queue" />
+				<entry name="java:jboss/exported/jms/queue/public_bookshop2_buyer_purchase_accepted_queue" />
+			</jms-queue>
+
+			<jms-queue name="public_bookshop2_buyer_purchase_rejected_queue">
+				<entry name="/queue/public_bookshop2_buyer_purchase_rejected_queue" />
+				<entry name="java:jboss/exported/jms/queue/public_bookshop2_buyer_purchase_rejected_queue" />
+			</jms-queue>
+
+			<jms-queue name="public_bookshop2_buyer_order_rejected_queue">
+				<entry name="/queue/public_bookshop2_buyer_order_rejected_queue" />
+				<entry name="java:jboss/exported/jms/queue/public_bookshop2_buyer_order_rejected_queue" />
+			</jms-queue>
+
+			<jms-queue name="public_bookshop2_buyer_purchase_books_queue">
+				<entry name="/queue/public_bookshop2_buyer_purchase_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/public_bookshop2_buyer_purchase_books_queue" />
+			</jms-queue>
+
+			<!-- "Protected" channel destinations -->
+
+			<jms-queue name="protected_bookshop2_seller_order_books_queue">
+				<entry name="/queue/protected_bookshop2_seller_order_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_order_books_queue" />
+			</jms-queue>
+
+			<jms-queue name="protected_bookshop2_seller_books_available_queue">
+				<entry name="/queue/protected_bookshop2_seller_books_available_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_books_available_queue" />
+			</jms-queue>
+
+			<jms-queue name="protected_bookshop2_seller_books_unavailable_queue">
+				<entry name="/queue/protected_bookshop2_seller_books_unavailable_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_books_unavailable_queue" />
+			</jms-queue>
+
+			<jms-queue name="protected_bookshop2_seller_purchase_books_queue">
+				<entry name="/queue/protected_bookshop2_seller_purchase_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_purchase_books_queue" />
+			</jms-queue>
+
+			<jms-queue name="protected_bookshop2_seller_shipment_scheduled_queue">
+				<entry name="/queue/protected_bookshop2_seller_shipment_scheduled_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_shipment_scheduled_queue" />
+			</jms-queue>
+
+			<jms-queue name="protected_bookshop2_seller_shipment_complete_queue">
+				<entry name="/queue/protected_bookshop2_seller_shipment_complete_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_shipment_complete_queue" />
+			</jms-queue>
+
+			<jms-queue name="protected_bookshop2_seller_shipment_failed_queue">
+				<entry name="/queue/protected_bookshop2_seller_shipment_failed_queue" />
+				<entry name="java:jboss/exported/jms/queue/protected_bookshop2_seller_shipment_failed_queue" />
+			</jms-queue>
+
+			<!-- "Shipment" channel destinations -->
+
+			<jms-queue name="shipment_bookshop2_shipper_ship_books_queue">
+				<entry name="/queue/shipment_bookshop2_shipper_ship_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/shipment_bookshop2_shipper_ship_books_queue" />
+			</jms-queue>
+
+			<!-- "Inventory" channel destinations -->
+			
+			<jms-queue name="inventory_bookshop2_supplier_book_orders_manager_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_book_orders_manager_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_book_orders_manager_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_query_books_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_query_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_query_books_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_reserve_books_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_reserve_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_reserve_books_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_reserved_books_manager_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_reserved_books_manager_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_reserved_books_manager_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_ship_books_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_ship_books_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_ship_books_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_shipment_scheduled_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_shipment_scheduled_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_shipment_scheduled_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_shipment_complete_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_shipment_complete_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_shipment_complete_queue" />
+			</jms-queue>
+
+			<jms-queue name="inventory_bookshop2_supplier_shipment_failed_queue">
+				<entry name="/queue/inventory_bookshop2_supplier_shipment_failed_queue" />
+				<entry name="java:jboss/exported/jms/queue/inventory_bookshop2_supplier_shipment_failed_queue" />
+			</jms-queue>
+			
+			<!-- "Test" channel destinations -->
+
+			<jms-queue name="test_message_domain_test_destination_queue_a">
+				<entry name="/queue/test_message_domain_test_destination_queue_a" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_a" />
+			</jms-queue>
+			
+			<jms-queue name="test_message_domain_test_destination_queue_b">
+				<entry name="/queue/test_message_domain_test_destination_queue_b" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_b" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_c">
+				<entry name="/queue/test_message_domain_test_destination_queue_c" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_c" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_d">
+				<entry name="/queue/test_message_domain_test_destination_queue_d" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_d" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_e">
+				<entry name="/queue/test_message_domain_test_destination_queue_e" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_e" />
+			</jms-queue>
+
+			<jms-queue name="test_message_domain_test_destination_queue_f">
+				<entry name="/queue/test_message_domain_test_destination_queue_f" />
+				<entry name="java:jboss/exported/jms/queue/test_message_domain_test_destination_queue_f" />
+			</jms-queue>
+		</jms-destinations>
+	</hornetq-server>
+</messaging-deployment>

@@ -1,0 +1,339 @@
+import admin.admin_service.aries;
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_persistence.aries;
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+import bookshop.bookshop_supplier_persistence.aries;
+
+
+protocol Bookshop2 {
+	set domain("bookshop2");
+	set namespace("bookshop2");
+
+	//like travel agent
+    participant Buyer {
+        add channel("Public");
+		set namespace("buyer");
+
+        receive orderBooks(OrderRequest orderRequest) {
+        	join transaction("bookReservation");
+        	set synchronous(true);
+        	
+            invoke Seller.orderBooks(orderRequest) {
+                message OrderAccepted: {
+                    purchaseBooks(books);
+                }
+                message OrderRejected: {
+                    //reply $response;
+                }
+            }
+        }
+
+        purchaseBooks(PurchaseRequest purchaseRequest) {
+            invoke Seller.purchaseBooks(purchaseRequest) {
+                message PurchaseAccepted: {
+                    //reply $response;
+                }
+                message PurchaseRejected: {
+                    //reply $response;
+                }
+            }
+        }
+    }
+
+	//like airline co.
+    participant Seller {
+		add channel("Protected");
+		set namespace("seller");
+
+        receive orderBooks(OrderRequest orderRequest) {
+          	join transaction("bookReservation");
+       		//bookCache.addToAvailableBooks(orderRequest.books);
+
+            invoke SupplierGroup.queryBooks(orderRequest) {
+            	set timeout(3m);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BooksAvailable: {
+					bookCache.addToAvailableBooks(books);
+					send SupplierGroup.reserveBooks(books);
+					reply OrderAccepted(books);
+                }
+                
+                message BooksUnavailable: {
+                    reply OrderRejected(books);
+                }
+				
+                timeout: {
+                    reply OrderAccepted;
+                    //reply OrderRejected;
+                }
+
+                exception: {
+                    reply OrderRejected;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+			reply PurchaseAccepted;
+		}
+		
+		/*
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+        	join transaction("bookReservation");
+
+			execute {
+            	set timeout(3m);
+            	set concurrent(true);
+
+            	Agent.purchaseBooks(purchaseRequest) {
+                    message PurchaseRejected: {
+            		    send Supplier.cancelShipment();
+                        abort();
+                    }
+                }
+            	
+            	Supplier.shipBooks(shipmentRequest) {
+	            	set timeout(3m);
+	            	set retry(3, 1h);
+				    message ShipmentFailed: {
+                        retry Supplier.shipBooks(shipmentRequest);
+				    }
+            	}
+            	
+				done: {
+            		reply PurchaseAccepted;
+                    commit;
+                }
+
+				cancel: {
+            		send Agent.cancelPayment();
+            		send Supplier.cancelShipment();
+                    abort();
+				}
+                
+				exception: {
+                    cancel();
+				}
+
+                abort() {
+            		reply PurchaseRejected;
+                    rollback;
+                }
+			}
+
+            rescheduleShipment(ShipmentRequest shipmentRequest) {
+            	send Shipper.shipBooks(shipmentRequest) {
+	            	set timeout(3m);
+	            	set retry(3, 1h);
+            	
+                    message ShipmentScheduled: {
+                    }
+                    
+                    message ShipmentFailed: {
+                    }
+                }
+            }
+        }
+        */
+        
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    User user; 
+			    List<Book> bookOrders; 
+			    Set<Book> availableBooks; 
+			    Set<Book> unavailableBooks; 
+		    }
+	    }
+    }
+
+	//call this network
+	//make so one can "add" participants
+    group SupplierGroup {
+        set participant("Supplier");
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        add channel("Inventory");
+        //add channel("Shipment");
+		set namespace("supplier");
+
+        //receive queryBooks(OrderRequest orderRequest) over Inventory {
+        
+        receive queryBooks(OrderRequest orderRequest) {
+        	join transaction("bookReservation");
+
+		    List<Book> books = orderRequest.getBooks();
+		    List<Book> booksInStock = supplierOrderCacheManager.getMatchingBooksInStock(books);
+		    if (booksInStock.size() == 0) {
+			    replyBooksUnavailable(books);
+		    } else {
+			    replyBooksAvailable(booksInStock);
+		    }
+/*
+            Iterator<Book> iterator = booksInStock.iterator();
+            while (iterator.hasNext()) {
+            	Book book = iterator.next();
+            	shipper.scheduleShipment(book);
+            }
+
+			for (int i=0; i < booksInStock.size(); i++) {
+				Book book = booksInStock.get(i);
+				System.out.println(">>>" + book.getName());
+			}
+
+           	List<Book> booksInStock = SupplierCache.getFromBooksInStock(orderRequest.books);
+           	//reply BooksAvailable(booksInStock);
+
+            Iterator<Book> iterator = booksInStock.iterator();
+            while (iterator.hasNext()) {
+            	Book book = iterator.next();
+            	shipper.scheduleShipment(book);
+            }
+
+            if (booksInStock.size() > 0) {
+           	    reply BooksAvailable(booksInStock);
+                System.out.println();
+            } else if (booksInStock == null) {
+                if (booksInStock == null)
+                    System.out.println();
+            } else {
+                cancelBooks(books);
+           	    reply BooksUnavailable(books);
+            }
+*/
+        }
+
+        receive reserveBooks(ReservationRequest reservationRequest) throws ReservationAbortedException {
+            join transaction("bookReservation");
+
+        	//BookOrderLog.startBookOrder(reservationRequest);
+		    List<Book> books = reservationRequest.getBooks();
+        	SupplierOrderCache.removeFromBooksInStock(books);
+        	BookInventory.addToReservedBooks(books);
+        }
+
+        //receive shipBooks(ShipmentRequest shipmentRequest) over Shipment, Inventory {
+        //   invoke Shipper.shipBooks(shipmentRequest) over Shipment {
+
+		//@Transaction("bookReservation")
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+        	join transaction("bookReservation");
+        	//BookOrderLog.update(shipmentRequest);
+
+            invoke Shipper.shipBooks(shipmentRequest) {
+				set transaction(required); 
+				set timeout(5m); 
+
+                message ShipmentScheduled: {
+					//BookOrderLog.update(shipmentScheduled);
+                    Shipment shipment = shipmentScheduled.getShipment();
+					reply ShipmentScheduled(shipment);
+				}
+				
+                message ShipmentComplete: {
+                    //BookOrderLog.update(shipmentComplete);
+                    Shipment shipment = shipmentComplete.getShipment();
+                    List<Order> orders = shipment.getOrders();
+                    BookOrderLog.addToBookOrders(orders);
+                	//BookOrderLog.log(Payment);
+                	post ShipmentComplete(orders);
+                	//reply ShipmentComplete;
+	            }
+	            
+                message ShipmentFailed: {
+					//BookOrderLog.update(shipmentFailed);
+                    Shipment shipment = shipmentFailed.getShipment();
+                	reply ShipmentFailed(shipment);
+				}
+
+                exception: {
+					//BookOrderLog.update(exception);
+                	reply ShipmentFailed(exception.message);
+                }
+	        }
+		}
+		
+		/*
+		schedule {
+			invoke 
+		}
+		*/
+		
+		//global
+		cache SupplierOrderCache { 
+			set scope(application); 
+			set transaction(required); 
+			set backingStore(BookOrderLog);
+			items {
+				Map<String, Book> booksInStock;
+                /*
+				List<Book> booksInStock {
+					index(title);
+					index(author);
+				}
+                */
+			}
+		}
+				
+		persist BookInventory {
+			add role("supplier");
+			set scope(application); 
+		    add role("administrator");
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				Map<String, Book> reservedBooks {
+					index(key);
+					index(title);
+					index(author);
+				}
+			}
+		}
+
+		persist BookOrderLog {
+			add role("supplier");
+			set scope(application); 
+		    add role("administrator");
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				List<Order> bookOrders;
+			}
+		}
+    }
+
+    participant Shipper {
+        add channel("Shipment");
+		set namespace("shipper");
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+        	join transaction("bookReservation");
+
+        	//@Timeout(1hour)
+        	listen shipmentScheduled(shipmentRequest) {
+        		reply ShipmentScheduled;
+			}
+
+        	//@Timeout(2days)
+        	listen shipmentConfirmation(shipmentRequest) {
+	            reply ShipmentComplete;
+	            //reply ShipmentFailed;
+	            //reply ShipmentComplete[Summary, Invoice, Receipt];
+        	}
+        }
+    }
+
+}
+

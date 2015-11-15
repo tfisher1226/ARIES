@@ -1,0 +1,60 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<!-- TODO set only if not provided by parent -->
+	<ui:param name="type" value="UserList" />
+	
+	<!-- TODO set only if not provided by parent -->
+	<ui:param name="manager" value="#{userListManager}" />
+	
+	<aries:region
+		id="#{type}Module"
+		parent="#{section}"
+		domain="#{type}"
+		section="#{type}Dialog"
+		rendered="#{manager.visible}">
+		
+		<aries:form
+			id="#{section}Form">
+			
+			<a4j:jsFunction 
+			 	name="launchUserListDialog"
+		    	execute="@this"
+		    	immediate="true" 
+		    	bypassUpdates="true"
+		    	limitRender="true"
+		    	action="#{manager.show}"
+				onbegin="setCursorWait(); showProgress('', 'User Records', 'Retrieving current records...')"
+				oncomplete="setCursorDefault(event.source); hideProgress(); showUserListDialog()"
+				render="#{type}Module, #{type}Dialog">
+				
+				<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
+				<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
+				<a4j:param name="targetField" assignTo="#{manager.targetField}" />
+			</a4j:jsFunction>
+	
+			<aries:dialog
+				id="#{section}">
+				
+				<!-- Container -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- Content -->
+					<ui:include src="userListPane.xhtml">
+						<ui:param name="itemManager" value="#{userInfoManager}" />
+						<ui:param name="listManager" value="#{userListManager}" />
+					</ui:include>
+				</aries:borderPane>
+			</aries:dialog>
+		</aries:form>
+	</aries:region>
+</ui:composition>

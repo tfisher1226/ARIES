@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="#{domain}ShipmentListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+			
+			<aries:toolButton
+				id="#{domain}ShipmentListNewButton"
+				value="#{element}..."
+				tooltip="Create new #{element} Record"
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				enabled="#{securityGuard.canCreate('shipment')}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="executeNewShipment()"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}ShipmentListEditButton"
+				value="Shipment..."
+				tooltip="Open details for selected record"
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canOpen('shipment')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}Open#{element}(); return true"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}ShipmentListRemoveButton"
+				value="Shipment..."
+				tooltip="Remove selected Shipment Record"
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canDelete('shipment')}"
+				mode="ajax"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				manager="#{listManager}"
+				action="removeShipment"
+				onclickXX="alert('#{domain}')"
+				onclick="popupPrompt('Shipment List', 'Remove selected Shipment record from System', 'Do you wish to continue?', 'org.aries.removeShipment', '#{section}ShipmentListPane')"
+				rendered="#{empty domain}"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}ShipmentListSelectButton"
+				value="Shipment..."
+				tooltip="Select Shipment Record(s)"
+				icon="/icons/common/Search16.gif"
+				iconDisabled="/icons/common/SearchDisabled16.gif"
+				enabled="#{securityGuard.canOpen('shipment')}"
+				mode="client"
+				execute="@none"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				onclickXX="alert('#{domain}')"
+				onclick="show#{domain}ShipmentSelectDialog()"
+				render="#{domain}ShipmentSelectDialog"
+				rendered="#{domain eq 'ShipmentDialog'}"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="#{domain}ShipmentListRefreshButton"
+				tooltip="Re-read information from server"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				enabled="#{securityGuard.canOpen('shipment')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}RefreshShipmentList()"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

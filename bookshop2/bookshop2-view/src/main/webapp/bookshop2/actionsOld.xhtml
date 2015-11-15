@@ -1,0 +1,83 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:outputScript>
+
+	function showNewPage(area) {
+		//document.location.href = '#{facesContext.externalContext.requestContextPath}/bookshop2/handler.jsf?area=' + area + '&amp;skin=#{skinBean.skin}'
+	}
+	
+	function showHomePane() {
+		showMainSection('home');
+	}
+	           
+	function showOperationPane() {
+		showMainSection('operation');
+	}
+
+	function showOperationSection(section) {
+		#{rich:component('operation-viewer-pane')}.switchToItem(section);
+	}
+
+	function showConfigurationPane() {
+		showMainSection('configuration');
+	}
+	           
+	function showConfigurationSection(section) {
+		#{rich:component('configuration-viewer-pane')}.switchToItem(section);
+	}
+
+
+	function showOverviewSection(parent) {
+		showMainSection('overview');
+	}
+
+	function showApplicationsSection(parent) {
+		showMainSection('applications');
+	}
+
+	function showElementsSection(parent) {
+		showMainSection('elements');
+	}
+
+	function showServicesSection(parent) {
+		showMainSection('services');
+	}
+
+	function showMessagingSection(parent) {
+		showMainSection('messaging');
+	}
+
+	function showCachingSection(parent) {
+		showMainSection('caching');
+	}
+	
+	function showPersistenceSection(parent) {
+		showMainSection('persistence');
+	}
+
+	function showMainSection(sectionName) {
+		#{rich:component('bookshop2ContentPane')}.switchToItem(sectionName);
+	}
+
+	function showPublicPage() {
+		window.location.href = '/bookshop2/public.seam'
+	}
+
+	function showBookshop2ModelPage(section) {
+		alert(9);
+		//alert('#{facesContext.externalContext.requestContextPath}/bookshop2/bookshop2-model/' + section + '.seam');
+		//document.location.href = '#{facesContext.externalContext.requestContextPath}/bookshop2/bookshop2-model/' + section + '.seam'
+	}
+	
+	</h:outputScript>
+</ui:composition>

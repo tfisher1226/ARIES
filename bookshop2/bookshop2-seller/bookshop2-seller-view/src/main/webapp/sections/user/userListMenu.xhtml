@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript" language="javascript">
+	function showUserListContextMenu(event, lastName, firstName) {
+		var menuId = 'userListMenu';
+		var menu = #{rich:component(menuId)};
+		menu.doShow(event, {
+			'lastName': lastName, 
+			'firstName': firstName
+		});
+	}
+	</script>
+
+	<a4j:region>
+		<a4j:outputPanel 
+			id="userListContextMenuPanel">
+			
+			<aries:contextMenu 
+				mode="client"
+				id="userListContextMenu"
+				target="userListTable">
+	
+				<aries:contextMenuItem 
+					value="View Record..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{userListManager}"
+					action="editUser"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); showUserDialog()"
+					render="UserDialog">
+					<aries:tooltip value="Edit selected record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New Record..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{userInfoManager}"
+					action="newUser"
+					onclick="setCursorWait(); showProgress('User Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); showUserDialog()"
+					render="UserDialog">
+					<aries:tooltip value="Create new record"/>
+				</aries:contextMenuItem>
+		
+		<!-- 
+					value="Set as archived..." 
+					value="Set as visible..." 
+		 -->
+		
+				<aries:contextMenuItem 
+					value="Remove Record..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('User: {lastName}, {firstName}', 'Remove User Record from System', 'Do you wish to continue?', 'org.sgiusa.removeUser', 'userListTabPanel')">
+					<aries:tooltip value="Remove selected record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>
+
+<!--
+				onclick="setCursorWait(); showProgress('User Record: {firstName} {lastName}', 'Removing membership information...')"
+				oncomplete="setCursorDefault(); hideProgress(); if (#{!messagesExist}) {checkPromptDeleteUser(#{member.lastName})} else {warnPermissionDenied('UserDialog')}">
+  -->

@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:set var="width" value="auto"/> 
+		<c:set var="height" value="auto"/> 
+		<aries:init/>
+		
+		<c:if test="#{empty fontSize}">
+			<c:set var="fontSize" value="#{userSkin.fontSize}" /> 
+		</c:if>
+		
+		<c:if test="#{empty fontWeight}">
+			<c:set var="fontWeight" value="#{userSkin.fontWeight}" /> 
+		</c:if>
+					
+		<c:if test="#{empty fontFamily}">
+			<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+		</c:if>
+		
+		<c:if test="#{empty textColor}">
+			<c:set var="textColor" value="#{userSkin.textColor}" /> 
+		</c:if>
+		
+		<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}; color: #{textColor}" /> 
+	
+		<h:panelGroup
+			layout="block"
+			style="width: auto; height: auto; #{marginSettings}; #{paddingSettings}; #{textSettings}; #{backgroundSettings}; #{style}">	
+				
+			<ui:insert />
+		</h:panelGroup>
+			
+		<!--  
+		<aries:panel
+			width="#{width}"
+			height="#{height}"
+			margin="#{marginSettings}"
+			padding="#{paddingSettings}"
+			borderWidth="#{borderWidth}"
+			borderStyle="#{borderStyle}"
+			borderColor="#{borderColor}"
+			backgroundColor="#{backgroundColor}"
+			fontSize="#{helper.convert(fontSize)}"
+			fontFamily="#{fontFamily}"
+			fontWeight="#{fontWeight}"
+			textColor="#{textColor}"
+			textDecoration="#{textDecoration}"
+			onclick="alert('#{marginSettings}')"
+			style="word-wrap: break-word; #{styleXX}">
+		
+			<ui:insert/>
+		</aries:panel>
+		-->
+		<aries:spacer height="8" />
+	</aries:tag>
+</ui:composition>

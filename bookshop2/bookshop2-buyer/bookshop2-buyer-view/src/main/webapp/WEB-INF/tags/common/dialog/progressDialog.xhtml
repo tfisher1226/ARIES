@@ -1,0 +1,178 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<script type="text/javascript">
+		var progressBar = null;
+	
+		function _showProgress(title, subtitle, message, actionEvent, cancelEnabled, renderList) {
+			progressDialog_params = new Object();
+			progressDialog_params.title = title;
+			progressDialog_params.subtitle = subtitle;
+			progressDialog_params.message = message;
+			progressDialog_params.actionEvent = actionEvent;
+			progressDialog_params.cancelEnabled = cancelEnabled;
+			progressDialog_params.renderList = renderList;
+			#{rich:component('progressDialog')}.show();
+		}
+	
+		function _hideProgress() {
+			progressDialog_params = null;
+			#{rich:component('progressDialog')}.hide();
+		}
+		
+		function _initializeProgressDialog(event) {
+			#{rich:element('progressDialog_title')}.innerHTML = progressDialog_params.title;
+			#{rich:element('progressDialog_subtitle')}.innerHTML = progressDialog_params.subtitle;
+			#{rich:element('progressDialog_message')}.innerHTML = progressDialog_params.message;
+			#{rich:element('progressDialog_actionEvent')}.innerHTML = progressDialog_params.actionEvent;
+			#{rich:element('progressDialog_cancelEnabled')}.innerHTML = progressDialog_params.cancelEnabled;
+			#{rich:element('progressDialog_renderList')}.innerHTML = progressDialog_params.renderList;
+	
+			if (progressDialog_params.title != '')
+				#{rich:element('progressDialog_titlePane')}.style.display = "block";
+			else #{rich:element('progressDialog_titlePane')}.style.display = "none";
+	
+			if (progressDialog_params.subtitle != '')
+				#{rich:element('progressDialog_subtitlePane')}.style.display = "block";
+			else #{rich:element('progressDialog_subtitlePane')}.style.display = "none";
+	
+			if (progressDialog_params.message != '')
+				#{rich:element('progressDialog_messagePane')}.style.display = "block";
+			else #{rich:element('progressDialog_messagePane')}.style.display = "none";
+			
+			if (progressDialog_params.cancelEnabled) {
+				if (progressDialog_params.actionEvent) 
+					#{rich:element('progressDialog_cancelActionButton')}.style.display = "block";
+				else #{rich:element('progressDialog_cancelActionButton')}.style.display = "none";
+	
+				if (progressDialog_params.actionEvent) 
+					#{rich:element('progressDialog_cancelCloseButton')}.style.display = "none";
+				else #{rich:element('progressDialog_cancelCloseButton')}.style.display = "block";
+				
+				//#{rich:element('progressDialog_cancelCloseButton')}.value = 'Cancel';
+			} //else #{rich:element('progressDialog_cancelCloseButton')}.value = 'Close';
+			startProgress(progressBar);
+		}
+		</script>
+	
+		<rich:popupPanel 
+			id="progressDialog" 
+			zindex="2000"
+			modal="true"
+			autosized="true"
+			resizable="false"
+			styleClass="dialog"
+			domElementAttachment="form"
+			onbeforeshow="_initializeProgressDialog(event)">
+	
+			<!-- TITLE -->		
+			<f:facet name="header" style="text-align: left; background-color: inherit;">
+				<h:outputText value="In Progress..." />
+			</f:facet>
+	
+			<!-- CLOSE ICON -->
+			<f:facet name="controls">
+				<h:panelGroup>
+					<h:graphicImage library="images" name="/dialog/close.png" style="cursor: pointer" onclick="setCursorDefault(); _hideProgress()" />
+				</h:panelGroup>
+			</f:facet>
+			
+			<!-- CONTENT -->
+			<a4j:region id="progressDialogForm" >
+				<h:panelGroup layout="block" style="border-top: 1px solid #C3BBB6">
+					<h:panelGroup layout="block" style="">
+	
+						<h:panelGrid
+							columns="2" 
+							cellpadding="0" 
+							cellspacing="0"  
+							columnClasses="formColumnAlignTop, formColumnAlignTop" 
+							style="margin-left: auto; margin-right: auto; vertical-align: top; background-color: inherit">
+							
+							<h:panelGroup layout="block" style="width: 64px; height: 64px; padding-top: 0px; padding-left: 0px; vertical-align: top; background-color: inherit">
+								<h:graphicImage library="images" name="/icons/status/WindowsInfo64.gif"/>
+							</h:panelGroup>
+	
+							<h:panelGroup layout="block" style="padding-top: 8px; background-color: inherit">
+								<a4j:outputPanel id="progressDialogTextPanel">
+									<div class="vspace2"/>
+	
+									<h:panelGroup id="progressDialog_titlePane" layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left; background-color: inherit;">
+										<h:outputText id="progressDialog_title" styleClass="dialogTitle"/>
+									</h:panelGroup>
+		
+									<h:panelGroup id="progressDialog_subtitlePane" layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left; background-color: inherit;">
+										<h:outputText id="progressDialog_subtitle" styleClass="dialogSubtitle" />
+									</h:panelGroup>
+		
+									<h:panelGroup id="progressDialog_messagePane" layout="block" style="width: 260px; margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left; background-color: inherit;">
+										<h:outputText id="progressDialog_message" styleClass="dialogMessage"/>
+									</h:panelGroup>
+		
+									<!--  
+									<h:panelGroup layout="block" rendered="#{not empty progressDialog_text}" style="width: 260px; margin-left: 2px; margin-right: 40px; text-align: left;">
+										<div class="vspace8"/>
+										<h:outputText value="#{progressDialog_text}" styleClass="dialogText"/>
+									</h:panelGroup>
+									-->
+								</a4j:outputPanel>
+								
+								<!-- PROGRESS BAR -->
+								<aries:spacer height="10"/>
+								<div style="display: block; margin-left: 2px; margin-right: 12px; background-color: inherit;">
+									<script>
+										progressBar = createBar(288, 15, "#FFFFFF", 1, "#bbb", "#{userSkin.highlightBorderColor}", 100, 7, 3, "");
+									</script>
+								</div>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:panelGroup>
+	
+					<!-- CONTROL -->
+					<aries:panel width="100%">
+						<aries:controlbar margin="12px">
+							<aries:toolbarGroup location="right">
+								<aries:smallDialogButton
+									id="progressDialog_cancelActionButton"
+									label="Cancel"
+									enabled="true"
+									mode="ajax"
+									execute="@this"
+									manager="#{progressDialog}"
+									action="cancel"
+									onclick="setCursorWait(this)"
+									oncomplete="setCursorDefault(this); _hideProgress()"
+									offset="true" />
+
+								<aries:smallDialogButton
+									id="progressDialog_cancelCloseButton"
+									label="Cancel"
+									enabled="true"
+									mode="client"
+									execute="@none"
+									onclick="_hideProgress()"
+									offset="true" />
+							</aries:toolbarGroup>
+						</aries:controlbar>
+					</aries:panel>
+				</h:panelGroup>
+			</a4j:region>
+	
+			<!-- PLACEHOLDERS -->
+			<h:inputHidden id="progressDialog_actionEvent" value=" " />
+			<h:inputHidden id="progressDialog_renderList" value=" " />
+			<h:inputHidden id="progressDialog_cancelEnabled" value=" " />
+		</rich:popupPanel>
+	</aries:tag>
+</ui:composition>

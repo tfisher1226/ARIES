@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+	<datasource
+		enabled="true"
+		use-java-context="true"
+		jndi-name="java:/admin_ds"
+		pool-name="admin_ds_pool">
+
+		<driver>mysql-5-driver</driver>
+
+		<connection-url>jdbc:mysql://localhost:3306/admin_db</connection-url>
+		<security>
+			<user-name>admin</user-name>
+			<password>password</password>
+		</security>
+
+		<pool>
+			<min-pool-size>2</min-pool-size>
+			<max-pool-size>10</max-pool-size>
+			<!--
+			<blocking-timeout-millis>5000</blocking-timeout-millis>
+			<idle-timeout-minutes>15</idle-timeout-minutes>
+			-->
+			<prefill>true</prefill>
+		</pool>
+		
+		<statement>
+			<prepared-statement-cache-size>32</prepared-statement-cache-size>
+			<share-prepared-statements />
+		</statement>
+		
+		<!-- reduce isolation from the default level (repeatable read) -->
+		<transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
+		
+		<!-- separate connections used with and without JTA transaction
+		<no-tx-separate-pools />
+		-->
+
+		<!-- disable transaction interleaving
+		<track-connection-by-tx />
+		-->
+		
+		<!--pooling parameters -->
+		
+		<!-- leverage mysql integration features -->
+		<!--
+		<exception-sorter-class-name>com.mysql.jdbc.integration.jboss.ExtendedMysqlExceptionSorter</exception-sorter-class-name>
+		
+		<valid-connection-checker-class-name>com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker</valid-connection-checker-class-name>
+		-->
+
+		<validation>
+			<valid-connection-checker
+				class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"></valid-connection-checker>
+			<exception-sorter
+				class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"></exception-sorter>
+		</validation>
+		
+		<!-- corresponding type-mapping in conf/standardjbosscmp-jdbc.xml
+		<metadata>
+			<type-mapping>mySQL</type-mapping>
+		</metadata>
+		-->
+	</datasource>
+</datasources>

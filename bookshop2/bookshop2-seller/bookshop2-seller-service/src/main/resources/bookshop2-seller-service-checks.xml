@@ -1,0 +1,1155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkpoints
+	xmlns="http://www.aries.org/validate"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/validate file:/workspace/ARIES/aries-validate/src/main/resources/schema/aries-validate-1.0.xsd">
+
+
+	<checkpoint>
+		<name>orderRequestMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRequestMessage/order must include one or more Book(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>booksAvailableMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>BooksAvailableMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$booksAvailableMessage/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>BooksAvailableMessage must include one or more Book(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>booksUnavailableMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>BooksUnavailableMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$booksUnavailableMessage/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>BooksUnavailableMessage must include one or more Book(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>orderAcceptedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderAcceptedMessage/order must include one or more Book(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>orderRejectedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/reason</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/reason must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>OrderRejectedMessage/order must include one or more Book(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>purchaseRequestMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/name/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/name/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/name/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/name/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/address/street</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/street must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/address/city</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/city must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/address/state</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/state must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/address/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/country must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/zipCode must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/address/zipCode/number</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/zipCode/number must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/address/zipCode/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/address/zipCode/country must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/payment/amount</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/payment/currency</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/payment/salesTax</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/payment/total</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/payment/total must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRequestMessage/payment/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRequestMessage/payment/dateTime must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>shipmentScheduledMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/date</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/date must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/time</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/time must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/name/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/name/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/name/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/name/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/address/street</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/street must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/address/city</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/city must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/address/state</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/state must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/address/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/country must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/zipCode must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/address/zipCode/number</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/zipCode/number must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentScheduledMessage/shipment/address/zipCode/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentScheduledMessage/shipment/address/zipCode/country must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>shipmentCompleteMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/date</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/date must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/time</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/time must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/name/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/name/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/name/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/name/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/address/street</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/street must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/address/city</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/city must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/address/state</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/state must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/address/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/country must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/zipCode must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/address/zipCode/number</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/zipCode/number must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/shipment/address/zipCode/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/shipment/address/zipCode/country must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/payment/amount</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/payment/currency</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/payment/salesTax</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/payment/total</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/payment/total must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentCompleteMessage/invoice/payment/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentCompleteMessage/invoice/payment/dateTime must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>shipmentFailedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/reason</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/reason must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/date</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/date must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/time</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/time must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/name must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/name/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/name/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/name/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/name/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/address/street</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/street must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/address/city</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/city must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/address/state</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/state must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/address/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/country must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/zipCode must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/address/zipCode/number</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/zipCode/number must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$shipmentFailedMessage/shipment/address/zipCode/country</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>ShipmentFailedMessage/shipment/address/zipCode/country must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>purchaseAcceptedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/amount</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/currency</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/salesTax</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/total</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/payment/total must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/payment/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/payment/amount</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/payment/currency</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/payment/salesTax</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/payment/total</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/payment/total must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/invoice/payment/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseAcceptedMessage/invoice/payment/dateTime must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>purchaseRejectedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/reason</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/reason must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/trackingNumber</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order/trackingNumber must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/count</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order/count must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order/dateTime must be specified</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order/personName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/personName/lastName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order/personName/lastName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/personName/firstName</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order/personName/firstName must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/books</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/order must include one or more Book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/amount</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/currency</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/salesTax</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/total</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/payment/total must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/dateTime</expression>
+			<exception>org.aries.AssertionFailure</exception>
+			<message>PurchaseRejectedMessage/payment/dateTime must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+</checkpoints>

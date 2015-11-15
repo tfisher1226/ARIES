@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:groupPane
+		width="380" 
+		height="140"
+		backgroundColor="inherit"
+		label="Skin Selection">
+	
+		<aries:formPane
+			columns="2"
+			backgroundColor="inherit">
+			
+			<h:selectManyCheckbox 
+				layout="pageDirection" 
+				converter="skinConverter"
+				value="#{manager.selectedItems1}" 
+				enabledClass=""
+				disabledClass=""
+				unselectedClass=""
+				onclickXX="alert('#{domain}')"
+				styleClass="formCheckbox" 
+				style="padding-top: 2px; padding-left: 6px; background-color: inherit">
+
+				<f:selectItems 
+					var="skinItem"  
+					value="#{manager.itemList1}"
+					itemLabel="#{skinHelper.toString(skinItem)}" />
+			</h:selectManyCheckbox>
+
+			<h:selectManyCheckbox 
+				layout="pageDirection" 
+				converter="skinConverter"
+				value="#{manager.selectedItems2}" 
+				styleClass="formCheckbox" 
+				style="margin-left: 0px; padding-top: 2px; padding-left: 6px; vertical-align: bottom; background-color: inherit">
+
+				<f:selectItems 
+					var="skinItem"
+					value="#{manager.itemList2}" 
+					itemLabel="#{skinHelper.toString(skinItem)}" />
+			</h:selectManyCheckbox>
+		</aries:formPane>
+	</aries:groupPane>
+</ui:composition>

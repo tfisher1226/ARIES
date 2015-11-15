@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:layeredPane
+		name="registrationRecordPane">
+
+		<aries:label
+			height="30"
+			paddingLeft="8px"
+			value="Registration Record View"
+			backgroundColor="inherit" />
+		
+		<aries:tabPane>
+			<ui:param name="width" value="#{width-2}" />
+			<ui:param name="height" value="#{height-80}" />
+
+			<aries:tab
+				label="Registration List"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="registrationListPane.xhtml">
+					<ui:param name="itemManager" value="#{registrationInfoManager}" />
+					<ui:param name="listManager" value="#{registrationListManager}" />
+				</ui:include>
+			</aries:tab>
+			
+			<aries:tab
+				label="Registration Structure"
+				icon="/icons/common/Default16.gif">
+				<ui:include src="registrationStructurePane.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</aries:layeredPane>
+</ui:composition>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+
+	<namespace 
+        name="auditLog" 
+        uri="http://www.aries.org/audit_log">
+
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+		
+		<element name="Event">
+			<id name="id" type="xs:long" />
+			<item name="type" type="xs:string" indexed="true" />
+			<item name="userId" type="xs:long" indexed="true" />
+			<item name="userName" type="xs:string" indexed="true" />
+			<item name="user" type="admin:User" relation="oneToOne" required="true" contained="false" />
+		</element>
+	</namespace>
+</information>
+

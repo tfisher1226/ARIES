@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	xmlns="http://nam/model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="aries-common-1.0.aries" />
+
+	<domain>org.aries</domain>
+	<name>common-data</name>
+	<version>0.0.1.SNAPSHOT</version>
+	<namespace>http://www.aries.org/common</namespace>
+</persistence>

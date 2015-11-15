@@ -1,0 +1,63 @@
+.dialog {
+}
+
+*.rf-pp-cnt {
+	padding: 0px;
+	/*
+	background-image: "url(#{resource['org.richfaces.images:actTabBg.png']})";
+	background-image: "url(#{resource['org.richfaces.images:colHdrGrad.png']})";
+	background-color: #{richSkin.editorBackgroundColor};
+	background-color: #{richSkin.generalBackgroundColor};
+	*/
+	background-color: #{userSkin.backgroundColor};
+}
+
+.rf-pp-hdr {
+    padding-left: 4px;
+	/*
+    background: "url(#{resource['org.richfaces.images:gradientA.png']})";
+    repeat-x: 'top left #{richSkin.headerBackgroundColor}';
+    position: relative;
+    padding-left: 10px;
+    cursor: move;
+    padding: 2px;
+    border-top-left-radius: '#{richSkin.panelBorderRadius}';
+    border-top-right-radius: '#{richSkin.panelBorderRadius}';
+    */
+}
+
+.rf-pp-hdr-cnt {
+    padding-left: 4px;
+	/*
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: '#{richSkin.headerWeightFont}';
+    color: '#{richSkin.headerTextColor}';
+    font-family: '#{richSkin.headerFamilyFont}';
+    font-size: '#{richSkin.headerSizeFont}';
+    padding: 2px;
+    padding-left: 10px;
+	*/
+}
+
+*.rf-pp-cntr {
+	border: 1px solid #BED6F8;
+}
+
+*.rf-pp-shade {
+	background-color: rgb(236, 236, 236);
+	background-color: #fff;
+	opacity: 0.5;
+	/*filter: alpha(opacity=50);*/
+}
+
+*.rf-pp-shdw {
+	background-color: rgb(0, 0, 0);
+	opacity: 0.1;
+	/*filter: alpha(opacity=10);*/
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	bottom: -6px;
+}

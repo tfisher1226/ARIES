@@ -1,0 +1,49 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:param name="itemManager" value="#{invoiceInfoManager}" />
+	<ui:param name="listManager" value="#{invoiceListManager}" />
+	
+	<aries:outputPane
+		id="#{domain}InvoiceListTablePane">
+		<ui:include src="invoiceListMenu.xhtml"/>
+		
+		<aries:table
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			id="#{domain}InvoiceListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0 or true}"
+			onrowdblclick="setCursorWait(); executeOpenSelectedInvoice(#{index}, #{rowItem.invoice.id})"
+			style="width: 320px; height: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TITLE -->
+			<aries:textColumn 
+				width="120"
+				header="Title">
+				<aries:link 
+					value="#{rowItem.invoice.title}"
+					onmouseup="setCursorWait(this); executeOpenSelectedInvoice(#{index}, #{rowItem.invoice.id})" />
+			</aries:textColumn>
+			
+			<!-- AUTHOR -->
+			<aries:textColumn
+				width="120"
+				header="Author">
+				<h:outputText value="#{rowItem.invoice.author}" />
+			</aries:textColumn>
+			
+			<!-- PRICE -->
+			<aries:textColumn
+				width="80"
+				header="Price">
+				<h:outputText value="#{rowItem.invoice.price}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

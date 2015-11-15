@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>bookshop2.supplier.entity</package>
+
+
+	<!--  
+	<entity class="BookOrdersEntity">
+		<named-query name="getBookOrdersById">
+			<query>
+				<![CDATA[
+					select distinct x from Book x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+
+		<named-query name="getAllBookOrdersRecords">
+			<query>
+				<![CDATA[
+					select x from Book x
+				]]>
+			</query>
+		</named-query>
+
+		<named-query name="getBookOrdersListById">
+			<query>
+				<![CDATA[
+					select x from Book x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+	</entity>
+	-->
+
+	<entity class="bookshop2.supplier.entity.BooksInStockEntity">
+		<named-query name="getAllBooksInStockRecords">
+			<query>
+				<![CDATA[
+					select x from BooksInStock x
+				]]>
+			</query>
+		</named-query>
+
+		<named-query name="getBooksInStockRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from BooksInStock x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+	</entity>
+		
+	<entity class="bookshop2.supplier.entity.ReservedBooksEntity">
+		<named-query name="getAllReservedBooksRecords">
+			<query>
+				<![CDATA[
+					select x from ReservedBooks x
+				]]>
+			</query>
+		</named-query>
+
+		<named-query name="getReservedBooksRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from ReservedBooks x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+
+		<named-query name="removeAllReservedBooksRecords">
+			<query>
+				<![CDATA[
+					delete from ReservedBooks x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

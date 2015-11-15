@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}PreferencesListTablePanel">
+		<ui:include src="preferencesListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}PreferencesListTable"
+			value="#{listManager.dataModel}"
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowdblclick="execute#{domain}SelectOpenPreferences(#{index}, #{rowItem.preferences.id})"
+			style="border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- USER -->
+			<aries:textColumn
+				width="100"
+				header="User">
+				<aries:link
+					value="#{userHelper.toString(rowItem.preferences.user)}"
+					onmouseup="execute#{domain}SelectOpenPreferences(#{index}, #{rowItem.preferences.id})" />
+			</aries:textColumn>
+			
+			<!-- THEME ID -->
+			<aries:textColumn
+				width="100"
+				header="Theme Id">
+				<h:outputText value="#{rowItem.preferences.themeId}" />
+			</aries:textColumn>
+			
+			<!-- SELECTED NODE -->
+			<aries:textColumn
+				width="100"
+				header="Selected Node">
+				<h:outputText value="#{rowItem.preferences.selectedNode}" />
+			</aries:textColumn>
+			
+			<!-- ENABLE TOOLTIPS -->
+			<aries:textColumn
+				width="100"
+				header="Enable Tooltips">
+				<h:outputText value="#{rowItem.preferences.enableTooltips}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

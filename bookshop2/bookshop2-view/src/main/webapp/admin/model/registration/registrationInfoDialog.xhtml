@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<!-- TODO set only if not provided by parent -->
+	<ui:param name="type" value="Registration" />
+	
+	<!-- TODO set only if not provided by parent -->
+	<ui:param name="manager" value="#{registrationInfoManager}" />
+	
+	<aries:region
+		id="#{type}Module"
+		parent="#{section}"
+		domain="#{type}"
+		section="#{type}Dialog"
+		render="#{type}ListPane"
+		rendered="#{manager.visible}">
+		
+		<aries:form
+			id="#{section}Form">
+			
+			<a4j:jsFunction
+			 	name="launchRegistrationDialog"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				action="#{manager.activate}"
+				onbegin="setCursorWait(); showProgress('', 'Registration Records', 'Preparing requested record...')"
+				oncomplete="setCursorDefault(eventSource); hideProgress(); showRegistrationDialog()"
+				render="#{type}Module, #{type}Dialog">
+				
+				<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
+				<a4j:param name="targetField" assignTo="#{manager.targetField}" />
+				<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
+				<a4j:param name="targetService" assignTo="#{manager.targetService}" />
+				<a4j:param name="immediate" assignTo="#{manager.immediate}" value="false" />
+			</a4j:jsFunction>
+
+			<aries:dialog
+				id="#{section}"
+				action="save#{type}"
+				render="#{manager.renderList}">
+				
+				<!-- Dialog Content -->
+				<ui:include src="registrationInfoPane.xhtml" />
+			</aries:dialog>
+		</aries:form>
+	</aries:region>
+</ui:composition>

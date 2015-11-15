@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/source/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+	<import file="bookshop_information.aries" />
+	
+	<namespace 
+		prefix="seller" 
+		name="bookshop-seller" 
+		uri="http://bookshop/seller">
+		
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+		
+		<!--
+			Seller related structures
+			*************************
+		 -->
+		
+		<element name="Advertisement" root="true">
+			<grouping name="Product Information">
+				<item name="enabled" type="xs:boolean" default="true" />
+				<item name="onSale" type="xs:boolean" default="true" />
+				<item name="productId" type="xs:string" required="true" />
+				<item name="salesPrice" type="xs:double" required="true" />
+				<item name="saleExpiration" type="xs:date" />
+			</grouping>
+			
+			<grouping name="Contact information">
+				<item name="firstName" type="xs:string" required="true" />
+				<item name="lastName" type="xs:string" required="true" />
+				<item name="emailAddress" type="common:EmailAddress" relation="manyToOne" cascade="all" required="true" />
+				<item name="homePhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+				<item name="cellPhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+			</grouping>
+			
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	</namespace>
+</information>
+

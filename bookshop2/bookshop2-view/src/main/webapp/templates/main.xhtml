@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<f:view>
+	<f:metadata>
+		<!--  
+		<f:event type="preRenderView" listener="#{adminManager.reset}"/>
+		-->
+		<f:viewAction rendered="#{true}" action="#{adminManager.reset}" />
+	</f:metadata>
+		
+    <h:head>
+	    <title>BOOKSHOP2</title>
+	    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+	    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	    <meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="pragma" content="no-cache" /> 
+	    <meta http-equiv="expires" content="0" />
+	    <meta name="copyright" content="&copy; 2015 BOOKSHOP2 Management. All Rights Reserved." />
+	    <meta name="description" content="" />
+	    <meta name="keywords" content="" />
+	    <meta name="robots" content="all" /> 
+	    
+		<!-- PAGE HEAD CONTENT --> 
+		<ui:include src="/templates/head-content.xhtml"/>
+    </h:head>
+    
+    <h:body style="max-width: 800px; height: 100%; margin: 0 auto; padding: 0 0; overflow: scroll; border: 0px solid #ccc; background-color: inherit">
+    
+		<!-- PAGE BODY SETUP --> 
+		<ui:include src="/templates/body-setup.xhtml"/>
+
+		<!-- POPUP DIALOGS -->
+
+		<!-- PAGE FORM -->
+		<aries:form id="pageForm">
+
+			<!-- POPUP DIALOGS -->
+			<aries:popupDialog/>
+			<aries:messageDialog/>
+			<aries:progressDialog/>
+			<aries:themeDialog/>
+
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="BOOKSHOP2"
+				subTitleText="Application Manager"
+				iconImage="/resources/graphics/default-page-icon.jpg" />
+
+			<!-- PAGE CONTENT -->
+			<ui:include src="/bookshop2/actions.xhtml"/>
+			<ui:include src="/bookshop2/menubar.xhtml"/>
+			<ui:include src="/bookshop2/navigator-pane.xhtml" />
+
+			<h:panelGroup 
+				layout="block" 
+				style="width: auto; margin-left: 256px; background-color: inherit">
+		
+				<aries:panel
+					width="100%"
+					height="auto"
+					margin="0px">
+
+					<!-- PAGE BODY -->
+                    <ui:insert name="body">
+                        Body content missed
+                    </ui:insert>
+				</aries:panel>
+			</h:panelGroup>
+			
+			<!-- PAGE FOOTER 
+			<aries:footer backgroundColor="inherit">
+				<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+					&copy; Copyright 2015 Bookshop2. All rights reserved.
+				</aries:p>
+			</aries:footer>
+			-->
+		</aries:form>
+
+		<a4j:outputPanel ajaxRendered="true">
+			<h:form style="display: none" prependId="false">
+				<h:inputHidden id="maximumSeverity" value="#{facesContext.maximumSeverity.ordinal}" />
+			</h:form>
+		</a4j:outputPanel>
+
+		<!-- PAGE BODY FOLLOWUP --> 
+		<ui:include src="/templates/body-followup.xhtml"/>
+    </h:body>
+	</f:view>
+</html>

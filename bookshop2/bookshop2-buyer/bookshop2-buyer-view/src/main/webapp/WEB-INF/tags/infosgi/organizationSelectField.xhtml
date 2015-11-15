@@ -1,0 +1,103 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty compact or compact == false}">
+		<c:set var="fieldBorder" value="border: 1px solid #ccc"/> 
+	</c:if>
+
+	<c:if test="#{not empty compact and compact == true}">
+		<c:set var="fieldBorder" value="border-width: 0px; border-left: 1px solid #ccc"/> 
+	</c:if>
+	
+	<script type="text/javascript">
+	function show#{domain}OrganizationSelectDialogXXX() {
+		var renderList = "#{domain}OrganizationSelectField";
+		$("[id^='pageForm:membershipListTablePanel']").each(function(index) {
+			renderList += ", "; 
+			renderList += $(this).attr('id'); 
+		});
+		_show#{domain}OrganizationSelectDialog(renderList);
+	}
+	</script>
+	
+	<a4j:outputPanel layout="block" id="#{domain}OrganizationSelectField" style="padding: 0px; #{fieldBorder}">
+		<ui:include src="organizationSelectMenu.xhtml"/>
+	
+		<a4j:region>
+			<rich:dataTable 
+				var="unused"
+				rowKeyVar="index" 
+				rows="1"
+				value="1" 
+				rendered="#{empty organizationFieldObject}"
+				onrowmouseover="highLightRow(this)"
+				onrowmouseout="unhighLightRow(this)"
+				onrowmousedown="selectRow(this)"
+				onrowclick="show#{domain}OrganizationSelectDialogXXX()"
+				render="#{domain}OrganizationSelectDialog"
+				selectionMode="single" 
+				sortMode="single" 
+				rowClass="tableRow"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noGrid noBorder noSelection"
+				style="width: 100%; border-width: 0px; background-color: #fff">
+
+				<rich:componentControl 
+					event="rowcontextMenu"
+					target="OrganizationSelectMenu" operation="show" />
+
+				<rich:column sortable="false">
+					<h:outputText value="none specified" styleClass="disabled"/>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:region>
+
+		<a4j:region>
+			<rich:dataTable 
+				var="unused"
+				rows="1"
+				value="#{organizationFieldObject}" 
+				rendered="#{not empty organizationFieldObject}"
+				onrowmouseover="highLightRow(this)"
+				onrowmouseout="unhighLightRow(this)"
+				onrowmousedown="selectRow(this)"
+				selectionMode="single" 
+				sortMode="single" 
+				onrowclick="show#{domain}OrganizationSelectDialogXXX()"
+				render="#{domain}OrganizationSelectDialog"
+				rowClass="tableRow height12"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noBorder noGrid"
+				style="width: 100%; border-width: 0px; background-color: #fff">
+
+				<rich:componentControl 
+					event="rowcontextmenu"
+					target="OrganizationSelectMenu" operation="show" />
+
+				<!--
+				<rich:componentControl 
+					event="rowclick"
+					target="#{domain}OrganizationSelectDialog" operation="show" />
+					-->
+				
+				<rich:column sortable="false">
+					<h:outputText value="#{organizationFieldObject.name} #{organizationFieldObject.level}"/>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

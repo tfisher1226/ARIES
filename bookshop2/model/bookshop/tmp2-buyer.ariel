@@ -1,0 +1,45 @@
+subnet Buyer {
+
+	//for example, like travel agent
+    participant Buyer {
+        add channel("Public");
+		set namespace("buyer");
+		import namespace("bookshop2");
+
+        receive orderBooks(OrderRequest orderRequest) {
+        	join transaction("bookReservation");
+        	set synchronous(true);
+        	
+            invoke Seller.orderBooks() {
+                message OrderAccepted: {
+		            Payment payment = context.getPayment(); 
+		            if (payment != null) {
+                        send Seller.purchaseBooks(payment);
+                    }
+					reply OrderAccepted;
+                    done;
+                }
+                message OrderRejected: {
+                    reply OrderRejected;
+                    done;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+        	join transaction("bookReservation");
+
+            invoke Seller.purchaseBooks() {
+                message PurchaseAccepted: {
+                    reply PurchaseAccepted;
+                    done;
+                }
+                message PurchaseRejected: {
+                    reply PurchaseRejected;
+                    done;
+                }
+            }
+        }
+    }
+}
+

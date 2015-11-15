@@ -1,0 +1,91 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!--  
+	<script type="text/javascript">
+	function showThemeDialog(element) {
+		var point = getPositionOf(element, 'LR');
+		#{rich:component('themeDialog')}.show({top: point[1]-1, left: point[0]});
+	}
+	function hideThemeDialog() {
+		#{rich:component('themeDialog')}.hide();
+	}
+	</script>
+	-->
+		
+	<ui:param name="manager" value="#{skinBean}" />
+
+	<a4j:jsFunction
+    	name="launchThemeDialog"
+    	execute="@this"
+    	immediate="true"
+    	bypassUpdates="true"
+    	limitRender="true"
+    	action="#{manager.activate}"
+		onbegin="setCursorWait(); showProgress('', 'User Interface Themes', 'Preparing theme selection...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); #{rich:component('ThemeDialog')}.show()"
+		render="ThemeDialogModule">
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel id="ThemeDialogModule">
+		<a4j:region rendered="#{manager.visible}">
+
+		<!--  
+		<aries:form
+			id="themeDialogForm">
+			-->
+			
+			<aries:dialog
+				id="ThemeDialog" 
+				action="submit"
+				title="BOOKSHOP2"
+				heading="User-Interface Theme"
+				message="Select a new appearance for the UI"
+				oncomplete="location.reload(true)">
+				
+				<h:outputLabel styleClass="header13" style="margin: 6px">Available Themes</h:outputLabel>
+	
+				<h:panelGrid 
+					styleClass="layoutPane" 
+					layout="block" 
+					cellpadding="0" 
+					cellspacing="0" 
+					columns="2" 
+					columnClasses="formColumn, formColumn" 
+					style="width: 360px; margin: 6px 6px 6px 6px; background-color: inherit"> 
+						
+					<h:selectOneRadio 
+						value="#{skinBean.skin}" 
+						layout="pageDirection" 
+						title="Changing skin"
+						onchange=""
+						border="0"
+						style="font-size: 12px">
+
+						<f:selectItem itemLabel="Aries" itemValue="aries" style="height: 12px" />
+						<f:selectItem itemLabel="Plain" itemValue="plain" style="height: 12px" />
+						<f:selectItem itemLabel="Classic" itemValue="classic" style="height: 12px" />
+						<f:selectItem itemLabel="BlueSky" itemValue="blueSky" style="height: 12px" />
+						<f:selectItem itemLabel="Marine" itemValue="deepMarine" style="height: 12px" />
+						<f:selectItem itemLabel="Emerald" itemValue="emeraldTown" style="height: 12px" />
+						<f:selectItem itemLabel="Cherry" itemValue="japanCherry" style="height: 12px" />
+						<!--  
+						<f:selectItem itemLabel="Default" itemValue="default" style="height: 12px" />
+						<f:selectItem itemLabel="Laguna" itemValue="laguna" style="height: 12px" />
+						-->
+						<f:selectItem itemLabel="Ruby" itemValue="ruby" style="height: 12px" />
+						<f:selectItem itemLabel="Wine" itemValue="wine" style="height: 12px" />
+					</h:selectOneRadio>
+				</h:panelGrid>
+			</aries:dialog>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

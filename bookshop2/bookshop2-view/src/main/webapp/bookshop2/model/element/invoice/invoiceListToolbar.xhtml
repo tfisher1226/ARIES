@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="#{domain}InvoiceListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+			
+			<aries:toolButton
+				id="#{domain}InvoiceListNewButton"
+				value="#{element}..."
+				tooltip="Create new #{element} Record"
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				enabled="#{securityGuard.canCreate('invoice')}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="executeNewInvoice()"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}InvoiceListEditButton"
+				value="Invoice..."
+				tooltip="Open details for selected record"
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canOpen('invoice')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}Open#{element}(); return true"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}InvoiceListRemoveButton"
+				value="Invoice..."
+				tooltip="Remove selected Invoice Record"
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canDelete('invoice')}"
+				mode="ajax"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				manager="#{listManager}"
+				action="removeInvoice"
+				onclickXX="alert('#{domain}')"
+				onclick="popupPrompt('Invoice List', 'Remove selected Invoice record from System', 'Do you wish to continue?', 'org.aries.removeInvoice', '#{section}InvoiceListPane')"
+				rendered="#{empty domain}"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}InvoiceListSelectButton"
+				value="Invoice..."
+				tooltip="Select Invoice Record(s)"
+				icon="/icons/common/Search16.gif"
+				iconDisabled="/icons/common/SearchDisabled16.gif"
+				enabled="#{securityGuard.canOpen('invoice')}"
+				mode="client"
+				execute="@none"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				onclickXX="alert('#{domain}')"
+				onclick="show#{domain}InvoiceSelectDialog()"
+				render="#{domain}InvoiceSelectDialog"
+				rendered="#{domain eq 'InvoiceDialog'}"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="#{domain}InvoiceListRefreshButton"
+				tooltip="Re-read information from server"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				enabled="#{securityGuard.canOpen('invoice')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}RefreshInvoiceList()"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

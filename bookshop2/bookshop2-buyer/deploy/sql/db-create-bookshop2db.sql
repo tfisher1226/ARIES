@@ -1,0 +1,13 @@
+use mysql;
+drop database if exists bookshop2DB;
+create database bookshop2DB;
+delete from user where user='manager';
+delete from db where user='manager';
+FLUSH PRIVILEGES;
+create user 'manager'@'localhost' identified by 'manager';
+create user 'manager'@'%' identified by 'manager';
+set password for manager = password('manager');
+grant all on bookshop2DB.* to 'manager';
+grant all on bookshop2DB.* to 'manager'@'localhost' identified by 'manager';
+grant all on bookshop2DB.* to 'manager'@'%' identified by 'manager';
+use bookshop2DB;

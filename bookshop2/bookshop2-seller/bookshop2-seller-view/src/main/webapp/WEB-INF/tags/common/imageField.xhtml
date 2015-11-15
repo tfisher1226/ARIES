@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+
+	<script type="text/javascript">
+		//var activityGroupTableHighlighter = new org.aries.view.table.UserSelectHighlighter('#fff', '#fde7c8', '#f5fafa');
+	</script>
+
+	<a4j:outputPanel id="#{fieldName}Panel" vertical-align="middle">
+
+		<ui:include src="#{fieldName}Menu.xhtml"/>
+
+			<h:panelGroup
+				layout="block"
+				rendered="#{activityGroupList.rowCount == 0}"
+				style="width: auto; height: 18px; padding-top: 4px; padding-left: 4px; background-color: white; ">
+				<a4j:commandLink 
+					styleClass="plainText" 
+					value="No records to display"
+					onmousedown="setCursorWait(this);"
+					onclick="setCursorWait(this);"
+					oncomplete="setCursorDefault(this); showActivityGroupSelectDialog()"
+					style="font-size: 11px; color: #000"
+					render="activityGroupSelectDialog">
+				</a4j:commandLink>
+			</h:panelGroup>
+			
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				id="activityGroupTable"
+				value="#{activityGroupList}" 
+				rows="#{activityGroupList.rowCount}"
+				rendered="#{activityGroupList.rowCount > 0}"
+				selectionMode="single" 
+				sortMode="single" 
+				onRowDblClick="showActivityGroupSelectDialog()"
+				render="activityGroupSelectDialog"
+				rowClass="tableRow height16"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noBorder noGrid"
+				style="background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="activityGroupContextMenu" operation="show"/>
+				
+				<a4j:ajax 
+					event="onRowMouseDown" 
+					immediate="true"
+	                action="#{activityGroupListManager.setSelection(listObject)}"/>
+	
+				<rich:column 
+					sortable="false">
+					<h:outputText value="#{listObject.activityGroupName}"/>
+				</rich:column>
+			</rich:dataTable>
+	</a4j:outputPanel>
+</ui:composition>

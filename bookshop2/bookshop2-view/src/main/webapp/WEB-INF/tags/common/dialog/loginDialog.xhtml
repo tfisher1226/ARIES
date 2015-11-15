@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:set var="domain" value="Login" /> 
+		<c:set var="section" value="LoginDialog" /> 
+		<c:set var="dialog" value="LoginDialog" /> 
+		<c:set var="defaultField" value="#{section}UserId" /> 
+		<c:set var="actionButton" value="#{section}LoginButton" /> 
+		
+		<!--  		
+	    <a4j:jsFunction mode="client" name="show#{dialog}" onbegin="#{rich:component(dialog)}.show()" />
+	    <a4j:jsFunction mode="client" name="hide#{dialog}" onbegin="#{rich:component(dialog)}.hide()" />
+	    -->
+	    
+		<script type="text/javascript">
+		function showLoginDialog() {#{rich:component(dialog)}.show()}
+		function hideLoginDialog() {#{rich:component(dialog)}.hide()}
+		</script>
+	    
+		<script type="text/javascript">
+		function processLoginDialogKeyDown(event) {
+			//alert(_processDialogKeyDown);
+			var dialog = #{rich:component(dialog)};
+			var buttonId = mainFormId.concat(':#{actionButton}');
+			return _processDialogKeyDown(dialog, buttonId, event);
+
+			<!--
+			if (event.keyCode == 13) {
+				var button = document.getElementById(mainFormId.concat(':#{actionButton}'));
+				alert(button);
+				if (button != null)
+					button.click(); 
+				return false;
+			} 
+			if (event.keyCode == 27) {
+				#{rich:component(dialog)}.hide(); 
+				return false;
+			}
+			return true;
+			-->
+		}
+		</script>
+
+	    <!--  
+	    <a4j:jsFunction 
+	    	name="render#{dialog}" 
+	    	immediate="true"
+	    	limitRender="true"
+	    	bypassUpdates="true"
+	    	execute="@this"
+			render="#{section}Content" />
+	    
+	    <a4j:jsFunction 
+	    	name="executeLogin" 
+	    	immediate="true"
+	    	limitRender="false"
+	    	bypassUpdates="false"
+	    	execute="#{section}Form"
+	    	action="#{identity.login}"
+			onbegin="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...')"
+			oncomplete="setCursorDefault(this); hideProgress(); if (#{!messages.isMessagesExist(domain)}) {hideLoginDialog(); renderLoginDialog()}"
+			render="#{section}Header, #{section}Content" />
+			-->
+
+		<!--  
+		<ui:include src="/dialogs/uploadDialog.xhtml">
+			<ui:param name="key" value="#{dialogKey}"/>
+			<ui:param name="manager" value="#{userManager}"/>
+			<ui:param name="action" value="uploadKey"/>
+			<ui:param name="render" value="loginPanel"/>
+		</ui:include>
+		-->
+
+<!--
+			onshow="#{rich:element(defaultField)}.focus();"
+-->
+
+		<aries:region
+			domain="login"
+			id="LoginDialogModule">
+			
+			<!--  
+			-->
+			<aries:form
+				id="loginDialogForm">
+	
+				<!-- Login Dialog -->
+				<rich:popupPanel 
+					id="#{dialog}" 
+					resizeable="false"
+					autosized="true" 
+					domElementAttachment="form"
+					trimOverlayedElements="true"
+					onshow="#{rich:element(defaultField)}.focus();"
+					styleClass="dialog"
+					style="overflow: hidden">
+		
+					<!-- HEADER -->
+					<aries:dialogHeaderBar 
+						title="#{title}"
+						heading="#{heading}" 
+						library="graphics"
+						logo="default-dialog-icon.jpg" 
+						message="Sign-in to access the site" />
+			
+					<!-- CONTENT -->
+					<a4j:region>
+						<a4j:outputPanel id="#{section}Content" layout="block" >
+							<h:panelGroup layout="block" style="background-color: inherit">
+					
+								<!--  
+								<rich:hotKey 
+									key="return"
+									enabledInInput="true"
+									preventDefault="true"
+									handler="alert(0)"/>
+									-->
+									
+								<!-- INPUT -->
+								<aries:spacer height="8"/>
+								<h:panelGrid styleClass="layoutPane" layout="block" columns="1" cellpadding="0" cellspacing="0" columnClasses="formColumn" style="margin: 12px 12px 12px 12px; background-color: inherit"> 
+									<ui:include src="loginPanel.xhtml"/>
+								</h:panelGrid>
+					
+								<!-- CONTROL -->
+								<h:panelGrid layout="block" columns="1" cellpadding="0" cellspacing="0" columnClasses="formColumn" style="width: 100%">
+									<ui:include src="loginControl.xhtml"/>
+								</h:panelGrid>
+							</h:panelGroup>
+						</a4j:outputPanel>
+					</a4j:region>
+				</rich:popupPanel>
+			</aries:form>	
+		</aries:region>
+	</aries:tag>
+</ui:composition>

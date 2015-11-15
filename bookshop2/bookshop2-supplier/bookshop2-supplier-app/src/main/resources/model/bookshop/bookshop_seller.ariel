@@ -1,0 +1,61 @@
+import admin.admin_service.aries;
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+
+protocol Bookshop2 {
+	set domain(bookshop2);
+	set namespace(bookshop);
+
+	//like airline co.
+    participant Seller {
+		add channel(Protected);
+		set namespace(seller);
+
+        receive orderBooks(OrderRequest orderRequest) {
+       		//bookCache.addToAvailableBooks(orderRequest.books);
+
+            invoke SupplierGroup.queryBooks(orderRequest) {
+            	set timeout(3m);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BooksAvailable: {
+                    option: {
+               		    bookCache.addToAvailableBooks(books);
+               		    send SupplierGroup.reserveBooks(books);
+                        reply OrderAccepted(books);
+                    }
+                }
+
+                timeout: {
+                    option: reply OrderAccepted;
+                    option: reply OrderRejected;
+                }
+
+                exception: {
+                    reply OrderRejected;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+            option: reply PurchaseAccepted;
+            option: reply PurchaseRejected;
+        }
+
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    admin:User user; 
+			    List<bookshop:Book> bookOrders; 
+			    Set<bookshop:Book> availableBooks; 
+			    Set<bookshop:Book> unavailableBooks; 
+		    }
+	    }
+    }
+
+}

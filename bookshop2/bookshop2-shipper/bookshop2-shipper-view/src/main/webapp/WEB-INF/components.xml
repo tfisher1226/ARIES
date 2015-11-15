@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<components 
+	xmlns="http://jboss.org/schema/seam/components"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:core="http://jboss.org/schema/seam/core"
+	xmlns:mail="http://jboss.org/schema/seam/mail" 
+	xmlns:pdf="http://jboss.org/schema/seam/pdf"
+	xmlns:excel="http://jboss.org/schema/seam/excel"
+	xmlns:async="http://jboss.org/schema/seam/async"
+	xmlns:security="http://jboss.org/schema/seam/security"
+	xmlns:persistence="http://jboss.org/schema/seam/persistence"
+	xmlns:transaction="http://jboss.org/schema/seam/transaction"
+	xmlns:framework="http://jboss.org/schema/seam/framework"
+	xmlns:document="http://jboss.org/schema/seam/document"
+	xmlns:web="http://jboss.org/schema/seam/web"
+	xsi:schemaLocation=
+		"http://jboss.org/schema/seam/core http://jboss.org/schema/seam/core-2.3.xsd
+		http://jboss.org/schema/seam/mail http://jboss.org/schema/seam/mail-2.3.xsd
+		http://jboss.org/schema/seam/pdf http://jboss.org/schema/seam/pdf-2.3.xsd
+        http://jboss.org/schema/seam/excel http://jboss.org/schema/seam/excel-2.3.xsd
+		http://jboss.org/schema/seam/async http://jboss.org/schema/seam/async-2.3.xsd
+		http://jboss.org/schema/seam/security http://jboss.org/schema/seam/security-2.3.xsd
+		http://jboss.org/schema/seam/persistence http://jboss.org/schema/seam/persistence-2.3.xsd 
+		http://jboss.org/schema/seam/transaction http://jboss.org/schema/seam/transaction-2.3.xsd 
+		http://jboss.org/schema/seam/components http://jboss.org/schema/seam/components-2.3.xsd
+		http://jboss.org/schema/seam/framework http://jboss.org/schema/seam/framework-2.3.xsd
+		http://jboss.org/schema/seam/document http://jboss.org/schema/seam/document-2.3.xsd
+		http://jboss.org/schema/seam/web http://jboss.org/schema/seam/web-2.3.xsd">
+
+	<core:manager 
+		concurrent-request-timeout="5000"
+		conversation-timeout="120000"
+		conversation-id-parameter="conversationId"
+		parent-conversation-id-parameter="parentConversationId"/>
+
+    <core:init 
+		debug="false" 
+		jndi-pattern="@jndiPattern@"
+    	transaction-management-enabled="false"/>
+
+	<transaction:ejb-transaction/>
+	<!--  
+	<transaction:no-transaction/>
+	-->
+
+	<!--  
+	<web:rewrite-filter view-mapping="/*"/>
+
+	<web:hot-deploy-filter url-pattern="*.seam"/>
+
+    <web:multipart-filter url-pattern="*.seam" 
+    	create-temp-files="true" max-request-size="100000000"/>
+	-->
+
+	<security:identity 
+		authenticate-method="#{authenticationManager.authenticate}" remember-me="true"/>
+
+	<!--  
+	<security:jpa-identity-store
+		user-class="org.aries.UserAccount"
+		role-class="org.aries.UserRole"/>
+
+	<event type="org.jboss.seam.security.notLoggedIn">
+		<action execute="#{redirect.captureCurrentView}"/>
+	</event>
+	
+	<event type="org.jboss.seam.security.loginSuccessful">
+		<action execute="#{redirect.returnToCapturedView}"/>
+	</event>
+	-->
+
+	<!--
+	<persistence:managed-persistence-context name="bookshop2.supplier.entityManager" persistence-unit-jndi-name="java:/bookshop2SupplierEMF" auto-create="true"/>
+	-->
+	
+    <!--
+    <component name="org.jboss.seam.remoting.remoting">
+	<component name="org.jboss.seam.remoting.remotingConfig">
+		<property name="debug">true</property>
+	</component>
+    -->
+
+	<!-- Remote service proxy components 
+	<component name="bookshop.shipper.service.shipBooks" class="bookshop.shipper.service.ShipBooksProxy" scope="session" auto-create="true" />
+	-->
+	
+	<!--  
+	<component name="admin.user.userService.userServiceAction" class="admin.user.UserServiceAction" scope="session" auto-create="true"/>
+	<component name="org.sgiusa.model.memberService" class="org.sgiusa.model.MemberServiceProxy" scope="session" auto-create="true"/>
+	<component name="org.sgiusa.model.organizationService" class="org.sgiusa.model.OrganizationServiceProxy" scope="session" auto-create="true"/>
+	-->
+
+	<!--  
+	<component name="org.sgiusa.model.userService" class="org.sgiusa.model.UserServiceProxy" scope="session" auto-create="true"/>
+	<component name="leadershipInfoService" class="org.sgiusa.LeadershipInfoServiceProxy" scope="session" auto-create="true"/>
+	<component name="studyDeptInfoService" class="org.sgiusa.StudyDeptInfoServiceProxy" scope="session" auto-create="true"/>
+	-->
+
+	<!-- Remote UI manager components -->
+	<component name="uploadManager" class="org.aries.ui.manager.UploadManager" scope="conversation" auto-create="true"/>
+
+	<!-- Common framework components 
+	<component name="globals" class="org.aries.Globals" scope="session"/>
+	<component name="display" class="org.aries.Display" scope="session"/>
+	<component name="messages" class="org.aries.Messages" scope="session"/>
+	<component name="navigator" class="org.aries.Navigator" scope="session"/>
+	<component name="converter" class="org.aries.Converter" scope="session"/>
+	-->
+
+	<!-- Common framework dialog window components 
+	<component name="messageDialog" class="common.ui.dialog.MessageDialog" scope="session"/>
+	<component name="progressDialog" class="common.ui.dialog.MessageDialog" scope="session"/>
+	-->
+	<component name="dialogMessageStyleFactory" class="common.ui.dialog.DialogMessageStyleFactory"/>
+
+	<!-- Common framework converter and validator components 
+	<component name="integerConverter" class="org.aries.ui.convert.IntegerConverter"/>
+	<component name="longConverter" class="org.aries.ui.convert.LongConverter"/>
+	<component name="numericValidator" class="org.aries.ui.validate.NumericValidator"/>
+	<component name="booleanConverter" class="org.aries.ui.convert.BooleanConverter"/>
+	<component name="emailAddressConverter" class="org.aries.ui.convert.EmailAddressConverter"/>
+	<component name="emailAddressValidator" class="org.aries.ui.validate.EmailAddressValidator"/>
+	<component name="phoneNumberConverter" class="org.aries.ui.convert.PhoneNumberConverter"/>
+	<component name="phoneNumberValidator" class="org.aries.ui.validate.PhoneNumberValidator"/>
+	-->
+
+	<component name="org.aries.serviceLocator" class="org.aries.registry.ServiceLocator" scope="application" auto-create="true"/>
+	<component name="org.aries.serviceRegistry" class="org.aries.registry.ServiceRegistry" scope="application" auto-create="true"/>
+	<component name="org.aries.serviceProxyFactory" class="org.aries.registry.ServiceProxyFactory" scope="application" auto-create="true"/>
+
+	<!--  
+	<component name="org.aries.serviceRepository" class="org.aries.service.ServiceRepositoryImpl" scope="application" auto-create="true"/>
+	<component name="org.aries.serviceFactory" class="org.aries.service.ServiceFactoryImpl" scope="application" auto-create="true"/>
+	-->
+
+	<component name="org.aries.common.attachmentMapper" class="org.aries.common.map.AttachmentMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.emailAccountMapper" class="org.aries.common.map.EmailAccountMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.emailAddressListMapper" class="org.aries.common.map.EmailAddressListMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.emailAddressMapper" class="org.aries.common.map.EmailAddressMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.emailBoxMapper" class="org.aries.common.map.EmailBoxMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.emailMessageMapper" class="org.aries.common.map.EmailMessageMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.personMapper" class="org.aries.common.map.PersonMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.personNameMapper" class="org.aries.common.map.PersonNameMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.phoneNumberMapper" class="org.aries.common.map.PhoneNumberMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.propertyMapper" class="org.aries.common.map.PropertyMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.streetAddressMapper" class="org.aries.common.map.StreetAddressMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.common.zipCodeMapper" class="org.aries.common.map.ZipCodeMapper" scope="application" auto-create="true"/>
+
+    <web:multipart-filter 
+    	disabled="true"
+    	create-temp-files="true" 
+		max-request-size="5000000" 
+		url-pattern="*.seam"/>   
+
+	<!-- 
+	<web:ajax4jsf-filter 
+		force-parser="true" 
+		enable-cache="true" 
+		log4j-init-file="custom-log4j.xml"
+		url-pattern="*.seam"/>
+	-->
+
+	<!--
+	<web:logging-filter 
+		url-pattern="*.seam"/>
+	-->
+
+	<!--  
+	<web:cache-control-filter 
+		name="imageCacheControlFilter"
+		regex-url-pattern=".*(\.gif|\.png|\.jpg|\.jpeg)"
+		value="max-age=86400"/>
+	
+	<web:cache-control-filter 
+		name="textCacheControlFilter"
+		regex-url-pattern=".*(\.css|\.js)"
+		value="max-age=1400"/>
+	-->
+
+ 	<!-- 1 day 
+	<web:cache-control-filter 
+		name="commonTypesCacheControlFilter"
+		regex-url-pattern=".*(\.gif|\.png|\.jpg|\.jpeg|\.css|\.js)"
+		value="max-age=86400"/>
+	-->
+
+	<!-- 5 days 
+	<web:cache-control-filter 
+		name="anotherCacheControlFilter"
+		url-pattern="/my/cachable/resources/*"
+		value="max-age=432000"/>
+	-->
+
+	<!--  
+    <event type="org.jboss.seam.security.notLoggedIn">
+        <action execute="#{redirect.captureCurrentView}"/>
+    </event>
+    
+    <event type="org.jboss.seam.security.loginSuccessful">
+        <action execute="#{redirect.returnToCapturedView}"/>
+    </event>    
+	-->
+
+	<document:document-store 
+		use-extensions="true" 
+		error-page="/includes/error-missing-pdf.xhtml" />
+    
+</components>

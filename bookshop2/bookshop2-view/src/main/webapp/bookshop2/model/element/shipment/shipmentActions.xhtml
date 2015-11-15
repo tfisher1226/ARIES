@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:param name="newAction" value="newShipment" />
+	<ui:param name="editAction" value="editShipment" />
+	<ui:param name="newActionHeader" value="Shipment Records" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	<ui:param name="itemManager" value="#{shipmentInfoManager}" />
+	<ui:param name="listManager" value="#{shipmentListManager}" />
+	
+	<!--
+	  ** Launch ShipmentDialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="newShipment"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{shipmentInfoManager.newShipment}"
+		onbegin="setCursorWait(); showProgress('', 'Shipment Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); showShipmentDialog()"
+		render="ShipmentModule, ShipmentListPane">
+		
+		<a4j:param name="targetDomain" value="ShipmentDialog" assignTo="#{shipmentInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="ShipmentListPane" assignTo="#{shipmentInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="shipmentList" assignTo="#{shipmentInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+
+
+	<a4j:jsFunction 
+		name="selectShipment" 
+		immediate="true" 
+		limitRender="true" 
+		onbegin="enableShipmentListToolbar()"
+		renderXX="ShipmentListToolbar">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+
+	<script type="text/javascript">
+	function enableShipmentListToolbar() {
+		enableButton('ShipmentListEditButton');
+		enableButton('ShipmentListRemoveButton');
+	}
+	</script>
+
+	<!--
+	  ** Select Shipment record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="openSelectedShipment"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', 'Shipment Records', 'Opening record for edit...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); #{rich:component('ShipmentDialog')}.show()"
+		render="ShipmentModule">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="ShipmentDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="ShipmentListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="shipmentList" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+
+
+	<!--
+	  ** Refresh Shipment record list
+	  -->
+
+	<a4j:jsFunction
+		name="refreshShipmentList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'Shipment Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{domain}ShipmentListTablePane">
+	</a4j:jsFunction>
+	
+</ui:composition>

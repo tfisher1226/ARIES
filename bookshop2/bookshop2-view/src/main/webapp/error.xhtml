@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf"
+    template="/templates/error-page-template.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+
+		<!--  
+		<ui:include src="sections/user/userWizard.xhtml" />
+		-->
+				
+		<!-- PAGE FORM -->
+		<aries:form id="errorForm">
+		
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="BOOKSHOP2"
+				subTitleText="Application Manager"
+				iconImage="../resources/graphics/default-page-icon.jpg" />
+
+			<!-- PAGE TOOLBAR -->
+			<aries:toolbar type="menubar">
+				<aries:toolbarGroup location="left">
+					<aries:toolItem 
+						mode="client"
+						name="home"
+						label="Home"
+						execute="@this"
+						icon="/icons/common/Home16.gif"
+						tooltip="Go back to home screen" 
+						onmousedown="setCursorWait(this)" 
+						onmouseup="showHomePage()" />
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup location="right">
+					<aries:toolItem 
+						name="help"
+						label="Help"
+						mode="ajax"
+						execute="@this"
+						icon="/icons/common/Help16.gif"
+						manager="#{navigator}"
+						action="showHelp" 
+						target="_blank" />
+
+					<aries:toolItem
+						id="logoutItem"
+						name="logout"
+						label="Logout"
+						execute="@this"
+						render="@all"
+						icon="/icons/common/Remove16.gif"
+						manager="#{identity}"
+						action="logout" 
+						onclick="waitCursor('logoutItem')" />
+				</aries:toolbarGroup>
+			</aries:toolbar>
+
+			<!-- PAGE CONTENT -->
+			<aries:panel 
+				padding="20px">
+				
+				<aries:h2 value="BOOKSHOP2 Application - Error Detected" />
+				
+				<aries:panel 
+					layout="block" 
+					styleClass="panel">
+					
+					<aries:link 
+						value="Go back to application" 
+						href="javascript:history.back()" />
+					
+					<aries:spacer height="10" />
+					<aries:h3>An exception has occurred and has been logged.</aries:h3>
+			
+					<aries:spacer height="10" />
+					<aries:text>Operations can be reached at <a href="mailto:admin@bookshop2.com">admin@bookshop2.com</a>.</aries:text>
+				</aries:panel>
+			</aries:panel>
+		</aries:form>
+	</ui:define>
+</ui:composition>

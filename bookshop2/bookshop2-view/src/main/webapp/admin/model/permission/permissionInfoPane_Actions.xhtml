@@ -1,0 +1,27 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:panel
+		padding="10px"
+		backgroundColor="inherit">
+
+		<aries:groupPane
+			width="#{width-22}"
+			height="#{height-2}"
+			backgroundColor="inherit"
+			label="Action Selection">
+			
+			<aries:spacer height="6" />
+			<ui:include src="../action/actionSelectField.xhtml">
+				<ui:param name="label" value="Actions" />
+				<ui:param name="type" value="ActionSelect" />
+				<ui:param name="name" value="permissionActions" />
+				<ui:param name="items" value="#{permissionHelper.getActions(permission)}" />
+			</ui:include>
+		</aries:groupPane>
+	</aries:panel>
+</ui:composition>

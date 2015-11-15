@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main.xhtml">
+
+	<ui:define name="body">
+
+		<!-- Dialogs -->
+		<ui:include src="/common/personNameDialog.xhtml" />
+		<ui:include src="/common/streetAddressDialog.xhtml" />
+		
+		<ui:include src="../../element/book/bookActions.xhtml" />
+		<ui:include src="../../element/book/bookDialog.xhtml" />
+		
+		<ui:include src="../../element/order/orderActions.xhtml" />
+		<ui:include src="../../element/order/orderDialog.xhtml" />
+		
+		<ui:include src="orderRequestMessageActions.xhtml" />
+		<ui:include src="orderRequestMessageDialog.xhtml" />
+	
+		<aries:formPane
+			width="auto" 
+			columns="2"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:label 
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="Message:" 
+				backgroundColor="inherit" />
+
+			<aries:label 
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="6px"
+				fontSize="13"
+				fontWeight="bold"
+				textColor="darkBlue" 
+				value="Bookshop2: Bookshop2-Model: OrderRequestMessage" />
+		</aries:formPane>
+		
+		<aries:tabPane
+			switchType="client" 
+			activeItem="#{navigationDriver.activePage}">
+	
+			<aries:tab 
+				name="orderRequestMessage" 
+				label="OrderRequestMessage">
+				<ui:include src="orderRequestMessage.xhtml" />
+			</aries:tab>
+
+			<aries:tab 
+				name="orderRequestMessageCriteria" 
+				label="OrderRequestMessage Criteria">
+				<ui:include src="orderRequestMessageCriteria.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</ui:define>
+</ui:composition>

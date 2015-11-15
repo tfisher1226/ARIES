@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<ui:param name="domain" value="UserDialog" />
+	<ui:include src="/pages/common/personNameDialog.xhtml"/>
+	<ui:include src="/pages/common/emailAddressDialog.xhtml"/>
+	<ui:include src="/pages/common/phoneNumberDialog.xhtml"/>
+	<ui:include src="/pages/common/streetAddressDialog.xhtml"/>
+			
+	<a4j:region>
+		<aries:dialog 
+			id="UserDialog"
+			manager="#{userInfoManager}">
+			
+			<h:panelGroup layout="block">
+				<aries:tabPane width="500px" height="300px"> 
+					<aries:tab label="User Identity">
+						<ui:include src="userRecordIdentityPane.xhtml">
+							<ui:param name="userObject" value="#{userInfoManager.user}" />
+						</ui:include>
+		    	    </aries:tab>
+		    	    
+					<aries:tab label="Contact Information">
+						<ui:include src="userRecordContactPane.xhtml">
+							<ui:param name="userObject" value="#{userInfoManager.user}" />
+						</ui:include>
+		    	    </aries:tab>
+				</aries:tabPane>
+			</h:panelGroup>
+		</aries:dialog>
+	</a4j:region>
+</ui:composition>

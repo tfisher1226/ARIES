@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. ./thebes-env
+
+$JBOSS_HOME/bin/standalone.sh \
+	-b $BINDING_HOST \
+	-bmanagement $BINDING_HOST \
+	--properties=startup.properties \
+	--server-config=standalone-hornetq-dedicated1.xml > $BOOKSHOP2_LOG_FILE 2>&1 &
+	

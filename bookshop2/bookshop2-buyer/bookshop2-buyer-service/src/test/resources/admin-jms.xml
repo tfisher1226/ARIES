@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging-deployment
+	xmlns="urn:jboss:messaging-deployment:1.0">
+
+	<hornetq-server>
+		<jms-destinations>
+			<!-- "Admin" channel destinations -->
+
+			<jms-queue name="admin_user_service_queue">
+				<entry name="/queue/admin_user_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/admin_user_service_queue" />
+			</jms-queue>
+
+			<jms-queue name="admin_skin_service_queue">
+				<entry name="/queue/admin_skin_service_queue" />
+				<entry name="java:jboss/exported/jms/queue/admin_skin_service_queue" />
+			</jms-queue>
+		</jms-destinations>
+	</hornetq-server>
+</messaging-deployment>

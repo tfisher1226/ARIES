@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="bookshop2-shipper-app">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
+        <dependent-module archiveName="bookshop2-shipper-view-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/bookshop2-shipper-view/bookshop2-shipper-view">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bookshop2-model-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/bookshop2-model/bookshop2-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bookshop2-shipper-client-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/bookshop2-shipper-client/bookshop2-shipper-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bookshop2-shipper-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/bookshop2-shipper-service/bookshop2-shipper-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="admin-model-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/admin-model/admin-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="admin-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/admin-service/admin-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="admin-data-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/admin-data/admin-data">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="admin-client-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/admin-client/admin-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="xstream-1.2.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/thoughtworks/xstream/xstream/1.2.2/xstream-1.2.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-digester-2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-digester/commons-digester/2.0/commons-digester-2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-io-1.3.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-lang-2.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-validator-1.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="joda-time-1.5.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/1.5.1/joda-time-1.5.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ehcache-core-2.5.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/net/sf/ehcache/ehcache-core/2.5.2/ehcache-core-2.5.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ehcache-jgroupsreplication-1.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/net/sf/ehcache/ehcache-jgroupsreplication/1.7/ehcache-jgroupsreplication-1.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="antlr-runtime-3.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/antlr/antlr-runtime/3.0.1/antlr-runtime-3.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ant-1.8.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/ant/ant/1.8.1/ant-1.8.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ariel-compiler-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/ariel-compiler/ariel-compiler">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aries-validate-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aries-validate/aries-validate">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aries-launcher-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aries-launcher/aries-launcher">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aries-registry-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/aries-registry/aries-registry">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-action-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-action/common-action">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-cache-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/common-cache/common-cache">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-client-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/common-client/common-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-data-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/common-data/common-data">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-ejb/common-ejb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-event-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-event/common-event">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-jaxb-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-jaxb/common-jaxb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-jaxws-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-jaxws/common-jaxws">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-jms-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-jms/common-jms">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-jmx-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-jmx/common-jmx">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-jndi-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-jndi/common-jndi">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-launcher-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-launcher/common-launcher">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-model-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-model/common-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-net-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-net/common-net">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-process-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-process/common-process">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-queue-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-queue/common-queue">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-rmi-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-rmi/common-rmi">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-runtime-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-runtime/common-runtime">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-service-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/common-service/common-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-transaction-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-transaction/common-transaction">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-util-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-util/common-util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="common-workflow-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common-workflow/common-workflow">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="nam-engine-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/nam-engine/nam-engine">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="nam-model-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/nam-model/nam-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tx-manager-base-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/tx-manager-base/tx-manager-base">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tx-manager-bridge-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/tx-manager-bridge/tx-manager-bridge">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tx-manager-client-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/tx-manager-client/tx-manager-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tx-manager-model-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/tx-manager-model/tx-manager-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tx-manager-registry-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/tx-manager-registry/tx-manager-registry">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="drools-api-5.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/drools/drools-api/5.0.1/drools-api-5.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="drools-compiler-5.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/drools/drools-compiler/5.0.1/drools-compiler-5.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="drools-core-5.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/drools/drools-core/5.0.1/drools-core-5.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="drools-decisiontables-5.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/drools/drools-decisiontables/5.0.1/drools-decisiontables-5.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.bpel.common.model-1.0.3-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/bpel/plugins/org.eclipse.bpel.common.model/1.0.3-SNAPSHOT/org.eclipse.bpel.common.model-1.0.3-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.bpel.model-1.0.3-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/bpel/plugins/org.eclipse.bpel.model/1.0.3-SNAPSHOT/org.eclipse.bpel.model-1.0.3-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.bpel.validator-1.0.3-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/bpel/plugins/org.eclipse.bpel.validator/1.0.3-SNAPSHOT/org.eclipse.bpel.validator-1.0.3-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.bpel.xpath10-1.0.3-SNAPSHOT.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/bpelins/org.eclipse.bpel.xpath10/1.0.3-SNAPSHOT/org.eclipse.bpel.xpath10-1.0.3-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.core.expressions-3.4.200.v20100505.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/core/org.eclipse.core.expressions/3.4.200.v20100505/org.eclipse.core.expressions-3.4.200.v20100505.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.core.resources-3.6.0.v20100526-0737.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/core/org.eclipse.core.resources/3.6.0.v20100526-0737/org.eclipse.core.resources-3.6.0.v20100526-0737.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.core.runtime-3.6.0.v20100505.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/core/org.eclipse.core.runtime/3.6.0.v20100505/org.eclipse.core.runtime-3.6.0.v20100505.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.emf.codegen-2.10.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/emf/org.eclipse.emf.codegen/2.10.0/org.eclipse.emf.codegen-2.10.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.emf.codegen.ecore-2.10.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/emf/org.eclipse.emf.codegen.ecore/2.10.1/org.eclipse.emf.codegen.ecore-2.10.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.emf.common-2.10.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/emf/org.eclipse.emf.common/2.10.1/org.eclipse.emf.common-2.10.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.emf.ecore-2.10.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore/2.10.1/org.eclipse.emf.ecore-2.10.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.emf.ecore.xmi-2.10.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore.xmi/2.10.1/org.eclipse.emf.ecore.xmi-2.10.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.equinox.common-3.6.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/equinox/org.eclipse.equinox.common/3.6.0/org.eclipse.equinox.common-3.6.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.osgi-3.6.0.v20100517.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/osgi/org.eclipse.osgi/3.6.0.v20100517/org.eclipse.osgi-3.6.0.v20100517.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="wsdl-1.1.100-v200707201214.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/wst/wsdl/1.1.100-v200707201214/wsdl-1.1.100-v200707201214.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.eclipse.xsd-2.8.0-v20120319-0555.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/eclipse/xsd/org.eclipse.xsd/2.8.0-v20120319-0555/org.eclipse.xsd-2.8.0-v20120319-0555.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="hibernate-ehcache-4.0.1.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-ehcache/4.0.1.Final/hibernate-ehcache-4.0.1.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javassist-3.15.0-GA.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/javassist/javassist/3.15.0-GA/javassist-3.15.0-GA.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jboss-el-1.0_02.CR6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/el/jboss-el/1.0_02.CR6/jboss-el-1.0_02.CR6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jbossjta-4.16.4.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/jbossts/jbossjta/4.16.4.Final/jbossjta-4.16.4.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jbossjts-4.16.4.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/jbossts/jbossjts/4.16.4.Final/jbossjts-4.16.4.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jgroups-3.1.0.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jgroups/jgroups/3.1.0.Final/jgroups-3.1.0.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mvel2-2.0.10.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/mvel/mvel2/2.0.10/mvel2-2.0.10.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="wsdl4j-1.6.3.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/wsdl4j/wsdl4j/1.6.3/wsdl4j-1.6.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="bookshop2-supplier-client-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/bookshop2-supplier-client/bookshop2-supplier-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/bookshop2-shipper-app/target/classes"/>
+
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+    </wb-module>
+</project-modules>

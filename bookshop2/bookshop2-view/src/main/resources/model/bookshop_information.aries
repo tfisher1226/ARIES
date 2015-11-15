@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/source/main/resources/schema/nam-1.0.xsd">
+
+	<import file="aries-common-1.0.aries" />
+	<import file="admin_model.aries" />
+
+	<namespace prefix="bookshop" name="bookshop" uri="http://bookshop">
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+
+		<!-- ****** -->	
+		<!--  Data  -->	
+		<!-- ****** -->	
+		
+		<element name="Book">
+			<item name="title" type="xs:string" required="true" />
+			<item name="author" type="xs:string" required="true" />
+			<item name="price" type="xs:double" required="true" />
+			<item name="quantity" type="xs:int" />
+		</element>
+
+		<element name="BookKey">
+			<item name="title" type="xs:string" required="true" />
+			<item name="author" type="xs:string" required="true" />
+		</element>
+		
+		<element name="Orders" transient="true">
+			<listItem name="orders" type="Order" relation="oneToMany" />
+		</element>
+	
+		<element name="Order">
+			<item name="count" type="xs:int" required="true" />
+			<listItem name="book" type="Book" relation="oneToMany" />
+		</element>
+	
+		<element name="Payment">
+			<item name="amount" type="xs:double" required="true" />
+			<item name="currency" type="xs:string" required="true" />
+			<item name="salesTax" type="xs:double" required="true" />
+			<item name="total" type="xs:double" required="true" />
+		</element>
+		
+		<element name="Invoice">
+			<listItem name="orders" type="Order" relation="oneToMany" />
+			<item name="payment" type="Payment" relation="oneToOne" required="true" />
+			<item name="time" type="xs:date" required="true" />
+		</element>
+	
+		<element name="Receipt">
+			<listItem name="orders" type="Order" relation="oneToMany" />
+			<item name="payment" type="Payment" relation="oneToOne" required="true" />
+			<item name="total" type="xs:double" required="true" />
+			<item name="time" type="xs:date" required="true" />
+		</element>
+	
+		<element name="BookInventory">
+			<listItem name="books" type="Book" relation="oneToMany" />
+		</element>
+	
+		<element name="BookShipment">
+			<listItem name="books" type="Book" relation="oneToMany" />
+		</element>
+	
+	
+		<!-- ******** -->	
+		<!--  Events  -->	
+		<!-- ******** -->	
+	
+		<element name="ShipmentCompleteEvent" extends="common:AbstractEvent">
+			<item name="invoice" type="Invoice" relation="oneToOne" required="true" />
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+	
+	
+		<!-- ********** -->	
+		<!--  Messages  -->	
+		<!-- ********** -->	
+	
+		<element name="OrderRequestMessage">
+			<listItem name="books" type="Book" required="true" />
+		</element>
+	
+		<element name="OrderResponseMessage">
+			<listItem name="availableBooks" type="Book" relation="oneToMany" />
+			<listItem name="unavailableBooks" type="Book" relation="oneToMany" />
+		</element>
+	
+		<element name="OrderAcceptedMessage">
+			<listItem name="books" type="Book" relation="oneToOne" required="true" />
+		</element>
+	
+		<element name="OrderRejectedMessage">
+			<item name="reason" type="xs:string" required="true" />
+		</element>
+	
+		<element name="PurchaseRequestMessage">
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+	
+		<element name="PurchaseAcceptedMessage">
+			<listItem name="book" type="Book" relation="oneToMany" required="true" />
+			<item name="payment" type="Payment" relation="oneToOne" required="true" />
+		</element>
+	
+		<element name="PurchaseRejectedMessage">
+			<listItem name="book" type="Book" relation="oneToMany" required="true" />
+			<item name="payment" type="Payment" relation="oneToOne" required="true" />
+		</element>
+	
+		<element name="QueryBooksRequestMessage">
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+		
+		<element name="ReservationRequestMessage">
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+	
+		<element name="BooksAvailableMessage">
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+	
+		<element name="ShipmentRequestMessage">
+			<item name="invoice" type="Invoice" relation="oneToOne" required="true" />
+		</element>
+	
+		<element name="ShipmentCompleteMessage">
+			<item name="invoice" type="Invoice" relation="oneToOne" required="true" />
+			<listItem name="orders" type="Book" relation="oneToMany" required="true" />
+		</element>
+	</namespace>
+</information>

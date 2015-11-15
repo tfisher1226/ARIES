@@ -1,0 +1,160 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	template="/templates/main-page-template.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+
+		<!-- IMPORTED DIALOGS -->
+		<aries:themeDialog/>
+
+		<!-- COMMON DIALOGS -->
+		<ui:include src="/common/inputDialog.xhtml"/>
+		<ui:include src="/common/personNameDialog.xhtml" />
+		<ui:include src="/common/emailAddressDialog.xhtml" />
+		<ui:include src="/common/phoneNumberDialog.xhtml" />
+		<ui:include src="/common/streetAddressDialog.xhtml" />
+		
+		<!-- MANAGEMENT DIALOGS for http://admin 
+		<aries:include file="/admin/section/action/actionSelectDialog.xhtml" manager="#{actionSelectManager}" type="Action" />
+		<aries:include file="/admin/section/permission/permissionInfoDialog.xhtml" manager="#{permissionInfoManager}" type="Permission" />
+		<aries:include file="/admin/section/permission/permissionListDialog.xhtml" manager="#{permissionListManager}" type="PermissionList" />
+		<aries:include file="/admin/section/preferences/preferencesInfoDialog.xhtml" manager="#{preferencesInfoManager}" type="Preferences" />
+		<aries:include file="/admin/section/preferences/preferencesListDialog.xhtml" manager="#{preferencesListManager}" type="PreferencesList" />
+		<aries:include file="/admin/section/registration/registrationInfoDialog.xhtml" manager="#{registrationInfoManager}" type="Registration" />
+		<aries:include file="/admin/section/registration/registrationListDialog.xhtml" manager="#{registrationListManager}" type="RegistrationList" />
+		<aries:include file="/admin/section/role/roleInfoDialog.xhtml" manager="#{roleInfoManager}" type="Role" />
+		<aries:include file="/admin/section/role/roleListDialog.xhtml" manager="#{roleListManager}" type="RoleList" />
+		<aries:include file="/admin/section/role/roleSelectDialog.xhtml" manager="#{roleSelectManager}" type="Role" />
+		<aries:include file="/admin/section/roleType/roleTypeSelectDialog.xhtml" manager="#{roleTypeSelectManager}" type="RoleType" />
+		<aries:include file="/admin/section/skin/skinInfoDialog.xhtml" manager="#{skinInfoManager}" type="Skin" />
+		<aries:include file="/admin/section/skin/skinListDialog.xhtml" manager="#{skinListManager}" type="SkinList" />
+		<aries:include file="/admin/section/skin/skinSelectDialog.xhtml" manager="#{skinSelectManager}" type="Skin" />
+		<aries:include file="/admin/section/user/userInfoDialog.xhtml" manager="#{userInfoManager}" type="User" />
+		<aries:include file="/admin/section/user/userListDialog.xhtml" manager="#{userListManager}" type="UserList" />
+		<aries:include file="/admin/section/user/userSelectDialog.xhtml" manager="#{userSelectManager}" type="User" />
+		-->
+
+		<h:outputScript>
+		function showAdminModelPane() {TogglePanelManager.toggleOnClient('pageForm:bookshop2ViewerPane', 'adminModelPane')}
+		function showAdminServicePane() {TogglePanelManager.toggleOnClient('pageForm:bookshop2ViewerPane', 'adminServicePane')}
+		</h:outputScript>
+
+		<!--  
+		<ui:include src="sections/user/userWizard.xhtml" />
+		-->
+				
+		<!-- PAGE FORM -->
+		<aries:form id="pageForm">
+
+			<!-- POPUP DIALOGS -->
+			<aries:popupDialog/>
+			<aries:messageDialog/>
+			<aries:progressDialog/>
+
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="BOOKSHOP2"
+				subTitleText="Application Manager"
+				iconImage="../resources/graphics/default-page-icon.jpg" />
+
+			<!-- PAGE CONTENT -->
+			<aries:formPane
+				width="100%"
+				height="auto"
+				columns="1"
+				columnClasses="formColumnAlignTop"
+				backgroundColor="inherit">
+			
+				<a4j:commandLink
+					value="Try me3"
+					execute="@none"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					action="#{globals.doNothing}"
+					onclick="setCursorWait(this); showProgress('', '', 'Refreshing information...');"
+					oncomplete="setCursorDefault(eventSource); hideProgress();"
+					render="@none">
+				</a4j:commandLink>
+
+				<aries:layerPane
+					width="100%"
+					height="100%"
+					id="bookshop2ContentPane"
+					activeItem="operation"
+					backgroundColor="red">
+
+					<aries:layeredPane
+						width="auto"
+						name="operation">
+						<ui:include src="bookshop2/operation/menubar.xhtml"/>
+						<ui:include src="bookshop2/operation/navigator-pane.xhtml"/>
+						<ui:include src="bookshop2/operation/viewer-pane.xhtml"/>
+					</aries:layeredPane>
+					
+					<!--  
+					<aries:layeredPane
+						width="auto"
+						name="home">
+						<ui:include src="bookshop2/menubar.xhtml"/>
+						<ui:include src="bookshop2/navigator-pane.xhtml"/>
+						<ui:include src="bookshop2/viewer-pane.xhtml"/>
+					</aries:layeredPane>
+
+					<aries:layeredPane
+						width="auto"
+						name="configuration">
+						<ui:include src="bookshop2/configuration/menubar.xhtml"/>
+						<ui:include src="bookshop2/configuration/navigator-pane.xhtml"/>
+						<ui:include src="bookshop2/configuration/viewer-pane.xhtml"/>
+					</aries:layeredPane>
+					
+					<aries:layeredPane
+						width="auto"
+						margin="10px"
+						name="applications">
+						<ui:include src="bookshop2/system/applications/navigator-pane.xhtml"/>
+						<ui:include src="bookshop2/system/applications/viewer-pane.xhtml"/>
+					</aries:layeredPane>
+
+					<aries:layeredPane
+						width="100%"
+						margin="10px"
+						name="elements">
+						elements
+					</aries:layeredPane>
+
+					<aries:layeredPane
+						width="100%"
+						margin="10px"
+						name="services">
+						<ui:include src="bookshop2/system/services/navigatorPane.xhtml"/>
+						<ui:include src="bookshop2/system/services/viewerPane.xhtml"/>
+					</aries:layeredPane>
+
+					<aries:layeredPane
+						width="100%"
+						margin="0px"
+						name="messaging">
+						<ui:include src="bookshop2/system/messaging/navigatorPane.xhtml"/>
+						<ui:include src="bookshop2/system/messaging/viewerPane.xhtml"/>
+					</aries:layeredPane>
+					-->
+				</aries:layerPane>
+			</aries:formPane>
+			
+			<!-- PAGE FOOTER -->
+			<aries:footer backgroundColor="inherit">
+				<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+					&copy; Copyright 2015 Bookshop2. All rights reserved.
+				</aries:p>
+			</aries:footer>
+		</aries:form>
+	</ui:define>
+</ui:composition>

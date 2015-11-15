@@ -1,0 +1,167 @@
+/*
+.button,
+.buttonDisabled {
+	padding-top: 6px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+	min-height: 22px;
+	vertical-align: middle;
+	background-color: red;
+}
+
+.dialogButton,
+.dialogButtonDisabled {
+	padding: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	vertical-align: middle;
+	background-color: #f0f0f0; 
+}
+
+.smallDialogButton,
+.smallDialogButtonDisabled {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+	min-height: 20px;
+	vertical-align: middle;
+}
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled,
+.smallDialogButton,
+.smallDialogButtonDisabled {
+	border: 1px solid #bbb !important;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #eee;
+	background-image: url('/aries/images/button-background.gif');
+}
+*/
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled,
+.smallDialogButton,
+.smallDialogButtonDisabled {
+	background-color: #{richSkin.generalBackgroundColor};
+	background-image: url('/aries/images/button-background.gif');
+	background-color: red;
+}
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled {
+}
+
+.smallDialogButton,
+.smallDialogButtonDisabled {
+}
+
+.button:hover,
+.dialogButton:hover,
+.smallDialogButton:hover {
+	border: 1px solid #479ff9 !important;
+	background-color: #f5fafa !important;
+	background-image: url('/aries/images/button-background-hover.gif');
+}
+
+.buttonDisabled,
+.dialogButtonDisabled,
+.smallDialogButtonDisabled {
+	/*border: 1px solid #ccc;*/
+	background-color: #f4f4f4;
+	background-image: url('/aries/images/button-background-disabled.gif');
+}
+
+/*
+.buttonLabel,
+.buttonLabelDisabled,
+.dialogButtonLabel,
+.dialogButtonLabelDisabled {
+	padding: 0px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #008;
+}
+
+.smallDialogButtonLabel,
+.smallDialogButtonLabelDisabled {
+	padding: 0px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #008;
+}
+
+.buttonLabel,
+.buttonLabelDisabled {
+	font-size: 12px; 
+}
+
+.dialogButtonLabel,
+.dialogButtonLabelDisabled {
+	font-size: 11px; 
+}
+
+.smallDialogButtonLabel {
+	font-size: 10px; 
+}
+
+.buttonLabel:hover,
+.dialogButtonLabel:hover,
+.smallDialogButtonLabel:hover {
+	text-decoration: underline;
+	color: #00a;
+}
+
+.buttonLabelDisabled,
+.dialogButtonLabelDisabled,
+.smallDialogButtonLabelDisabled {
+	font-weight: normal;
+	color: #999;
+}
+*/
+
+
+/*
+ * Remove gap between icon and label
+ */
+ 
+/*
+.dialogButton .rich-menu-item-icon,
+.dialogButton .rich-menu-group-icon,
+.smallDialogButton .rich-menu-item-icon,
+.smallDialogButton .rich-menu-group-icon {
+    width: 0px;
+	margin: 0px;
+	padding: 0px;  
+	padding-right: 6px;  
+}  
+*/
+
+.dialogButton2 {
+    padding: 2px 4px;
+    background-position: 0px 50%;
+    border: 1px solid;
+    font-size: 11px;
+    font-weight: normal;
+    text-decoration: none;
+    color: #eee;
+}
+
+.dialogButton2.a:active, 
+.dialogButton2.a:link, 
+.dialogButton2.a:visited {
+    text-decoration: none;
+	color: blue;
+}
+

@@ -1,0 +1,226 @@
+import admin.admin_service.aries;
+import 2pc.2pc_domain.aries;
+import 2pc.2pc_messaging.aries;
+
+protocol 2pc {
+	set domain(tm);
+	set namespace(tm);
+
+    participant Client {
+		TransactionContext transactionContext;
+
+    	start: {
+	    	activateTransaction(timeout);
+	    	registerParticipant();
+    	}
+
+	    activateTransaction(timeout) {
+			try {
+				if (transactionContext != null) {
+					CoordinationContext currentContext = getCoordinationContext(transactionContext);
+				}
+				CoordinationContext currentContext = getContext(transactionContext);
+				coordinationContext = Activation.activate(CoordinationConstants.WSAT_PROTOCOL, currentContext, timeout);
+				if (coordinationContext == null)
+					throw new SystemException("Received context is null");
+				TransactionContextImpl transactionContext = new TransactionContextImpl(coordinationContext);
+				return transactionContext;
+	
+			} catch (Exception e) {
+				throw new SystemException(e.getMessage());
+			}
+	    }
+	    
+	    getCoordinationContext(TransactionContext transactionContext) {
+			if (transactionContext != null) {
+				CoordinationContext coordinationContext = new CoordinationContext();
+				CoordinationContextType coordinationContextType = transactionContext.getCoordinationContextType();
+				coordinationContext.setCoordinationType(coordinationContextType.getCoordinationType());
+				coordinationContext.setExpires(coordinationContextType.getExpires());
+				coordinationContext.setIdentifier(coordinationContextType.getIdentifier());
+				coordinationContext.setRegistrationService(coordinationContextType.getRegistrationService());
+				return coordinationContext;
+			}
+	    }
+	    
+	    registerParticipant() {
+			TransactionContext transactionContext = transactionManager.currentTransaction();
+			EndpointReference completionParticipant = getCompletionParticipant(transactionContext);
+			EndpointReference completionCoordinator = transactionManager.registerParticipant(transactionContext, completionParticipant);
+			completionCoordinators.put(transactionId, completionCoordinator);
+	    }
+    }
+    
+    
+    participant Activation {
+        add channel(Public);
+		set namespace(buyer);
+
+        receive activate(ActivationRequest activationRequest) {
+           	set synchronous(true); 
+        
+            invoke Seller.orderBooks(orderRequest) {
+                message OrderAccepted: {
+                    purchaseBooks(books);
+                }
+                message OrderRejected: {
+                    //reply $response;
+                }
+            }
+        }
+
+        purchaseBooks(PurchaseRequest purchaseRequest) {
+            invoke Seller.purchaseBooks(purchaseRequest) {
+                message PurchaseAccepted: {
+                    //reply $response;
+                }
+                message PurchaseRejected: {
+                    //reply $response;
+                }
+            }
+        }
+    }
+
+	//like airline co.
+    participant Seller {
+		add channel(Protected);
+		set namespace(seller);
+
+        receive orderBooks(OrderRequest orderRequest) {
+       		//bookCache.addToAvailableBooks(orderRequest.books);
+
+            invoke SupplierGroup.queryBooks(orderRequest) {
+            	set timeout(3m);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BooksAvailable: {
+                    option: {
+               		    bookCache.addToAvailableBooks(books);
+               		    send SupplierGroup.reserveBooks(books);
+                        reply OrderAccepted(books);
+                    }
+                }
+                
+                message BooksUnavailable: {
+                    reply OrderRejected(books);
+                }
+
+                timeout: {
+                    option: reply OrderAccepted;
+                    option: reply OrderRejected;
+                }
+
+                exception: {
+                    reply OrderRejected;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+            option: reply PurchaseAccepted;
+            option: reply PurchaseRejected;
+        }
+
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    admin:User user; 
+			    List<bookshop:Book> bookOrders; 
+			    Set<bookshop:Book> availableBooks; 
+			    Set<bookshop:Book> unavailableBooks; 
+		    }
+	    }
+    }
+
+	//call this network
+	//make so one can "add" participants
+    group SupplierGroup {
+        set participant(Supplier);
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        add channel(Inventory);
+		set namespace(supplier);
+
+        receive queryBooks(OrderRequest orderRequest) {
+           	List<bookshop:Book> books = supplierOrderCache.getFromBooksInStock(orderRequest.books);
+           	option: reply BooksAvailable(books);
+           	option: reply BooksUnavailable(books);
+        }
+
+        receive reserveBooks(ReservationRequest reservationRequest) {
+        	//TODO List<bookshop:Book> books = reservationRequest.books;
+        	SupplierOrderCache.removeFromBooksInStock(books);
+        	BookOrderLog.addToReservedBooks(books);
+        }
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+            invoke Shipper.shipBooks(shipmentRequest) {
+				set transaction(required); 
+				set timeout(5m); 
+
+                message ShipmentComplete: {
+                	option: {
+	                    SupplierOrderCache.addToCurrentBookOrders(orders);
+	                	//bookOrderLog.log(Payment);
+	                	post ShipmentComplete(orders);
+	                	//reply ShipmentComplete;
+	                }
+	            }
+	        }
+		}
+		
+		//global
+		cache SupplierOrderCache { 
+			set scope(application); 
+			set transaction(required); 
+			set backingStore(bookOrderLog);
+			items {
+				List<bookshop:Book> currentBookOrders; 
+				Map<bookshop:BookKey, bookshop:Book> booksInStock;
+				Map<bookshop:BookKey, bookshop:Book> reservedBooks;
+			}
+		}
+
+		persist BookOrderLog {
+			add role(seller);
+		    add role(administrator);
+			set scope(application); 
+			set transaction(required); 
+		    set source(BookshopDS);
+		    set adapter(hibernate);
+		    import namespace(bookshop);
+			items {
+				List<bookshop:Book> bookOrders {
+					index(title);
+					index(author);
+				} 
+				Map<xs:String, bookshop:Book> reservedBooks {
+					index(title);
+					index(author);
+				}
+			}
+		}
+    }
+
+    participant Shipper {
+        add channel(Shipment);
+		set namespace(shipper);
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+            reply ShipmentComplete;
+            //reply ShipmentComplete[Summary, Invoice, Receipt];
+        }
+    }
+
+
+        //receive queryBooks(OrderRequest orderRequest) over Inventory {
+        
+        //receive shipBooks(ShipmentRequest shipmentRequest) over Shipment, Inventory {
+        //   invoke Shipper.shipBooks(shipmentRequest) over Shipment {
+
+}

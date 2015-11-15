@@ -1,0 +1,45 @@
+#!/bin/sh
+
+#
+# BOOKSHOP2 settings for tfisher-hp2
+#
+
+export HOST=localhost
+
+export BINDING_HOST=localhost
+
+export JAVA_HOME=c:/software/jdk1.7.0_80_64
+
+export JBOSS_HOME=c:/software/jboss-eap-6.4-node3
+#export JBOSS_HOME=c:/software/jboss-as-7.1.1.Final-node3
+
+export JBOSS_RUNTIME_HOME=$JBOSS_HOME/standalone
+
+export JBOSS_DEPLOYMENT_HOME=$JBOSS_RUNTIME_HOME/deployments
+
+export JBOSS_CONFIGURATION_HOME=$JBOSS_RUNTIME_HOME/configuration
+
+export BOOKSHOP2_HOME=c:/workspace/ARIES2/bookshop2
+
+export BOOKSHOP2_EAR_HOME=$BOOKSHOP2_HOME/bookshop2-app
+
+export BOOKSHOP2_EAR_FILE=bookshop2-app.ear
+
+export BOOKSHOP2_JMS_FILE=bookshop2-jms.xml
+
+export BOOKSHOP2_DS_FILE=bookshop2-ds.xml
+
+export BOOKSHOP2_SUPPLIER_DS_FILE=bookshop2-supplier-ds.xml
+
+export BOOKSHOP2_LOG_HOME=$BOOKSHOP2_HOME/runtime/log
+
+export BOOKSHOP2_LOG_FILE=$BOOKSHOP2_LOG_HOME/console.log
+
+export BOOKSHOP2_BUYER_EAR_HOME=$BOOKSHOP2_HOME/bookshop2-buyer-app
+
+export BOOKSHOP2_BUYER_EAR_FILE=bookshop2-buyer-app.ear
+
+export ADMIN_JMS_FILE=admin-jms.xml
+
+export ADMIN_DS_FILE=admin-ds.xml
+

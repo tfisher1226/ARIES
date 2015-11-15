@@ -1,0 +1,87 @@
+/*
+ * Toolbar related
+ * ---------------
+ */
+
+*.rf-tb {
+	/*
+	background-image: url(#{resource['images:flags/usa.gif']});
+	background-image: url(#{resource['org.richfaces.images:dsDigGrad.png']});
+	background-image: url(#{resource['org.richfaces.images:colHdrGrad.png']});
+	*/
+	background-image: none;
+	background-color: #{richSkin.toolbarBackgroundColor};
+	background-color: #{userSkin.toolbarBackgroundColor};
+	border: 0px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor};
+	/*
+	background-color: blue;
+	background-color: #{richSkin.generalBackgroundColor};
+	border: 0px #{userSkin.borderStyle} #{userSkin.borderColor};
+	*/
+	border-left-width: 0px;
+	border-right-width: 0px;
+}
+
+/*
+*.rf-tb-itm {
+	padding: 0px;
+	margin: 0px;
+}
+*/
+
+*.rf-tb-sep {
+	padding: 0px;
+	margin: 0px;
+}
+
+.dialogButton *.rf-ddm-itm-ic,
+.smallDialogButton *.rf-ddm-itm-ic,
+.toolItem *.rf-ddm-itm-ic,
+.controlbarItem *.rf-ddm-itm-ic {
+	margin: 0px;
+}
+
+.menuItem .rf-ddm-itm-lbl {
+	margin: 0px 10px;
+}
+
+.toolbar {
+	/*
+	background-image: url(#{resource['images:flags/usa.gif']});
+	background-image: url(#{resource['org.richfaces.images:tabBottomBg.png']});
+	background-image: url(#{resource['org.richfaces.images:colHdrGrad.png']});
+	background-color: cyan;
+	*/
+}
+
+.controlbar {
+	background-color: #{richSkin.editorBackgroundColor};
+	background-color: #{richSkin.tabBackgroundColor};
+	background-color: #{richSkin.generalBackgroundColor};
+	background-color: #{userSkin.backgroundColor};
+	background-image: none;
+}
+
+.toolbar,
+.controlbar {
+	padding: 0px;
+	margin: 0px;
+	/* 
+	margin-right: 0px;
+	margin-left: 0px;
+	cellpadding: 0px; 
+	cellspacing: 0px;
+	border: 0px;
+	border-width: 0px;
+	border-collapse: collpase; 
+	*/ 
+}
+
+.menuItem,
+.toolItem,
+.toolItemDisabled,
+.toolButton,
+.toolLabel {
+	background-image: none;
+	background: inherit;
+}

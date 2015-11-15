@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty interactive}">
+		<c:set var="interactive" value="true"/> 
+	</c:if>
+
+	<c:if test="#{not interactive}">
+		<h:panelGroup layout="block" style="padding: 4px 6px; border: 1px solid #9999cc; background-color: #eaeaf6; text-decoration: none">
+			<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumn" >
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" style="margin-right: 8px"/>
+				</c:if>
+				<h:outputText styleClass="toolbarLabel" value="#{label}" style="white-space: nowrap"/>
+			</h:panelGrid>
+		</h:panelGroup>
+	</c:if>
+	
+	<c:if test="#{interactive}">
+		<rich:menuItem
+			submitMode="ajax"
+			disabled="false"
+			rendered="true"
+			immediate="true"
+			ajaxSingle="true"
+			requestDelay="0"
+			action="#{globals.doNothing}"
+			onclick="setCursorWait(this)"
+			oncomplete="setCursorDefault(this); showPage('#{url}')"
+			styleClass="toolbarItem" style="padding: 6px">
+			<f:facet name="icon">
+				<h:graphicImage value="#{icon}" style="padding-right: 8px"/>
+			</f:facet>
+			<h:outputText styleClass="toolbarLabel" value="#{label}"/>
+		</rich:menuItem>
+	</c:if>
+</ui:composition>

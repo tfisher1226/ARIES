@@ -1,0 +1,55 @@
+import admin.admin_service.aries;
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_persistence.aries;
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+import bookshop.bookshop_supplier_persistence.aries;
+
+
+	//like travel agent
+    participant Buyer {
+        add channel("Public");
+		set namespace("buyer");
+
+        receive orderBooks(OrderRequest orderRequest) {
+        	join transaction("bookReservation");
+        	set synchronous(true);
+        	
+            invoke Seller.orderBooks() {
+                message OrderAccepted: {
+                    //List<Book> books = purchaseBooks(books);
+                    //order.setBooks(books);
+					//reply OrderAccepted(order);
+
+                    List<Book> books = order.books;
+		            Payment payment = context.getPayment(); 
+		            if (payment != null) {
+                        send Seller.purchaseBooks(books, payment);
+                    }
+					reply OrderAccepted;
+                    done;
+                }
+                message OrderRejected: {
+                    reply OrderRejected;
+                    done;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+        	join transaction("bookReservation");
+
+            invoke Seller.purchaseBooks() {
+                message PurchaseAccepted: {
+                    reply PurchaseAccepted;
+                    done;
+                }
+                message PurchaseRejected: {
+                    reply PurchaseRejected;
+                    done;
+                }
+            }
+        }
+    }
+

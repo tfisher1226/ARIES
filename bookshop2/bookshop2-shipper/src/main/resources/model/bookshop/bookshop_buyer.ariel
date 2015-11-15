@@ -1,0 +1,39 @@
+import admin.admin_service.aries;
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+
+protocol Bookshop2 {
+	set domain(bookshop2);
+	set namespace(bookshop);
+
+	//like travel agent
+    participant Buyer {
+        add channel(Public);
+		set namespace(buyer);
+
+        receive orderBooks(OrderRequest orderRequest) {
+            invoke Bookshop.Seller.orderBooks(orderRequest) {
+                message OrderAccepted: {
+                    purchaseBooks(books);
+                }
+                message OrderRejected: {
+                    //reply $response;
+                }
+            }
+        }
+
+        purchaseBooks(PurchaseRequest purchaseRequest) {
+            invoke Seller.purchaseBooks(purchaseRequest) {
+                message PurchaseAccepted: {
+                    //reply $response;
+                }
+                message PurchaseRejected: {
+                    //reply $response;
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<div onclick="#{onclick}" 
+		styleClass="formPanel" 
+		style="width: 240px; height: auto; float: left; background-color: inherit">
+	
+	<!--  
+	<aries:panel
+		width="240"
+		height="100%"
+		margin="10px"
+		backgroundColor="inherit">
+		-->
+
+		<aries:label
+			value="Bookshop"
+			height="30" 
+			marginTop="10px"
+			marginBottom="10px"
+			paddingLeft="8px"
+			backgroundColor="inherit" />
+
+		<aries:tabPane
+			margin="0px"
+			id="main-navigator-pane">
+
+			<aries:tab
+				label="Welcome"
+				icon="/icons/common/Default16.gif"
+				onselect="showMainPane()">
+				
+				<!--  
+				<ui:define name="control">
+					<rich:toggleControl
+						event="click"
+						targetPanel="main-viewer-pane" 
+						targetItem="main-overview-pane" />
+				</ui:define>
+				-->
+				
+				<ui:include src="navigator-tab1.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</div>
+</ui:composition>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<ui:composition template="/templates/main.xhtml">
+		<ui:define name="body">
+		
+			<aries:label
+				value="Bookshop"
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				backgroundColor="inherit" />
+			
+			<c:choose>
+				<c:when test="#{empty navigationDriver.activePage}">
+					<aries:label
+						value="Overview"
+						paddingLeft="8px"/>
+				</c:when>
+				
+				<c:otherwise>
+					<aries:tabPane
+						switchType="client" 
+						activeItem="#{navigationDriver.activePage}"
+						onbeforeitemchange="return false">
+			
+						<c:forEach items="#{navigationDriver.currentArea.sections}" var="section">
+		
+							<aries:tab 
+								name="#{section.id}" 
+								label="#{section.name}"
+								onheaderclick="setCursorWait(this); document.location.href='#{facesContext.externalContext.requestContextPath}/bookshop2/handler.jsf?demo=#{navigationDriver.currentArea.id}&amp;section=#{section.id}&amp;skin=#{skinBean.skin}'">
+								
+								<c:if test="#{navigationDriver.currentSection.id == section.id}">
+									<ui:include src="#{navigationDriver.sectionURI}" />
+								</c:if>
+							</aries:tab>
+						</c:forEach>
+					</aries:tabPane>
+				</c:otherwise>
+			</c:choose>
+		</ui:define>
+	</ui:composition>
+</html>

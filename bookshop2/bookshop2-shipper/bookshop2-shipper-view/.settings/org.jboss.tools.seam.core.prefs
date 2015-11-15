@@ -1,0 +1,8 @@
+action.package=bookshop2.shipper
+action.sources=/bookshop2-shipper-client/src/main/java
+eclipse.preferences.version=1
+model.package=bookshop2.shipper
+model.sources=/bookshop2-shipper-client/src/main/java
+seam.ejb.project=bookshop2-shipper-client
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1

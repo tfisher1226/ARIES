@@ -1,0 +1,112 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:param name="newAction" value="newJmxEvent" />
+	<ui:param name="editAction" value="editJmxEvent" />
+	<ui:param name="newActionHeader" value="JmxEvent Records" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	<ui:param name="itemManager" value="#{jmxEventInfoManager}" />
+	<ui:param name="listManager" value="#{jmxEventListManager}" />
+	
+	<!--
+	
+	  ** Launch JmxEventDialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="new#{serviceId}JmxEvent"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{jmxEventInfoManager.newJmxEvent}"
+		onbegin="setCursorWait(); showProgress('', 'JmxEvent Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); showJmxEventDialog()"
+		render="#{serviceId}JmxEventModule, #{serviceId}JmxEventListPane">
+		
+		<a4j:param name="targetDomain" value="#{serviceId}JmxEventDialog" assignTo="#{jmxEventInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{serviceId}JmxEventListPane" assignTo="#{jmxEventInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="jmxEventList" assignTo="#{jmxEventInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+
+
+	<a4j:jsFunction 
+		name="select#{serviceId}JmxEvent" 
+		immediate="true" 
+		limitRender="true" 
+		onbegin="enable#{serviceId}JmxEventListToolbar()"
+		renderXX="#{serviceId}JmxEventListToolbar">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+
+	<script type="text/javascript">
+	function enableJmxEventListToolbar() {
+		enableButton('JmxEventListEditButton');
+		enableButton('JmxEventListRemoveButton');
+	}
+	</script>
+
+	<!--
+	  ** Select JmxEvent record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="openSelected#{serviceId}JmxEvent"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', 'JmxEvent Records', 'Opening record for edit...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); #{rich:component('JmxEventDialog')}.show()"
+		render="#{serviceId}JmxEventModule">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="#{serviceId}JmxEventDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{serviceId}JmxEventListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="jmxEventList" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+
+
+	<!--
+	  ** Refresh JmxEvent record list
+	  -->
+
+	<a4j:jsFunction
+		name="refresh#{serviceId}JmxEventList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'JmxEvent Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{serviceId}JmxEventListTablePane">
+	</a4j:jsFunction>
+	
+	
+	<!--
+	  ** Clear JmxEvent record list
+	  -->
+
+	<a4j:jsFunction
+		name="clear#{serviceId}JmxEventList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.clear}"
+		onbegin="setCursorWait(); showProgress('', 'JmxEvent Records', 'Clearing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{serviceId}JmxEventListTablePane">
+	</a4j:jsFunction>
+</ui:composition>

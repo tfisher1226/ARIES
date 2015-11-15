@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:set var="domain" value="Register"/> 
+		<c:set var="dialog" value="RegisterDialog" /> 
+	
+		<a4j:region rendered="#{not empty registrationManager.registration}">
+			<aries:dialog 
+				domain="Register"
+				manager="#{registrationManager}">
+				
+				<h:panelGroup layout="block">
+					<aries:tabPane width="500" height="300"> 
+						<aries:tab label="Identification">
+							<aries:insetPane>
+								<ui:include src="registerIdentityPanel.xhtml">
+									<ui:param name="userObject" value="#{registrationManager.registration.user}" />
+								</ui:include>
+							</aries:insetPane>
+			    	    </aries:tab>
+		
+						<aries:tab label="Contact Information">
+							<aries:insetPane>
+								<ui:include src="registerContactPanel.xhtml">
+									<ui:param name="userObject" value="#{registrationManager.registration.user}" />
+								</ui:include>
+							</aries:insetPane>
+			    	    </aries:tab>
+					</aries:tabPane>
+				</h:panelGroup>
+			</aries:dialog>
+		</a4j:region>
+	</aries:tag>
+</ui:composition>

@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+    <a4j:jsFunction 
+    	name="launch#{domain}#{type}Dialog"
+    	execute="@this"
+    	immediate="true" 
+    	bypassUpdates="true"
+    	limitRender="true"
+    	action="#{personNameManager.show}"
+		onbegin="setCursorWait()"
+		oncomplete="setCursorDefault(this); show#{domain}#{type}Dialog()"
+		render="#{domain}#{type}Module, #{domain}#{type}Dialog">
+		<a4j:param name="instanceName" assignTo="#{personNameManager.recordInstance}" />
+	</a4j:jsFunction>
+	
+	<aries:region
+		id="#{section}#{type}Module"
+		parent="#{section}"
+		domain="#{domain}#{type}"
+		section="#{domain}#{type}Dialog"
+		rendered="#{personNameManager.visible}">
+		
+		<h:form id="#{section}Form">
+			<aries:region>
+				<aries:dialog
+					id="#{section}"
+					action="submit"
+					manager="#{personNameManager}"
+					render="#{parent}Form:#{parent}#{type}">
+					
+					<!-- Dialog Content -->
+					<ui:include src="personNamePanel.xhtml" />
+				</aries:dialog>
+			</aries:region>
+		</h:form>
+	</aries:region>
+</ui:composition>

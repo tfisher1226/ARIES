@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkpoints
+	xmlns="http://www.aries.org/validate"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/validate file:/workspace/ARIES/aries-validate/src/main/resources/schema/aries-validate-1.0.xsd">
+
+
+	<checkpoint>
+		<name>orderRequestMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>OrderRequestMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRequestMessage/order/books</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>OrderRequestMessage must include one or more books(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>orderAcceptedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>OrderAcceptedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderAcceptedMessage/order/books</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>OrderAcceptedMessage must include one or more books(s)</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>orderRejectedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>OrderRejectedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$orderRejectedMessage/reason</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>OrderRejectedMessage/reason must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>purchaseAcceptedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/order/books</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage must include one or more book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/amount</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/currency</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/salesTax</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseAcceptedMessage/payment/total</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseAcceptedMessage/payment/total must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+	<checkpoint>
+		<name>purchaseRejectedMessage</name>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/order/books</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage must include one or more book(s)</message>
+		</condition>
+		<condition>
+			<type>notNull</type>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage/payment must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/amount</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage/payment/amount must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/currency</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage/payment/currency must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/salesTax</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage/payment/salesTax must be specified</message>
+		</condition>
+		<condition>
+			<type>notEmpty</type>
+			<expression>$purchaseRejectedMessage/payment/total</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>PurchaseRejectedMessage/payment/total must be specified</message>
+		</condition>
+	</checkpoint>
+
+
+</checkpoints>

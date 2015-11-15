@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/infosgi/src"
+    modelPluginID="infosgi" modelName="Infosgi" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>infosgi.ecore</foreignModel>
+  <genPackages prefix="Org_aries_common" resource="XML" disposableProviderFactory="true"
+      ecorePackage="infosgi.ecore#/0">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/Capability">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/ALL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/READ"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/CREATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/UPDATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/DELETE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/EXPORT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/EMAIL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Capability/PRINT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/Country">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Country/USA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Country/CAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Country/MEX"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Country/PR"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/Language">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/ENGLISH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/SPANISH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/FRENCH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/ITALIAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/GERMAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/PORTUGUESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/JAPANESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/CHINESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/KOREAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/VIETNAMESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/THAI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Language/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/PhoneNumberType">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/PhoneNumberType/HOME"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/PhoneNumberType/WORK"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/PhoneNumberType/CELL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/PhoneNumberType/FAX"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/PhoneNumberType/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/RoleType">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/RoleType/MANAGER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/RoleType/USER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/RoleType/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/State">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/AL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/AK"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/AZ"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/AR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/CA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/CO"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/CT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/DE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/FL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/GA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/HI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/ID"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/IL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/IN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/IA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/KS"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/KY"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/LA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/ME"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MS"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MO"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/MT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NV"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NJ"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NM"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NY"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/NC"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/ND"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/OH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/OK"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/PA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/RI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/SC"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/SD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/TN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/TX"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/UT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/VT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/VA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/WA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/WV"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/WI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/State/WY"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/0/Status">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Status/INFO"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Status/PROMPT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Status/WARNING"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/0/Status/ERROR"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/CapabilityObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/CountryObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/LanguageObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/PhoneNumberTypeObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/RoleTypeObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/StateObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/0/StatusObject"/>
+    <genClasses ecoreClass="infosgi.ecore#/0/Attachment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Attachment/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Attachment/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Attachment/size"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Attachment/fileName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Attachment/fileData"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Attachment/contentType"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/attachment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/emailAccount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/emailAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/emailAddressList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/emailBox"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/emailMessage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/map"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/mapEntry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/note"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/person"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/personName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/phoneNumber"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/properties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/property"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/streetAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/user"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/DocumentRoot/zipCode"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/EmailAccount">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAccount/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAccount/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAccount/password"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAccount/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAccount/lastName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailAccount/emailBoxes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAccount/enabled"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/EmailAddress">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/lastName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailAddress/phoneNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/creationDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/lastUpdate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddress/enabled"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/EmailAddressList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddressList/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailAddressList/emailAddress"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/EmailBox">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailBox/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailBox/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailBox/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailBox/emailAccount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailBox/parentBox"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailBox/messageList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailBox/creationDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailBox/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/EmailMessage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/content"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/subject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/timestamp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/sourceId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/smtpHost"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/smtpPort"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/fromAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/toAddressList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/bccAddressList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/ccAddressList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/replytoAddressList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/adminAddressList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/EmailMessage/attachments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/EmailMessage/sendAsHtml"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Event/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Event/user"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/Map">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Map/mapEntry"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/MapEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/MapEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/Note">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Note/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Note/creationDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Note/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Note/lastUpdate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Note/author"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/Person">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Person/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Person/userId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Person/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Person/phoneNumber"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Person/emailAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Person/streetAddress"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/PersonName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PersonName/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PersonName/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PersonName/middleInitial"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/PhoneNumber">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/area"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/extension"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/PhoneNumber/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/Properties">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/Properties/property"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/Property">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Property/mixed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Property/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Property/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/Property/value"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/StreetAddress">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/city"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/latitude"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/longitude"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/StreetAddress/street"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/StreetAddress/zip"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/User">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/User/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/User/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/User/password"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/User/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/User/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/User/enabled"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/User/phoneNumber"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/0/User/emailAddress"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/0/ZipCode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/ZipCode/country"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/ZipCode/extension"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/0/ZipCode/number"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Org_sgiusa_model" resource="XML" disposableProviderFactory="true"
+      ecorePackage="infosgi.ecore#/1">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/ActivityGroup">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/YOUTHMUSICCORP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/FIFEANDDRUMCORP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/BYAKUREN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/SOKAGROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/GAJOKAI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/CHORUSGROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/STUDYGROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/PHONETOBAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/BOOKSTORETOBAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/CLEANUPCOMMITTEE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/BUILDINGCOMMITTEE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/WELCOMINGCOMMITTEE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/GOLDENSTAGECREW"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/YOUTHPEACEGROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/YOUTHSUPPORTGROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/SOKASPIRITGROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/CULTUREDEPT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/SECRETARIET"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroup/CENTRALEXECUTIVECOMMITTEE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/ActivityGroupName">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/none"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/YouthMusicCorp"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/FifeAndDrumCorp"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/Byakuren"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/SokaGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/Gajokai"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/ChorusGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/StudyGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/PhoneToban"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/BookstoreToban"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/CleanupCommittee"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/BuildingCommittee"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/WelcomingCommittee"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/GoldenStageCrew"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/YouthPeaceGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/YouthSupportGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/SokaSpiritGroup"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/CultureDept"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/Secretariet"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ActivityGroupName/CentralExecutiveCommittee"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/Capability">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/ALL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/READ"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/CREATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/UPDATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/DELETE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/EXPORT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/EMAIL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Capability/PRINT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/Division">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/YWD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/YMD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/YD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/WD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/MD"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Division/ALL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/DivisionName">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/none"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/YoungWomenSDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/YoungMenSDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/YouthDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/WomanSDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/MenSDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/DivisionName/AllDivisions"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/EventStatus">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/EventStatus/MANAGER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/EventStatus/USER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/EventStatus/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/FamilyRelation">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/MOTHER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/FATHER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/SISTER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/BROTHER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/STEPSISTER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/STEPBROTHER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/HUSBAND"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/WIFE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/SON"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/DAUGHTER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/GRANDMOTHER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/GRANDFATHER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/GRANDSON"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/GRANDDAUGHTER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/MOTHERINLAW"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/FATHERINLAW"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/SONINLAW"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/DAUGHTERINLAW"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/AUNT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/UNCLE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/COUSIN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/NIECE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/NEPHEW"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/EXHUSBAND"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/EXWIFE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/FamilyRelation/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/GohonzonType">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/GohonzonType/REGULAR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/GohonzonType/SMALL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/GohonzonType/LARGE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/GohonzonType/FAMILY"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/GohonzonType/OMOMORI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/GohonzonType/OKATAGI"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/OrganizationLevel">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/SGIUSA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/TEAM"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/ZONE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/REGION"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/AREA"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/CHAPTER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/DISTRICT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/GROUP"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/OrganizationLevel/UNIT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/Position">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/LEADER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/VICELEADER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/GUIDANCE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/ADVISOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/SENIORVICELEADER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/GENERALDIRECTOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/VICEGENERALDIRECTOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/SENIORVICEGENERALDIRECTOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/SOKASPIRITCOORDINATOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/CULTUREDEPTCOORDINATOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/MEMBERCAREADVISOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/MEMBERSHIPSTATISTICSADMINISTRATOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/MEMBERSHIPDATABASEADMINISTRATOR"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Position/PUBLICATIONSREPRESENTATIVE"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/PositionName">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/Leader"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/ViceLeader"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/Guidance"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/Advisor"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/SeniorViceLeader"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/GeneralDirector"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/ViceGeneralDirector"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/SeniorViceGeneralDirector"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/SokaSpiritCoordinator"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/CultureDeptCoordinator"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/MemberCareAdvisor"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/MembershipStatisticsAdministrator"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/MembershipDatabaseAdministrator"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/PositionName/PublicationsRepresentative"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/Role">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Role/MANAGER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Role/USER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/Role/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/SchoolType">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/ELEMENTARY"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/GRAMMER"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/JRHIGHSCHOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/HIGHSCHOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/COLLEGE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/GRADUATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SchoolType/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/StudyDeptExamLevel">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/ENTRANCE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/ELEMENTARY"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/INTERMEDIATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/ADVANCED"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/GRADUATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/POSTGRADUATE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptExamLevel/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/StudyDeptLanguage">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/ENGLISH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/SPANISH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/FRENCH"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/ITALIAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/GERMAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/PORTUGUESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/JAPANESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/CHINESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/KOREAN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/VIETNAMESE"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/THAI"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/StudyDeptLanguage/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/SubDivision">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivision/STUDENT"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivision/HIGHSCHOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivision/JRHIGHSCHOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivision/ELEMENTARYSCHOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivision/CHILDREN"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivision/ALL"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/SubDivisionName">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivisionName/StudentDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivisionName/HighSchoolDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivisionName/JrHighSchoolDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivisionName/ElementarySchoolDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivisionName/ChildrenSDivision"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/SubDivisionName/ALLSubDivisions"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="infosgi.ecore#/1/ViewType">
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ViewType/USERLIST"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ViewType/MEMBERLIST"/>
+      <genEnumLiterals ecoreEnumLiteral="infosgi.ecore#/1/ViewType/ORGANIZATIONNODE"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/ActivityGroupNameObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/ActivityGroupObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/CapabilityObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/DivisionNameObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/DivisionObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/EventStatusObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/FamilyRelationObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/GohonzonTypeObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/OrganizationLevelObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/PositionNameObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/PositionObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/RoleObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/SchoolTypeObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/StudyDeptExamLevelObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/StudyDeptLanguageObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/SubDivisionNameObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/SubDivisionObject"/>
+    <genDataTypes ecoreDataType="infosgi.ecore#/1/ViewTypeObject"/>
+    <genClasses ecoreClass="infosgi.ecore#/1/DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/emailList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/familyMember"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/gohonzonInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/leadershipInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/leadershipRole"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/member"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/members"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/memberSearchCriteria"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/membershipInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/note"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/organization"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/permission"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/preferences"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/registration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/schoolInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/studyDeptExam"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/studyDeptInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/user"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/users"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/DocumentRoot/view"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/EmailList">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/EmailList/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/EmailList/enabled"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/EmailList/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/EmailList/divisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/EmailList/subDivisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/EmailList/activityGroups"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/EmailList/emailAddressList"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Event/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Event/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Event/status"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Event/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Event/divisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Event/subDivisions"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/FamilyMember">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/FamilyMember/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/FamilyMember/sgiMember"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/FamilyMember/familyRelation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/FamilyMember/personName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/FamilyMember/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/GohonzonInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/GohonzonInfo/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/GohonzonInfo/gohonzonType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/GohonzonInfo/receiveDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/GohonzonInfo/returned"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/GohonzonInfo/returnDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/GohonzonInfo/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/LeadershipInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipInfo/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipInfo/examPassed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipInfo/examPassedDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipInfo/manualSigned"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipInfo/manualSignedDate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/LeadershipInfo/leadershipRoles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipInfo/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/LeadershipRole">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/active"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/level"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/position"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/division"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/subDivision"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/activityGroup"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/startDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/endDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/LeadershipRole/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Member">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/middleInitial"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/emailAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/streetAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/homePhone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/cellPhone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/workPhone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/otherPhone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/division"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/subDivision"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/activityGroups"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/leadershipInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/studyDeptInfo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/statusProfile"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/notes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/interests"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/languages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/joinDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/birthDate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Member/familyInfo"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/employer"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/occupation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/extraField1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/extraField2"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/visible"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/locatable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Member/archived"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Members">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Members/record"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/MemberSearchCriteria">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/MemberSearchCriteria/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MemberSearchCriteria/divisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MemberSearchCriteria/subDivisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MemberSearchCriteria/activityGroups"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/MembershipInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MembershipInfo/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MembershipInfo/friendOfSgi"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/MembershipInfo/gohonzons"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MembershipInfo/receivedCertificate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MembershipInfo/notActivated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MembershipInfo/notLocatable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/MembershipInfo/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Note">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Note/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Note/text"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Note/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Note/creationDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Note/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Organization">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/organizationId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/permissionId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/level"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/abbrv"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Organization/parent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Organization/children"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Organization/creator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Organization/provider"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Organization/accessors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/zipCodes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/creationDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Organization/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Permission">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/enabled"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Permission/organization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/divisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/subDivisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/activityGroups"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Permission/capabilities"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Preferences">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/themeId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/openViews"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/openNodes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/selectedView"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/selectedNode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Preferences/enableTooltips"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Registration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Registration/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Registration/date"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Registration/user"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Registration/cancelled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/Registration/aborted"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/SchoolInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/schoolName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/schoolType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/fieldOfStudy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/startDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/endDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/SchoolInfo/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/StudyDeptExam">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/current"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/examLevel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/examLanguage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/examLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/examDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptExam/lastUpdate"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/StudyDeptInfo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptInfo/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/StudyDeptInfo/lastUpdate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/StudyDeptInfo/studyDeptExams"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/User">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/password"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/enabled"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/lastName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/emailAccount"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/emailAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/streetAddress"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/cellPhone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/homePhone"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/User/role"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/permissions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/User/preferences"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/Users">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/Users/record"/>
+    </genClasses>
+    <genClasses ecoreClass="infosgi.ecore#/1/View">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/View/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/View/userId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute infosgi.ecore#/1/View/viewType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference infosgi.ecore#/1/View/organization"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

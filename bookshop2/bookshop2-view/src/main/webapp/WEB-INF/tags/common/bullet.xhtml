@@ -1,0 +1,130 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+
+<aries:tag>
+	<aries:init/>
+	
+	<c:if test="#{empty href}">
+		<c:set var="href" value="#" /> 
+	</c:if>
+	
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true" /> 
+	</c:if>
+	
+	<c:if test="#{empty fontSize}">
+		<c:set var="fontSize" value="#{userSkin.fontSize}" /> 
+	</c:if>
+	
+	<c:if test="#{empty fontWeight}">
+		<c:set var="fontWeight" value="#{userSkin.fontWeight}" /> 
+	</c:if>
+				
+	<c:if test="#{empty fontFamily}">
+		<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+	</c:if>
+	
+	<c:if test="#{empty textColor}">
+		<c:set var="textColor" value="#{userSkin.headerTextColor}" /> 
+	</c:if>
+
+	<c:if test="#{empty linkColor}">
+		<c:set var="linkColor" value="#{userSkin.linkColor}" /> 
+	</c:if>
+	
+	<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}" /> 
+	
+	<c:if test="#{href eq '#' and empty onclick}">
+		<c:set var="textSettings" value="#{textSettings}; color: #{textColor}; text-decoration: none;"/> 
+	</c:if>
+	
+	<c:if test="#{href ne '#' or not empty onclick}">
+		<c:set var="textSettings" value="#{textSettings}; color: #{linkColor};"/> 
+	</c:if>
+	
+	<c:if test="#{empty library}">
+		<c:set var="library" value="images"/> 
+	</c:if>
+
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="/bullets/RoundBulletEmpty16.gif"/> 
+	</c:if>
+	
+	<c:if test="#{empty iconWidth}">
+		<c:set var="iconWidth" value="38px"/> 
+		<c:if test="#{empty icon2}">
+			<c:set var="iconWidth" value="20px"/> 
+		</c:if>
+	</c:if>
+	
+
+	<a4j:outputPanel
+		layout="block"
+		rendered="#{rendered}"
+		style="background-color: inherit">
+
+		<h:panelGroup 
+			layout="block" 
+			style="#{marginSettings}; background-color: inherit">
+			 
+			<h:panelGroup 
+				layout="block" 
+				style="float: left; width: 100%; height: #{height}; max-height: #{height}; background-color: inherit"> 
+
+				<h:panelGroup 
+					layout="block" 
+					style="padding-left: 0px; margin-left: #{iconWidth}; background-color: inherit">
+
+					<aries:link 
+						href="#{href}"
+						onclick="#{onclick}"
+						rendered="#{href ne '#' or not empty onclick}"
+						onmousedown="setCursorWait(this); #{onmousedown}"
+						onmouseup="#{onmouseup}"
+						onmouseout="#{onmouseout}"
+						style="#{textSettings}">#{value}</aries:link>
+
+					<aries:text 
+						href="#{href}"
+						onclick="#{onclick}"
+						rendered="#{href eq '#' and empty onclick}"
+						style="#{textSettings}">#{value}</aries:text>
+						
+						<div style="padding-top: 2px">
+							<ui:insert />
+						</div>
+				</h:panelGroup>
+			</h:panelGroup>
+
+			<h:panelGrid 
+				layout="block"
+				cellpadding="0"
+				cellspacing="0"
+				columns="2" 
+				columnClass="formColumnAlignMiddle" 
+				styleClass="formPanel"
+				style="float: left; width: #{iconWidth}; margin-left: -100%; height: #{height}; max-height: #{height}; background-color: #{backgroundColor}">
+		
+				<h:graphicImage 
+					library="#{library}" 
+					name="#{icon}" 
+					style="margin-right: 0px; background-color: inherit" />
+		
+				<c:if test="#{not empty icon2}">
+					<h:graphicImage 
+						library="#{library}" 
+						name="#{icon2}" 
+						style="margin-right: 0px; background-color: inherit" />
+				</c:if>
+			</h:panelGrid>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</aries:tag>
+</ui:composition>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-web>
+	<context-root>/bookshop2</context-root>
+	<!-- 
+	<virtual-host>bookshop2</virtual-host>
+	<security-domain>java:/jaas/bookshop2</security-domain> 
+	-->
+</jboss-web>

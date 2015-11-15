@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. ./tfisher-hp2-env
+
+$JBOSS_HOME/bin/jboss-cli.sh --connect controller=localhost:9999 ":shutdown"
+#$JBOSS_HOME/bin/jboss-cli.sh --connect controller=172.18.0.2:9999 ":shutdown"
+
+
+#$JBOSS_HOME/bin/shutdown.sh --host=$BINDING_HOST -s jnp://$HOST:$BINDING_PORT -u admin -p password
+#$JBOSS_HOME/bin/shutdown.sh --host=$BINDING_HOST --port=$BINDING_PORT -S
+#ps -e | grep jboss | grep -v grep | awk '{print $1}' | xargs kill

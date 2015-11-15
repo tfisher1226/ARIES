@@ -1,0 +1,12 @@
+#!/bin/sh
+
+source ./setenv
+
+mysql --user=$USER --password=$PASSWORD --host=$HOST --database=$DATABASE < db-load-schema.sql
+
+mysql --user=$USER --password=$PASSWORD --host=$HOST --database=$DATABASE < db-load-data-user.sql
+mysql --user=$USER --password=$PASSWORD --host=$HOST --database=$DATABASE < db-load-data-organization.sql
+
+mysql --user=$USER --password=$PASSWORD --host=$HOST --database=$DATABASE < db-load-test-data.sql
+
+mysql --user=$USER --password=$PASSWORD --host=$HOST --database=$DATABASE_ORIG < db-load-all-orig.sql

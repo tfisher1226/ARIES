@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:param name="newAction" value="newOrder" />
+	<ui:param name="editAction" value="editOrder" />
+	<ui:param name="newActionHeader" value="Order Records" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	<ui:param name="itemManager" value="#{orderInfoManager}" />
+	<ui:param name="listManager" value="#{orderListManager}" />
+	
+	<!--
+	  ** Launch OrderDialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="executeNewOrder"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{orderInfoManager.newOrder}"
+		onbegin="setCursorWait(); showProgress('', 'Order Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); showOrderDialog()"
+		render="OrderModule, OrderListPane">
+		
+		<a4j:param name="targetDomain" value="OrderDialog" assignTo="#{orderInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="OrderListPane" assignTo="#{orderInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="orderList" assignTo="#{orderInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+
+
+	<a4j:jsFunction 
+		name="selectOrder" 
+		immediate="true" 
+		limitRender="true" 
+		onbegin="enableOrderListToolbar()"
+		renderXX="OrderListToolbar">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+
+	<script type="text/javascript">
+	function enableOrderListToolbar() {
+		enableButton('OrderListEditButton');
+		enableButton('OrderListRemoveButton');
+	}
+	</script>
+
+	<!--
+	  ** Select Order record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="executeOpenSelectedOrder"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', 'Order Records', 'Opening record for edit...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); #{rich:component('OrderDialog')}.show()"
+		render="OrderModule">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="OrderDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="OrderListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="orderList" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+
+
+	<!--
+	  ** Refresh Order record list
+	  -->
+
+	<a4j:jsFunction
+		name="executeRefreshOrderList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'Order Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{domain}OrderListTablePane">
+	</a4j:jsFunction>
+	
+</ui:composition>

@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:param name="itemManager" value="#{orderRequestMessageInfoManager}" />
+	<ui:param name="listManager" value="#{orderRequestMessageListManager}" />
+	
+	<aries:outputPane
+		id="#{domain}OrderRequestMessageListTablePane">
+		<ui:include src="orderRequestMessageListMenu.xhtml"/>
+		
+		<aries:table
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			id="#{domain}OrderRequestMessageListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0 or true}"
+			onrowdblclick="setCursorWait(); open#{domain}OrderRequestMessage(#{index}, #{rowItem.orderRequestMessage.id})"
+			style="width: 320px; height: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- Order -->
+			<aries:textColumn
+				width="100"
+				header="Order">
+				<h:outputText value="#{orderHelper.toString(rowItem.orderRequestMessage.order)}" />
+			</aries:textColumn>
+			
+			<!-- Name 
+			<aries:textColumn
+				width="160"
+				header="Name">
+				<h:outputText value="#{personNameHelper.toString(rowItem.orderRequestMessage.name)}" />
+			</aries:textColumn>
+			-->
+			
+			<!-- Address -->
+			<aries:textColumn
+				width="100"
+				header="Address">
+				<h:outputText value="#{streetAddressHelper.toString(rowItem.orderRequestMessage.address)}" />
+			</aries:textColumn>
+			
+			<!-- Payment -->
+			<aries:textColumn
+				width="100"
+				header="Payment">
+				<h:outputText value="#{paymentHelper.toString(rowItem.orderRequestMessage.payment)}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

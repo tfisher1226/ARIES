@@ -1,0 +1,8 @@
+#!/bin/sh 
+
+source ./setenv
+
+OPTIONS="--no-data --no-autocommit"
+
+mysqldump $OPTIONS --user=root --password=$MYSQL_PASSWORD --database $DATABASE > exported-schema.sql
+

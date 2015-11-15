@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+projectArtifactId=bookshop2-buyer-view
+projectBranch=
+projectGroupId=bookshop2-buyer
+sonarServerUrl=http\://localhost\:9000
+version=1

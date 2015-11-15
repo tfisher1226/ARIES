@@ -1,0 +1,161 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty immediate}">
+			<c:set var="immediate" value="true"/> 
+		</c:if>
+	
+		<c:if test="#{empty labelStyle}">
+			<c:set var="labelStyle" value="font-size: 12px; font-weight: bold; color: red"/> 
+		</c:if>
+	
+		<c:set var="styleClass" value="#{nodeSelected ? 'treeNodeSelected' : 'treeNode'}"/> 
+	
+	<!-- 
+			type="#{nodeType}"
+			dragType="dragType"
+			icon="#{icon}"
+			iconLeaf="#{iconLeaf}"
+			immediate="#{immediate}"
+			execute="#{execute}"
+			bypassUpdates="#{bypassUpdates}"
+			limitRender="#{limitRender}"
+			acceptedTypes="#{acceptedTypes}"
+			dropListener="#{dropListener}"
+			oncontextmenu="#{oncontextmenu}"
+			ondblclick="#{ondblclick}"
+			oncomplete="#{oncomplete}"
+			render="#{render}"
+			nodeClass="treeNode"
+			styleClass="#{styleClass}"
+			iconCollapsed="/icons/FolderClosed16.gif"
+			iconExpanded="/icons/FolderOpen16.gif"
+	 -->
+	
+		<rich:treeNode
+			type="#{nodeType}"
+			expanded="#{nodeExpanded}"
+			iconCollapsed="#{iconCollapsed}"
+			iconExpanded="#{iconExpanded}"
+			iconLeaf="#{iconLeaf}"
+			immediate="#{immediate}"
+			onclick="#{onclick}"
+			ondblclick="#{ondblclick}"
+			onmouseover="highlightNode(this); #{onmouseover}"
+			onmouseout="unhighlightNode(this); #{onmouseout}"
+			onmousedown="selectNode(this); #{onmousedown}"
+			onbeforetoggle="#{onbeforetoggle}"
+			ontoggle="#{ontoggle}"
+			render="#{render}"
+			styleClass="#{styleClass}"
+			style="border: 0px solid red; background-color: inherit">
+	
+			<h:outputText value="#{nodeLabel}" style="#{labelStyle}" />
+	
+			<!--  
+			<c:if test="#{not empty oncontextmenu}">
+				<a4j:region renderRegionOnly="true">
+					<a4j:ajax event="oncontextmenu" 
+						immediate="true"
+						execute="@this"
+						bypassUpdates="true"
+						limitRender="true"
+						onsubmit="#{oncontextmenu}">
+					</a4j:ajax>
+				</a4j:region>
+			</c:if>
+			-->
+	
+			<!-- 
+			<c:if test="#{not empty ondblclick}">
+				<a4j:region immediate="true">
+				<a4j:ajax event="onRowDblClick" 
+					immediate="false"
+					execute="@this"
+					bypassUpdates="false"
+					limitRender="false"
+					execute="elementDialog"
+					action="#{elementManager.editElement}"
+					onsubmit="alert(8); setCursorWait(); showProgress('Element', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(); hideProgress(); Richfaces.showModalPanel('elementDialog')"
+					render="elementDialog">
+				</a4j:ajax>
+				</a4j:region>
+			</c:if>
+			-->
+				
+			<!--  
+			<c:if test="#{not empty ondblclick}">
+				<a4j:region renderRegionOnly="false">
+					<a4j:ajax event="ondblclick" 
+						immediate="true"
+						execute="@this"
+						bypassUpdates="false"
+						limitRender="true"
+						action="#{manager[action]}"
+						execute="elementDialog"
+						oncomplete="#{ondblclick}"
+						render="elementDialog">
+					</a4j:ajax>
+				</a4j:region>
+			</c:if>
+			
+			renderElementDialog()
+			onselected="selectObject('#{item.label}'); #{oncomplete}"
+	
+			<a4j:region renderRegionOnly="true">
+				<a4j:ajax event="onclick" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true">
+					<a4j:param value="#{item.object}" assignTo="#{nam.selectedDomain}"/>
+					<a4j:param value="#{item.object}" assignTo="#{domainManager.domain}"/>
+				</a4j:ajax>
+			</a4j:region>
+	
+			<a4j:ajax 
+				event="onclick" 
+				immediate="true"
+				execute="@this"
+				bypassUpdates="true"
+				oncomplete="showInformationDomainView('elementPanel')"
+				render="elementPanel">
+				<a4j:param value="#{item.object}" assignTo="#{element}"/>
+			</a4j:ajax>
+	
+			<rich:componentControl event="onclick" name="showInformationDomainView"  operation="show">
+			   <f:param name="param1" value="elementPanel"/>
+			</rich:componentControl>
+			-->
+	
+			<!--  
+			onclick="#{onclick}; selectObject('#{item.object}')"
+			onclick="#{onclick}; selectObject('#{nam.informationTreeMap.get(item.object)}'); alert(9)"
+			-->
+	
+			<!--  
+			<h:commandButton 
+				id="locationNodeOutput"
+				value="#{node}"
+				action="#{richTree.nodeRowClick}" 
+				style="border: 0px; background-color: transparent; background-image: none; font-size: 9pt; color: inherit">
+				<f:setPropertyActionListener target="#{richTree.selectedNode}" value="#{node}" />
+			</h:commandButton>
+			-->
+			
+			<ui:insert/>
+		</rich:treeNode>
+	</aries:tag>
+</ui:composition>

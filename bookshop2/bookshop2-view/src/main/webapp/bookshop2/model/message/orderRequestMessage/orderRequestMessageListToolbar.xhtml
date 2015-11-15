@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="#{domain}OrderRequestMessageListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+			
+			<aries:toolButton
+				id="#{domain}OrderRequestMessageListNewButton"
+				value="#{element}..."
+				tooltip="Create new OrderRequestMessage Record"
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				enabled="#{securityGuard.canCreate('orderRequestMessage')}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="new#{domain}OrderRequestMessage()"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}OrderRequestMessageListEditButton"
+				value="OrderRequestMessage..."
+				tooltip="Open details for selected record"
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canOpen('orderRequestMessage')}"
+				mode="client"
+				execute="@none"
+				onmouseup="open#{domain}OrderRequestMessage(); return true"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}OrderRequestMessageListRemoveButton"
+				value="OrderRequestMessage..."
+				tooltip="Remove selected OrderRequestMessage Record"
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canDelete('orderRequestMessage')}"
+				mode="ajax"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				manager="#{listManager}"
+				action="removeOrderRequestMessage"
+				onclickXX="alert('#{domain}')"
+				onclick="popupPrompt('OrderRequestMessage List', 'Remove selected OrderRequestMessage record from System', 'Do you wish to continue?', 'org.aries.removeOrderRequestMessage', '#{section}OrderRequestMessageListPane')"
+				rendered="#{empty domain}"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}OrderRequestMessageListSelectButton"
+				value="OrderRequestMessage..."
+				tooltip="Select OrderRequestMessage Record(s)"
+				icon="/icons/common/Search16.gif"
+				iconDisabled="/icons/common/SearchDisabled16.gif"
+				enabled="#{securityGuard.canOpen('orderRequestMessage')}"
+				mode="client"
+				execute="@none"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				onclickXX="alert('#{domain}')"
+				onclick="show#{domain}OrderRequestMessageSelectDialog()"
+				render="#{domain}OrderRequestMessageSelectDialog"
+				rendered="#{domain eq 'OrderRequestMessageDialog'}"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="#{domain}OrderRequestMessageListRefreshButton"
+				tooltip="Re-read information from server"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				enabled="#{securityGuard.canOpen('orderRequestMessage')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refresh#{domain}OrderRequestMessageList()"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

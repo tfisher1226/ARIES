@@ -1,0 +1,366 @@
+@charset "UTF-8";
+
+body {
+	margin: 0px 0px auto 0px;
+	padding: 0px 0px 0px 0px;
+	background: #a7a9ac;
+	background: #fff;
+}
+
+.aries-header {
+	width: 100%;
+	height: 70px;
+	min-width: 800px;
+	max-height: 70px;
+	background: #49699b url(/infosgi/images/aries/MAP-banner-back.jpg);
+}
+
+.aries-header-left {
+	width: 552px;
+	height: 70px;
+	background: #49699b url(/infosgi/images/aries/libreq/libreq-banner-left.jpg);
+}
+
+.aries-header-right {
+	width: 344px;
+	height: 70px;
+	background: #49699b url(/infosgi/images/aries/MAP-banner-right.jpg);
+}
+
+div#global_menu {
+	width: 100%;
+	height: 30px;
+	background: #626d46;
+	border-bottom: 1px solid #4d5534;
+	border-top: 1px solid #4d5534;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 19px;
+	letter-spacing: 0px;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+div#sub_menu {
+	width: 100%;
+	height: 20px;
+	background: #cfd9b7;
+	border-bottom: 1px solid #4d5534;
+	border-top: 1px solid #4d5534;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 12px;
+	letter-spacing: 0px;
+	text-decoration: none;
+	color: #000000;
+	padding: 0 0 0 0;
+}
+
+#top_menu {
+	right: 0px;
+	position: relative;
+	float: right;
+	padding: 0px;
+}
+
+#top_menu ul {
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	list-style-type: none;
+}
+
+#top_menu li {
+	padding: 0px;
+	margin: 0px;
+	background-image: url(/infosgi/images/aries/topmenu-back.jpg);
+	background-color: #eeeedd;
+	border-left: 1px solid #a7b771;
+	border-right: 1px solid #4d5634;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 13px;
+	letter-spacing: 0px;
+	text-decoration: none;
+	float: left;
+}
+
+#top_menu li a {
+	display: block;
+	padding: 9px 13px 8px 13px;
+}
+
+#top_menu li a:link,
+#top_menu li a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#top_menu li a:hover {
+	background-image: url(/infosgi/images/aries/topmenu-backhover.jpg);
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#top_menu li ul {
+	position: absolute;
+	background-color: inherit;
+	left: -999em;
+	z-index: 2000;
+	margin-top: 0;
+	width: 143px;
+	list-style-type: none;
+}
+
+#top_menu li li {
+	color: #000000;
+	background-color: #eeeedd;
+	border: none;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	line-height: 14px;
+	letter-spacing: 0px;
+	text-align: left;
+	text-decoration: none;
+}
+
+#top_menu li li a {
+	color: #000000;
+	background-color: #eeeedd;
+	background-image: none;
+	padding: 4px 6px 4px 10px;
+	border-left: solid 1px #8c9a5f;
+	border-right: solid 1px #8c9a5f;
+	border-bottom: solid 1px #8c9a5f;
+	display: block;
+	width: 160px;
+}
+
+#top_menu li li a:link,
+#top_menu li li a:visited,
+#top_menu li.current_page_item li a:link,
+#top_menu li.current_page_item li a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+#top_menu li li a:hover,
+#top_menu li.current_page_item li a:hover {
+	color: #ffffff;
+	background: #818e58;
+}
+
+#top_menu li:hover ul,
+#top_menu li.sfhover ul {
+	left: auto;
+}
+
+#top_menu li li ul {
+	display: none;
+}
+
+#top_menu li li li ul {
+	display: none;
+}
+
+#top_title {
+	padding: 6px 0 6px 14px;
+	text-align: left;
+	font-style: normal;
+}
+
+.leftnav {
+	border-top: none;
+	border-bottom: 1px solid #25364e;
+	width: 185px;
+	float: left;
+}
+
+.leftnav ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.leftnav li {
+	width: 185px;
+	padding: 0px;
+	margin: 0px;
+	border-top: 1px solid #25364e;
+	background: #ebeff4;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 15px;
+	font-weight: bold;
+	letter-spacing: 0px;
+}
+
+.leftnav li a,
+.leftnav li a:visited {
+	width: 160px;
+	padding: 7px 10px 7px 15px;
+	margin: 0px;
+	display: block;
+	text-decoration: none;
+	color: #ffffff;
+	background: #3a547a;
+}
+
+.leftnav li a:hover {
+	background: #4f72a6;
+	color: #ffecab;
+}
+
+.leftnav li.nobutton {
+	padding: 7px 5px 9px 15px;
+	width: 165px;
+}
+
+.navhead {
+	margin: 0 0 5px 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 15px;
+	letter-spacing: 0px;
+	color: #3a547a;
+	display: block;
+}
+
+.caption {
+	font: 10px Arial, Helvetica, sans-serif;
+	line-height: 11px;
+	color: #555555;
+	margin: 5px 0 0 0;
+}
+
+.listBox {
+	border: 1px solid #3b441f;
+	width: 145px;
+}
+
+.listBox ul {
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;
+}
+
+.listBox li {
+	width: 145px;
+	padding: 0px;
+	margin: 0px;
+	border-top: 1px solid #a2aa8a;
+	background: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	line-height: 13px;
+	letter-spacing: 0px;
+}
+
+.listBox li a,
+.listBox li a:visited {
+	width: 140px;
+	padding: 5px 0 5px 5px;
+	margin: 0px;
+	display: block;
+	text-decoration: none;
+	color: #4f5d22;
+	background: #ffffff;
+}
+
+.listBox li a:hover {
+	background: #d2d9b7;
+}
+
+.listBox li.listBoxHead {
+	border: none;
+}
+
+.listBox li.listBoxHead a,
+.listBox li.listBoxHead a:visited {
+	padding: 5px 0 5px 5px;
+	margin: 0px;
+	display: block;
+	text-decoration: none;
+	font-weight: bold;
+	background: #3b441f;
+	color: #ffffff;
+}
+
+.browseButton {
+	display: inline;
+	background: #8c9a5f;
+	margin: 0 35px 0 0;
+	width: 95px;
+	height: 35px;
+}
+
+.browseButton a {
+	width: 95px;
+	height: 35px;
+	display: block;
+	border-top: 1px solid #adbd80;
+	border-bottom: 1px solid #64733b;
+	border-left: 1px solid #adbd80;
+	border-right: 1px solid #64733b;
+	color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 15px;
+	padding: 12px 10px 10px 40px;
+}
+
+.browseButton a:link,
+.browseButton a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.browseButton a:hover {
+	background: #626d3d;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#browseSection {
+	margin: 15px 0 15px 0;
+}
+
+.COP a:link,
+.COP a:visited {
+	background: #8c9a5f url(/infosgi/images/aries/aries/COP-back.jpg);
+}
+
+.COP a:hover {
+	background: #8c9a5f url(/infosgi/images/aries/COPr-back.jpg);
+}
+
+.ACQ a:link,
+.ACQ a:visited {
+	background: #8c9a5f url(/infosgi/images/aries/ACQ-back.jpg);
+}
+
+.ACQ a:hover {
+	background: #8c9a5f url(/infosgi/images/aries/ACQr-back.jpg);
+}
+
+.ProcDisp a:link,
+.ProcDisp a:visited {
+	background: #8c9a5f url(/infosgi/images/aries/ProcDisp-back.jpg);
+}
+
+.ProcDisp a:hover {
+	background: #8c9a5f url(/infosgi/images/aries/ProcDispR-back.jpg);
+}
+
+.Taxon a:link,
+.Taxon a:visited {
+	background: #8c9a5f url(/infosgi/images/aries/Taxon-back.jpg);
+}
+
+.Taxon  a:hover {
+	background: #8c9a5f url(/infosgi/images/aries/TaxonR-back.jpg);
+}
+

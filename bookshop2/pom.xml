@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>bookshop2</groupId>
+	<artifactId>bookshop2</artifactId>
+	<name>bookshop2</name>
+	<description>Project object model for: bookshop2</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+
+	<modules>
+		<module>bookshop2-model</module>
+		<module>bookshop2-client</module>
+		<module>bookshop2-service</module>
+		<module>bookshop2-supplier</module>
+		<module>bookshop2-shipper</module>
+		<module>bookshop2-seller</module>
+		<module>bookshop2-buyer</module>
+		<module>bookshop2-view</module>
+		<module>bookshop2-test</module>
+		<module>bookshop2-app</module>
+	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>deployment</id>
+			<name>Internal Releases</name>
+			<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		
+		<snapshotRepository>
+			<id>deployment</id>
+			<name>Internal Snapshots</name>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<!--  
+		<jboss.home>c:/software/jboss-as-7.1.1.Final-node1</jboss.home>
+		-->
+		<bookshop2.deploy.exploded>true</bookshop2.deploy.exploded>
+		<bookshop2.version>0.0.1-SNAPSHOT</bookshop2.version>
+		<bookshop2.runtime.home>runtime</bookshop2.runtime.home>
+		<bookshop2.model.home>model</bookshop2.model.home>
+		<source.model.home>${workspace.location}/_generator/src/main/resources/model</source.model.home>
+
+		<!--  
+		<admin.model.home>c:/workspace/ARIES/admin/src/main/resources/model</admin.model.home>
+		<aries.common.model.home>c:/workspace/ARIES/common-model/src/main/resources/schema</aries.common.model.home>
+		<aries.bookshop2.model.home>c:/workspace/ARIES/_generator/src/main/resources/model</aries.bookshop2.model.home>
+		-->
+	</properties>
+
+	<build>
+		<filters>
+			<filter>src/main/resources/maven/server.properties</filter>
+		</filters>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>pre-process</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- pull "common" model sources to local home -->
+								<copy todir="${bookshop2.model.home}/common" verbose="true" overwrite="true">
+									<fileset dir="${source.model.home}/common" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+
+								<!-- pull "admin" model sources to local home -->
+								<copy todir="${bookshop2.model.home}/admin" verbose="true" overwrite="true">
+									<fileset dir="${source.model.home}/admin" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+
+								<!-- pull "bookshop2" model sources to local home -->
+								<copy todir="${bookshop2.model.home}/bookshop" verbose="true" overwrite="true">
+									<fileset dir="${source.model.home}/bookshop" casesensitive="yes">
+										<include name="**/*.ariel" />
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<copy todir="${bookshop2.runtime.home}/model" verbose="true" overwrite="true">
+									<fileset dir="${bookshop2.model.home}" casesensitive="yes">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+								
+								<!--  
+								<copy todir="${bookshop2.model.home}" overwrite="true">
+									<fileset dir="${aries.bookshop2.model.home}" casesensitive="yes">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+
+								<copy todir="src/main/resources/model" overwrite="true">
+									<fileset dir="${bookshop2.model.home}" casesensitive="yes">
+										<include name="**/*" />
+									</fileset>
+								</copy>
+								-->
+
+                                <!--
+								<copy todir="src/main/resources/model/bookshop" file="${bookshop2.model.home}/bookshop/bookshop_buyer.ariel" overwrite="true" />
+								<copy todir="src/main/resources/model/bookshop" file="${bookshop2.model.home}/bookshop/bookshop_information.aries" overwrite="true" />
+								<copy todir="src/main/resources/model/bookshop" file="${bookshop2.model.home}/bookshop/bookshop_messaging.aries" overwrite="true" />
+								<copy todir="src/main/resources/model/bookshop" file="${bookshop2.model.home}/bookshop/bookshop_seller_information.aries" overwrite="true" />
+								<copy todir="src/main/resources/model/bookshop" file="${bookshop2.model.home}/bookshop/bookshop_seller_persistence.aries" overwrite="true" />
+								<copy todir="src/main/resources/model/common" file="${aries.common.model.home}/aries-common-1.0.aries" overwrite="true" />
+								<copy todir="src/main/resources/model/admin" file="${admin.model.home}/admin/admin_model.aries" overwrite="true" />
+								<copy todir="src/main/resources/model/admin" file="${admin.model.home}/admin/admin_service.aries" overwrite="true" />
+                                -->
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-model</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-model</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-view</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2</groupId>
+				<artifactId>bookshop2-view</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.supplier</groupId>
+				<artifactId>bookshop2-supplier</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.seller</groupId>
+				<artifactId>bookshop2-seller</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.buyer</groupId>
+				<artifactId>bookshop2-buyer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

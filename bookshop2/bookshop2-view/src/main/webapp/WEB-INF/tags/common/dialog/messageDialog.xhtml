@@ -1,0 +1,216 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+
+		<script type="text/javascript">
+		var messageDialog_status = '';
+		var messageDialog_title = '';
+		var messageDialog_subtitle = '';
+		var messageDialog_message = '';
+		var messageDialog_actionEvent = '';
+		var messageDialog_cancelEnabled = false;
+		var messageDialog_progressEnabled = false;
+		var messageDialog_renderList = '';
+	
+		function _showMessage(status, title, subtitle, message, actionEvent, cancelEnabled, progressEnabled, renderList) {
+			org.aries.view.messageDialog_params = new Object();
+			org.aries.view.messageDialog_params.status = status;
+			org.aries.view.messageDialog_params.title = title;
+			org.aries.view.messageDialog_params.subtitle = subtitle;
+			org.aries.view.messageDialog_params.message = message;
+			org.aries.view.messageDialog_params.actionEvent = actionEvent;
+			org.aries.view.messageDialog_params.cancelEnabled = cancelEnabled;
+			org.aries.view.messageDialog_params.progressEnabled = progressEnabled;
+			org.aries.view.messageDialog_params.renderList = renderList;
+	
+			#{rich:component('messageDialog')}.show();
+
+			/*
+			_initializeMessageDialog(
+				org.aries.view.messageDialog_params.title,
+				org.aries.view.messageDialog_params.subtitle,
+				org.aries.view.messageDialog_params.message,
+				org.aries.view.messageDialog_params.actionEvent,
+				org.aries.view.messageDialog_params.cancelEnabled,
+				org.aries.view.messageDialog_params.progressEnabled,
+				org.aries.view.messageDialog_params.renderList);
+				*/
+	
+		}
+		
+		function _hideMessage() {
+			#{rich:component('messageDialog')}.hide();
+			org.aries.view.messageDialog_params = null;
+		}
+	
+		function _initializeMessageDialog(event) {
+			//#{rich:element('messageDialog_status_alert')}.style.display = "none";
+			//#{rich:element('messageDialog_status_prompt')}.style.display = "none";
+			//#{rich:element('messageDialog_status_warning')}.style.display = "none";
+			//#{rich:element('messageDialog_status_error')}.style.display = "none";
+			//#{rich:element('MessageDialogActionButton')}.style.visible = false;
+	
+			/*
+			alert('#{messageDialog.status}');
+			if ('#{messageDialog.status}' == 'alert') {
+				#{rich:element('messageDialog_status_alert')}.style.display = "block";
+			} else if (#{messageDialog.status == 'prompt'}) {
+				#{rich:element('messageDialog_status_prompt')}.style.display = "block";
+			} else if (#{messageDialog.status == 'warning'}) {
+				#{rich:element('messageDialog_status_warning')}.style.display = "block";
+			} else if (#{messageDialog.status == 'error'}) {
+				#{rich:element('messageDialog_status_error')}.style.display = "block";
+			}
+				
+			if (org.aries.view.messageDialog_params.status == 'alert') {
+				#{rich:element('messageDialog_status_alert')}.style.display = "block";
+			} else if (org.aries.view.messageDialog_params.status == 'prompt') {
+				#{rich:element('messageDialog_status_prompt')}.style.display = "block";
+			} else if (org.aries.view.messageDialog_params.status == 'warning') {
+				#{rich:element('messageDialog_status_warning')}.style.display = "block";
+			} else if (org.aries.view.messageDialog_params.status == 'error') {
+				#{rich:element('messageDialog_status_error')}.style.display = "block";
+			}
+			#{rich:element('messageDialog_title')}.innerHTML = org.aries.view.messageDialog_params.title;
+			#{rich:element('messageDialog_subtitle')}.innerHTML = org.aries.view.messageDialog_params.subtitle;
+			#{rich:element('messageDialog_message')}.innerHTML = org.aries.view.messageDialog_params.message;
+			//#{rich:element('messageDialog_actionEvent')}.innerHTML = org.aries.view.messageDialog_params.actionEvent;
+			//#{rich:element('messageDialog_renderList')}.innerHTML = org.aries.view.messageDialog_params.renderList;
+			//#{rich:element('messageDialog_cancelEnabled')}.innerHTML = org.aries.view.messageDialog_params.cancelEnabled;
+			//#{rich:element('messageDialog_progressEnabled')}.innerHTML = org.aries.view.messageDialog_params.progressEnabled;
+			*/
+	
+			//if (org.aries.view.messageDialog_params.actionEvent != '') {
+			//	#{rich:element('MessageDialogActionButton')}.style.visible = true;
+			//}
+	
+			//#{rich:element('messageDialog_title')}.innerHTML = '#{messageDialog.title}';
+			//#{rich:element('messageDialog_subtitle')}.innerHTML = '#{messageDialog.subtitle}';
+			//#{rich:element('messageDialog_message')}.innerHTML = '#{messageDialog.message}';
+		}
+		</script>
+	    	
+		<rich:popupPanel 
+			id="messageDialog"
+			zindex="2147483647"
+			modal="true" 
+			autosized="true"
+			resizable="false"
+			styleClass="dialog"
+			domElementAttachment="form"
+			onshow="_initializeMessageDialog(event)">
+	
+			<!-- TITLE -->		
+			<f:facet name="header" style="text-align: left; background-color: inherit;">
+				<h:outputText value="Message" />
+			</f:facet>
+	
+			<!-- CLOSE ICON -->
+			<f:facet name="controls">
+				<h:panelGroup>
+					<h:graphicImage library="images" name="/dialog/close.png" style="cursor: pointer" onclick="setCursorDefault(); _hideMessage()" />
+				</h:panelGroup>
+			</f:facet>
+	
+			<!-- CONTENT -->
+			<a4j:region id="messageDialogForm" >
+				<h:panelGroup layout="block" style="border-top: 1px solid #C3BBB6">
+					<h:panelGroup layout="block" style="background-color: inherit">
+						<a4j:outputPanel id="messageDialogContentPane">
+	
+							<h:panelGrid
+								columns="2" 
+								cellpadding="0" 
+								cellspacing="0"  
+								columnClasses="formColumnAlignTop, formColumnAlignTop" 
+								style="margin-left: auto; margin-right: auto; background-color: inherit">
+	
+								<h:panelGroup layout="block" style="width: 64px; height: 64px; max-height: 64px; padding-top: 0px; padding-left: 0px; vertical-align: top; background-color: inherit">
+									<h:graphicImage rendered="#{messageDialog.status == 'alert'}" library="images" name="/icons/status/WindowsInfo64.gif" />
+									<h:graphicImage rendered="#{messageDialog.status == 'prompt'}" library="images" name="/icons/status/WindowsPrompt64.gif" />
+									<h:graphicImage rendered="#{messageDialog.status == 'warning'}" library="images" name="/icons/status/WindowsWarning64.gif" />
+									<h:graphicImage rendered="#{messageDialog.status == 'error'}" library="images" name="/icons/status/WindowsError64.gif" />
+								</h:panelGroup>
+	
+								<a4j:outputPanel id="messageDialogTextPanel">
+									<h:panelGroup layout="block" style="width: 300px; padding-top: 8px; height: auto; background-color: inherit">
+										<div class="vspace2"/>
+		
+										<h:panelGroup layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; padding: 0px; text-align: left; background-color: inherit">
+											<h:outputText id="messageDialog_title" styleClass="dialogTitle" />
+										</h:panelGroup>
+				
+										<h:panelGroup layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left;">
+											<h:outputText id="messageDialog_subtitle" styleClass="dialogSubtitle" />
+										</h:panelGroup>
+				
+										<h:panelGroup layout="block" style="margin-top: 8px; margin-left: 2px; margin-right: 40px; text-align: left;">
+											<h:outputText id="messageDialog_message" styleClass="dialogMessage" />
+										</h:panelGroup>
+			
+										<!--  
+										<h:panelGroup layout="block" style="margin-left: 2px; margin-right: 20px; text-align: left;">
+											<span class="smallErrorText">
+												<aries:spacer height="6"/>
+												<h:messages/>
+											</span>
+										</h:panelGroup>
+										-->
+									</h:panelGroup>
+								</a4j:outputPanel>
+							</h:panelGrid>
+						</a4j:outputPanel>
+					</h:panelGroup>
+	
+					<!-- CONTROL -->
+					<aries:panel width="100%">
+						<aries:controlbar margin="12px">
+							<aries:toolbarGroup location="right">
+
+								<aries:smallDialogButton
+									id="MessageDialogActionButton"
+									rendered="#{not empty messageDialog.actionEvent}"
+									label="OK"
+									immediate="true"
+									bypassUpdates="true"
+									limitRender="true"
+									manager="#{messageDialog}"
+									action="execute"
+									onclick="if (#{not empty messageDialog.actionEvent}) {setCursorWait(this); if (#{not empty messageDialog.progressEnabled and messageDialog.progressEnabled == true}) {showProgress('#{messageDialog.title}', '#{messageDialog.subtitle}', 'Request in progress...')}}" 
+									oncomplete="setCursorDefault(this); hideProgress(); hideMessage()"
+									render="#{messageDialog.renderList}"/>
+	
+								<aries:smallDialogButton
+									id="MessageDialogCancelButton"
+									label="#{messageDialog.cancelEnabled == true ? 'Cancel' : 'Close'}"
+									mode="client" 
+									execute="@none" 
+									onclick="_hideMessage()" 
+									offset="true"/> 
+							</aries:toolbarGroup>
+						</aries:controlbar>
+					</aries:panel>
+				</h:panelGroup>
+			</a4j:region>
+	
+			<!-- PLACEHOLDERS -->
+			<h:inputHidden id="messageDialog_actionEvent" />
+			<h:inputHidden id="messageDialog_renderList" />
+			<h:inputHidden id="messageDialog_cancelEnabled" />
+			<h:inputHidden id="messageDialog_progressEnabled" />
+		</rich:popupPanel>	
+	</aries:tag>
+</ui:composition>
+

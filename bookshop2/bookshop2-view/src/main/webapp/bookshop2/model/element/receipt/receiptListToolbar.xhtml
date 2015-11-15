@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="#{domain}ReceiptListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+			
+			<aries:toolButton
+				id="#{domain}ReceiptListNewButton"
+				value="#{element}..."
+				tooltip="Create new #{element} Record"
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				enabled="#{securityGuard.canCreate('receipt')}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="executeNewReceipt()"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}ReceiptListEditButton"
+				value="Receipt..."
+				tooltip="Open details for selected record"
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canOpen('receipt')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}Open#{element}(); return true"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}ReceiptListRemoveButton"
+				value="Receipt..."
+				tooltip="Remove selected Receipt Record"
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canDelete('receipt')}"
+				mode="ajax"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				manager="#{listManager}"
+				action="removeReceipt"
+				onclickXX="alert('#{domain}')"
+				onclick="popupPrompt('Receipt List', 'Remove selected Receipt record from System', 'Do you wish to continue?', 'org.aries.removeReceipt', '#{section}ReceiptListPane')"
+				rendered="#{empty domain}"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}ReceiptListSelectButton"
+				value="Receipt..."
+				tooltip="Select Receipt Record(s)"
+				icon="/icons/common/Search16.gif"
+				iconDisabled="/icons/common/SearchDisabled16.gif"
+				enabled="#{securityGuard.canOpen('receipt')}"
+				mode="client"
+				execute="@none"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				onclickXX="alert('#{domain}')"
+				onclick="show#{domain}ReceiptSelectDialog()"
+				render="#{domain}ReceiptSelectDialog"
+				rendered="#{domain eq 'ReceiptDialog'}"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="#{domain}ReceiptListRefreshButton"
+				tooltip="Re-read information from server"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				enabled="#{securityGuard.canOpen('receipt')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}RefreshReceiptList()"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

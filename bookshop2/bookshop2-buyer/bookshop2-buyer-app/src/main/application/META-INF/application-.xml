@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:application="http://java.sun.com/xml/ns/javaee/application_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd" version="5">
+  <description>bookshop2-buyer</description>
+  <display-name>bookshop2-buyer</display-name>
+  <module>
+    <web>
+      <web-uri>bookshop2-buyer-view-0.0.1-SNAPSHOT.war</web-uri>
+      <context-root>/bookshop2-buyer</context-root>
+    </web>
+  </module>
+  <module>
+    <ejb>bookshop2-buyer-service-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <ejb>jboss-seam-2.3.0.Final.jar</ejb>
+  </module>
+  <module>
+    <java>bookshop2-model-0.0.1-SNAPSHOT.jar</java>
+  </module>
+  <module>
+    <ejb>bookshop2-buyer-client-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <ejb>bookshop2-seller-client-0.0.1-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <java>bookshop2-seller-model-0.0.1-SNAPSHOT.jar</java>
+  </module>
+  <library-directory>lib</library-directory>
+</application>

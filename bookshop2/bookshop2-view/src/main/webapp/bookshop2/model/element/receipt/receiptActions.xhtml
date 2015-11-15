@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:param name="newAction" value="newReceipt" />
+	<ui:param name="editAction" value="editReceipt" />
+	<ui:param name="newActionHeader" value="Receipt Records" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	<ui:param name="itemManager" value="#{receiptInfoManager}" />
+	<ui:param name="listManager" value="#{receiptListManager}" />
+	
+	<!--
+	  ** Launch ReceiptDialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="newReceipt"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{receiptInfoManager.newReceipt}"
+		onbegin="setCursorWait(); showProgress('', 'Receipt Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); showReceiptDialog()"
+		render="ReceiptModule, ReceiptListPane">
+		
+		<a4j:param name="targetDomain" value="ReceiptDialog" assignTo="#{receiptInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="ReceiptListPane" assignTo="#{receiptInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="receiptList" assignTo="#{receiptInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+
+
+	<a4j:jsFunction 
+		name="selectReceipt" 
+		immediate="true" 
+		limitRender="true" 
+		onbegin="enableReceiptListToolbar()"
+		renderXX="ReceiptListToolbar">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+
+	<script type="text/javascript">
+	function enableReceiptListToolbar() {
+		enableButton('ReceiptListEditButton');
+		enableButton('ReceiptListRemoveButton');
+	}
+	</script>
+
+	<!--
+	  ** Select Receipt record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="openSelectedReceipt"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', 'Receipt Records', 'Opening record for edit...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); #{rich:component('ReceiptDialog')}.show()"
+		render="ReceiptModule">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="ReceiptDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="ReceiptListPane" assignTo="#{itemManager.targetField}" />
+		<a4j:param name="targetInstance" value="receiptList" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+
+
+	<!--
+	  ** Refresh Receipt record list
+	  -->
+
+	<a4j:jsFunction
+		name="refreshReceiptList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'Receipt Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{domain}ReceiptListTablePane">
+	</a4j:jsFunction>
+	
+</ui:composition>

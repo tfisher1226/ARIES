@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:region>
+		<aries:outputPane 
+			id="#{domain}OrderRequestMessageListContextMenuPane">
+			
+			<aries:contextMenu 
+				mode="client"
+				id="#{domain}OrderRequestMessageListContextMenu"
+				target="#{domain}OrderRequestMessageListTable">
+	
+				<aries:contextMenuItem 
+					value="Edit OrderRequestMessage..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{orderRequestMessageListManager}"
+					action="editOrderRequestMessageRequestMessage"
+					onclick="setCursorWait(); showProgress('OrderRequestMessage Records', 'Preparing for edit...')"
+					onclickXXX="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}OrderRequestMessageDialog()"
+					render="#{domain}OrderRequestMessageDialog">
+					
+					<aries:tooltip value="Edit selected OrderRequestMessage record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New OrderRequestMessage..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{orderRequestMessageInfoManager}"
+					action="newOrderRequestMessage"
+					onclick="setCursorWait(); showProgress('OrderRequestMessage Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}OrderRequestMessageDialog();"
+					render="#{domain}OrderRequestMessageDialog">
+					
+					<aries:tooltip value="Create new OrderRequestMessage record"/>
+				</aries:contextMenuItem>
+		
+				<aries:contextMenuItem 
+					value="Remove OrderRequestMessage..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('OrderRequestMessage Records', 'Remove OrderRequestMessage from System', 'Do you wish to continue?', 'org.aries.removeOrderRequestMessage', '#{domain}OrderRequestMessageListPane')"
+					onclickXXX="popupPrompt('OrderRequestMessage: {lastName}, {firstName}', 'Remove OrderRequestMessage Record from System', 'Do you wish to continue?', 'org.aries.removeOrderRequestMessage', '#{domain}OrderRequestMessageListPane')">
+					
+					<aries:tooltip value="Remove selected OrderRequestMessage record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

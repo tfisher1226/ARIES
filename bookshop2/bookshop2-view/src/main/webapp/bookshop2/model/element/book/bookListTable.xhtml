@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:param name="itemManager" value="#{bookInfoManager}" />
+	<ui:param name="listManager" value="#{bookListManager}" />
+	
+	<aries:outputPane
+		id="#{domain}BookListTablePane">
+		<ui:include src="bookListMenu.xhtml"/>
+		
+		<aries:table
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			id="#{domain}BookListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0 or true}"
+			onrowmousedownXX="select#{domain}Book(#{index}, #{rowItem.book.id})"
+			onrowdblclick="setCursorWait(); open#{domain}Book(#{index}, #{rowItem.book.id})"
+			style="width: 320px; height: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TITLE -->
+			<aries:textColumn 
+				width="120"
+				header="Title">
+				<aries:link 
+					value="#{rowItem.book.title}"
+					onmouseup="setCursorWait(this); open#{domain}Book(#{index}, #{rowItem.book.id})" />
+			</aries:textColumn>
+			
+			<!-- AUTHOR -->
+			<aries:textColumn
+				width="120"
+				header="Author">
+				<h:outputText value="#{rowItem.book.author}" />
+			</aries:textColumn>
+			
+			<!-- PRICE -->
+			<aries:textColumn
+				width="80"
+				header="Price">
+				<h:outputText value="#{rowItem.book.price}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

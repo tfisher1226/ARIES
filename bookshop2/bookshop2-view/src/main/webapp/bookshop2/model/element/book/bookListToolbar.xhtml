@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="#{domain}BookListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+			
+			<aries:toolButton
+				id="#{domain}BookListNewButton"
+				value="#{element}..."
+				tooltip="Create new #{element} Record"
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				enabled="#{securityGuard.canCreate('book')}"
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)"
+				onmouseup="new#{domain}Book()"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}BookListEditButton"
+				value="Book..."
+				tooltip="Open details for selected record"
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canOpen('book')}"
+				mode="client"
+				execute="@none"
+				onmouseup="open#{domain}Book(); return true"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}BookListRemoveButton"
+				value="Book..."
+				tooltip="Remove selected Book Record"
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canDelete('book')}"
+				mode="ajax"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				manager="#{listManager}"
+				action="removeBook"
+				onclickXX="alert('#{domain}')"
+				onclick="popupPrompt('Book List', 'Remove selected Book record from System', 'Do you wish to continue?', 'org.aries.removeBook', '#{section}BookListPane')"
+				rendered="#{empty domain}"
+				offset="true" />
+				
+			<aries:toolButton
+				id="#{domain}BookListSelectButton"
+				value="Book..."
+				tooltip="Select Book Record(s)"
+				icon="/icons/common/Search16.gif"
+				iconDisabled="/icons/common/SearchDisabled16.gif"
+				enabled="#{securityGuard.canOpen('book')}"
+				mode="client"
+				execute="@none"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				onclickXX="alert('#{domain}')"
+				onclick="show#{domain}BookSelectDialog()"
+				render="#{domain}BookSelectDialog"
+				rendered="#{domain eq 'BookDialog'}"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="#{domain}BookListRefreshButton"
+				tooltip="Re-read information from server"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				enabled="#{securityGuard.canOpen('book')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refresh#{domain}BookList()"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

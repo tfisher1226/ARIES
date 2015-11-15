@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:param name="itemManager" value="#{orderInfoManager}" />
+	<ui:param name="listManager" value="#{orderListManager}" />
+	
+	<aries:outputPane
+		id="#{domain}OrderListTablePane">
+		<ui:include src="orderListMenu.xhtml"/>
+		
+		<aries:table
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			id="#{domain}OrderListTable"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0 or true}"
+			onrowdblclick="setCursorWait(); executeOpenSelectedOrder(#{index}, #{rowItem.order.id})"
+			style="width: 320px; height: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TrackingNumber -->
+			<aries:textColumn 
+				width="120"
+				header="Tracking Number">
+				<aries:link 
+					value="#{rowItem.order.trackingNumber}"
+					onmouseup="setCursorWait(this); executeOpenSelectedOrder(#{index}, #{rowItem.order.id})" />
+			</aries:textColumn>
+			
+			<!-- PersonName -->
+			<aries:textColumn
+				width="160"
+				header="Person Name">
+				<h:outputText value="#{personNameHelper.toString(rowItem.order.personName)}" />
+			</aries:textColumn>
+			
+			<!-- Count -->
+			<aries:textColumn
+				width="80"
+				header="Count">
+				<h:outputText value="#{rowItem.order.count}" />
+			</aries:textColumn>
+			
+			<!-- DateTime -->
+			<aries:textColumn
+				width="140"
+				header="Date Time">
+				<h:outputText value="#{rowItem.order.dateTime}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

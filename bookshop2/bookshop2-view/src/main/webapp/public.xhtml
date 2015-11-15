@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/login-page-template.xhtml">
+
+	<ui:define name="content">
+
+		<!-- LOGIN DIALOG -->
+		<aries:loginDialog
+			title="Identification Required" 
+			heading="BOOKSHOP2 LOGIN"/>
+	
+		<aries:registerDialog
+			title="Account Registration" 
+			heading="BOOKSHOP2 REGISTRATION"/>
+				
+		<!-- PAGE BODY -->
+		<aries:form id="publicForm">
+
+			<!-- POPUP DIALOGS -->
+			<aries:messageDialog />
+			<aries:popupDialog />
+			<aries:progressDialog />
+
+			<!-- COMMON DIALOGS -->
+			<aries:themeDialog />
+			<ui:include src="/common/inputDialog.xhtml" />
+			<ui:include src="/common/personNameDialog.xhtml" />
+			<ui:include src="/common/emailAddressDialog.xhtml" />
+			<ui:include src="/common/phoneNumberDialog.xhtml" />
+			<ui:include src="/common/streetAddressDialog.xhtml" />
+
+			<!-- REGISTRATION WIZARD 
+			<ui:include src="/admin/registration/registrationDialog.xhtml"/>
+			-->
+
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="BOOKSHOP2"
+				subTitleText="Application Management Interface"
+				iconImage="/resources/graphics/default-page-icon.jpg" />
+				
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="/bookshop2/menubar.xhtml"/>
+			
+			<!-- PAGE FOOTER -->
+			<aries:footer backgroundColor="inherit">
+				<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+					&copy; Copyright 2015 Bookshop2. All rights reserved.
+				</aries:p>
+			</aries:footer>
+		</aries:form>
+	</ui:define>
+</ui:composition>

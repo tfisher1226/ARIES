@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<applications
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="aries_fun_information.aries" />
+	<import file="aries_fun_persistence.aries" />
+	<import file="aries_fun_messaging.aries" />
+	
+	<application>
+		<name>aries-fun</name>
+		<groupId>org.aries_fun</groupId>
+		<artifactId>aries-fun</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<namespace>http://aries-fun.org</namespace>
+	
+		<modules>
+			<module>
+				<type>service</type>
+				<name>aries-fun-service</name>
+				
+				<services>
+					<domain name="org.aries_fun">
+						<service name="userService" type="User">
+							<listener channel="ariesFun" role="user" />
+							<operation name="getAllUsers" />
+							<operation name="getUserById" />
+							<operation name="getUserByUserName" />
+							<operation name="addUser" />
+							<operation name="saveUser" />
+							<operation name="deleteUser" />
+						</service>
+					</domain>
+				</services>
+			</module>
+	
+			<module>
+				<type>data</type>
+				<name>aries-fun-data</name>
+				<persistence>
+					<unit ref="ariesFun" />
+					<source ref="ariesFunDS" />
+					<adapter ref="hibernate" />
+				</persistence>
+			</module>
+
+			<module>
+				<type>ear</type>
+				<name>aries-fun-app</name>
+			</module>
+		</modules>
+	</application>
+</applications>

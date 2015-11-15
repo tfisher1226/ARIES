@@ -1,0 +1,16 @@
+#!/bin/sh 
+
+USER=sgiusa
+
+PASSWORD=db-!*usa.1
+
+HOST=dc1-mysql-01.kattare.com
+
+DATABASE=sgiusadb
+
+DATABASE_ORIG=infosjidb
+
+SQL_SCHEMA_FILE=db-load-schema.sql
+
+SQL_DATA_FILE=db-load-data.sql
+

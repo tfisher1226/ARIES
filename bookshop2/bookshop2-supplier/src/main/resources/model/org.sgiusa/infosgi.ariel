@@ -1,0 +1,15 @@
+
+
+
+public interface INFOSGI {
+
+
+    public action Login {
+        
+    }
+
+    public page Main {
+
+    }
+}
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<channels>
+		<channel name="ariesFun">
+			<sender name="manager" link="ariesFunLink" />
+			<receiver name="system" link="ariesFunLink" invalid="invalidLink" />
+		</channel>
+	</channels>
+
+	<links>
+		<link name="ariesFunLink">
+			<role name="user" />
+			<role name="manager" />
+			<transport ref="ariesFunRMI" />
+		</link>
+
+		<link name="invalidLink">
+			<role name="manager" />
+			<transport ref="ariesFunRMI" />
+		</link>
+	</links>
+
+	<transports>
+		<rmi-transport name="ariesFunRMI" port="@aries.port.rmi@" />
+		<http-transport name="ariesFunHTTP" />
+	</transports>
+</messaging>

@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:repeat value="#{messages.getMessages(module)}" var="msg">
+		<h:panelGrid 
+			layout="block" 
+			cellpadding="0"
+			cellspacing="0"
+			columns="2" 
+			columnClasses="formColumnAlignTop, formColumnAlignMiddle"
+			rendered="#{not empty msg.detail or not empty msg.summary}" 
+			style="background-color: inherit">
+			
+				<h:graphicImage 
+					library="images" 
+					name="#{dialogMessageStyleFactory.styleForSeverity(msg.severity).iconUrl}" 
+					style="padding-left: 0px; background-color: inherit" />
+					
+				<h:outputText 
+					value="#{msg.detail}" 
+					rendered="#{not empty msg.detail}" 
+					styleClass="#{dialogMessageStyleFactory.styleForSeverity(msg.severity).styleClass}" 
+					style="padding-left: 4px; padding-top: 4px; font-size: 12px; background-color: inherit"/>
+
+				<h:outputText 
+					value="#{msg.summary}" 
+					rendered="#{empty msg.detail and not empty msg.summary}" 
+					styleClass="#{dialogMessageStyleFactory.styleForSeverity(msg.severity).styleClass}" 
+					style="padding-left: 4px; padding-top: 4px; font-size: 12px; background-color: inherit"/>
+		</h:panelGrid>
+	</ui:repeat>
+</ui:composition>

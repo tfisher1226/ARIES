@@ -1,0 +1,96 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.commandLink {
+		width: 18px;
+	}
+	.commandLink0 {
+		width: 6px;
+	}
+	.commandLink1,
+	.commandLink2 {
+		width: auto; 
+		height: auto; 
+		vertical-align: middle;
+		text-align: left;
+	}
+	.commandLink1 {
+		width: 18px;
+	}
+	</style>
+
+	<!--  
+	<c:if test="#{empty label}">
+		<c:set var="label" value="not specified"/> 
+	</c:if>
+
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="resource://images/icons/common/TriangleRight16.gif"/> 
+	</c:if>
+	-->
+
+	<c:if test="#{empty width}">
+		<c:set var="width" value="auto"/> 
+	</c:if>
+
+	<c:if test="#{empty height}">
+		<c:set var="height" value="22px"/> 
+	</c:if>
+
+	<c:if test="#{empty onclick}">
+		<c:set var="onclick" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty interactive}">
+		<c:set var="interactive" value="#{current != name}"/> 
+	</c:if>
+
+	<c:if test="#{not interactive}">
+		<h:panelGrid layout="block" columns="2" columnClasses="commandLink, commandLink2"
+			style="width: #{width}; height: #{height}; text-decoration: none; text-align: left; border: 1px solid #9999cc; background-color: #eaeaf6">
+			<c:if test="#{not empty icon}">
+				<h:graphicImage value="#{icon}" style="padding-left: 2px; padding-right: 0px"/>
+			</c:if>
+			<c:if test="#{not empty label}">
+				<c:if test="#{empty icon}">
+					<rich:spacer width="0"/>
+				</c:if>
+				<h:outputText styleClass="XXX" value="#{label}" style="padding-left: 0px; padding-right: 5px; font-size: 13px; white-space: nowrap"/>
+			</c:if>
+		</h:panelGrid>
+	</c:if>
+	
+	<c:if test="#{interactive}">
+		<a4j:commandLink
+			action="#{manager[action]}"
+			onclick="setCursorWait(this); #{onclick}"
+			oncomplete="setCursorDefault(this); #{oncomplete}">
+			<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="commandLink1, commandLink2" 
+				onmouseover="this.style.border='1px solid #a8d8eb'; this.style.backgroundColor='#deedf3'; this.style.cursor='pointer'; this.style.textDecoration='underline'"
+				onmouseout="this.style.border='1px solid transparent'; this.style.backgroundColor='#fff'; this.style.cursor='default'; this.style.textDecoration='none'"
+				style="width: #{width}; height: #{height}; border: 1px solid transparent; text-decoration: none; text-align: left; background-color: inherit">
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" style="padding-left: 2px; background-color: inherit"/>
+				</c:if>
+				<c:if test="#{not empty label}">
+					<c:if test="#{empty icon}">
+						<rich:spacer width="4"/>
+					</c:if>
+					<h:outputText value="#{label}" styleClass="XXX" style="padding-left: 0px; padding-right: 5px; font-size: 13px; white-space: nowrap; background-color: inherit"/>
+				</c:if>
+			</h:panelGrid>
+			<aries:tooltip value="#{tooltip}" />
+		</a4j:commandLink>
+	</c:if>
+</ui:composition>

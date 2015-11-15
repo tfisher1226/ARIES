@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- NOTES (TODO: move to some readme in future): id for sample should equals 
+	to xhtml page name with the sample the same for demo id - it should be equals 
+	to name of the folder where samples placed -->
+
+<root>
+	<group>
+		<id>admin</id>
+		<name>ADMIN</name>
+		<modules>
+			<module>
+				<id>admin-model</id>
+				<name>Admin Model</name>
+				<sections>
+					<section>
+						<id>user</id>
+						<name>User</name>
+					</section>
+					<section>
+						<id>role</id>
+						<name>Role</name>
+					</section>
+				</sections>
+			</module>
+			<module>
+				<id>admin-service</id>
+				<name>Admin Service</name>
+				<sections>
+					<section>
+						<id>user</id>
+						<name>User</name>
+					</section>
+					<section>
+						<id>role</id>
+						<name>Role</name>
+					</section>
+				</sections>
+			</module>
+		</modules>
+	</group>
+	<group>
+		<id>bookshop2</id>
+		<name>BOOKSHOP2</name>
+		<modules>
+			<module>
+				<id>buyer</id>
+				<name>Buyer</name>
+				<sections>
+					<section>
+						<id>bookshop2-buyer-service</id>
+						<name>Bookshop2 Buyer Service</name>
+					</section>
+				</sections>
+			</module>
+
+			<module>
+				<id>area1</id>
+				<name>AREA1</name>
+				<sections>
+					<section>
+						<id>section1</id>
+						<name>SECTION1</name>
+					</section>
+					<section>
+						<id>section2</id>
+						<name>SECTION2</name>
+					</section>
+				</sections>
+			</module>
+			<module>
+				<id>area2</id>
+				<name>AREA2</name>
+				<sections>
+					<section>
+						<id>section1</id>
+						<name>SECTION1</name>
+					</section>
+					<section>
+						<id>section2</id>
+						<name>SECTION2</name>
+					</section>
+				</sections>
+			</module>
+		</modules>
+	</group>
+</root>

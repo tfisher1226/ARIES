@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+		<a4j:outputPanel id="registerContactPanel">
+			<h:panelGroup rendered="#{true}">
+			
+				<h:outputLabel styleClass="groupLabel">Contact Information</h:outputLabel>
+				<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 8px; padding-left: 4px; margin-top: 6px">
+			
+					<aries:spacer width="1" height="1"/>
+					<a4j:outputPanel id="userEmailAddressPanel">
+						<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+							<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px">Email</h:outputLabel>
+							<h:panelGroup styleClass="formPanel" layout="block" style="width: 200px; height: auto; cursor: pointer">
+								<ui:include src="/pages/common/emailAddressField.xhtml">
+									<ui:param name="emailAddressFieldLabel" value="#{userObject.emailAddress.url}"/>
+								</ui:include>
+							</h:panelGroup> 
+						</h:panelGrid>
+					</a4j:outputPanel>
+			
+					<aries:spacer width="1" height="6"/>
+					<a4j:outputPanel id="userPhoneNumberPanel">
+						<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+							<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px; padding-top: 2px">Phones</h:outputLabel>
+							<h:panelGroup styleClass="formPanel" layout="block" style="width: 200px; height: auto; cursor: pointer">
+								<ui:include src="/pages/common/phoneNumberField.xhtml">
+								</ui:include>
+							</h:panelGroup> 
+						</h:panelGrid>
+					</a4j:outputPanel>
+			
+					<aries:spacer width="1" height="6"/>
+					<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+						<h:outputLabel styleClass="formLabel" style="width: 70px; padding-top: 2px">Address</h:outputLabel>
+						<h:panelGroup styleClass="formPanel" layout="block" style="width: 200px; height: auto; cursor: pointer">
+								<ui:include src="/pages/common/streetAddressField.xhtml">
+									<ui:param name="streetAddressFieldLabel" value="#{userObject.streetAddress}"/>
+								</ui:include>
+						</h:panelGroup> 
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:panelGroup>
+		</a4j:outputPanel>
+</ui:composition>

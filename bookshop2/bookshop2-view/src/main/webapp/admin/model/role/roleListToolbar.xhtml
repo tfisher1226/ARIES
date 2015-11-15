@@ -1,0 +1,93 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:toolbar
+		type="tab"
+		id="#{domain}ListToolbar">
+	
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="#{domain}New#{element}Button"
+				value="#{element}..."
+				tooltip="Create new #{element} Record"
+				icon="/icons/common/Role16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				enabled="#{securityGuard.canCreate('role')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}New#{element}()"
+				offset="true" />
+			
+			<aries:toolButton
+				id="#{domain}Open#{element}Button"
+				value="Role..."
+				tooltip="Open details for selected record"
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canOpen('role')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}Open#{element}(); return true"
+				offset="true" />
+			
+			<aries:toolButton
+				id="#{domain}RoleListRemoveRoleButton"
+				value="Role..."
+				tooltip="Remove selected Role Record"
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				enabled="#{listManager.hasSelection() and securityGuard.canDelete('role')}"
+				mode="ajax"
+				execute="@this"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				manager="#{listManager}"
+				action="removeRole"
+				onclickXX="alert('#{domain}')"
+				onclick="popupPrompt('Role List', 'Remove selected Role record from System', 'Do you wish to continue?', 'org.aries.removeRole', '#{section}RoleListPane')"
+				rendered="#{empty domain}"
+				offset="true" />
+			
+			<aries:toolButton
+				id="#{domain}RoleListSelectRoleButton"
+				value="Role..."
+				tooltip="Select Role Record(s)"
+				icon="/icons/common/Search16.gif"
+				iconDisabled="/icons/common/SearchDisabled16.gif"
+				enabled="#{securityGuard.canOpen('role')}"
+				mode="client"
+				execute="@none"
+				immediate="true"
+				bypassUpdates="true"
+				limitRender="true"
+				onclickXX="alert('#{domain}')"
+				onclick="show#{domain}RoleSelectDialog()"
+				render="#{domain}RoleSelectDialog"
+				rendered="#{domain eq 'RoleDialog'}"
+				offset="true" />
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="#{domain}Refresh#{element}Button"
+				tooltip="Re-read information from server"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				enabled="#{securityGuard.canOpen('role')}"
+				mode="client"
+				execute="@none"
+				onmouseup="execute#{domain}Refresh#{element}List()"
+				offset="true" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

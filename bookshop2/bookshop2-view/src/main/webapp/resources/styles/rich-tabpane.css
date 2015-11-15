@@ -1,0 +1,90 @@
+.rf-tbp {
+	height: 100% !important;
+}
+
+.rf-tab-cnt {
+	border: 1px;
+}
+
+.rf-tab-cnt,
+.rf-tab-hdr-tabline-vis.rf-tab-hdr-tabline-top {
+	padding-top: 0px;
+	border-width: 0px;
+	background: #{userSkin.backgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr {
+	background: #{userSkin.tabBackgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-act.rf-tab-hdr-top {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-width: 1px;
+	border-color: #{userSkin.tabActiveBorderColor};
+	background-image: url(#{resource['org.richfaces.images:tabBg.png']});
+	background: #{userSkin.tabActiveBackgroundColor};
+	background: #{userSkin.backgroundColor};
+	background: white;
+}
+
+.rf-tab-hdr-inact.rf-tab-hdr-top {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-width: 1px !important;
+	border-color: #{userSkin.tabInactiveBorderColor};
+	border-bottom-color: #{userSkin.tabActiveBorderColor};
+	background: #{userSkin.tabInactiveBackgroundColor};
+	background: #{userSkin.backgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-dis.rf-tab-hdr-top {
+	/*background-image: url(../org.richfaces.images/tabBg.png);*/
+	background: #{userSkin.tabDisabledBackgroundColor};
+	background: inherit;
+	cursor: default;
+}
+
+*.rf-tab-hdr-tablst {
+	background: #{userSkin.tabBackgroundColor};
+	background: inherit;
+}
+
+.rf-tab-hdr-brd {
+	height: 0px;
+	border-width: 0px;
+}
+
+.rf-tab-hdr-tabs {
+    border: 0px;
+}
+
+.rf-tab-hdr-tabline-vis.rf-tab-hdr-tabline-top {
+    border-bottom-width: 0px;
+    padding-top: 0px;
+}
+
+.rf-tab-hdr-spcr {
+	background: inherit;
+    border-bottom: 1px #{userSkin.borderStyle} #{userSkin.borderColor} !important;
+}
+
+.rf-tab-hdr-spcrXX {
+	display: block;
+	height: 4px;
+    padding: 10px;
+	background: #eef;
+	border-width: 10px;
+    border-bottom: 1px #{userSkin.borderStyle} #{userSkin.borderColor} !important;
+	border-bottom: 10px solid red !important;
+}
+
+.rf-tab-hdr-spcrXX {
+    border-bottom: 1px #{userSkin.borderStyle} #{userSkin.borderColor};
+    padding: 0 6px 0 0;
+	background: inherit;
+}
+

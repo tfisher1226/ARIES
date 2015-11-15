@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main.xhtml">
+
+	<ui:define name="body">
+
+		<!-- Dialogs -->
+		<ui:include src="/common/personNameDialog.xhtml" />
+		<ui:include src="/common/streetAddressDialog.xhtml" />
+		
+		<ui:include src="../../element/book/bookActions.xhtml" />
+		<ui:include src="../../element/book/bookDialog.xhtml" />
+		
+		<ui:include src="../../element/order/orderActions.xhtml" />
+		<ui:include src="../../element/order/orderDialog.xhtml" />
+	
+		<aries:formPane
+			width="auto" 
+			columns="2"
+			columnClass="formColumnAlignLeft"
+			backgroundColor="inherit">
+			
+			<aries:label 
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="8px"
+				fontSize="13"
+				value="Element:" 
+				backgroundColor="inherit" />
+
+			<aries:label 
+				height="30" 
+				marginTop="10px"
+				marginBottom="10px"
+				paddingLeft="6px"
+				fontSize="13"
+				fontWeight="bold"
+				textColor="darkBlue" 
+				value="Bookshop2: Bookshop2-Model: Order" />
+		</aries:formPane>
+		
+		<aries:tabPane
+			switchType="client" 
+			activeItem="#{navigationDriver.activePage}">
+	
+			<aries:tab 
+				name="order" 
+				label="Order">
+				<ui:include src="order.xhtml" />
+			</aries:tab>
+
+			<aries:tab 
+				name="orderKey" 
+				label="Key">
+				<ui:include src="orderKey.xhtml" />
+			</aries:tab>
+
+			<aries:tab 
+				name="orderCriteria" 
+				label="Criteria">
+				<ui:include src="orderCriteria.xhtml" />
+			</aries:tab>
+		</aries:tabPane>
+	</ui:define>
+</ui:composition>

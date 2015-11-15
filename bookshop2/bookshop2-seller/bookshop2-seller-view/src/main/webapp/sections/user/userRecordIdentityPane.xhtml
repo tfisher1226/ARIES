@@ -1,0 +1,72 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="100%" 
+		height="100%" 
+		padding="10px"
+		backgroundColor="inherit">
+
+		<aries:label>User Identity</aries:label>
+		<aries:panel width="100%" height="100%" borderWidth="1px" borderColor="#ddd" marginTop="6px" padding="10px" backgroundColor="inherit">
+		
+			<aries:spacer height="1" />
+			<aries:personNameField id="#{section}UserName" label="Name" labelWidth="80px" />
+
+			<aries:spacer height="6" />
+			<aries:inputTextField id="#{section}UserId" label="User ID" labelWidth="80px" value="#{user.userId}" />
+
+			<aries:spacer height="6" />
+			<aries:inputSecretField id="#{section}Password" label="Password" labelWidth="80px" value="#{user.password}"/>
+
+			<aries:spacer height="1"/>
+		</aries:panel>
+	</aries:panel>
+	
+
+	<!--  
+	<aries:panel
+		width="100%" 
+		height="100%" 
+		padding="10px"
+		backgroundColor="inherit">
+
+		<h:outputLabel styleClass="groupLabel">User Identity</h:outputLabel>
+		<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 8px; padding-left: 4px; margin-top: 6px; background-color: inherit">
+	
+			<aries:spacer height="1"/>
+			<a4j:outputPanel id="#{domain}NamePanel">
+				<h:panelGrid styleClass="formPanel" layout="block" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnFillVertical, formColumn"> 
+					<h:outputLabel styleClass="formLabel" onclick="alert('#{domain}')" style="width: 80px; padding-top: 2px">Name</h:outputLabel>
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 190px; height: auto; cursor: pointer">
+						<ui:include src="/pages/common/personNameField.xhtml">
+							<ui:param name="personNameFieldLabel" value="#{user.firstName} #{user.lastName}"/>
+						</ui:include>
+					</h:panelGroup>
+				</h:panelGrid>
+			</a4j:outputPanel>
+	
+			<aries:spacer height="6"/>
+			<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+				<h:outputLabel styleClass="formLabel" id="#{domain}UserIdLabel" for="#{domain}UserIdField" style="display: block; width: 80px">User ID</h:outputLabel>
+				<h:inputText styleClass="formInput" id="#{domain}UserIdField" value="#{user.userId}" style="width: 184px" />
+			</h:panelGrid>
+	
+			<aries:spacer height="6"/>
+			<h:panelGrid styleClass="formPanel" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+				<h:outputLabel id="#{domain}PasswordLabel" styleClass="formLabel" for="#{domain}PasswordField" style="display: block; width: 80px">Password</h:outputLabel>
+				<h:inputText id="#{domain}PasswordField" styleClass="formInput" value="#{user.password}" style="width: 184px" />
+			</h:panelGrid>
+		</h:panelGroup>
+	</aries:panel>
+	-->	
+</ui:composition>

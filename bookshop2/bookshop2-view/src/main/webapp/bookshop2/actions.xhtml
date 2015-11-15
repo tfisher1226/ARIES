@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:outputScript>
+
+	function showHomePage() {
+		showPage('/index.seam');
+	}
+	           
+	function showPublicPage() {
+		showPage('/public.seam');
+	}
+
+	function showBookshop2ModelElementPage(section) {
+		showPage('/bookshop2/model/element/' + section + '/index.seam');
+	}
+
+	function showBookshop2ModelEventPage(section) {
+		showPage('/bookshop2/model/event/' + section + '/index.seam');
+	}
+
+	function showBookshop2ModelExceptionPage(section) {
+		showPage('/bookshop2/model/exception/' + section + '/index.seam');
+	}
+
+	function showBookshop2ModelMessagePage(section) {
+		showPage('/bookshop2/model/message/' + section + '/index.seam');
+	}
+	
+	function showBookshop2BuyerServicePage(section) {
+		showPage('/bookshop2/buyer/service/' + section + '/index.seam');
+	}
+	
+	function showBookshop2SellerServicePage(section) {
+		showPage('/bookshop2/seller/service/' + section + '/index.seam');
+	}
+	
+	function showBookshop2ShipperServicePage(section) {
+		showPage('/bookshop2/shipper/service/' + section + '/index.seam');
+	}
+	
+	function showBookshop2SupplierServicePage(section) {
+		showPage('/bookshop2/supplier/service/' + section + '/index.seam');
+	}
+	
+	function showPage(page) {
+		var url = '#{facesContext.externalContext.requestContextPath}' + page;
+		//alert(url);
+		window.location.href = url;
+	}
+
+	</h:outputScript>
+</ui:composition>

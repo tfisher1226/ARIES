@@ -1,0 +1,44 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPane
+		id="#{section}PermissionListTablePanel">
+		<ui:include src="permissionListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}PermissionListTable"
+			value="#{listManager.dataModel}"
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowdblclick="execute#{domain}SelectOpenPermission(#{index}, #{rowItem.permission.id})"
+			style="border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TARGET -->
+			<aries:textColumn
+				width="100"
+				header="Target">
+				<h:outputText value="#{rowItem.permission.target}" />
+			</aries:textColumn>
+			
+			<!-- ORGANIZATION -->
+			<aries:textColumn
+				width="100"
+				header="Organization">
+				<h:outputText value="#{rowItem.permission.organization}" />
+			</aries:textColumn>
+			
+			<!-- ENABLED -->
+			<aries:textColumn
+				width="100"
+				header="Enabled">
+				<h:outputText value="#{rowItem.permission.enabled}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

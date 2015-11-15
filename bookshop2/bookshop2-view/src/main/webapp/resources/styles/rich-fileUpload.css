@@ -1,0 +1,56 @@
+.rf-fu {
+	border-width: 0px;	
+	border: 0px solid #eee;	
+	background-color: #{richSkin.generalBackgroundColor};
+	background-image: none;
+}
+
+.rf-fu-hdr {
+	border-width: 0px;	
+	border: 0px solid #eee;	
+	background-color: #{richSkin.generalBackgroundColor};
+	background-image: none;
+}
+
+.rf-fu-btn-add, 
+.rf-fu-btn-upl, 
+.rf-fu-btn-clr {
+    border-color: #{userSkin.borderColor};
+	background-color: #{userSkin.backgroundColor};
+    background-image: none;
+}
+
+.rf-fu-cntr-hdn {
+	border: 1px solid cyan;	
+}
+
+.rf-fu-btn-add,
+.rf-fu-btn-upl,
+.rf-fu-btn-clr {
+	border: 1px solid #ccc;	
+}
+
+.rf-pb {
+	border-width: 1px;	
+	border: 1px solid #ccc;	
+}
+
+.rf-pb-rmng {
+	border-width: 1px;	
+	border: 1px solid blue;	
+}
+
+.rf-pb-prgs {
+	border-width: 1px;	
+	border: 1px solid red;	
+}
+
+rf-fu-inp-cntr {
+	border-width: 1px;	
+	border: 1px solid pink;	
+}
+
+.rf-fu-lst {
+	border-width: 0px;	
+	border: 0px solid green;
+}

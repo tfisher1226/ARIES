@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>bookshop2.supplier.entity</package>
+
+
+	<entity class="bookshop2.supplier.entity.BookOrdersEntity">
+		<named-query name="getBookOrdersRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from BookOrders x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getBookOrdersRecordByTrackingNumber">
+			<query>
+				<![CDATA[
+					select distinct x from BookOrders x where x.trackingNumber = :trackingNumber
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllBookOrdersRecords">
+			<query>
+				<![CDATA[
+					select x from BookOrders x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllBookOrdersRecords">
+			<query>
+				<![CDATA[
+					delete from BookOrders x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+	
+	<entity class="bookshop2.supplier.entity.BookOrdersBookEntity">
+		<named-query name="getBookOrdersBookRecordById">
+			<query>
+				<![CDATA[
+					select distinct x from BookOrdersBook x where x.id = :id
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getBookOrdersBookRecordByBarCode">
+			<query>
+				<![CDATA[
+					select distinct x from BookOrdersBook x where x.barCode = :barCode
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="getAllBookOrdersBookRecords">
+			<query>
+				<![CDATA[
+					select x from BookOrdersBook x
+				]]>
+			</query>
+		</named-query>
+		
+		<named-query name="removeAllBookOrdersBookRecords">
+			<query>
+				<![CDATA[
+					delete from BookOrdersBook x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache
+	name="ShipperCacheManager"
+	updateCheck="false"
+	monitoring="autodetect"
+	dynamicConfig="true"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd">
+	
+	<!--
+		Sets the path to the directory where cache data and index files are created.
+		If the path is a Java System Property it is replaced by its value in the running VM.
+		Subdirectories can be specified below the property e.g. java.io.tmpdir/one
+	-->
+	
+	<diskStore path="java.io.tmpdir/registry-cache" />
+	
+	
+	<!--
+		Specifies a CacheManagerPeerProviderFactory which will be used to create a
+		CacheManagerPeerProvider, which discovers other CacheManagers in the cluster.
+	-->
+	
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory" />
+	
+	<!--
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="file=registry-jgroups.xml" />
+	-->
+	
+	
+	<!--
+		******************************************************************************
+		Mandatory Default Cache configuration. These settings will be applied to
+		caches created programmatically using CacheManager.add(String cacheName).
+		******************************************************************************
+	-->
+	
+	<defaultCache
+		eternal="false"
+		maxElementsInMemory="0"
+		timeToIdleSeconds="100"
+		timeToLiveSeconds="100"
+		overflowToDisk="true"
+		transactionalMode="off">
+	
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="
+				replicateAsynchronously=true,
+				replicatePuts=true,
+				replicateUpdates=true,
+				replicateUpdatesViaCopy=false,
+				replicateRemovals=true" />
+	</defaultCache>
+</ehcache>

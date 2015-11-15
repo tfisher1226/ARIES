@@ -1,0 +1,392 @@
+
+/*
+ * Toolbar related
+ * ---------------
+ */
+
+.toolbar {
+	/*
+	background-image: none;
+	background-color: #d3dce3; 
+	background-color: #e8eefa; 
+	background-color: #e6e7e8;
+	background-color: #e0eaf3;
+	background-color: #eef0f9;
+	background-color: #f6f6f6;
+	*/
+}
+
+.toolbarLabel {
+	font-size: 12px;
+	font-weight: normal;
+	color: darkBlue;
+	color: #008;
+}
+
+.toolbarTypePlain {
+	/*
+	background-image: none; 
+	background-color: transparent;
+	*/ 
+}
+
+.toolbarTypeTab {
+	/*
+	background-image: none; 
+	background-color: #f6f6f6;
+	*/ 
+}
+
+.toolbarTypeMenubar {
+	/*
+	background-image: none; 
+	background-color: #f6f6f6;
+	*/ 
+	border-top: #{userSkin.border};
+	border-bottom: #{userSkin.border};
+}
+
+/*
+.toolbar {
+	padding-left: 0px;
+	padding-right: 0px;
+	border: 1px solid #C3BBB6;
+	background-image: none;
+	background-color: #d3dce3; 
+	background-color: #e8eefa; 
+	background-color: #e6e7e8;
+	background-color: #e0eaf3;
+	background-color: #eef0f9;
+	background-color: #f6f6f6;
+}
+
+.toolbar .rich-toolbar-item {
+	margin: 0px;
+	padding: 0px;
+}
+*/
+
+/*
+.controlbar {
+	background-image: none; 
+	background-color: #f1f1f1; 
+}
+
+.controlbar {
+	padding: 0px;
+	margin: 0px;
+	margin-right: 10px;
+	margin-left: 8px;
+	cellpadding: 0px; 
+	cellspacing: 0px; 
+	border: 0px;
+	border-width: 1px; 
+	border-collapse: collpase; 
+	background-image: none; 
+	background-color: #f1f1f1; 
+}
+*/
+
+.toolbarContent {
+	width: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*
+.toolbarContent .rich-ddmenu-label {
+	margin: 0px;
+	padding: 0px;
+}
+.toolbarContent .rich-ddmenu-label:hover {
+	padding: 0px;
+}
+.toolbarContent .rich-ddmenu-label-unselect {
+	border: 1px solid transparent;
+}
+*/
+
+.toolbarSeparator {
+	margin: 0px;
+	padding: 0px;
+}
+
+.toolbarGroup {
+	margin: 0px;
+	padding: 0px;
+}
+
+/*
+.toolGroup,
+.toolGroupLeft,
+.toolGroupRight {
+	margin: 0px;
+	padding: 1px; 
+	vertical-align: middle; 
+}
+.toolGroupLeft {
+	text-align: left; 
+}
+.toolGroupRight {
+	text-align: right; 
+}
+*/
+
+/*
+.toolbarContent .rich-menu-item,
+.toolbarContent .rich-menu-group,
+.toolbarContent .rich-menu-item-icon, 
+.toolbarContent .rich-menu-group-icon,
+.toolbarContent .rich-menu-item-enabled,
+.toolbarContent .rich-menu-group-enabled,
+.toolbarContent .rich-ddmenu-label {
+	margin: 0px;
+	padding: 0px; 
+}
+.toolbarContent .rich-menu-item-enabled,
+.toolbarContent .rich-menu-group-enabled {
+	border: 1px solid transparent;
+}
+.toolbarContent .rich-ddmenu-label:hover {
+	padding: 0px;
+}
+*/
+
+
+.toolbarItemXX {
+	background-image: url(../org.richfaces.images/menu_item_bg.png);
+	background-image: "url(#{resource['org.richfaces.images:/menu_item_bg.png']})";
+	background-repeat: repeat-x;
+	background-position: bottom left;
+	background-color: #ECF4FE;
+}
+
+/*
+.toolbarItem,
+.toolbarMenu,
+.toolbarToggleItem,
+.toolbarToggleItemSelected {
+	text-align: center; 
+	vertical-align: middle;
+	font-size: 12px;
+	font-weight: normal;
+	color: darkBlue;
+}
+
+.toolbarItem,
+.toolbarMenu,
+.toolbarToggleItem {
+	background-color: transparent;
+	border: 1px solid transparent;
+}
+
+.toolbarItem:hover,
+.toolbarMenu:hover,
+.toolbarToggleItem:hover {
+	border: 1px solid #b9d7fc;
+	border: 1px solid #84acdd;
+	background-image: none;
+	background-color: transparent;
+	background-color: #ddecff;
+}
+*/
+
+.toolbarItem:hover,
+.toolbarMenu:hover,
+.toolbarToggleItem:hover {
+	background-image: none;
+	background-color: transparent;
+	background-color: #ddecff;
+}
+
+.toolbarToggleItemSelected {
+	background-color: #d3e6ff;
+	border: 1px solid #84acdd;
+}
+
+.toolbarToggleItemSelected:hover {
+	border: 1px solid #b9d7fc;
+}
+
+.toolItemDisabled {
+	background-color: #ECF4FE;
+}
+
+/*
+.toolbarLabel {
+	font-size: 12px;
+	font-weight: normal;
+	color: darkBlue;
+	color: #008;
+}
+
+*.rf-tb-itm {
+	padding: 0px;
+	margin: 0px;
+}
+
+*.rf-tb-sep {
+	padding: 0px;
+	margin: 0px;
+}
+
+.controlbar {
+	padding: 0px;
+	margin: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	cellpadding: 0px; 
+	cellspacing: 0px; 
+	border: 0px;
+	border-width: 1px; 
+	border-collapse: collpase; 
+	background-image: none; 
+	background-color: #f1f1f1; 
+}
+*/
+
+
+
+/*
+.toolbar .rich-menu-item,
+.toolbar .rich-menu-group,
+.controlbarContent .rich-menu-item,
+.controlbarContent .rich-menu-group {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: 1px solid transparent;
+}
+
+.toolbar .rich-menu-item-hover,
+.toolbar .rich-menu-group-hover,
+.controlbarContent .rich-menu-item-hover,
+.controlbarContent .rich-menu-group-hover {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-color: #deedf3;
+	border-color: #a8d8eb;
+	border: 1px solid #a8d8eb;
+	color: blue;
+}
+*/
+
+/*
+.toolbarItem .rich-menu-item,
+.toolbarItem .rich-menu-group,
+.toolbarMenu .rich-menu-item,
+.toolbarMenu .rich-menu-group,
+.toolbarLink .rich-menu-item,
+.toolbarLink .rich-menu-group,
+.toolbarToggleItem .rich-menu-item,
+.toolbarToggleItem .rich-menu-group,
+.toolbarToggleItemSelected .rich-menu-item,
+.toolbarToggleItemSelected .rich-menu-group {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border: 1px solid transparent;
+}
+
+.toolbarItem .rich-menu-item-hover,
+.toolbarItem .rich-menu-group-hover,
+.toolbarMenu .rich-menu-item-hover,
+.toolbarMenu .rich-menu-group-hover,
+.toolbarLink .rich-menu-item-hover,
+.toolbarLink .rich-menu-group-hover,
+.toolbarToggleItem .rich-menu-item-hover,
+.toolbarToggleItem .rich-menu-group-hover,
+.toolbarToggleItemSelected .rich-menu-item-hover,
+.toolbarToggleItemSelected .rich-menu-group-hover {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-color: #deedf3;
+	border-color: #a8d8eb;
+	border: 1px solid #a8d8eb;
+	color: blue;
+	
+	background-color: red;
+}
+
+.toolbarItem:hover,
+.toolbarItem:hover,
+.toolbarMenu:hover,
+.toolbarMenu:hover,
+.toolbarLink:hover,
+.toolbarLink:hover,
+.toolbarToggleItem:hover,
+.toolbarToggleItem:hover,
+.toolbarToggleItemSelected:hover,
+.toolbarToggleItemSelected:hover {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	background-color: #deedf3;
+	border-color: #a8d8eb;
+	border: 1px solid #a8d8eb;
+	color: blue;
+	background-color: red;
+}
+
+.toolbarItem .rich-menu-item-icon,
+.toolbarItem .rich-menu-item-label,
+.toolbarItem .rich-menu-group-icon,
+.toolbarItem .rich-menu-group-label,
+.toolbarMenu .rich-menu-item-icon,
+.toolbarMenu .rich-menu-item-label,
+.toolbarMenu .rich-menu-group-icon,
+.toolbarMenu .rich-menu-group-label,
+.toolbarLink .rich-menu-item-icon,
+.toolbarLink .rich-menu-item-label,
+.toolbarLink .rich-menu-group-icon,
+.toolbarLink .rich-menu-group-label,
+.toolbarToggleItem .rich-menu-item-icon,
+.toolbarToggleItem .rich-menu-item-label,
+.toolbarToggleItem .rich-menu-group-icon,
+.toolbarToggleItem .rich-menu-group-label,
+.toolbarToggleItemSelected .rich-menu-item-icon,
+.toolbarToggleItemSelected .rich-menu-item-label,
+.toolbarToggleItemSelected .rich-menu-group-icon,
+.toolbarToggleItemSelected .rich-menu-group-label {
+	width: 0px;
+	margin: 0px;
+	padding: 0px;  
+	text-align: left;
+	vertical-align: middle;  
+}
+*/
+
+.toolbarLink {
+	height: 18px; 
+	margin: 0px; 
+	padding: 0px;
+	padding-right: 9px;
+	font-size: 13px;
+	font-weight: normal;
+	color: #00b;
+}
+
+.toolbarLabel {
+	font-size: 12px;
+	font-weight: normal;
+	color: darkBlue;
+	color: #008;
+}
+
+
+/*
+ * Controlbar related
+ * ---------------
+ */
+
+/*
+.controlPane {
+	background-color: inherit
+}
+
+.controlbar {
+	background-color: #f1f1f1; 
+}
+
+.controlbar {
+	background-image: none; 
+	background-color: #f1f1f1; 
+}
+*/

@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.toolbarItem .toolbarLabel: hover {
+		text-decoration: underline;
+	}
+	</style>
+
+	<c:if test="#{empty manager}">
+		<c:set var="manager" value="#{globals}"/> 
+	</c:if>
+
+	<c:if test="#{empty action}">
+		<c:set var="action" value="doNothing"/> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolbarItem"/> 
+	</c:if>
+
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="toolbarLabel"/> 
+	</c:if>
+
+	<c:if test="#{empty labelStyle}">
+		<c:set var="labelStyle" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value="padding: 6px 6px"/> 
+	</c:if>
+	
+	<c:if test="#{empty interactive}">
+		<c:set var="interactive" value="#{current != name}"/> 
+	</c:if>
+
+	<c:if test="#{not interactive}">
+		<h:panelGroup layout="block" style="#{style}; border: 1px solid #9999cc; background-color: #eaeaf6; text-decoration: none">
+			<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumn" >
+				<c:if test="#{empty icon}">
+					<h:graphicImage value="resource://images/spacer.gif" width="0" height="16"/>
+				</c:if>
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" style="margin-right: 3px"/>
+				</c:if>
+				<h:outputText 
+					value="#{label}" 
+					styleClass="#{labelClass}" 
+					style="white-space: nowrap"/>
+			</h:panelGrid>
+		</h:panelGroup>
+	</c:if>
+	
+	<c:if test="#{interactive}">
+		<rich:menuItem
+			submitMode="ajax"
+			disabled="false"
+			rendered="true"
+			immediate="true"
+			ajaxSingle="true"
+			requestDelay="0"
+			action="#{manager[action]}"
+			onclick="setCursorWait(this); #{onclick}"
+			oncomplete="setCursorDefault(this); #{oncomplete}"
+			styleClass="#{styleClass}" 
+			style="#{style}">
+			<f:facet name="icon">
+				<c:if test="#{empty icon}">
+					<h:graphicImage value="resource://images/spacer.gif" width="0" height="1"/>
+				</c:if>
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" style="padding-right: 3px"/>
+				</c:if>
+			</f:facet>
+			
+			<h:outputText 
+				value="#{label}"
+				styleClass="#{labelClass} link"
+				style="#{labelStyle}"/>
+				
+			<aries:tooltip value="#{tooltip}" />
+		</rich:menuItem>
+	</c:if>
+</ui:composition>

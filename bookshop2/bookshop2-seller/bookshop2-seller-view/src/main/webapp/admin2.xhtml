@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="pageTemplate.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+	
+		<!-- PAGE FORM -->
+		<aries:pageForm>
+		
+			<!-- IMPORTED DIALOGS -->
+			<aries:popupDialog/>
+			<aries:messageDialog/>
+			<aries:progressDialog/>
+			<aries:themeDialog/>
+			
+			<ui:include src="sections/user/userDialog.xhtml" />
+
+			<!--  
+			<ui:include src="sections/user/userWizard.xhtml" />
+			-->
+			
+			<!-- IMPORTED ACTIONS --> 
+			<ui:include src="adminActions.xhtml"/>
+
+			<!-- PAGE HEADER -->
+			<aries:pageHeader 
+				backgroundColorXX="blue"
+				titleText="INFOSGI Admin"
+				titleImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"
+				backgroundImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"/>
+
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="adminMenubar.xhtml"/>
+			
+			<!-- PAGE CONTENT -->
+			<aries:formPane width="#{globals.screenWidth}px" columns="2">
+				<ui:include src="adminNavigatorPane.xhtml"/>
+				<ui:include src="adminViewerPane.xhtml"/>
+			</aries:formPane>
+
+			<!-- PAGE FOOTER -->
+			<aries:pageFooter/>
+		</aries:pageForm>
+	</ui:define>
+</ui:composition>

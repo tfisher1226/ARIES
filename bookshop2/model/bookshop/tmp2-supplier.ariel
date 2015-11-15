@@ -1,0 +1,135 @@
+subnet Supplier {
+
+	//call this network
+	//make so one can "add" participants
+    group SupplierGroup {
+        set participant("Supplier");
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        add channel("Inventory");
+		set namespace("supplier");
+
+        //receive queryBooks(OrderRequest orderRequest) over Inventory {
+        
+        receive queryBooks(QueryRequest queryRequest) {
+        	join transaction("bookReservation");
+		    List<Book> books = queryRequest.getBooks();
+		    List<Book> booksInStock = supplierOrderCacheManager.getMatchingBooksInStock(books);
+		    if (booksInStock.size() == 0) {
+			    reply BooksUnavailable;
+		    } else {
+			    reply BooksAvailable(booksInStock);
+		    }
+            done;
+        }
+
+        receive reserveBooks(ReservationRequest reservationRequest) throws ReservationAbortedException {
+            join transaction("bookReservation");
+       	    List<Book> books = reservationRequest.getBooks();
+           	SupplierOrderCache.removeFromBooksInStock(books);
+   	        BookInventory.addToReservedBooks(books);
+            done;
+        }
+
+        //receive shipBooks(ShipmentRequest shipmentRequest) over Shipment, Inventory {
+        //   invoke Shipper.shipBooks(shipmentRequest) over Shipment {
+
+		//@Synchronous
+		//@Transacted("bookReservation")
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+        	join transaction("bookReservation");
+        	//BookOrderLog.update(shipmentRequest);
+
+            invoke Shipper.shipBooks() {
+				set transaction(required); 
+				set timeout(5min); 
+
+                message ShipmentScheduled: {
+					//BookOrderLog.update(shipmentScheduled);
+                    Shipment shipment = shipmentScheduled.getShipment();
+					reply ShipmentScheduled(shipment);
+                    //done;
+				}
+				
+                message ShipmentComplete: {
+                    //BookOrderLog.update(shipmentComplete);
+                    Shipment shipment = shipmentComplete.getShipment();
+                    Order order = shipment.getOrder();
+                    BookOrderLog.addToBookOrders(order);
+                	//BookOrderLog.log(Payment);
+                	post ShipmentComplete(shipment);
+                	reply ShipmentComplete(shipment);
+                    done;
+	            }
+	            
+                message ShipmentFailed: {
+					//BookOrderLog.update(shipmentFailed);
+                    Shipment shipment = context.getShipment();
+                	reply ShipmentFailed(shipment);
+                    done;
+				}
+
+                exception: {
+					//BookOrderLog.update(exception);
+                	reply ShipmentFailed(exception.message);
+                    //throw ReservationAbortedException;
+                    done;
+                }
+	        }
+		}
+		
+		/*
+		schedule {
+			invoke 
+		}
+		*/
+		
+		//global
+		cache SupplierOrderCache { 
+			set scope(application); 
+			set transaction(required); 
+			set backingStore(BookOrderLog);
+			items {
+				Map<String, Book> booksInStock;
+                /*
+				List<Book> booksInStock {
+					index(title);
+					index(author);
+				}
+                */
+			}
+		}
+				
+		persist BookInventory {
+			add role("supplier");
+			set scope(application); 
+		    add role("administrator");
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				Map<String, Book> reservedBooks {
+					index(key);
+					index(title);
+					index(author);
+				}
+			}
+		}
+
+		persist BookOrderLog {
+			add role("supplier");
+			set scope(application); 
+		    add role("administrator");
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				List<Order> bookOrders;
+			}
+		}
+    }
+}

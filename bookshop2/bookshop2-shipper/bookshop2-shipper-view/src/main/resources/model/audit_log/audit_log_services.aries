@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="audit_log_information.aries" />
+	<import file="audit_log_messaging.aries" />
+
+	<service name="logService" type="auditLog:Event">
+		<listener link="auditLink" role="user" />
+
+		<listener channel="userEventChannel" role="user" />
+		<listener channel="systemEventChannel" role="user" />
+
+		<operation name="getEventById" />
+		<operation name="getEventList" />
+		<operation name="getEventListByType" />
+		<operation name="getEventListByUserId" />
+		<operation name="getEventListByUserName" />
+		<operation name="addEvent" />
+		<operation name="saveEvent" />
+	</service>
+</services>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+                                "facelet-taglib_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://bookshop2Domain/jsf</namespace>
+	<tag>
+		<tag-name>myValidator</tag-name>
+		<validator>
+			<validator-id>myValidator</validator-id>
+		</validator>
+	</tag>
+
+    <!-- common -->
+	<tag><tag-name>bullet</tag-name><source>../common/bullet.xhtml</source></tag>
+	<tag><tag-name>controlbar</tag-name><source>../common/controlbar.xhtml</source></tag>
+	<tag><tag-name>controlPane</tag-name><source>../common/controlPane.xhtml</source></tag>
+	<tag><tag-name>link</tag-name><source>../common/link.xhtml</source></tag>
+	<tag><tag-name>panel</tag-name><source>../common/panel.xhtml</source></tag>
+	<tag><tag-name>messages</tag-name><source>../common/messages.xhtml</source></tag>
+	<tag><tag-name>tooltip</tag-name><source>../common/tooltip.xhtml</source></tag>
+
+    <!-- button related -->
+	<tag><tag-name>button</tag-name><source>../common/button/button.xhtml</source></tag>
+	<tag><tag-name>dialogButton</tag-name><source>../common/button/dialogButton.xhtml</source></tag>
+	<tag><tag-name>smallDialogButton</tag-name><source>../common/button/smallDialogButton.xhtml</source></tag>
+	<tag><tag-name>saveButton</tag-name><source>../common/button/saveButton.xhtml</source></tag>
+	<tag><tag-name>saveAllButton</tag-name><source>../common/button/saveAllButton.xhtml</source></tag>
+
+    <!-- dialog related -->
+	<tag><tag-name>dialog</tag-name><source>../common/dialog/dialog.xhtml</source></tag>
+	<tag><tag-name>dialogControl</tag-name><source>../common/dialog/dialogControl.xhtml</source></tag>
+	<tag><tag-name>dialogHeaderBar</tag-name><source>../common/dialog/dialogHeaderBar.xhtml</source></tag>
+	<tag><tag-name>dialogTitleBar</tag-name><source>../common/dialog/dialogTitleBar.xhtml</source></tag>
+	<tag><tag-name>loginDialog</tag-name><source>../common/dialog/loginDialog.xhtml</source></tag>
+	<tag><tag-name>messageDialog</tag-name><source>../common/dialog/messageDialog.xhtml</source></tag>
+	<tag><tag-name>progressDialog</tag-name><source>../common/dialog/progressDialog.xhtml</source></tag>
+	<tag><tag-name>uploadDialog</tag-name><source>../common/dialog/uploadDialog.xhtml</source></tag>
+
+    <!-- menu related -->
+	<tag><tag-name>contextMenu</tag-name><source>../common/menu/contextMenu.xhtml</source></tag>
+	<tag><tag-name>contextMenuGroup</tag-name><source>../common/menu/contextMenuGroup.xhtml</source></tag>
+	<tag><tag-name>contextMenuItem</tag-name><source>../common/menu/contextMenuItem.xhtml</source></tag>
+	<tag><tag-name>dropDownMenu</tag-name><source>../common/menu/dropDownMenu.xhtml</source></tag>
+	<tag><tag-name>menuItem</tag-name><source>../common/menu/menuItem.xhtml</source></tag>
+	<tag><tag-name>menuPanel</tag-name><source>../common/menu/menuPanel.xhtml</source></tag>
+
+    <!-- popup related -->
+	<tag><tag-name>popup</tag-name><source>../common/popup/popup.xhtml</source></tag>
+
+    <!-- table related -->
+
+    <!-- toolbar related -->
+	<tag><tag-name>toolbar</tag-name><source>../common/toolbar/toolbar.xhtml</source></tag>
+	<tag><tag-name>toolbarGroup</tag-name><source>../common/toolbar/toolbarGroup.xhtml</source></tag>
+	<tag><tag-name>toolButton</tag-name><source>../common/toolbar/toolButton.xhtml</source></tag>
+	<tag><tag-name>toolItem</tag-name><source>../common/toolbar/toolItem.xhtml</source></tag>
+	<tag><tag-name>toolToggleButton</tag-name><source>../common/toolbar/toolToggleButton.xhtml</source></tag>
+
+    <!-- tree related -->
+	<tag><tag-name>treeNode</tag-name><source>../common/tree/treeNode.xhtml</source></tag>
+
+    <!-- wizard related -->
+	<tag><tag-name>wizard</tag-name><source>../common/wizard/wizard.xhtml</source></tag>
+	<tag><tag-name>wizardControl</tag-name><source>../common/wizard/wizardControl.xhtml</source></tag>
+</facelet-taglib>

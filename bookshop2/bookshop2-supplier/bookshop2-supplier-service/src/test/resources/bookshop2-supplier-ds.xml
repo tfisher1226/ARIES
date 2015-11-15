@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+	<xa-datasource
+		jndi-name="bookshop2_supplier_ds"
+		pool-name="bookshop2_supplier_pool">
+		
+		<driver>mysql-5-driver</driver>
+		
+		<xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+		<xa-datasource-property name="URL">jdbc:mysql://localhost:3306/bookshop2_supplier_db</xa-datasource-property>
+		<xa-datasource-property name="user">supplier</xa-datasource-property>
+		<xa-datasource-property name="password">password</xa-datasource-property>
+
+		<security>
+			<user-name>supplier</user-name>
+			<password>password</password>
+		</security>
+
+		<xa-pool>
+			<min-pool-size>0</min-pool-size>
+			<max-pool-size>10</max-pool-size>
+			<use-strict-min>true</use-strict-min>
+			<is-same-rm-override>false</is-same-rm-override>
+			<interleaving>false</interleaving>
+			<pad-xid>false</pad-xid>
+			<wrap-xa-resource>false</wrap-xa-resource>
+		</xa-pool>
+
+		<validation>
+			<validate-on-match>false</validate-on-match>
+			<background-validation>false</background-validation>
+			<valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker" />
+			<exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter" />
+		</validation>
+
+		<statement>
+			<share-prepared-statements>false</share-prepared-statements>
+		</statement>
+
+		<!--  
+		<track-connection-by-tx>true</track-connection-by-tx>
+		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLExceptionSorter</exception-sorter-class-name>
+		<valid-connection-checker-class-name>org.jboss.resource.adapter.jdbc.vendor.MySQLValidConnectionChecker</valid-connection-checker-class-name>
+		<min-pool-size>1</min-pool-size>
+		<max-pool-size>10</max-pool-size>
+		<no-tx-separate-pools>true</no-tx-separate-pools>
+		<idle-timeout-minutes>10</idle-timeout-minutes>
+		<metadata>
+			<type-mapping>mySQL</type-mapping>
+		</metadata>
+		-->
+	</xa-datasource>
+
+	<drivers>
+		<driver 
+			name="mysql" 
+			module="com.mysql">
+			<xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
+		</driver>
+	</drivers>
+</datasources>

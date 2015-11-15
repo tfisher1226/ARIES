@@ -1,0 +1,8 @@
+<jboss-app>
+	<loader-repository>
+		bookshop2-buyer-app:archive=bookshop2-buyer-app.ear
+		<loader-repository-config>
+			java2ParentDelegation=false
+		</loader-repository-config>
+	</loader-repository>
+</jboss-app>

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+. ./tfisher-hp2-env
+
+rm -rf $JBOSS_RUNTIME_HOME/data
+rm -rf $JBOSS_RUNTIME_HOME/log
+rm -rf $JBOSS_RUNTIME_HOME/tmp

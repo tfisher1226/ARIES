@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- TODO set only if not provided by parent -->
+	<ui:param name="type" value="Receipt" />
+	
+	<!-- TODO set only if not provided by parent -->
+	<ui:param name="manager" value="#{receiptInfoManager}" />
+	
+	<a4j:jsFunction 
+    	name="launchReceiptDialog"
+    	execute="@this"
+    	immediate="true" 
+    	bypassUpdates="true"
+    	limitRender="true"
+    	action="#{manager.activate}"
+		onbegin="setCursorWait(event.source); showProgress('', 'Receipt Records', 'Preparing requested record...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); #{rich:component('ReceiptDialog')}.show()"
+		render="ReceiptModule">
+		
+		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
+	</a4j:jsFunction>
+
+	<a4j:outputPanel id="ReceiptModule">
+		<a4j:region rendered="#{manager.visible}">
+
+			<!--  
+			<h:form id="ReceiptDialogForm" prependId="false">
+			</h:form>
+			-->
+
+			<aries:dialog
+				id="ReceiptDialog"
+				title="BOOKSHOP2"
+				heading="New Receipt Record"
+				message="Fill in Receipt information"
+				action="saveReceipt"
+				render="#{manager.renderList} #{section}ReceiptListTablePane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="receiptPane.xhtml" />
+			</aries:dialog>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

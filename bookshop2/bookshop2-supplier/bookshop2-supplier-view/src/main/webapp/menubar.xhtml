@@ -1,0 +1,464 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<f:subview rendered="#{!identity.loggedIn}">
+
+		<rich:toolBar 
+			itemSeparator="none"
+			styleClass="toolbar" 
+			contentClass="toolbarContent"
+			separatorClass="toolbarSeparator"
+			style="width: auto; height: 30px; padding: 1px; background-color: #f0f0f0; border: 0px; border-top: 1px solid #C3BBB6; border-bottom: 1px solid #C3BBB6">
+	
+			<rich:toolBarGroup location="left" styleClass="toolGroupLeft" style="">
+				<!-- 
+				<rich:menuItem
+					submitMode="none"
+					disabled="false"
+					rendered="true"
+					immediate="true"
+					ajaxSingle="true"
+					requestDelay="0"
+					onclick="setCursorWait(this); showLoginDialog(); setCursorDefault(this)"
+					oncomplete=""
+					reRender="loginDialog"
+					styleClass="toolbarItem" style="">
+					<f:facet name="icon">
+						<h:graphicImage value="resource://images/icons/common/Import16.gif"/>
+					</f:facet>
+					<h:outputText 
+						value="Login3"
+						styleClass="toolbarItem" style="padding: 0px; background-color: inherit"/>
+				</rich:menuItem>
+				 -->
+	
+				<!--  
+				<rich:dropDownMenu hideDelay="200" style="width: 80px; text-align: left">
+					<f:facet name="label">
+						<h:panelGrid columns="2" columnClasses="menuIconColumn, menuTextColumn">
+                            <h:graphicImage value="resource://images/icons/common/Refresh16.gif"/>
+                               <h:outputLink value="http://localhost:8080/infosgi" styleClass="toolbarItem" style="padding-left: 2px">
+                               	<h:outputText value="Refresh" />
+                               </h:outputLink>
+						</h:panelGrid>
+					</f:facet>
+				</rich:dropDownMenu>
+				-->
+			</rich:toolBarGroup>
+
+			<rich:toolBarGroup location="right" styleClass="toolbarGroup">
+				<!--  
+				<rich:dropDownMenu hideDelay="200" style="width: 180px; text-align: left">
+					<f:facet name="label">
+						<h:panelGrid columns="2" columnClasses="menuIconColumn, menuTextColumn">
+							<h:graphicImage value="resource://images/icons/status/Info16.gif"/>
+							<h:commandLink 
+								value="How to access the site"
+								action="#{globals.doNothing}"
+								onclick="setCursorWait();"
+								oncomplete="setCursorDefault();"
+								styleClass="toolbarItem"
+                                   style="padding-left: 2px">
+							</h:commandLink> 
+						</h:panelGrid>
+					</f:facet>
+				</rich:dropDownMenu>
+				-->
+
+				<ui:include src="/common/dialog/loginItem.xhtml"/>
+			</rich:toolBarGroup>
+		</rich:toolBar>
+	</f:subview>
+
+	<f:subview rendered="#{identity.loggedIn}">
+		<aries:toolbar type="menubar">
+			<aries:toolbarGroup location="left">
+			
+				<aries:dropDownMenu 
+					value="File"
+					icon="resource://images/icons/common/File16.gif">
+					
+					<aries:menuItem 
+						value="Import Members..."
+						tooltip="Import Membership records into the system"
+						icon="resource://images/icons/common/Import16.gif"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+				    	manager="#{importManager}"
+				    	action="importMembers"
+						onclick="setCursorWait(this); showProgress('Membership Records', 'Importing records from original database...')"
+						oncomplete="setCursorDefault(this); hideProgress()"/>
+
+					<aries:menuItem 
+						value="Move Members..."
+						tooltip="Move Membership records from one Organization to another Organization"
+						icon="resource://images/icons/common/Default16.gif"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+				    	manager="#{globals}"
+				    	action="doNothing"
+						onclick="setCursorWait(this)"
+						oncomplete="setCursorDefault(this)"/>
+					
+					<aries:menuItem 
+						value="Move Organization..."
+						tooltip="Move Organization from one place to another place"
+						icon="resource://images/icons/common/Default16.gif"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+				    	manager="#{globals}"
+				    	action="doNothing"
+						onclick="setCursorWait(this)"
+						oncomplete="setCursorDefault(this)"/>
+					
+					<aries:menuItem 
+						value="Logout"
+						tooltip="Import Membership records into the system"
+						icon="resource://images/icons/common/Remove16.gif"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+				    	manager="#{identity}"
+						action="logout"
+						onclick="setCursorWait(this)"
+						oncomplete="setCursorDefault(this)"/>
+				</aries:dropDownMenu>
+
+				<aries:dropDownMenu 
+					value="New"
+					icon="resource://images/icons/common/New16.gif">
+
+					<aries:menuItem 
+						value="Member..."
+						rendered="true"
+						disabled="false"
+						tooltip="Create new Membership Record"
+						icon="resource://images/icons/common/Default16.gif"
+						submitMode="ajax"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						manager="#{memberInfoManager}"
+						action="newMember"
+						onclick="setCursorWait(this); showProgress('New Membership Record', 'Creating new record...')"
+						oncomplete="setCursorDefault(this); hideProgress(); showMemberDialog()"
+						reRender="memberDialog">
+					</aries:menuItem>
+
+					<aries:menuItem 
+						value="User..."
+						rendered="true"
+						disabled="false"
+						tooltip="Create new User Account Record"
+						icon="resource://images/icons/common/Default16.gif"
+						submitMode="ajax"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						manager="#{userInfoManager}"
+						action="newUser"
+						onclick="setCursorWait(this); showProgress('New User Account', 'Creating new record...')"
+						oncomplete="setCursorDefault(this); hideProgress(); showUserDialog()"
+						reRender="userDialog">
+					</aries:menuItem>
+
+					<!--  
+					<rich:menuItem submitMode="none">
+						<f:facet name="icon">
+							<h:graphicImage value="resource://images/icons/common/message.gif"/>
+						<a4j:commandLink 
+						</f:facet>
+							value="Email..."
+							immediate="true" 
+							ajaxSingle="true"
+							bypassUpdates="true"
+							action="#{emailManager.newMessage}"
+							onclick="setCursorWait(this); showProgress('New Email Message', 'Creating new message...')"
+							oncomplete="setCursorDefault(this); hideProgress(); showMemberDialog()"
+							styleClass="menuLabel">
+							<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+								<span style="white-space: nowrap; display: block; text-align: left">
+										<h:outputText value="Create / send new email message"/> 
+								</span>
+							</rich:toolTip>
+						</a4j:commandLink>
+					</rich:menuItem>
+
+					<rich:menuItem submitMode="none">
+						<f:facet name="icon">
+							<h:graphicImage value="resource://images/icons/common/Default16.gif"/>
+						</f:facet>
+						<a4j:commandLink 
+							value="Schedule..."
+							immediate="true" 
+							ajaxSingle="true"
+							bypassUpdates="true"
+							action="#{eventManager.newEvent}"
+							onclick="setCursorWait(this); showProgress('New Event Record', 'Creating new record...')"
+							oncomplete="setCursorDefault(this); hideProgress(); showEventDialog()"
+							styleClass="menuLabel">
+							<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+								<span style="white-space: nowrap; display: block; text-align: left">
+										<h:outputText value="Create / schedule new event for the calendar"/> 
+								</span>
+							</rich:toolTip>
+						</a4j:commandLink>
+					</rich:menuItem>
+					-->
+				</aries:dropDownMenu>
+
+				<aries:dropDownMenu 
+					value="View"
+					icon="resource://images/icons/common/Project16.gif">
+					
+					<!--  
+					<aries:menuItem 
+						value="Members..."
+						tooltip="View Membership Records"
+						icon="resource://images/icons/common/Group16.gif"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						manager="#{organizationManager}"
+						action="viewOrganizations"
+						onclick="setCursorWait(this); showProgress('Membership Records', 'Retrieving information...')"
+						oncomplete="setCursorDefault(this); hideProgress()">
+					</aries:menuItem>
+					-->
+
+					<aries:menuItem 
+						value="Users..."
+						tooltip="View User Acount Records"
+						icon="resource://images/icons/common/Role16.gif"
+						disabled="false"
+						rendered="true"
+						submitMode="none"
+						onclick="setCursorWait(this); showProgress('User Account Records', 'Retrieving information...'); viewUsers()"
+						oncomplete="setCursorDefault(this); hideProgress()">
+					</aries:menuItem>
+
+					<aries:menuItem 
+						rendered="true"
+						disabled="false"
+						value="Document..."
+						tooltip="View Test Document"
+						icon="resource://images/icons/common/Default16.gif"
+				    	manager="#{mainManager}"
+				    	action="viewDocument"
+						onclick="setCursorWait(this); showProgress('Test Document', 'Retrieving information...')"
+						oncomplete="setCursorDefault(this); hideProgress()"
+				    	reRender="membershipViewPanel">
+					</aries:menuItem>
+
+					<aries:menuItem 
+						value="Refresh"
+						tooltip="Refresh the current display"
+						icon="resource://images/icons/common/Refresh16.gif"
+						submitMode="none"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						onclick="location.reload(true)">
+					</aries:menuItem>
+
+					<!--  
+					<rich:menuItem>
+						<f:facet name="icon">
+							<h:graphicImage value="resource://images/icons/common/message.gif"/>
+						</f:facet>
+						<a4j:commandLink 
+							value="Email..."
+							action="#{emailManager.viewMessages}"
+							onclick="setCursorWait(this); showProgress('Email Message Records', 'Retrieving information...')"
+							oncomplete="setCursorDefault(this); hideProgress()"
+							styleClass="menuLabel">
+							<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+								<span style="white-space: nowrap; display: block; text-align: left">
+									<h:outputText value="View email messages"/> 
+								</span>
+							</rich:toolTip>
+						</a4j:commandLink> 
+					</rich:menuItem>
+
+					<rich:menuItem>
+						<f:facet name="icon">
+							<h:graphicImage value="resource://images/icons/common/Default16.gif"/>
+						</f:facet>
+						<a4j:commandLink 
+							value="Calendar..."
+							action="#{eventManager.viewEvents}"
+							onclick="setCursorWait(this); showProgress('INFOSGI Event Records', 'Retrieving information...')"
+							oncomplete="setCursorDefault(this); hideProgress()"
+							styleClass="menuLabel">
+							<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+								<span style="white-space: nowrap; display: block; text-align: left">
+									<h:outputText value="View calendar and events"/> 
+								</span>
+							</rich:toolTip>
+						</a4j:commandLink> 
+					</rich:menuItem>
+
+					<rich:menuItem>
+						<f:facet name="icon">
+							<h:graphicImage value="resource://images/icons/common/Default16.gif"/>
+						</f:facet>
+						<a4j:commandLink 
+							value="Log..."
+							action="#{logManager.viewEvents}"
+							onclick="setCursorWait(this); showProgress('INFOSGI Event Records', 'Retrieving information...')"
+							oncomplete="setCursorDefault(this); hideProgress()"
+							styleClass="menuLabel">
+							<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+								<span style="white-space: nowrap; display: block; text-align: left">
+									<h:outputText value="View system log"/> 
+								</span>
+							</rich:toolTip>
+						</a4j:commandLink> 
+					</rich:menuItem>
+					-->
+				</aries:dropDownMenu>
+
+				<aries:dropDownMenu 
+					value="Search"
+					icon="resource://images/icons/common/Search16.gif">
+					
+					<aries:menuItem 
+						value="Members..."
+						tooltip="Search Membership Records"
+						icon="resource://images/icons/common/Copy16.gif"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						onclick="setCursorWait(this); showProgress('Membership Records', 'Retrieving information...')"
+						oncomplete="setCursorDefault(this); hideProgress()">
+					</aries:menuItem>
+				</aries:dropDownMenu>
+
+				<ui:include src="/common/toolbar/toolItem.xhtml">
+					<ui:param name="name" value="reset"/>
+					<ui:param name="label" value="Reset"/>
+					<ui:param name="icon" value="resource://images/icons/common/Refresh16.gif"/>
+					<ui:param name="manager" value="#{globals}"/>
+					<ui:param name="action" value="doNothing"/>
+					<ui:param name="reRender" value="detailView"/>
+				</ui:include>
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<!--  
+				<ui:include src="/common/toolbar/toolItem.xhtml">
+					<ui:param name="name" value="test"/>
+					<ui:param name="label" value="Test"/>
+					<ui:param name="submitMode" value="none"/>
+					<ui:param name="icon" value="resource://images/icons/common/Default16.gif"/>
+					<ui:param name="onclick" value="foo(); setCursorDefault(this)"/>
+				</ui:include>
+				-->
+
+				<aries:dropDownMenu 
+					value="Help"
+					icon="resource://images/icons/common/Help16.gif">
+					
+					<aries:menuItem 
+						value="About..."
+						tooltip="About the INFOSGI helper application"
+						icon="resource://images/icons/common/Speak16.gif"
+						submitMode="none"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						onclick="setCursorWait(this); setCursorDefault(this)">
+					</aries:menuItem>
+				</aries:dropDownMenu>
+
+				<ui:include src="/common/toolbar/toolItem.xhtml">
+					<ui:param name="name" value="preferences"/>
+					<ui:param name="label" value="Preferences"/>
+					<ui:param name="icon" value="resource://images/icons/common/Configure16.gif"/>
+					<ui:param name="manager" value="#{globals}"/>
+					<ui:param name="action" value="doNothing"/>
+					<ui:param name="reRender" value="pageForm"/>
+				</ui:include>
+
+				<ui:include src="/common/toolbar/toolItem.xhtml">
+					<ui:param name="name" value="logout"/>
+					<ui:param name="label" value="Logout"/>
+					<ui:param name="icon" value="resource://images/icons/common/Remove16.gif"/>
+					<ui:param name="manager" value="#{identity}"/>
+					<ui:param name="action" value="logout"/>
+				</ui:include>
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</f:subview>
+
+		<!--  
+		<rich:toolBar 
+			itemSeparator="none"
+			styleClass="toolbar" 
+			contentClass="toolbarContent"
+			separatorClass="toolbarSeparator"
+			style="width: auto; height: 30px; background-color: #f0f0f0; border: 0px; border-top: 1px solid #C3BBB6; border-bottom: 1px solid #C3BBB6">
+
+			<rich:toolBarGroup location="left" styleClass="toolGroupLeft">
+				<rich:dropDownMenu 
+					hideDelay="100" 
+					submitMode="none"
+					styleClass="toolbarMenu" 
+					style="padding: 2px">
+					<f:facet name="label">
+						<h:panelGrid columns="2" columnClasses="formColumn, formColumn">
+							<h:graphicImage value="resource://images/icons/common/File16.gif" style="padding-right: 4px"/>
+							<h:outputText styleClass="toolbarLabel" value="File"/>
+						</h:panelGrid>
+					</f:facet>
+
+					<rich:menuItem 
+						submitMode="ajax"
+						disabled="false"
+						rendered="true"
+						immediate="true"
+						ajaxSingle="true"
+						requestDelay="0"
+						action="#{importManager.importMembers}"
+						onclick="setCursorWait(this); showProgress('Membership Records', 'Importing records from original database...')"
+						oncomplete="setCursorDefault(this); hideProgress()"
+						styleClass="toolbarItem" style="padding: 5px 6px">
+						<f:facet name="icon">
+							<h:graphicImage value="resource://images/icons/common/Import16.gif" style="padding-right: 8px"/>
+						</f:facet>
+						<h:outputText styleClass="menuLabel" value="Import Members..."/>
+						<ui:include src="/common/tooltip.xhtml">
+							<ui:param name="tooltip" value="Import original membership records"/>
+						</ui:include>
+					</rich:menuItem>
+		</rich:toolBar>
+		-->
+</ui:composition>

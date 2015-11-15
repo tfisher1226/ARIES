@@ -1,0 +1,72 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+		<c:set var="domain" value="Test" /> 
+		<c:set var="section" value="TestDialog" /> 
+		<c:set var="dialog" value="TestDialog" /> 
+		<c:set var="defaultField" value="#{section}UserId" /> 
+		<c:set var="actionButton" value="#{section}TestButton" /> 
+		
+		<script type="text/javascript">
+		function showTestDialog() {#{rich:component(dialog)}.show()}
+		function hideTestDialog() {#{rich:component(dialog)}.hide()}
+		</script>
+	    
+		<script type="text/javascript">
+		function processTestDialogKeyDown(event) {
+			var dialog = #{rich:component(dialog)};
+			var buttonId = mainFormId.concat(':#{actionButton}');
+			return _processDialogKeyDown(dialog, buttonId, event);
+		}
+		</script>
+
+		<a4j:region
+			domain="Test"
+			id="TestDialogRegion">
+			
+			<h:form id="TestDialogForm">
+			<!--  
+			-->
+	
+				<!-- Test Dialog -->
+				<rich:popupPanel 
+					id="#{dialog}" 
+					resizeable="false"
+					autosized="true" 
+					domElementAttachment="form"
+					onshow="#{rich:element(defaultField)}.focus();"
+					styleClass="dialog"
+					style="overflow: hidden">
+		
+					<!-- CONTENT -->
+					<a4j:region>
+						<a4j:outputPanel id="#{section}Content" layout="block" >
+							<h:panelGroup layout="block" style="background-color: inherit">
+					
+								<!-- INPUT -->
+								<div class="vspace8"/>
+								<h:panelGrid styleClass="layoutPane" layout="block" columns="1" cellpadding="0" cellspacing="0" columnClasses="formColumn" style="margin: 12px 12px 12px 12px; background-color: inherit"> 
+									<ui:include src="testPanel.xhtml"/>
+								</h:panelGrid>
+					
+								<!-- CONTROL -->
+								<h:panelGrid layout="block" columns="1" cellpadding="0" cellspacing="0" columnClasses="formColumn" style="width: 100%">
+									<ui:include src="testControl.xhtml"/>
+								</h:panelGrid>
+							</h:panelGroup>
+						</a4j:outputPanel>
+					</a4j:region>
+				</rich:popupPanel>
+			</h:form>	
+		</a4j:region>
+</ui:composition>

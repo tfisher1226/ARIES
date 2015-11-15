@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<arquillian
+	xmlns="http://jboss.org/schema/arquillian"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+	
+	<defaultProtocol type="Servlet 3.0" />
+	
+	<engine>
+		<!-- Uncomment the following to have test archives exported to the file system for inspection. -->
+		<property name="deploymentExportPath">target/deployments</property>
+	</engine>
+	
+	<container qualifier="jboss" default="true">
+		<configuration>
+			<property name="jbossHome">${NODE_05}</property>
+		</configuration>
+	</container>
+	
+	<group qualifier="serverGroup01">
+		<container qualifier="hornetQ01_local" mode="manual">
+			
+			<configuration>
+				<property name="jbossHome">${NODE_05}</property>
+				<property name="serverConfig">standalone-hornetq-dedicated1.xml</property>
+				<property name="managementAddress">${BIND_SERVER01}</property>
+				<property name="managementPort">9999</property>
+				<property name="startupTimeoutInSeconds">60</property>
+				
+				<property name="javaVmArguments">
+					-Xms256m
+					-Xmx2g
+					-XX:PermSize=256m
+					-XX:MaxPermSize=512m
+					-XX:NewRatio=4
+					-XX:SurvivorRatio=8
+					-Xbootclasspath/a:/software/jdk1.7.0_80_64/lib/tools.jar
+					-Xrunjdwp:transport=dt_socket,address=8787,server=y,suspend=n
+					
+					-Djboss.bind.address=${BIND_SERVER01}
+					-Djboss.bind.address.management=${BIND_SERVER01}
+					-Djboss.partition.name=jbossas7clusterColocated
+					-Djboss.default.multicast.address=230.0.0.4
+					-Djboss.modules.system.pkgs=org.jboss.byteman
+					-Dcom.arjuna.ats.jta.supportSubtransactions=true
+					
+					-Dorg.jboss.byteman.verbose=true
+					-Dorg.jboss.byteman.transform.all
+					-javaagent:${BYTEMAN_HOME}/lib/byteman.jar=boot:${BYTEMAN_HOME}/lib/byteman.jar,boot:${BYTEMAN_HOME}/lib/byteman-submit.jar,${BYTEMAN_HOME}/lib/byteman-bmunit.jar,listener:true,port:8888,prop:org.jboss.byteman.verbose=true
+					
+					-Dadmin.application_runtime_home=c:/workspace/ARIES2/admin/runtime
+					-Dtx-manager.application_runtime_home=c:/workspace/ARIES2/tx-manager/runtime
+					-Dbookshop2.buyer.application_runtime_home=c:/workspace/ARIES2/bookshop2/bookshop2-buyer/runtime
+					-Dbookshop2.seller.application_runtime_home=c:/workspace/ARIES2/bookshop2/bookshop2-seller/runtime
+					-Dbookshop2.shipper.application_runtime_home=c:/workspace/ARIES2/bookshop2/bookshop2-shipper/runtime
+					-Dbookshop2.supplier.application_runtime_home=c:/workspace/ARIES2/bookshop2/bookshop2-supplier/runtime
+				</property>
+			</configuration>
+		</container>
+	</group>
+
+	<extension qualifier="byteman">
+		<property name="autoInstallClientAgent">false</property>
+		<property name="autoInstallContainerAgent">false</property>
+		<property name="clientAgentPort">9999</property>
+		<property name="containerAgentPort">8888</property>
+	</extension>
+</arquillian>

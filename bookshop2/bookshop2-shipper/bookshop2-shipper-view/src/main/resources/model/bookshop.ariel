@@ -1,0 +1,204 @@
+import admin_service.aries;
+
+import bookshop_information.aries;
+import bookshop_seller_information.aries;
+import bookshop_seller_persistence.aries;
+
+protocol Bookshop2 {
+	set domain(bookshop2);
+	set namespace(bookshop);
+
+    channel Public {
+        add client(Buyer);
+        add service(Seller);
+    }
+
+    channel Inventory {
+        add client(Seller);
+        add service(Supplier);
+    }
+
+    channel Shipment {
+        add client(Supplier);
+        add service(Shipper);
+    }
+
+	//like travel agent
+    participant Buyer {
+        add channel(Public);
+		set namespace(buyer);
+
+        receive orderBooks(OrderRequest orderRequest) {
+            invoke Seller.orderBooks(orderRequest) {
+                message OrderAccepted: {
+                    purchaseBooks(books);
+                }
+                message OrderRejected: {
+                    //if ($response.
+                    //reply $response;
+                }
+                /*
+                response(OrderRejected orderRejected) {
+                	if (orderRejected.reason == outOfStock) {
+                		scheduleNotification(orderRequest);
+                	}
+                }
+                */
+            }
+        }
+
+        purchaseBooks(PurchaseRequest purchaseRequest) {
+            invoke Seller.purchaseBooks(purchaseRequest) {
+                message PurchaseAccepted: {
+                    //reply $response;
+                }
+                message PurchaseRejected: {
+                    //reply $response;
+                }
+            }
+        }
+        
+        /*
+        scheduleNotification(OrderRequest orderRequest) {
+        	outstandingOrderCache.addToOutstandingOrders(orderRequest);
+        	NotificationRequest notificationRequest = createNotificationRequest(orderRequest.books);
+            invoke Seller.scheduleNotification(notificationRequest);
+        }
+        
+        receive notification(Notification notification) {
+        	List<OrderRequest> orderRequests = outstandingOrderCache.getOrderRequests(notification.books);
+        	orderBooks(orderRequests);
+        }
+        */
+    }
+
+	//like airline co.
+    participant Seller {
+        add channel(Public);
+        add channel(Inventory);
+		set namespace(seller);
+
+        receive orderBooks(OrderRequest orderRequest) {
+       		//bookCache.addToAvailableBooks(orderRequest.books);
+
+            invoke SupplierGroup.queryBooks(orderRequest) {
+            	set timeout(3m);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BooksAvailable: {
+                    option: {
+               		    bookCache.addToAvailableBooks(books);
+               		    send SupplierGroup.reserveBooks(books);
+                        reply OrderAccepted(books);
+                    }
+                }
+
+                timeout: {
+                    option: reply OrderAccepted;
+                    option: reply OrderRejected;
+                }
+
+                exception: {
+                    reply OrderRejected;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest purchaseRequest) {
+            option: reply PurchaseAccepted;
+            option: reply PurchaseRejected;
+        }
+
+		//local
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    admin:User user; 
+			    List<bookshop:Book> bookOrders; 
+			    Set<bookshop:Book> availableBooks; 
+			    Set<bookshop:Book> unavailableBooks; 
+		    }
+	    }
+    }
+
+	//call this network
+	//make so one can "add" participants
+    group SupplierGroup {
+        set participant(Supplier);
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        add channel(Inventory);
+        add channel(Shipment);
+		set namespace(supplier);
+
+        receive queryBooks(OrderRequest orderRequest) {
+           	List<bookshop:Book> books = supplierOrderCache.getFromBooksInStock(books);
+           	reply BooksAvailable(books);
+        }
+
+        receive reserveBooks(ReservationRequest reservationRequest) {
+        }
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+            invoke Shipper.shipBooks(shipmentRequest) {
+				set transaction(required); 
+				set timeout(5m); 
+
+                message ShipmentComplete: {
+                	option: {
+	                    supplierOrderCache.addToCurrentBookOrders(orders);
+	                	//bookOrderLog.log(Payment);
+	                	post ShipmentComplete(orders);
+	                	//reply ShipmentComplete;
+	                }
+	            }
+	        }
+		}
+		
+		//global
+		cache SupplierOrderCache { 
+			set scope(application); 
+			set transaction(required); 
+			set backingStore(bookOrderLog);
+			items {
+				List<bookshop:Book> currentBookOrders; 
+				Map<bookshop:BookKey, bookshop:Book> booksInStock;
+			}
+		}
+
+		persist BookOrderLog {
+			add role(seller);
+		    add role(administrator);
+			set scope(application); 
+			set transaction(required); 
+		    set source(BookshopDS);
+		    set adapter(hibernate);
+		    import namespace(bookshop);
+			items {
+				List<bookshop:Book> bookOrders {
+					index(title);
+					index(author);
+				} 
+				Map<xs:String, bookshop:Book> booksInStock {
+					index(title);
+					index(author);
+				}
+			}
+		}
+    }
+
+    participant Shipper {
+        add channel(Shipment);
+		set namespace(shipper);
+
+        receive shipBooks(ShipmentRequest shipmentRequest) {
+            reply ShipmentComplete;
+            //reply ShipmentComplete[Summary, Invoice, Receipt];
+        }
+    }
+
+}

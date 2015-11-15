@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup 
+				location="left">
+				
+				<aries:toolButton
+					tooltip="Show Help for Register Dialog"
+					manager="#{globals}"
+					action="doNothing"
+					icon="/icons/common/Help24.gif"
+					onclick="showAlert('Display in progress', 'Placeholder for Help Window 2', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup 
+				location="right">
+
+				<rich:menuItem
+					mode="ajax"
+					execute="@this"
+					action="#{identity.login}"
+					onclick="showProgress('#{manager.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="@this"
+					styleClass="toolItem" 
+					style="">
+					<h:outputText value="Test" />
+				</rich:menuItem>
+				
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showProgress('#{manager.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="@this"
+					offset="true" />
+
+				<aries:dialogButton
+					id="registerButton"
+					label="Register"
+					default="true"
+					mode="ajax"
+					execute="@all"
+					icon="/icons/common/Export16.gif"
+					iconDisabled="/icons/common/ExportDisabled16.gif"
+					manager="#{identity}"
+					action="register"
+					onclick="setCursorWait(this); showProgress('#{title}', 'Authenticating user...');"
+					oncomplete="setCursorDefault(); hideProgress(); if (#{!messages.exist}) hideRegisterDialog();"
+					offset="true" />
+
+				<aries:dialogButton
+					label="Cancel"
+					mode="client"
+					onclick="hideRegisterDialog();"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar> 
+	</aries:controlPane>
+</ui:composition>

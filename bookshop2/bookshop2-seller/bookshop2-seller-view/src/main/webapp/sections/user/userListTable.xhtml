@@ -1,0 +1,247 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+    <a4j:jsFunction name="selectUser" onbegin="" render="">
+    	<a4j:param name="selectedRowIndex" assignTo="#{userListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedUserName" assignTo="#{userListManager.selectedUserName}" />  
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel id="userListTablePanel">
+		<aries:panel>
+			
+			<ui:include src="userListMenu.xhtml"/>
+	
+			<aries:table 
+				id="userListTable"
+				width="#{globals.screenWidth-334}"
+				height="#{globals.screenHeight-224}"
+				value="#{userListManager.userList}" 
+				rowCount="#{userListManager.userList.rowCount}"
+				onrowclick="selectUser('#{index}', '#{rowItem.user.id}')"
+				style="border-top-width: 0px; border-left-width: 0px">
+	
+				<!-- INDEX -->
+				<aries:tableColumn 
+					width="20px"
+					sortOrder="ascending"
+					sortBy="#{index}"
+					filterValue="#{index}">
+					<h:outputText value="#{index+1}"/>
+				</aries:tableColumn>
+	
+				<!-- SELECTOR -->
+				<aries:tableColumn 
+					width="20px">
+					<h:panelGrid columns="2" style="margin: 3px; margin-top: 6px">
+						<h:selectBooleanCheckbox styleClass="formCheckbox" immediate="true" value="#{rowItem.checked}" style="padding: 2px">
+							<a4j:ajax 
+								event="click" 
+								execute="@this"
+								immediate="true"
+								limitRender="true" />
+						</h:selectBooleanCheckbox>
+					</h:panelGrid> 
+				</aries:tableColumn>
+				
+				<!--  
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="userListMenu" operation="show">
+					<f:param value="#{rowItem.user.firstName}" name="firstName"/>
+					<f:param value="#{rowItem.user.lastName}" name="lastName"/>
+				</rich:componentControl>
+				-->
+	
+				<!--  
+				<a4j:ajax 
+					event="onRowDblClick" 
+					action="#{userInfoManager.editUser}"
+					onsubmit="setCursorWait(); showProgress('#{rowItem.user.lastName}, #{rowItem.user.firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); showUserDialog()">
+					<f:setPropertyActionListener target="#{userInfoManager.user}" value="#{rowItem.user}" />
+				</a4j:ajax>
+				
+				<a4j:ajax 
+					event="onRowMouseDown" 
+					immediate="true"
+					ajaxSingle="false"
+					bypassUpdates="true"
+					limitRender="true"
+					onsubmit="userListTableHighlighter.processTableRowMouseDown(this)">
+					<f:setPropertyActionListener target="#{userInfoManager.user}" value="#{rowItem.user}" />
+				</a4j:ajax>
+				-->
+				
+				<!-- Division 
+				<aries:tableColumn 
+					width="40px"
+					sortable="true"
+					sortBy="#{rowItem.user.divisions}"
+					filterValue="#{rowItem.user.divisions}">
+					<f:facet name="header">
+						<h:outputText value="Divisions"/>
+					</f:facet>
+					<h:outputText value="#{rowItem.user.divisions}"/>
+				</aries:tableColumn>
+				-->
+				
+				<!-- USER NAME -->
+				<aries:tableColumn 
+					width="200px"
+					sortable="true"
+					sortOrder="ascending"
+					sortBy="#{userHelper.getName(rowItem.user)}"
+					filterValue="#{userHelper.getName(rowItem.user)}">
+					<f:facet name="header">
+						<h:outputText value="Name"/>
+					</f:facet>
+					
+					<a4j:commandLink 
+						execute="@this"
+						immediate="true"
+						bypassUpdates="true"
+						limitRender="true"
+						value="#{userHelper.getName(rowItem.user)}"
+						action="#{userListManager.editUser(rowItem.user.id)}"
+						onclick="setCursorWait(); showProgress('', 'User Information for: #{userHelper.getName(rowItem.user)}', 'Preparing for edit...')"
+						oncomplete="setCursorDefault(this); hideProgress(); showUserDialog()"
+						render="UserDialog">
+						<a4j:param value="#{user}" assignTo="#{personBean}"/>
+					</a4j:commandLink>
+				</aries:tableColumn>
+	
+				<!-- EMAIL ADDRESS -->
+				<aries:tableColumn 
+					width="100px"
+					sortable="true"
+					sortBy="#{emailAddressHelper.toUrlString(rowItem.user.emailAddress)}"
+					filterValue="#{emailAddressHelper.toUrlString(rowItem.user.emailAddress)}">
+					<f:facet name="header">
+						<h:outputText value="Email"/>
+					</f:facet>
+					<h:outputText value="#{emailAddressHelper.toUrlString(rowItem.user.emailAddress)}"/>
+				</aries:tableColumn>
+
+				<!-- ROLES -->
+				<aries:tableColumn 
+					width="140px"
+					sortable="true"
+					sortBy="#{userHelper.getRoles(rowItem.user)}"
+					filterValue="#{userHelper.getRoles(rowItem.user)}">
+					<f:facet name="header">
+						<h:outputText value="Roles"/>
+					</f:facet>
+					<h:outputText value="#{userHelper.getRoles(rowItem.user)}"/>
+				</aries:tableColumn>
+				
+				<!-- HOME PHONE -->
+				<aries:tableColumn 
+					width="100px"
+					sortable="true"
+					sortBy="#{phoneNumberHelper.toString(rowItem.user.homePhone)}"
+					filterValue="#{phoneNumberHelper.toString(rowItem.user.homePhone)}">
+					<f:facet name="header">
+						<h:outputText value="Home Phone"/>
+					</f:facet>
+					<h:outputText value="#{phoneNumberHelper.toString(rowItem.user.homePhone)}"/>
+				</aries:tableColumn>
+	
+				<!-- CELL PHONE -->
+				<aries:tableColumn 
+					width="100px"
+					sortable="true"
+					sortBy="#{phoneNumberHelper.toString(rowItem.user.cellPhone)}"
+					filterValue="#{phoneNumberHelper.toString(rowItem.user.cellPhone)}">
+					<f:facet name="header">
+						<h:outputText value="Cell Phone"/>
+					</f:facet>
+					<h:outputText value="#{phoneNumberHelper.toString(rowItem.user.cellPhone)}"/>
+				</aries:tableColumn>
+	
+				<!-- STREET ADDRESS -->
+				<aries:tableColumn
+					width="240px"
+					sortable="true"
+					sortBy="#{rowItem.user.streetAddress.street}"
+					filterValue="#{rowItem.user.streetAddress.street}">
+					<f:facet name="header">
+						<h:outputText value="Street address"/>
+					</f:facet>
+					<h:outputText value="#{rowItem.user.streetAddress.street}"/>
+				</aries:tableColumn>
+	
+				<!-- CITY NAME -->
+				<aries:tableColumn 
+					visible="true" 
+					width="100px"
+					sortable="true"
+					sortBy="#{rowItem.user.streetAddress.city}"
+					filterValue="#{rowItem.user.streetAddress.city}">
+					<f:facet name="header">
+						<h:outputText value="City"/>
+					</f:facet>
+					<h:outputText value="#{rowItem.user.streetAddress.city}"/>
+				</aries:tableColumn>
+	
+				<!-- STATE CODE -->
+				<aries:tableColumn 
+					width="50px"
+					sortable="true"
+					sortBy="#{rowItem.user.streetAddress.state}"
+					filterValue="#{rowItem.user.streetAddress.state}">
+					<f:facet name="header">
+						<h:outputText value="State"/>
+					</f:facet>
+					<h:outputText value="#{rowItem.user.streetAddress.state}"/>
+				</aries:tableColumn>
+	
+				<!-- ZIP CODE -->
+				<aries:tableColumn 
+					width="60px"
+					sortable="true"
+					sortBy="#{zipCodeHelper.toString(rowItem.user.streetAddress.zip)}"
+					filterValue="#{zipCodeHelper.toString(rowItem.user.streetAddress.zip)}">
+					<f:facet name="header">
+						<h:outputText value="Zip-code"/>
+					</f:facet>
+					<h:outputText value="#{zipCodeHelper.toString(rowItem.user.streetAddress.zip)}"/>
+				</aries:tableColumn>
+				
+				<!--  
+				<f:facet name="footer">
+					<rich:datascroller 
+						id="memberListTableScroller" 
+						pagesVar="pages"
+						fastControls="auto"
+						renderIfSinglePage="false" 
+						tableClass="tableScroller"
+						style="background-color: white">
+	                    <f:facet name="pages">
+	                        <h:panelGroup>
+	                        	<aries:spacer width="20px"/>
+	                            <h:outputText value=" Page "/>
+	                            <h:selectOneMenu value="#{memberListManager.memberListPageIndex}" 
+	                                onchange="#{rich:component('memberListTableScroller')}.switchToPage(this.value)">
+	                                <f:selectItems value="#{memberListManager.pagesToScroll}" />
+	                            </h:selectOneMenu>
+	                            <h:outputText value=" of #{pages} "/>
+	                        	<aries:spacer width="20px"/>
+	                        </h:panelGroup>
+	                    </f:facet>
+					</rich:datascroller>
+				</f:facet>
+				-->
+			</aries:table>
+		</aries:panel>
+	</a4j:outputPanel>
+</ui:composition>

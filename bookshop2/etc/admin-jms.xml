@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging-deployment xmlns="urn:jboss:messaging-deployment:1.0">
+    <hornetq-server>
+        <jms-destinations>
+            <jms-queue name="adminQueueA">
+                <entry name="/queue/adminQueueA" />
+            </jms-queue>
+            <jms-queue name="adminQueueB">
+                <entry name="/queue/adminQueueB" />
+            </jms-queue>
+            <jms-queue name="adminQueueC">
+                <entry name="/queue/adminQueueC" />
+            </jms-queue>
+            <jms-queue name="adminQueueD">
+                <entry name="/queue/adminQueueD" />
+            </jms-queue>
+            <jms-topic name="adminTopicA">
+                <entry name="/topic/adminTopicA" />
+            </jms-topic>
+            <jms-topic name="adminTopicB">
+                <entry name="/topic/adminTopicB" />
+            </jms-topic>
+            <jms-topic name="adminTopicC">
+                <entry name="/topic/adminTopicC" />
+            </jms-topic>
+            <jms-topic name="adminTopicD">
+                <entry name="/topic/adminTopicD" />
+            </jms-topic>
+        </jms-destinations>
+    </hornetq-server>
+</messaging-deployment>

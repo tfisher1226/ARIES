@@ -1,0 +1,106 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<c:if test="#{empty id}">
+			<c:set var="id" value="#{section}EmailAddressField" /> 
+		</c:if>
+		
+		<c:if test="#{empty enabled}">
+			<c:set var="enabled" value="true" /> 
+		</c:if>
+		
+		<c:if test="#{empty compact or compact == false}">
+			<c:set var="fieldBorder" value="border: 1px solid #{userSkin.borderColor}" /> 
+		</c:if>
+	
+		<c:if test="#{not empty compact and compact == true}">
+			<c:set var="fieldBorder" value="border-width: 0px; border-left: 1px solid #{userSkin.borderColor}" />
+		</c:if>
+
+		<c:if test="#{enabled}">
+		</c:if>
+		
+		<c:if test="#{not enabled}">
+			<c:set var="labelStyleClass" value="disabled" />
+		</c:if>
+		
+		<c:if test="#{not emailAddressManager.isEmpty()}">
+			<c:set var="tableStyle" value="color: black" />
+			<c:set var="tableStyleClass" value="table noGrid noBorder" />
+			<c:set var="labelValue" value="#{emailAddressManager.label}" />
+		</c:if>
+		
+		<c:if test="#{emailAddressManager.isEmpty()}">
+			<c:set var="tableStyle" value="color: gray; border: 1px solid #{userSkin.borderColor}" />
+			<c:set var="tableStyleClass" value="table noGrid noBorder noSelection" />
+			<c:set var="labelValue" value="none specified" />
+		</c:if>
+		
+		<a4j:outputPanel id="#{id}" layout="block" style="width: 100%; height: auto; background-color: #fff; padding: 0px; #{fieldBorder}">
+			<ui:include src="emailAddressMenu.xhtml" />
+	
+			<a4j:region>
+				<rich:dataTable 
+					var="unused"
+					rowKeyVar="index"
+					value="1" 
+					rows="1"
+					rendered="#{not enabled}"
+					selectionMode="single" 
+					sortMode="single" 
+					rowClass="tableRow"
+					headerClass="tableHeader" 
+					activeClass="tableRowActive"
+					selectedClass="tableRowSelected"
+					styleClass="#{tableStyleClass}"
+					style="width: 100%; height: auto; border-width: 0px; background-repeat: no-repeat; background-position: 1px 1px; background-color: #fff; background-image: url(#{resource['org.richfaces.images:inputBackgroundImage.png']}); #{tableStyle}">
+	
+					<rich:column sortable="false">
+						<h:outputText value="#{labelValue}" styleClass="#{labelStyleClass}" />
+					</rich:column>
+				</rich:dataTable>
+	
+				<rich:dataTable 
+					var="unused"
+					rowKeyVar="index"
+					value="1"
+					rows="1"
+					rendered="#{enabled}"
+					onrowmouseover="highLightField(this, '#{userSkin.highlightBorderColor}')"
+					onrowmouseout="unhighLightField(this, '#{userSkin.borderColor}')"
+					onrowmousedown="focusField(this, '#{userSkin.focusBorderColor}')"
+					onrowmouseup="unfocusField(this, '#{userSkin.borderColor}')"
+					onrowclick="show#{domain}EmailAddressDialog()"
+					render="#{domain}EmailAddressDialog"
+					selectionMode="single" 
+					sortMode="single"
+					rowClass="tableRow"
+					headerClass="tableHeader" 
+					activeClass="tableRowActive"
+					selectedClass="tableRowSelected"
+					styleClass="#{tableStyleClass}"
+					style="width: 100%; height: auto; border-width: 0px; background-repeat: no-repeat; background-position: 1px 1px; background-color: #fff; background-image: url(#{resource['org.richfaces.images:inputBackgroundImage.png']}); #{tableStyle}">
+	
+					<rich:componentControl 
+						event="rowcontextmenu"
+						target="#{section}EmailAddressMenu" operation="show" />
+	
+					<rich:column sortable="false">
+						<h:outputText value="#{labelValue}" styleClass="#{labelStyleClass}" />
+					</rich:column>
+				</rich:dataTable>
+			</a4j:region>
+		</a4j:outputPanel>
+	</aries:tag>
+</ui:composition>

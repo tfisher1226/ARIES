@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="infosgi-information.aries" />
+	
+	<domain name="org.sgiusa">
+		<namespace name="infosgi" />
+
+		<service name="userService" type="User">
+			<listener link="infosgiLink" role="user" />
+			<operation name="getAllUsers" />
+			<operation name="getUserById" />
+			<operation name="getUserByUserName" />
+			<operation name="addUser" />
+			<operation name="saveUser" />
+			<operation name="deleteUser" />
+		</service>
+
+		<service name="memberService" type="Member">
+			<listener link="infosgiLink" role="user" />
+			<operation name="getAllMembers" />
+			<operation name="getMemberListByPage" />
+			<operation name="getMemberListByMemberQuery" />
+			<operation name="getMemberListByOrganizationId" />
+			<operation name="getMemberById" />
+			<operation name="addMember" />
+			<operation name="saveMember" />
+			<operation name="deleteMember" />
+			<operation name="importMembers" />
+		</service>
+
+		<service name="organizationService" type="Organization">
+			<listener link="infosgiLink" role="user" />
+			<operation name="getOrganizationById" />
+			<operation name="getOrganizationByPermissionList" />
+			<operation name="addOrganization" />
+			<operation name="moveOrganization" />
+			<operation name="saveOrganization" />
+			<operation name="deleteOrganization" />
+			<operation name="importOrganizations" />
+		</service>
+
+		<service name="eventService" type="Event">
+			<listener link="infosgiLink" role="user" />
+			<operation name="getAllEvents" />
+			<operation name="getEventById" />
+			<operation name="getEventListByUserName" />
+			<operation name="addEvent" />
+			<operation name="deleteEvent" />
+		</service>
+	</domain>
+</services>
+

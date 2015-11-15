@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+		
+		<c:if test="#{empty execute}">
+			<c:set var="execute" value="@none"/> 
+		</c:if>
+	
+		<c:if test="#{empty toggleType}">
+			<c:set var="toggleType" value="client"/> 
+		</c:if>
+	
+		<c:if test="#{empty selectionType}">
+			<c:set var="selectionType" value="client"/> 
+		</c:if>
+	
+		<c:if test="#{empty styleClass}">
+			<c:set var="styleClass" value="tree"/> 
+		</c:if>
+	
+		<a4j:region>
+		 	<a4j:outputPanel 
+		 		id="#{id}TreePanel">
+						
+		 		<rich:panel 
+					styleClass="treePanel"
+					bodyClass="treePanelBody"
+					style="width: #{width}; height: #{height}; max-height: #{height}; padding: 0px; border: 0px; background-color: white">
+	 
+					<rich:tree 
+						id="#{id}"
+						var="item"
+						rowKeyVar="rowKey"
+						nodeType="#{item.type}"
+						value="#{value}"
+						execute="#{execute}"
+						toggleType="#{toggleType}"
+						selectionType="#{selectionType}"
+						keepSaved="#{true}"
+						styleClass="#{styleClass}"
+						style="">
+	
+						<!--  
+						<rich:treeSelectionChangeListener listener="{organizationTreeManager.processTreeSelectionChange}"/>
+						-->
+	
+						<ui:insert/>
+					</rich:tree>
+				</rich:panel>
+			</a4j:outputPanel>
+		</a4j:region>
+	</aries:tag>
+</ui:composition>

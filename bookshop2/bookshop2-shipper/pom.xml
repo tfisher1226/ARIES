@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>bookshop2.shipper</groupId>
+	<artifactId>bookshop2-shipper</artifactId>
+	<name>bookshop2-shipper</name>
+	<description>Project object model for: bookshop2-shipper</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>bookshop2</groupId>
+		<artifactId>bookshop2</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>bookshop2-shipper-client</module>
+		<module>bookshop2-shipper-service</module>
+		<module>bookshop2-shipper-view</module>
+		<module>bookshop2-shipper-app</module>
+	</modules>
+	
+	<properties>
+		<bookshop2.version>0.0.1-SNAPSHOT</bookshop2.version>
+		<bookshop2.model.home>../model</bookshop2.model.home>
+		<bookshop2.deploy.exploded>true</bookshop2.deploy.exploded>
+	</properties>
+
+	<build>
+		<filters>
+			<filter>src/main/resources/maven/server.properties</filter>
+		</filters>
+	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper-service</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper-view</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper-view</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>bookshop2.shipper</groupId>
+				<artifactId>bookshop2-shipper-client</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>test</scope>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

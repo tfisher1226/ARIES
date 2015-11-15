@@ -1,0 +1,192 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="auto"
+		height="auto"
+		backgroundColor="inherit">
+	
+		<aries:formPane 
+			width="auto"
+			height="auto"
+			margin="10px"
+			backgroundColor="inherit">
+				
+			<aries:label fontSize="13" fontWeight="bold" value="Modules" />
+
+			<aries:spacer height="4" />
+			<aries:dropPane fontSize="13" id="admin-model-menu" value="Admin" manager="#{navigationManager}">
+				<aries:dropPane fontSize="11" fontWeight="bold" id="admin-model-elements-menu" value="Element" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Role" onclick="showAdminModelElementPage('role')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="User" onclick="showAdminModelElementPage('user')" />
+				</aries:dropPane>
+			</aries:dropPane>
+			
+			<aries:spacer height="4" />
+			<aries:dropPane fontSize="13" id="bookshop2-model-menu" value="Bookshop2" manager="#{navigationManager}">
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-model-elements-menu" value="Element" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Book" onclick="showBookshop2ModelElementPage('book')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Invoice" onclick="showBookshop2ModelElementPage('invoice')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Order" onclick="showBookshop2ModelElementPage('order')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Payment" onclick="showBookshop2ModelElementPage('payment')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Receipt" onclick="showBookshop2ModelElementPage('receipt')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Element16.gif" library="graphics" value="Shipment" onclick="showBookshop2ModelElementPage('shipment')" />
+				</aries:dropPane>
+
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-model-events-menu" value="Event" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Event16.gif" library="graphics" value="Purchase Complete" onclick="showBookshop2ModelEventPage('purchaseCompleteEvent')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Event16.gif" library="graphics" value="Shipment Complete" onclick="showBookshop2ModelEventPage('shipmentCompleteEvent')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Event16.gif" library="graphics" value="Shipment Confirmed" onclick="showBookshop2ModelEventPage('shipmentConfirmedEvent')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Event16.gif" library="graphics" value="Shipment Scheduled" onclick="showBookshop2ModelEventPage('shipmentScheduledEvent')" />
+				</aries:dropPane>
+
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-model-exceptions-menu" value="Exception" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Exception16.gif" library="graphics" value="Reservation Aborted" onclick="showBookshop2ModelExceptionPage('reservationAbortedException')" />
+				</aries:dropPane>
+
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-model-messages-menu" value="Message" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Order Request" onclick="showBookshop2ModelMessagePage('orderRequestMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Order Accepted" onclick="showBookshop2ModelMessagePage('orderAcceptedMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Order Rejected" onclick="showBookshop2ModelMessagePage('orderRejectedMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Purchase Request" onclick="showBookshop2ModelMessagePage('purchaseRequestMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Purchase Accepted" onclick="showBookshop2ModelMessagePage('purchaseAcceptedMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Purchase Rejected" onclick="showBookshop2ModelMessagePage('purchaseRejectedMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Query Request" onclick="showBookshop2ModelMessagePage('queryRequestMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Reservation Request" onclick="showBookshop2ModelMessagePage('reservationRequestMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Shipment Complete" onclick="showBookshop2ModelMessagePage('shipmentCompleteMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Shipment Failed" onclick="showBookshop2ModelMessagePage('shipmentFailedMessage')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Message16.gif" library="graphics" value="Shipment Scheduled" onclick="showBookshop2ModelMessagePage('shipmentScheduledMessage')" />
+				</aries:dropPane>
+			</aries:dropPane>
+			
+			<!--  
+			<aries:spacer height="8" />
+			<aries:bullet value="Area1" onclick="showBookshop2Page('area1')" />
+			<aries:bullet value="Area2" onclick="showBookshop2Page('area2')" />
+			<aries:label fontSize="11" fontWeight="bold" marginTop="1px" marginBottom="3px" marginLeft="2px" value="Elements" />
+			-->
+
+			<aries:spacer height="8" />
+			<aries:label fontSize="13" fontWeight="bold" value="Applications" />
+
+			<aries:spacer height="4" />
+			<aries:dropPane fontSize="13" id="bookshop2-buyer-menu" value="Buyer" manager="#{navigationManager}">
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-buyer-services-menu" value="Service" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Order Books" onclick="showBookshop2BuyerServicePage('orderBooks')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Purchase Books" onclick="showBookshop2BuyerServicePage('purchaseBooks')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+			<aries:spacer height="4" />
+			<aries:dropPane fontSize="13" id="bookshop2-seller-menu" value="Seller" manager="#{navigationManager}">
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-seller-services-menu" value="Service" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Order Books" onclick="showBookshop2SellerServicePage('orderBooks')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Purchase Books" onclick="showBookshop2SellerServicePage('purchaseBooks')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+			<aries:spacer height="4" />
+			<aries:dropPane fontSize="13" id="bookshop2-supplier-menu" value="Supplier" manager="#{navigationManager}">
+				<aries:spacer height="2" />
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-supplier-cache-menu" value="Cache" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/Cache16.gif" iconWidth="20" library="graphics" value="Supplier Order Cache" onclick="showBookshop2SupplierServicePage('queryBooks')" />
+				</aries:dropPane>
+
+				<aries:spacer height="2" />
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-supplier-data-menu" value="Database" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/PersistenceUnit16.gif" iconWidth="20" library="graphics" value="Book Inventory" onclick="showBookshop2SupplierServicePage('queryBooks')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/icons/PersistenceUnit16.gif" iconWidth="20" library="graphics" value="Book Order Log" onclick="showBookshop2SupplierServicePage('reserveBooks')" />
+				</aries:dropPane>
+
+				<aries:spacer height="2" />
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-supplier-services-menu" value="Service" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Query Books" onclick="showBookshop2SupplierServicePage('queryBooks')" />
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Reserve Books" onclick="showBookshop2SupplierServicePage('reserveBooks')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+			<aries:spacer height="4" />
+			<aries:dropPane fontSize="13" id="bookshop2-shipper-menu" value="Shipper" manager="#{navigationManager}">
+				<aries:dropPane fontSize="11" fontWeight="bold" id="bookshop2-shipper-services-menu" value="Service" manager="#{navigationManager}">
+					<aries:bullet fontSize="12" fontWeight="normal" icon="/nam/icons/Service16.gif" library="graphics" value="Ship Books" onclick="showBookshop2SellerServicePage('shipBooks')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+
+			<!--  
+
+			<aries:dropPane fontSize="13" id="buyer-menu" value="Buyer" manager="" onclickXXX="showBookshop2BuyerPage('bookshop2-buyer-service')">
+				<aries:label fontSize="11" fontWeight="bold" marginTop="1px" marginBottom="3px" paddingLeft="2px" value="Service" />
+
+				<aries:dropPane fontSize="13" id="buyer-order-books-menu" value="Order Books" manager="#{navigationManager}" onclick="showOperationSection('bookshop2-buyer-service', 'orderBooks')">
+					<aries:label fontSize="11" fontWeight="bold" marginTop="1px" marginBottom="2px" paddingLeft="2px" value="Potential Results" />
+					<aries:bullet fontSize="12" marginTop="2" id="buyer-order-accepted-menu" value="Order Accepted" onclick="showOperationSection('buyer-orderBooks-orderAccepted-handler-pane')" />
+					<aries:bullet fontSize="12" marginTop="1" id="buyer-order-rejected-menu" value="Order Rejected" onclick="showOperationSection('buyer-orderBooks-orderRejected-handler-pane')" />
+				</aries:dropPane>
+				
+				<aries:spacer height="3" />
+				<aries:dropPane fontSize="13" id="buyer-purchase-books-menu" value="Purchase Books" manager="#{navigationManager}" onclick="showOperationSection('buyer-purchase-books-service-pane')">
+					<aries:label fontSize="11" fontWeight="bold" marginTop="1px" marginBottom="2px" paddingLeft="2px" value="Potential Results" />
+					<aries:bullet fontSize="12" marginTop="2" id="buyer-purchase-accepted-menu" value="Purchase Accepted" onclick="showOperationSection('buyer-purchaseBooks-purchaseAccepted-handler-pane')" />
+					<aries:bullet fontSize="12" marginTop="1" id="buyer-purchase-rejected-menu" value="Purchase Rejected" onclick="showOperationSection('buyer-purchase-rejected-callback-pane')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+			<aries:spacer height="3" />
+			<aries:dropPane fontSize="13" id="seller-menu" value="Seller" manager="" onclickXXX="showOperationSection('seller-application-pane')">
+				<aries:label fontSize="11" fontWeight="bold" padding="10px" paddingTop="12px" paddingBottom="14px" paddingLeft="3px" value="Service" />
+
+				<aries:dropPane fontSize="13" id="seller-order-books-menu" value="Order Books" manager="#{navigationManager}" onclick="showOperationSection('seller-order-books-service-pane')">
+					<aries:bullet fontSize="12" marginTop="2" id="seller-order-accepted-menu" value="Order Accepted" onclick="showOperationSection('seller-order-accepted-callback-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" id="seller-order-rejected-menu" value="Order Rejected" onclick="showOperationSection('seller-order-rejected-callback-pane')" />
+				</aries:dropPane>
+				
+				<aries:spacer height="3" />
+				<aries:dropPane fontSize="13" id="seller-purchase-books-menu" value="Purchase Books" manager="#{navigationManager}" onclick="showOperationSection('seller-purchase-books-service-pane')">
+					<aries:bullet fontSize="12" marginTop="2" id="seller-purchase-accepted-menu" value="Purchase Accepted" onclick="showOperationSection('seller-purchase-accepted-callback-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" id="seller-purchase-rejected-menu" value="Purchase Rejected" onclick="showOperationSection('seller-purchase-rejected-callback-pane')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+			<aries:spacer height="3" />
+			<aries:dropPane fontSize="13" id="supplier-menu" value="Supplier" manager="" onclickXXX="showOperationSection('supplier-application-pane')">
+				<aries:dropPane fontSize="13" id="supplier-query-books-menu" value="Query Books" manager="#{navigationManager}" onclick="showOperationSection('supplier-query-books-service-pane')">
+					<aries:bullet fontSize="12" marginTop="2" id="supplier-books-available-menu" value="Books Available" onclick="showOperationSection('supplier-books-available-callback-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" id="supplier-books-unavailable-menu"  value="Books Unavailable" onclick="showOperationSection('supplier-books-unavailable-callback-pane')" />
+				</aries:dropPane>
+				
+				<aries:spacer height="3" />
+				<aries:dropPane fontSize="13" id="supplier-reserve-books-menu" value="Reserve Books" manager="#{navigationManager}" onclick="showOperationSection('supplier-reserve-books-service-pane')">
+					<aries:bullet fontSize="12" marginTop="2" id="supplier-reservation-aborted-exception-menu" value="Reservation Aborted Exception" onclick="showOperationSection('supplier-reservation-aborted-exception-pane')" />
+				</aries:dropPane>
+				
+				<aries:spacer height="3" />
+				<aries:dropPane fontSize="13" id="supplier-ship-books-menu" value="Ship Books" manager="#{navigationManager}" onclick="showOperationSection('supplier-ship-books-service-pane')">
+					<aries:bullet fontSize="12" marginTop="2" id="supplier-shipment-scheduled-menu" onclick="showOperationSection('supplier-shipment-scheduled-message-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" id="supplier-shipment-complete-menu" onclick="showOperationSection('supplier-shipment-complete-message-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" id="supplier-shipment-failed-menu" onclick="showOperationSection('supplier-shipment-failed-message-pane')" />
+				</aries:dropPane>
+			</aries:dropPane>
+
+			<aries:spacer height="3" />
+			<aries:dropPane fontSize="13" id="shipper-menu" value="Shipper" manager="" onclickXXX="showOperationSection('shipper-application-pane')">
+				<aries:dropPane fontSize="13" id="shipper-ship-books-menu" value="Ship Books" manager="#{navigationManager}" onclick="showOperationSection('shipper-ship-books-service-pane')">
+					<aries:bullet fontSize="12" marginTop="2" value="shipper-shipment-scheduled-menu" onclick="showOperationSection('shipper-shipment-scheduled-message-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" value="shipper-shipment-complete-menu" onclick="showOperationSection('shipper-shipment-complete-message-pane')" />
+					<aries:bullet fontSize="12" marginTop="2" value="shipper-shipment-failed-menu" onclick="showOperationSection('shipper-shipment-failed-message-pane')" />
+				</aries:dropPane>
+			</aries:dropPane>
+			-->
+			
+			<aries:spacer height="6" />
+		</aries:formPane>
+	</aries:panel>
+</ui:composition>

@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:set var="style" value=";" /> 
+	<c:set var="style" value="#{style}; width: #{width}" /> 
+	<c:set var="style" value="#{style}; height: #{height}" /> 
+
+    <!--
+	<c:set var="style" value="#{style}; margin: #{margin}" /> 
+	<c:set var="style" value="margin-top: #{marginTop}; #{style}" /> 
+	<c:set var="style" value="margin-left: #{marginLeft}; #{style}" /> 
+
+	<c:if test="#{empty margin}">
+		<c:set var="style" value="#{style}; margin: #{marginTop} #{marginRight} #{marginBottom} #{marginLeft}" /> 
+	</c:if>
+
+	<c:if test="#{not empty margin}">
+		<c:set var="style" value="#{style}; margin: #{margin}" />
+	</c:if>
+	<c:set var="style" value="#{style}; margin: #{marginTop} #{marginRight} #{marginBottom} #{marginLeft}" /> 
+	-->
+		 
+	<c:set var="style" value="#{style}; margin: #{marginTopX} #{marginRightX} #{marginBottomX} #{marginLeftX}" /> 
+	<c:set var="style" value="#{style}; padding: #{paddingTop} #{paddingRight} #{paddingBottom} #{paddingLeft}" /> 
+	<c:set var="style" value="#{style}; font-size: #{fontSize}" /> 
+	<c:set var="style" value="#{style}; font-family: #{fontFamily}" /> 
+	<c:set var="style" value="#{style}; font-weight: #{fontWeight}" /> 
+	<c:set var="style" value="#{style}; color: #{textColor}" /> 
+	<c:set var="style" value="#{style}; text-decoration: #{textDecoration}" /> 
+	<c:set var="style" value="#{style}; background-color: #{backgroundColor}" /> 
+
+</ui:composition>

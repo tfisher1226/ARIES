@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	<!--  
+	-->
+	<h:outputStylesheet library="styles" name="rich-button.css" />
+	<h:outputStylesheet library="styles" name="rich-menu.css" />
+	<h:outputStylesheet library="styles" name="rich-panel.css" />
+	<h:outputStylesheet library="styles" name="rich-input.css" />
+	<h:outputStylesheet library="styles" name="rich-fileUpload.css" />
+	<h:outputStylesheet library="styles" name="rich-popupPanel.css" />
+	<h:outputStylesheet library="styles" name="rich-tabpane.css" />
+	<h:outputStylesheet library="styles" name="rich-toolbar.css" />
+	<h:outputStylesheet library="styles" name="rich-tree.css" />
+	<h:outputStylesheet library="styles" name="table.css" />
+	
+	<!--  
+	<ui:include src="main-page-script.xhtml" />
+	-->
+	
+	<h:outputScript>
+	function showAdminPage(module, section) {
+		showPage('admin', module, section);
+	}
+	
+	function showBookshop2Page(module, section) {
+		//showPage('bookshop2', module, section);
+		document.location.href = '#{facesContext.externalContext.requestContextPath}/bookshop2/' + module + '.jsf'
+	}
+
+	function showBookshop2BuyerPage(module, section) {
+		#{rich:component('configuration-viewer-pane')}.switchToItem(section);
+	}
+	
+	function showBookshop2BuyerPage(module, section) {
+		if (!isDefined(section))
+			document.location.href = '#{facesContext.externalContext.requestContextPath}/bookshop2/buyer/' + module + '.jsf'
+		else document.location.href = '#{facesContext.externalContext.requestContextPath}/bookshop2/buyer/' + module + '/' + section + '.jsf'
+	}
+	
+	function showPage(group, module, section) {
+		var url = '#{facesContext.externalContext.requestContextPath}/driver.jsf?';
+		url += 'group='+group+'&amp;';
+		if (module)
+			url += 'module='+module+'&amp;';
+		if (section)
+			url += 'section='+section+'&amp;';
+		url += 'skin=#{skinBean.skin}';
+		alert(url);
+		document.location.href = url;
+	}
+	
+	function showNewPage(area) {
+		var url = '#{facesContext.externalContext.requestContextPath}/bookshop2/handler.jsf?area=' + area + '&amp;skin=#{skinBean.skin}';
+		//alert(url);
+		document.location.href = url;
+	}
+	</h:outputScript>
+</ui:composition>

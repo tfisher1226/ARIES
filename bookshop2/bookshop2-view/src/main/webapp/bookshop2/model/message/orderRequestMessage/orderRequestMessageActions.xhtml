@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:param name="newAction" value="new#{domain}OrderRequestMessage" />
+	<ui:param name="editAction" value="edit#{domain}OrderRequestMessage" />
+	<ui:param name="newActionHeader" value="#{domain}OrderRequestMessage Records" />
+	<ui:param name="editActionHeader" value="#{listManager.header}" />
+	<ui:param name="itemManager" value="#{orderInfoManager}" />
+	<ui:param name="listManager" value="#{orderListManager}" />
+	
+	<!--
+	  ** Launch OrderRequestMessageDialog in "new record" mode
+	  -->
+	
+	<a4j:jsFunction
+		name="new#{domain}OrderRequestMessage"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{orderInfoManager.newOrderRequestMessage}"
+		onbegin="setCursorWait(); showProgress('', 'OrderRequestMessage Records', 'Creating new record...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); show#{domain}OrderRequestMessageDialog()"
+		render="#{domain}OrderRequestMessageModule, #{domain}OrderRequestMessageListPane">
+		
+		<a4j:param name="targetDomain" value="#{domain}OrderRequestMessageDialog" assignTo="#{orderInfoManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{domain}OrderRequestMessageListPane" assignTo="#{orderInfoManager.targetField}" />
+		<a4j:param name="targetInstance" value="orderList" assignTo="#{orderInfoManager.targetInstance}" />
+	</a4j:jsFunction>
+
+
+	<a4j:jsFunction 
+		name="select#{domain}OrderRequestMessage" 
+		immediate="true" 
+		limitRender="true" 
+		onbegin="enable#{domain}OrderRequestMessageListToolbar()">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+
+	<script type="text/javascript">
+	function enable#{domain}OrderRequestMessageListToolbar() {
+		enableButton('#{domain}OrderRequestMessageListEditButton');
+		enableButton('#{domain}OrderRequestMessageListRemoveButton');
+	}
+	</script>
+
+	<!--
+	  ** Select OrderRequestMessage record from list, and open it
+	  -->
+	
+	<a4j:jsFunction
+		name="open#{domain}OrderRequestMessage"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager[editAction]}"
+		onbegin="setCursorWait(); showProgress('', 'OrderRequestMessage Records', 'Opening record for edit...')"
+		oncomplete="setCursorDefault(eventSource); setCursorDefault(event.source); hideProgress(); #{rich:component('OrderRequestMessageDialog')}.show()"
+		render="OrderRequestMessageModule">
+		
+		<a4j:param name="targetIndex" assignTo="#{listManager.selectedRecordIndex}" />
+		<a4j:param name="targetId" assignTo="#{listManager.selectedRecordId}" />
+		
+		<a4j:param name="targetDomain" value="#{domain}OrderRequestMessageDialog" assignTo="#{itemManager.targetDomain}" />
+		<a4j:param name="targetField" value="#{domain}OrderRequestMessageListPane" assignTo="#{itemManager.targetField}" />
+		
+		<a4j:param name="targetInstance" value="orderList" assignTo="#{itemManager.targetInstance}" />
+		<a4j:param name="immediate" assignTo="#{itemManager.immediate}" value="true" />
+	</a4j:jsFunction>
+
+
+	<!--
+	  ** Refresh OrderRequestMessage record list
+	  -->
+
+	<a4j:jsFunction
+		name="refresh#{domain}OrderRequestMessageList"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{listManager.refresh}"
+		onbegin="setCursorWait(); showProgress('', 'OrderRequestMessage Records', 'Refreshing current list...')"
+		oncomplete="setCursorDefault(this); hideProgress()"
+		render="#{domain}OrderRequestMessageListTablePane">
+	</a4j:jsFunction>
+	
+</ui:composition>

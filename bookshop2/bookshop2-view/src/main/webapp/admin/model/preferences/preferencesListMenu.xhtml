@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:region>
+		<aries:outputPane
+			id="#{section}PreferencesListContextMenuPane">
+			
+			<aries:contextMenu
+				mode="client"
+				id="#{section}PreferencesListContextMenu"
+				target="#{section}PreferencesListTable">
+				
+				<aries:contextMenuItem
+					value="Edit Preferences..."
+					disabled="false"
+					mode="ajax"
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{preferencesListManager}"
+					action="editPreferences"
+					onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}PreferencesDialog()"
+					render="#{domain}PreferencesDialog">
+					
+					<aries:tooltip value="Edit selected Preferences record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="New Preferences..."
+					mode="ajax"
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{preferencesInfoManager}"
+					action="newPreferences"
+					onclick="setCursorWait(); showProgress('Preferences Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}PreferencesDialog()"
+					render="#{domain}PreferencesDialog, #{domain}PreferencesDialogPersonNameDialog, #{domain}PreferencesDialogEmailAddressDialog, #{domain}PreferencesDialogPhoneNumberDialog, #{domain}PreferencesDialogStreetAddressDialog">
+					
+					<aries:tooltip value="Create new Preferences record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem
+					value="Remove Preferences..."
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Preferences: {lastName}, {firstName}', 'Remove Preferences Record from System', 'Do you wish to continue?', 'org.aries.removePreferences', '#{section}PreferencesListPane')">
+					
+					<aries:tooltip value="Remove selected Preferences record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

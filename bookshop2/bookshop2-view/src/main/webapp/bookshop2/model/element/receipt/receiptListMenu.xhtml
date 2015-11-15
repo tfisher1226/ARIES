@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<aries:region>
+		<aries:outputPane 
+			id="#{domain}ReceiptListContextMenuPane">
+			
+			<aries:contextMenu 
+				mode="client"
+				id="#{domain}ReceiptListContextMenu"
+				target="#{domain}ReceiptListTable">
+	
+				<aries:contextMenuItem 
+					value="Edit Receipt..." 
+					disabled="false"
+					mode="ajax" 
+					execute="@this"
+					immediate="true"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/Edit16.gif"
+					manager="#{receiptListManager}"
+					action="editReceipt"
+					onclick="setCursorWait(); showProgress('Receipt Records', 'Preparing for edit...')"
+					onclickXXX="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+					oncomplete="setCursorDefault(this); hideProgress(); show#{domain}ReceiptDialog()"
+					render="#{domain}ReceiptDialog">
+					
+					<aries:tooltip value="Edit selected Receipt record"/>
+				</aries:contextMenuItem>
+				
+				<aries:contextMenuItem 
+					value="New Receipt..."
+					mode="ajax" 
+					immediate="true"
+					execute="@this"
+					bypassUpdates="true"
+					limitRender="true"
+					icon="/icons/common/New16.gif"
+					manager="#{receiptInfoManager}"
+					action="newReceipt"
+					onclick="setCursorWait(); showProgress('Receipt Records', 'Creating new record...')"
+					oncomplete="setCursorDefault(); hideProgress(); show#{domain}ReceiptDialog();"
+					render="#{domain}ReceiptDialog">
+					
+					<aries:tooltip value="Create new Receipt record"/>
+				</aries:contextMenuItem>
+		
+				<aries:contextMenuItem 
+					value="Remove Receipt..." 
+					immediate="true"
+					disabled="false"
+					icon="/icons/common/Remove16.gif"
+					mode="client"
+					execute="@none"
+					onclick="popupPrompt('Receipt Records', 'Remove Receipt from System', 'Do you wish to continue?', 'org.aries.removeReceipt', '#{domain}ReceiptListPane')"
+					onclickXXX="popupPrompt('Receipt: {lastName}, {firstName}', 'Remove Receipt Record from System', 'Do you wish to continue?', 'org.aries.removeReceipt', '#{domain}ReceiptListPane')">
+					
+					<aries:tooltip value="Remove selected Receipt record"/>
+				</aries:contextMenuItem>
+			</aries:contextMenu>
+		</aries:outputPane>
+	</aries:region>
+</ui:composition>

@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>bookshop2.supplier</groupId>
+	<artifactId>bookshop2-supplier-app</artifactId>
+	<name>bookshop2-supplier-app</name>
+	<description>Project object model for: bookshop2-supplier-app</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>ear</packaging>
+
+	<parent>
+		<groupId>bookshop2.supplier</groupId>
+		<artifactId>bookshop2-supplier</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<bookshop2.model.home>../../model</bookshop2.model.home>
+		<bookshop2.runtime.home>../runtime</bookshop2.runtime.home>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<version>5</version>
+					<earSourceDirectory>${basedir}/src/main/application</earSourceDirectory>
+					<generateApplicationXml>false</generateApplicationXml>
+
+					<!--  
+					<generateApplicationXml>true</generateApplicationXml>
+					<earSourceExcludes>**/application.xml</earSourceExcludes>
+					<applicationXml>${project.build.directory}/application.xml</applicationXml>
+					-->
+			
+					<modules>
+						<webModule>
+							<groupId>bookshop2.supplier</groupId>
+							<artifactId>bookshop2-supplier-view</artifactId>
+							<contextRoot>bookshop2-supplier</contextRoot>
+							<unpack>true</unpack>
+						</webModule>
+						
+						<jarModule>
+							<groupId>bookshop2</groupId>
+							<artifactId>bookshop2-model</artifactId>
+							<unpack>true</unpack>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>bookshop2.seller</groupId>
+							<artifactId>bookshop2-seller-client</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>bookshop2.seller</groupId>
+							<artifactId>bookshop2-seller-model</artifactId>
+							<unpack>true</unpack>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>bookshop2.shipper</groupId>
+							<artifactId>bookshop2-shipper-client</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>bookshop2.supplier</groupId>
+							<artifactId>bookshop2-supplier-client</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>bookshop2.supplier</groupId>
+							<artifactId>bookshop2-supplier-data</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>bookshop2.supplier</groupId>
+							<artifactId>bookshop2-supplier-service</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>admin</groupId>
+							<artifactId>admin-model</artifactId>
+							<unpack>true</unpack>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>admin</groupId>
+							<artifactId>admin-service</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>admin</groupId>
+							<artifactId>admin-data</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>admin</groupId>
+							<artifactId>admin-client</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>com.thoughtworks.xstream</groupId>
+							<artifactId>xstream</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>commons-digester</groupId>
+							<artifactId>commons-digester</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>commons-io</groupId>
+							<artifactId>commons-io</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>commons-lang</groupId>
+							<artifactId>commons-lang</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>commons-validator</groupId>
+							<artifactId>commons-validator</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>joda-time</groupId>
+							<artifactId>joda-time</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>net.sf.ehcache</groupId>
+							<artifactId>ehcache-core</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>net.sf.ehcache</groupId>
+							<artifactId>ehcache-jgroupsreplication</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.antlr</groupId>
+							<artifactId>antlr-runtime</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.apache.ant</groupId>
+							<artifactId>ant</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>ariel-compiler</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>aries-validate</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>aries-launcher</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>aries-registry</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-action</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-cache</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-client</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-data</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-ejb</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-event</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-jaxb</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-jaxws</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-jms</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-jmx</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-jndi</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-launcher</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-model</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-net</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-process</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-queue</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-rmi</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-runtime</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-service</artifactId>
+							<unpack>false</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-transaction</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-util</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+												
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>common-workflow</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>nam-engine</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>nam-model</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+												
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>tx-manager-base</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>tx-manager-bridge</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>org.aries</groupId>
+							<artifactId>tx-manager-client</artifactId>
+							<unpack>true</unpack>
+						</ejbModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>tx-manager-model</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.aries</groupId>
+							<artifactId>tx-manager-registry</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-api</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-compiler</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-core</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-decisiontables</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.bpel.plugins</groupId>
+							<artifactId>org.eclipse.bpel.common.model</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.bpel.plugins</groupId>
+							<artifactId>org.eclipse.bpel.model</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.bpel.plugins</groupId>
+							<artifactId>org.eclipse.bpel.validator</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.bpelins</groupId>
+							<artifactId>org.eclipse.bpel.xpath10</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.core</groupId>
+							<artifactId>org.eclipse.core.expressions</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.core</groupId>
+							<artifactId>org.eclipse.core.resources</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.core</groupId>
+							<artifactId>org.eclipse.core.runtime</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.emf</groupId>
+							<artifactId>org.eclipse.emf.codegen</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.emf</groupId>
+							<artifactId>org.eclipse.emf.codegen.ecore</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.emf</groupId>
+							<artifactId>org.eclipse.emf.common</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.emf</groupId>
+							<artifactId>org.eclipse.emf.ecore</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.emf</groupId>
+							<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.equinox</groupId>
+							<artifactId>org.eclipse.equinox.common</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.osgi</groupId>
+							<artifactId>org.eclipse.osgi</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.wst</groupId>
+							<artifactId>wsdl</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.eclipse.xsd</groupId>
+							<artifactId>org.eclipse.xsd</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.hibernate</groupId>
+							<artifactId>hibernate-ehcache</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.javassist</groupId>
+							<artifactId>javassist</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.jboss.el</groupId>
+							<artifactId>jboss-el</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.jboss.jbossts</groupId>
+							<artifactId>jbossjta</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.jboss.jbossts</groupId>
+							<artifactId>jbossjts</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<!--  
+						<jarModule>
+							<groupId>org.jboss.seam</groupId>
+							<artifactId>jboss-seam-debug</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.jboss.seam</groupId>
+							<artifactId>jboss-seam-mail</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<ejbModule>
+							<groupId>org.jboss.seam</groupId>
+							<artifactId>jboss-seam</artifactId>
+							<unpack>false</unpack>
+						</ejbModule>
+						-->
+						
+						<jarModule>
+							<groupId>org.jgroups</groupId>
+							<artifactId>jgroups</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>org.mvel</groupId>
+							<artifactId>mvel2</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+						
+						<jarModule>
+							<groupId>wsdl4j</groupId>
+							<artifactId>wsdl4j</artifactId>
+							<unpack>false</unpack>
+							<bundleDir>lib</bundleDir>
+						</jarModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-client-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-data-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-model-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-service-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>bookshop2.supplier</groupId>
+			<artifactId>bookshop2-supplier-view</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>war</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>bookshop2</groupId>
+			<artifactId>bookshop2-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>bookshop2.seller</groupId>
+			<artifactId>bookshop2-seller-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>bookshop2.seller</groupId>
+			<artifactId>bookshop2-seller-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>bookshop2.shipper</groupId>
+			<artifactId>bookshop2-shipper-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>bookshop2.supplier</groupId>
+			<artifactId>bookshop2-supplier-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>bookshop2.supplier</groupId>
+			<artifactId>bookshop2-supplier-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>bookshop2.supplier</groupId>
+			<artifactId>bookshop2-supplier-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-client</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>ejb</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-client-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-data-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-model-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-service-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,19 @@
+import admin.admin_service.aries;
+
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_persistence.aries;
+
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+import bookshop.bookshop_supplier_persistence.aries;
+
+
+network Bookshop2 {
+	set domain("bookshop2");
+	set namespace("bookshop2");
+	import namespace("bookshop2");
+
+
+
+}

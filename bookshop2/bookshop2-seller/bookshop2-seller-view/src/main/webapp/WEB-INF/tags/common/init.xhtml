@@ -1,0 +1,154 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- RENDERED -->
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true" /> 
+	</c:if>
+
+	<!-- ENABLED -->
+	<c:if test="#{empty enabled}">
+		<c:set var="enabled" value="true" /> 
+	</c:if>
+	
+	<!-- WIDTH -->
+	<c:if test="#{empty width}">
+		<c:set var="width" value="auto" /> 
+	</c:if>
+
+	<!-- HEIGHT -->
+	<c:if test="#{empty height}">
+		<c:set var="height" value="auto" /> 
+	</c:if>
+
+	<!-- PADDING -->
+	<c:if test="#{not empty paddingTop}">
+		<c:set var="paddingTopX" value="#{paddingTop}" /> 
+	</c:if>
+	<c:if test="#{not empty paddingRight}">
+		<c:set var="paddingRightX" value="#{paddingRight}" /> 
+	</c:if>
+	<c:if test="#{not empty paddingBottom}">
+		<c:set var="paddingBottomX" value="#{paddingBottom}" /> 
+	</c:if>
+	<c:if test="#{not empty paddingLeft}">
+		<c:set var="paddingLeftX" value="#{paddingLeft}" /> 
+	</c:if>
+	<c:if test="#{empty paddingTop}">
+		<c:set var="paddingTopX" value="#{empty padding ? userSkin.paddingTop : padding}" /> 
+	</c:if>
+	<c:if test="#{empty paddingRight}">
+		<c:set var="paddingRightX" value="#{empty padding ? userSkin.paddingRight : padding}" /> 
+	</c:if>
+	<c:if test="#{empty paddingBottom}">
+		<c:set var="paddingBottomX" value="#{empty padding ? userSkin.paddingBottom : padding}" /> 
+	</c:if>
+	<c:if test="#{empty paddingLeft}">
+		<c:set var="paddingLeftX" value="#{empty padding ? userSkin.paddingLeft : padding}" /> 
+	</c:if>
+			
+	<!-- MARGIN -->
+	<c:if test="#{not empty marginTop}">
+		<c:set var="marginTopX" value="#{marginTop}" /> 
+	</c:if>
+	<c:if test="#{not empty marginRight}">
+		<c:set var="marginRightX" value="#{marginRight}" /> 
+	</c:if>
+	<c:if test="#{not empty marginBottom}">
+		<c:set var="marginBottomX" value="#{marginBottom}" /> 
+	</c:if>
+	<c:if test="#{not empty marginLeft}">
+		<c:set var="marginLeftX" value="#{marginLeft}" /> 
+	</c:if>
+	<c:if test="#{empty marginTop}">
+		<c:set var="marginTopX" value="#{empty margin ? userSkin.marginTop : margin}" /> 
+	</c:if>
+	<c:if test="#{empty marginRight}">
+		<c:set var="marginRightX" value="#{empty margin ? userSkin.marginRight : margin}" /> 
+	</c:if>
+	<c:if test="#{empty marginBottom}">
+		<c:set var="marginBottomX" value="#{empty margin ? userSkin.marginBottom : margin}" /> 
+	</c:if>
+	<c:if test="#{empty marginLeft}">
+		<c:set var="marginLeftX" value="#{empty margin ? userSkin.marginLeft : margin}" /> 
+	</c:if>
+
+	<!-- BORDER-WIDTH -->
+	<c:if test="#{empty borderWidth}">
+		<c:set var="borderWidth" value="#{userSkin.borderWidth}" /> 
+	</c:if>
+
+	<!-- BORDER-STYLE -->
+	<c:if test="#{empty borderStyle}">
+		<c:set var="borderStyle" value="#{userSkin.borderStyle}" /> 
+	</c:if>
+
+	<!-- BORDER-COLOR -->
+	<c:if test="#{empty borderColor}">
+		<c:set var="borderColor" value="#{userSkin.borderColor}" /> 
+	</c:if>
+	
+	<!-- FONT-SIZE -->
+	<c:if test="#{empty fontSize}">
+		<c:set var="fontSize" value="#{userSkin.fontSize}" /> 
+	</c:if>
+
+	<!-- FONT-FAMILY -->
+	<c:if test="#{empty fontFamily}">
+		<c:set var="fontFamily" value="#{userSkin.fontFamily}" /> 
+	</c:if>
+
+	<!-- FONT-WEIGHT -->
+	<c:if test="#{empty fontWeight}">
+		<c:set var="fontWeight" value="#{userSkin.fontWeight}" /> 
+	</c:if>
+
+	<!-- TEXT-COLOR -->
+	<c:if test="#{empty textColor}">
+		<c:set var="textColor" value="#{userSkin.textColor}" /> 
+	</c:if>
+
+	<!-- TEXT-DECORATION -->
+	<c:if test="#{empty textDecoration}">
+		<c:set var="textDecoration" value="#{userSkin.textDecoration}" /> 
+	</c:if>
+
+	<!-- BACKGROUND-COLOR -->
+	<c:if test="#{empty backgroundColor}">
+		<c:set var="backgroundColor" value="#{userSkin.backgroundColor}" /> 
+	</c:if>
+	
+
+	<c:set var="textSettings" value=";" /> 
+	<c:set var="textSettings" value="#{textSettings}; font-size: #{fontSize}" /> 
+	<c:set var="textSettings" value="#{textSettings}; font-family: #{fontFamily}" /> 
+	<c:set var="textSettings" value="#{textSettings}; font-weight: #{fontWeight}" /> 
+	<c:set var="textSettings" value="#{textSettings}; color: #{textColor}" /> 
+	<c:set var="textSettings" value="#{textSettings}; text-decoration: #{textDecoration}" /> 
+	
+	<c:set var="sizeSettings" value=";" /> 
+	<c:set var="sizeSettings" value="#{sizeSettings}; width: #{width}" /> 
+	<c:set var="sizeSettings" value="#{sizeSettings}; height: #{height}" /> 
+	<c:set var="sizeSettings" value="#{sizeSettings}; margin: #{marginTopX} #{marginRightX} #{marginBottomX} #{marginLeftX}" /> 
+	<c:set var="sizeSettings" value="#{sizeSettings}; padding: #{paddingTopX} #{paddingRightX} #{paddingBottomX} #{paddingLeftX}" /> 
+
+	<c:set var="paddingSettings" value="padding: #{paddingTopX} #{paddingRightX} #{paddingBottomX} #{paddingLeftX}" /> 
+	
+	<c:set var="borderSettings" value=";" /> 
+	<c:set var="borderSettings" value="#{borderSettings}; border: #{borderWidth} #{borderStyle} #{borderColor}" /> 
+	<c:set var="borderSettings" value="#{borderSettings}; border-width: #{borderWidth}" /> 
+	
+	<c:set var="backgroundSettings" value=";" /> 
+	<c:set var="backgroundSettings" value="#{backgroundSettings}; background-color: #{backgroundColor}" /> 
+	
+</ui:composition>

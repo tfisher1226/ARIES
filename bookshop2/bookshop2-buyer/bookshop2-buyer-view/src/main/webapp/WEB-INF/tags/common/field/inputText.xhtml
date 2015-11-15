@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag param="value">
+		<c:if test="#{empty id}">
+			<c:set var="id" value="InputText_#{globals.nextId()}" /> 
+		</c:if>
+
+		<!--  
+		<c:if test="#{empty converter}">
+			<c:set var="converter" value="" /> 
+		</c:if>
+		
+		<c:if test="#{empty validator}">
+			<c:set var="validator" value="" /> 
+		</c:if>
+		-->
+		
+		<aries:fieldWrapper>
+			<h:inputText
+				id="#{id}" 
+				value="#{value}"
+				label="#{label}"
+				disabled="#{!enabled}"
+				readonly="#{readonly}"
+				required="#{required}"
+				maxlength="#{maxlength}"
+				autocomplete="#{autocomplete}"
+				validatorMessageXX="#{validatorMessage}"
+				converterMessageXX="#{converterMessage}"
+				onkeydown="#{onkeydown}"
+				styleClass="browserSpecificInputText formInput" 
+				style="background-color: inherit">
+				<!--  
+				validator="#{validator}"
+				converter="#{converter}"
+				-->
+
+				<ui:insert />
+			</h:inputText>
+		</aries:fieldWrapper>
+	</aries:tag>
+</ui:composition>

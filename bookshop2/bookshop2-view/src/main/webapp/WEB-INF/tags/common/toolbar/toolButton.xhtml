@@ -1,0 +1,208 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:tag>
+		<aries:init/>
+		
+		<c:if test="#{empty id}">
+			<c:set var="id" value="toolButton_#{globals.nextId()}" /> 
+		</c:if>
+		
+		<c:if test="#{empty enabled}">
+			<c:set var="enabled" value="true" /> 
+		</c:if>
+	
+		<c:if test="#{empty rendered}">
+			<c:set var="rendered" value="true" /> 
+		</c:if>
+	
+		<c:if test="#{empty mode}">
+			<c:set var="mode" value="ajax" /> 
+		</c:if>
+	
+		<c:if test="#{empty immediate}">
+			<c:set var="immediate" value="false" /> 
+		</c:if>
+	
+		<c:if test="#{empty bypassUpdates}">
+			<c:set var="bypassUpdates" value="false" /> 
+		</c:if>
+	
+		<c:if test="#{empty limitRender}">
+			<c:set var="limitRender" value="false" /> 
+		</c:if>
+	
+		<c:if test="#{empty manager}">
+			<c:set var="manager" value="#{globals}" /> 
+		</c:if>
+	
+		<c:if test="#{empty action}">
+			<c:set var="manager" value="#{globals}" /> 
+			<c:set var="action" value="doNothing" /> 
+		</c:if>
+	
+		<c:if test="#{empty execute}">
+			<c:set var="execute" value="@this" /> 
+		</c:if>
+		
+		<c:if test="#{empty render}">
+			<c:set var="render" value="nothing" /> 
+		</c:if>
+	
+		<c:if test="#{empty styleClass}">
+			<c:set var="styleClass" value="toolItem" /> 
+		</c:if>
+	
+		<c:if test="#{empty labelClass}">
+			<c:set var="labelClass" value="toolLabel" /> 
+		</c:if>
+	
+		<!--  
+		<c:if test="#{empty labelStyle}">
+			<c:set var="labelStyle" value="" /> 
+		</c:if>
+	
+		<c:if test="#{empty style}">
+			<c:set var="style" value="" /> 
+		</c:if>
+		-->	
+
+		<c:if test="#{enabled}">
+			<!--  
+			<c:set var="enabledDisplay" value="block" />
+			<c:set var="disabledDisplay" value="none" />
+			-->
+			<rich:jQuery selector="##{id}" query="show()"/>
+			<rich:jQuery selector="##{id}Disabled" query="hide()"/>
+		</c:if>
+
+		<c:if test="#{not enabled}">
+			<!--
+			<c:set var="enabledDisplay" value="none" />
+			<c:set var="disabledDisplay" value="block" />
+			-->
+			<rich:jQuery selector="##{id}" query="hide()"/>
+			<rich:jQuery selector="##{id}Disabled" query="show()"/>
+		</c:if>
+		
+		<c:if test="#{empty interactive}">
+			<c:set var="interactive" value="#{true}" /> 
+		</c:if>
+		
+		<!--  
+		<c:if test="#{empty interactive}">
+			<c:set var="interactive" value="#{not disabled}" /> 
+		</c:if>
+	
+		<c:if test="#{not interactive}">
+			<h:panelGroup layout="block" rendered="#{rendered}" style="#{style}; border: 0px solid #9999cc; text-decoration: none">
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumn" >
+					<c:if test="#{empty disabledIcon}">
+						<aries:spacer height="16" />
+					</c:if>
+					<c:if test="#{not empty disabledIcon and empty label}">
+						<h:graphicImage library="images" name="#{disabledIcon}" style="" />
+					</c:if>
+					<c:if test="#{not empty disabledIcon and not empty label}">
+						<h:graphicImage library="images" name="#{disabledIcon}" style="margin-right: 3px" />
+					</c:if>
+					<c:if test="#{not empty label}">
+						<h:outputText value="#{label}" styleClass="#{labelClass}" style="white-space: nowrap" />
+					</c:if>
+				</h:panelGrid>
+	
+				<aries:tooltip value="#{disabledTooltip}" />
+			</h:panelGroup>
+		</c:if>
+		-->
+	
+		<rich:menuItem
+			id="#{id}"
+			disabled="false"
+			rendered="#{rendered}"
+			mode="#{mode}"
+			execute="#{execute}"
+			immediate="#{immediate}"
+			bypassUpdates="#{bypassUpdates}"
+			limitRender="#{limitRender}"
+			ignoreDupResponses="true"
+			action="#{manager[action]}"
+			onmousedown="#{onmousedown}"
+			onmouseup="#{onmouseup}"
+			onmouseover="#{onmouseover}"
+			onmouseout="#{onmouseout}"
+			onclick="#{onclick}"
+			oncomplete="#{oncomplete}"
+			render="#{render}"
+			styleClass="toolItem"
+			style="padding: 3px 2px 2px 2px; display: #{enabledDisplay}; cursor: pointer; background-color: inherit">
+
+			<f:facet name="icon">
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumnAlignMiddle" style="border-collapse: collapse; background-color: inherit">
+					<c:if test="#{empty icon}">
+						<aries:spacer height="16" />
+					</c:if>
+					<c:if test="#{not empty icon}">
+						<h:graphicImage library="images" name="#{icon}" style="margin: 0px; padding: 0px; border-width: 0px;" />
+						<c:if test="#{not empty label}">
+							<aries:spacer width="2" />
+						</c:if>
+					</c:if>
+					<c:if test="#{not empty label}">
+						<h:outputText value="#{label}" styleClass="toolLabel" style="white-space: nowrap; #{labelStyle}" />
+						<c:if test="#{empty icon}">
+							<aries:spacer height="16" />
+						</c:if>
+					</c:if>
+				</h:panelGrid>
+			</f:facet>
+			
+			<ui:insert/>
+			
+			<rich:tooltip rendered="#{not empty tooltip}" followMouse="true" direction="auto" verticalOffset="26" jointPoint="topAuto" showDelay="200" styleClass="tooltip" value="#{tooltip}" />
+		</rich:menuItem>
+
+		<rich:menuItem
+			id="#{id}Disabled"
+			rendered="#{rendered and not enabled}"
+			disabled="true"
+			iconDisabled="#{iconDisabled}"
+			styleClass="toolItemDisabled"
+			style="padding: 3px 2px 2px 2px; display: #{disabledDisplay}; cursor: pointer">
+
+			<f:facet name="iconDisabled">
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumnAlignMiddle" style="border-collapse: collapse">
+					<c:if test="#{empty iconDisabled}">
+						<aries:spacer height="16" />
+					</c:if>
+					<c:if test="#{not empty iconDisabled}">
+						<h:graphicImage library="images" name="#{iconDisabled}" style="margin: 0px; padding: 0px; border-width: 0px;" />
+						<c:if test="#{not empty label}">
+							<aries:spacer width="2" />
+						</c:if>
+					</c:if>
+					<c:if test="#{not empty label}">
+						<h:outputText value="#{label}" styleClass="toolLabel" style="white-space: nowrap; #{labelStyle}" />
+						<c:if test="#{empty iconDisabled}">
+							<aries:spacer height="16" />
+						</c:if>
+					</c:if>
+				</h:panelGrid>
+			</f:facet>
+			
+			<ui:insert/>
+			
+			<rich:tooltip rendered="#{not empty tooltip}" followMouse="true" direction="auto" verticalOffset="26" jointPoint="topAuto" showDelay="200" styleClass="tooltip" value="#{tooltip}" />
+		</rich:menuItem>
+	</aries:tag>
+</ui:composition>

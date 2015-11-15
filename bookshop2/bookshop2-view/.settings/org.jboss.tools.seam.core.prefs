@@ -1,0 +1,14 @@
+action.package=bookshop2.supplier
+action.sources=/bookshop2-supplier-client/src/main/java
+eclipse.preferences.version=1
+model.package=bookshop2.supplier
+model.sources=/bookshop2-supplier-client/src/main/java
+seam.ejb.project=bookshop2-supplier-client
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/bookshop2-view/src/main/webapp
+seam.test.creating=false
+seam.test.project=bookshop2-view
+test.package=bookshop2.test
+test.sources=/bookshop2-view/src/main/java

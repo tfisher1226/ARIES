@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<ui:composition>
+		<p>admin-model - role</p>
+
+		<h:panelGroup 
+			layout="block" 
+			style="width: auto; margin-left: 256px; background-color: inherit">
+
+			<!-- Common Dialogs -->
+		
+			<!-- User Dialogs 
+			<ui:include src="/admin/section/action/actionSelectDialog.xhtml" manager="#{actionSelectManager}" type="Action" />
+			<ui:include src="/admin/section/permission/permissionInfoDialog.xhtml" manager="#{permissionInfoManager}" type="Permission" />
+			<ui:include src="/admin/section/permission/permissionListDialog.xhtml" manager="#{permissionListManager}" type="PermissionList" />
+			<ui:include src="/admin/section/preferences/preferencesInfoDialog.xhtml" manager="#{preferencesInfoManager}" type="Preferences" />
+			<ui:include src="/admin/section/preferences/preferencesListDialog.xhtml" manager="#{preferencesListManager}" type="PreferencesList" />
+			<ui:include src="/admin/section/role/roleInfoDialog.xhtml" manager="#{roleInfoManager}" type="Role" />
+			<ui:include src="/admin/section/role/roleListDialog.xhtml" manager="#{roleListManager}" type="RoleList" />
+			<ui:include src="/admin/section/role/roleSelectDialog.xhtml" manager="#{roleSelectManager}" type="Role" />
+			<ui:include src="/admin/section/roleType/roleTypeSelectDialog.xhtml" manager="#{roleTypeSelectManager}" type="RoleType" />
+			<ui:include src="/admin/section/user/userInfoDialog.xhtml" manager="#{userInfoManager}" type="User" />
+			<ui:include src="/admin/section/user/userListDialog.xhtml" manager="#{userListManager}" type="UserList" />
+			<ui:include src="/admin/section/user/userSelectDialog.xhtml" manager="#{userSelectManager}" type="User" />
+			<ui:include src="/admin/section/user/userInfoDialog.xhtml" />
+			-->
+
+			<a4j:commandLink 
+			 	value="Role Dialog"
+			 	immediate="true"
+			 	bypassUpdates="true"
+			 	execute="@this"
+			 	action="#{buyerInfoManager.activate}"
+			 	onclick="setCursorWait(this)"
+			 	onmouseup="setCursorDefault(event.source); launchBookDialog('RoleDialog', 'role', 'role')" />
+		</h:panelGroup>
+	</ui:composition>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<aries:outputPanel
+		id="#{section}UserListTablePanel2">
+		<ui:include src="userListMenu.xhtml"/>
+		
+		<aries:table
+			id="#{section}UserListTable2"
+			value="#{listManager.dataModel}" 
+			rowCount="#{listManager.dataModel.rowCount}"
+			visible="#{listManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowclickXXX="select#{domain}User(#{index}, #{rowItem.user.id})"
+			onrowdblclick="execute#{domain}SelectOpenUser(#{index}, #{rowItem.user.id})"
+			style="border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- USER NAME -->
+			<aries:textColumn 
+				width="200"
+				header="Name">
+				<aries:link 
+					value="#{userHelper.toString(rowItem.user)}"
+					onmouseup="execute#{domain}SelectOpenUser(#{index}, #{rowItem.user.id})" />
+			</aries:textColumn>
+
+			<!-- EMAIL ADDRESS -->
+			<aries:textColumn 
+				width="100"
+				header="Email Address"
+				onselectXX="selectRow(this)">
+				<h:outputText value="#{emailAddressHelper.toString(rowItem.user.emailAddress)}"/>
+			</aries:textColumn>
+
+			<!-- ROLES -->
+			<aries:textColumn 
+				width="140"
+				header="Roles">
+				<h:outputText value="#{roleHelper.toString(rowItem.user.roles)}" />
+			</aries:textColumn>
+			
+			<!-- HOME PHONE -->
+			<aries:textColumn 
+				width="100"
+				header="Home Phone">
+				<h:outputText value="#{phoneNumberHelper.toString(rowItem.user.homePhone)}" />
+			</aries:textColumn>
+
+			<!-- CELL PHONE -->
+			<aries:textColumn 
+				width="100"
+				header="Cell Phone">
+				<h:outputText value="#{phoneNumberHelper.toString(rowItem.user.cellPhone)}" />
+			</aries:textColumn>
+
+			<!-- STREET ADDRESS -->
+			<aries:textColumn
+				width="240"
+				header="Street Address">
+				<h:outputText value="#{rowItem.user.streetAddress.street}" />
+			</aries:textColumn>
+
+			<!-- CITY NAME -->
+			<aries:textColumn 
+				width="100"
+				header="City">
+				<h:outputText value="#{rowItem.user.streetAddress.city}" />
+			</aries:textColumn>
+
+			<!-- STATE CODE -->
+			<aries:textColumn 
+				width="50"
+				header="State">
+				<h:outputText value="#{rowItem.user.streetAddress.state}" />
+			</aries:textColumn>
+
+			<!-- ZIP CODE -->
+			<aries:textColumn 
+				width="60"
+				header="Zip-code">
+				<h:outputText value="#{zipCodeHelper.toString(rowItem.user.streetAddress.zipCode)}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPanel>
+</ui:composition>

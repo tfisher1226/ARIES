@@ -1,0 +1,12 @@
+use mysql;
+drop database if exists bookshop2_supplier_db;
+create database bookshop2_supplier_db;
+delete from user where user='supplier';
+delete from db where user='supplier';
+FLUSH PRIVILEGES;
+create user 'supplier'@'localhost' identified by 'password';
+create user 'supplier'@'%' identified by 'password';
+grant all on bookshop2_supplier_db.* to 'supplier';
+grant all on bookshop2_supplier_db.* to 'supplier'@'localhost' identified by 'password';
+grant all on bookshop2_supplier_db.* to 'supplier'@'%' identified by 'password';
+use bookshop2_supplier_db;
