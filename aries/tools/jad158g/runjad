@@ -1,0 +1,4 @@
+#!/bin/sh
+
+jad.exe -f -ff -nonlb -space -t -v -o -r -sjava -dsrc '**/*/*.class'
+

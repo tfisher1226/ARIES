@@ -1,0 +1,118 @@
+ARIES
+
+Abstract
+OMEGA is a model-driven code generation approach based on Executable UML enhanced with extension information provided by metamodel hierarchies. It is domain-specific but can easily incorporate new or related domains. In this experience report, we describe the challenges encountered during the implementation of a code-generation facility for the J2EE platform.
+
+ARIES provides a Foundation for Model-Driven Architectures.
+
+ARIES - Assembling Applications with Patterns, Models, Frameworks, Maven and ARIEL
+
+
+Introduction
+
+The idea and motivation behind ARIES is to provide an environment where business applications are developed and maintained with less effort while maintaining maximum adaptibility to the changing nature of business processes.
+
+Business applications today cannot be isolated. Business applications have to interoperate and integrate.  This is true both within organizations and between organizations. Application integration has always been a difficult task for various functional and technology related reasons.  ARIES, however, due to the practical structure and usage of apropriate modeling, enables integration both within single organizational domains as well as between seperate organizational domains.
+
+The most recent answer to the integration challenge is the Service Oriented Architecture (SOA) and the web services technologies. The bottom-up view of the SOA sees different business applications exposing their functionalities through web services. Thus we can now access different functionalities of different legacy and new developed applications in a standard way (through web services). Such access to functionalities is important because typical companies have a large number of existing applications which have to be integrated.
+
+Developing the web services and exposing the functionalities is not sufficient. We also need a way to compose these functionalities in the right order - a way to define business processes which will make practical use of the exposed functionalities. We would obviously prefer a relatively simple and straightforward way to define such processes, particularly because we know that business processes change often, therefore we would like to modify them easily.
+
+This is where ARIEL (Architectural Integration and Execution Language) becomes important and stands alone. ARIEL allows composition of web services and is thus the top-down approach to SOA - the process oriented approach to SOA.
+
+In this article we will discuss the role of ARIEL and its relationship with Java. We will concentrate particularly on the idea of extending ARIEL, to be able to compose resources other than web services (for example EJBs, JMS, etc.) on one hand, and the possibility to mix ARIEL with pre-existing Java code on the other hand to open up some interesting new perspectives. 
+
+
+The Execution component
+
+http://dl.acm.org/citation.cfm?id=545976&CFID=72550025&CFTOKEN=48587939
+
+In ARIES, the Execution component is viewed as potentially having a state machine that can execute asynchronously and concurrently. 
+We view this approach as necessary for today's distributed computing environments. 
+One may still define a system that relies on synchronous method calls between objects to produce a completely synchronous model of the subject matter. 
+Similarly, our particular use of the statechart is not the only possible one.
+
+
+ARIEL
+
+The designer powerful constructs to model systems that closely align to business processes.
+
+
+
+Role of ARIEL
+
+A process-oriented approach to SOA requires a language to express how web services are composed into business processes. Of course it would be great if such descriptions could also be executed, which would allow us not only to define abstract process definitions, but to write exact executable specifications of processes. ARIEL is such a language. Actually it is the first language which:
+
+    Allows definition of abstract and executable processes
+    Can be used in simple and practical way to allow interoperability between companies
+    Processes can be executed using simple Java runtime environment
+
+Before we have a more in-depth look at ARIEL, let us discuss how web services can be composed. There are two ways: orchestration and choreography. In orchestration, a central process takes control over associated web services and coordinates the execution of different operations on those services. This is done as per the requirements of the orchestration. The involved web services do not know (and do not need to know) that they are used as part of a higher-level business process. Only the central coordinator of the orchestration knows this, so, in short, orchestration is centralized with explicit definitions of operations and the order of invocation of web services.
+
+Choreography on the other hand does not rely on a central coordinator. Rather, each web service involved in the choreography knows exactly when to execute its operations and whom to interact with. Choreography is a collaborative effort focused on exchange of messages. All participants of the choreography need to be aware of the business process, operations to execute, messages to exchange, and the timing of message exchanges.
+
+From the perspective of composing web services to execute business processes, orchestration is the more flexible approach compared to choreography.  However a hybrid approach is best... describe what this is...
+
+    We know exactly who is responsible for the execution of the whole business process.
+    We can incorporate web services, even those that are not aware that they are a part of a business process.
+    We can also provide alternative scenarios when faults occur.
+
+ARIEL follows the orchestration paradigm. Choreography is covered by other standards, such as WSCI (Web Services choreography Interface) and WS-CDL (Web Services Choreography Description Language). Choreography has not gained support from the industry which would be comparable to BPEL.
+
+ARIEL can be used within and between companies. Within companies the role of ARIEL is to standardize enterprise application integration and extend the integration to previously isolated systems. Between enterprises and business partners, ARIEL enables simpler, easier and more effective integration. Definitions of business processes described in ARIEL do not impact existing systems thus stimulating upgrades. ARIEL is the key technology in environments where functionalities already exist or will be exposed via web services. 
+
+
+
+The ARIES Language (ARIEL)
+
+Let us now have a look at ARIEL. ARIEL has been designed specifically as a language for definition of business processes. ARIEL supports two different types of business processes:
+
+    Executable processes allow us to specify the exact details of a process and how it is executed.
+    Abstract business protocols allow us to specify the public message exchange between parties only. They do not include the internal details of process flows and are not executable.
+
+ARIEL is an XML-based language which supports the web services technology stack, including SOAP, WSDL, UDDI, WS-Reliable Messaging, WS-Addressing, WS-Coordination and WS-Transaction. ARIEL in part represents a convergence of existing workflow languages such as... but is unique in that....
+
+WSFL was designed by IBM and is based on the concept of directed graphs. XLANG was designed by Microsoft and is a block-structured language. BPEL combines both approaches and provides a rich vocabulary for description of business processes.
+
+A ARIEL process specifies in practical detail the semantics of interoperation between participating services. 
+
+A ARIEL process specifies in practical detail the semantics of execution and interoperation between participating services. 
+
+Sections of process execution may be specified as sequential or parallel. Conditional behavior can also be expressed, for example, a service invocation can depend on the value of a previous invocation. Other constructs can be expressed as well such as loops, variables, value assignments, fault handlers, and so on. By combining all these constructs, we can define complex business processes in an algorithmic manner.
+
+ARIEL is thus comparable to business process description languages such as BPEL and ???, but not as powerful. On the other hand it is simpler and better suited for business integration. 
+
+Let us have a closer look at a typical BPEL process. First, the BPEL business process receives a request. To fulfill it, the process then invokes the involved web services and finally responds to the original caller. Because the BPEL process communicates with other web services, it relies heavily on the WSDL description of the web services invoked by the composite web service.
+
+A BPEL process consists of steps. Each step is called an activity. BPEL supports primitive and structure activities. Primitive activities represent basic constructs and are used for common tasks, such as those listed below:
+
+    Invoking other web services, using <invoke>
+    Waiting for the client to invoke the business process through sending a message, using <receive> (receiving a request)
+    Generating a response for synchronous operations, using <reply>
+    Manipulating data variables, using <assign>
+    Indicating faults and exceptions, using <throw>
+    Waiting for some time, using <wait>
+    Terminating the entire process, using <terminate>, etc.
+
+We can then combine these and other primitive activities and define complex algorithms, which exactly specify the steps of business processes. To combine primitive activities BPEL supports several structured activities. The most important are:
+
+    Sequence ( <sequence>), which allows us to define a set of activities that will be invoked in an ordered sequence
+    Flow ( <flow>) for defining a set of activities that will be invoked in parallel
+    Case-switch construct ( <switch>) for implementing branches
+    While ( <while>) for defining loops
+    The ability to select one of a number of alternative paths, using <pick>
+
+Each BPEL process will also declare variables, using <variable> , and define partner links, using <partnerLink> . We will say more on partner links later in this article.
+
+A BPEL process can be synchronous or asynchronous. A synchronous BPEL process blocks the client (the one which is using the process) until the process finishes and returns a result to the client. An asynchronous process does not block the client. Rather it uses a callback to return the result (if any). Usually we use asynchronous processes for longer-lasting processes and synchronous for processes that return a result in a relatively short time. If a BPEL process uses asynchronous web services, the process itself is usually also asynchronous (although this is not necessary).
+
+For its clients a BPEL process looks like any other web service. When we define a BPEL process, we actually define a new web service that is a composition of existing services. The interface of the new BPEL composite web service uses a set of port types, through which it provides operations like any other web service. To invoke a business process described in BPEL, we have to invoke the resulting composite web service. The figure below shows a schematic view of a BPEL process:
+
+
+
+Future of ARIEL
+
+With increases in the use of web service technology the importance of BPEL will rise further. 
+
+
+

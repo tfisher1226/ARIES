@@ -1,0 +1,111 @@
+<ns4:services domain="seller">
+	<ns4:service name="purchaseBooks">
+		<ns4:namespace>http://bookshop2/seller</ns4:namespace>
+		<ns4:className>PurchaseBooksImpl</ns4:className>
+		<ns4:interfaceName>PurchaseBooks</ns4:interfaceName>
+
+		<ns4:channels>
+			<ns4:clients>buyer</ns4:clients>
+			<ns4:services>seller</ns4:services>
+		</ns4:channels>
+
+		<ns4:channels>
+			<ns4:clients>seller</ns4:clients>
+			<ns4:services>supplier</ns4:services>
+		</ns4:channels>
+
+		<ns4:interactor xsi:type="ns4:Listener" link="seller" role="seller" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+
+		<ns4:operation name="purchaseBooks">
+			<ns4:parameter name="purchaseRequestMessage" type="{http://bookshop}purchaseRequestMessage" />
+		</ns4:operation>
+
+		<ns4:process name="SellerProcess">
+			<ns4:namespace>http://bookshop2/seller</ns4:namespace>
+			<ns4:transacted local="false" />
+
+			<ns4:operations name="orderBooks">
+				<ns4:parameter name="orderRequestMessage" type="{http://bookshop}orderRequestMessage" construct="item" />
+
+				<ns4:command>
+					<ns4:name>call</ns4:name>
+					<ns4:type>sequential</ns4:type>
+					<ns4:text>bookCache.addAvailableBooks</ns4:text>
+					<ns4:actor xsi:type="ns4:Interactor" link="sellerLink" role="seller" target="seller" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<ns4:interaction>call</ns4:interaction>
+						<ns4:timeToLive>1000</ns4:timeToLive>
+						<ns4:transacted>true</ns4:transacted>
+						<ns4:channel>
+							<ns4:name>orderBooks</ns4:name>
+						</ns4:channel>
+						<ns4:service>orderBooks</ns4:service>
+					</ns4:actor>
+					<ns4:arguments>orderRequestMessage.getBooks()</ns4:arguments>
+				</ns4:command>
+
+				<ns4:command>
+					<ns4:name>invoke</ns4:name>
+					<ns4:type>concurrent</ns4:type>
+					<ns4:actor xsi:type="ns4:Interactor" link="SupplierGroupLink" role="SupplierGroup" target="SupplierGroup" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+						<ns4:interaction>invoke</ns4:interaction>
+						<ns4:timeToLive>1000</ns4:timeToLive>
+						<ns4:transacted>true</ns4:transacted>
+						<ns4:timeout>10800000000</ns4:timeout>
+						<ns4:channel>
+							<ns4:name>queryBooks</ns4:name>
+						</ns4:channel>
+						<ns4:service>queryBooks</ns4:service>
+					</ns4:actor>
+					<ns4:arguments>orderRequestMessage</ns4:arguments>
+				</ns4:command>
+			</ns4:operations>
+
+			<ns4:operations name="callback">
+				<ns4:parameter name="bookAvailableMessage" type="{http://bookshop}bookAvailableMessage" />
+
+				<ns4:command>
+					<ns4:name>option</ns4:name>
+					<ns4:type>sequential</ns4:type>
+
+					<ns4:commands>
+						<ns4:name>call</ns4:name>
+						<ns4:type>sequential</ns4:type>
+						<ns4:text>bookCache.addAvailableBook</ns4:text>
+						<ns4:actor xsi:type="ns4:Interactor" link="sellerLink" role="seller" target="seller" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+							<ns4:interaction>call</ns4:interaction>
+							<ns4:timeToLive>1000</ns4:timeToLive>
+							<ns4:transacted>true</ns4:transacted>
+							<ns4:channel>
+								<ns4:name>orderBooks</ns4:name>
+							</ns4:channel>
+							<ns4:service>orderBooks</ns4:service>
+						</ns4:actor>
+						<ns4:arguments>bookAvailableMessage.getBook()</ns4:arguments>
+					</ns4:commands>
+
+					<ns4:commands>
+						<ns4:name>reply</ns4:name>
+						<ns4:type>concurrent</ns4:type>
+						<ns4:text>OrderAccepted</ns4:text>
+						<ns4:actor xsi:type="ns4:Interactor" link="buyerLink" role="buyer" target="buyer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+							<ns4:interaction>reply</ns4:interaction>
+							<ns4:timeToLive>1000</ns4:timeToLive>
+							<ns4:transacted>true</ns4:transacted>
+							<ns4:channel>
+								<ns4:name>orderBooks</ns4:name>
+							</ns4:channel>
+							<ns4:service>orderBooks</ns4:service>
+						</ns4:actor>
+					</ns4:commands>
+				</ns4:command>
+			</ns4:operations>
+
+			<ns4:operations name="purchaseBooks">
+				<ns4:parameter name="purchaseRequestMessage" type="{http://bookshop}purchaseRequestMessage" construct="item" />
+			</ns4:operations>
+
+			<ns4:cacheUnits name="BookCache" />
+		</ns4:process>
+	</ns4:service>
+</ns4:services>
+                        

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jaxb-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JAXB Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<jaxb.version>2.2.4-1</jaxb.version>
+		<jvnet.jaxb2.version>0.8.0</jvnet.jaxb2.version>
+		<streambuffer.version>1.0</streambuffer.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+ 			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>2.2.3</version>
+			</dependency>
+ 
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-xjc</artifactId>
+				<version>${jaxb.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.xml.stream.buffer</groupId>
+				<artifactId>streambuffer</artifactId>
+				<version>${streambuffer.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.jvnet.staxex</groupId>
+						<artifactId>stax-ex</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!--  
+			<dependency>
+				<groupId>org.jvnet.jaxb2_commons</groupId>
+				<artifactId>jaxb2-basics-runtime</artifactId>
+				<version>${jvnet.jaxb2.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>junit</artifactId>
+						<groupId>junit</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.jvnet.jaxb2_commons</groupId>
+				<artifactId>jaxb2-basics-testing</artifactId>
+				<version>${jvnet.jaxb2.version}</version>
+				<scope>test</scope>
+			</dependency>
+			-->
+		</dependencies>
+	</dependencyManagement>
+</project>

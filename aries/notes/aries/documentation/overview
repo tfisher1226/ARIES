@@ -1,0 +1,49 @@
+The Aries modeling framework describes an approach to modeling distributed systems that is both simple and thorough.
+
+The Aries approach delivers a rapid return on investment through an easily accessible, highly-productive and easily managed solution.
+
+    See a demonstration of ARIES highlighting three simple steps to successful system design and deployment.
+    Learn how to integrate with and reuse your existing frameworks and applications.
+    Identify how ARIES can help to improve you current software development efforts.
+    Discover how easy it is to create new and innovative solutions.
+
+
+
+
+
+
+
+Why yet another modeling language?
+-Ability to achieve completness
+-Ability to have thoroughness in expressivness
+-Ability to easily interchange with other modeling languages
+-Ability to easily manage, adapt and evolve over time
+-Ability to simple and readable (so nobody has to be a rocket scientist to get something done or figure something out..)
+
+
+
+
+Applictions
+   - Scalable in diferent ways
+   - Message layer independence
+   - Service layer independence
+   - Can easily have a variety of clients
+   - Data integrity ensured across all operations 
+   - Security and protection ensured across all operations 
+
+Transactions
+
+Exceptions
+
+Messaging
+
+Persistence
+
+Cacheing
+
+Services
+
+Clients
+
+Modules
+

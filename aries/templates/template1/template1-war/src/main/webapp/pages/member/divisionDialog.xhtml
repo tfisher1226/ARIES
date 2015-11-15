@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:form>
+	    <a4j:jsFunction name="renderDivisionDialog" reRender="divisionDialog" />
+	    <a4j:jsFunction name="showDivisionDialogOLD" reRender="divisionDialog" oncomplete="Richfaces.showModalPanel('divisionDialog')" />
+	    <a4j:jsFunction name="hideDivisionDialogOLD" reRender="divisionDialog" oncomplete="Richfaces.hideModalPanel('divisionDialog')" />
+	    <a4j:jsFunction name="renderDivisionState" reRender="divisionField" />
+	</a4j:form>
+
+	<script type="text/javascript">
+	function showDivisionDialog() {Richfaces.showModalPanel('divisionDialog')}
+	function hideDivisionDialog() {Richfaces.hideModalPanel('divisionDialog')}
+	</script>
+	
+	<a4j:region renderRegionOnly="true">
+	
+		<aries:dialog 
+			dialogWidth="440"
+			dialogHeight="290"
+			dialogName="divisionDialog"
+			dialogBean="#{divisionSelectManager}"
+			dialogAction="submit"
+			dialogRenderer="renderDivisionState">
+			<h:panelGroup layout="block">
+				<ui:include src="divisionPanel.xhtml"/>
+			</h:panelGroup>
+		</aries:dialog>
+	</a4j:region>
+</ui:composition>

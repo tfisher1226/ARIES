@@ -1,0 +1,31 @@
+XA Support
+----------
+
+There are different levels of XA support. Some pools won't even enlist the XAResource automatically for you. If it does, can it deal with use cases such as: connection has been returned to the pool by the application code, but the tx is still running. Tx has been checked out of the pool, then the app begins a tx in which it uses that connection. Or the reverse situation, where the app suspends the tx and then continutes to use the connection. Or where the tx rolls back in the background due to a timeout. Check the small print carefully and write a lot of test cases.
+
+http://jbossts.blogspot.com/2012/01/connecting-dots.html
+
+You only need to delist the resource if you are finished with the work on that resource with that specific transaction, or you want to suspend the work and come back later (enlist again).
+
+
+
+
+You shouldn't be doing any connection management at all in your persistence.xml file. The <jta-data-source> element and the notion of putting connection information in <properties> are mutually exclusive.
+
+Either the JPA provider creates and manages connections (using properties) or it gets the connections from the container (using jta-data-source). Putting both in there will give you unpredictable results. If the JPA provider chooses to honor the connection properties you can quite easily shut off transaction management, connection pooling and more.
+
+What you want is to configure all those things in the container and do not do any of that in the persistence unit declaration.
+
+
+
+The combination of TransactionManagementType.BEAN (BMT) and UserTransaction should be fine. Note that you'll want to catch Throwable rather than Exception. As well the rollback() call can also throw exceptions which should be handled. Overall, though, this should produce the results you want.
+
+Note carefully that while this looks to be nearly identical to what you get from TransactionManagementType.CONTAINER (CMT) and no interceptor, they do differ in one critical way:
+
+    Two CMT beans can share the same transaction
+    Two BMT beans can not share the same transaction.
+
+This is because the container is required to suspend any transaction that might be in progress before invoking any bean using BMT. In that regard the term Bean-Managed Transaction is actually a bit of a misnomer as the container will always take action on any transactions in progress before invoking the BMT bean.
+
+As such BMT and CMT are not on equal footing and it is actually impossible to implement some of the basic CMT features such as SUPPORTS or REQUIRED using BMT.
+

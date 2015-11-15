@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z $WORKSPACE ]; then
+	echo "WORKSPACE must be set"
+	exit 1
+fi
+
+
+set cwd=`pwd`
+cd $WORKSPACE
+rm -rf [a-z]*/build
+rm -rf [a-z]*/target
+cd $cwd

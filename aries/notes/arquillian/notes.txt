@@ -1,0 +1,11 @@
+
+
+We need to ensure that there is only one testable archive to avoid classloader issues. Making the archive testable makes it deploy with the Arquillian libraries, whereas setting testable=false makes it deploy as con?gured; no further enrichment occurs.
+
+We also add a JBoss-speci?c deployment descriptor to the second archive. This descriptor tells JBoss to add the ?rst deployment's classes to the classloader of the second deployment. This allows the CDI bean to see the EJB in another archive.
+
+This approach would also work if you wanted to deploy multiple web services in a single operation to the container and then execute them all serially. You shouldn't assume any specific order though in your testing, unless you build it all in a single method.
+
+If you do deploy across many archives, you should keep your project's structure in mind. Your deployment order (for non-tested archives) should match how it would be deployed in production. Wherever possible, you should match your production deployment.
+
+

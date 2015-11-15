@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jaxb:bindings 
+	version="2.1"
+	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+
+	<jaxb:bindings schemaLocation="aries-common-1.0.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="org.aries.common">
+	    	     <jaxb:javadoc>
+	    	     	<![CDATA[<body>
+	    	     		Package level documentation for generated package.
+	    	     	</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+	    </jaxb:schemaBindings>
+	</jaxb:bindings>
+	
+	<jaxb:bindings schemaLocation="aries-security-1.0.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="org.aries.security">
+	    	     <jaxb:javadoc>
+	    	     	<![CDATA[<body>
+	    	     		Package level documentation for generated package.
+	    	     	</body>]]>
+				</jaxb:javadoc>
+			</jaxb:package> 
+	    </jaxb:schemaBindings>
+	</jaxb:bindings>
+
+    <jaxb:globalBindings>
+		<xjc:simple/>
+		<xjc:serializable uid="1" />
+		<xjc:javaType name="java.util.Date" xmlType="xs:date" adapter="org.aries.adapter.DateAdapter" />
+		<xjc:javaType name="java.util.Date" xmlType="xs:time" adapter="org.aries.adapter.DateAdapter" /> 
+		<xjc:javaType name="java.util.Date" xmlType="xs:dateTime" adapter="org.aries.adapter.DateAdapter" />
+		<xjc:javaType name="java.lang.Boolean" xmlType="xs:boolean" adapter="org.aries.adapter.BooleanAdapter" />
+    </jaxb:globalBindings>
+</jaxb:bindings>

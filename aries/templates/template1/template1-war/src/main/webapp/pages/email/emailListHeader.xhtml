@@ -1,0 +1,120 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel 
+		layout="block" 
+		id="organizationListHeader"
+		style="width: auto; height: 30px; padding-top: 6px">
+		
+	<rich:toolBar 
+		itemSeparator="none"
+		styleClass="toolbar" 
+		contentClass="toolbarContent"
+		separatorClass="toolbarSeparator"
+		style="width: auto; background-color: #fff; border: 0px">
+
+		<rich:toolBarGroup location="left" styleClass="toolbarGroup">
+			<ui:include src="/common/toolbar/toolItem.xhtml">
+				<ui:param name="value" value="Welcome"/>
+				<ui:param name="tooltip" value="Go to Welcome Page"/>
+				<ui:param name="icon" value="resource://images/icons/common/Home16.gif"/>
+				<ui:param name="manager" value="#{navigator}"/>
+				<ui:param name="action" value="showMain"/>
+				<ui:param name="background" value="#fff"/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+			</ui:include>
+		</rich:toolBarGroup>
+		
+		<rich:toolBarGroup location="right" styleClass="toolbarGroup">
+			<!--  
+			<ui:include src="/common/toolbar/toolButton.xhtml">
+				<ui:param name="value" value="Search"/>
+				<ui:param name="tooltip" value="Search for record(s)"/>
+				<ui:param name="icon" value="resource://images/icons/common/Search16.gif"/>
+				<ui:param name="manager" value="#{globals}"/>
+				<ui:param name="action" value="doNothing"/>
+				<ui:param name="onclick" value="showWarning('Placeholder for Search Page', 'Options for searching records will be provided here')"/>
+				<ui:param name="oncomplete" value=""/>
+				<ui:param name="background" value="#fff"/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+			</ui:include>
+			-->
+
+			<!--
+				<ui:param name="manager" value="#{exportManager}"/>
+				<ui:param name="action" value="exportToPDF"/>
+			-->
+
+			<ui:include src="/common/toolbar/toolItem.xhtml">
+				<ui:param name="value" value="PDF"/>
+				<ui:param name="tooltip" value="Export member list to PDF"/>
+				<ui:param name="icon" value="resource://images/icons/export/PDF16.gif"/>
+				<ui:param name="manager" value="#{exportManager}"/>
+				<ui:param name="action" value="exportToPDF"/>
+				<ui:param name="onclick" value=""/>
+				<ui:param name="background" value="#fff"/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+				<ui:param name="target" value="_blank"/>
+				<ui:param name="offset" value="true"/>
+			</ui:include>
+			
+			<!--  
+			<span class="hspace6"/>
+			<h:commandLink value="Export"
+				action="#{excelExporter.export('emailListForm:memberListTable')}"/>
+			-->
+
+			<span class="hspace4"/>
+			<ui:include src="/common/toolbar/toolItem.xhtml">
+				<ui:param name="value" value="Excel"/>
+				<ui:param name="tooltip" value="Export member list to Excel"/>
+				<ui:param name="icon" value="resource://images/icons/export/Excel16.gif"/>
+				<ui:param name="manager" value="#{exportManager}"/>
+				<ui:param name="action" value="exportToXLS"/>
+				<ui:param name="background" value="#fff"/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+				<ui:param name="offset" value="true"/>
+			</ui:include>
+
+			<span class="hspace4"/>
+			<ui:include src="/common/toolbar/toolItem.xhtml">
+				<ui:param name="value" value="Email"/>
+				<ui:param name="tooltip" value="Send e-mail message to member list"/>
+				<ui:param name="icon" value="resource://images/icons/common/message.gif"/>
+				<ui:param name="manager" value="#{emailManager}"/>
+				<ui:param name="action" value="sendEmailToList"/>
+				<ui:param name="background" value="#fff"/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+				<ui:param name="offset" value="true"/>
+			</ui:include>
+
+			<span class="hspace12"/>
+			<ui:include src="/common/toolbar/toolItem.xhtml">
+				<ui:param name="value" value="Help"/>
+				<ui:param name="icon" value="resource://images/icons/common/Help16.gif"/>
+				<ui:param name="manager" value="#{navigator}"/>
+				<ui:param name="action" value="showHelp"/>
+				<ui:param name="onclick" value="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"/>
+				<ui:param name="background" value="#fff"/>
+				<ui:param name="enabled" value="true"/>
+			</ui:include>
+		</rich:toolBarGroup>
+	</rich:toolBar>
+	</a4j:outputPanel>
+</ui:composition>
+

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>aries-validate</artifactId>
+	<name>aries-validate</name>
+	<description>aries-validate</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<schema.home>src/main/resources/schema</schema.home>
+		<source.model.home>${workspace.location}/_generator/src/main/resources/model</source.model.home>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.properties</include>
+						<include>**/*.xml</include>
+						<include>**/*.xsd</include>
+						<include>**/*.xjb</include>
+						<include>META-INF/sun-jaxb.episode</include>
+						<primaryArtifact>true</primaryArtifact>
+					</includes>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<specVersion>2.2</specVersion>
+							<forceRegenerate>true</forceRegenerate>
+							<schemaDirectory>${basedir}/${schema.home}/common</schemaDirectory>
+							<generateDirectory>${basedir}/src/main/java</generateDirectory>
+							<schemaIncludes>
+								<schemaInclude>aries-validate-1.0.xsd</schemaInclude>
+							</schemaIncludes>
+							<strict>true</strict>
+							<extension>true</extension>
+							<verbose>true</verbose>
+							<debug>false</debug>
+							<args>
+								<arg>-npa</arg>
+								<arg>-enableIntrospection</arg>
+							</args>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>export-xsd</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<!-- push public XSD files to central location -->
+								<copy todir="${source.model.home}/common" file="${schema.home}/common/aries-validate-1.0.xsd" overwrite="true" verbose="true" />
+							</target>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>post-process</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<delete file="src/main/java/JAXBDebug.java" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	-->
+	
+	<dependencies>
+		<!--  
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.1</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!-- EMF -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-emf</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+			<exclusions>
+				<exclusion>
+					<groupId>org.aries.pom</groupId>
+					<artifactId>util</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- JAXB -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- SEAM 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

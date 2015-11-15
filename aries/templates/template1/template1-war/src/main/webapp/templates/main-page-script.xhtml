@@ -1,0 +1,177 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+    <a4j:jsFunction 
+    	name="resetProgressDialog" 
+    	immediate="true" 
+    	execute="@this" 
+    	limitRender="true">
+		<a4j:param name="visible" value="false" assignTo="#{progressDialogBean.visible}" noEscape="true"/>
+	</a4j:jsFunction>
+
+    <a4j:jsFunction 
+    	name="waitCursor" 
+    	execute="@this"
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"		    	
+    	oncomplete="setCursorWait(#{rich:element(name)})">
+        <a4j:param name="name" assignTo="#{name}"/> 
+    </a4j:jsFunction>
+
+    <a4j:jsFunction 
+    	name="defaultCursor"
+    	execute="@this"
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"		    	
+    	oncomplete="setCursorDefault(#{rich:element(name)})">
+        <a4j:param name="name" assignTo="#{name}"/> 
+    </a4j:jsFunction>
+
+    <a4j:jsFunction 
+    	name="renderPage" immediate="true" render="pageForm" eventsQueue="org.sgiusa.queue">
+	</a4j:jsFunction>
+
+	<!-- 
+    <a4j:jsFunction 
+    	name="selectPermissionOrganization" 
+    	immediate="true" 
+    	execute="@this"
+    	limitRender="true"
+    	render="PermissionOrganizationSelectDialogHeader">
+    	<a4j:param name="selectedRowKey" assignTo="#{organizationSelectManager.selectedRowKey}" />  
+    	<a4j:param name="selectedNodeId" assignTo="#{organizationSelectManager.selectedNodeId}" />  
+	</a4j:jsFunction>
+
+    <a4j:jsFunction 
+    	name="selectMemberTransferOrganization" 
+    	immediate="true" 
+    	execute="@this"
+    	limitRender="true"
+    	render="MemberTransferOrganizationSelectDialogHeader">
+    	<a4j:param name="selectedRowKey" assignTo="#{organizationSelectManager.selectedRowKey}" />  
+    	<a4j:param name="selectedNodeId" assignTo="#{organizationSelectManager.selectedNodeId}" />  
+	</a4j:jsFunction>
+	
+    <a4j:jsFunction 
+    	name="selectOrganizationTransferOrganizationSelectOrganization" 
+    	immediate="true" 
+    	execute="OrganizationTransferOrganizationSelectDialogForm"
+    	render="OrganizationTransferOrganizationSelectDialogHeader">
+    	<a4j:param name="selectedRowKey" assignTo="#{organizationSelectManager.selectedRowKey}" />  
+    	<a4j:param name="selectedNodeId" assignTo="#{organizationSelectManager.selectedNodeId}" />  
+	</a4j:jsFunction>
+	-->
+	
+	<!-- 
+    <a4j:jsFunction 
+    	name="selectMember"
+    	onbegin="" 
+		render="">
+    	<a4j:param name="selectedRowIndex" assignTo="#{memberListManager.selectedRowIndex}" />  
+    	<a4j:param name="selectedMemberId" assignTo="#{memberListManager.selectedMemberId}" />  
+	</a4j:jsFunction>
+	-->
+
+	<!--  
+	<h:form>
+    <a4j:jsFunction 
+    	name="viewMembers" 
+    	immediate="true" 
+    	execute="@this"
+    	bypassUpdates="true"
+    	limitRender="true"
+    	onbeforedomupdate=""
+    	action="#{mainManager.viewMembers}"
+    	oncomplete="setCursorDefault(); /*showOrganizationView('membershipView'); hideProgress()*/"
+    	render="membershipViewPanel">
+	</a4j:jsFunction>
+	</h:form>
+
+    <a4j:jsFunction 
+    	name="viewMembers" 
+    	immediate="true" 
+    	execute="@this"
+    	bypassUpdates="true"
+    	limitRender="true"
+    	onbeforedomupdate=""
+    	action="#{mainManager.viewMembers(selectedNodeId)}"
+    	oncomplete="setCursorDefault(); /*showOrganizationView('membershipView'); hideProgress()*/"
+    	render="@all">
+    	<a4j:param name="selectedNodeId" assignTo="#{organizationTreeManager.selectedNodeId}" />   
+	</a4j:jsFunction>
+	
+	<a4j:region>
+	    <a4j:jsFunction 
+	    	name="processViewMembers"
+	    	onbegin="alert(#{nodeLabel}); alert(viewMembers); showProgress('View members for '+#{nodeLabel}, 'Retrieving records...'); viewMembers(#{nodeId})"> 
+	    	<a4j:param name="nodeId" assignTo="#{nodeId}" />   
+	    	<a4j:param name="nodeLabel" assignTo="#{nodeLabel}" />   
+		</a4j:jsFunction>
+	</a4j:region>
+	-->
+	
+	<a4j:region>
+	    <a4j:jsFunction 
+	    	name="editMember" 
+	    	immediate="true" 
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{memberListManager.editMember}"
+	    	oncomplete="hideProgress(); setCursorDefault(); showOrganizationInfoDialog()"
+	    	render="OrganizationInfoDialogForm">
+	    	<a4j:param name="memberId" assignTo="#{memberInfoManager.memberId}" />   
+		</a4j:jsFunction>
+	</a4j:region>
+	
+	<!-- 
+	<a4j:region>
+	    <a4j:jsFunction 
+	    	name="viewMembers" 
+	    	immediate="true" 
+	    	execute="@this"
+	    	bypassUpdates="true"
+	    	limitRender="true"
+	    	action="#{mainManager.viewMembers}"
+	    	oncomplete="Richfaces.hideModalPanel('progressDialog'); setCursorDefault(); showOrganizationView()"
+	    	render="mainTabPanel, membershipViewPanel">
+		</a4j:jsFunction>
+	</a4j:region>
+	-->
+
+	<a4j:region>
+	    <a4j:jsFunction 
+	    	name="showOrganizationView"
+	    	onbegin="refreshOrganizationView()">
+	    	<a4j:param name="viewName" value="organizationView"/>   
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	name="refreshOrganizationView"
+	    	onbegin="">
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	name="showAdministrationView"
+	    	onbegin="refreshAdministrationView()">
+	    	<a4j:param name="viewName" value="administrationView"/>   
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	name="refreshAdministrationView"
+	    	onbegin="">
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

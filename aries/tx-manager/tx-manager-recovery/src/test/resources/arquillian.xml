@@ -1,0 +1,20 @@
+<arquillian 
+	xmlns="http://jboss.com/arquillian" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+	<container qualifier="jbossas" default="true">
+		<configuration>
+			<property name="jbossHome">c:/software/jboss-6.1.0.Final</property>
+			<property name="javaVmArguments">-Xms64m -Xmx512m -XX:MaxPermSize=256m</property>
+			<property name="providerUrl">jnp://localhost:1099</property>
+		</configuration>
+
+		<protocol type="Servlet 3.0">
+			<configuration>
+				<property name="host">localhost</property>
+				<property name="port">8080</property>
+			</configuration>
+		</protocol>
+	</container>
+</arquillian>

@@ -1,0 +1,45 @@
+11635 e valley peck 626-258-0365 Theresa
+
+
+
+Response:
+
+Many times people criticize what they don't understand..
+
+Quote by Steve Ballmer:
+ 	I believe our industry has a responsibility, and an opportunity, to dramatically simplify the computing environment by seamlessly weaving together all of the devices, services and multiple layers of software into a coherent, efficiently managed technology framework.
+
+Quote by T. Reenskaug:
+    Any method that prevents the programmer writing code, is a good method.
+
+
+The XXX pi calculus [refhere] is a language for defining, describing and analysing protocols suitable for use within a service oriented excution environment featuring long-running transactional processes.  It provides an intuitive process syntax for detailing the actions of the participants in a protocol, emphasising their communication.
+
+The syntax is coupled with formal semantics to allow reasoning about protocols. The language is based on the pi calculus with the addition of a rich term algebra to enable modelling of the cryptographic operations used by security protocols.  A wide variety of cryptographic primitives can be abstractly modelled by means of an equational theory.
+
+The calculus allows one to express several types of goals, and to analyse whether the target protocol implementation meets its goals or not.
+
+
+
+The architectural design of the generated output is based on nothing more than a thorough, practical understanding of selected standards and best-practices.  In short, it is far "less-risky" to use this approach than to adopt the risk of trusting an individual programmer to "do his best...".  In order to complete the design and implementation that would be equivalent to the generated output, several types of specialized programmers would be necessarily required.  These specialized programmers include the following: (the term tier could be used interchangeablywith layer below)
+    1) UI layer
+    2) Client layer
+    2) Message layer
+    2) Service layer
+    2) Process layer
+    2) Data layer
+
+Again, in order to achieve the equivalent using programmers, for even a small project such as the "bookshop" one, the outcome is literally unpredictable.  Incicentally, the generated output using NAM is created within seconds.And this includes already completed test (at multiple levels) that are ready to run correctly immediately right off the bat.  Also generated are projects, config files, and fully maven-based build files (i.e. including pom, bom, and api pom files). 
+
+If you have used EJBs in the past, or have become aware of some of the evolution resulting from EJB 2 to EJB 3 and how Spring fits in and how Seam fits in.  We see a gradual shift toward 1) making things easier for the developer while offereing greater variety of essential functionality.  Essential functionality here refers to enforcing security and transactional integrity.  This translates to propagation of security context and transactional context across service and process boundaries.  Up to this point, EJBs are the only thing out there allowing us to do this in a way that has reasonable performance.  Some folks (the JBoss Transactions team) have attemted to provide this using Web-Services (currently called XTS) but the performance and processing overhead really sucks.  Sure its performance will get better over time but using EJB's is still way more practical.  The reason to use Web-Services for this functionality (seamless propagation and management of security and transactional context) would be when the communicating parties are different and independent organizations.
+
+A Maven-ized project has certain clear benefits (some say essential benefits) compared to a project that is not using Maven (or other such tool).  It is valuable to clearly undestand these benefits and to understand some of how Maven provides them.
+
+We take what Maven has done using archetypes to simplify application creation and go several steps further.  Maven has ability to create multi-project applications...
+
+Enterprise Java Beans
+
+It is important to understand certain benefits provided by using EJBs.  It allows us to properly utlize EJBs in the right ways in the right places.  Like any such technology, using EJBs by way of manually coding them by hand opens the door for mistakes and mis-usages...
+
+
+

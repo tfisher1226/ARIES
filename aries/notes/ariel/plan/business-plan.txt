@@ -1,0 +1,10 @@
+
+Listings:
+
+Things where we need to keep track of versions and status of updates:
+       -Eclipse plugins
+       -Eclipse JBoss tools especially
+       -Eclipse project structures
+       -Dependent Jars for each Group we support:
+                  Example groupings based on Application server environments
+

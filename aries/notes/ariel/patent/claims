@@ -1,0 +1,32 @@
+-- A method for manufactoring arbitrarily distributed computing systems among disparate hw/sw systems by means of a language that captures protocol behaviour and isolates it from the business logic.
+
+-- A Model and a Language for representing a Protocol Scenario with multiple Transactional Participants.  Where any given Participant may be a Service, a Cache, a Database, or a Command.  And where each Participant may have 0 or more other Participants configured as handlers for the various Events and Timeouts that may occur associated with the Action.
+
+-- A text-based Language to describe the interactions between Participants in a Distributed System.  Interactions may be transactional and may be configured with Transactional Attributes to specify scope, degree of isolation and global failure actions.  Interactions in blocks may run in serial or concurrently
+
+for the definition of and interaction of multiple Participants and Communincations using various Interactions where Interactions may be Data Interactions, Event Interactions, and Message Interactions where communications may be synchronous or asynchronous within multiple groups of potentially disparate Messaging Systems. 
+
+-- A formal Model for Recovery within a Distributed Workflow having disparate Participants.
+
+-- A Model for partitioning an Application into recoverable-units.  Transaction failures are often handled locally within such models using retries, compensation actions, or other alternative actions.
+
+-- Different condition-handling policies for different results using a criteria language to declare the different groups of conditions to be handled by any specific condition-handler.
+
+-- Hierarchical recovery of some or all child transactions for undoing the effects of a failed global transaction.
+
+-- A Model for the definition and specification of a Compensation Action as a single Task or chain of Tasks that can effectively undo or repair damage incurred by a failed operation within a Workflow.  Where Compensation Actions can be applied to Tasks or Groups of Tasks to support Hierarchical Recovery.
+
+
+
+
+
+-- A website that allows automated generation of distributed system from minimal input.
+    - by means of allowing user to organize information in specific essential ways.
+        - configurations
+        - data models
+        - messaging models
+        - persistence models
+
+
+fax #: 972-726-7557 (charter) ref #: 1695653603
+

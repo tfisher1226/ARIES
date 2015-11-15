@@ -1,0 +1,174 @@
+import bookshop.xsd;
+
+protocol Bookshop2 {
+
+    /*
+    role buyer {
+    }
+
+    role seller {
+    }
+    */
+
+    channel Public {
+        add client(Buyer);
+        add service(Seller);
+    }
+
+    channel Inventory {
+        add client(Seller);
+        add service(Supplier);
+    }
+
+    channel Shipment {
+        add client(Supplier);
+        add service(Shipper);
+    }
+
+    participant Buyer {
+        add channel(Public);
+		set namespace(buyer);
+
+        receive orderBooks(OrderRequest) {
+            invoke Seller.orderBooks($message) {
+                message OrderAccepted: {
+                    purchaseBooks(PurchaseRequest);
+                }
+                message OrderRejected: {
+                    //reply $response;
+                }
+            }
+        }
+
+        purchaseBooks(PurchaseRequest) {
+            invoke Seller.purchaseBooks($message) {
+                message PurchaseAccepted: {
+                    //reply $response;
+                }
+                message PurchaseRejected: {
+                    //reply $response;
+                }
+            }
+        }
+    }
+
+    participant Seller {
+        add channel(Public);
+        add channel(Inventory);
+		set namespace(seller);
+
+        receive orderBooks(OrderRequest) {
+       		bookCache.addAvailableBooks($request.books);
+
+            invoke SupplierGroup.queryBooks($request) {
+            	set timeout(3m);
+            	set minResponse(4);
+            	set maxResponse(10);
+
+                message BookAvailable: {
+                    option: {
+               		    bookCache.addAvailableBook($response.book);
+                        //send SupplierGroup.reserveBooks($request);
+                        reply OrderAccepted;
+                    }
+                }
+
+                timeout: {
+                    option: reply OrderAccepted;
+                    option: reply OrderRejected;
+                }
+
+                exception: {
+                    reply OrderRejected;
+                }
+            }
+        }
+
+        receive purchaseBooks(PurchaseRequest) {
+            option: reply PurchaseAccepted;
+            option: reply PurchaseRejected;
+        }
+
+   		cache BookCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    List<Book> bookOrders; 
+			    List<Book> availableBooks; 
+			    List<Book> unavailableBooks; 
+		    }
+	    }
+    }
+
+    group SupplierGroup {
+        set participant(Supplier);
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        add channel(Inventory);
+        add channel(Shipment);
+		set namespace(supplier);
+
+        receive queryBooks(OrderRequest) {
+            option: reply BookAvailable;
+        }
+
+        receive reserveBooks(ReservationRequest) {
+        }
+
+        receive shipBooks(ShipmentRequest) {
+            invoke Shipper.shipBooks($message) {
+				set transaction(required); 
+				set timeout(5m); 
+
+                message ShipmentComplete: {
+                	option: {
+	                    supplierOrderCache.addBookOrders(Orders);
+	                	//bookOrderLog.log(Payment);
+	                	post ShipmentComplete;
+	                	//reply ShipmentComplete;
+	                }
+	            }
+	        }
+		}
+		
+		cache SupplierOrderCache { 
+			set scope(application); 
+			set transaction(required); 
+			set backingStore(bookOrderLog);
+			items {
+				List<Book> currentBookOrders; 
+				Map<Book, String> booksInStock;
+			}
+		}
+
+		persist BookOrderLog {
+		    set role(administrator);
+			set scope(application); 
+			set transaction(mandatory); 
+		    set source(SgiusaDS);
+			items {
+				List<Book> allBookOrders {
+					index(title);
+					index(author);
+				} 
+				Map<String, Book> booksInStock {
+					index(title);
+					index(author);
+				}
+			}
+		}
+    }
+
+    participant Shipper {
+        add channel(Shipment);
+		set namespace(buyer);
+
+        receive shipBooks(ShipmentRequest) {
+            reply ShipmentComplete;
+            //reply ShipmentComplete[Summary, Invoice, Receipt];
+        }
+    }
+
+}

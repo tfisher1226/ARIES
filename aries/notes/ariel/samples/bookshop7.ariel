@@ -1,0 +1,122 @@
+protocol Bookshop {
+
+    role buyer {
+    }
+
+    role seller {
+    }
+
+    role supplier {
+    }
+
+    group suppliers {
+        role supplier;
+    }
+
+    participant Buyer {
+        role buyer;
+        receive orderBooks(books)  {
+            invoke seller.order(books) {
+                message OrderAccepted: {
+                    invoke Seller.purchaseBooks(payment) {
+                        message PaymentAccepted: {
+                            print(receipt);
+                            end;
+                        }
+                        message PaymentRejected: {
+                            end;
+                        }
+                    }
+                }
+                message OrderRejected: {
+                    end;
+                }
+            }
+        }
+    }
+
+    participant Seller {
+        role seller;
+        receive orderBooks(books) {
+            invoke Suppliers.query(books), timeout=3m, min=1, max=5 {
+                message BooksAvailable:
+                    aggregate(min($bookInfo.price));
+                }
+                message Exception: {
+                    reply(Exception);
+                }
+                timeout: {
+                    done;
+                }
+                done {
+                    option reply(OrderAccepted(invoice));
+                    option reply(OrderRejected);
+                }
+            }            
+        }
+
+        receive purchaseBooks(payment) {
+            option exception(CreditDeclined);
+            option exception(PaymentRefused);
+            option reply(Receipt);
+        }
+    }
+
+    participant Supplier {
+        role supplier;
+
+        receive queryBooks(books) {
+            option reply(BooksAvailable);
+            option reply(BooksUnavailable);
+        }
+
+        receive reserveBooks(books) {
+            option reply(BooksReserved);
+            option reply(BooksUnavailable);
+        }
+
+        receive shipBooks(books) {
+            invoke shipper.shipBooks(books) {
+                message BooksShipped: {
+                    post(BooksShipped);
+                }
+            }
+        }
+    }
+
+    participant Shipper {
+        role shipper;
+        receive shipBooks(books) {
+            reply(BooksShipped);
+        }
+    }
+}
+
+
+
+    participant buyer {
+        role buyer;
+        receive orderBooks(books)  {
+            invoke seller.order(books) {
+                message OrderAccepted: {
+                    purchaseBooks(invoice);
+                }
+                message OrderRejected: {
+                    end;
+                }
+            }
+
+            purchaseBooks(invoice) {
+                invoke seller.purchaseBooks(payment) {
+                    message PaymentAccepted: {
+                        print(receipt);
+                        end;
+                    }
+                    message PaymentRejected: {
+                        end;
+                    }
+                }
+            }
+        }
+    }
+

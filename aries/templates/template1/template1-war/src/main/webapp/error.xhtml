@@ -1,0 +1,79 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    template="/templates/error-page-template.xhtml">
+
+	<!-- CONTENT -->
+	<ui:define name="content">
+		<aries:form id="errorForm">
+			<aries:toolbar type="menubar">
+				<aries:toolbarGroup location="left">
+					<aries:toolItem 
+						mode="client"
+						name="home"
+						label="Home"
+						execute="@this"
+						icon="/icons/common/Home16.gif"
+						tooltip="Go back to home screen" 
+						onmousedown="setCursorWait(this)" 
+						onmouseup="window.location.href = '/main.seam'" />
+				</aries:toolbarGroup>
+	
+				<aries:toolbarGroup location="right">
+					<aries:toolItem 
+						name="help"
+						label="Help"
+						mode="ajax"
+						execute="@this"
+						icon="/icons/common/Help16.gif"
+						manager="#{navigator}"
+						action="showHelp" 
+						target="_blank" />
+
+					<aries:toolItem
+						id="logoutItem"
+						name="logout"
+						label="Logout"
+						execute="@this"
+						render="@all"
+						icon="/icons/common/Remove16.gif"
+						manager="#{identity}"
+						action="logout" 
+						onclick="waitCursor('logoutItem')" />
+				</aries:toolbarGroup>
+			</aries:toolbar>
+
+			<aries:outputPane id="errorHeaderBar" layout="block" style="padding: 12px">
+				<div class="title">
+					${template1_title} Application Error
+				</div>
+				
+				<br/>	
+				<h:panelGroup layout="block" styleClass="panel">
+					<a href="javascript:history.back()">Go back to application</a>
+					
+					<div class="vspace10"/>
+					<h3>An exception has occurred and has been logged.</h3>
+			
+					<div class="vspace10"/>
+					<h:panelGroup layout="block" rendered="#{messagesExist or true}">
+						<div class="vspace6"/>
+						<h:panelGrid columns="3" columnClasses="formColumn, formColumn">
+							<ui:repeat value="#{messages.getMessages()}" var="message">
+								<h:graphicImage library="images" name="#{dialogMessageStyleFactory.styleForSeverity(message.severity).iconUrl}" style="vertical-align: top"/>
+								<h:outputText value="#{message.detail}" styleClass="#{dialogMessageStyleFactory.styleForSeverity(message.severity).styleClass}" style="padding-left: 8px; vertical-align: top"/>.
+								<span class="hspace4"/>
+							</ui:repeat>
+						</h:panelGrid>
+					</h:panelGroup>
+				
+					<div class="vspace10"/>
+					<h3>Operations can be reached at <a href="mailto:${template1_administrator_email_address}">${template1_administrator_email_address}</a>.</h3>
+				</h:panelGroup>
+			</aries:outputPane>
+		</aries:form>
+	</ui:define>
+</ui:composition>

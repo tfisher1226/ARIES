@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>org.sgiusa.model.entity</package>
+
+	<entity class="EmailListEntity">
+		<named-query name="getEmailLists">
+			<query>
+				<![CDATA[
+					select x from EmailList x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getEmailListBy">
+			<query>
+				<![CDATA[
+					select x from EmailList x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="EventEntity">
+		<named-query name="getEvents">
+			<query>
+				<![CDATA[
+					select x from Event x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getEventBy">
+			<query>
+				<![CDATA[
+					select x from Event x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="FamilyMemberEntity">
+		<named-query name="getFamilyMembers">
+			<query>
+				<![CDATA[
+					select x from FamilyMember x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getFamilyMemberBy">
+			<query>
+				<![CDATA[
+					select x from FamilyMember x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="GohonzonInfoEntity">
+		<named-query name="getGohonzonInfos">
+			<query>
+				<![CDATA[
+					select x from GohonzonInfo x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getGohonzonInfoBy">
+			<query>
+				<![CDATA[
+					select x from GohonzonInfo x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="LeadershipInfoEntity">
+		<named-query name="getLeadershipInfos">
+			<query>
+				<![CDATA[
+					select x from LeadershipInfo x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getLeadershipInfoBy">
+			<query>
+				<![CDATA[
+					select x from LeadershipInfo x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="LeadershipRoleEntity">
+		<named-query name="getLeadershipRoles">
+			<query>
+				<![CDATA[
+					select x from LeadershipRole x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getLeadershipRoleBy">
+			<query>
+				<![CDATA[
+					select x from LeadershipRole x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="MemberEntity">
+		<named-query name="getMembers">
+			<query>
+				<![CDATA[
+					select x from Member x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getMemberBy">
+			<query>
+				<![CDATA[
+					select x from Member x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="MembersEntity">
+		<named-query name="getMemberss">
+			<query>
+				<![CDATA[
+					select x from Members x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getMembersBy">
+			<query>
+				<![CDATA[
+					select x from Members x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="MembershipInfoEntity">
+		<named-query name="getMembershipInfos">
+			<query>
+				<![CDATA[
+					select x from MembershipInfo x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getMembershipInfoBy">
+			<query>
+				<![CDATA[
+					select x from MembershipInfo x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="NoteEntity">
+		<named-query name="getNotes">
+			<query>
+				<![CDATA[
+					select x from Note x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getNoteBy">
+			<query>
+				<![CDATA[
+					select x from Note x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="OrganizationEntity">
+		<named-query name="getOrganizations">
+			<query>
+				<![CDATA[
+					select x from Organization x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getOrganizationBy">
+			<query>
+				<![CDATA[
+					select x from Organization x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="SchoolInfoEntity">
+		<named-query name="getSchoolInfos">
+			<query>
+				<![CDATA[
+					select x from SchoolInfo x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getSchoolInfoBy">
+			<query>
+				<![CDATA[
+					select x from SchoolInfo x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="StudyDeptExamEntity">
+		<named-query name="getStudyDeptExams">
+			<query>
+				<![CDATA[
+					select x from StudyDeptExam x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getStudyDeptExamBy">
+			<query>
+				<![CDATA[
+					select x from StudyDeptExam x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="StudyDeptInfoEntity">
+		<named-query name="getStudyDeptInfos">
+			<query>
+				<![CDATA[
+					select x from StudyDeptInfo x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getStudyDeptInfoBy">
+			<query>
+				<![CDATA[
+					select x from StudyDeptInfo x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="UserEntity">
+		<named-query name="getUsers">
+			<query>
+				<![CDATA[
+					select x from User x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getUserBy">
+			<query>
+				<![CDATA[
+					select x from User x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="UserPermissionEntity">
+		<named-query name="getUserPermissions">
+			<query>
+				<![CDATA[
+					select x from UserPermission x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getUserPermissionBy">
+			<query>
+				<![CDATA[
+					select x from UserPermission x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="UsersEntity">
+		<named-query name="getUserss">
+			<query>
+				<![CDATA[
+					select x from Users x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getUsersBy">
+			<query>
+				<![CDATA[
+					select x from Users x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

@@ -1,0 +1,30 @@
+Substitution breakdown
+----------------------
+
+.project 
+	-project selection for modules to be included in the ear
+	
+pom.xml 
+	-application-specific properties
+	-deployment-specific properties
+		-exploded deployment setting
+		-module-specific exploded deployment setting
+		-inclusion of each maven dependency of each module (i.e. the grand superset of all modules)
+		 (this grand-superset must not have conflicts.  It is the user's responsibility to ensure this.
+		 The GE provides default sets of libraries that can be used here, where all dependencies have 
+		 been made compatible and conflict-free.
+	-target host name
+	-bundle directory
+	-ear source directory
+	-data source file name
+	-J2EE EAR version setting for JBoss section
+	-inclusion of each module
+		-dependency management section
+		-dependencies section
+
+.settings/org.eclipse.wst.common.component
+	-each dependent-module
+		-archive name
+		-deployment path
+		-project handle
+		

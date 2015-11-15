@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>javax-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JAVAX Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<javax.el.version>2.2</javax.el.version>
+		<javax.ejb.version>3.1</javax.ejb.version>
+		<javax.cdi.version>1.0</javax.cdi.version>
+		<javax.jms.version>1.1</javax.jms.version>
+		<javax.wsdl.version>1.6.2</javax.wsdl.version>
+		<javax.mail.version>1.4.2</javax.mail.version>
+		<javax.activation.version>1.1</javax.activation.version>
+		<javax.validation.version>1.0.0.GA</javax.validation.version>
+		<javax.persistence.version>2.0</javax.persistence.version>
+		<javax.transaction.api.version>1.1-rev-1</javax.transaction.api.version>
+		<javax.transaction.jta.version>1.1</javax.transaction.jta.version>
+		<javax.servlet.version>3.0</javax.servlet.version>
+		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
+		<jsr250-api.version>1.0</jsr250-api.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>activation</artifactId>
+				<version>${javax.activation.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.annotation</groupId>
+				<artifactId>jsr250-api</artifactId>
+				<version>${jsr250-api.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>el-api</artifactId>
+				<version>${javax.el.version}</version>
+			</dependency>
+	
+	        <!--
+	        3.1.0
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet.version}</version>
+			</dependency>
+	        -->
+
+			<dependency>
+				<groupId>org.jboss.spec.javax.servlet</groupId>
+				<artifactId>jboss-servlet-api_3.0_spec</artifactId>
+				<version>1.0.2.Final</version>
+			</dependency>
+
+	        <!--
+	        2.5
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${javax.servlet.version}</version>
+			</dependency>
+	        -->
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${javax.servlet.jstl.version}</version>
+			</dependency>
+
+	        <dependency>
+	            <groupId>javax.mail</groupId>
+	            <artifactId>mail</artifactId>
+	            <version>${javax.mail.version}</version>
+	        </dependency>
+
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${javax.validation.version}</version>
+			</dependency>
+
+			<!--  
+			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>persistence-api</artifactId>
+				<version>${javax.persistence.version}</version>
+			</dependency>
+			-->
+	
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>transaction-api</artifactId>
+	            <version>${javax.transaction.api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+	            <version>${javax.transaction.jta.version}</version>
+			</dependency>
+				
+            <!--
+	        <dependency>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
+	            <version>${javax.jms.version}</version>
+			</dependency>
+            -->
+
+			<!--  
+			<dependency> 
+				<groupId>javax.ejb</groupId>
+				<artifactId>ejb-api</artifactId>
+				<version>${javax.ejb.version}</version> 
+			</dependency>
+			-->
+
+            <dependency>
+                <groupId>javax.enterprise</groupId>
+                <artifactId>cdi-api</artifactId>
+				<version>${javax.cdi.version}</version> 
+            </dependency>
+
+			<!--  
+			<dependency>
+				<groupId>javax.portlet</groupId>
+				<artifactId>portlet-api</artifactId>
+	            <version>${javax.portlet.version}</version>
+			</dependency>
+	    	-->
+
+			<dependency>
+				<groupId>org.jboss.spec.javax.ejb</groupId>
+				<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+				<version>1.0.0.CR2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

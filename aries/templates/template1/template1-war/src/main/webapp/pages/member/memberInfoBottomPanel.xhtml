@@ -1,0 +1,135 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGrid 
+		layout="block" 
+		columns="2" 
+		columnClasses="formColumnAlignTop, formColumnAlignTop"
+		styleClass="layoutPane"  
+		style="background-color: inherit"> 
+
+		<h:panelGrid 
+			layout="block" 
+			columns="1" 
+			columnClasses="formColumn"
+			styleClass="formPanel"  
+			style="background-color: inherit"> 
+
+			<a4j:outputPanel id="memberDivisionPanel">
+				<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumnAlignTop, formColumn">
+					<h:outputLabel styleClass="formLabel" style="width: 80px; padding-top: 2px">Division</h:outputLabel>
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 166px; height: auto; cursor: pointer">
+						<ui:include src="divisionField.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+			
+			<rich:spacer height="8"/>
+			<a4j:outputPanel id="memberOrganizationPanel">
+				<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumnAlignTop, formColumn"> 
+					<h:outputLabel styleClass="formLabel" style="width: 80px; padding-top: 2px">Organization</h:outputLabel>
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 166px; height: auto; cursor: pointer">
+						<ui:include src="organizationField.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+
+			<rich:spacer height="8"/>
+			<a4j:outputPanel id="memberActivityGroupPanel">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnFillVertical, formColumn" style="border: 1px solid #ccc; background-color: inherit">
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 60px; height: 100%; cursor: pointer; background-color: inherit">
+						<h:outputLabel styleClass="formLabel" style="display: block; padding-top: 2px">Groups</h:outputLabel>
+					</h:panelGroup> 
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 190px; height: auto; cursor: pointer">
+						<ui:include src="activityGroupField.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+			
+			<!--  
+			<div class="vspace8"/>
+			<a4j:outputPanel id="memberActivityGroupPanel">
+				<h:outputLabel styleClass="groupLabel">Activity Groups</h:outputLabel>
+				<h:panelGrid styleClass="groupPanel" layout="block" columns="1" columnClasses="formColumnAlignTop"> 
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 230px; height: auto; cursor: pointer">
+						<ui:include src="activityGroupField.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+			-->
+		</h:panelGrid>
+
+		<h:panelGrid 
+			layout="block" 
+			columns="1" 
+			columnClasses="formColumn"
+			styleClass="formPanel"  
+			style="margin-left: 16px; background-color: inherit"> 
+			
+			<a4j:outputPanel id="leadershipInfoFieldPanel">
+				<h:outputLabel styleClass="groupLabel">Leadership Information</h:outputLabel>
+				<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="margin-top: 4px; background-color: inherit"> 
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 286px; height: auto; cursor: pointer">
+						<ui:include src="leadershipInfoField.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+
+			<rich:spacer height="8"/>
+			<a4j:outputPanel id="studyDeptInfoFieldPanel">
+				<h:outputLabel styleClass="groupLabel">Study Dept. Information</h:outputLabel>
+				<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="margin-top: 4px; background-color: inherit"> 
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 286px; height: auto; cursor: pointer">
+						<ui:include src="studyDeptInfoField.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+			
+			<!--  
+			<a4j:outputPanel id="studyPositionPanel">
+				<h:outputLabel styleClass="groupLabel">Study Dept. Information</h:outputLabel>
+				<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="margin-top: 4px; background-color: inherit"> 
+					<h:panelGroup styleClass="formPanel" layout="block" style="width: 286px; height: auto; cursor: pointer">
+						<ui:include src="leadershipListTable.xhtml"/>
+					</h:panelGroup> 
+				</h:panelGrid>
+			</a4j:outputPanel>
+			-->
+		</h:panelGrid>
+
+		<!--  
+		<div class="groupLabel">Address</div>
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="1" columnClasses="formColumn" style="background-color: inherit"> 
+	
+			<h:panelGrid styleClass="formPanel" columns="2"> 
+				<div class="formLabel" style="width: 50px">Street</div>
+				<h:inputText styleClass="formInput" style="width: 300px" value="#{member.streetAddress.street}"/>
+			</h:panelGrid>
+	
+			<h:panelGrid styleClass="formPanel" columns="8"> 
+				<div class="formLabel" style="width: 50px">City</div>
+				<h:inputText styleClass="formInput" style="width: 120px" value="#{member.streetAddress.city}"/>
+	
+				<rich:spacer width="10"/>
+				<div class="formLabel" style="width: 30px">State</div>
+				<h:inputText styleClass="formInput" style="width: 20px" value="#{member.streetAddress.state}"/>
+	
+				<rich:spacer width="10"/>
+				<div class="formLabel" style="width: 20px">Zip</div>
+				<h:inputText styleClass="formInput" style="width: 70px" value="#{member.streetAddress.zip}"/>
+			</h:panelGrid>
+		</h:panelGrid>
+		-->
+
+	</h:panelGrid>
+</ui:composition>

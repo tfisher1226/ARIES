@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jta</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JAXB Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>javax-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jta-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!--  
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.transaction</groupId>
+			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.resource</groupId>
+			<artifactId>jboss-connector-api_1.5_spec</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+		</dependency>
+			
+		<dependency>
+			<groupId>org.jboss.jbossts</groupId>
+			<artifactId>jbossjta</artifactId>
+		</dependency>
+
+		<!--  
+		-->
+		<dependency>
+			<groupId>org.jboss.jbossts</groupId>
+			<artifactId>jbossjts</artifactId>
+		</dependency>
+        
+		<dependency>
+			<groupId>org.jboss.jbossts</groupId>
+			<artifactId>jbossjts-integration</artifactId>
+		</dependency>
+	</dependencies>
+</project>

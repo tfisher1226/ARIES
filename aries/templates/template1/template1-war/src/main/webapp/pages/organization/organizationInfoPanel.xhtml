@@ -1,0 +1,61 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="organizationInfoPanel">
+		<h:panelGroup rendered="true">
+
+			<!--  
+			<h:panelGroup rendered="#{organization.id == null}">
+				<h:outputText styleClass="dialogSubTitle" escape="false" 
+					value="New #{organization.level} for #{organization.parent.name} #{organization.parent.level}"/>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{organization.id != null}">
+				<h:outputText styleClass="dialogSubTitle" escape="false" 
+					value="#{organization.name} #{organization.parent.level} of #{organization.parent.name} #{organization.parent.level}"/>
+			</h:panelGroup>
+			-->
+		
+			<div class="vspace2"/>
+			<h:outputLabel styleClass="groupLabel text13">#{organization.level} Information</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="height: 126px; margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 8px 10px 10px 4px">		
+
+					<div class="vspace2"/>
+					<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignBottom, formColumn">		
+						<h:outputLabel styleClass="formLabel" style="display: block; width: 50px">Name</h:outputLabel>
+						<h:inputText  styleClass="formInput" id="organizationNameField" style="width: 340px" value="#{organization.name}"/>
+					</h:panelGrid> 
+		
+					<div class="vspace8"/>
+					<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignBottom, formColumn">		
+						<h:outputLabel styleClass="formLabel" style="display: block; width: 50px">Level</h:outputLabel>
+						<h:selectOneMenu layout="pageDirection" disabled="true" 
+							styleClass="formInput" style="width: 346px" value="#{organization.level}">
+							<s:selectItems hideNoSelectionLabel="false" value="#{levels}" var="level" label="#{level}"/>
+							<s:convertEnum/>
+						</h:selectOneMenu>
+					</h:panelGrid> 
+		
+					<div class="vspace8"/>
+					<h:panelGroup styleClass="formPanel" layout="block" rendered="#{organization.level == 'ZONE' or organization.level == 'REGION' or organization.level == 'AREA'}">
+						<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignBottom, formColumn">		
+							<h:outputLabel styleClass="formLabel" style="display: block; width: 50px">Abbrv.</h:outputLabel>
+							<h:inputText styleClass="formInput" style="width: 340px" value="#{organization.abbrv}"/>
+						</h:panelGrid> 
+					</h:panelGroup>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

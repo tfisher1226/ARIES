@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://www.aries.org/0.0.1" 
+	xmlns:common="http://www.aries.org/common/0.0.1"
+	xmlns:sgiusa="http://www.sgiusa.org/model/0.0.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/0.0.1 http://www.aries.org/aries-0.0.1.xsd">
+
+	<modelVersion>0.0.1</modelVersion>
+
+	<template>
+	    <name>template1</name>
+	    <title>template1</title>
+	
+	</template>
+
+	<page name="main">
+	    <file>main.xhtml</file>
+	    <template>template1</template>
+
+		<menubar ref="main"/>
+		<messages module="main"/>
+
+		<page-pane>
+			<horizontal-pane>
+				<panel width="330" fill="vertical">
+					<label2>Organization View</label2>
+					<tabPanel>
+						<tab name="organizationTab">
+							<label>Organization</label>
+							<icon>resource://images/icons/common/New16.gif</icon>
+							
+							<toolbar>
+								<toolGroup location="left">
+									<action ref="newOrganization"/>
+									<action ref="editOrganization"/>
+								</toolGroup>
+								<toolGroup location="right">
+									<action ref="collapseOrganization"/>
+									<action ref="expandOrganization"/>
+									<action ref="refreshOrganizations"/>
+								</toolGroup>
+							</toolbar>
+							
+							<tree name="organizationTree"/> 
+								<bean>organizationTreeManager</bean> 
+								<treeNode>
+									<type>ZONE</type>
+									<icon ref="File">
+									<menu ref="organizationMenu"/>
+									<view ref="membershipView"/>
+									<action name="viewMembersAction"/>
+								</treeNode>
+							</tree>
+						</tab>
+					</tabPanel>
+				</panel>
+				
+				<panel fill="both">
+				</panel>
+			</horizontal-pane>
+		</page-pane>
+	</page>
+
+	<actions>
+		<action>
+			<name>importMembers</name>
+			<label>Import Members...</label>
+			<tooltip>Import Membership records into the system</tooltip>
+			<icon>resource://images/icons/common/Import16.gif</icon>
+		</action>
+	</actions>
+
+	<components>
+		<menubar>
+			<name>main</name>
+			<mode>public</mode>
+			<items location="right">
+				<login-action/>
+			</items>
+		</menubar>
+		
+		<menubar>
+			<name>main</name>
+			<mode>private</mode>
+			<menugroup location="left">
+				<menu>
+					<label>File</label>
+					<action name="importMembers"/>
+					<action name="moveMembers"/>
+					<action name="moveOrganization"/>
+					<logout-action/>
+				</menu>
+				<menu>
+					<label>New</label>
+					<new-user-action/>
+				</menu>
+			</menu>
+			<menugroup location="right">
+				<help-menu/>
+				<logout-action/>
+			</menu>
+		</menubar>
+	</components>
+
+</project>

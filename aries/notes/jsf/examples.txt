@@ -1,0 +1,3 @@
+
+http://jtech.ua.es/richfaces-showcase/richfaces/component-sample.jsf;jsessionid=47A33249E09EC56319A7676E87405D5D?demo=region
+

@@ -1,0 +1,23 @@
+http://facelets.java.net/nonav/docs/dev/docbook.html#template
+http://www.jsfcentral.com/articles/facelets_3.html
+
+
+Template/Client Relationships
+-----------------------------
+
+When describing templating within Facelets, we have two roles: the template and the template client.
+
+Any document can act as a template; but what makes a document a template? It just simply uses one or more <ui:insert/> tags to inject content from another source.
+
+The other half of the equation is the template client. This includes documents that use the <ui:component/>, <ui:composition/>, <ui:fragment/>, or <ui:decorate/>.
+
+
+Multi-Level Templating
+----------------------
+
+Template use may go multiple levels deep. This means that a template client may use a template which in turn may use a template.
+
+Templating is backed by the a TemplateManager that has a stack of TemplateClient instances. Tags like <ui:composition> implement TemplateClient. When a template is being evaluated and comes upon a <ui:insert/> tag, it will ask the TemplateManager for a TemplateClient that either has a match for the tag's name attribute, or the top-most TemplateClient on the stack.
+
+An example would be having a <ui:insert name="title"/> tag in the template. The TemplateManager will walk through its internal stack of TemplateClients, asking each one for a content under the name title. It will continue through the stack until one is found. If none are found, then the original template is free to include the default content.
+

@@ -1,0 +1,20 @@
+model-module:
+    model.xsd
+    
+
+data-module:
+    model.xsd
+    persistence.xml
+    queries/
+        type1-queries.xml
+        type2-queries.xml
+    import.sql
+
+client-module:
+
+
+
+ear-module:
+
+war-module:
+    components.xml

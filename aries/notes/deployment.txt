@@ -1,0 +1,47 @@
+
+JBOSS
+--------
+
+http://shrubbery.mynetgear.net/c/display/W/JBoss+Ports:
+
+How to configure ports for different instances of JBoss
+Solution #1 : Use the Service Binding facility
+
+The "Service Binding" feature uses a JMX bean to configure the other JMX beans (as far as I can tell). This requires you to make a file that has all of the possible bindings for each 'jboss server name'. The basics are:
+
+   1. Create a globally shared "Service Binding" file that will contain the port numbers for each possible instance of JBoss on the machine by 'configuration name'.
+   2. Uncomment or add a "Service Binding" section in conf/jboss-service.xml. This where the configuration will select which set of bindings it will use from the shared bindings file.
+
+See: http://community.jboss.org/wiki/ConfiguringMultipleJBossInstancesOnOnemachine
+
+Solution #2: Use M4 or ANT to pre-process the XML configuration files.
+
+If JBoss isn't the only thing that needs port numbers, host names and directories configured into each instance than you need more than just the Service Binding feature. In this case, we experience one drawback of JBoss's modular configuration: there are lots of files to change! Although this isn't really that difficult it requires a bit of work and it might break if JBoss changes their configuration files around if you're not careful.
+
+
+
+Beginning with EAP 4.3 or community AS 5.0, JBoss AS includes JBoss Messaging (JBM) as its JMS implementation. JBM requires that each server in the cluster have a unique integer id (whether the servers are running on the same physical machine or not).  This id can be set via the command line, so, to start two instances bound to different IP addresses you would:
+
+./run.sh -c node1 -b 192.168.0.10
+./run.sh -c node2 -b 192.168.0.11 -Djboss.messaging.ServerPeerID=1
+
+To specify a port setting to "ports-01":
+
+./run.sh -c node2 -Djboss.service.binding.set=ports-01 -Djboss.messaging.ServerPeerID=1
+
+
+
+Configuring Multiple JBoss Instances On One Machine
+
+http://community.jboss.org/wiki/ConfiguringMultipleJBossInstancesOnOnemachine
+
+
+Simultaneously launching multiple instances configured for clustering:
+
+If you intend to launch multiple JBoss instances on the same machine and have them form a cluster, it's common to write some kind of script to launch the two instances. It is a good practice to add some kind of pause in your script between the launch of the first instance and the second. 10 to 20 seconds is good.
+
+This is because if both instances are launched simultaneously, they both may decide they are the JGroups coordinator. At this point, you will have two independent clusters of one node each. If this happens, both nodes may begin to start HASingleton services, such as HA-JMS. A few seconds later, the two nodes will discover each other and the two clusters will merge. One of the nodes will no longer be coordinator, and the HASingleton services will be stopped. Stopping a service that's in the middle of starting does not always go cleanly.
+
+By putting a pause in your startup script, you give the first node a chance to become coordinator before the second node starts. The second node will then cleanly join the cluster, and no HASingleton services will be started on it.
+
+

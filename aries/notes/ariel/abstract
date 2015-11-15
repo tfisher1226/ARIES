@@ -1,0 +1,42 @@
+We approach behave symbolically, start to manipulate elements of information and usage requirements in a different way - a way in which our predecessors have not done before.
+We proceed to disassemble emerging contemporary systems into a vocabulary of discrete symbols where each characteriozed in a unique way.
+So that we can therefore take these symbols and recombine them in new and different ways and imagine and realize new effective architectures.
+
+
+Features included:
+
+
+
+
+Features not (yet) included:
+
+- Further specification of failure semantics
+To optimize performance in fault-tolerant distributed systems, it is often necessary to enforce various different failure semantics for different components.  By choosing a custom set of failure semantics for each component and then by enforcing the semantics with a minimal set of protocols for a particular architecture, performance may be maximized while ensuring the desired system behavior.
+
+We envision such semantics being described in the architectural model by using ARIEL.  We plan to provide within ARIEL language constructs for specifying, on a per-component basis, behaviors that transparently enforce failure semantics. These behaviors could then be saved as individual independent ARIEL components that may be reused with arbitrary components, allowing the development of a library of behaviors for the handling of failures in distributed system architectures.
+
+References:
+- Google Protocol Buffers
+A protocol description language for customizing failure semantics, Sturman and Agha, 1994
+Distributed snapshots: Determining global states of distributed systems - Chandy, Lamport - 1985
+The X-Kernel: An architecture for implementing network protocols - Hutchinson, Peterson - 1991
+Understanding Fault-Tolerant Distributed Systems - Cristian - 1991 
+Distributed programming in Argus - LISKOV - 1988
+Reflection and semantics in a procedural language - Smith - 1982
+Concurrent object-oriented programming - Agha - 1990
+A Message System Supporting Fault Tolerance - Borg, Baumbach, et al. - 1983
+A linguistic framework for dynamic composition of dependability protocols - Agha, Frolund, et al. - 1992 
+A methodology for adapting to patterns of faults - Agha, Sturman - 1994
+A metaarchitecture for distributed resource management - Venkatasubramanian, Talcott - 1993
+Fault-adaptation for systems in unpredictable environments - Sturman - 1994
+FT-SR: A programming language for constructing fault-tolerant distributed systems - Schlichting, Thomas - 1992 
+Communication Support for Reliable Distributed Computing - Birman, Joseph - 1987
+A Linguistic Approach to Failure Handling in Distributed Systems - Schlichting, Christian, et al. - 1991 
+
+
+- Message description
+    - Placements of fields in the messages
+    - Allow for bit fields
+    - Conditionals: a flag (bit field) = true means that data can appear at a later location in the packet
+    - Ability to define a message (packet) structure by referring to another message (packet) definition
+

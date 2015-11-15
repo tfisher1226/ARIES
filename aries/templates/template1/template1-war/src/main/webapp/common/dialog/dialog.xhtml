@@ -1,0 +1,103 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<c:if test="#{empty autosized}">
+		<c:set var="autosized" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty moveable}">
+		<c:set var="moveable" value="true"/> 
+	</c:if>
+	
+	<c:if test="#{empty dialogWidth}">
+		<c:set var="dialogWidth" value="464"/> 
+	</c:if>
+	
+	<c:if test="#{empty dialogHeight}">
+		<c:set var="dialogHeight" value="400"/> 
+	</c:if>
+
+	<c:if test="#{empty keepVisualState}">
+		<c:set var="keepVisualState" value="true"/> 
+	</c:if>
+	
+	<rich:modalPanel 
+		id="#{dialogName}" 
+		autosized="#{autosized}" 
+		moveable="#{moveable}"
+		keepVisualState="#{keepVisualState}">
+
+		<!-- HEADER -->
+		<ui:include src="/common/dialog/dialogHeaderBar.xhtml">
+			<ui:param name="dialogKey" value="#{dialogName}"/>
+			<ui:param name="dialogTitle" value="#{dialogBean.title}"/>
+		</ui:include>
+
+		<!-- TITLE 
+		<aries:dialogTitleBar 
+			dialogKey="#{dialogName}" 
+			dialogTitle="#{dialogBean.title}"/>
+			-->
+	
+		<!-- HEADER 
+		<h:panelGrid layout="block" columns="2" columnClasses="dialogHeaderColumn1, dialogHeaderColumn2" 
+			style="width: 100%; vertical-align: top; border-bottom: 1px solid #bbb; background-color: white;">
+			
+			<h:panelGroup layout="block" style="padding: 6px">
+				<h:outputText value="#{dialogBean.title}" styleClass="dialogTitle"/>
+				<aries:messages id="#{dialogName}Messages" module="#{dialogName}"/>
+			</h:panelGroup>
+
+			<c:if test="#{not empty dialogIcon}">
+				<h:panelGroup layout="block" style="">
+					<h:graphicImage value="#{dialogIcon}"/>
+				</h:panelGroup>
+			</c:if>
+		</h:panelGrid>
+		-->
+			
+		<h:panelGroup id="#{dialogName}Panel" layout="block" style="background-color: #f0f0f0">
+
+				<!-- 
+				<h:panelGroup layout="block" style="width: #{dialogWidth}px; height: #{dialogHeight-110}px; background-color: inherit">
+					<h:panelGroup layout="block" style="width: #{dialogWidth-24}px; height: #{dialogHeight-150}px; margin: 10px 12px 10px 12px; background-color: inherit">
+ 					-->
+ 						
+			<!-- CONTENT -->
+			<h:form id="#{dialogName}Form">
+				<h:panelGroup layout="block" style="width: 100%; height: auto; background-color: inherit">
+					<h:panelGroup layout="block" style="width: auto; height: auto; margin: 10px 12px 12px 12px; background-color: inherit">
+
+						<!-- PAGES -->
+						<ui:insert/>
+					</h:panelGroup>
+				
+					<!-- CONTROL 
+					<h:panelGroup layout="block" style="width: #{dialogWidth}px; height: 50px; background-color: inherit">
+						<div style="display: block; width: 100%; height: 1px; background-color: #bbb"/>
+						<div style="display: block; width: 100%; height: 1px; background-color: #fff"/>
+						<div style="display: block; width: 100%; height: 12px"/>
+						<div style="display: block; width: #{dialogWidth-18}px; height: 24px; padding: 0px 10px 0px 8px">
+							<ui:include src="dialogControl.xhtml" />
+						</div>
+					</h:panelGroup>
+					-->
+					
+					<aries:controlPane>
+						<ui:include src="dialogControl.xhtml"/>
+					</aries:controlPane>
+				</h:panelGroup>
+			</h:form>
+		</h:panelGroup>
+	</rich:modalPanel>
+</ui:composition>

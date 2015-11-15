@@ -1,0 +1,15 @@
+
+model / architect systems as protocol agnostic messaging systems where a system is designed to be used with different underlying message communiocation frameworks as well as messagin system where mixed framewkrs are used.  In this case components that send as well as receive become, in essence, a bridge betyween the two underlying messaging systems.  The developer will not know this, and not need to care about it since specification of underlying messaing framweork will occur at deploy-time.  This allows for experiementation and fine-tuning.
+
+
+Good practices:
+---------------
+
+Lot of defaults need to be specified:
+-Max delivery attempts need to be specified
+-Need to have binding for Dead Letter Address jms.queue.DLQ
+-Time-to-live needs to be set
+-default set of message properties
+
+-keeping MDB's from handling messages until module is initialized.
+

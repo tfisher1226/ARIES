@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/login-page-template.xhtml">
+
+	<ui:define name="content">
+
+		<!-- REGISTRATION WIZARD -->
+		<aries:include file="/admin/registration/registrationDialog.xhtml"/>
+		
+		<aries:form id="loginForm">
+		
+			<!-- COMMON DIALOGS -->
+			<aries:messageDialog />
+			<aries:popupDialog />
+			<aries:progressDialog />
+			<aries:themeDialog />
+
+			<!-- LOGIN DIALOG -->
+			<aries:loginDialog
+				title="Identification Required" 
+				heading="${template1_title} LOGIN" 
+				logo="/infosgi-dialog-left.gif"/> 
+	
+			<!-- KEYFILE UPLOAD DIALOG 
+			<aries:uploadDialog 
+				dialogKey="Login"
+				uploadableTypes="zip, ZIP"
+				uploadHandler="#{uploadManager}"
+				uploadHandlerAction="authenticateUploadedKeyfile"
+				uploadHandlerRender="loginUploadMessages, keyFileField"
+				logo="/infosgi-dialog-left.gif" />
+				-->
+
+			<!-- MENUBAR --> 
+			<ui:include src="${template1_page_folder}/menubar.xhtml"/>
+		</aries:form>
+	</ui:define>
+</ui:composition>

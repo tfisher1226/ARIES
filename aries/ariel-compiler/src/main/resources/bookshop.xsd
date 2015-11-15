@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://bookshop"
+	targetNamespace="http://bookshop">
+
+	<!-- ****** -->	
+	<!--  Data  -->	
+	<!-- ****** -->	
+	
+	<xs:element name="book" type="tns:Book" />
+	<xs:complexType name="Book">
+		<xs:sequence>
+			<xs:element name="title" type="xs:string" />
+			<xs:element name="author" type="xs:string" />
+			<xs:element name="price" type="xs:double" />
+			<xs:element name="quantity" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="orders" type="tns:Orders"/>
+	<xs:complexType name="Orders">
+		<xs:sequence>
+			<xs:element name="orders" type="tns:Order" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="order" type="tns:Order"/>
+	<xs:complexType name="Order">
+		<xs:sequence>
+			<xs:element name="count" type="xs:int" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="book" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="payment" type="tns:Payment"/>
+	<xs:complexType name="Payment">
+		<xs:sequence>
+			<xs:element name="amount" type="xs:double" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="currency" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="salesTax" type="xs:double" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="total" type="xs:double" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="invoice" type="tns:Invoice"/>
+	<xs:complexType name="Invoice">
+		<xs:sequence>
+			<xs:element name="orders" type="tns:Order" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="payment" type="tns:Payment" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="time" type="xs:date" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="receipt" type="tns:Receipt"/>
+	<xs:complexType name="Receipt">
+		<xs:sequence>
+			<xs:element name="orders" type="tns:Order" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="payment" type="tns:Payment" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="total" type="xs:double" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="time" type="xs:date" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="bookInventory" type="tns:BookInventory"/>
+	<xs:complexType name="BookInventory">
+		<xs:sequence>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--  
+	<xs:element name="bookList" type="tns:BookList"/>
+	<xs:complexType name="BookList">
+		<xs:sequence>
+			<xs:element name="elements" type="tns:BookInfo" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	
+	<!--  
+    <xs:simpleType name="BookOrderState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ordered"/>
+			<xs:enumeration value="accepted"/>
+			<xs:enumeration value="purchased"/>
+			<xs:enumeration value="available"/>
+			<xs:enumeration value="unavailable"/>
+			<xs:enumeration value="shipped"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="bookOrderStatus" type="tns:BookOrderStatus"/>
+	<xs:complexType name="BookOrderStatus">
+		<xs:sequence>
+			<xs:element name="title" type="xs:string" />
+			<xs:element name="author" type="xs:string" />
+			<xs:element name="quantity" type="xs:int" />
+			<xs:element name="state" type="tns:BookOrderState" />
+		</xs:sequence>
+	</xs:complexType>
+	-->
+
+	<xs:element name="bookShipment" type="tns:BookShipment"/>
+	<xs:complexType name="BookShipment">
+		<xs:sequence>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- ******** -->	
+	<!--  Events  -->	
+	<!-- ******** -->	
+
+	<xs:element name="shipmentCompleteEvent" type="tns:ShipmentCompleteEvent"/>
+	<xs:complexType name="ShipmentCompleteEvent">
+		<xs:sequence>
+			<xs:element name="invoice" type="tns:Invoice" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- ********** -->	
+	<!--  Messages  -->	
+	<!-- ********** -->	
+
+	<xs:element name="orderRequestMessage" type="tns:OrderRequestMessage"/>
+	<xs:complexType name="OrderRequestMessage">
+		<xs:sequence>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="orderResponseMessage" type="tns:OrderResponseMessage"/>
+	<xs:complexType name="OrderResponseMessage">
+		<xs:sequence>
+			<xs:element name="availableBooks" type="tns:Book" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="unavailableBooks" type="tns:Book" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="orderAcceptedMessage" type="tns:OrderAcceptedMessage"/>
+	<xs:complexType name="OrderAcceptedMessage">
+		<xs:sequence>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="orderRejectedMessage" type="tns:OrderRejectedMessage"/>
+	<xs:complexType name="OrderRejectedMessage">
+		<xs:sequence>
+			<xs:element name="reason" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="purchaseRequestMessage" type="tns:PurchaseRequestMessage"/>
+	<xs:complexType name="PurchaseRequestMessage">
+		<xs:sequence>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="purchaseAcceptedMessage" type="tns:PurchaseAcceptedMessage"/>
+	<xs:complexType name="PurchaseAcceptedMessage">
+		<xs:sequence>
+			<xs:element name="book" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="payment" type="tns:Payment" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="purchaseRejectedMessage" type="tns:PurchaseRejectedMessage"/>
+	<xs:complexType name="PurchaseRejectedMessage">
+		<xs:sequence>
+			<xs:element name="book" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="payment" type="tns:Payment" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="reservationRequestMessage" type="tns:ReservationRequestMessage"/>
+	<xs:complexType name="ReservationRequestMessage">
+		<xs:sequence>
+			<xs:element name="books" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="bookAvailableMessage" type="tns:BookAvailableMessage"/>
+	<xs:complexType name="BookAvailableMessage">
+		<xs:sequence>
+			<xs:element name="book" type="tns:Book" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="shipmentRequestMessage" type="tns:ShipmentRequestMessage"/>
+	<xs:complexType name="ShipmentRequestMessage">
+		<xs:sequence>
+			<xs:element name="invoice" type="tns:Invoice" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="shipmentCompleteMessage" type="tns:ShipmentCompleteMessage"/>
+	<xs:complexType name="ShipmentCompleteMessage">
+		<xs:sequence>
+			<xs:element name="invoice" type="tns:Invoice" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="orders" type="tns:Book" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

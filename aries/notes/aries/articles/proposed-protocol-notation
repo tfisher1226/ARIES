@@ -1,0 +1,7 @@
+
+https://community.jboss.org/thread/159362
+
+characterization of runtime binding to protocol needs to be defined
+  -parameters such as the roles, channels, groups, and their corresponding defaults.
+  -state (data items) for population of cache dataunits and persistence dataunits and their corresponding defaults.
+

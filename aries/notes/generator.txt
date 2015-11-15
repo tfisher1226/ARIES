@@ -1,0 +1,45 @@
+Premise is that the modeling of system architecture, communication protocols and channels, business services and related logic, deployment deliverables, and execution environment are all interralated parts of one unified and cohesive platform.
+
+
+We place our focus on providing 5 different workbenches:
+-System Workbench
+-Application Workbench
+-Module Workbench
+-Service Workbench
+-UI Workbench
+
+
+Command Targets:
+generate
+validate
+test
+deploy
+start
+stop
+pause
+reset
+refresh
+
+
+Types of supported Generations:
+-project
+    -application (service)
+    -application (view)
+    -module (library)
+    -module (client)
+    -module (model)
+    -module (data)
+
+
+Generation of Javadocs
+-include UML diagrams
+-include author
+
+
+NAM Engine
+----------
+
+Plugin-based where each plugin consists of a Builder and a Generator.  
+The specific inputs and outputs for the builder are dependent upon what is being generated. The general idea for the Builder is that the Builder builds only what needs to be built and nothing more. And therefore the input(s) required for each Builder are specific to what is being generated.
+
+

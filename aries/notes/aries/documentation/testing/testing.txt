@@ -1,0 +1,156 @@
+Good examples for emf api testing can be found here:
+http://www.voelter.de/data/blog/DynamicModelCreationTest.java.html
+http://is.muni.cz/th/255817/fi_m/zruban_master.pdf
+http://www.slideshare.net/KubaKubryski/arquillian-24027253
+http://www.slideshare.net/mojavelinux/real-javaeetestingwithanswers
+
+For testing persistence, please see:
+http://www.scribd.com/doc/166438659/Arquillian-Testing-Guide
+
+
+http://www.tutorialspoint.com/software_testing/levels_of_testing.htm
+
+
+Goals
+-Enhance and extend existing "testing culture" in Java EE
+-Filling voids
+  -Automation of numerous tasks 
+  -Identification of and Elimination of (unnecessary) human intervention - replaced with consistent best-practice approaches
+
+Core principles
+-Tests should be portable to any container
+-Tests should be executable from both IDE and command line
+-The testing platform should extend existing frameworks
+-Tests should not be "tied" to individual builds
+
+Levels of verification
+Unit vs. Integration vs. Functional
+
+Challenges for Integration Testing
+-Active mocks to stand in for collaborators
+-Configure application to use test data source(s)
+-Deal with (lack of) classpath isolation
+-Run a build to create/deploy application archive
+
+In-container approach to Integration Testing
+-Seperate container process
+-Test is deployed as archive
+-Test executes in container
+-Results collected remotely
+Pros:
+-Relies on shared-memory
+-Pass-by-references
+-No need for remote views
+-Managed concurrency
+Cons:
+-Lack of isolation
+-Environment not "true"
+
+Benefits of ShrinkWrap
+-IDE incremental compilation
+  -Save and re-run
+  -Skip the build
+-Simple API
+-Tooling views
+-Export and debugging
+-Micro-deployments
+
+Benefits of Arquillian
+-Write less code
+-As much or as little integration as one desires
+-Looks like a unit-test, but with fully functioning components
+-Simple way to get an instance of compnent-under-test
+-You don't hestitate when you need a resource
+-Same test - multiple containers
+-Its the real deal
+
+Test Archives
+-Built at runtime using ShrinkWrap
+-Bundles:
+  -Code under test
+  -Dependencies
+  -Test classes and invoker
+-Deployed to container before test is executed
+-Undeployed after test is executed
+
+Micro deployments
+-Deploy components in isolation
+-Test one "slice" at a time
+-No need to wait for full application build/startup
+-Tune size of integration
+  -Layers buy inclusion
+  -No "big bang"
+
+
+Functional Testing
+Functional testing is a necessary part of application testing to ensure that the functional requirements of what you are building are satis?ed. These can be assumed as passing by reading requirements or acceptance criteria, performing the said function, and validating that the result is as expected.
+
+Historically, functional testing has been performed manually. There is a certain amount of automated testing that has existed, such as automating the browser function and running scripts to ensure system status. Arquillian adds some more powerful assertions to help you get the most out of this automated testing.
+
+Functional Testing using Selenium
+
+
+
+
+Current implementation
+-Maven - Bill of materials
+-Arquillian
+-ShrinkWrap
+-Junit
+-TestNg
+-Mockito
+
+Supported containers
+-JBoss AS7
+
+For each area include sections for Initial Testing Scenarios (basic test coverage) and Advanced Testing Scenarios
+
+Integration-testing nontrivial deployments.
+
+
+examples:
+Failover Testing
+Important fail-over features are the time it takes to complete a failover and the possibility to repeat the fail-over action.  We need to measure and verify the time needed to perform a fail-over as well as simulatation of multiple fail-over and fail-back actions in a row.
+
+
+Adrian Cole specifically, and he realized, "wait a minute, this is the perfect solution for cloud testing because you've abstracted away all of the container life cycle management, why does the container have to be on the same computer or in the same network?" Or why does the container have to exist on a computer that is already running? Why not boot the entire computer, you know run the virtual machine somewhere on a cloud, start up all the servers that you need to send the test to the cloud, let it run inside of there, and then pull it back down and tear down the whole thing. 
+
+So we're starting to see Arquillian branch out in different programming models, but also in different infrastructures. And it's really fascinating what types of testing we never really thought was possible before, or we thought was way too much effort to get set up, is now just child’s play with Arquillian. 
+
+
+
+Serice Layer Testing
+Server in JTA Mode
+Byteman
+Byteman is used by a few of the quickstarts to demonstrate distributed transaction processing and crash recovery.
+Byteman is a tool which simplifies tracing and testing of Java programs. Byteman allows you to insert extra Java code into your application, either as it is loaded during JVM startup or after it has already started running. This code can be used to trace what the application is doing and to monitor and debug deployments to be sure it is operating correctly. You can also use Byteman to inject faults or synchronization code when testing your application.
+
+Server in JTS Mode
+
+
+Data Layer Testing
+MySQL and PostgreSQL
+http://www.jboss.org/jdf/quickstarts/jboss-as-quickstart/#suggested-approach-to-the-quickstarts
+
+
+UI Layer Testing:
+Selenium and JSFUnit
+
+
+
+
+supplier ship books
+     -shipment complete
+     -shipment scheduled
+     -shipment failed
+
+    invoke shipper ship books
+           -shipment complete
+           -shipment scheduled
+           -shipment failed
+
+
+
+
+
+

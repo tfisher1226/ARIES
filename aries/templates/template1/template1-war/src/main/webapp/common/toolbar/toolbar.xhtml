@@ -1,0 +1,64 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty itemSeparator}">
+		<c:set var="itemSeparator" value="none" /> 
+	</c:if>
+
+	<!--  
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolbar" /> 
+	</c:if>
+
+	<c:if test="#{empty contentClass}">
+		<c:set var="contentClass" value="toolbarContent" /> 
+	</c:if>
+
+	<c:if test="#{empty separatorClass}">
+		<c:set var="separatorClass" value="toolbarSeparator" /> 
+	</c:if>
+	-->
+
+	<c:if test="#{empty type}">
+		<c:set var="type" value="plain" /> 
+	</c:if>
+ 
+	<c:if test="#{type == 'plain'}">
+		<c:set var="style" value="#{style}; background-color: transparent; padding: 1px; border: 0px" /> 
+	</c:if>
+
+	<c:if test="#{type == 'menubar'}">
+		<c:set var="style" value="#{style}; background-color: #f4f4f4; padding: 1px; border: 1px solid #ccc" /> 
+	</c:if>
+
+	<c:if test="#{type == 'tab'}">
+		<c:set var="style" value="#{style}; background-color: #f8f8f8; padding: 1px; border: 1px solid #ccc; border-top-width: 0px; border-bottom-width: 0px" /> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value="" /> 
+	</c:if>
+
+	<rich:toolBar 
+		itemSeparator="#{itemSeparator}"
+		styleClass="toolbar"
+		contentClass="toolbarContent" 
+		separatorClass="toolbarSeparator"
+		style="background-image: none; #{style}">
+		<!--  
+		width: auto; height: auto;
+		-->
+
+		<ui:insert />
+	</rich:toolBar>
+</ui:composition>

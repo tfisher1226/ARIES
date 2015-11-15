@@ -1,0 +1,70 @@
+.text { 
+	font-size: '#{richSkin.generalSizeFont}';
+	fint-family: '#{richSkin.generalFamilyFont}';
+}
+
+.H1 {
+	padding: 0px;
+	font-size: 250%; 
+	font-weight: bold;
+	text-decoration: none;
+	color: '#{richSkin.generalTextColor}'; 
+	background-color: '#{richSkin.generalBackgroundColor}';
+	background-image: none;
+	border: 1px solid '#{richSkin.panelBorderColor}';
+}
+
+.H2 { 
+	padding: 0px;
+	font-size: 200%; 
+	font-weight: bold;
+	text-decoration: none;
+	color: '#{richSkin.generalTextColor}'; 
+	background-color: '#{richSkin.generalBackgroundColor}';
+	background-image: none;
+	border: 1px solid '#{richSkin.panelBorderColor}';
+}
+
+.H3 { 
+	padding: 0px;
+	font-size: 170%; 
+	font-weight: bold;
+	text-decoration: none;
+	color: '#{richSkin.generalTextColor}'; 
+	background-color: '#{richSkin.generalBackgroundColor}';
+	background-image: none;
+	border: 1px solid '#{richSkin.panelBorderColor}';
+}
+
+.H4 { 
+	padding: 0px;
+	font-size: 140%; 
+	font-weight: bold;
+	text-decoration: none;
+	color: '#{richSkin.generalTextColor}'; 
+	background-color: '#{richSkin.generalBackgroundColor}';
+	background-image: none;
+	border: 1px solid '#{richSkin.panelBorderColor}';
+}
+
+.H5 { 
+	padding: 0px;
+	font-size: 120%; 
+	font-weight: bold;
+	text-decoration: none;
+	color: '#{richSkin.generalTextColor}'; 
+	background-color: '#{richSkin.generalBackgroundColor}';
+	background-image: none;
+	border: 1px solid '#{richSkin.panelBorderColor}';
+}
+
+.H6 { 
+	padding: 0px;
+	font-size: 100%; 
+	font-weight: bold;
+	text-decoration: none;
+	color: '#{richSkin.generalTextColor}'; 
+	background-color: '#{richSkin.generalBackgroundColor}';
+	background-image: none;
+	border: 1px solid '#{richSkin.panelBorderColor}';
+}

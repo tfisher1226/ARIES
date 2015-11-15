@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>activemq-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries ActiveMQ JMS Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<activemq.version>5.4.1</activemq.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-all</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-core</artifactId>
+				<version>${activemq.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
+

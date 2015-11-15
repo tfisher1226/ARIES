@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>aries</artifactId>
+	<name>aries</name>
+	<description>aries</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>common</module>
+		<module>../admin</module>
+		<module>../nam</module>
+		<module>ariel-compiler</module>
+		<module>aries-context</module>
+		<module>aries-launcher</module>
+		<!--  
+		<module>aries-maven-bpel-plugin</module>
+		<module>aries-maven-jboss-plugin</module>
+		<module>aries-maven-plugin</module>
+		-->
+		<module>aries-registry</module>
+		<module>aries-security</module>
+		<module>aries-validate</module>
+		<module>tx-manager</module>
+	</modules>
+</project>

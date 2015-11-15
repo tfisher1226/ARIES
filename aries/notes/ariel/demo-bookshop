@@ -1,0 +1,100 @@
+Collaborating Participants
+
+service provided by a participant based on a stateless, client-server model. Distributed applications require the ability to exchange information in a peer-to-peer environment. In these types of environments a participant represents a requester of services provided by another participant and is at the same time a provider of services requested from other participants, thus creating mutual multi-participant service dependencies.
+
+Using ARIEL one describes how a participant is capable of engaging in collaborations with different participants.
+
+The roleTypes, relationshipTypes, participantTypes, and channelTypes define collaborating participants and their coupling.
+
+The typeRef complex type definitions used in participantTypes , relationshipTypes, and channelTypes are different for each. They are type definitions for different local elements even though they have the same tag name. The text in the following sections describes the different attributes and child elements of each.
+
+
+
+RoleType
+
+A roleType enumerates potential observable behavior a participant can exhibit in order to interact. For example, the "Buyer" roleType is associated with the purchasing of goods or services and the "Supplier" roleType is associated with providing those goods or services for a fee.
+
+The syntax of the roleType construct is:
+
+<roleType name="NCName">
+   <behavior name="NCName" interface="QName"? />+
+</roleType>
+
+The attribute name is used to specify a distinct name for each roleType element declared within a choreography package.
+
+Within the roleType element, a behavior element specifies a subset of the observable behavior a participant exhibits. A roleType MUST contain one or more behavior elements. The attribute name within the behavior element is used to specify a distinct name for each behavior element declared within a roleType element.
+
+The behavior element defines an OPTIONAL interface attribute, which identifies a WSDL interface type. A behavior without an interface describes a roleType that is not required to support a specific Web Service interface.
+
+
+RelationshipType
+
+A relationshipType identifies the roleTypes and behaviors, where mutual commitments MUST be made for collaborations to be successful. For example, the relationshipTypes between a "Buyer" and a "Seller" could include:
+
+    A "Purchasing" relationshipType, for the initial procurement of goods or services, and
+
+    A "Customer Management" relationshipType to allow the "Supplier" to provide service and support after the goods have been purchased or the service provided
+
+Although relationshipTypes are always between two roleTypes, choreographies involving more than two roleTypes are possible. For example, if the purchase of goods involved a third-party "Shipper" contracted by the "Supplier" to deliver the "Supplier's" goods, then, in addition to the "Purchasing" and "Customer Management" relationshipTypes described above, the following relationshipTypes might exist:
+
+    A "Logistics Provider" relationshipType between the "Supplier" and the "Shipper", and
+
+    A "Goods Delivery" relationshipType between the "Buyer" and the "Shipper"
+
+The syntax of the relationshipType construct is:
+
+<relationshipType name="NCName">
+   <roleType typeRef="QName" behavior="list of NCName"? />
+   <roleType typeRef="QName" behavior="list of NCName"? />
+</relationshipType>
+
+The attribute name is used to specify a distinct name for each relationshipType element declared within a choreography package.
+
+A relationshipType element MUST have exactly two roleTypes defined. Each roleType is specified by the typeRef attribute within the roleType element. The "QName" value of the typeRef attribute of the roleType element MUST reference the name of a roleType.
+
+Within each roleType element, the OPTIONAL attribute behavior identifies the commitment of a participant as an XML-Schema list of behavior types belonging to this roleType. If the behavior attribute is missing then all the behaviors belonging to this roleType are identified as the commitment of a participant. If the behavior attribute is present then the behaviors listed MUST be a proper subset of those belonging to this roleType.
+
+
+ParticipantType
+
+A participantType groups together those parts of the observable behavior that MUST be implemented by a participant . A logical entity or organization MAY be represented by more than one participantType within a choreography.
+
+The syntax of the participantType construct is:
+
+<participantType name="NCName">
+   <roleType typeRef="QName" />+
+</participantType>
+
+The attribute name is used to specify a distinct name for each participantType element declared within a choreography package.
+
+Within the participantType element, one or more roleType elements identify the roleTypes that MUST be implemented by this participantType. Each roleType is specified by the typeRef attribute of the roleType element. The "QName" value of the typeRef attribute of the roleType element MUST reference the name of a roleType. A specific roleType MUST NOT be specified in more than one participantType element.
+
+An example is shown below where the "SellerForBuyer" roleType belonging to a "Buyer-Seller" relationshipType is implemented by the participantType "Broker" which also implements the "SellerForShipper" roleType belonging to a "Seller-Shipper" relationshipType. 
+
+<roleType name="Buyer">
+   . . .
+</roleType>
+<roleType name="SellerForBuyer">
+    <behavior name="sellerForBuyer" interface="rns:sellerForBuyerPT"/>
+</roleType>
+<roleType name="SellerForShipper">
+    <behavior name="sellerForShipper" interface="rns:sellerForShipperPT"/>
+</roleType>
+<roleType name="Shipper">
+   . . .
+</roleType>
+
+<relationshipType name="Buyer-Seller">
+    <roleType typeRef="tns:Buyer" />
+    <roleType typeRef="tns:SellerForBuyer" />
+</relationshipType>
+<relationshipType name="Seller-Shipper">
+    <roleType typeRef="tns:SellerForShipper" />
+    <roleType typeRef="tns:Shipper" />
+</relationshipType>
+
+<participantType name="Broker">
+   <roleType typeRef="tns:SellerForBuyer" />
+   <roleType typeRef="tns:SellerForShipper" />
+</participantType>
+

@@ -1,0 +1,320 @@
+
+
+
+Generated Parts
+----------------
+
+For each top-level Element we generate the following:
+
+ElementRecordHelper class
+ElementRecordManager class
+ElementListManager class
+ElementListObject class
+
+elementFieldPanel.xhtml file
+elementFieldMenu.xhtml file
+
+elementRecord.xhtml file
+elementRecordDialog.xhtml file
+elementRecordControl.xhtml file
+elementRecordPanel.xhtml file
+
+elementList.xhtml file
+elementListDialog.xhtml file
+elementListControl.xhtml file
+elementListMenu.xhtml file
+elementListPanel.xhtml file
+elementListTable.xhtml file
+
+
+
+
+
+A ElementFactory which is builder that includes build operations of different signatures.
+
+Queries:
+Query for all
+Queries by primary key(s)
+Queries by indexed fields
+Queries by unique fields
+
+Insert operation
+Update operation
+Delete operation
+Import operation
+Export operation
+
+
+ElementModel class
+ElementEntity class
+ElementFactory class
+ElementAdapter class
+ElementRepository class
+ElementMapper class
+ElementSearch class for describing dynamic queries.
+ElementUtil class that provides useful operations like common conversions, comparisons, and validations.
+
+
+
+
+Components:
+
+        Control:
+        --------
+
+
+        Common:
+        -------
+
+
+        Layout:
+        -------
+        pane
+        stackPane
+        tabPane
+        tab
+
+
+
+
+Themes:
+
+        Labels:
+        -------
+        text
+        link
+        label
+        heading1
+
+
+
+
+User-Interface Components
+-------------------------
+
+text
+label
+bullet
+button
+
+
+User-Interface Styles
+---------------------
+
+These sections provide for different text settings:
+------------------------------------------
+-fontSize
+-fontFamily
+
+text
+text1
+text2
+text3
+
+These sections provide for styled blocks. Each block has the same set of potential styles.  This small set of styles, when acting as group, make it easy to configure, manage and maintain an application user-interface.  When grouped in this way, this set of styles make it easy for users/developers to configure their UI.  If any given style is not set, its value will default to the general/default setting.
+-----------------------------------------
+
+-padding
+-border
+-fontWeight
+-textDecoration
+-foregroundColor
+-backgroundColor
+-backgroundImage
+-gradientColor
+
+
+Groupings:
+-Base
+-Header (normal, small)
+-Control (normal, small)
+-Toolbar (normal, small)
+-Tab (normal, small)
+
+
+
+body text
+body link
+
+bullet text
+bullet link
+
+label text
+label link
+
+footer text
+footer link
+
+header text
+header link
+
+
+
+
+
+Core Attributes
+---------------
+
+General:
+-generalBackgroundColor
+-generalBackgroundAdditionalColor
+-generalBackgroundOverallColor
+-generalBorderColor
+-generalBorderStyle
+-generalBorderWidth
+-generalFontFamily
+-generalFontSize
+-generalFontStyle
+-generalFontWeight
+-generalGradientColor
+-generalLinkColor
+-generalLinkHoverColor
+-generalLinkVisitedColor
+-generalSubBorderColor
+-generalTextColor
+-generalTrimColor
+
+Button:
+-buttonFontFamily
+-buttonFontSize
+-buttonFontStyle
+-buttonFontWeight
+-buttonBackgroundColor
+-buttonBackgroundImage
+-buttonGradientColor
+-buttonCornerRadius
+-buttonTextColor
+
+Header:
+-headerTextColor
+-headerFontFamily
+-headerFontSize
+-headerFontStyle
+-headerFontWeight
+-headerBackgroundColor
+-headerBackgroundImage
+-headerGradientColor
+
+Control:
+-controlBackgroundColor
+-controlBorderColor
+-controlFontFamily
+-controlFontSize
+-controlFontStyle
+-controlFontWeight
+-controlTextColor
+
+Focus:
+-focusBackgroundColor
+-focusBorderColor
+-focusTextColor
+
+Theme:
+-themeTextColor
+-themeBackgroundColor
+
+Tab:
+
+-tabBorderColor
+-tabBackgroundColor
+-tabBackgroundImage
+-tabCornerRadius
+-tabFontFamily
+-tabFontSize
+-tabFontStyle
+-tabFontWeight
+-tabGradientColor
+-tabTextColor
+-tabTextDecoration
+
+-tabActiveBorderColor
+-tabActiveBackgroundColor
+-tabActiveBackgroundImage
+-tabActiveFontFamily
+-tabActiveFontSize
+-tabActiveFontStyle
+-tabActiveFontWeight
+-tabActiveTextColor
+-tabActiveGradientColor
+-tabActiveTextDecoration
+
+-tabInactiveBorderColor
+-tabInactiveBackgroundColor
+-tabInactiveBackgroundImage
+-tabInactiveFontFamily
+-tabInactiveFontSize
+-tabInactiveFontStyle
+-tabInactiveFontWeight
+-tabInactiveGradientColor
+-tabInactiveTextColor
+-tabInactiveTextDecoration
+
+-tabDisabledBorderColor
+-tabDisabledBackgroundColor
+-tabDisabledBackgroundImage
+-tabDisabledFontFamily
+-tabDisabledFontSize
+-tabDisabledFontStyle
+-tabDisabledFontWeight
+-tabDisabledGradientColor
+-tabDisabledTextColor
+-tabDisabledTextDecoration
+
+Table:
+-tableBackgroundColor
+-tableBorderColor
+-tableBorderWidth
+-tableFooterBackgroundColor
+-tableFooterTextColor
+-tableHeaderBackgroundColor
+-tableHeaderTextColor
+-tableSubFooterBackgroundColor
+-tableSubHeaderBackgroundColor
+
+Toolbar:
+-toolbarBackgroundColor
+-toolbarBackgroundImage
+-toolbarBorderColor
+-toolbarBorderWidt
+-toolbarGradientColor
+
+Editor:
+-editBackgroundColor
+-editorBackgroundColor
+-editorMainBackgroundColor
+-editorMainTextColor
+
+Highlight:
+-highlightedBackgroundColor
+-highlightedBackgroundImage
+-highlightedBorderColor
+-highlightedBorderWidth
+-highlightedControlColor
+-highlightedTextColor
+
+Shadow:
+-shadowBackgroundColor
+-shadowOpacity
+
+Tooltip:
+-tooltipBackgroundColor
+-tooltipBackgroundImage
+-tooltipBorderColor
+-tooltipBorderWidth
+-tooltipTextColor
+
+Menu:
+-menuBackgroundColor
+-menuBackgroundImage
+
+Dialog:
+-dialogBackgroundColor
+-dialogBackgroundImage
+-dialogBorderColor
+-dialogBorderWidth
+
+
+
+
+
+

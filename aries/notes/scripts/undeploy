@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set workingDir = `pwd`
+cd $WORKSPACE/audit-data; mvn -e -DskipTests=true tomcat:undeploy;
+cd $WORKSPACE/audit-service; mvn -e -DskipTests=true tomcat:undeploy;
+cd $WORKSPACE/authorization-data; mvn -e -DskipTests=true tomcat:undeploy;
+cd $WORKSPACE/authorization-service; mvn -e -DskipTests=true tomcat:undeploy;
+cd $WORKSPACE/audit-view; mvn -e -DskipTests=true tomcat:undeploy;
+cd $workingDir
+

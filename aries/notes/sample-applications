@@ -1,0 +1,12 @@
+1) Loan-Broker
+
+2) Night-out
+
+3) Backoffice Workflow - A typical asynchronous information workflow subject to scale. 
+
+4) Market Analyzer - A typical event-driven system - a real-time, even-driven application. 
+The application accesses an analytical engine and datastores. 
+The application subscribes to ordinary events from data sources such as sensors, devices, and data feeds such as news wire services. 
+The application publishes notable events to data sinks such as user consoles (dashboards), event subscribers (other applications), and to a back-end cloud. 
+A human operator executes queries on the application to address ad hoc, real-time issues such as: currency cross-rate calculation, detection of clustered stock movement, best-effort stock trading, and climate control.
+

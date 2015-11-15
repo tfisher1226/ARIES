@@ -1,0 +1,80 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGrid 
+		layout="block" 
+		columns="1" 
+		columnClasses="formColumn" 
+		styleClass="layoutPanel" 
+		style="background-color: inherit">
+
+		<a4j:outputPanel id="studyDeptExamPanel" layout="block" style="">
+			<div class="groupLabel">Study Dept. Exam Specification</div>
+			<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="margin-top: 4px">
+
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" style="margin: 6px">
+					<h:panelGrid styleClass="formPanel" layout="block" columns="2" style="margin: 4px">
+						<div class="formLabel" style="width: 60px">Level</div>
+						<rich:comboBox 
+							width="200"
+							required="true"
+							defaultLabel="Enter Level" 
+							enableManualInput="false"
+							selectFirstOnUpdate="false" 
+							value="#{studyDeptExam.examLevel}"
+							inputStyle="padding: 0px"
+							style="">
+							<s:selectItems 
+								hideNoSelectionLabel="false"
+								var="examLevel"  
+								value="#{examLevels}" 
+								label="#{examLevel}"/>
+							<s:convertEnum/>
+						</rich:comboBox>
+					</h:panelGrid>
+
+					<h:panelGrid styleClass="formPanel" layout="block" columns="2" style="margin: 4px">
+						<div class="formLabel" style="width: 60px">Language</div>
+						<rich:comboBox 
+							width="200"
+							required="true"
+							defaultLabel="Enter Language"
+							enableManualInput="false"
+							selectFirstOnUpdate="false" 
+							value="#{studyDeptExam.examLanguage}"
+							inputStyle="padding: 0px"
+							style="">
+							<s:selectItems 
+								hideNoSelectionLabel="false"
+								var="examLanguage"  
+								value="#{examLanguages}" 
+								label="#{examLanguage}"/>
+							<s:convertEnum/>
+						</rich:comboBox>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<h:panelGrid layout="block" columns="1" columnClasses="formColumn" style="width: 180px; margin: 6px; margin-right: 0px; background-color: inherit">
+					<h:panelGrid styleClass="layoutPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn" style="background-color: inherit">
+						<h:panelGroup layout="block" style="width: 60px; background-color: inherit">
+							<h:outputLabel styleClass="formLabel" value="Date"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" style="background-color: inherit">
+							<rich:calendar popup="true" value="#{studyDeptExam.examDate}" inputStyle="width: 80px; height: 16px; font-size: 11px"/>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+		</a4j:outputPanel>
+	</h:panelGrid>
+</ui:composition>

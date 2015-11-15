@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>junit-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JUnit Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<junit.version>4.11</junit.version>
+		<mockito.version>1.8.3</mockito.version>
+		<mockejb.version>0.6-beta2</mockejb.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+
+			<!-- 
+			<dependency>
+				<groupId>org.mockejb</groupId>
+				<artifactId>mockejb</artifactId>
+				<version>${mockejb.version}</version>
+				<scope>test</scope>
+			</dependency>
+			-->
+		</dependencies>
+	</dependencyManagement>
+</project>

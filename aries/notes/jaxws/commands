@@ -1,0 +1,5 @@
+If you only want to look at the SOAP messages run with
+-Dcom.sun.xml.ws.transport.http.client.HttpTransportPipe.dump=true
+
+
+C:\>wsimport -keep -verbose http://localhost:8888/ws/server?wsdl

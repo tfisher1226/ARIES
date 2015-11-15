@@ -1,0 +1,15 @@
+
+Maven based
+------------
+
+-For each application (and for each application group) will generate hierarchically organized multi-module projects
+-includes bom files as well as pom files
+
+
+Dependency Management
+----------------------
+
+-Dependencies specified by using groups.
+-Groups of dependencies specified in hierarchically organized custom groups (bom and pom for each)
+
+

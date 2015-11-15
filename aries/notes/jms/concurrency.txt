@@ -1,0 +1,14 @@
+
+
+you should keep a connection open for the entire life of your application.
+
+So you should do this:
+
+connection = cf.createConnection(...);
+
+session = connection.createSession(...);
+
+producer = session.createProducer(...);
+
+The session and producer should always be used within a thread. As a session represents a thread usage. (You may reuse it within multiple threads as long as it's synchronized)
+

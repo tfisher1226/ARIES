@@ -1,0 +1,34 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<style>
+	.globalMessagesColumn1 { padding-left: 0px; vertical-align: top; }
+	.globalMessagesColumn2 { padding-left: 8px; }
+	</style>
+
+	<a4j:outputPanel layout="block" id="globalMessages">
+		<h:panelGroup layout="block" rendered="#{globals.facesMessagesExist}">
+			<div class="vspace8"/>
+			<h:panelGrid columns="2" columnClasses="globalMessagesColumn1, globalMessagesColumn2">
+				<h:graphicImage value="resource://images/icons/status/Error.gif"/>
+				<ui:repeat value="#{globals.facesMessages}" var="message">
+					<h:outputText value="#{message.detail}" styleClass="largeError"/>.
+					<span class="hspace6"/>
+				</ui:repeat>
+			</h:panelGrid>
+			<div class="vspace4"/>
+		</h:panelGroup>
+	</a4j:outputPanel>
+	
+	<h:panelGroup layout="block" rendered="#{!globals.facesMessagesExist}">
+		<div class="vspace8"/>
+	</h:panelGroup>
+</ui:composition>

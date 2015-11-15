@@ -1,0 +1,65 @@
+projects to verify before regeneration
+common-data
+common-model
+
+
+Software design, in some ways, is a particularly strange art. The design itself is not a physical thing, it is not the artefact that will eventually be run nor is it any more concrete (in the sense of the real world) than the actual software that will be executed. Yet it is key to the successful production of effective software. It is also the step that will determine the overall structure, nature, and approach of the resulting software. Herein, of course, lies one of the ironies of the software development world - you can't test a design (at least not directly).
+
+However, this does not mean that testing isn't relevant for design activities. Indeed, I would argue that testing is as important a consideration during design as it is during coding. It is certainly no less important than any other requirement that needs to be considered during any design steps.
+
+In this column I am going to present two aspects to the consideration of testing that need to be considered during any design process. These are "design for testability" and "test first design".
+
+
+Design for testability
+
+Given any set of requirements, different designers may come out with markedly different designs. These designs will then form the blueprint of the way in which the software will be built, deployed, and executed. It is not necessarily true that one design is better per se than another, but it may certainly be true that one design is easier to implement, maintain, deploy and test than another. It is this last point that I want to consider here. That is: "How easy is a design to test once implemented in a language such as Java?"
+
+It is certainly possible to design software in such a way as to make testing easier. The easier software is to test, the more likely it is to be tested. Certainly, in my experience, if software is hard to configure, set up and to actually test then less testing gets done. If software is easier to test more testing is likely to be performed and a greater number of flaws may be discovered.
+
+As an example, consider the Java application presented below. As can be seen from this diagram we have a simple stateful session bean (using EJB 2.0) that provides a calculator-like function. However, to test the "business logic" of this bean we will need to either compile the classes, create appropriate XML files, jar these up with the classes, and deploy to an EJB container such as JBOSS or possibly OpenEJB (which can provide a lightweight test environment). We will then need to create a client class that uses an initial context and an EJB Home object to access the remote bean object. Only then can we test the business logic.
+
+
+Figure 1: Standard stateless EJB design
+
+However, we may all put off testing the business logic because we do not have a tool such as JBOSS or OpenEJB installed - and certainly the mantra of "test often and little" might well be forgotten.
+
+
+In contrast, the following version of this system uses a separate "business processor" class. This is referenced by the bean but encapsulates all the logic of the application. I can now test the business logic independently of the EJB world merely by compiling the processor class and calling it from a test harness.
+
+This processor is simplified further via the use of a factory class. Of course, the bean version still needs testing, but the larger bulk of the tests will be on the business logic and not on the deployment and invocation mechanisms.
+
+
+Figure 2: Design taking into account testability of business logic
+
+As an illustration of how simply the business logic can now be tested, see the test harness class below.
+
+package com.reg.dev.dft.basic;
+
+
+public class TestHarness1 {
+        public static void main(String[] args) {
+                CalculatorProcessor processor = 
+                 CalculatorProcessorFactory.getCalculatorProcessor();
+                processor.setValue1(10);
+                processor.setOperator("+");
+                processor.setValue2(15);
+                System.out.println(processor.calculate());
+        }
+
+}
+
+Note that EJB 3.0 has to some extent made the testing of EJBs simpler, but EJBs are used here merely as an example and should not be taken as the only application of the concept.
+Test first design
+
+Test first design means that if you can design the test then you can design the model. The corollary of this is that if you can't design the tests then you shouldn't design the model.
+
+This is the design equivalent of the Extreme Programming (XP) idea of "test first coding" and follows directly on from the previous section. That is, in order to really carry out "design for testability" you need to know what you want to test and where. Thus, you should consider the tests you want to perform before you start to design your software. In fact, you should be able to write (or in this case design) the tests for a module or subsystem before you design that module. The argument is that if you can't design the tests for the module then you don't know enough about the module to design it yet.
+
+Even if you do not subscribe to the agile philosophy, I believe designers should take into account how the system they are designing will be tested during the modelling phase (and not just during coding). This is because it is the designer who has the overall context within which they are designing; it is the designer who knows how a particular module or subsystem will function within the greater whole. It is all too common to find that junior programmers understand their small section of the system but have no reference point within which to position this. Thus, the designer should take into account how the software should be tested.
+Summary
+
+The idea of taking testing into account during design may seem obvious to you, but when I first encountered this concept it almost stopped me in my tracks for its simplicity, benefit, utility, and how obvious it was.
+
+However, I had not seen anything written about this before and realised that I had been failing to take testability into account at design time. That is not to say that code was not tested, but this was not an issue considered during design.
+
+But, by considering how the code to be produced from the modelling phase could be tested, you can make it much easier for the person who codes the model to test it and thus make it easier to identify potential problems. Since encountering this concept it is one of the things that I have most widely adopted

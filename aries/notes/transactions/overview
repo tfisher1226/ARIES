@@ -1,0 +1,60 @@
+
+See XTS programmer's guide for very good intro and overview:
+http://anonsvn.jboss.org/repos/labs/labs/jbosstm/workspace/XTS_TX11/docs/
+
+Transactions have emerged as the dominant paradigm for coordinating interactions between
+parties in a distributed system, and in particular to manage applications that require
+concurrent access to shared data.
+
+
+
+Also:
+http://docs.oracle.com/cd/E21764_01/integration.1111/e10224/soa_transactions.htm
+
+Modeling transaction semantics within BPEL enables one to use the underlying Java Transaction API (JTA) infrastructure. This section describes how to do this.
+
+ARIES by default creates a new transaction on a request basis. That is, if a transaction exists, it is suspended, and a new transaction is created. Upon completion of the child (new) transaction, the master (suspended) transaction resumes.
+
+However, if the request is asynchronous (that is, one-way), the transaction is either:
+    -Inherited for insertion into the dehydration store (table dlv_message).
+    -Enlisted transparently into the transaction (if one exists).
+
+There is no message loss. Either the invocation message is inserted into the dehydration store for processing or the consumer is notified through a fault.
+There is a small set of properties that can be set on the consuming process (that is, on the partner link) and the providing process. These properties allow one to specify how a chain of execution are integrated into a single global transaction.  On the consuming side, one sets the transaction=participate on the partner link binding in the bpel.xml file.  On the providing side, one sets the transaction=participate in the <configurations> section of bpel.xml.
+At the minimum, in order to include a BPEL execution in a current transactional context, one must set the transaction property on the BPEL component being called (known as the callee process).  One must add "bpel.config.transaction" into the BPEL process service component section in the ARIEL configuration file.  This property configures the transactional behavior for BPEL instances with initiating calls. 
+
+<a>Example 12-1</a> provides details.
+
+Example 12-1 Setting a New Transaction
+
+<component name="InternalWarehouseService">
+    <implementation.bpel src="InternalWarehouseService.bpel"/>
+    <property name="bpel.config.transaction" 
+         many="false" type="xs:string">required | requiresNew</property>
+</component>
+
+<table header="Table 12-1 bpel.config.transaction Property Behavior">
+<column header="Invocation model>
+<row>Request/response initiating invocations</row>
+<row>One-way initiating invocations in which <fixed>bpel.config.oneWayDeliveryPolicy</fixed> is set to <fixed>sync<fixed>.</row>
+</column>
+
+<column header="Transaction property set to "required">
+<row>The caller's transaction is joined (if there is one) or a new transaction is created (if there is not one).</row>
+Invoked messages are processed using the same thread in the same transaction.
+</column>
+
+<column header="Transaction property set to "requiresNew">
+A new transaction is always created and an existing transaction (if there is one) is suspended.
+A new transaction is always created and an existing transaction (if there is one) is suspended.
+</column>
+</table>
+
+<note header="Note:">
+The bpel.config.transaction property does not apply for midprocess receive activities. In those cases, another thread in another transaction is used to process the message. This is because correlation is needed and it is always done asynchronously.
+</note>
+
+
+
+
+

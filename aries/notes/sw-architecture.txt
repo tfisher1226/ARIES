@@ -1,0 +1,4 @@
+
+
+software systems are organized into groupings referred to loosely as services which get deployed into tomcat (or other app server) as one or more war-files and one or more supporting jars.
+

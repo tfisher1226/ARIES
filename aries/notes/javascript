@@ -1,0 +1,67 @@
+Running/testing javascript from maven:
+http://stackoverflow.com/questions/6260158/how-to-use-maven-classpath-to-run-java-main-class
+
+if (!org) var org = { };
+if (!org.aries) org.aries = { };
+if (!org.aries.view) org.aries.view = { };
+if (!org.aries.view.text) org.aries.view.table = { };
+
+/**
+ * This is a reusable class for highlighting table rows.
+ * 
+ * It was tested with a RichFaces DataTable. To use, create a UserSelectHighlighter JavaScript
+ * object and make the following rich:dataTable attribute assignments:
+ *   onRowMouseOver="highlighterObject.processTableRowMouseOver(this)"
+ *   onRowMouseDown="highlighterObject.processTableRowMouseDown(this)"
+ *   onRowMouseOut="highlighterObject.processTableRowMouseOut(this)"
+ *
+ * Where highlighterObject is the name of the UserSelectHighlighter JavaScript object.
+ *
+ */
+org.aries.view.table.UserSelectHighlighter = function(rowNormalColor, rowSelectColor, rowMouseoverColor) {    
+    var selectedRow = null;
+
+    // Set default normal row color when undefined or empty
+    if (!rowNormalColor || rowNormalColor == '') {
+        rowNormalColor = '#fff';
+    }
+
+    // Set default select row color when undefined or empty
+    if (!rowSelectColor || rowSelectColor == '') {
+        rowSelectedColor = '#fde7c8';
+    }
+
+    // Set default mouseover row color when undefined or empty
+    if (!rowMouseoverColor || rowMouseoverColor == '') {
+        rowMouseOverColor = '#f5fafa';
+    }
+    
+    var mouseOver = function(row) {
+        var rowColor = selectedRow != row ? rowMouseoverColor : rowSelectColor; 
+        colorRow(row, rowColor);
+    }
+
+    var mouseDown = function(row) {
+        row.style.backgroundColor = rowSelectColor; 
+        
+        if (selectedRow != null && selectedRow != row) {  
+            colorRow(selectedRow, rowNormalColor);
+        }
+        
+        selectedRow = row;
+    }
+
+    var mouseOut = function(row) {
+        var rowColor = selectedRow != row ? rowNormalColor : rowSelectColor;
+        colorRow(row, rowColor);
+    }
+    
+    var colorRow = function(row, color) {
+        row.style.backgroundColor = color;
+    }
+
+    // Expose the public methods.
+    this.processTableRowMouseOver = mouseOver;
+    this.processTableRowMouseDown = mouseDown;
+    this.processTableRowMouseOut = mouseOut;
+}

@@ -1,0 +1,150 @@
+
+
+
+What is an Enterprise JavaBean?
+
+-server-side component architectures for the Java language
+
+-structured approach to the specification and behavior of different types of objects
+    -very helpful to properly segment (decouple) the fundamental layers (tiers) of a system
+
+-version 3 totally different from previous versions (radically different on multiple levels)
+    -culmination of what was learned from many varied areas of computing over many years by many different people 
+
+-consistent/standard access to fundamental services
+    -distributed communication service
+    -naming and directory services
+    -transaction management service
+    -data persistence services
+    -resource-sharing services
+
+-deployed in a number of different ways
+    -ear - enterprise archive
+    -jar - persistence archive
+    -sar - service archive
+    -rar - resource archive
+    -war - web archive
+
+
+What's so special about Enterprise JavaBeans?
+
+-simplifies the task of creating distributed objects hence distributed systems
+Makes it easier to create transactional distributed applications than any other component architecture
+Transactional beaviour, security, and persistence is handled automatically
+    -the right frameworks are doing the right scopes of work 
+           --> developer's focus is guided into the right places 
+               this approach has matured like fine wine - the same cannot be said of Spring which has incorporated (added-on) many fundamentals (over the years) as after thoughts and even in ad-hoc ways -- regarding spring, if you only knew what was under the hood...)
+           -- absolutely what is desired by management
+           -- absolutely minimizes risk and cost
+Standard adopted by most all distributed object vendors and considered fundamental to distributed object system development
+Vendors (of servers) implement the same specification which guarantees a consistent model across runtime env.'s (server, OS, and hardware)
+Do not have to worry about vendor lock-in, or version lock-in
+-automated lifecycle support (state changes tracked automatically)
+-superior transaction management
+
+
+What is a session bean?
+
+-stateless or stateful
+-Stateless session beans perform transient services (may be accessed by multiple clients) (hopefully reentrant) 
+    -lifetime independent of client session (may be started and stopped at any time) 
+         (further realization of this concept is sar)
+-Stateful session beans are dedicated to one client and act as a server-side extension of that client
+    -lifetime tied to client session
+-can provide access to transient business services (stateless) (validate and process credit card orders)
+-can act as agents modeling workflow (stateful) (represent a customer's session at an online shopping site)
+    -idea of conversation is born here, allowing concurrent snapshots of session state (while maintaining consistency)
+-does not represent persistent concepts
+
+
+What is a stateless session bean?
+
+-provides a stateless service to client (not unlike HTTP - essentially what tomcat is designed for)
+    (adding stateful services into tomcat can actually be thought of as an aberration)
+-instance fields do not maintain data relative to a client session
+-all data needed to execute a method is provided by method arguments
+-usually developed as a set of related and simple services
+    -where each business method represents an isolated independent service
+-makes for implementation which is very lightweight and fast, but limited in behavior
+-normal for stateless beans to use other beans but may also access resources (i.e. database) directly
+   (depends really on how much attention designers pay to properly structuring their code - 
+    SLSBs are more like gateways)
+
+
+What is a stateful session bean?
+
+-acts as a server-side extension of the client that creates it
+-maintains conversational state with the client
+-usually developed to act as agents for the client 
+-manages client interaction with underlying services (other beans performing work on behalf of client)
+-not typically reentrant... may have locks
+
+
+What is an entity bean?
+
+-server-side component
+-typically shared among multiple clients (reentrant)
+-like SLSBs not tied to any particular client session
+-may be container-managed (CMP) or bean-managed (BMP)
+-have identity, where each bean represents a unique set of data
+-designed to represent data in a repository (i.e. database, cache or distributed cache)
+-may wrap data with business object semantics and read and update data automatically
+    -business methods do not exactly match the persistent fields
+     i.e. persistent state need not map exactly to business methods
+    -provides nice flexibility in how components are designed
+
+
+What is a container managed bean?
+
+-is an entity bean whose state is automatically synchronized with underlying store
+    -developer does not need to write any explicit persistence calls into the code
+    -synchronization carried out as dictated by the deployer at deployment time
+-persistence fields are subset of instance fields, called container-managed fields
+-automatic state-change-event propagation
+
+
+
+What is the bean container?
+
+-spring arose in large part due to the poor intial design of entity beans
+    -now that hibernate and JPA have matured and EJB 3 is here, 
+     the original appeal of Spring has greatly diminished
+
+-due to standardization of the container, the exchange of a server can be 
+   done with little effort (this fact reigns truer and truer as each month passes by)
+
+
+What is special about the bean container?
+
+-transparent / automated object pooling
+-transparent / automated thread pooling
+-allows entity beans to transparently represent data in cache or distributed cache)
+
+
+
+About JBOSS
+
+-global leader in very highly competitive field
+-forrester report says this about JBoss: ...
+-overall is the most fun and pleasurable software to deal with, why?
+    -stability, standards
+    -excellant overall implentation, and excellant integration of internal components
+    -framework component implementations go through excellant acceptance process, components exposed to much higher levels of scrutiny (i.e. judged from wider ranges of perspecitives) and structured verification processes
+
+-auto-recovery of bean state upon unexpected system outage or system crash
+
+
+Why JBossESB?
+
+-WILL PAY BIG DIVIDENDS for your precious time spent
+-structure absolutely facilitates ease of development
+-structure absolutely facilitates ease of maintenance
+-structure absolutely facilitates ease of testing and verification
+
+
+
+What is a service?
+
+-has automated lifecycle support (state changes tracked automatically)
+
+

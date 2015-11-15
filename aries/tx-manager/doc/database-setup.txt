@@ -1,0 +1,18 @@
+# run the server
+./mysqld --user=root
+
+# run the client
+./mysql --user=sample --password=sample --database=sample
+
+# execute the following from within client:
+mysql> create database sample;
+mysql> create user 'sample'@'localhost' identified by 'sample';
+mysql> create user 'sample'@'%' identified by 'sample';
+mysql> set password for sample = password('sample');
+mysql> grant all on sample.* to sample;
+mysql> grant all on sample.* to sample@localhost identified by 'sample';
+mysql> use sample;
+
+# execute the following to set a password for root
+/usr/bin/mysqladmin -u root password 'new-password'
+/usr/bin/mysqladmin -u root -h webapps.aero.org password 'new-password'

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>hornetq-test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries HornetQ JMS Test Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+	</modules>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>hornetq-test-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>hornetq</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.microcontainer</groupId>
+			<artifactId>jboss-kernel</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.logging</groupId>
+					<artifactId>jboss-logging-spi</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>apache-xerces</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-bootstrap</artifactId>
+		</dependency>
+	</dependencies>
+</project>
+

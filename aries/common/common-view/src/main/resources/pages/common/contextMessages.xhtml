@@ -1,0 +1,27 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<style>
+	.contextMessagesColumn1 {padding-left: 8px;}
+	.contextMessagesColumn2 {padding-left: 8px;}
+	</style>
+
+	<h:panelGroup layout="block" rendered="#{globals.isFacesMessagesExist(module)}">
+		<div class="vspace6"/>
+		<h:panelGrid columns="2" columnClasses="contextMessagesColumn1, contextMessagesColumn2">
+			<h:graphicImage value="resource://images/icons/status/Error.gif"/>
+			<ui:repeat value="#{globals.getFacesMessages(module)}" var="message">
+				<h:outputText value="#{message.detail}" styleClass="error"/>.
+				<span class="hspace4"/>
+			</ui:repeat>
+		</h:panelGrid>
+	</h:panelGroup>
+</ui:composition>

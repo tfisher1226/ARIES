@@ -1,0 +1,9 @@
+
+
+We would release it as a Maven Plugin that executes the engine given one or more input files.  I can explain later 'what is a Maven Plugin', however Mr. Ehrlich (as well as yourself too!) may already be familiar with what a Maven Plugin is - anyway I will give a brief explanation of that.
+
+So, we give the engine (i.e. the Maven plugin) the name of a file that is either an ARIES file or an ARIEL file - both types of files may then import other ARIES/ARIEL files.  A typical architecture will be represented by multiple (appropriately organized) ARIES/ARIEL files - I will provide an example fileset that represents a working architecture.
+
+The engine will then proceed to auto-generate output files organized as multiple Eclipse projects.  (I'll explain later what is an Eclipse project.)  The engine will auto-generate all appropriate project config files, build files, application config files, many types of descriptor files, property files; as well as numerous types of source code files... implemented and organized according to common Java EE standards and "best practices".  Also generated are various and extensive (in some areas) unit-tests, functional-tests and integration-tests.  In addition, all required third-party application dependencies are appropriately specified and organized.
+
+

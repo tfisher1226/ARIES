@@ -1,0 +1,3 @@
+For good example follow:
+http://eclipsesource.com/blogs/tutorials/emf-tutorial/
+

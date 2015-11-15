@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>eclipse-emf</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Eclipse EMF Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>eclipse-emf-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.resources</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.runtime</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.expressions</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.core</groupId>
+			<artifactId>org.eclipse.core.jobs</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.equinox</groupId>
+			<artifactId>org.eclipse.equinox.common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.osgi</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+		</dependency>
+		
+		<!--  
+		<dependency>
+			<groupId>org.eclipse.text</groupId>
+			<artifactId>org.eclipse.text</artifactId>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.eclipse.xsd</groupId>
+			<artifactId>org.eclipse.xsd</artifactId>
+		</dependency>
+		
+		<!--  
+		<dependency>
+			<groupId>org.eclipse.xsd</groupId>
+			<artifactId>xsd</artifactId>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.codegen</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.codegen.ecore</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.bpel.plugins</groupId>
+			<artifactId>org.eclipse.bpel.common.model</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.eclipse.bpel.plugins</groupId>
+			<artifactId>org.eclipse.bpel.model</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.eclipse.bpel.plugins</groupId>
+			<artifactId>org.eclipse.bpel.validator</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.eclipse.bpelins</groupId>
+			<artifactId>org.eclipse.bpel.xpath10</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.wst</groupId>
+			<artifactId>wsdl</artifactId>
+		</dependency>
+
+		<!--
+		<dependency>
+			<groupId>org.eclipse.wtp</groupId>
+			<artifactId>wsdl</artifactId>
+		</dependency>
+		-->
+	</dependencies>
+</project>
+

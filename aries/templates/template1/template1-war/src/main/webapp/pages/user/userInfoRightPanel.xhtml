@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="userDivisionPanel">
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumnAlignTop, formColumn">
+			<h:outputLabel styleClass="formLabel" style="width: 80px; padding-top: 2px">Divisions</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 166px; height: auto; cursor: pointer">
+				<ui:include src="userDivisionsField.xhtml"/>
+			</h:panelGroup> 
+		</h:panelGrid>
+	</a4j:outputPanel>
+	
+	<rich:spacer height="8"/>
+	<a4j:outputPanel id="userOrganizationPanel">
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumnAlignTop, formColumn"> 
+			<h:outputLabel styleClass="formLabel" style="width: 80px; padding-top: 2px">Organization</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 166px; height: auto; cursor: pointer">
+				<ui:include src="userOrganizationField.xhtml"/>
+			</h:panelGroup> 
+		</h:panelGrid>
+	</a4j:outputPanel>
+
+	<rich:spacer height="8"/>
+	<a4j:outputPanel id="userActivityGroupPanel">
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnFillVertical, formColumn" style="border: 1px solid #ccc; background-color: inherit">
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 60px; height: 100%; cursor: pointer; background-color: inherit">
+				<h:outputLabel styleClass="formLabel" style="display: block; padding-top: 2px">Groups</h:outputLabel>
+			</h:panelGroup> 
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 190px; height: auto; cursor: pointer">
+				<ui:include src="userActivityGroupField.xhtml"/>
+			</h:panelGroup> 
+		</h:panelGrid>
+	</a4j:outputPanel>
+
+	<rich:spacer height="8"/>
+	<a4j:outputPanel id="userPermissionsPanel">
+		<div class="groupLabel">Permissions</div>
+		<h:panelGroup styleClass="groupPanel" layout="block" style="width: 80px">
+			<h:selectManyCheckbox styleClass="formInput" layout="pageDirection" value="#{selectedRoles}">
+				<s:selectItems hideNoSelectionLabel="false" value="#{roles}" var="role" label="#{role}"/>
+				<s:convertEnum/>
+			</h:selectManyCheckbox>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

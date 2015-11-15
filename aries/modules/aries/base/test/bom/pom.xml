@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>aries-base-test-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries BASE Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-util</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-net</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-runtime</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-jndi</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-event</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-client</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-launcher</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-model</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-model</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>nam-engine</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

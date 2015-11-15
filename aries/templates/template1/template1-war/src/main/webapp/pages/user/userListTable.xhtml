@@ -1,0 +1,245 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript">
+		var userListTableHighlighter = new org.aries.view.table.UserSelectHighlighter('#fff', '#ddecff', '#eeeeff');
+	</script>
+
+	<a4j:outputPanel id="userListTablePanel">
+		<ui:include src="userListMenu.xhtml"/>
+
+		<rich:panel 
+			bodyClass="panelBody"
+			style="width: auto; height: auto; max-height: #{globals.screenHeight-198}px; padding: 0px; margin: 0px; border-bottom-width: 0px; overflow: auto; overflow-y: scroll">
+
+			<h:panelGroup
+				layout="block"
+				rendered="#{userListManager.userList.rowCount == 0}"
+				style="width: auto; height: 20px; padding-top: 4px; padding-left: 2px; border: 0px solid #C3BBB6;">
+				<h:outputText styleClass="label" value="No records to display" style="font-size: 12px"/>
+			</h:panelGroup>
+	
+			<a4j:region>
+				<rich:dataTable 
+					width="100%"
+					var="rowItem"
+					rowKeyVar="index" 
+					id="userListTable"
+					value="#{userListManager.userList}" 
+					rendered="#{userListManager.userList.rowCount > 0}"
+					onRowMouseOver="userListTableHighlighter.processTableRowMouseOver(this)"
+					onRowMouseOut="userListTableHighlighter.processTableRowMouseOut(this)"
+					selectionMode="single" 
+					sortMode="single" 
+					rowClass="tableRow"
+					headerClass="tableHeader" 
+					activeClass="tableRowActive"
+					selectedClass="tableRowSelected"
+					styleClass="table"
+					style="">
+
+					<rich:componentControl 
+						event="onRowContextMenu"
+						for="userListMenu" operation="show">
+						<f:param value="#{rowItem.record.firstName}" name="firstName"/>
+						<f:param value="#{rowItem.record.lastName}" name="lastName"/>
+					</rich:componentControl>
+
+					<a4j:support 
+						event="onRowDblClick" 
+						action="#{userInfoManager.editUser}"
+						onsubmit="setCursorWait(); showProgress('#{rowItem.record.lastName}, #{rowItem.record.firstName}', 'Preparing for edit...')"
+						oncomplete="setCursorDefault(this); showUserDialog(); hideProgress()">
+						<f:setPropertyActionListener target="#{userInfoManager.user}" value="#{rowItem.record}" />
+					</a4j:support>
+	
+					<a4j:support 
+						event="onRowMouseDown" 
+						requestDelay="0"
+						immediate="true"
+						ajaxSingle="false"
+						bypassUpdates="true"
+						limitToList="true"
+						disableDefault="true"
+						onsubmit="userListTableHighlighter.processTableRowMouseDown(this)">
+						<f:setPropertyActionListener target="#{userInfoManager.user}" value="#{rowItem.record}" />
+					</a4j:support>
+		
+					<!-- INDEX -->
+					<rich:column 
+						width="20px"
+						sortable="true"
+						sortBy="#{index}"
+						filterBy="#{index}"
+						filterEvent="onkeyup">
+						<h:outputText value="#{index+1}"/>
+					</rich:column>
+					
+					<!-- Division -->
+					<rich:column 
+						width="40px"
+						sortable="true"
+						sortBy="#{rowItem.record.divisions}"
+						filterBy="#{rowItem.record.divisions}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Divisions"/>
+						</f:facet>
+						<h:outputText value="#{rowItem.record.divisions}"/>
+					</rich:column>
+		
+					<!-- MEMBER NAME -->
+					<rich:column 
+						width="200px"
+						sortable="true"
+						sortBy="#{helper.toNameString(rowItem.record)}"
+						filterBy="#{helper.toNameString(rowItem.record)}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Name"/>
+						</f:facet>
+						<a4j:commandLink 
+							immediate="true" 
+							ajaxSingle="true"
+							requestDelay="0"
+							bypassUpdates="true"
+							value="#{rowItem.record.lastName}, #{rowItem.record.firstName}"
+							action="#{userListManager.editUser}"
+							onclick="setCursorWait(this); showProgress('#{helper.toNameString(rowItem.record)}', 'Preparing for edit...')"
+							oncomplete="setCursorDefault(this); showUserDialog(); Richfaces.hideModalPanel('progressDialog')"
+							reRender="userDialog">
+							<a4j:actionparam value="#{user}" assignTo="#{personBean}"/>
+						</a4j:commandLink>
+					</rich:column>
+		
+					<!-- EMAIL ADDRESS -->
+					<rich:column 
+						width="100px"
+						sortable="true"
+						sortBy="#{rowItem.record.emailAddress.url}"
+						filterBy="#{rowItem.record.emailAddress.url}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Email"/>
+						</f:facet>
+						<h:outputText value="#{rowItem.record.emailAddress.url}"/>
+					</rich:column>
+	
+					<!-- HOME PHONE -->
+					<rich:column 
+						width="100px"
+						sortable="true"
+						sortBy="#{helper.toPhoneString(rowItem.record.homePhone)}"
+						filterBy="#{helper.toPhoneString(rowItem.record.homePhone)}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Home Phone"/>
+						</f:facet>
+						<h:outputText value="#{helper.toPhoneString(rowItem.record.homePhone)}"/>
+					</rich:column>
+		
+					<!-- CELL PHONE -->
+					<rich:column 
+						width="100px"
+						sortable="true"
+						sortBy="#{helper.toPhoneString(rowItem.record.cellPhone)}"
+						filterBy="#{helper.toPhoneString(rowItem.record.cellPhone)}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Cell Phone"/>
+						</f:facet>
+						<h:outputText value="#{helper.toPhoneString(rowItem.record.cellPhone)}"/>
+					</rich:column>
+		
+					<!-- STREET ADDRESS -->
+					<rich:column
+						width="240px"
+						sortable="true"
+						sortBy="#{rowItem.record.streetAddress.street}"
+						filterBy="#{rowItem.record.streetAddress.street}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Street address"/>
+						</f:facet>
+						<h:outputText value="#{rowItem.record.streetAddress.street}"/>
+					</rich:column>
+		
+					<!-- CITY NAME -->
+					<rich:column 
+						visible="true" 
+						width="100px"
+						sortable="true"
+						sortBy="#{rowItem.record.streetAddress.city}"
+						filterBy="#{rowItem.record.streetAddress.city}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="City"/>
+						</f:facet>
+						<h:outputText value="#{rowItem.record.streetAddress.city}"/>
+					</rich:column>
+		
+					<!-- STATE CODE -->
+					<rich:column 
+						width="50px"
+						sortable="true"
+						sortBy="#{rowItem.record.streetAddress.state}"
+						filterBy="#{rowItem.record.streetAddress.state}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="State"/>
+						</f:facet>
+						<h:outputText value="#{rowItem.record.streetAddress.state}"/>
+					</rich:column>
+		
+					<!-- ZIP CODE -->
+					<rich:column 
+						width="60px"
+						sortable="true"
+						sortBy="#{rowItem.record.streetAddress.zip}"
+						filterBy="#{rowItem.record.streetAddress.zip}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Zip-code"/>
+						</f:facet>
+						<h:outputText value="#{rowItem.record.streetAddress.zip}"/>
+					</rich:column>
+					
+					<!--  
+					<f:facet name="footer">
+						<rich:datascroller 
+							id="memberListTableScroller" 
+							pagesVar="pages"
+							fastControls="auto"
+							renderIfSinglePage="false" 
+							tableClass="tableScroller"
+							style="background-color: white">
+		                    <f:facet name="pages">
+		                        <h:panelGroup>
+		                        	<rich:spacer width="20px"/>
+		                            <h:outputText value=" Page "/>
+		                            <h:selectOneMenu value="#{memberListManager.memberListPageIndex}" 
+		                                onchange="#{rich:component('memberListTableScroller')}.switchToPage(this.value)">
+		                                <f:selectItems value="#{memberListManager.pagesToScroll}" />
+		                            </h:selectOneMenu>
+		                            <h:outputText value=" of #{pages} "/>
+		                        	<rich:spacer width="20px"/>
+		                        </h:panelGroup>
+		                    </f:facet>
+						</rich:datascroller>
+					</f:facet>
+					-->
+				</rich:dataTable>
+			</a4j:region>
+		</rich:panel>
+	</a4j:outputPanel>
+</ui:composition>

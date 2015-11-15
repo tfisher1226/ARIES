@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>util-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Util Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<ant.version>1.8.1</ant.version>
+		<antlr.version>3.4</antlr.version>
+		<antlr301.version>3.0.1</antlr301.version>
+		<antlr.runtime.version>3.4</antlr.runtime.version>
+		<antlr301.runtime.version>3.0.1</antlr301.runtime.version>
+		<antlr2.version>2.7.7</antlr2.version>
+		<javassist.version>3.15.0-GA</javassist.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<itext.version>2.1.7</itext.version>
+		<mvel.version>1.2.21</mvel.version>
+		<jodatime.version>1.5.1</jodatime.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant</artifactId>
+				<version>${ant.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>${antlr2.version}</version>
+			</dependency>
+
+            <!--
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>${antlr.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>antlr</artifactId>
+						<groupId>antlr</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr-runtime</artifactId>
+				<version>${antlr.runtime.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>antlr</artifactId>
+						<groupId>antlr</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+            -->
+
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>${antlr301.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>antlr</artifactId>
+						<groupId>antlr</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr-runtime</artifactId>
+				<version>${antlr301.runtime.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>antlr</artifactId>
+						<groupId>antlr</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${jodatime.version}</version>
+			</dependency>
+
+			<!--  
+			<dependency>
+				<groupId>javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>3.11.0.GA</version>
+			</dependency>
+			-->
+
+			<dependency>
+				<groupId>dom4j</groupId>
+				<artifactId>dom4j</artifactId>
+				<version>${dom4j.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lowagie</groupId>
+				<artifactId>itext</artifactId>
+				<version>${itext.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcmail-jdk14</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcprov-jdk14</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bctsp-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lowagie</groupId>
+				<artifactId>itext-rtf</artifactId>
+				<version>${itext.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcmail-jdk14</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcprov-jdk14</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bctsp-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>oro</groupId>
+				<artifactId>oro</artifactId>
+				<version>2.0.8</version>
+			</dependency>
+
+			<dependency>
+				<groupId>xerces</groupId>
+				<artifactId>xercesImpl</artifactId>
+				<version>2.11.0</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>xml-apis</groupId>
+				<artifactId>xml-apis</artifactId>
+				<version>1.4.01</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.2.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
+

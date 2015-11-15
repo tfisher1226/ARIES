@@ -1,0 +1,16 @@
+
+Common Themes Driving the Code-Generation
+
+A few general themes permeate most of the recommended approaches outlined in this article:
+
+    The approaches outlined here focus on the readability and maintainability of application code.
+
+    Generated code should be portable across the supported set of application server environments.
+
+    The most important characteristic of maintainable and readable code is the quality of the code itself. Clean code that speaks for itself is preferable to annotations. Self-explanatory code and annotations are preferable to comments that are necessary to explain convoluted code.
+
+
+Favor Conventions over Exceptions
+
+In an ideal world, the default configuration settings would always be exactly what we wanted. Our use of configuration by exception would not require any exceptions to be configured. We can approach this ideal world by minimizing the frequency and severity of our deviations from the assumed configuration. Although there is nothing inherently wrong about providing specific exceptions to the default configuration settings, doing so requires more effort on our part to denote and maintain the metadata describing the exceptions to the default configuration.
+

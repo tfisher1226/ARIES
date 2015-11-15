@@ -1,0 +1,140 @@
+import Order;
+import CreditCheck;
+import CreditOk;
+import InsufficientCredit;
+import OrderConfirmation;
+import OrderRejected;
+import OutOfStock;
+
+protocol PurchaseBook {
+
+
+    participant buyer {
+        role buyer;
+        receive orderBooks(books)  {
+            invoke seller.order(books) {
+                message OrderAccepted: {
+                    updateStatus();
+                }
+                message OrderInvoice: {
+                    updateStatus(invoice);
+                    invoke seller.purchaseBooks(payment) {
+                        message PaymentAccepted: {
+                            updateStatus(receipt);
+                            end;
+                        }
+                        message PaymentRejected: {
+                            updateStatus(reason);
+                            end;
+                        }
+                    }
+                }
+                message OrderRejected: {
+                    updateStatus(reason);
+                    end;
+                }
+            }
+        }
+    }
+
+	participant seller {
+        role seller;
+	    receive orderBooks(books) {
+            invoke queryInventory(books) {
+                option InStock: {
+                    processOrder(invoice);
+                }
+                option OutOfStock: {
+                    invoke supplier.queryBooks(books) {
+                        message BooksAvailable: {
+                            processOrder(books);
+                        }
+                        message BooksUnavailable: {
+                            reply(OutOfStock);
+                        }
+                    }
+                }
+            }
+        }
+
+        processOrder() {
+            invoke creditAgency.checkCredit {
+                message CreditApproved: {
+                    reply(OrderAccepted);
+                    queryBooks();
+                }
+                message CreditNotApproved: {
+                    reply(OrderRejected);
+                }
+            }
+        }
+
+        queryBooks(books) {
+            invoke suppliers.queryBooks(books), timeout=3m, min=1, max=5 {
+                message BooksAvailable:
+                    aggregate(min($bookInfo.price));
+                }
+                exception: {
+                    reply(Exception);
+                }
+                timeout: {
+                    option: done;
+                    option: reply(OrderRejected);
+                }
+                join: {
+                    reply(Invoice);
+                }
+            }
+        }
+
+        receive purchaseBooks(payment) {
+            option: 
+                exception(CreditDeclined);
+            option: 
+                exception(PaymentRefused);
+            option: {
+                shipBooks();
+                reply(Receipt);
+            }
+
+            shipBooks() {
+                split (invoice.suppliers: supplier) {
+                    invoke supplier.shipBooks($supplier.books) {
+                        message BooksShipped:
+                            aggregate(min($bookInfo.price));
+                        }
+                        exception: {
+                            reply(Exception);
+                        }
+                        timeout: {
+                            option: done;
+                            option: reply(OrderRejected);
+                        }
+                        join: {
+                            reply(Invoice);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    participant creditAgency {
+        role creditAgency;
+        receive checkCredit(creditApplication) {
+            option: {
+		        reply(CreditApproved);
+            }
+            option: {
+			    reply(CreditNotApproved);
+            }
+        }
+    }
+
+	participant supplier {
+        role supplier;
+	    receive shipBooks(books) {
+        }
+    }
+}
+

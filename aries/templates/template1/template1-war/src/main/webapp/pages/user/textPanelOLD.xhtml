@@ -1,0 +1,110 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript">
+	function show#{field}TextPanel(element) {
+		var point = getPositionOf(element, 'LR');
+		Richfaces.showModalPanel('#{field}TextPanel', {left: point[0], top: point[1]-23});
+		#{rich:element('userIdTextField')}.focus();
+	}
+	function hide#{field}TextPanel() {
+		Richfaces.hideModalPanel('#{field}TextPanel');
+	}
+	function saveValue(newValue) {
+		alert(newValue);
+		var id = "#{rich:clientId('userIdComponent')}"; 
+		alert(id); 
+		#{rich:element('userIdComponent')}.value = "HI"; 
+		//alert(#{rich:element(id)}.value);
+		//showObject(#{rich:component(id)}); 
+		alert(2);
+	}
+	</script>
+	
+	<!-- TextPanel -->
+	<rich:modalPanel 
+		id="#{field}TextPanel" 
+		autosized="true" 
+		moveable="false"
+		shadowDepth="0"
+		onhide=""
+		onmaskclick="hide#{field}TextPanel()" 
+		style="">
+
+		<rich:hotKey 
+			key="return"
+			selector="##{field}TextField"
+			handler="hide#{field}TextPanel(); rerender#{field}Component()"/>
+
+		<a4j:jsFunction 
+			name="rerender#{field}Panel"
+			reRender="#{field}Panel"/>
+
+		<a4j:jsFunction 
+			name="rerender#{field}Component"
+			reRender="#{field}Component"/>
+
+		<a4j:jsFunction 
+			immediate="true"
+			ajaxSingle="true"
+			name="rerender#{field}Panel"
+			reRender="#{field}Panel"/>
+
+		<!--  
+		<a4j:support event="onBlur" onsubmit="alert('#{rich:element('userIdTextField')}.value()')">
+		</a4j:support> 
+
+		<rich:hotKey 
+			key="return" 
+			disableInInput="false"
+			selector="#userDialogForm"
+			handler="#{rich:element('userDialogForm')}.submit(); event.stopPropagation(); event.preventDefault(); return false"/>
+
+		<rich:hotKey 
+			key="return" 
+			disableInInput="false"
+			selector="#userDialogForm"
+			handler="${rich:element('userDialogForm:save')}.click(); event.stopPropagation(); event.preventDefault(); return false"/>
+
+		<rich:hotKey 
+			key="esc" 
+			disableInInput="false"
+			selector="#userDialogForm"
+			handler="${rich:element('userDialogForm:cancel')}.click(); event.stopPropagation(); event.preventDefault(); return false"/>
+			onblur="alert(8)"
+			reRender="#{field}Panel" 
+
+			<rich:componentControl
+				event="onblur"
+				for="">
+			</rich:componentControl>
+			 #{rich:component('userDialogForm:userIdComponent')}
+		-->
+
+		<!-- CONTENT -->
+		<a4j:region>
+		<h:panelGrid styleClass="formPanel" columns="1" columnClasses="formColumn" style="">
+			<h:inputText id="#{field}TextField" styleClass="formInput text12" value="#{bean[field]}" style="width: 214px; height: 16px">
+
+				<a4j:jsFunction name="setValue" reRender="#{field}Panel" oncomplete="alert(7)">
+					 <a4j:actionparam name="param1" assignTo="#{tmpxxx}"/>
+				</a4j:jsFunction>
+
+				<a4j:support 
+					event="onblur"
+					onsubmit="setValue(this.value); alert('#{tmpxxx}')"/>
+			</h:inputText>
+		</h:panelGrid>
+		</a4j:region>
+	</rich:modalPanel>
+</ui:composition>

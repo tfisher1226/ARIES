@@ -1,0 +1,3 @@
+If you accessing more than one resource in the same transaction, only 1
+of them can be a non-XA resource.  Is this true? and for which providers?
+

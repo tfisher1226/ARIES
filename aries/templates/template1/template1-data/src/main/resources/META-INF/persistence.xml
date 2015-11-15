@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="Template1DS" transaction-type="JTA">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:/Template1DS</jta-data-source>
+
+		<mapping-file>META-INF/queries-org.aries.common.xml</mapping-file>
+		<mapping-file>META-INF/queries-org.sgiusa.model.xml</mapping-file>
+
+		<class>org.aries.common.entity.AttachmentEntity</class>
+		<class>org.aries.common.entity.EmailAccountEntity</class>
+		<class>org.aries.common.entity.EmailAddressEntity</class>
+		<class>org.aries.common.entity.EmailAddressListEntity</class>
+		<class>org.aries.common.entity.EmailBoxEntity</class>
+		<class>org.aries.common.entity.NotificationEntity</class>
+		<class>org.aries.common.entity.PersonNameEntity</class>
+		<class>org.aries.common.entity.PhoneNumberEntity</class>
+		<class>org.aries.common.entity.StreetAddressEntity</class>
+		<class>org.aries.common.entity.ZipCodeEntity</class>
+		<class>org.sgiusa.model.entity.EmailListEntity</class>
+		<class>org.sgiusa.model.entity.EventEntity</class>
+		<class>org.sgiusa.model.entity.FamilyMemberEntity</class>
+		<class>org.sgiusa.model.entity.GohonzonInfoEntity</class>
+		<class>org.sgiusa.model.entity.LeadershipInfoEntity</class>
+		<class>org.sgiusa.model.entity.LeadershipRoleEntity</class>
+		<class>org.sgiusa.model.entity.MemberEntity</class>
+		<class>org.sgiusa.model.entity.MembersEntity</class>
+		<class>org.sgiusa.model.entity.MembershipInfoEntity</class>
+		<class>org.sgiusa.model.entity.NoteEntity</class>
+		<class>org.sgiusa.model.entity.OrganizationEntity</class>
+		<class>org.sgiusa.model.entity.SchoolInfoEntity</class>
+		<class>org.sgiusa.model.entity.StudyDeptExamEntity</class>
+		<class>org.sgiusa.model.entity.StudyDeptInfoEntity</class>
+		<class>org.sgiusa.model.entity.UserEntity</class>
+		<class>org.sgiusa.model.entity.UserPermissionEntity</class>
+		<class>org.sgiusa.model.UserRole</class>
+		<class>org.sgiusa.model.entity.UsersEntity</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+	</persistence-unit>
+</persistence>

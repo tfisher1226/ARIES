@@ -1,0 +1,64 @@
+import Book;
+import Payment;
+
+protocol Bookshop {
+    role buyer;
+    role seller;
+    role supplier;
+
+    action orderBooks {
+        buyer->seller.orderBooks(books) {
+            run queryBooks(books) {
+                BooksAvailable:
+                    reply(OrderAccepted(List<Book>));
+                }
+                BooksUnavailable:
+                    reply(OrderRejected);
+                }
+                timeout: {
+                    reply(OrderRejected);
+                }
+                error[*]: {
+                    reply($error);
+                }
+            }
+
+            OrderAccepted: {
+                run purchaseBooks(payment);
+            }
+            OrderRejected: {
+                end;
+            }
+            timeout: {
+                end;
+            }
+            error[*]: {
+                end;
+            }
+        }
+    }
+
+    action queryBooks {
+        seller->suppliers.query(books), timeout=3m, limit=5 {
+            if ($inventory.containsAny(books)) {
+                reply(BooksAvailable);
+            } else {
+                reply(BooksUnavailable);
+            }
+
+            BooksAvailable: {
+                aggregate($bookInfo, min($bookInfo.price));
+            }
+        }
+    }
+
+    action purchaseBooks {
+        buyer->seller.purchaseBooks(payment) {
+            reply(receipt);
+        }
+        PaymentAccepted: {
+            end;
+        }
+    }
+}
+

@@ -1,0 +1,100 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<ui:include src="membershipListColumnPanel.xhtml"/>
+
+	<aries:toolbar type="tab"> 
+		<aries:toolbarGroup location="left">
+		
+			<!--  
+			<h:outputText value="Records per page" styleClass="text11" style="padding-left: 4px; padding-right: 6px"/>
+       		<h:inputText value="#{memberRecordsPerPage}" converter="integerConverter" style="font-size: 11px; width: 20px; border: 1px solid #C3BBB6">
+       			<a4j:support event="onkeyup" reRender="membershipListTable" requestDelay="0" ajaxSingle="true"/>
+       		</h:inputText>
+			<span class="hspace4"/>
+       		-->
+
+			<aries:toolButton
+				submitMode="ajax"
+				immediate="true"
+				ajaxSingle="true"
+				bypassUpdates="true"
+				limitToList="true"
+				icon="resource://images/icons/common/New16.gif"
+				manager="#{memberInfoManager}"
+				action="newMember"
+				onclick="setCursorWait(); showProgress('Membership Records', 'Creating new record...')"
+				oncomplete="setCursorDefault(); showMemberDialog(); hideProgress()"
+				tooltip="Create new Membership Record"
+				reRender="memberDialog"
+				linkClass="text16 link"
+				offset="true"/>
+				
+			<aries:toolButton
+				submitMode="none"
+				tooltip="Show/hide table columns"
+				icon="resource://images/icons/common/Table16.gif"
+				onclick="showMemberListColumnPanel#{tabId}(this); setCursorDefault(this)"
+		   		reRender="memberListColumnPanel#{tabId}"
+				linkClass="text16 link"
+				offset="true"/>
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup location="right">
+			<aries:toolButton
+				tooltip="Export Member List to PDF"
+				icon="resource://images/icons/export/PDF16.gif"
+		   		manager="#{exportManager}" 
+		   		action="exportToPDF" 
+		   		reRender="detailView"
+				linkClass="text16 link"
+				target="_blank"
+				offset="true"/>
+
+			<span class="hspace1"/>
+			<aries:toolButton
+				tooltip="Export Member List to Excel"
+				icon="resource://images/icons/export/Excel16.gif"
+		   		manager="#{mainManager}" 
+		   		action="exportToXLS" 
+		   		reRender="membershipViewPanel"
+				linkClass="text16 link"
+				target="_blank"
+				offset="true"/>
+
+			<!--  
+			<span class="hspace1"/>
+			<aries:toolButton
+				tooltip="Send E-mail to member list"
+				icon="resource://images/icons/common/message.gif"
+		   		manager="#{emailManager}" 
+		   		action="sendEmailToList" 
+		   		reRender="detailView"
+				linkClass="text16 link"
+				target="_blank"
+				offset="true"/>
+				-->
+				
+			<span class="hspace1"/>
+			<aries:toolButton
+				icon="resource://images/icons/common/Refresh16.gif"
+				tooltip="Re-read component from server"
+		   		manager="#{mainManager}"
+		   		action="refreshTab" 
+				onclick="setCursorWait(this); showProgress('Membership Service', 'Refreshing #{organizationTreeManager.selectedOrganizationName}...')"
+				oncomplete="setCursorDefault(this); hideProgress()"
+		   		reRender="membershipListTable#{tabManager.tabId}"
+				linkClass="text16 link"/>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

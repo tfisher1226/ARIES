@@ -1,0 +1,1 @@
+http://www.bleathem.ca/talks/2012-JavaOne/testing-jsf.html#/9

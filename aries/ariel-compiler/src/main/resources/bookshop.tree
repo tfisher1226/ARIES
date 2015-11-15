@@ -1,0 +1,49 @@
+import bookshop.xsd;
+
+
+    process [Buyer]
+        service [orderBooks]
+            receiver [orderBooks(bookOrderRequest)]
+                invoker [Seller.orderBooks(bookOrderRequest)]
+                    callback [OrderAccepted]
+                        sender [bookOrderResponse];
+                    callback [OrderRejected]
+
+
+    process [Seller]
+
+        service [orderBooks]
+            receive [orderBooks(bookOrderRequest)]
+                invoke [SupplierGroup.queryBooks(bookOrderRequest)]
+                    callback [BooksAvailable]
+                    callback [Exception]
+
+        service [purchaseBooks]
+            receive [purchaseBooks(bookPurchaseRequest)]
+
+        callback [receiveResponse(BooksAvailable)]
+            receive [receiveResponse(BooksAvailable)]
+
+        callback [receiveResponse(Exception)]
+            receive [receiveResponse(Exception)]
+
+
+
+    process [Supplier] {
+        service [queryBooks]
+            receive [queryBooks(BookInfo)]
+        service [reserveBooks]
+            receive [reserveBooks(BookInfo)]
+        service [shipBooks]
+            receive [shipBooks(BookInfo)]
+                invoke [Shipper.shipBooks(BookInfo, Payment)]
+                    callback [BooksShipped]
+                    	option: {
+	                    	SupplierOrderCache.put(BookInfo);
+	                    	bookOrderLog.log(Payment);	
+	                	    post BooksShipped;
+	                	    reply OrderReceipt;
+		
+    process Shipper {
+        receive [shipBooks(BookInfo, Payment)]
+

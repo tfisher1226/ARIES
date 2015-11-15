@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="userDialogPanel">
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Specify Name</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 12px 8px 12px 8px">		
+
+					<rich:spacer height="2"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="userFirstNameLabel" styleClass="formLabel text12" for="userFirstNameField" style="display: block; width: 50px">First</h:outputLabel>
+						<h:inputText id="userFirstNameField" styleClass="formInput text12" value="#{user.firstName}" style="width: 300px" />
+					</h:panelGrid>
+			
+					<rich:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 0px">
+						<h:outputLabel id="userLastNameLabel" styleClass="formLabel text12" for="userLastNameField" style="display: block; width: 50px">Last</h:outputLabel>
+						<h:inputText id="userLastNameField" styleClass="formInput text12" value="#{user.lastName}" style="width: 300px" />
+					</h:panelGrid>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

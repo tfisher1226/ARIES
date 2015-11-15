@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jaxws-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JAXWS Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<cxf.version>2.3.3</cxf.version>
+		<saxonHE.version>9.4</saxonHE.version>
+        <!--
+		<saxonB.version>9.0</saxonB.version>
+		<saxon.version>9.1.0.8</saxon.version>
+        -->
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 
+				Pull in the cxf-parents as import scope to re-use the dependenecyManagement 
+				sections of those poms. Those sections define the versions of various third 
+				party deps that CXF used to build with and test with and we would like to 
+				make sure the same versions are used.
+			-->
+
+			<!--  
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf</artifactId>
+				<version>${cxf.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-parent</artifactId>
+				<version>${cxf.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			-->			
+			
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>${cxf.version}</version>
+				<!--
+				<exclusions>
+					<exclusion>
+						<artifactId>org.apache.cxf</artifactId>
+						<groupId>cxf-rt-bindings-soap</groupId>
+					</exclusion>
+				</exclusions>
+				-->
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-core</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<!--
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-bindings-soap</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			-->
+	
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http-jetty</artifactId>
+				<version>${cxf.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-jms</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-ws-addr</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-ws-security</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-databinding-jaxb</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			
+	        <dependency>
+	            <groupId>org.apache.cxf</groupId>
+	            <artifactId>cxf-common-utilities</artifactId>
+				<version>${cxf.version}</version>
+	        </dependency>
+
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>Saxon-HE</artifactId>
+				<version>${saxonHE.version}</version>
+			</dependency>
+
+            <!--	
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>Saxon-B</artifactId>
+				<version>${saxonB.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>saxon</artifactId>
+				<version>${saxon.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>saxon-dom</artifactId>
+				<version>${saxon.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>saxon-xpath</artifactId>
+				<version>${saxon.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>saxon-xqj</artifactId>
+				<version>${saxon.version}</version>
+			</dependency>
+            -->
+
+			<!-- 
+			<dependency>
+				<groupId>org.apache.neethi</groupId>
+				<artifactId>neethi</artifactId>
+				<version>2.0.4</version>
+			</dependency>
+			-->
+		</dependencies>
+	</dependencyManagement>
+</project>
+

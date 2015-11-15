@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jndi</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JNDI Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jndi-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.naming</groupId>
+			<artifactId>jnp-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.naming</groupId>
+			<artifactId>jnpserver</artifactId>
+		</dependency>
+	</dependencies>
+</project>

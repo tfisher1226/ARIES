@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGrid styleClass="layoutPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 8px 10px; background-color: inherit">
+		<h:panelGroup layout="block">
+			<ui:include src="leadershipRoleTable.xhtml"/>
+		</h:panelGroup>
+
+		<h:panelGrid styleClass="layoutPanel" layout="block" columns="1" columnClasses="formColumn" style="margin-top: 12px">
+			<h:panelGrid styleClass="layoutPanel" layout="block" columns="3" columnClasses="formColumn, formColumnAlignMiddle, formColumnAlignMiddle">
+
+				<a4j:outputPanel id="manualSignedDatePanel" layout="block" style="margin-right: 10px">
+					<rich:calendar popup="true" disabled="#{!leadershipInfo.manualSigned}" value="#{leadershipInfo.manualSignedDate}" inputStyle="width: 80px; font-size: 11px"/>
+				</a4j:outputPanel>
+
+				<h:selectBooleanCheckbox id="manualSignedCheckbox" title="Leadership Manual has been signed" value="#{leadershipInfo.manualSigned}" immediate="true" style="padding: 4px">
+					<a4j:support event="onclick" requestDelay="0" ajaxSingle="true" reRender="manualSignedDatePanel"/> 
+	 			</h:selectBooleanCheckbox>
+
+				<h:panelGroup layout="block" style="width: 76px; padding-left: 2px; background-color: inherit">
+					<h:outputLabel value="Signed Manual" for="manualSignedCheckbox"/>
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<h:panelGrid styleClass="layoutPanel" layout="block" columns="3" columnClasses="formColumn, formColumnAlignMiddle, formColumnAlignMiddle" style="margin-top: 4px">
+
+				<a4j:outputPanel id="examPassedDatePanel" layout="block" style="margin-right: 10px">
+					<rich:calendar popup="true" disabled="#{!leadershipInfo.examPassed}" value="#{leadershipInfo.examPassedDate}" inputStyle="width: 80px; font-size: 11px"/>
+				</a4j:outputPanel>
+	 			
+				<h:selectBooleanCheckbox id="examPassedCheckbox" title="Leadership Exam has been taken and passed" value="#{leadershipInfo.examPassed}" immediate="true" style="padding: 4px">
+					<a4j:support event="onclick" requestDelay="0" ajaxSingle="true" reRender="examPassedDatePanel"/> 
+	 			</h:selectBooleanCheckbox>
+
+				<h:panelGroup layout="block" style="width: 76px; padding-left: 2px; background-color: inherit">
+					<h:outputLabel value="Passed Exam" for="examPassedCheckbox"/>
+				</h:panelGroup>
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:panelGrid>
+</ui:composition>

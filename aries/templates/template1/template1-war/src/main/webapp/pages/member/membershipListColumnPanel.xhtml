@@ -1,0 +1,116 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- 
+	<script type="text/javascript">
+	function showMemberListColumnPanel#{tabId}(element) {
+		var point = getPositionOf(element, 'LR');
+		Richfaces.showModalPanel('memberListColumnPanel#{tabId}', {top: point[1]-1, left: point[0]});
+	}
+	function hideMemberListColumnPanel#{tabId}() {
+		Richfaces.hideModalPanel('memberListColumnPanel#{tabId}');
+	}
+	</script>
+	-->
+
+	<script type="text/javascript">
+	//<![CDATA[
+	function showMemberListColumnPanel#{tabId}(element) {
+		var point = getPositionOf(element, 'LR');
+		Richfaces.showModalPanel('memberListColumnPanel#{tabId}', {top: point[1]-1, left: point[0]});
+	}
+	function hideMemberListColumnPanel#{tabId}() {
+		Richfaces.hideModalPanel('memberListColumnPanel#{tabId}');
+	}
+	//]]>
+	</script>
+	
+	<a4j:region>
+		<!-- MemberListColumnPanel -->
+		<rich:modalPanel 
+			rendered="true" 
+			autosized="true" 
+			id="memberListColumnPanel#{tabId}" 
+			onmaskclick="hideMemberListColumnPanel#{tabId}()"
+			style="height: auto">
+	
+			<!-- CONTENT -->
+			<a4j:outputPanel rendered="true">
+				<h:form id="memberListColumnForm#{tabId}">
+	
+					<div class="vspace6"/>
+					<h:outputLabel styleClass="header12" style="margin: 6px; background-color: inherit">Column Selection</h:outputLabel>
+					<h:panelGrid styleClass="layoutPane" layout="block" cellpadding="0" cellspacing="0" columns="2" columnClasses="formColumn, formColumn" style="width: auto; margin: 6px 6px; background-color: inherit"> 
+	
+						<h:panelGroup layout="block" style="width: 100px">
+							<h:selectManyCheckbox 
+								styleClass="formInput" 
+								layout="pageDirection" 
+								value="#{memberListManager.selectedMemberListColumns1}" 
+								style="padding-left: 4px">
+		
+								<s:selectItems 
+									var="column"  
+									value="#{memberListColumns1}" 
+									hideNoSelectionLabel="true"
+									label="#{column}"/>
+							</h:selectManyCheckbox>
+						</h:panelGroup>
+	
+						<h:panelGroup layout="block" style="width: 80px">
+							<h:selectManyCheckbox 
+								styleClass="formInput" 
+								layout="pageDirection" 
+								value="#{memberListManager.selectedMemberListColumns2}" 
+								style="padding-left: 4px">
+		
+								<s:selectItems 
+									var="column"  
+									value="#{memberListColumns2}" 
+									hideNoSelectionLabel="true"
+									label="#{column}"/>
+							</h:selectManyCheckbox>
+						</h:panelGroup>
+	
+						<rich:spacer/>
+						<h:panelGroup styleClass="popupControlPane" layout="block" style="background-color: inherit">
+							<rich:spacer height="6"/>
+	
+							<aries:toolbar>
+								<aries:toolbarGroup location="right">
+									<aries:smallDialogButton
+										value="Apply"
+										manager="#{memberListManager}"
+										action="selectColumns"
+										onclick="setCursorWait(this); hideMemberListColumnPanel#{tabId}()"
+										oncomplete="setCursorDefault(this)"
+										reRender="membershipListTablePanel#{tabId}"
+										rendered="true"/>
+	
+									<aries:smallDialogButton
+										value="Cancel"
+										submitMode="none"
+										onclick="setCursorDefault(this); hideMemberListColumnPanel#{tabId}()"
+										reRender="membershipListTablePanel#{tabId}"
+										rendered="true"
+										offset="true"/>
+								</aries:toolbarGroup>
+							</aries:toolbar>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:form>
+			</a4j:outputPanel> 
+		</rich:modalPanel>
+	</a4j:region>
+</ui:composition>
+

@@ -1,0 +1,112 @@
+
+protocol ReserveTravel {
+    role client;
+    role agent;
+    role provider[1..num_providers];
+
+  	action client->agent.queryServices() {
+        [servicesList]: {
+            option <requestMoreInfo> {
+                continue;
+            }
+        
+            option <reserveServices> {
+                agent->provider.listServices();
+                    [servicesList]: {
+                        option <allServicesAvailable> {
+                            agent->provider.reserveServices();
+                            run PurchaseTravel;
+                        }
+
+                        option <alternateServicesAvailable> {
+                            agent.response->client {
+                                [alternateServices]: {
+                                    option <reserveServices> {
+                                        agent->provider.reserveServices();
+                                        run PurchaseTravel;                
+                                    }
+                            
+                                    option <cancel> {
+                                        end;
+                                    }
+                                }
+                            }
+                        }
+
+                        option <nothingAvailable> {
+                            end;
+                        }
+                    }
+
+                    timeout: {
+                        end;
+                    }
+
+                    error: {
+                        end;
+                    }
+                }
+            }
+
+            option <quit> {
+            }
+        }
+
+        timeout: {
+            end;
+        }
+
+        error: {
+            end;
+        }
+    }
+
+  	action agent->provider.listServices() {
+        servicesList: {
+            option: servicesAvailable {
+                reserveServices();
+                run PurchaseTravel;                
+            }
+            option: alternateServicesAvailable {
+                agent->client(alternateServices);
+                
+            }
+            option: nothingAvailable {
+            }
+        }
+        timeout: {
+        }
+        error: {
+        }
+    }
+
+    reserveServices() {
+         agent->provider.reserveServices();
+    }
+
+  	action agent->provider.reserveServices() {
+
+    }
+
+
+    handleServices() {
+        option: requestMoreInfo() {
+            continue;
+        }
+        
+        option: reserveServices() {
+            agent->provider.queryServices {
+                service_info:
+                    
+            
+        }
+
+        option: quit();
+    }
+
+    reserveServices() {
+        client->agent.reserveServices(reservationRequest) {
+        }
+    }
+
+}

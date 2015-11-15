@@ -1,0 +1,71 @@
+
+
+Communication frameworks designed using ARIEL rely on the cpncept of globals typs.  Globals typs enalbe us to describe the model of distributed communication.  This model may be seen as an abstract high-level view of the protocol that all participants will have to respect in order to commincate with each other in multi-party communcation.
+
+The ARIEL designer will specify ...  At runtime the system will use global types to monitor protocol interactions amoinc the participants as well as enforce the rules and constraints of the protocol.  The rules and constraints of the protocol include enforcemet of security credentials among the participants.  The runtime system will verify correct interactinal behaviour as well as prevent and report any incorrect behavioud detected making sure for example the deadlocks cannot and do not ever occur.
+
+The runtime representation consists of input/output operations decorated with explicit senders and receivers according to the information provided in the global types.
+
+An alternative way could be that the programmer directly speci?es the senders and the receivers in the communication operations as our low-level processes; the system could then infer the global types from the ARIEL program.  Our communication and interaction type systems will work as before in order to check the correctness and the progress of the workflow.  Thus the ARIEL designer can choose between a top-down or a bottom-up style of design, while at the same time still rely upon the same properties being checked and guaranteed by the system.
+
+
+We are currently designing and implementing a modelling and speci?cation language
+with multiparty session types [19] for the standards of business and ?nancial
+protocols with our industry collaborators [20,21].
+
+This consists of three layers: the
+?rst layer is a global type which corresponds to a signature of class models in UML;
+the second one is for conversation models where signatures and variables for multiple
+conversationsare integrated;and the third layer includes extensionsof the existing
+languages(such as Java [13])which implement conversationmodels. We are currently
+consideringtoextendthismodellingframeworkwithourtypedisciplinesothatwecan
+specifyandensureprogressforexecutableconversations.
+
+ARIEL uses a distributed calculas where each chanel consists of a master-endpoint and one or more slave-endpoints.  Each endpoint (master or slave) may have zero or more callback-ebndpoints depending upon the nature of the endpoint.  Each endpoint will also have one or more listeners dependeing upon with communication mediums are designed to be supported by that endpoint.  Typicall callback-endpoints will receive response communiations over whichever same communication medium as its associated sservier-endpoint receied its request upon, ie.e web-service request will result in a webservice response, or a EJB request will result ion an EKB response.  This behaviour, however, can be configured in theat a given service may receive requests using one communication medium and generate response using another communciation medium.  The configuration is specified in ARIES.
+
+The behavioral aspect of ARIES is described in one or more ARIEL models in terms of activities.  There are three types of activities, namely control?ow activities, workunit activities, and basic activities.
+
+An ARIEL model (abstract or executable) speci?es the orchestrationofwebservicesintermsofactivitieswhichcan be primitive or structured. Primitives activities include:
+
+- invoke - calling a service's operation
+- receive - waiting for a message
+- reply - sending a message
+- wait - pausing for a period of time
+- assign - assigning value of one variable to another
+- throw - initiating an exception
+- terminate - terminating the service
+
+ARIEL provides support for exception handling.  Faults (exceptions) can be thrown to signal exceptional conditions that are handled (caught) by fault handlers as well as compensation handlers. Time-based exceptions (e.g. timeouts) are handled by event handlers.
+
+
+
+High Availability
+Using combinations of application level clustering and middle-tier clustering and data-layer clustering are the main techniques available in ARIEL models for helping to ensure high availability.
+
+The quality attribute of scalability deserves special mention vis-à-vis the scope of
+this paper, because the architectural technique of clustering is used to achieve
+scalability and is also used to achieve high availability. But all discussion of
+clustering in this paper is in the context of high availability, even though the
+additional BPEL system design considerations introduced by clustering must be
+addressed regardless of why clustering is used. Clustering for high availability is
+arguably simpler than clustering for scalability, because the goal is merely
+redundancy, not calibrating resource supply to load patterns.
+
+High availability of a system at a given site is typically achieved through
+architecture configurations termed “active-active” and “active-passive”. In
+addition, a disaster recovery site may be configured as a backup for a primary site.
+While Oracle Application Server HA documentation [B28941] describes activeactive
+configurations, active-passive configurations, and disaster recovery for ASbased
+applications (of which BPEL systems are examples), this revision of this
+paper focuses primarily on active-active configurations at a single site.
+
+The knowledge collected in this paper concerns the subtopics of deployment
+architecture, installation and configuration, process design, administration, and
+testing, for each of which the paper includes a major section. Before delving in to
+those subtopics, however, it is important to consider the level of investment that
+an organization should make in HA architecture for a given BPEL system
+
+
+
+
+

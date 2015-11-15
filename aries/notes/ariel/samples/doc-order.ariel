@@ -1,0 +1,90 @@
+protocol DocumentPurchase {
+
+    participant Member {
+        receive getDocs() {
+            invoke Catalog.searchDocs(searchRequest) {
+                message SearchResults: {
+                    orderDocs();
+                }
+                message NotFound:
+                exception:
+                timeout: {
+                    end;
+                }
+            }
+
+            orderDocs() {
+                invoke Catalog.orderDocs(orderRequest) {
+                    message OrderAccepted: {
+                        purchaseDocs();
+                    }
+                    exception:
+                    timeout: {
+                        cancelOrder();
+                    }
+                }
+            }
+
+            purchaseDocs() {
+                invoke Catalog.purchaseDocs(paymentRequest) {
+                    message PaymentAccepted(Receipt): {
+                        end;
+                    }
+                }
+            }
+
+            cancelOrder() {
+                send Catalog.cancelOrder();
+                end;
+            }
+        }
+    }
+
+    participant Catalog {
+        receive searchDocs(searchRequest) {
+            option reply(SearchResults);
+            option reply(NotFound);
+        }
+
+        receive orderDocs(OrderRequest) transaction="mandatory" {
+            option {
+                invoke Repository.checkAvailable(docs) {
+                    message DocumentAvailable: {
+                        reply(OrderAccepted);
+                    }
+                    message NotAvailable: {
+                        reply(OrderRejected);
+                        cancelOrder();
+                    }
+                }
+            }
+        }
+
+        receive purchaseDocs(PaymentRequest) {
+            option reply(PaymentAccepted);
+            option {
+                reply(PaymentRejected);
+                cancelOrder();
+            }
+        }
+
+        receive cancelOrder() {
+            raise(OrderCancelled);
+            end;
+        }
+    }
+
+    participant Repository {
+        role repositoryManager;
+
+        receive checkAvailable(docs) {
+            reply(DocumentAvailable);
+            reply(NotAvailable);
+        }
+
+        receive deliverDocument() {
+            
+        }
+    }
+
+}

@@ -1,0 +1,9 @@
+
+
+Architectural Design and Implementation Usability Metrics
+
+How to measure the completeness of Architectural design and associated implementation of that design.  One might tend to want to seperate these two, design and implementation, however we believe it is better to measure and apply metrics to both at the same time since at runtime both are so tightly coupled and interrelated.
+
+This set of metrics is by no means exhaustive, but instead is meant for our immediate pusposes to provide a way of evaluating the quality of a system.
+
+This set of metrics allows us to breakdown the quality of an architecture into understandable measures.

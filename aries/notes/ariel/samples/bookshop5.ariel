@@ -1,0 +1,146 @@
+protocol Bookshop {
+    role buyer;
+    role seller;
+    role supplier;
+
+
+    buyer {
+        buyer->seller.orderBooks(books) {
+            OrderAccepted: {
+                purchaseBooks(invoice);
+            }
+            OrderRejected: {
+                end;
+            }
+        }
+
+        buyer->seller.purchaseBooks(payment) {
+            PaymentAccepted: {
+                print(receipt);
+                end;
+            }
+            PaymentRejected: {
+                end;
+            }
+        }
+    }
+
+    seller {
+        action orderBooks(books) {
+            suppliers.query(books), timeout=3m, min=1, max=5 {
+                BooksAvailable:
+                    aggregate(min($bookInfo.price));
+                }
+                Exception: {
+                    reply(Exception);
+                }
+                timeout: {
+                    done;
+                }
+                done {
+                    choice {
+                        reply(OrderAccepted(invoice));
+                    } or {
+                        reply(OrderRejected);
+                    }
+                }
+            }            
+        }
+
+        action purchaseBooks(payment) {
+            reply(Receipt);
+        }
+    }
+
+    supplier {
+        action queryBooks(books) {
+            choice {
+                reply(BooksAvailable);
+            } or {
+                reply(BooksUnavailable);
+            }
+        }
+
+        action reserveBooks(books) {
+            choice {
+                reply(BooksReserved);
+            } or {
+                reply(BooksUnavailable);
+            }
+        }
+    }
+
+
+
+    
+
+
+    start {
+        buyer->seller.orderBooks(books) {
+            OrderAccepted: {
+                buyer->seller.purchaseBooks(payment) {
+                    PaymentAccepted: {
+                        print(receipt);
+                        end;
+                    }
+                    PaymentRejected: {
+                        end;
+                    }
+                }
+            }
+            OrderRejected: {
+                end;
+            }
+        }
+    }
+
+
+    
+    action purchaseBooks@buyer    
+
+    action orderBooks@seller(books) {
+        run queryBooks(books) {
+            BooksAvailable:
+                reply(OrderAccepted(List<BookInfo>));
+            }
+            BooksUnavailable:
+                reply(OrderRejected);
+            }
+            timeout: {
+                reply(OrderRejected);
+            }
+            error[*]: {
+                reply($error);
+            }
+        }
+
+            OrderAccepted: {
+                run purchaseBooks(payment);
+            }
+            OrderRejected: {
+                end;
+            }
+            timeout: {
+                end;
+            }
+            error[*]: {
+                end;
+            }
+        }
+    }
+
+    action queryBooks {
+        seller->suppliers.query(books), timeout=3m, limit=5 {
+            if ($inventory.containsAny(books)) {
+                reply(BooksAvailable);
+            } else {
+                reply(BooksUnavailable);
+            }
+
+            BooksAvailable: {
+                aggregate($bookInfo, min($bookInfo.price));
+            }
+        }
+    }
+
+}

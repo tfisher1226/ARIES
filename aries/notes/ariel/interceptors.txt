@@ -1,0 +1,50 @@
+http://docs.jboss.org/ejb3/docs/tutorial/1.0.7/html/EJB3_Interceptors.html
+
+Specification of Interceptors
+
+The Ariel 1.0 spec defines the ability to apply interceptors to the service methods of your session and message driven beans. EJB 3.0 interceptors take the form of methods annotated with the @javax.ejb.AroundInvoke annotation. These methods must have the following signature:
+
+			
+@javax.ejb.AroundInvoke
+public Object <Arbitrary method name>(javax.ejb.InvocationContext ctx) throws java.lang.Exception
+
+			
+		
+
+Note
+
+You can apply interceptors to JBoss specific @Service and @Consumer beans
+
+You can either define an interceptor method in the bean class itself, or in separate classes. There can only be one interceptor method per class.
+Interceptor method in bean class :
+
+Take a look at org.jboss.tutorial.interceptor.bean.EmailMDB . It contains this method:
+
+			
+@AroundInvoke
+public Object mdbInterceptor(InvocationContext ctx) throws Exception
+{
+   System.out.println("*** Intercepting call to EmailMDB.mdbInterceptor()");
+   return ctx.proceed();
+}
+			
+		
+
+This method will wrap the call to EmailMDB.onMessage(). The call to ctx.proceed() causes the next object in the chain of interceptors to get invoked. At the end of the chain of interceptors, the actual bean method gets called.
+
+Similarly org.jboss.tutorial.interceptor.bean.EmailSystemBean has a method annotated with @AroundInvoke
+
+				
+@AroundInvoke
+public Object myBeanInterceptor(InvocationContext ctx) throws Exception
+{
+   if (ctx.getMethod().getName().equals("emailLostPassword"))
+   {
+      System.out.println("*** EmailSystemBean.myBeanInterceptor - username: " + ctx.getParameters()[0]);
+   }
+
+   return ctx.proceed();
+}
+
+				
+			

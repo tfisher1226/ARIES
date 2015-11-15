@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jaxb:bindings 
+	version="2.1"
+	jaxb:extensionBindingPrefixes="xjc"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+
+	<jaxb:bindings schemaLocation="template1-model-0.0.1.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="template1.model">
+			</jaxb:package> 
+	    </jaxb:schemaBindings>
+	</jaxb:bindings>
+
+	<!--
+	<jaxb:bindings schemaLocation="aries-common-0.0.1.xsd">
+		<jaxb:bindings node="//xs:complexType[@name='PhoneNumber']">
+			<jaxb:class ref="org.aries.common.PhoneNumber"/>
+		</jaxb:bindings>
+	</jaxb:bindings>
+	-->
+
+    <jaxb:globalBindings>
+		<xjc:simple/>
+		<xjc:serializable uid="1" />
+		<xjc:javaType name="java.util.Date" xmlType="xs:date" adapter="org.aries.adapter.DateAdapter" />
+		<xjc:javaType name="java.util.Date" xmlType="xs:time" adapter="org.aries.adapter.DateAdapter" /> 
+		<xjc:javaType name="java.util.Date" xmlType="xs:dateTime" adapter="org.aries.adapter.DateAdapter" />
+		<xjc:javaType name="java.lang.Boolean" xmlType="xs:boolean" adapter="org.aries.adapter.BooleanAdapter" />
+    </jaxb:globalBindings>
+</jaxb:bindings>

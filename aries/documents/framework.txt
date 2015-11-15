@@ -1,0 +1,39 @@
+
+
+
+JBossAS
+JBossESB
+JBossCache
+
+Service registry (UDDI)
+Service implementation
+
+
+
+
+Reusable modules:
+--------------------
+
+Common service layer
+
+UserManager service
+Authentication service
+Notification service
+GeneralEvent service
+GeneralException service
+
+
+Business service layer
+
+IcamApproval service
+IcamAuthorization service
+IcamAudit service
+IcamPersistence service
+IcamJustification service
+IcamWorkflow service
+
+
+
+
+
+

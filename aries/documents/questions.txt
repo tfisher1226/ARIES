@@ -1,0 +1,4 @@
+
+
+When email notification is sent to Delegator to request approval, how does the response get communicated? and processed?
+

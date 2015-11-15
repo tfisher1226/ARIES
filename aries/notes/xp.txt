@@ -1,0 +1,10 @@
+
+
+
+References
+
+The Easy Way to Writing Good User Stories
+http://www.codesqueeze.com/the-easy-way-to-writing-good-user-stories/
+
+INVEST in Good Stories, and SMART Tasks
+http://xp123.com/xplor/xp0308/index.shtml

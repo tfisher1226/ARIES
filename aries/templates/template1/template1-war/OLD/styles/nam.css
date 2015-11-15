@@ -1,0 +1,35 @@
+.domainPanelBody {
+	width: auto; 
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	overflow: auto; 
+	overflow-y: scroll;
+}
+
+.formInputEdit {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	border-width: 0px;
+	border-spacing: 0px;
+	background-color: red;
+}
+
+.formInputView {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	border-width: 0px;
+	border-spacing: 0px;
+	background-color: red;
+}
+
+.formInputViewHover {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	border-width: 0px;
+	border-spacing: 0px;
+	background-color: cyan;
+}

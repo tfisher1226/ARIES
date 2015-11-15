@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.memberOptionSelectMenuBody {
+		width: 180px; 
+		height: 100px;
+		padding: 0px;
+		margin: 0px; 
+		overflow: auto;
+	}
+	</style>
+	
+	<script type="text/javascript" language="JavaScript1.2">
+	function showMemberOptionSelectMenu(element) {
+		var point = getPositionOf(element, 'LL');
+		Richfaces.showModalPanel('memberOptionSelectMenu', {top: point[1] - 70, left: point[0] - 182});
+	}
+	function hideMemberOptionSelectMenu() {
+		Richfaces.hideModalPanel('memberOptionSelectMenu');
+	}
+	</script>
+	
+	<!-- MemberOptionSelectMenu -->
+	<rich:modalPanel id="memberOptionSelectMenu" 
+		autosized="true" width="180" onmaskclick="hideMemberOptionSelectMenu()">
+
+		<ui:include src="/common/button/dialogButton.xhtml">
+			<ui:param name="text" value="Leadership Information..."/>
+			<ui:param name="immediate" value="true"/>
+			<ui:param name="ajaxSingle" value="true"/>
+			<ui:param name="image" value="resource://images/icons/common/Plus16.gif"/>
+			<ui:param name="onclick" value="setCursorWait(this); hideMemberOptionSelectMenu(); showOrganizationSelectDialog(this); setCursorDefault(this)"/>
+			<ui:param name="reRender" value="organizationSelectDialog"/>
+			<ui:param name="rendered" value="true"/>
+			<ui:param name="enabled" value="#{superUser}"/>
+		</ui:include>
+	</rich:modalPanel>
+</ui:composition>
+

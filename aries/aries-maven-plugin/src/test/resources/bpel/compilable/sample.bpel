@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<process 
+	name="SampleBpelProcess"
+	suppressJoinFailure="yes"
+	xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	xmlns:wsa="http://www.w3.org/2005/08/addressing"
+	targetNamespace="http://www.aries.org/bpel"
+	expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+	queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+	
+    <sequence>
+        <empty/>
+    </sequence>
+</process>

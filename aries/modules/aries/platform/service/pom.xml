@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>aries-platform-service-layer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Platform Service Layer Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+        <module>test</module>
+	</modules>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-service-layer-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<!-- ARIES -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-service-layer</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- ARIES 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-service-layer-test</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+		-->
+				
+		<!-- PLATFORM-BASE -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-base</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- PLATFORM-BASE 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-base</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+		-->
+		
+		<!-- PLATFORM-UTIL -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>util</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JAVAX -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>javax</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- COMMONS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>commons</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JNDI -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jndi</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JAXB -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxb</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JAXWS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxws</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+			<exclusions>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon-dom</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon-xpath</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>net.sf.saxon</groupId>
+					<artifactId>saxon-xqj</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<!-- JTA -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jta</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JDT -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-jdt</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- EMF -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-emf</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- EHCACHE -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JBOSS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jboss</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- SEAM (backend) 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+			<exclusions>
+				<exclusion>
+					<groupId>org.testng</groupId>
+					<artifactId>testng</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        -->
+        
+		<!-- HORNETQ -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>hornetq</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- ACTIVEMQ 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>activemq</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+		-->
+
+		<!-- DROOLS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>drools</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- PLEXUS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>plexus</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

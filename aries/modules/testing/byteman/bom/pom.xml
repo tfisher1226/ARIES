@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>byteman-bom</artifactId>
+	<name>byteman-bom</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Aries Byteman Bom</description>
+	<packaging>pom</packaging>
+
+	<properties>
+		<byteman.version>2.1.4.1</byteman.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.byteman</groupId>
+				<artifactId>byteman</artifactId>
+				<version>${byteman.version}</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.jboss.byteman</groupId>
+				<artifactId>byteman-submit</artifactId>
+				<version>${byteman.version}</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.jboss.byteman</groupId>
+				<artifactId>byteman-install</artifactId>
+				<version>${byteman.version}</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.jboss.byteman</groupId>
+				<artifactId>byteman-bmunit</artifactId>
+				<version>${byteman.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
+

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>common-jms</artifactId>
+	<description>common-jms</description>
+	<name>common-jms</name>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+						<primaryArtifact>true</primaryArtifact>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!--  
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.6.0</version>
+			<scope>system</scope>
+			<systemPath>${java.home}/../lib/tools.jar</systemPath>
+		</dependency>
+		-->
+
+		<!--  
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-as-client</artifactId>
+			<version>5.1.0.GA</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-as-client</artifactId>
+			<version>6.0.0-FINAL</version>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>jboss.jbossas</agroupId>
+			<artifactId>jmx-invoker-adaptor-client</artifactId>
+			<version>6.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.0.0.Beta4</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-as-system</artifactId>
+			<version>6.0.0.Final</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-system-client</artifactId>
+			<version>6.0.0.Final</version>
+			<scope>test</scope>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.0.0.Beta5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.naming</groupId>
+			<artifactId>jnp-client</artifactId>
+			<version>5.0.5.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-core</artifactId>
+			<version>2.1.2.Final</version>
+			<scope>provided</scope>
+		</dependency> 
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jms</artifactId>
+			<version>2.1.2.Final</version>
+			<scope>provided</scope>
+		</dependency> 
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-logging</artifactId>
+			<version>2.1.2.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jboss-as-integration</artifactId>
+			<version>2.1.2.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+        <!--
+		<dependency>
+			<groupId>org.jboss.jbossas</groupId>
+			<artifactId>jboss-as-hornetq-int</artifactId>
+			<version>6.0.0.Final</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jpl-pattern</artifactId>
+					<groupId>jpl-pattern</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jpl-util</artifactId>
+					<groupId>jpl-util</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.2.4.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.javaee</groupId>
+			<artifactId>jboss-jms-api</artifactId>
+			<version>1.1.0.GA</version>
+			<scope>compile</scope>
+		</dependency>
+        -->
+
+		<dependency>
+			<groupId>org.jboss.ws.native</groupId>
+			<artifactId>jbossws-native-core</artifactId>
+			<version>3.4.1.GA</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.neethi</groupId>
+			<artifactId>neethi</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-net</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jndi</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-transaction</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

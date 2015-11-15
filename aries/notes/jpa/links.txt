@@ -1,0 +1,6 @@
+https://docs.jboss.org/author/display/AS71/JPA+Reference+Guide#JPAReferenceGuide-ContainermanagedExtendedPersistencecontext
+
+https://blogs.oracle.com/carolmcdonald/entry/jpa_caching
+
+https://docs.jboss.org/author/display/WFLY8/JPA+Reference+Guide
+

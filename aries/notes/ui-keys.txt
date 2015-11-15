@@ -1,0 +1,8 @@
+If you want disable the Backspace key in your JSF Richfaces application put this in your view:
+
+<rich:hotKey key="backspace" handler="return false;" disableInInput="true"/>
+
+<rich:hotKey key="backspace"
+             disableInInput="true"
+             handler="alert('Backspace is disabled'); event.stopPropagation(); event.preventDefault(); return false;" />
+

@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<rich:toolBar 
+		id="organizationListToolbar"
+		itemSeparator="none" 
+		styleClass="toolbar"
+		contentClass="toolbarContent" 
+		separatorClass="toolbarSeparator"
+		style="width: auto; background-color: #f8f8f8">
+
+		<rich:toolBarGroup location="left" styleClass="toolbarGroup">
+			<span class="hspace6"/>
+	       	<h:outputLabel styleClass="text">Organizations</h:outputLabel>
+		</rich:toolBarGroup>
+		
+		<rich:toolBarGroup location="right" styleClass="toolbarGroup">
+			<span class="hspace4"/>
+
+		   	<a4j:commandButton 
+		   		image="resource://images/icons/common/ExpandAll16.gif"
+		   		action="#{organizationManager.expand}" 
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this)"
+		   		reRender="organizationTreePanel">
+				<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+					<span style="white-space: nowrap; display: block; text-align: left">
+						<h:outputText value="Expand selected organization"/>
+					</span>
+				</rich:toolTip>
+		   	</a4j:commandButton> 
+
+			<span class="hspace10"/>
+		   	<a4j:commandButton 
+		   		image="resource://images/icons/common/CollapseAll16.gif"
+		   		action="#{organizationManager.collapse}" 
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this)"
+		   		reRender="organizationTreePanel">
+				<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+					<span style="white-space: nowrap; display: block; text-align: left">
+						<h:outputText value="Collapse selected organization"/>
+					</span>
+				</rich:toolTip>
+		   	</a4j:commandButton> 
+
+			<span class="hspace10"/>
+		   	<a4j:commandButton 
+		   		image="resource://images/icons/common/Refresh16.gif"
+		   		action="#{organizationManager.refreshTree}" 
+				onclick="setCursorWait(this); showProgress('Organization Manager', 'Refreshing content...')"
+				oncomplete="setCursorDefault(this); hideProgress()"
+		   		reRender="organizationList">
+				<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+					<span style="white-space: nowrap; display: block; text-align: left">
+						<h:outputText value="Refresh organizations"/>
+					</span>
+				</rich:toolTip>
+		   	</a4j:commandButton> 
+
+			<span class="hspace10"/>
+		   	<a4j:commandButton 
+		   		image="resource://images/icons/common/Redo16.gif"
+		   		action="#{organizationManager.reloadContent}" 
+				onclick="showProgress('Documentation Viewer', 'Reloading content...')"
+				oncomplete="hideProgress()"
+		   		reRender="organizationList">
+				<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+					<span style="white-space: nowrap; display: block; text-align: left">
+						<h:outputText value="Reload organizations from disk-file"/>
+					</span>
+				</rich:toolTip>
+		   	</a4j:commandButton> 
+			<span class="hspace6"/>
+		</rich:toolBarGroup>
+	</rich:toolBar>
+</ui:composition>

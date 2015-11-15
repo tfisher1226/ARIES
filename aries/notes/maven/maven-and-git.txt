@@ -1,0 +1,20 @@
+
+All modules that share release schedule/versioning CAN be in the same repository. All modules that have distinct schedules SHOULD be in separate repositories.
+
+The "module parent" (meaning the top-most pom in the repo) should be part of the repo, naturally. If it again has a parent, it is usually the company-parent pom by absolute version (non-snapshot), which has its own repository, with nothing much in it except the pom itself and maybe some site stuff. I would try very hard to avoid referring to a (snapshot) parent outside the repository on the file-system.
+
+
+That being said, I have gone down that road before: We have a project that combines many Git repositories in one project - they all have the same release-cycle and are tightly coupled to eachother, but are split up for build practicalities and architectural tidyness (one is for the Windows client build, another is for server-side, etc). We used gitslave to keep these repos bundled. Alternatives for this are myrepos, git submodules, git-repo. You can also stitch repos together on demand using git subtree.
+
+---
+
+I +1 this comment. If your module share a not only a common release
+cadence, but common version number then a single git repository works,
+but if/when they change one really should look at separate repositories.
+
+The main reasons for this revolve around the maven-release-plugin (
+assuming you're using the standard release setup ) in that m-r-p really
+likes to release from the root of the repository [1] and because of
+git's repository wide tagging setup ( globally tagging all modules with
+the version details of individual things gets quite noisy, and
+problematic if you need to do back-port fixes on an individual module.

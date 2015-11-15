@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:impl="http://sample/async_echo_service"
+	targetNamespace="http://sample/async_echo_service">
+
+	<wsdl:message name="initiateEchoRequest">
+		<wsdl:part name="echoString" type="xsd:string" />
+	</wsdl:message>
+
+	<wsdl:portType name="AsyncEchoService">
+		<wsdl:operation name="initiateEcho" parameterOrder="echoString">
+			<wsdl:input message="impl:initiateEchoRequest" name="initiateEchoRequest" />
+			<!-- Oneway operation: No output or fault elements here -->
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="AsyncEchoServiceHTTPBinding" type="impl:AsyncEchoService">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="initiateEcho">
+			<soap:operation soapAction="" style="rpc" />
+			<wsdl:input name="initiateEchoRequest">
+				<soap:body
+					namespace="http://sample/async_echo_service"
+					use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="AsyncEchoServiceService">
+		<wsdl:port binding="impl:AsyncEchoServiceHTTPBinding" name="AsyncEchoService">
+			<soap:address location="http://localhost:8080/AsyncEchoService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<rich:toolBar 
+		itemSeparator="none" 
+		styleClass="toolbar"
+		contentClass="toolbarContent" 
+		separatorClass="toolbarSeparator"
+		style="width: auto; height: auto; border-top-width: 0px; border-bottom-width: 0px; background-color: #f8f8f8">
+
+		<rich:toolBarGroup location="left" styleClass="toolbarGroup">
+			<a4j:outputPanel id="organizationToolbarPanel">
+				<!--  
+		       	<h:outputLabel styleClass="text12" style="padding-left: 6px">#{organization.name}</h:outputLabel>
+		       	-->
+			</a4j:outputPanel>
+		</rich:toolBarGroup>
+		
+		<rich:toolBarGroup location="right" styleClass="toolbarGroup" style="padding: 0px">
+			<span class="hspace4"/>
+
+			<!--  
+			<aries:toolToggleButton
+				ajaxSingle="true"
+				id="showMemberCountLabelsButton"
+				icon="resource://images/icons/common/Default16.gif"
+				tooltip="Show member count in labels"
+				selected="#{treeNodeFactory.showMemberCountInLabels}"
+		   		manager="#{treeNodeFactory}" 
+		   		action="toggleShowMemberCountInLabels" 
+		   		reRender="showMemberCountLabelsButton"
+				linkClass="text16 link"/>
+
+			<aries:toolToggleButton
+				ajaxSingle="true"
+				id="showFilterDetailLabelsButton"
+				icon="resource://images/icons/common/Default16.gif"
+				tooltip="Show filter detail in labels"
+				selected="#{treeNodeFactory.showFilterDetailInLabels}"
+		   		manager="#{treeNodeFactory}" 
+		   		action="toggleShowFilterDetailInLabels" 
+		   		reRender="showFilterDetailLabelsButton"
+				linkClass="text16 link"/>
+				-->
+
+			<aries:toolButton
+				ajaxSingle="true"
+				icon="resource://images/icons/common/CollapseAll16.gif"
+				tooltip="Click here to Collapse Organizations"
+		   		manager="#{organizationTreeManager}" 
+		   		action="collapse" 
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this)"
+		   		reRender="organizationTreePanel"
+				linkClass="text16 link"/>
+				
+			<aries:toolButton
+				ajaxSingle="true"
+				icon="resource://images/icons/common/ExpandAll16.gif"
+				tooltip="Click here to Expand Organizations"
+		   		manager="#{organizationTreeManager}" 
+		   		action="expand" 
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this)"
+		   		reRender="organizationTreePanel"
+				linkClass="text16 link"/>
+				
+			<aries:toolButton
+				ajaxSingle="true"
+				icon="resource://images/icons/common/Refresh16.gif"
+				tooltip="Re-read Organizations from server"
+		   		manager="#{organizationTreeManager}" 
+		   		action="refresh" 
+				onclick="setCursorWait(this); showProgress('Organization Service', 'Refreshing Organizational Structure...')"
+				oncomplete="setCursorDefault(this); hideProgress()"
+		   		reRender="organizationTreePanel, detailView"
+				linkClass="text16 link"/>
+		</rich:toolBarGroup>
+	</rich:toolBar>
+</ui:composition>

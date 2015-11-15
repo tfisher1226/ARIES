@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<components 
+	xmlns="http://jboss.com/products/seam/components"
+    xmlns:core="http://jboss.com/products/seam/core"
+	xmlns:security="http://jboss.com/products/seam/security"
+	xmlns:persistence="http://jboss.com/products/seam/persistence"
+	xmlns:transaction="http://jboss.com/products/seam/transaction"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=
+		"http://jboss.com/products/seam/core http://jboss.com/products/seam/core-2.2.xsd 
+		http://jboss.com/products/seam/security http://jboss.com/products/seam/security-2.2.xsd
+		http://jboss.com/products/seam/persistence http://jboss.com/products/seam/persistence-2.2.xsd 
+		http://jboss.com/products/seam/transaction http://jboss.com/products/seam/transaction-2.2.xsd 
+		http://jboss.com/products/seam/components http://jboss.com/products/seam/components-2.2.xsd">
+
+	<persistence:entity-manager-factory name="SgiusaDS"/>
+	<persistence:managed-persistence-context name="org.sgiusa.entityManager" entity-manager-factory="#{SgiusaDS}" auto-create="true"/>
+
+	<persistence:entity-manager-factory name="SgiusaOrigDS"/>
+	<persistence:managed-persistence-context name="org.sgiusa.entityManagerOrig" entity-manager-factory="#{SgiusaOrigDS}" auto-create="true"/>
+
+	<!--
+	<transaction:entity-transaction entity-manager="#{org.sgiusa.entityManager}"/>
+	-->
+
+	<!-- Common data framework components 
+	<component name="userMapper" class="org.sgiusa.map.UserMapper" scope="application" auto-create="true"/>
+	-->
+	
+	<!--  
+	<component name="org.aries.primitiveMapper" class="org.aries.data.map.PrimitiveMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.emailAddressMapper" class="org.aries.data.map.EmailAddressMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.phoneNumberMapper" class="org.aries.data.map.PhoneNumberMapper" scope="application" auto-create="true"/>
+	<component name="org.aries.streetAddressMapper" class="org.aries.data.map.StreetAddressMapper" scope="application" auto-create="true"/>
+	-->
+
+	<!--  
+	<component name="org.aries.serviceLocator" class="org.aries.registry.ServiceLocator" scope="application" auto-create="true"/>
+	<component name="org.aries.serviceRegistry" class="org.aries.registry.ServiceRegistry" scope="application" auto-create="true"/>
+	<component name="org.aries.serviceProxyFactory" class="org.aries.registry.ServiceProxyFactory" scope="application" auto-create="true"/>
+	-->
+
+</components>

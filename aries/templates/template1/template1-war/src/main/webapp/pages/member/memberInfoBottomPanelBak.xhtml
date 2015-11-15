@@ -1,0 +1,42 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<style>
+	</style>
+	
+	<div class="groupLabel">Address</div>
+	<h:panelGrid styleClass="grid groupPanel" layout="block" columns="1"> 
+
+		<h:panelGrid styleClass="formPanel" columns="2"> 
+			<div class="formLabel" style="width: 50px">Street</div>
+			<h:inputText styleClass="formInput" style="width: 300px" value="#{member.streetAddress.street}"/>
+		</h:panelGrid>
+
+		<h:panelGrid styleClass="formPanel" columns="8"> 
+			<div class="formLabel" style="width: 50px">City</div>
+			<h:inputText styleClass="formInput" style="width: 120px" value="#{member.streetAddress.city}"/>
+
+			<rich:spacer width="10"/>
+			<div class="formLabel" style="width: 30px">State</div>
+			<h:inputText styleClass="formInput" style="width: 20px" value="#{member.streetAddress.state}"/>
+
+			<rich:spacer width="10"/>
+			<div class="formLabel" style="width: 20px">Zip</div>
+			<h:inputText styleClass="formInput" style="width: 70px" value="#{member.streetAddress.zip}"/>
+		</h:panelGrid>
+
+<!-- 
+		<h:panelGrid layout="block" columns="4" styleClass="grid groupPanel" style="border-width: 0px"> 
+		</h:panelGrid>
+ -->
+
+	</h:panelGrid>
+</ui:composition>

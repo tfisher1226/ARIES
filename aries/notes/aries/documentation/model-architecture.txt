@@ -1,0 +1,36 @@
+We distinguish 6 different types of functionally distinct areas that can be thought of as seperate and independent...  We arrive at the selection of these 6 areas for the purpose of achiving the cleanest seperation of concerns.  This simplifies dependency relationships.  It also enables isolation of concerns, and practial reusage of modules.  The designer can use his/her own judgement and preference in the granularity of large or small these module types are.
+
+The domain-model is in the center of the immediate module-set, with the persistence aspect implemented by an adapter.
+
+The important point is that the domain-model does not depend on anything else. 
+
+One result is nothing in the domain layer needs to import anything from the hibernate package, or whatever persistence technology is being used.
+
+
+Modeled Structures
+
+-Channel names are expected to be globally unique
+-Application names are expected to be globally unique
+-Information names are expected to be globally unique
+-Persistence names are expected to be globally unique
+-Messaging names are expected to be globally unique
+
+
+
+http://alistair.cockburn.us/Hexagonal+architecture
+
+Atomikos' Ports and Adapters Architecture
+
+Atomikos is designed along a ports and adapters/hexagonal architecture, allowing an application to equally be driven by users, programs, automated test or batch scripts, and to be developed and tested in isolation from its eventual run-time devices and databases. This approach allows for (relatively) easy implementation of new transaction APIs, standards and models; and new types of two-phase commit resources.  
+
+Our Atomikos domain is a two-phase commit, and our adaptor is a participant model, with users leveraging ports to interact with the core Atomikos system. 
+
+This architecture has allows us to realize a number of capabilities including: 
+
+JTA (port) / XA (adapter)
+TCC (port/adapter)
+RMI (port/adapter)
+WS-AT (port/adapter)
+CORBA’s OTS (port/adapter)
+TaaS - Transactions for REST (port/adapter)
+

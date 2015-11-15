@@ -1,0 +1,442 @@
+ MR Buffer           Size  Mode         File
+ -- ------           ----  ----         ----
+.   BridgeWrapper.java  9456 JDE        c:/software/JBOSSTS_4_13_1_Final/xts/bridge/src/org/jboss/jbossts/xts/bridge/at/BridgeWrapper.java
+    pom.xml<13>     66532  SGML         c:/workspace/ARIES/aries/pom.xml
+    pom.xml<12>     16362  SGML         c:/workspace/ARIES/common/pom.xml
+    pom.xml<49>       794  SGML         c:/workspace/ARIES/event/pom.xml
+    pom.xml<48>      1685  SGML         c:/workspace/ARIES/event-client/pom.xml
+    pom.xml<47>      1421  SGML         c:/workspace/ARIES/common-event/pom.xml
+    pom.xml<46>      6203  SGML         c:/workspace/ARIES/aries-maven-bpel-plugin/pom.xml
+    pom.xml<21>      3336  SGML         c:/workspace/ARIES/aries-maven-jboss-plugin/pom.xml
+    AddressingStatefulTestCase.java  3118 JDE c:/software/jbossws-cxf-bin-3.4.1/tests/java/org/jboss/test/ws/jaxws/samples/addressing/AddressingStatefulTestCase.java
+    Launcher.java<3>  7019 JDE          c:/workspace/TEMP/aries-launcher-0.0.1-SNAPSHOT/src/org/aries/launcher/Launcher.java
+    Launcher.class  10557  Fundamental  c:/workspace/TEMP/aries-launcher-0.0.1-SNAPSHOT/org/aries/launcher/Launcher.class
+    Servlet.java<3>  1714  JDE          c:/workspace/TEMP/aries-launcher-0.0.1-SNAPSHOT/src/common/servlet/Servlet.java
+    Servlet.java<2>  1498  JDE          c:/workspace/TEMP/aries-launcher-0.0.1-SNAPSHOT/org/aries/Servlet.java
+    runjad<2>          81  Fundamental  c:/workspace/ARIES/aries/tools/jad158g/runjad
+    runjad              0  Fundamental  c:/workspace/commands/runjad
+    addrights-sshd    386  Shell-script c:/workspace/commands/addrights-sshd
+  % aries-launcher-0.0.1-SNAPSHOT.jar  54685 Zip-Archive c:/workspace/.m2/repository/org/aries/aries-launcher/0.0.1-SNAPSHOT/aries-launcher-0.0.1-SNAPSHOT.jar
+  % 0.0.1-SNAPSHOT    722  Dired by name c:/workspace/.m2/repository/org/aries/aries-launcher/0.0.1-SNAPSHOT/
+    Launcher.java<2>  6430 JDE          c:/workspace/TEMP/aries-launcher-0.0.1-SNAPSHOT/org/aries/launcher/Launcher.java
+    ApplicationInitializer.java  20183 JDE c:/workspace/TEMP/aries-launcher-0.0.1-SNAPSHOT/org/aries/launcher/ApplicationInitializer.java
+    Launcher.java    6440  JDE          c:/workspace/ARIES3/aries-launcher/source/main/java/org/aries/launcher/Launcher.java
+    Servlet.java     1498  JDE          c:/workspace/ARIES3/aries-launcher/source/main/java/org/aries/Servlet.java
+    ReservationServiceImpl.java  3700 JDE c:/workspace/ARIES3/nightout-restaurant-service/source/main/java/org/aries/restaurant/ReservationServiceImpl.java
+    model.txt        1870  Text         c:/workspace/ARIES/aries/notes/transactions/coordinator/model.txt
+  % coordinator       196  Dired by name c:/workspace/ARIES/aries/notes/transactions/coordinator/
+  % transactions      787  Dired by name c:/workspace/ARIES/aries/notes/transactions/
+  % recovery-scenarios  1173 Dired by name c:/workspace/ARIES/aries/notes/transactions/recovery-scenarios/
+ *% notes            4519  Dired by name c:/workspace/ARIES/aries/notes/
+  % aries            2434  Dired by name c:/workspace/ARIES/aries/
+  % server            420  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/ws_addressing/server/
+    GreeterImpl.java<2>  2885 JDE       c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/ws_addressing/server/GreeterImpl.java
+    Client.java<2>   6316  JDE          c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/ws_addressing/client/Client.java
+    pom.xml<45>     24659  SGML         c:/software/jbossws-native-src-dist/modules/testsuite/pom.xml
+    jar-versions.xml  205077 SGML       c:/software/jboss-6.1.0.Final/jar-versions.xml
+    pom.xml<44>      5440  SGML         c:/software/jbossws-native-src-dist/modules/testsuite/native-tests/pom.xml
+    pom.xml<43>     22557  SGML         c:/software/jbossws-native-src-dist/pom.xml
+  % META-INF<4>       808  Dired by name c:/software/jboss-6.1.0.Final/client/tmp/META-INF/
+    standard-jaxws-client-config.xml  2395 SGML c:/software/jboss-6.1.0.Final/client/tmp/META-INF/standard-jaxws-client-config.xml
+  % tmp               642  Dired by name c:/software/jboss-6.1.0.Final/client/tmp/
+    jbossws-native-config-as6.xml  4024 SGML c:/software/jboss-6.1.0.Final/client/tmp/jbossws-native-config-as6.xml
+  % deployers        3750  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deployers/
+  % jbossws-jaxrpc.deployer  443 Dired by name c:/software/jboss-6.1.0.Final/server/node03/deployers/jbossws-jaxrpc.deployer/
+  % jbossws.deployer  597  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deployers/jbossws.deployer/
+  % node03            827  Dired by name c:/software/jboss-6.1.0.Final/server/node03/
+  % deploy<3>        4055  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/
+    xts11-jboss-beans.xml  18811 SGML   c:/software/jboss-6.1.0.Final/server/node03/deploy/jbossxts.sar/META-INF/xts11-jboss-beans.xml
+  % META-INF<3>       499  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/jbossxts.sar/META-INF/
+  % samples<5>       1810  Dired by name c:/software/jbossws-native-bin-dist/tests/java/org/jboss/test/ws/jaxws/samples/
+    AddressingStatefulTestCase.java<2>  3118 JDE c:/software/jbossws-native-bin-dist/tests/java/org/jboss/test/ws/jaxws/samples/addressing/AddressingStatefulTestCase.java
+    AddressingPort.java<2>  5711 JDE    c:/software/jbossws-native-bin-dist/tests/java/org/jboss/test/ws/jaxws/samples/addressing/AddressingPort.java
+  % addressing        687  Dired by name c:/software/jbossws-native-bin-dist/tests/java/org/jboss/test/ws/jaxws/samples/addressing/
+    ServerHandler.java<2>  3638 JDE     c:/software/jbossws-native-bin-dist/tests/java/org/jboss/test/ws/jaxws/samples/addressing/ServerHandler.java
+    stack-specific-jboss-beans.xml  4024 SGML c:/software/jbossws-native-bin-dist/deploy/resources/jbossws-jboss601/jbossws.beans/META-INF/stack-specific-jboss-beans.xml
+  % META-INF<2>       317  Dired by name c:/software/jbossws-native-bin-dist/deploy/resources/jbossws-jboss601/jbossws.beans/META-INF/
+  % jbossws.beans     286  Dired by name c:/software/jbossws-native-bin-dist/deploy/resources/jbossws-jboss601/jbossws.beans/
+  % jbossws-jboss601  277  Dired by name c:/software/jbossws-native-bin-dist/deploy/resources/jbossws-jboss601/
+  % resources<3>      473  Dired by name c:/software/jbossws-native-bin-dist/deploy/resources/
+  % deploy            360  Dired by name c:/software/jbossws-native-bin-dist/deploy/
+  % jbossws-native-bin-dist  551 Dired by name c:/software/jbossws-native-bin-dist/
+    pom.xml         13050  SGML         c:/workspace/ARIES/org.eclipse.bpel.parent/pom.xml
+    pom.xml<42>      3083  SGML         c:/workspace/ARIES/sample-jaxws-xts-client/pom.xml
+    ServerHandler.java  3638 JDE        c:/software/jbossws-cxf-bin-3.4.1/tests/java/org/jboss/test/ws/jaxws/samples/addressing/ServerHandler.java
+    StatefulEndpointImpl.java  3496 JDE c:/software/jbossws-cxf-bin-3.4.1/tests/java/org/jboss/test/ws/jaxws/samples/addressing/StatefulEndpointImpl.java
+    AddressingPort.java  5711 JDE       c:/software/jbossws-cxf-bin-3.4.1/tests/java/org/jboss/test/ws/jaxws/samples/addressing/AddressingPort.java
+  % client<2>         350  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/ws_addressing/client/
+    Server.java<2>   1705  JDE          c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/ws_addressing/server/Server.java
+  % ws_addressing<2>  394  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/ws_addressing/
+  % demo<2>           267  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/demo/
+  % src<6>            253  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/src/
+  % ws_addressing     567  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/
+  % wsdl<3>           340  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_addressing/wsdl/
+    hello_world_addr.wsdl  6988 Fundamental c:/software/apache-cxf-2.3.3/samples/ws_addressing/wsdl/hello_world_addr.wsdl
+    pom.xml<41>      6833  SGML         c:/software/apache-cxf-2.3.3/samples/ws_addressing/pom.xml
+  % aries-tx          845  Dired by name c:/workspace/ARIES/aries-tx/
+  % samples          3344  Dired by name c:/software/apache-cxf-2.3.3/samples/
+  % test-classes      315  Dired by name c:/workspace/ARIES/tx-manager-service/target/test-classes/
+  % target            880  Dired by name c:/workspace/ARIES/tx-manager-service/target/
+    ParticipantInitializer.java  1411 JDE c:/workspace/ARIES3/tx-service-engine/source/main/java/org/aries/platform/tx/participant/ParticipantInitializer.java
+  % participant      1948  Dired by name c:/workspace/ARIES3/tx-service-engine/source/main/java/org/aries/platform/tx/participant/
+    AriesPluginInitializer.java  4634 JDE c:/workspace/ARIES3/tx-plugin-aries/source/main/java/tx/plugin/aries/AriesPluginInitializer.java
+    AriesExceptionUtil.java  974 JDE    c:/workspace/ARIES3/tx-plugin-aries/source/main/java/tx/plugin/aries/AriesExceptionUtil.java
+    jaxws-handlers-server-twoway.xml  485 SGML c:/workspace/ARIES3/tx-service-engine/source/main/resources/jaxws-handlers-server-twoway.xml
+    jaxws-handlers-server-oneway.xml  492 SGML c:/workspace/ARIES3/tx-service-engine/source/main/resources/jaxws-handlers-server-oneway.xml
+  % tx-manager        710  Dired by name c:/workspace/ARIES/tx-manager/
+    wsat-coordinator-binding.wsdl  2168 Fundamental c:/workspace/ARIES3/tx-service-engine/source/main/resources/wsdl/wsat-coordinator-binding.wsdl
+    wscoor-registration-binding.wsdl  1332 Fundamental c:/workspace/ARIES3/tx-service-engine/source/main/resources/wsdl/wscoor-registration-binding.wsdl
+    XTSATRecoveryManagerImple.java  15680 JDE c:/software/JBOSSTS_4_13_1_Final/xts/recovery/src/org/jboss/jbossts/xts/recovery/participant/at/XTSATRecoveryManagerImple.java
+  % at                496  Dired by name c:/software/JBOSSTS_4_13_1_Final/xts/recovery/src/org/jboss/jbossts/xts/recovery/participant/at/
+    .project<8>       934  Fundamental  c:/workspace/ARIES/aries-tx/.project
+    Bank.java<2>     3000  JDE          c:/software/JBOSSTS_4_13_1_Final/ArjunaJTS/trailmap/src/com/arjuna/demo/jts/localbank/Bank.java
+    Bank.java        3307  JDE          c:/software/JBOSSTS_4_13_1_Final/ArjunaJTS/trailmap/src/com/arjuna/demo/jta/localbank/Bank.java
+    BankServer.java  4928  JDE          c:/software/JBOSSTS_4_13_1_Final/ArjunaJTS/trailmap/src/com/arjuna/demo/jts/explicitremotebank/BankServer.java
+    TransactionManagerImpleUnitTest.java  1821 JDE c:/software/JBOSSTS_4_13_1_Final/ArjunaJTA/jta/tests/classes/com/hp/mwtests/ts/jta/twophase/TransactionManagerImpleUnitTest.java
+    SimpleTest.java  2057  JDE          c:/software/JBOSSTS_4_13_1_Final/ArjunaJTA/jta/tests/classes/com/hp/mwtests/ts/jta/twophase/SimpleTest.java
+    UserTransactionUnitTest.java  3794 JDE c:/software/JBOSSTS_4_13_1_Final/ArjunaJTA/jta/tests/classes/com/hp/mwtests/ts/jta/twophase/UserTransactionUnitTest.java
+    SubordinateTestCase.java  24706 JDE c:/software/JBOSSTS_4_13_1_Final/ArjunaJTA/jta/tests/classes/com/hp/mwtests/ts/jta/subordinate/SubordinateTestCase.java
+    CancelOnlyConfirm.java  2338 JDE    c:/software/JBOSSTS_4_13_1_Final/xts/WSCF/tests/classes/com/arjuna/wscf11/tests/model/twophase/CancelOnlyConfirm.java
+  % twophase         1051  Dired by name c:/software/JBOSSTS_4_13_1_Final/xts/WSCF/tests/classes/com/arjuna/wscf11/tests/model/twophase/
+    ParticipantSynchronization.java  2424 JDE c:/software/JBOSSTS_4_13_1_Final/xts/WSCF/tests/classes/com/arjuna/wscf11/tests/model/twophase/ParticipantSynchronization.java
+  % JBOSSTS_4_16_4_Final  1525 Dired by name c:/software/JBOSSTS_4_16_4_Final/
+    Build.txt        3302  Text         c:/software/JBOSSTS_4_16_4_Final/Build.txt
+    sharedbuild.xml  7408  SGML         c:/software/JBOSSTS_4_16_4_Final/XTS/sharedbuild.xml
+    build.xml       13785  SGML         c:/software/JBOSSTS_4_16_4_Final/XTS/build.xml
+  % XTS              1606  Dired by name c:/software/JBOSSTS_4_16_4_Final/XTS/
+    README<3>        1183  Fundamental  c:/software/JBOSSTS_4_16_4_Final/XTS/WSCF/README
+    README<2>        1183  Fundamental  c:/software/JBOSSTS_4_13_1_Final/xts/WSCF/README
+    actors.txt       2459  Text         c:/workspace/ARIES/common-tx/notes/actors.txt
+  % notes<3>          175  Dired by name c:/workspace/ARIES/common-tx/notes/
+  % common-tx         788  Dired by name c:/workspace/ARIES/common-tx/
+    org.eclipse.wst.common.component<4>  683 Fundamental c:/workspace/ARIES/sample-jaxws-xts-service/.settings/org.eclipse.wst.common.component
+    org.eclipse.wst.common.component<3>  680 Fundamental c:/workspace/ARIES/sample-jaxws-xts-client/.settings/org.eclipse.wst.common.component
+    org.eclipse.wst.common.component<2>  661 Fundamental c:/workspace/ARIES/async_echo-ui/.settings/org.eclipse.wst.common.component
+  % .settings<8>     1596  Dired by name c:/workspace/ARIES/async_echo-ui/.settings/
+    README            880  Fundamental  c:/software/JBOSSTS_4_13_1_Final/xts/demo/README
+    README.txt<4>    1482  Text         c:/software/JBOSSTS_4_13_1_Final/xts/README.txt
+  % sample-jaxws-xts-client  679 Dired by name c:/workspace/ARIES/sample-jaxws-xts-client/
+  % .settings<5>      347  Dired by name c:/workspace/ARIES/sample-jaxws-xts/.settings/
+  % sample-jaxws-xts  716  Dired by name c:/workspace/ARIES/sample-jaxws-xts/
+    RestaurantParticipantBA.java  10109 JDE c:/software/JBOSSTS_4_16_4_Final/XTS/demo/src/com/jboss/jbosstm/xts/demo/services/restaurant/RestaurantParticipantBA.java
+    RestaurantParticipantAT.java  8410 JDE c:/software/JBOSSTS_4_16_4_Final/XTS/demo/src/com/jboss/jbosstm/xts/demo/services/restaurant/RestaurantParticipantAT.java
+    OutboundBridgeManager.java  5392 JDE c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/outbound/OutboundBridgeManager.java
+    JaxWSTxOutboundBridgeHandler.java  4826 JDE c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/outbound/JaxWSTxOutboundBridgeHandler.java
+    OutboundBridge.java  3040 JDE       c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/outbound/OutboundBridge.java
+  % outbound          706  Dired by name c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/outbound/
+    BridgeXAResource.java  13425 JDE    c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/outbound/BridgeXAResource.java
+  % txbridge          395  Dired by name c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/
+  % utils             369  Dired by name c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/utils/
+  % inbound           713  Dired by name c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/inbound/
+    BridgeDurableParticipant.java  9987 JDE c:/software/JBOSSTS_4_16_4_Final/txbridge/src/org/jboss/jbossts/txbridge/inbound/BridgeDurableParticipant.java
+    pom.xml<40>      2071  SGML         c:/workspace/ARIES/nightout-customer-view/pom.xml
+    pom.xml<37>      5008  SGML         c:/workspace/ARIES/loanbroker-credit-service/pom.xml
+    pom.xml<32>      5587  SGML         c:/workspace/ARIES/loanbroker-bank-service/pom.xml
+    pom.xml<26>      3139  SGML         c:/workspace/ARIES/model2-data/pom.xml
+    pom.xml<16>      4980  SGML         c:/workspace/ARIES/model1-service/pom.xml
+    pom.xml<25>      3424  SGML         c:/workspace/ARIES/model1-data/pom.xml
+    pom.xml<8>       1708  SGML         c:/workspace/ARIES/common-jaxws/pom.xml
+    ehcache.xml       954  SGML         c:/workspace/ARIES/ehcache-jta-sample/src/main/resources/ehcache.xml
+    pom.xml<39>      7644  SGML         c:/workspace/ARIES/ehcache-jta-banking/pom.xml
+    pom.xml<38>      2589  SGML         c:/workspace/ARIES/ehcache-jta-sample/pom.xml
+    overview.txt    24738  Text         c:/workspace/ARIES/aries/notes/overview.txt
+    pom.xml<22>     54727  SGML         c:/workspace/ARIES3/aries/pom.xml
+    org.eclipse.wst.common.component  17605 Fundamental c:/workspace/ARIES/async_echo-app/.settings/org.eclipse.wst.common.component
+  % .settings<9>      990  Dired by name c:/workspace/ARIES/async_echo-app/.settings/
+  % .settings<10>    1126  Dired by name c:/workspace/ARIES/async_echo-service/.settings/
+  % async_echo-service.jar  71374 Zip-Archive c:/workspace/ARIES/async_echo-service/target/async_echo-service.jar
+ *  components.xml<2>  1168 SGML        c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-service-0.0.1-SNAPSHOT.jar/components.xml
+    components.xml   6493  SGML         c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/WEB-INF/components.xml
+    components.properties  37 Fundamental c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/WEB-INF/classes/components.properties
+    run.sh           9339  Shell-script c:/software/jboss-6.1.0.Final/bin/run.sh
+    start-jboss.sh   1407  Shell-script c:/workspace/ARIES/async_echo/bin/start-jboss.sh
+    org.eclipse.wst.common.project.facet.core.xml<2>  454 SGML c:/workspace/ARIES/async_echo-ui/.settings/org.eclipse.wst.common.project.facet.core.xml
+  % .settings<7>      716  Dired by name c:/workspace/ARIES/template1-app/.settings/
+  % template1-app     784  Dired by name c:/workspace/ARIES/template1-app/
+  % template1-ui      856  Dired by name c:/workspace/ARIES/template1-ui/
+    pom.xml<36>      7052  SGML         c:/workspace/ARIES/template1-ui/pom.xml
+    pom.xml<35>      2972  SGML         c:/workspace/ARIES3/common-transaction/pom.xml
+    pom.xml<9>      13243  SGML         c:/workspace/ARIES3/common/pom.xml
+    pom.xml<34>      3056  SGML         c:/workspace/ARIES3/tx-service-engine/pom.xml
+    pom.xml<33>      1358  SGML         c:/workspace/ARIES3/tx-api/pom.xml
+    .project<7>      1714  Fundamental  c:/workspace/ARIES/aries-context/.project
+  % aries-context    1045  Dired by name c:/workspace/ARIES/aries-context/
+    pom.xml<31>      2337  SGML         c:/workspace/ARIES/aries-registry/pom.xml
+  % aries-registry    792  Dired by name c:/workspace/ARIES/aries-registry/
+  % ARIES            9835  Dired by name c:/workspace/ARIES/
+  % common-ejb        788  Dired by name c:/workspace/ARIES/common-ejb/
+    to-joan-about-piano-teacher  1895 Fundamental c:/Users/tfisher/Documents/personal/letters/to-joan-about-piano-teacher
+    to-joan-about-doctor  768 Fundamental c:/Users/tfisher/Documents/personal/letters/to-joan-about-doctor
+    to-carver         299  Fundamental  c:/Users/tfisher/Documents/personal/letters/to-carver
+ *% bin<2>            446  Dired by name c:/workspace/ARIES/async_echo/bin/
+    start-jboss-ec2.sh  345 Shell-script c:/workspace/ARIES/async_echo/bin/start-jboss-ec2.sh
+    pom.xml<30>     21257  SGML         c:/workspace/ARIES/template1-ear/pom.xml
+  % rozene-app        912  Dired by name c:/workspace/ARIES/rozene-app/
+  % infosgi-ear       981  Dired by name c:/workspace/ARIES/infosgi-ear/
+    pom.xml<14>     23684  SGML         c:/workspace/ARIES/async_echo-ui/pom.xml
+    pom.xml<17>     26886  SGML         c:/workspace/ARIES/async_echo-app/pom.xml
+    pom.xml<29>      3041  SGML         c:/workspace/ARIES/aries-launcher/pom.xml
+  % common-rmi        788  Dired by name c:/workspace/ARIES/common-rmi/
+  % SAVE              249  Dired by name c:/workspace/ARIES/common-rmi/SAVE/
+    .project<6>       936  Fundamental  c:/workspace/ARIES/common-rmi/.project
+ *  foo              9424  Fundamental  c:/workspace/ARIES/async_echo-tmp/foo
+    notes.txt        1515  Text         c:/workspace/ARIES/aries/notes/notes.txt
+  % classes          1224  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/WEB-INF/classes/
+  % WEB-INF           974  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/WEB-INF/
+  % async_echo-ui-0.0.1-SNAPSHOT.war  742 Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/
+  % async_echo-app.ear  780 Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/
+    application.xml<2>  814 SGML        c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/META-INF/application.xml
+    TODO              103  Fundamental  c:/workspace/ARIES/async_echo-tmp/TODO
+    web.xml<2>       2044  SGML         c:/workspace/ARIES/loanbroker-bank-service/source/main/webapp/WEB-INF/web.xml
+  % async_echo-app    727  Dired by name c:/workspace/ARIES/async_echo-app/
+    approve.xml       328  SGML         c:/software/riftsaw-2.3.0.Final/samples/quickstart/order_management/messages/approve.xml
+    AsyncEchoServiceFunctionIT.java  3563 JDE c:/workspace/TEMP/tmp-2012-06-14c/async_echo-service/source/test/java/sample/async_echo_service/AsyncEchoServiceFunctionIT.java
+    AsyncEchoServiceProcessIT.java  2433 JDE c:/workspace/TEMP/tmp-2012-06-14c/async_echo-service/source/test/java/sample/async_echo_service/AsyncEchoServiceProcessIT.java
+    JMXConnector.java  8118 JDE         c:/software/jboss-6.1.0.Final-src/system/src/main/java/org/jboss/system/server/jmx/JMXConnector.java
+    pom.xml-        12062  SGML         c:/workspace/ARIES/async_echo-service/pom.xml-
+    AsyncEchoCallerPTProxyTest.java  2082 JDE c:/workspace/ARIES/async_echo-client/source/test/java/sample/async_echo/AsyncEchoCallerPTProxyTest.java
+  % async_echo<2>     556  Dired by name c:/workspace/ARIES/async_echo-client/source/test/java/sample/async_echo/
+    eclipse.ini<2>    478  Fundamental  c:/software/eclipse-jee-helios-SR2-win32-x86_64-JBossTools/eclipse.ini
+    eclipse.ini       478  Fundamental  c:/software/eclipse-jee-helios-SR2-win32-x86_64-fresh/eclipse.ini
+    asyncEchoPanel.xhtml  1712 Fundamental c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/pages/sample/async_echo/asyncEchoPanel.xhtml
+  % async_echo        353  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/pages/sample/async_echo/
+  % sample            332  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/pages/sample/
+  % pages             656  Dired by name c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app.ear/async_echo-ui-0.0.1-SNAPSHOT.war/pages/
+    application.properties  0 Fundamental c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app/async_echo-ui-0.0.1-SNAPSHOT.war/WEB-INF/classes/application.properties
+    FileSyncBuilder.java  26224 JDE     c:/software/de.loskutov.FileSync-1.3.5/src/de/loskutov/fs/builder/FileSyncBuilder.java
+  % builder           422  Dired by name c:/software/de.loskutov.FileSync-1.3.5/src/de/loskutov/fs/builder/
+    ForceFileSyncActionDelegate.java  6375 JDE c:/software/de.loskutov.FileSync-1.3.5/src/de/loskutov/fs/actions/ForceFileSyncActionDelegate.java
+  % actions           292  Dired by name c:/software/de.loskutov.FileSync-1.3.5/src/de/loskutov/fs/actions/
+  % fs                644  Dired by name c:/software/de.loskutov.FileSync-1.3.5/src/de/loskutov/fs/
+    javascript        647  Fundamental  c:/workspace/ARIES/aries/notes/javascript
+    org.eclipse.wst.common.project.facet.core.xml  217 SGML c:/workspace/ARIES/async_echo-client/.settings/org.eclipse.wst.common.project.facet.core.xml
+    tutorials.txt     202  Text         c:/workspace/ARIES/aries/notes/tutorials.txt
+    sample-applications  784 Fundamental c:/workspace/ARIES/aries/notes/sample-applications
+    generator.txt     653  Text         c:/workspace/ARIES/aries/notes/generator.txt
+    pom.xml<28>      6847  SGML         c:/workspace/ARIES/nam-engine/pom.xml
+    pom.xml<24>      1686  SGML         c:/workspace/ARIES/async_echo/pom.xml
+    jboss-app.xml     389  SGML         c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app/META-INF/jboss-app.xml
+    application.xml   932  SGML         c:/software/jboss-6.1.0.Final/server/node03/deploy/deploy.last/async_echo-app/META-INF/application.xml
+    profile.xml     10349  SGML         c:/software/jboss-6.1.0.Final/server/node03/conf/bootstrap/profile.xml
+    jboss-ports.properties  1661 Fundamental c:/workspace/ARIES/async_echo/conf/jboss-ports.properties
+    pom.xml<27>      4082  SGML         c:/workspace/ARIES/async_echo-tmp/pom.xml
+  % jmx               525  Dired by name c:/software/jboss-6.1.0.Final-src/system/src/main/java/org/jboss/system/server/jmx/
+    JMXAdapter.java  3868  JDE          c:/software/jboss-6.1.0.Final-src/system/src/main/java/org/jboss/system/server/jmx/JMXAdapter.java
+    Handler.java     1578  JDE          c:/software/jboss-6.1.0.Final-src/main/src/main/java/org/jboss/handlers/stub/vfsmemory/Handler.java
+  % run.jar         86971  Zip-Archive  c:/software/jboss-6.1.0.Final/bin/run.jar
+    JMXKernel.java  20443  JDE          c:/software/jboss-6.1.0.Final-src/system-jmx/src/main/java/org/jboss/system/server/jmx/JMXKernel.java
+ *  ServerIntegrationTest.java  27093 JDE c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/jbossas/embedded/testsuite/ServerIntegrationTest.java
+    pom.xml<23>       938  SGML         c:/workspace/ARIES/async_echo-model/pom.xml
+    .project<5>       568  Fundamental  c:/workspace/ARIES/aries/.project
+    .bashrc          1339  Shell-script ~/.bashrc
+ *% .settings<4>      431  Dired by name c:/workspace/ARIES/aries/.settings/
+    site.xml         2138  SGML         c:/workspace/ARIES/aries/site.xml
+    foo2            10035  Fundamental  c:/workspace/ARIES/aries/foo2
+    AbstractJBossServerMojo.java  7853 JDE c:/software/jboss-6.1.0.Final-src/mjboss-maven-plugin/jboss-maven-plugin/src/main/java/org/codehaus/mojo/jboss/AbstractJBossServerMojo.java
+    EmbeddedEjbCallingServlet.java  5030 JDE c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/jbossas/embedded/testsuite/servlet/EmbeddedEjbCallingServlet.java
+  % servlet           405  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/jbossas/embedded/testsuite/servlet/
+  % testsuite         682  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/jbossas/embedded/testsuite/
+  % embedded<2>       287  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/jbossas/embedded/
+  % jbossas           277  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/jbossas/
+  % jboss             330  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/jboss/
+    pom.xml<19>      5223  SGML         c:/software/jboss-6.1.0.Final-src/embedded/pom.xml
+    template.xhtml<2>  6130 Fundamental c:/workspace/ARIES/async_echo-ui/target/async_echo-ui/template.xhtml
+  % aries-maven-jboss-plugin<2>  741 Dired by name c:/workspace/ARIES/aries-maven-jboss-plugin/
+  % .settings<3>      440  Dired by name c:/workspace/ARIES/aries-maven-jboss-plugin/.settings/
+    .project<4>       553  Fundamental  c:/workspace/ARIES/aries-maven-jboss-plugin/.project
+ *% aries-maven-jboss-plugin  681 Dired by name c:/workspace/ARIES/jboss-maven-plugin/
+    .classpath<5>     600  Fundamental  c:/workspace/ARIES/aries-maven-jboss-plugin/.classpath
+  % aries-maven-bpel-plugin  767 Dired by name c:/workspace/ARIES3/aries-maven-bpel-plugin/
+  % ARIES3          11627  Dired by name c:/workspace/ARIES3/
+    StartMojo.java   2269  JDE          c:/software/jboss-6.1.0.Final-src/mjboss-maven-plugin/jboss-maven-plugin/src/main/java/org/codehaus/mojo/jboss/StartMojo.java
+    StartAndWaitMojo.java  7332 JDE     c:/software/jboss-6.1.0.Final-src/mjboss-maven-plugin/jboss-maven-plugin/src/main/java/org/codehaus/mojo/jboss/StartAndWaitMojo.java
+  % jboss<2>         1524  Dired by name c:/software/jboss-6.1.0.Final-src/mjboss-maven-plugin/jboss-maven-plugin/src/main/java/org/codehaus/mojo/jboss/
+    ASTestConfig.java  11430 JDE        c:/software/jboss-6.1.0.Final-src/testsuite/src/main/org/jboss/test/jbossts/taskdefs/ASTestConfig.java
+    pom.xml<20>      4813  SGML         c:/software/jboss-6.1.0.Final-src/main/pom.xml
+  % org<2>            260  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/org/
+  % java<2>           254  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/java/
+  % test              313  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/test/
+  % src<5>            245  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/src/
+  % embedded          301  Dired by name c:/software/jboss-6.1.0.Final-src/embedded/
+  % jboss-6.1.0.Final-src  2507 Dired by name c:/software/jboss-6.1.0.Final-src/
+  % jboss-6.1.0.Final  861 Dired by name c:/software/jboss-6.1.0.Final/
+    template.xhtml   6130  Fundamental  c:/workspace/ARIES/async_echo-ui/target/jboss6/deploy/async_echo-ui/template.xhtml
+    security          638  Fundamental  c:/workspace/ARIES/infosgi/notes/security
+  % notes<2>          920  Dired by name c:/workspace/ARIES/infosgi/notes/
+    jboss-logging.xml  24485 SGML       c:/software/jboss-6.1.0.Final/server/node03/deploy/jboss-logging.xml
+  % bootstrap         716  Dired by name c:/software/jboss-6.1.0.Final/server/node03/conf/bootstrap/
+  % conf             1496  Dired by name c:/software/jboss-6.1.0.Final/server/node03/conf/
+    applications.xml<2>  4540 SGML      c:/workspace/WESTERN/t3/app_launcher/etc/applications.xml
+    applications.xml<3>  399 SGML       c:/workspace/WESTERN/t1/app_launcher/etc/applications.xml
+    applications.xml  4540 SGML         c:/workspace/WESTERN/t2/app_launcher/etc/applications.xml
+  % etc               560  Dired by name c:/workspace/WESTERN/t2/app_launcher/etc/
+  % app_launcher     1030  Dired by name c:/workspace/WESTERN/t2/app_launcher/
+    aries.properties  1488 Fundamental  c:/software/jboss-6.1.0.Final/server/node03/conf/aries.properties
+    web.xml          9303  SGML         c:/workspace/ARIES/template1-war/source/main/webapp/WEB-INF/web.xml
+ *% async_echo-ui     734  Dired by name c:/workspace/ARIES/async_echo-ui/
+    main.xhtml       1586  Fundamental  c:/workspace/ARIES/async_echo-ui/source/main/webapp/main.xhtml
+    actual-client-events.log  2372 Fundamental c:/workspace/ARIES/async_echo-service/source/test/java/sample/async_echo_service/actual-client-events.log
+    clustering         67  Fundamental  c:/workspace/ARIES/aries/notes/clustering
+  % async_echo-service  734 Dired by name c:/workspace/ARIES/async_echo-service/
+    JMXControlClient.java  3656 JDE     c:/workspace/WESTERN/t2/app.common.jmx/src/app/common/jmx/JMXControlClient.java
+    ConsoleLogger.java  3005 JDE        c:/software/sisu-inject-plexus-2.3.0/org/codehaus/plexus/logging/console/ConsoleLogger.java
+    TypeLiteral.java  11813 JDE         c:/software/guice-3.0-src/core/src/com/google/inject/TypeLiteral.java
+  % META-INF          279  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/main/resources/META-INF/
+  % resources<2>      267  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/main/resources/
+  % main              316  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/main/
+  % src<3>            426  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/
+  % maven-embedder    243  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/
+  % apache-maven-3.0.4  1279 Dired by name c:/software/apache-maven-3.0.4/
+    log4j.xml        7744  SGML         c:/software/jboss-6.1.0.Final/server/node03/conf/log4j.xml
+    foo6            10035  Fundamental  c:/workspace/ARIES/aries/foo6
+    foo5             6082  Fundamental  c:/workspace/ARIES/aries/foo5
+ *% source            361  Dired by name c:/workspace/ARIES/async_echo-service/source/
+    foo4             6086  Fundamental  c:/workspace/ARIES/aries/foo4
+    settings.xml<3>  10288 SGML         c:/software/apache-maven-3.0.4/conf/settings.xml
+    settings.xml<2>  1630  SGML         c:/software/apache-maven-3.0.3/conf/settings.xml
+    MavenCli.java   40745  JDE          c:/software/apache-maven-3.0.4/maven-embedder/src/main/java/org/apache/maven/cli/MavenCli.java
+    pom.xml<18>     21827  SGML         c:/software/apache-maven-3.0.4/pom.xml
+    MavenTest.java   1637  JDE          c:/software/apache-maven-3.0.4/maven-core/src/test/java/org/apache/maven/MavenTest.java
+    AppTest.java<2>   644  JDE          c:/software/apache-maven-3.0.4/maven-embedder/src/test/embedder-test-project/src/test/java/org/apache/maven/AppTest.java
+    App.java<2>       179  JDE          c:/software/apache-maven-3.0.4/maven-embedder/src/test/embedder-test-project/src/main/java/org/apache/maven/App.java
+    settings.xml      949  SGML         c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/settings.xml
+    AppTest.java      653  JDE          c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/test/java/org/apache/maven/embedder/AppTest.java
+    App.java          188  JDE          c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/java/org/apache/maven/embedder/App.java
+  % embedder          316  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/java/org/apache/maven/embedder/
+  % maven             307  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/java/org/apache/maven/
+  % apache            298  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/java/org/apache/
+  % org               292  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/java/org/
+  % java              285  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/java/
+  % main<2>           281  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/main/
+  % src<4>            334  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/src/
+  % simple-project    271  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/simple-project/
+  % examples          267  Dired by name c:/software/apache-maven-3.0.4/maven-embedder/src/examples/
+    letter-to-joan-2012-05-28  1861 Fundamental c:/Users/tfisher/Documents/personal/incidents-with-joan/letter-to-joan-2012-05-28
+    letter-to-joan-2012-05-16  5653 Fundamental c:/Users/tfisher/Documents/personal/incidents-with-joan/letter-to-joan-2012-05-16
+  % common-jmx        665  Dired by name c:/workspace/ARIES/common-jmx/
+  % aries-manager     483  Dired by name c:/workspace/ARIES/aries-manager/
+    summer-2012.txt  1896  Text         c:/Users/tfisher/Documents/Lillyanne/summer-2012.txt
+    Purchasing@Buyer.spr  333 Fundamental c:/software/scribble-tools-cli-2.0.0.Final/samples/purchasing/Purchasing@Buyer.spr
+    Purchasing.ariel  333  Fundamental  c:/workspace/ARIES/aries/notes/ariel/samples/Purchasing.ariel
+  % samples<4>        185  Dired by name c:/workspace/ARIES/aries/notes/ariel/samples/
+ *% ariel             238  Dired by name c:/workspace/ARIES/aries/notes/ariel/
+  % purchasing<2>     421  Dired by name c:/software/scribble-tools-cli-2.0.0.Final/samples/purchasing/
+  % samples<3>        325  Dired by name c:/software/scribble-tools-cli-2.0.0.Final/samples/
+  % scribble-tools-cli-2.0.0.Final  669 Dired by name c:/software/scribble-tools-cli-2.0.0.Final/
+  % bundle           1030  Dired by name c:/software/scribble-tools-cli-2.0.0.Final/bundle/
+    foo<2>            691  Fundamental  c:/software/scribble-tools-cli-2.0.0.Final/bundle/foo
+    readme.txt<2>    1047  Text         c:/software/scribble-tools-cli-2.0.0.Final-src/samples/simple_validator/readme.txt
+  % simple_validator  456  Dired by name c:/software/scribble-tools-cli-2.0.0.Final-src/samples/simple_validator/
+    parse.sh          182  Shell-script c:/software/scribble-tools-cli-2.0.0.Final/bin/parse.sh
+  % bin               827  Dired by name c:/software/scribble-tools-cli-2.0.0.Final/bin/
+  % purchasing        425  Dired by name c:/software/scribble-tools-cli-2.0.0.Final-src/samples/purchasing/
+  % samples<2>        329  Dired by name c:/software/scribble-tools-cli-2.0.0.Final-src/samples/
+    pom.xml<15>      4938  SGML         c:/software/scribble-tools-cli-2.0.0.Final-src/distribution/pom.xml
+  % scribble-tools-cli-2.0.0.Final-src  433 Dired by name c:/software/scribble-tools-cli-2.0.0.Final-src/
+    ariel.txt        1490  Text         c:/workspace/ARIES/aries/notes/ariel.txt
+    async_echo.ariel  2639 Fundamental  c:/workspace/ARIES/async_echo-service/source/main/resources/async_echo.ariel
+  % resources         889  Dired by name c:/workspace/ARIES/async_echo-service/source/main/resources/
+    hornetq-jms.xml<2>  1718 SGML       c:/software/jboss-6.1.0.Final/server/default/deploy/hornetq/hornetq-jms.xml
+  % hornetq<2>        490  Dired by name c:/software/jboss-6.1.0.Final/server/default/deploy/hornetq/
+    hornetq-jms.xml  1249  SGML         c:/software/jboss-6.0.0.Final/server/default/deploy/hornetq/hornetq-jms.xml
+  % hornetq           489  Dired by name c:/software/jboss-6.0.0.Final/server/default/deploy/hornetq/
+  % deploy<2>        4050  Dired by name c:/software/jboss-6.0.0.Final/server/default/deploy/
+    async_echo.aries<2>  2929 Fundamental c:/workspace/ARIES/async_echo-service/target/classes/async_echo.aries
+    mule-config.xml<2>  5305 SGML       c:/software/mule-standalone-3.2.0/examples/loanbroker-bpm/src/main/app/mule-config.xml
+    loan-broker-process.jpdl.xml  3703 SGML c:/software/mule-standalone-3.2.0/examples/loanbroker-bpm/src/main/resources/loan-broker-process.jpdl.xml
+    mule-config.xml  8435  SGML         c:/software/mule-standalone-3.2.0/examples/loanbroker-simple/src/main/app/mule-config.xml
+  % transaction      1573  Dired by name c:/software/ehcache-2.4.2/src/net/sf/ehcache/transaction/
+    ReadCommittedSoftLockFactoryImpl.java  4545 JDE c:/software/ehcache-2.4.2/src/net/sf/ehcache/transaction/ReadCommittedSoftLockFactoryImpl.java
+    ReadCommittedSoftLockImpl.java  5607 JDE c:/software/ehcache-2.4.2/src/net/sf/ehcache/transaction/ReadCommittedSoftLockImpl.java
+    TransactionIDImpl.java  1928 JDE    c:/software/ehcache-2.4.2/src/net/sf/ehcache/transaction/TransactionIDImpl.java
+  % ehcache          2731  Dired by name c:/software/ehcache-2.4.2/src/net/sf/ehcache/
+  % sf                238  Dired by name c:/software/ehcache-2.4.2/src/net/sf/
+  % net               230  Dired by name c:/software/ehcache-2.4.2/src/net/
+  % src<2>            444  Dired by name c:/software/ehcache-2.4.2/src/
+  % ehcache-2.4.2     794  Dired by name c:/software/ehcache-2.4.2/
+    README.txt<3>    1095  Text         c:/software/ehcache-2.4.2/samples/colorcache/src/assemble/README.txt
+    log4j.properties  987  Fundamental  c:/software/ehcache-2.4.2/samples/hibernate/src/main/resources/log4j.properties
+  % Lillyanne         177  Dired by name c:/Users/tfisher/Documents/Lillyanne/
+ *% Documents        2557  Dired by name c:/Users/tfisher/Documents/
+    OrderingService.java  1606 JDE      c:/software/riftsaw-2.3.0.Final/samples/quickstart/order_management/Ordering-war/src/java/org/jboss/soa/bpel/samples/quickstart/ordering/ws/OrderingService.java
+    pom.xml<11>      1980  SGML         c:/workspace/ARIES/common-client/pom.xml
+  % common-client     729  Dired by name c:/workspace/ARIES/common-client/
+    pom                 0  Fundamental  c:/workspace/ARIES3/common/pom
+  % .settings<2>      703  Dired by name c:/workspace/ARIES3/common-jaxws/.settings/
+  % common-jaxws      671  Dired by name c:/workspace/ARIES3/common-jaxws/
+    pom.xml<10>      2581  SGML         c:/workspace/ARIES3/aries-jaxws/pom.xml
+    CompletionCoordinatorPortType.java  1190 JDE c:/workspace/ARIES3/tx-service-engine/source/main/java/org/aries/platform/tx/completion/CompletionCoordinatorPortType.java
+    Notification.java  1701 JDE         c:/workspace/ARIES3/tx-service-model/source/main/java/org/aries/tx/service/Notification.java
+    handlers.xml     1913  SGML         c:/software/apache-cxf-2.3.3-src/testutils/src/main/java/org/apache/hello_world_soap_http/handlers.xml
+    GreeterImplMixedStyle.java  2418 JDE c:/software/apache-cxf-2.3.3-src/testutils/src/main/java/org/apache/hello_world_mixedstyle/GreeterImplMixedStyle.java
+    HTTPGreeterImpl.java  1236 JDE      c:/software/apache-cxf-2.3.3-src/testutils/src/main/java/org/apache/hello_world_doc_lit/HTTPGreeterImpl.java
+    HeaderTesterImpl.java  2927 JDE     c:/software/apache-cxf-2.3.3-src/testutils/src/main/java/org/apache/headers/HeaderTesterImpl.java
+    addNumbers.wsdl  3744  Fundamental  c:/software/apache-cxf-2.3.3/samples/jaxws_handlers/wsdl/addNumbers.wsdl
+  % wsdl<2>           266  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_handlers/wsdl/
+  % jaxws_handlers    496  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_handlers/
+    Client.java      3018  JDE          c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/hw/client/Client.java
+  % client            348  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/hw/client/
+    TestAsyncHandler.java  1462 JDE     c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/hw/client/TestAsyncHandler.java
+  % hw                321  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/hw/
+  % demo              254  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/
+  % src               251  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/
+  % jaxws_async       493  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_async/
+    JBWS3084TestCase.java  4307 JDE     c:/software/jbossws-cxf-bin-3.4.1/tests/java/org/jboss/test/ws/saaj/jbws3084/JBWS3084TestCase.java
+    ServiceImpl.java  4276 JDE          c:/software/jbossws-cxf-bin-3.4.1/tests/java/org/jboss/test/ws/saaj/jbws3084/ServiceImpl.java
+  % wssec11           399  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_security/interopfest/wssec11/
+  % interopfest       571  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_security/interopfest/
+  % ws_security       496  Dired by name c:/software/apache-cxf-2.3.3/samples/ws_security/
+    wssec.xml        2151  SGML         c:/software/apache-cxf-2.3.3/samples/ws_security/ut/src/demo/wssec/client/wssec.xml
+    ConciseFormatter.java  1284 JDE     c:/software/apache-cxf-2.3.3/samples/ws_security/ut/src/demo/wssec/common/ConciseFormatter.java
+    hello_world_wssec.wsdl  5408 Fundamental c:/software/apache-cxf-2.3.3/samples/ws_security/ut/wsdl/hello_world_wssec.wsdl
+    README.txt<2>    4923  Text         c:/software/apache-cxf-2.3.3/samples/ws_security/ut/README.txt
+    SimpleInvoke.bpel  2912 Fundamental c:/workspace/ARIES/simple_invoke-service/source/main/resources/SimpleInvoke.bpel
+    async_echo.wsdl  2470  Fundamental  c:/workspace/ARIES/async_echo-service/source/main/resources/async_echo.wsdl
+    async_echo_service.wsdl  1525 Fundamental c:/workspace/ARIES/async_echo-service/source/main/resources/async_echo_service.wsdl
+    async_echo.bpel  2658  Fundamental  c:/workspace/ARIES/async_echo-service/source/main/resources/async_echo.bpel
+  % incidents-with-joan  852 Dired by name c:/Users/tfisher/Documents/personal/incidents-with-joan/
+    incidents-spring-2012  555 Fundamental c:/Users/tfisher/Documents/personal/incidents-with-joan/incidents-spring-2012
+  % personal          940  Dired by name c:/Users/tfisher/Documents/personal/
+  % tfisher          2934  Dired by name c:/Users/tfisher/
+    OrderingArtifacts.wsdl  3597 Fundamental c:/software/riftsaw-2.3.0.Final/samples/quickstart/order_management/bpelContent/OrderingArtifacts.wsdl
+    readme.txt       1510  Text         c:/software/riftsaw-2.3.0.Final/samples/quickstart/simple_correlation/readme.txt
+    SimpleInvokeProxyMain.java  785 JDE c:/workspace/TEST/simple_invoke-client/source/test/java/org/jboss/bpel/examples/SimpleInvokeProxyMain.java
+    SimpleInvokeProxy.java  1592 JDE    c:/workspace/TEST/simple_invoke-client/source/main/java/org/jboss/bpel/examples/SimpleInvokeProxy.java
+    HelloWorldProxyMain.java<2>  1585 JDE c:/workspace/TEST/simple_invoke-hello-client/source/test/java/simple_invoke/helloworld/copy/HelloWorldProxyMain.java
+  % copy              388  Dired by name c:/workspace/TEST/simple_invoke-hello-client/source/test/java/simple_invoke/helloworld/copy/
+  % helloworld        441  Dired by name c:/workspace/TEST/simple_invoke-hello-client/source/test/java/simple_invoke/helloworld/
+    HelloWorldProxyMain.java  1391 JDE  c:/workspace/TEST/simple_invoke-hello-client/source/test/java/simple_invoke/helloworld/HelloWorldProxyMain.java
+    HelloWorldProxy.java  1535 JDE      c:/workspace/TEST/simple_invoke-hello-client/source/main/java/simple_invoke/helloworld/HelloWorldProxy.java
+    HelloWorldImplMain.java  1158 JDE   c:/workspace/TEST/simple_invoke-hello-service/source/test/java/simple_invoke/helloworld/HelloWorldImplMain.java
+    HelloWorldImpl.java  964 JDE        c:/workspace/TEST/simple_invoke-hello-service/source/main/java/simple_invoke/helloworld/HelloWorldImpl.java
+    HelloWorld.java<2>  553 JDE         c:/workspace/TEST/simple_invoke-hello-client/source/main/java/simple_invoke/helloworld/HelloWorld.java
+    HelloWorld.java   553  JDE          c:/workspace/TEST/simple_invoke-hello-service/source/main/java/simple_invoke/helloworld/HelloWorld.java
+    SimpleInvoke.java  362 JDE          c:/workspace/TEST/simple_invoke-service/source/main/java/org/jboss/bpel/examples/SimpleInvoke.java
+    SimpleInvokeProcess.java  1466 JDE  c:/workspace/TEST/simple_invoke-service/source/main/java/org/jboss/bpel/examples/process/SimpleInvokeProcess.java
+    SimpleInvoke        0  Fundamental  c:/workspace/TEST/simple_invoke-client/source/main/java/org/jboss/bpel/examples/SimpleInvoke
+  % jgroups           771  Dired by name c:/workspace/.m2/repository/jgroups/jgroups/
+    HelloWorldWS.aries  1697 Fundamental c:/workspace/ARIES/simple_invoke-service/source/main/resources/HelloWorldWS.aries
+    aries-common-0.0.1.xsd  10939 Fundamental c:/workspace/ARIES/common-net/target/classes/schema/aries-common-0.0.1.xsd
+    pom.xml<7>       2047  SGML         c:/workspace/ARIES/model2/pom.xml
+  % .settings         798  Dired by name c:/workspace/ARIES/cxf-sample-jaxws_async/.settings/
+    .classpath        609  Fundamental  c:/workspace/ARIES/cxf-sample-jaxws_async/.classpath
+    .classpath<2>     905  Fundamental  c:/workspace/ARIES/nam-model/.classpath
+    .project<3>      1007  Fundamental  c:/workspace/ARIES/cxf-sample-jaxws_async/.project
+    pom.xml<6>       5965  SGML         c:/workspace/ARIES/cxf-sample-jaxws_async/pom.xml
+    .project<2>       574  Fundamental  c:/workspace/ARIES/cxf-samples/.project
+    pom.xml<3>       5841  SGML         c:/workspace/ARIES/cxf-samples/pom.xml
+    pom.xml<5>       8240  SGML         c:/software/apache-cxf-2.3.3/samples/pom.xml
+    pom.xml<4>       5965  SGML         c:/workspace/ARIES/jaxws_async/pom.xml
+    hello_world_async.wsdl  3802 Fundamental c:/software/apache-cxf-2.3.3/samples/jaxws_async/wsdl/hello_world_async.wsdl
+  % wsdl              341  Dired by name c:/software/apache-cxf-2.3.3/samples/jaxws_async/wsdl/
+    Server.java      1410  JDE          c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/hw/server/Server.java
+    README.txt       5079  Text         c:/software/apache-cxf-2.3.3/samples/jaxws_async/README.txt
+    async_binding.xml  1420 SGML        c:/software/apache-cxf-2.3.3/samples/jaxws_async/wsdl/async_binding.xml
+    pom.xml<2>       5910  SGML         c:/software/apache-cxf-2.3.3/samples/jaxws_async/pom.xml
+    GreeterImpl.java  2259 JDE          c:/software/apache-cxf-2.3.3/samples/jaxws_async/src/demo/hw/server/GreeterImpl.java
+    .project          586  Fundamental  c:/workspace/ARIES/org.eclipse.bpel.parent/.project
+    *scratch*           0  Lisp Interaction 
+ *  *Messages*       1791  Fundamental  
+  % *Completions*     512  Completion List 
+  % *Help*           6175  Help         
+  % .settings<6>     1405  Dired by name c:/workspace/ARIES/template1-ui/.settings/

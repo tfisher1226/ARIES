@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Local workspace location
+export WORKSPACE=/c/workspace/AEROSPACE
+
+# Maven repository location
+export REPOSITORY=/c/workspace/.m2
+
+# Aerospace development location
+export AERO_HOME=$WORKSPACE/aero
+
+# Java development kit location
+export JAVA_HOME=/c/software/jdk1.6.0_20
+
+# Tomcat home location
+export TOMCAT_HOME=/c/software/apache-tomcat-6.0.26
+
+# Maven settings
+export MAVEN_HOME=/c/software/apache-maven-2.2.1
+export MAVEN_OPTS="-Xmx512m -Xms256m -XX:MaxPermSize=512m"
+
+# adjust command path
+export PATH=$AERO_HOME/scripts:$JAVA_HOME/bin:$MAVEN_HOME/bin:$TOMCAT_HOME/bin:$PATH

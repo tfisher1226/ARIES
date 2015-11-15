@@ -1,0 +1,86 @@
+import bookshop.xsd;
+
+interface BookshopUI {
+
+    page[*] {
+        execute #{blog.hitCount.hit};
+    }
+
+    page LoginPage {
+
+        navigation showLogin(loginForm) {
+
+        }
+
+        event login(loginForm) {
+            invoke Seller.orderBooks($message) {
+                message OrderAccepted: {
+                    purchaseBooks(PurchaseRequest);
+                }
+                message OrderRejected: {
+                    //reply $response;
+                }
+            }
+        }
+
+    }
+
+
+    page homePage {
+
+        navigation {
+            if (#{identity.isLoggedIn}) {
+                redirect "/main.xhtml";
+            } else {
+         		render "/home.xhtml"; 
+            }
+	    }
+    }
+
+    page mainPage {
+        set loginRequired(true);
+    
+        action selectHotel 
+        action selectHotel(hot) {
+            redirect "/hotel.xhtml";
+        }
+        
+        action cancelBookingList {
+            redirect
+        }
+    }
+
+    page hotelPage {
+        set loginRequired(true);
+        set conversationRequired(true);
+          
+        action bookHotel {
+            result Success: {
+                redirect "/book.xhtml"'
+            }
+
+            timeout: {
+                post warning("response timeed-out");
+            }
+
+            error: {
+                redirect "/error.xhtml"'
+            }
+        }
+    }
+
+
+    page registerPage {
+    
+        if (#{validation.failed}) 
+            execute #{register.invalid};
+    
+        navigation {
+            if (#{register.registered}) {
+                redirect "/home.xhtml";
+            }
+        }
+    }
+
+
+}

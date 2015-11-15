@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>aries-base</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries BASE Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+        <module>test</module>
+	</modules>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-net</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-runtime</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-event</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-action</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-queue</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-cache</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-client</artifactId>
+			<type>ejb</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-launcher</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-transaction</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-rmi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-ejb</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jmx</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxws</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jndi</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jms</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-registry</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-launcher</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-validate</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-model</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-engine</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>ariel-compiler</artifactId>
+		</dependency>
+	</dependencies>
+</project>

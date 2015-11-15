@@ -1,0 +1,4 @@
+http://docs.oracle.com/cd/B31017_01/core.1013/b28764/rules005.htm
+
+http://jaxb.java.net/nonav/2.2.1/docs/vendorCustomizations.html
+

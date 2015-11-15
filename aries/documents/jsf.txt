@@ -1,0 +1,23 @@
+General Tips for Building JSF Components
+
+    -Simulate a rendered result before implement it. Use any HTML editor with a preview option to see how the HTML you are going to produce works buy itself. If some HTML construction doesn’t work for you, you save time seeing the problem before you start to implement the component that produces the unsatisfactory HTML code.
+
+    -Localize the JavaScript functions. If the rendered code contains JavaScript, be sure this JavaScript code doesn’t collide with JavaScript coding in other components that will work on the same page.
+
+    -Test how your component works together with other JSF Components. Check the situation where your components insert other components or are themselves inserted as children for other components.
+
+-Check how the rendered code works in the different browser. Avoid browser-specific tags or attributes.
+
+
+
+Component Skeleton
+
+
+Attribute Binding
+
+Attribute binding is one of the most powerful JSF features. You can take the value from a bean property or resource bundle property rather than just hardcode it into your JSP file.
+
+
+Component Binding
+
+One more powerful feature of the JSF technology is component binding. Unlike value binding, component binding allows controlling all of the aspects of a bound component and its child hierarchy from a Java class that is usually called a "backing bean."

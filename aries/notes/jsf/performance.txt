@@ -1,0 +1,1 @@
+http://blog.industrieit.com/2011/11/stateless-jsf-high-performance-zero-per-request-memory-overhead/

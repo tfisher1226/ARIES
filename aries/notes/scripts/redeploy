@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mvn -e -o -DskipTests=true jboss:undeploy;
+mvn clean; 
+mvn -e -o -DskipTests=true install;
+mvn -e -o -DskipTests=true jboss:deploy;
+

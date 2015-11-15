@@ -1,0 +1,88 @@
+MavenXpp3Reader reader = new MavenXpp3Reader();
+Model model = reader.read(myreader);
+MavenProject project = new MavenProject(model);
+
+
+/**
+ * @parameter expression="${project}"
+ */
+private org.apache.maven.project.MavenProject mavenProject;
+
+List<org.apache.maven.model.Dependency> depmgtdeps = mavenProject.getDependencyManagement().getDependencies();
+
+
+
+File pom = new File("pom.xml");
+DefaultProjectBuildingRequest request = new DefaultProjectBuildingRequest();
+DefaultProjectBuilder builder = new DefaultProjectBuilder();
+
+String mavenHome = System.getenv("M2_HOME");
+ArtifactRepository localRepository = new MavenArtifactRepository(
+        "local",
+        new File(mavenHome + "/repository").toURI().toURL().toString(),
+        new DefaultRepositoryLayout(),
+        new ArtifactRepositoryPolicy(),
+        new ArtifactRepositoryPolicy());
+request.setLocalRepository(localRepository);
+MavenProject project = builder.build(pom, request).getProject();
+Properties properties = project.getProperties(); 
+
+
+
+
+package org.example;
+
+import java.io.File;
+
+import org.apache.maven.model.Model;
+import org.apache.maven.model.building.ModelBuildingRequest;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.DefaultProjectBuildingRequest;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectBuilder;
+import org.apache.maven.project.ProjectBuildingResult;
+import org.sonatype.aether.RepositorySystemSession;
+
+/**
+  * run with: mvn $groupId:$artifactId:$version:fetch-pom -DpomFile=$pomFile
+  *
+  * @goal fetch-pom
+  */
+public class FetchModelMojo extends AbstractMojo{
+
+   /**
+    * Current repository/network configuration of Maven.
+    * @parameter default-value="${repositorySystemSession}"
+    * @readonly
+    */
+   private RepositorySystemSession repoSession;
+
+   /**
+    * @component
+    */
+   private ProjectBuilder projectBuilder;
+
+   /**
+    * @parameter expression="${pomFile}" default-value=""
+    */
+   private String pomFile;
+
+   public void execute() throws MojoExecutionException {
+     try {
+       DefaultProjectBuildingRequest req = new DefaultProjectBuildingRequest();
+       req.setRepositorySession(repoSession);
+       req.setValidationLevel(ModelBuildingRequest.VALIDATION_LEVEL_STRICT);
+       ProjectBuildingResult res = projectBuilder.build(new File(pomFile),req);
+
+       // do something with the project
+       MavenProject prj = res.getProject();
+       System.out.println("prj=" + prj);
+       Model model = prj.getModel();
+       System.out.println("id="+model.getId());
+     } catch (Exception e) {
+       throw new MojoExecutionException(e.getMessage(), e);
+     }
+   }
+}
+

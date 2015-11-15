@@ -1,0 +1,45 @@
+
+Although interaction protocols are often part of mutli-agent infrastructures, many of the most common protocols are semi-formal, or vague, or contain errors.  Formal protocol specification can help reduce risk because as result of several important features: 1) dynamic runtime protocol checking and enforcement; 2) automated testing and verification; 3) runtime simulation of protocol behaviour with controlled injection of specific conditions;
+
+
+
+Rationale
+
+The Ariel language has been created to address several needs.  These need are described below.
+
+The engineering of distributed systems demands fundamental and thorough description of communications because it is about interoperability among disparate agents inhabiting distinct protection domains (potentially among organisations with conficting interests and complex trust relationships).  In such a context, different agents (or organizations) need a clear shared understanding on how they are to interact with each other in a given business protocol. As an example, consider a business protocol which is about transaction of stocks and which need be bound by regulations. We need a clear criteria as to whether each end-point (agent or organization) is acting conforming to the protocol. In fact, conformance of the protocol itself to a regulation should also be clarifed.
+
+For these requirements to make sense in practice, we should have a precise way to specify what course of actions and interactions (their kinds and structures) are stipulated by a protocol.  To achieve this method of specification we can follow the standard framework in process algebras and programming language semantics, and defining formal syntax, well-formed type disciplines and evolution of behavior (dynamic semantics).  By mathematically defining these ideas we can formulate correctness criteria (as well as criteria for incorrect behavior) without ambiguity providing a means to prove (or refute) whether a participating agent conforms to the protocol.
+
+
+
+
+
+
+
+Requirements
+
+Most attempts at describing a multi-lateral protocol are hard to understand and are prone to misunderstandings, even when using variable names for clarity.  We propose that a language used for developing and describing protocols is needed which can meet the following goals in the best way possible.
+
+1) concise in terms of having or requiring the most minimal possible input
+
+2) concise in terms of being thorough in capturing the behaviour of asyncronous processing at the different levels.
+
+3) easy to read and undersdtand.
+
+
+The modeling language has to represent both the possible states and the possible actions.
+
+Provide an unambiguous formal specification language with clear semantics to allow thorough verification.
+
+Provide for the expression of fundamental synchronous and asynchronous interaction.  
+
+Provide for the expression of nested intereactions.
+
+Allow for ease of reuse and abstraction of protocols.
+
+
+
+Transactionality
+
+If the designer wishes, he/she can design nearly all types of asynchronous processing constructs using a collection of steps where each step is individually transactional.  And that groups (and subgroups) of steps can be organized into a hierarchical model of nested transactions and related sub-transactions.  Furthermore the relationships among the transactions and subtransactions mayb specified on a step-by-step basis allowing the designer to fine-tune the transactional behaviour of the overall tree of asynchronous processes.

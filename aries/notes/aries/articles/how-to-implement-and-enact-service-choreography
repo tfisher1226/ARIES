@@ -1,0 +1,5 @@
+https://community.jboss.org/thread/169183
+https://community.jboss.org/thread/169183
+
+
+I believe you are asking how can we ensure that a choreography is being executed properly? If so, then the only way is to monitor the system and then validate that the interactions between the various components correctly match the expected behaviour as defined in the choreography.

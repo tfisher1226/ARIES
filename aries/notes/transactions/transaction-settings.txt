@@ -1,0 +1,28 @@
+2.3.3. Using the connection
+
+Once the connection is established, all operations on the connection are monitored by JBossJTA. you do not need to use the transactional connection within transactions. If a transaction is not present when the connection is used, then operations are performed directly on the database. 
+
+Transaction timeouts
+
+You can use transaction timeouts to automatically terminate transactions if a connection is not terminated within an appropriate period. 
+
+Simultaneous transactions
+
+You can use JBossJTA connections within multiple transactions simultaneously. An example would be different threads, with different notions of the current transaction. JBossJTA does connection pooling for each transaction within the JDBC connection. Although multiple threads may use the same instance of the JDBC connection, internally there may be a separate connection for each transaction. With the exception of method close, all operations performed on the connection at the application level are only performed on this transaction-specific connection. 
+
+2.3.4. Connection pooling
+
+For each user name and password, JBossJTA maintains a single instance of each connection for as long as that connection is in use. Subsequent requests for the same connection get a reference to the original connection, rather than a new instance. You can try to close the connection, but the connection will only actually be closed when all users (including transactions) have either finished with the connection, or issued close calls.
+
+2.3.5. Reusing connections
+
+Some JDBC drivers allow the reuse of a connection for multiple different transactions once a given transaction completes. Unfortunately this is not a common feature, and other drivers require a new connection to be obtained for each new transaction. By default, the JBossJTA transactional driver always obtains a new connection for each new transaction. However, if an existing connection is available and is currently unused, JBossJTA can reuse this connection. To turn on this feature, add option reuseconnection=true to the JDBC URL. For instance, jdbc:arjuna:sequelink://host:port;databaseName=foo;reuseconnection=true
+
+2.3.6. Terminating the transaction
+
+When a transaction with an associated JDBC connection terminates, because of the application or because a transaction timeout expires, JBossJTA uses the JDBC driver to drive the database to either commit or roll back any changes made to it. This happens transparently to the application.
+
+2.3.7. AutoCommit
+
+If property AutoCommit of the interface java.sql.Connection is set to true for JDBC, the execution of every SQL statement is a separate top-level transaction, and it is not possible to group multiple statements to be managed within a single OTS transaction. Therefore, JBossJTA disables AutoCommit on JDBC connections before they can be used. If AutoCommit is later set to true by the application, JBossJTA throws the java.sql.SQLException. 
+

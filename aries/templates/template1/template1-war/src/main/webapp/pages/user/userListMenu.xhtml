@@ -1,0 +1,110 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript" language="javascript">
+	//<![CDATA[ 
+
+	function showUserListContextMenu(event, lastName, firstName) {
+		var menuId = 'userListMenu';
+		var menu = #{rich:component(menuId)};
+		menu.doShow(event, {
+			'lastName': lastName, 
+			'firstName': firstName
+		});
+	}
+	
+	function warnPermissionDenied(name) {
+		showWarning(name, 'Cannot remove User Record', 'Permission Denied.');
+	}
+
+	function checkPromptDeleteUser(name) {
+		showPrompt(name, 'Remove User Record from system', 'Do you wish to continue?', 'removeUser', 'userListTablePanel');
+	}
+	//]]>
+	</script>
+
+	<a4j:region>
+		<aries:contextMenu 
+			submitMode="none"
+			id="membershipContextMenu">
+	
+			<aries:contextMenuItem 
+				value="New User Record..."
+				submitMode="ajax" 
+				immediate="true"
+				ajaxSingle="true"
+				bypassUpdates="true"
+				limitToList="true"
+				icon="resource://images/icons/common/New16.gif"
+				manager="#{memberInfoManager}"
+				action="newUser"
+				onclick="setCursorWait(); showProgress('User Records', 'Creating new record...')"
+				oncomplete="setCursorDefault(); Richfaces.showModalPanel('memberDialog'); hideProgress()"
+				reRender="memberDialog">
+				<aries:tooltip value="Create new record"/>
+			</aries:contextMenuItem>
+	
+			<!--  
+			<aries:contextMenuItem 
+				value="Open..." 
+				submitMode="ajax" 
+				immediate="true"
+				disabled="false"
+				icon="resource://images/icons/common/Open16.gif"
+				action="#{memberInfoManager.openUser}"
+				onclick="setCursorWait(); showProgress('User Records', 'Retrieving information...')"
+				oncomplete="setCursorDefault(); hideProgress()">
+				<ui:include src="/common/tooltip.xhtml">
+					<ui:param name="tooltip" value="Open selected record"/>
+				</ui:include>
+			</aries:contextMenuItem>
+			-->
+	
+			<aries:contextMenuItem 
+				value="Edit User Record..." 
+				disabled="false"
+				submitMode="ajax" 
+				immediate="false"
+				ajaxSingle="false"
+				bypassUpdates="false"
+				limitToList="false"
+				icon="resource://images/icons/common/Edit16.gif"
+				manager="#{mainManager.selectUserListTab}"
+				action="editUser"
+				process="memberDialog"
+				onclick="setCursorWait(); showProgress('{lastName}, {firstName}', 'Preparing for edit...')"
+				oncomplete="setCursorDefault(this); Richfaces.showModalPanel('memberDialog'); hideProgress()"
+				reRender="memberDialog">
+				<aries:tooltip value="Edit selected record"/>
+			</aries:contextMenuItem>
+	
+	<!-- 
+				value="Set as archived..." 
+				value="Set as visible..." 
+	 -->
+	
+			<rich:menuSeparator/> 
+			<aries:contextMenuItem 
+				value="Remove User Record..." 
+				immediate="true"
+				disabled="false"
+				icon="resource://images/icons/common/Remove16.gif"
+				manager="#{memberInfoManager}"
+				action="promptRemoveUser"
+				onclick="setCursorWait(); showProgress('User Record: {firstName} {lastName}', 'Removing membership information...')"
+				oncomplete="setCursorDefault(); hideProgress(); if (#{!messagesExist}) {checkPromptDeleteUser(#{member.lastName})} else {warnPermissionDenied('memberDialog')}">
+				<aries:tooltip value="Remove selected record"/>
+			</aries:contextMenuItem>
+		</aries:contextMenu>
+	</a4j:region>
+</ui:composition>

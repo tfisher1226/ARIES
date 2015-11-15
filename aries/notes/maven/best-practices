@@ -1,0 +1,91 @@
+Recurring issues like:
+    -Huge overhead in repository snapshot artifact lookups
+    -Multimodule useless plugin invocations
+    -Build randomly failing on the build server
+    -Release unnecessary complex
+
+If only one best practice, then it would be:
+    -Don't fight against Maven, you'll loose. 
+    So, follow and use its conventions, 
+    adopt its philosophy, use it the way it works.
+
+Best Practice 1 - Lower the number of repositories
+    -Keeping the number of Repositories declared in the POM as low as possible has a drastic 
+    impact on the build experience and also lowers concerns on the build being dependent 
+    on multiple internet sources to be reproducible.
+
+    --Remove development leftovers, i.e. validating which repositories are actually needed by the build
+    --Use a corporate repository to proxy external repositories, allowing Maven to focus on building and 
+    leaving the hassle of remote repository dependency resolution to the proxy repository.
+
+    ---Put all release repositories under one single URL
+    ---Put all the above snapshot repositories under one single URL
+
+Best Practice 2 - Fine tune SNAPSHOT repositories policies
+    -By default Maven 2 checks always for newer versions of SNAPSHOT dependencies 
+    and SNAPSHOT plugins, but this can definitely be controlled by POM/settings configurations. 
+    It's always a best practice to limit SNAPSHOT update policies to perform a daily check rather 
+    than bothering every single build with useless (unless you’re in heavy development phases) 
+    HTTP failed requests.
+
+Best Practice 3 - Limit Multimodule unnecessary plugin executions
+    -When used in their default configuration certain plugins result in 
+    unnecessary (or at least overhead) executions for all the submodules 
+    in the reactor.
+
+Best Practice 4 - Clearly specify plugin versions
+    -One the main causes of non reproducible or instable builds is the 
+    Maven 'feature' which allows you not to specify a plugin version, 
+    in which case Maven will try to retrieve the latest plugin version 
+    from any of the available repositories.
+
+Best Practice 5 - Check for weird plugin executions in lifecycle
+    -avoid complex POM configurations
+
+Best Practice 5 - Look for and eliminate redundent plugin executions in lifecycle
+    -identify wierd loops in execution
+
+
+Others:
+    -Eliminate plugins that use SNAPSHOT versions (or settle upon a non-SNAPSHOT version)
+
+
+Results:
+    -reliably repeateable builds
+    -reduced build time
+
+
+
+Also, from this book, look at Chapter 7 outlined below:
+http://www.packtpub.com/apache-maven-2-effective-implementation/book#indetail
+
+Maven Best Practices
+    Preparing the development environment
+          Maven installation and user settings
+              Encrypting server passwords
+          Project settings
+          Configuring repositories
+    Keeping it simple
+          Using conventions
+          Using inheritance
+          Decomposing the build into modules
+              Aligning the source structure
+              Selecting group and artifact identifiers
+              Building modules together
+              Each module should be independently useful
+              Watching the dependencies
+              Separating API from implementation
+          Trimming dependencies
+          Dependency version management
+          Profiles and pipelining
+          Scripting and writing plugins
+          Creating and using archetypes
+   Build portability
+          Setting expectations
+          Hard coding
+          Portable profiles
+          Portable artifacts
+          Resource filtering
+          Shared resources
+          Build reproducibility
+

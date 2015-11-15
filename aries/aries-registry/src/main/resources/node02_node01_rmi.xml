@@ -1,0 +1,48 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../main/config/ehcache.xsd">
+
+
+    <diskStore path="java.io.tmpdir/one"/>
+
+	<cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+									 properties="peerDiscovery=manual,rmiUrls=//node01:40003/sampleCache1"/>
+
+
+    <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+                                     properties="hostName=node02, port=40002, remoteObjectPort=40005, socketTimeoutMillis="/>
+
+
+    <defaultCache
+            maxElementsInMemory="10"
+            eternal="false"
+            timeToIdleSeconds="100"
+            timeToLiveSeconds="100"
+            overflowToDisk="true">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,
+                                               replicatePuts=true,
+                                               replicateUpdates=true,
+                                               replicateUpdatesViaCopy=true,
+                                               replicateRemovals=true "/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" />
+    </defaultCache>
+
+    <!-- Sample cache named sampleCache1 -->
+	<cache name="sampleCache1"
+		   maxElementsInMemory="0"
+		   maxElementsOnDisk="0"
+		   eternal="true"
+		   copyOnWrite="false">
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="
+				replicateAsynchronously=true,
+				replicatePuts=true,
+				replicatePutsViaCopy=true,
+				replicateUpdates=true,
+				replicateUpdatesViaCopy=true,
+				replicateRemovals=true,
+				asynchronousReplicationIntervalMillis=10
+			"
+		/>
+	</cache>
+</ehcache>

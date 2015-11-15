@@ -1,0 +1,26 @@
+
+Using Masked Passwords in Configuration Files
+
+By default all passwords in HornetQ server's configuration files are in plaintext form. This usually poses no security issues as those files should be well protected from unauthorized accessing. However, in some circumstances a user doesn't want to expose its passwords to more eyes than necessary.
+
+HornetQ can be configured to use 'masked' passwords in its configuration files. A masked password is an obscure string representation of a real password. To mask a password a user will use an 'encoder'. The encoder takes in the real password and outputs the masked version. A user can then replace the real password in the configuration files with the new masked password. When HornetQ loads a masked password, it uses a suitable 'decoder' to decode it into real password.
+
+Hornetq provides a default password encoder and decoder. Optionally users can use or implement their own encoder and decoder for masking the passwords.
+
+
+cluster-password
+
+The nature of the value of cluster-password is subject to the value of property 'mask-password'. If it is true the cluster-password is masked.
+
+
+Passwords in connectors and acceptors
+
+In the server configuration, Connectors and Acceptors sometimes needs to specify passwords. For example if a users wants to use an SSL-enabled NettyAcceptor, it can specify a key-store-password and a trust-store-password. Because Acceptors and Connectors are pluggable implementations, each transport will have different password masking needs.
+
+When a Connector or Acceptor configuration is initialised, HornetQ will add the "mask-password" and "password-codec" values to the Connector or Acceptors params using the keys hornetq.usemaskedpassword and hornetq.passwordcodec respectively. The Netty and InVM implementations will use these as needed and any other implementations will have access to these to use if they so wish.
+
+
+Passwords in Core Bridge cofigurations
+
+Core Bridges are configured in the server configuration file and so the masking of its 'password' properties follows the same rules as that of 'cluster-password'.
+

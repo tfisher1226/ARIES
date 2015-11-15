@@ -1,0 +1,88 @@
+http://fusesource.com/docs/framework/2.2/jaxws/JAXWSCustomTypeMappingFixed.html
+
+
+
+By default, the code generators map attributes defined as having a fixed value to normal properties. When using schema validation, Fuse Services Framework can enforce the schema definition. However, using schema validation increases message processing time.
+
+Another way to map attributes that have fixed values to Java is to map them to Java constants. You can instruct the code generator to map fixed value attributes to Java constants using the globalBindings customization element. You can also customize the mapping of fixed value attributes to Java constants at a more localized level using the property element.
+Global customization
+
+You can alter this behavior by adding the globalBinding element's fixedAttributeAsConstantProperty attribute. Setting this attribute to true instructs the code generator to map any attribute defined using fixed attribute to a Java constant.
+
+Example 16.21 shows an in-line customization that forces the code generator to generate constants for attributes with fixed values.
+
+Example 16.21. in-Line Customization to Force Generation of Constants
+
+<schema targetNamespace="http://widget.com/types/widgetTypes" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        jaxb:version="2.0">
+  <annotation>
+    <appinfo>
+      <jaxb:globalBindings fixedAttributeAsConstantProperty="true" />
+    </appinfo>
+  </annotation>
+  ...
+</schema>
+
+
+
+This shows an external binding file that customizes the generation of fixed attributes.
+
+Example 16.22. Binding File to Force Generation of Constants
+
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+               jaxb:version="2.0">
+  <jaxb:bindings schemaLocation="types.xsd">
+    <jaxb:globalBindings fixedAttributeAsConstantProperty="true" />
+  <jaxb:bindings>
+<jaxb:bindings>
+
+
+
+This shows an in-line customization that forces the code generator to generate constants for a single attribute with a fixed value.
+
+Example 16.23. In-Line Customization to Force Generation of Constants
+
+<schema targetNamespace="http://widget.com/types/widgetTypes" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        jaxb:version="2.0">
+  <complexType name="widgetAttr">
+    <sequence>
+      ...
+    </sequence>
+    <attribute name="fixer" type="xsd:int" fixed="7">
+      <annotation>
+        <appinfo>
+          <jaxb:property fixedAttributeAsConstantProperty="true" />
+        </appinfo>
+      </annotation>
+     </attribute>
+  </complexType>
+  ...
+</schema>
+
+
+
+This shows an external binding file that customizes the generation of a fixed attribute.
+
+Example 16.24. Binding File to Force Generation of Constants
+
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+               jaxb:version="2.0">
+  <jaxb:bindings schemaLocation="types.xsd">
+    <jaxb:bindings node="xsd:complexType[@name='widgetAttr']">
+      <jaxb:bindings node="xsd:attribute[@name='fixer']">
+            <jaxb:property fixedAttributeAsConstantProperty="true" />
+        </jaxb:bindings>
+    </jaxb:bindings>
+  </jaxb:bindings>
+<jaxb:bindings>
+
+
+

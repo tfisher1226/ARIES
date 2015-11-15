@@ -1,0 +1,69 @@
+Process
+A process is an abstraction of an independent thread of control.
+
+
+What is pi-calculus? 
+pi-calculus is a model of computation for concurrent systems. 
+The syntax of p-calculus lets you represent processes, parallel composition of processes, 
+synchronous communication between processes through channels, creation of fresh 
+channels, replication of processes, and nondeterminism.  That's it!
+
+
+What is the analogy between p-calculus and pi-calculus? 
+lambda-calculus is to sequential programs as pi-calculus is to concurrent programs. 
+More precisely, lambda-calculus is the core language of functional computation, in which 
+"everything is a function" and all computation proceeds by function application; pi-
+calculus is the core calculus of message-based concurrency, in which "everything is a 
+process" and all computation proceeds by communication on channels.  lambda-calculus can 
+claim to be a canonical model of functional computation; however, pi-calculus cannot 
+make such a claim for concurrent computation [Pierce95]. 
+ 
+Benjamin Pierce puts it best: 
+ 
+The lambda-calculus holds an enviable position: it is recognized as 
+embodying, in miniature, all of the essential features of functional 
+computation.  Moreover, other foundations for functional computation, such 
+as Turing machines, have exactly the same expressive power.  The 
+"inevitability" of the lambda-calculus arises from the fact that the only way 
+to observe a functional computation is to watch which output values it yields 
+when presented with different input values. 
+ 
+Unfortunately, the world of concurrent computation is not so orderly.  
+Different notions of what can be observed may be appropriate for different 
+circumstances, giving rise to different definitions of when two concurrent 
+systems have "the same behavior": for example, we may wish to observe or 
+ignore the degree of inherent parallelism of a system, the circumstances 
+under which it may deadlock, the distribution of its processes among physical 
+processors, or its resilience to various kinds of failures.  Moreover, 
+concurrent systems can be described in terms of many different constructs for 
+creating processes (fork/wait, cobegin/coend, futures, data parallelism, etc.), 
+exchanging information between them (shared memory, rendezvous, 
+message-passing, dataflow, etc.), and managing their use of shared resources 
+(semaphores, monitors, transactions, etc.). 
+ 
+This variability has given rise to a large class of formal systems called 
+process calculi (sometimes process algebras), each embodying the essence 
+of a particular concurrent or distributed programming paradigm [Pierce 95]. 
+ 
+pi-calculus is just one of many such process calculi. 
+ 
+An interesting aside: lambda-calculus can be encoded in pi-calculus. 
+
+process algebra
+An algebra is a mathematical structure with a set of values and a set of operations on the 
+values.  These operations enjoy algebraic properties such as commutativity, associativity, 
+idempotency, and distributivity.    In a typical process algebra, processes are values and 
+parallel composition is defined to be a commutative and associative operation on 
+processes. 
+
+
+
+[Hoare85] C.A.R. Hoare, Communicating Sequential Processes, Prentice-Hall, 1985. 
+
+[Milner80] Robin Milner, A Calculus of Communicating Systems, Lecture Notes in 
+Computer Science, volume 92, Springer-Verlag, 1980
+
+[Pierce95] Benjamin C. Pierce, Foundational Calculi for Programming Languages, CRC 
+Handbook of Computer Science and Engineering, Chapter 136, CRC Press, 1996. 
+http://www.cis.upenn.edu/~bcpierce/papers/ 
+

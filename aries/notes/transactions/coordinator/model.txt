@@ -1,0 +1,47 @@
+
+
+Client                                  Transaction Manager                                     Server
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Workflow: Transaction Begin
+------------------------------------------------------
+
+tx->begin
+                                        ActivationPortType.createCoordinationContext
+createTxContext
+startTxContext
+enlistCompletionParticipants
+txManager->registerParticipant
+                                        RegistrationPortType.getInstance().registerParticipant
+
+
+
+Workflow: Execute Business Process
+------------------------------------------------------
+
+invokeService
+                                                                                                RestaurantPortType->bookSeats
+                                                                                                create participant
+                                                                                                register participant
+                                        RegistrationPortType.getInstance().registerParticipant
+                                                                                                create participantEngine
+                                                                                                activate participantEngine
+                                                                                                get derived state
+                                                                                                update derived state
+                                                                                                save derived state
+
+
+
+
+Workflow: Transaction Commit
+------------------------------------------------------
+
+tx->commit
+
+
+
+
+
+
+

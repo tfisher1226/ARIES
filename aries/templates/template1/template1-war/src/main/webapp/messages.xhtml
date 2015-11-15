@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<c:if test="#{empty id}">
+		<c:set var="id" value="MessagesPlaceholder" /> 
+	</c:if>
+
+	<a4j:outputPanel id="#{id}" ajaxRendered="false">
+		<h:panelGroup layout="block" rendered="#{messages.isMessagesExist(module)}">
+			<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumn">
+				<ui:repeat value="#{messages.getMessages(module)}" var="message">
+					<h:graphicImage value="#{dialogMessageStyleFactory.styleForSeverity(message.severity).iconUrl}" style="padding-left: 8px; vertical-align: top"/>
+					<h:outputText value="#{message.detail}" styleClass="#{dialogMessageStyleFactory.styleForSeverity(message.severity).styleClass}" style="padding-left: 8px; vertical-align: top"/>
+					<span class="hspace4"/>
+					<br/>
+				</ui:repeat>
+			</h:panelGrid>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>tx-manager-demo</artifactId>
+	<description>tx-manager-demo</description>
+	<name>tx-manager-demo</name>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+    <build>
+        <plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.xsd</include>
+						<include>**/*.wsdl</include>
+						<include>**/*.bpel</include>
+						<include>**/*.properties</include>
+						<include>**/*.aries</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+            <plugin>
+				<groupId>org.aries.maven.plugin</groupId>
+				<artifactId>aries-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<goals>
+			            	<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+                    <fileSet>
+                        <directory>${basedir}/src/main/resources/services</directory>
+                        <includes>
+                            <include>async_echo/async_echo.aries</include>
+                        </includes>
+                    </fileSet>
+                    <dryRun>false</dryRun>
+				</configuration>
+				<!--  
+				<dependencies>
+					<dependency>
+						<groupId>org.aries.pom</groupId>
+						<artifactId>eclipse-emf</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.emf</groupId>
+						<artifactId>org.eclipse.emf.ecore</artifactId>
+					</dependency>
+				</dependencies>
+				-->
+            </plugin>
+        </plugins>
+    </build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-data-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-registry</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-service</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--  
+		<dependency>
+			<groupId>org.async_echo</groupId>
+			<artifactId>tx-manager-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.async_echo</groupId>
+			<artifactId>tx-manager-client</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+		-->
+
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-net</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-runtime</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-runtime</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-event</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-event</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-action</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-service</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-service</artifactId>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-cache</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-tx</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!-- 
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-rmi</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-ejb</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jmx</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxws</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jndi</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jms</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-registry</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-launcher</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+		
+
+		<!--  
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!-- JNDI support -->
+
+		<!-- 
+		<dependency>
+			<groupId>org.jboss.naming</groupId>
+			<artifactId>jnpserver</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+
+		<!-- Transaction support -->
+
+		<!--  
+		<dependency>
+			<groupId>org.jboss.jbossts</groupId>
+			<artifactId>jbossjta</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.ws</groupId>
+					<artifactId>jbossws-common</artifactId>
+  				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-server-manager</artifactId>
+  				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.ws.native</groupId>
+					<artifactId>jbossws-native-core</artifactId>
+  				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.jbossts</groupId>
+			<artifactId>jbossjts</artifactId>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.ws</groupId>
+					<artifactId>jbossws-common</artifactId>
+  				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-server-manager</artifactId>
+  				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.ws.native</groupId>
+					<artifactId>jbossws-native-core</artifactId>
+  				</exclusion>
+			</exclusions>
+		</dependency>
+		-->
+		
+
+		<!-- Webservices support -->
+		
+		<!--  
+		<dependency>
+			<groupId>com.sun.xml.stream.buffer</groupId>
+			<artifactId>streambuffer</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon</artifactId>
+			<version>9.1.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-dom</artifactId>
+			<version>9.1.0.8</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http-jetty</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<!-- Data-layer support -->
+		
+		<!--  
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+	</dependencies>
+</project>

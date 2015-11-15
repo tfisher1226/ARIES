@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- TITLE 
+	<ui:include src="/common/dialog/dialogTitleBar.xhtml">
+		<ui:param name="dialogKey" value="#{dialogKey}"/>
+		<ui:param name="dialogTitle" value="#{dialogTitle}"/>
+	</ui:include>
+	-->
+
+	<ui:include src="dialogTitleBar.xhtml"/>
+
+	<a4j:outputPanel id="#{dialogKey}Header">
+
+		<!-- HEADER -->
+		<h:panelGrid columns="2" columnClasses="dialogHeaderColumn1, dialogHeaderColumn2" style="width: 100%; vertical-align: top; background-color: white">
+			<h:panelGroup layout="block" style="padding: 0px 6px 6px 6px">
+				<h:outputText value="#{dialogTitle}" styleClass="dialogTitle" style="display: block"/>
+
+				<rich:spacer height="8"/>
+				<ui:include src="/messages.xhtml">
+					<ui:param name="id" value="#{dialogKey}Messages"/>
+					<ui:param name="module" value="#{dialogKey}"/>
+				</ui:include>
+				
+				<!-- MESSAGES 
+				<aries:messages id="#{dialogKey}Messages" module="#{dialogKey}"/>
+				-->
+			</h:panelGroup>
+
+			<!--  
+			<h:panelGroup layout="block" style="">
+				<h:graphicImage value="resource://images/aero/aero-logo-dialog.jpg"/>
+			</h:panelGroup>
+			-->
+		</h:panelGrid>
+
+		<div style="display: block; width: 100%; height: 1px; background-color: #bbb"/>
+		<div style="display: block; width: 100%; height: 1px; background-color: #fff"/>
+	</a4j:outputPanel>
+</ui:composition>
+
+

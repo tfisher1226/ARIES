@@ -1,0 +1,69 @@
+
+CompletionInitiator
+CompletionCoordinator
+CompletionParticipant
+
+TransactionActivation
+TransactionRegistration
+TransactionParticipant
+
+
+UserTransaction
+ -commit -> 
+
+
+CompletionCoordinatorProcessor.commit
+  CompletionCoordinatorProcessorImpl.commit
+    CompletionCoordinatorImple.commit
+      CoordinatorServiceImple.commit
+        UserActivityImple.end
+          ActivityImple.end
+            TwoPhaseHLSImple.complete
+              CoordinatorControl.complete
+                ATCoordinator.end
+                  ATCoordinator.End
+                    ATCoordinator.onePhaseCommit
+                      ParticipantRecord.topLevelOnePhaseCommit
+                        DurableTwoPhaseCommitParticipant.confirmOnePhase
+                          DurableTwoPhaseCommitParticipant.prepare
+                            Durable2PCStub.prepare
+                              ParticipantStub.prepare
+                                CoordinatorEngine.prepare
+                                  CoordinatorEngine.sendPrepare
+                                    ParticipantClient.sendPrepare
+                                    ----------------------------------------
+                                    
+                          
+                
+
+          
+
+DurableTwoPhaseCommitParticipant.commit
+ParticipantStup.commit
+
+
+DurableTwoPhaseCommitParticipant.prepare
+  ParticipantStup.prepare
+    CoordinatoEngineImpl.prepare
+      ParticipantClient.sendPrepare
+        ----------------------------------------
+        ParticipantPortType.prepareOperation
+          ParticipantProcessor.prepare
+            ParticipantEngine.prepare
+              ParticipantEngine.executePrepare (from ACTIVE state)
+                -get vote from participant
+                   -if Exception then rollbackDecision()
+                   -if prepared then commitDecision()
+                   -if readOnly then readOnlyDecision()
+                   -if aborted then rollbackDecision()
+                   -if prepared then commitDecision()
+              ParticipantEngine.sendPrepared (from PREPARED state)
+                CoordinatorClient.sendPrepared
+                  ----------------------------------------
+                  CoordinatorPortType.preparedOperation
+                    CoordinatorProcessor.prepared
+                      CoordinatorEngine.prepared
+                        ParticipantClient.sendPrepare
+
+              ParticipantEngine.sendAborted (from ABORTING state)
+  

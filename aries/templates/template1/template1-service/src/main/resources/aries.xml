@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<application>
+	<name>infosgi-service</name>
+	<domain>org.sgiusa</domain>
+	<package>org.sgiusa</package>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<providers>
+		<provider 
+			type="jms" 
+			name="@jms.provider.name@"
+			connection-url="@jms.provider.jndi.url@"
+			context-factory="@jms.provider.jndi.context-factory@" 
+			url-pkg-prefixes="@jms.provider.jndi.url-pkg-prefixes@"
+			default-connection-factory="@jms.provider.connection-factory@"
+			user="@jms.provider.jndi.username@"
+			password="@jms.provider.jndi.username@" />
+	</providers>
+	
+	<channels
+		mode="text" 
+		domain="org.aries">
+		<channel type="WS" name="jaxws"/>
+		<channel type="RMI" mode="text" name="rmi" port="@aries.port.rmi@"/>
+	</channels>
+
+	<services group="org.sgiusa">
+		<service name="getUser">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getUserAction" class="org.sgiusa.GetUserAction"/>
+			</process>
+		</service>
+
+	    <service name="getUsers">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getUsersAction" class="org.sgiusa.GetUsersAction"/>
+			</process>
+		</service>
+
+		<service group="org.sgiusa" name="saveUser">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.saveUserAction" class="org.sgiusa.SaveUserAction"/>
+			</process>
+		</service>
+
+		<service group="org.sgiusa" name="deleteUser">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.deleteUserAction" class="org.sgiusa.DeleteUserAction"/>
+			</process>
+		</service>
+
+	    <service name="getMembers">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getMembersAction" class="org.sgiusa.GetMembersAction"/>
+			</process>
+		</service>
+
+	    <service name="getMemberById">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getMemberAction" class="org.sgiusa.GetMemberAction"/>
+			</process>
+		</service>
+
+	    <service name="getMembersByOrganization">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getMembersByOrganizationAction" class="org.sgiusa.GetMembersByOrganizationAction"/>
+			</process>
+		</service>
+
+		<service group="org.sgiusa" name="saveMember">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.saveMemberAction" class="org.sgiusa.SaveMemberAction"/>
+			</process>
+		</service>
+
+	    <service name="importMembers">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.importMembersAction" class="org.sgiusa.ImportMembersAction"/>
+			</process>
+		</service>
+		
+	    <service name="getOrganizations">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getOrganizationsAction" class="org.sgiusa.GetOrganizationsAction"/>
+			</process>
+		</service>
+
+	    <service name="getOrganization">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.getOrganizationAction" class="org.sgiusa.GetOrganizationAction"/>
+			</process>
+		</service>
+
+	    <service name="saveOrganization">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.saveOrganizationAction" class="org.sgiusa.SaveOrganizationAction"/>
+			</process>
+		</service>
+
+	    <service name="deleteOrganization">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.deleteOrganizationAction" class="org.sgiusa.DeleteOrganizationAction"/>
+			</process>
+		</service>
+
+	    <service name="importOrganizations">
+			<listener channel="org.aries.rmi"/>
+			<process>
+				<action name="org.sgiusa.importOrganizationsAction" class="org.sgiusa.ImportOrganizationsAction"/>
+			</process>
+		</service>
+	</services>
+
+<!--  	
+    <service group="org.sgiusa" name="saveUser">
+		<listener channel="org.aries.rmi"/>
+		<action name="saveUserAction" class="org.sgiusa.SaveUserAction"/>
+	</service>
+
+    <service group="org.sgiusa" name="getMembers">
+		<listener channel="org.aries.rmi"/>
+		<action name="getMembersAction" class="org.sgiusa.GetMembersAction"/>
+	</service>
+
+    <service group="org.sgiusa" name="getMember">
+		<listener channel="org.aries.rmi"/>
+		<action name="getMemberAction" class="org.sgiusa.GetMemberAction"/>
+	</service>
+
+    <service group="org.sgiusa" name="saveMember">
+		<listener channel="org.aries.rmi"/>
+		<action name="saveMemberAction" class="org.sgiusa.SaveMemberAction"/>
+	</service>
+
+    <service group="org.sgiusa" name="getOrganizations">
+		<listener channel="org.aries.rmi"/>
+		<action name="getOrganizationsAction" class="org.sgiusa.GetOrganizationsAction"/>
+	</service>
+
+    <service group="org.sgiusa" name="saveOrganization">
+		<listener channel="org.aries.rmi"/>
+		<action name="saveOrganizationAction" class="org.sgiusa.SaveOrganizationAction"/>
+	</service>
+-->
+
+</application>

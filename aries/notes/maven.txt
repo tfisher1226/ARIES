@@ -1,0 +1,60 @@
+<plugin>
+	<groupId>com.atlassian.maven.plugins</groupId>
+	<artifactId>maven-upload-plugin</artifactId>
+	<version>1.1</version>
+	<configuration>
+		<resourceSrc>
+			${project.build.directory}/${project.build.finalName}.${project.packaging}
+		</resourceSrc>
+		<resourceDest>${jboss.deployDir}</resourceDest>
+		<serverId>${jboss.host}</serverId>
+		<url>${jboss.deployUrl}</url>
+	</configuration>
+</plugin> 
+
+<server>
+	<id>localhost</id>
+	<username>username</username>
+	<password>{Pz+6YRsDJ8dUJD7XE8=} an encrypted password. Supported since
+		maven 2.1</password>
+</server>
+
+<profiles>
+	<profile>
+		<id>dev</id>
+		<properties>
+			<jboss.host>localhost</jboss.host>
+			<jboss.deployDir>/opt/jboss/server/default/deploy/</jboss.deployDir>
+			<jboss.deployUrl>scp://root@localhost</jboss.deployUrl>
+		</properties>
+	</profile>
+	<profile>
+		<id>test</id>
+		<properties>
+			<jboss.host>testserver</jboss.host>
+		</properties>
+	</profile>
+</profiles>
+
+
+<plugin>
+	<groupId>com.atlassian.maven.plugins</groupId>
+	<artifactId>maven-upload-plugin</artifactId>
+	<version>1.1</version>
+	<configuration>
+		<serverId>jira-repo</serverId>
+		<resourceSrc>
+			${project.build.directory}/${project.build.finalName}.${project.packaging}
+		</resourceSrc>
+		<resourceDest>opt/jira/webapps</resourceDest> <!-- note: no leading slash -->
+		<url>scp://root@jira</url>
+	</configuration>
+</plugin>
+
+<servers>
+	<server>
+		<id>jira-repo</id>
+		<username>myusername</username>
+		<password>mypassword</password>
+	</server>
+</servers>

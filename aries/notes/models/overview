@@ -1,0 +1,17 @@
+Quote by Steve Ballmer:
+ 	I believe our industry has a responsibility, and an opportunity, to dramatically simplify the computing environment by seamlessly weaving together all of the devices, services and multiple layers of software into a coherent, efficiently managed technology framework.
+
+Quote by T. Reenskaug:
+    Any method that prevents the programmer writing code, is a good method.
+
+
+The XXX pi calculus [refhere] is a language for defining, describing and analysing protocols suitable for use within a service oriented excution environment featuring long-running transactional processes.  It provides an intuitive process syntax for detailing the actions of the participants in a protocol, emphasising their communication.
+
+The syntax is coupled with formal semantics to allow reasoning about protocols. The language is based on the pi calculus with the addition of a rich term algebra to enable modelling of the cryptographic operations used by security protocols.  A wide variety of cryptographic primitives can be abstractly modelled by means of an equational theory.
+
+The calculus allows one to express several types of goals, and to analyse whether the target protocol implementation meets its goals or not.
+
+
+
+
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar
+	version="3.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd">
+
+	<display-name>tx-manager-client</display-name>
+
+	<interceptors>
+	</interceptors>
+
+	<assembly-descriptor>
+ 		<!--
+			Interceptor to support the handling of Transactional context.
+			This will apply to all methods for all beans in deployment.
+		-->
+		<interceptor-binding>
+			<ejb-name>*</ejb-name>
+			<interceptor-class>common.tx.handler.service.EjbTransactionInterceptor</interceptor-class>
+		</interceptor-binding>
+	</assembly-descriptor>
+</ejb-jar>

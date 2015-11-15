@@ -1,0 +1,13 @@
+    <f:facet name="controls">
+        <h:outputLink value="#" onclick="#{rich:component('window')}.cdiv.minimize(); return false;">
+            <h:outputText value="Minimize"/>
+        </h:outputLink>
+        <h:outputText value=" | "/>
+        <h:outputLink value="#" onclick="#{rich:component('window')}.cdiv.maximize(); return false;">
+            <h:outputText value="Maximize"/>
+        </h:outputLink>
+        <h:outputText value=" | "/>         
+        <h:outputLink value="#" onclick="#{rich:component('window')}.hide(); return false;">
+            <h:outputText value="Close"/>
+        </h:outputLink>             
+    </f:facet>   

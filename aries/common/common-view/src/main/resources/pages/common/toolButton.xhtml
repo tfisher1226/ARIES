@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+   	<a4j:commandButton 
+   		image="#{image}"
+		rendered="#{enabled}"
+   		action="#{manager[action]}"
+		onmouseover="setCursorPointer(this)"
+		onmouseout="setCursorDefault(this)"
+		onclick="setCursorWait(this); #{onclick}"
+		oncomplete="setCursorDefault(this); #{oncomplete}"
+		reRender="#{reRender}">
+		<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+			<span style="white-space: nowrap; display: block; text-align: left">
+				<h:outputText value="#{tooltip}"/>
+			</span>
+		</rich:toolTip>
+   	</a4j:commandButton>
+	<h:graphicImage 
+		value="#{imageDisabled}"
+		rendered="#{!enabled}"/>
+
+	<span class="hspace5"/>
+	<a4j:commandLink 
+		value="#{text}"
+		immediate="true"
+		rendered="#{enabled}"
+   		action="#{manager[action]}"
+		onmouseover="setCursorPointer(this)"
+		onmouseout="setCursorDefault(this)"
+		onclick="setCursorWait(this); #{onclick}"
+		oncomplete="setCursorDefault(this); #{oncomplete}"
+		reRender="#{reRender}"
+		style="font-size: 13px; font-weight: normal; color: #008">
+		<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+			<span style="white-space: nowrap; display: block; text-align: left">
+				<h:outputText value="#{tooltip}"/>
+			</span>
+		</rich:toolTip>
+	</a4j:commandLink> 
+	<h:outputText 
+		value="#{text}"
+		rendered="#{!enabled}"
+		style="font-size: 13px; font-weight: normal; color: #aaa">
+	</h:outputText>
+</ui:composition>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.top</groupId>
+	<artifactId>top</artifactId>
+	<name>aries</name>
+	<description>aries</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>activemq</module>
+        <module>commons</module>
+        <module>drools</module>
+        <module>eclipse/emf</module>
+        <module>eclipse/jdt</module>
+        <module>ehcache</module>
+        <module>hibernate</module>
+        <module>hornetq</module>
+        <module>hsql</module>
+        <module>javax</module>
+        <module>jaxb</module>
+        <module>jaxws</module>
+        <module>jboss</module>
+        <module>jndi</module>
+        <module>jpa</module>
+        <module>jsf</module>
+        <module>jta</module>
+        <module>junit</module>
+        <module>logging</module>
+        <module>mysql</module>
+        <module>plexus</module>
+        <module>richfaces/3</module>
+        <module>richfaces/4</module>
+        <module>seam</module>
+        <module>spring</module>
+        <module>testing</module>
+        <module>tx/manager</module>
+        <module>util</module>
+        <module>aries/base</module>
+        <module>aries/client</module>
+        <module>aries/data</module>
+        <module>aries/model</module>
+        <module>aries/service</module>
+        <module>aries/view</module>
+        <module>aries/platform/all</module>
+        <module>aries/platform/base</module>
+        <module>aries/platform/client</module>
+        <module>aries/platform/data</module>
+        <module>aries/platform/model</module>
+        <module>aries/platform/service</module>
+        <module>aries/platform/view</module>
+	</modules>
+</project>

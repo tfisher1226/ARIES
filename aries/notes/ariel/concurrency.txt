@@ -1,0 +1,62 @@
+
+Concurrency Control
+
+Concurrency control is implemented by the class LockManager, which provides sensible default behavior while allowing the programmer to override it if deemed necessary by the particular semantics of the class being programmed. As with StateManager and persistence, concurrency control implementations are accessed through interfaces. As well as providing access to remote services, the current implementations of concurrency control available to interfaces include:
+
+Persistent locks
+
+    Locks are made persistent by being written to the local file system or database. 
+
+Memory locks
+
+    Locks are maintained within the memory of the virtual machine which created them. This implementation has better performance than when writing locks to the local disk.  As with persistent locks, data objects may be shared between virtual machines via shared-memory.  
+
+Importantly, an Aries data-object is a basic Java object with no requirements which can be affected by the SecurityManager. 
+
+
+Lifecycle:
+
+The transactional runtime shell is represented by the AtomicAction class, which uses StateManager to record sufficient information for crash recovery mechanisms to complete the transaction in the event of failures. It has methods for starting and terminating the transaction, and, for those situations where programmers need to implement their own resources, methods for registering them with the current transaction. Because TxCore supports sub-transactions, if a transaction is begun within the scope of an already executing transaction it will automatically be nested.
+
+You can use TxCore with multi-threaded applications. Each thread within an application can share a transaction or execute within its own transaction. Therefore, all TxCore classes are also thread-safe.
+
+Example 2.4. Relationships Between Activation, Termination, and Commitment
+
+{
+
+    . . .
+
+    O1 objct1 = new objct1(Name-A);/* (i) bind to "old" persistent object A */
+
+    O2 objct2 = new objct2();  /* create a "new" persistent object */
+
+    OTS.current().begin();     /* (ii) start of atomic action */
+
+
+    objct1.op(...);           /* (iii) object activation and invocations */
+
+    objct2.op(...);
+
+    . . .
+
+    OTS.current().commit(true);  /* (iv) tx commits & objects deactivated */
+
+}              /* (v) */
+
+Creation of bindings to persistent objects
+
+    This could involve the creation of stub objects and a call to remote objects. Here, we re-bind to an existing persistent object identified by Name-A, and a new persistent object. A naming system for remote objects maintains the mapping between object names and locations and is described in a later chapter. 
+Start of the atomic transaction
+
+Operation invocations
+
+    As a part of a given invocation, the object implementation is responsible to ensure that it is locked in read or write mode, assuming no lock conflict, and initialized, if necessary, with the latest committed state from the object store. The first time a lock is acquired on an object within a transaction the object’s state is acquired, if possible, from the object store. 
+Commit of the top-level action
+
+    This includes updating of the state of any modified objects in the object store. 
+Breaking of the previously created bindings
+
+
+
+
+

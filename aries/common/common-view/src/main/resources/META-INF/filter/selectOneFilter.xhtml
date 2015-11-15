@@ -1,0 +1,47 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jstl/core">
+	
+	<c:if test="${empty requestDelay}">
+		<c:set var="requestDelay" value="0"/>
+	</c:if>
+	
+	<c:if test="${empty width}">
+		<c:set var="width" value="150"/>
+	</c:if>
+	
+	<c:set var="sortFunctionName" value="sortColumn#{filterStrategy.id}"/>
+
+	<h:panelGroup>
+		<a4j:jsFunction
+			name="#{sortFunctionName}"
+			action="#{tableModel.sort(filterStrategy)}"
+			requestDelay="0"
+			reRender="#{reRender}"
+            ajaxSingle="true"
+            immediate="true"/>
+		
+		<div onclick="#{sortFunctionName}()" style="width: 100%;">
+			<h:outputText value="#{title}"/>
+			<h:graphicImage value="#{sortIcon}"  style="border: 0px; padding-left: 4px"/>
+		</div>
+		<rich:comboBox id="${filterStrategy.id}" value="#{filterStrategy.filterValue}" enableManualInput="false"
+			defaultLabel="Click for choices" width="#{width}">
+			<f:selectItems value="#{selectItems}" />
+			<f:valueChangeListener binding="#{tableModel}"/>
+			<a4j:support event="onchange"
+                         requestDelay="#{requestDelay}"
+                         reRender="#{reRender}"
+                         focus="${filterStrategy.id}"
+                         ajaxSingle="true"/>
+		</rich:comboBox>
+	</h:panelGroup>
+</ui:composition>

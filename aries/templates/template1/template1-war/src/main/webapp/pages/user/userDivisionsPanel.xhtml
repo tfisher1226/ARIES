@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup layout="block">
+		<h:panelGrid 
+			styleClass="formPanel" 
+			layout="block" 
+			columns="2" 
+			columnClasses="formColumnAlignTop, formColumnAlignTop">
+
+			<a4j:outputPanel id="userDivisionSelectPanel" layout="block" style="width: 110px">
+				<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Division(s)</h:outputLabel>
+				<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 6px; background-color: inherit">
+	
+					<h:selectManyCheckbox 
+						layout="pageDirection" 
+						value="#{divisionSelectManager.selectedDivisions}">
+	
+						<a4j:support 
+							event="onclick" 
+							reRender="userSubDivisionSelectPanel"/>
+	
+						<s:selectItems 
+							hideNoSelectionLabel="false"
+							var="division"  
+							value="#{divisions}" 
+							label="#{division} (#{division})"/>
+						<s:convertEnum/>
+					</h:selectManyCheckbox>
+				</h:panelGroup>
+			</a4j:outputPanel>
+
+			<a4j:outputPanel id="userSubDivisionSelectPanel" layout="block" style="margin-left: 12px; width: 290px">
+				<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Youth Sub-Division(s)</h:outputLabel>
+				<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 6px; background-color: inherit">
+	
+					<h:selectManyCheckbox 
+						layout="pageDirection" 
+						value="#{subDivisionSelectManager.selectedSubDivisions}">
+						
+						<s:selectItems 
+							hideNoSelectionLabel="false" 
+							var="subDivision" 
+							value="#{subDivisions}" 
+							label="#{subDivision} (#{subDivision})"/>
+						<s:convertEnum/>
+					</h:selectManyCheckbox>
+				</h:panelGroup>
+			</a4j:outputPanel>
+		</h:panelGrid>
+	</h:panelGroup>
+</ui:composition>

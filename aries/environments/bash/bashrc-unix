@@ -1,0 +1,48 @@
+# User dependent .bashrc file
+
+# Don't put duplicate lines in the history.
+export HISTCONTROL=ignoredups
+
+# Local setup
+export SOFTWARE_HOME=/home2/s/sgiusa/software
+export RUNTIME_HOME=/home2/s/sgiusa/runtime
+
+# Tools setup
+#export ANT_HOME=$SOFTWARE_HOME/apache-ant-1.7.0
+#export SVN_HOME=$SOFTWARE_HOME/svn-win32-1.4.6
+#export JAVA_HOME=$SOFTWARE_HOME/jdk1.6.0_23
+#export JAXWS_HOME=$SOFTWARE_HOME/jaxws-ri/2.1.2
+#export EMACS_HOME=$SOFTWARE_HOME/emacs-21.3
+#export CYGWIN_HOME=$SOFTWARE_HOME/cygwin-1.7.7
+
+# Maven setup
+#export MAVEN_HOME=$SOFTWARE_HOME/apache-maven-2.0.9
+export MAVEN_HOME=$SOFTWARE_HOME/apache-maven-2.2.1
+export MAVEN_OPTS="-Xmx1024m -Xms512m -XX:PermSize=128m -XX:MaxPermSize=256m"
+export M2_REPO="/c/workspace/.m2/repository"
+export M2_HOME=$MAVEN_HOME
+
+# JBoss setup
+export JBOSS_HOME=$SOFTWARE_HOME/jboss-6.0.0.Final
+
+# Tomcat setup
+export CATALINA_HOME=$SOFTWARE_HOME/apache-tomcat-6.0.32
+export TOMCAT_HOME=$CATALINA_HOME
+
+# MySQL setup
+#export MYSQL_HOME=/opt/mysql-5.1.45
+#export MYSQL_HOME=$SOFTWARE_HOME/mysql-5.1.54-win32
+
+# CVS setup
+export CVSROOT=:pserver:sgiusa@thebes.kattare.com:/home2/s/sgiusa/cvs
+
+# Set specific command path locations.
+#export PATH=$PATH:$CYGWIN_HOME/bin:$CYGWIN_HOME/usr/bin:$JAVA_HOME/bin:$ANT_HOME/bin:$MAVEN_HOME/bin:$SVN_HOME/bin:$JAXWS_HOME/bin:$EMACS_HOME/bin:$MYSQL_HOME/bin
+
+# Set specific command prompt.
+export PS1="\u@\h:\w$ "
+
+# Source aliases if they exist.
+if [ -f "${HOME}"/.bash_alias ] ; then
+    source "${HOME}"/.bash_alias
+fi

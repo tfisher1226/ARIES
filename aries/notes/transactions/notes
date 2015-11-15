@@ -1,0 +1,28 @@
+When to use setRollbackOnly()
+
+You can rollback the transaction with setRollbackOnly() in BMT. But it is important to always call commit() in order to cinalize the transaction.  What the setRollbackOnly() method does is to MARK the transaction as rollback only transaction. Meaning, even after calling commit(), all of the data will not be persisted because the transaction is already marked as 'rollback only', but the commit() method would still need to be called in order to conclude the transaction. 
+
+Remember that the commit() method would still need to be called even after setRollbackOnly() method.  Invoking the UserTransaction's setRollbackOnly() will cause it to throw javax.transaction.RollbackException.
+
+REMINDER for UserTransaction's setRollbackOnly() in Bean-Managed Transaction
+
+As suggested by Oracle, you may wish to not use the UserTransaction's setRollbackOnly() method in any Bean-Managed Transaction Session Beans.
+
+Always remember to end your transaction with commit() even after invoking setRollbackOnly() after begin().
+
+It is good practice to have the commit() method called in the finally{} clause.
+
+
+mixing up the rollback() and the setRollbackOnly() can be achieved quite easily and can result in erratic application behavior. - See more at: http://www.developerscrappad.com/547/java/java-ee/ejb3-x-jpa-when-to-use-rollback-and-setrollbackonly/#sthash.Eh2U3rIF.dpuf
+
+It is important to understand these two so you won't fall into this trap.
+
+REMINDER for EJBContext's setRollbackOnly() in Container-Managed Transaction
+
+For Container-Managed Transaction, you can perform the rollback only through EJBContext's
+setRollbackOnly() method (not through UserTransaction's setRollbackOnly() method).
+
+The setRollbackOnly() method need not only be invoked only when error occurs in the midst of the
+method. Sometimes, it is used to "test" or "pre-qualify" a transaction. There are many creative ways to use
+EJBContext's setRollbackOnly() depending the requirement of the application, so use it wisely. - See more at: http://www.developerscrappad.com/547/java/java-ee/ejb3-x-jpa-when-to-use-rollback-and-setrollbackonly/#sthash.Eh2U3rIF.dpuf
+

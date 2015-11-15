@@ -1,0 +1,236 @@
+Package validation
+------------------
+
+validate_NoCircularContainment(ePackage, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(ePackage, diagnostics, context);
+validate_EveryDataValueConforms(ePackage, diagnostics, context);
+validate_EveryReferenceIsContained(ePackage, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(ePackage, diagnostics, context);
+validate_EveryProxyResolves(ePackage, diagnostics, context);
+validate_UniqueID(ePackage, diagnostics, context);
+validate_EveryKeyUnique(ePackage, diagnostics, context);
+validate_EveryMapEntryUnique(ePackage, diagnostics, context);
+validateENamedElement_WellFormedName(ePackage, diagnostics, context);
+validateEPackage_WellFormedNsURI(ePackage, diagnostics, context);
+validateEPackage_WellFormedNsPrefix(ePackage, diagnostics, context);
+validateEPackage_UniqueSubpackageNames(ePackage, diagnostics, context);
+validateEPackage_UniqueClassifierNames(ePackage, diagnostics, context);
+validateEPackage_UniqueNsURIs(ePackage, diagnostics, context);
+
+
+Element validation
+------------------
+
+validate_NoCircularContainment(eClass, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eClass, diagnostics, context);
+validate_EveryDataValueConforms(eClass, diagnostics, context);
+validate_EveryReferenceIsContained(eClass, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eClass, diagnostics, context);
+validate_EveryProxyResolves(eClass, diagnostics, context);
+validate_UniqueID(eClass, diagnostics, context);
+validate_EveryKeyUnique(eClass, diagnostics, context);
+validate_EveryMapEntryUnique(eClass, diagnostics, context);
+validateENamedElement_WellFormedName(eClass, diagnostics, context);
+validateEClassifier_WellFormedInstanceTypeName(eClass, diagnostics, context);
+validateEClassifier_UniqueTypeParameterNames(eClass, diagnostics, context);
+validateEClass_InterfaceIsAbstract(eClass, diagnostics, context);
+validateEClass_AtMostOneID(eClass, diagnostics, context);
+validateEClass_UniqueFeatureNames(eClass, diagnostics, context);
+validateEClass_UniqueOperationSignatures(eClass, diagnostics, context);
+validateEClass_NoCircularSuperTypes(eClass, diagnostics, context);
+validateEClass_WellFormedMapEntryClass(eClass, diagnostics, context);
+validateEClass_ConsistentSuperTypes(eClass, diagnostics, context);
+validateEClass_DisjointFeatureAndOperationSignatures(eClass, diagnostics, context);
+
+
+Attribute validation
+--------------------
+
+validate_NoCircularContainment(eAttribute, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eAttribute, diagnostics, context);
+validate_EveryDataValueConforms(eAttribute, diagnostics, context);
+validate_EveryReferenceIsContained(eAttribute, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eAttribute, diagnostics, context);
+validate_EveryProxyResolves(eAttribute, diagnostics, context);
+validate_UniqueID(eAttribute, diagnostics, context);
+validate_EveryKeyUnique(eAttribute, diagnostics, context);
+validate_EveryMapEntryUnique(eAttribute, diagnostics, context);
+validateENamedElement_WellFormedName(eAttribute, diagnostics, context);
+validateETypedElement_ValidLowerBound(eAttribute, diagnostics, context);
+validateETypedElement_ValidUpperBound(eAttribute, diagnostics, context);
+validateETypedElement_ConsistentBounds(eAttribute, diagnostics, context);
+validateETypedElement_ValidType(eAttribute, diagnostics, context);
+validateEStructuralFeature_ValidDefaultValueLiteral(eAttribute, diagnostics, context);
+validateEAttribute_ConsistentTransient(eAttribute, diagnostics, context);
+
+
+Reference validation
+--------------------
+
+validate_NoCircularContainment(eReference, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eReference, diagnostics, context);
+validate_EveryDataValueConforms(eReference, diagnostics, context);
+validate_EveryReferenceIsContained(eReference, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eReference, diagnostics, context);
+validate_EveryProxyResolves(eReference, diagnostics, context);
+validate_UniqueID(eReference, diagnostics, context);
+validate_EveryKeyUnique(eReference, diagnostics, context);
+validate_EveryMapEntryUnique(eReference, diagnostics, context);
+validateENamedElement_WellFormedName(eReference, diagnostics, context);
+validateETypedElement_ValidLowerBound(eReference, diagnostics, context);
+validateETypedElement_ValidUpperBound(eReference, diagnostics, context);
+validateETypedElement_ConsistentBounds(eReference, diagnostics, context);
+validateETypedElement_ValidType(eReference, diagnostics, context);
+validateEStructuralFeature_ValidDefaultValueLiteral(eReference, diagnostics, context);
+validateEReference_ConsistentOpposite(eReference, diagnostics, context);
+validateEReference_SingleContainer(eReference, diagnostics, context);
+validateEReference_ConsistentKeys(eReference, diagnostics, context);
+validateEReference_ConsistentUnique(eReference, diagnostics, context);
+validateEReference_ConsistentContainer(eReference, diagnostics, context);
+
+
+Enumeration validation
+----------------------
+
+validate_NoCircularContainment(eEnum, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eEnum, diagnostics, context);
+validate_EveryDataValueConforms(eEnum, diagnostics, context);
+validate_EveryReferenceIsContained(eEnum, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eEnum, diagnostics, context);
+validate_EveryProxyResolves(eEnum, diagnostics, context);
+validate_UniqueID(eEnum, diagnostics, context);
+validate_EveryKeyUnique(eEnum, diagnostics, context);
+validate_EveryMapEntryUnique(eEnum, diagnostics, context);
+validateENamedElement_WellFormedName(eEnum, diagnostics, context);
+validateEClassifier_WellFormedInstanceTypeName(eEnum, diagnostics, context);
+validateEClassifier_UniqueTypeParameterNames(eEnum, diagnostics, context);
+validateEEnum_UniqueEnumeratorNames(eEnum, diagnostics, context);
+validateEEnum_UniqueEnumeratorLiterals(eEnum, diagnostics, context);
+
+
+Literal validation
+------------------
+
+validate_NoCircularContainment(eEnumLiteral, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eEnumLiteral, diagnostics, context);
+validate_EveryDataValueConforms(eEnumLiteral, diagnostics, context);
+validate_EveryReferenceIsContained(eEnumLiteral, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eEnumLiteral, diagnostics, context);
+validate_EveryProxyResolves(eEnumLiteral, diagnostics, context);
+validate_UniqueID(eEnumLiteral, diagnostics, context);
+validate_EveryKeyUnique(eEnumLiteral, diagnostics, context);
+validate_EveryMapEntryUnique(eEnumLiteral, diagnostics, context);
+validateENamedElement_WellFormedName(eEnumLiteral, diagnostics, context);
+
+
+DataType validation
+-------------------
+
+validate_NoCircularContainment(eDataType, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eDataType, diagnostics, context);
+validate_EveryDataValueConforms(eDataType, diagnostics, context);
+validate_EveryReferenceIsContained(eDataType, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eDataType, diagnostics, context);
+validate_EveryProxyResolves(eDataType, diagnostics, context);
+validate_UniqueID(eDataType, diagnostics, context);
+validate_EveryKeyUnique(eDataType, diagnostics, context);
+validate_EveryMapEntryUnique(eDataType, diagnostics, context);
+validateENamedElement_WellFormedName(eDataType, diagnostics, context);
+validateEClassifier_WellFormedInstanceTypeName(eDataType, diagnostics, context);
+validateEClassifier_UniqueTypeParameterNames(eDataType, diagnostics, context);
+
+
+TypedElement validation
+-----------------------
+
+validate_NoCircularContainment(eTypedElement, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eTypedElement, diagnostics, context);
+validate_EveryDataValueConforms(eTypedElement, diagnostics, context);
+validate_EveryReferenceIsContained(eTypedElement, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eTypedElement, diagnostics, context);
+validate_EveryProxyResolves(eTypedElement, diagnostics, context);
+validate_UniqueID(eTypedElement, diagnostics, context);
+validate_EveryKeyUnique(eTypedElement, diagnostics, context);
+validate_EveryMapEntryUnique(eTypedElement, diagnostics, context);
+validateENamedElement_WellFormedName(eTypedElement, diagnostics, context);
+validateETypedElement_ValidLowerBound(eTypedElement, diagnostics, context);
+validateETypedElement_ValidUpperBound(eTypedElement, diagnostics, context);
+validateETypedElement_ConsistentBounds(eTypedElement, diagnostics, context);
+validateETypedElement_ValidType(eTypedElement, diagnostics, context);
+
+
+NamedElement validation
+-----------------------
+
+validate_NoCircularContainment(eNamedElement, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eNamedElement, diagnostics, context);
+validate_EveryDataValueConforms(eNamedElement, diagnostics, context);
+validate_EveryReferenceIsContained(eNamedElement, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eNamedElement, diagnostics, context);
+validate_EveryProxyResolves(eNamedElement, diagnostics, context);
+validate_UniqueID(eNamedElement, diagnostics, context);
+validate_EveryKeyUnique(eNamedElement, diagnostics, context);
+validate_EveryMapEntryUnique(eNamedElement, diagnostics, context);
+validateENamedElement_WellFormedName(eNamedElement, diagnostics, context);
+
+
+StructuralFeature validation
+----------------------------
+
+validate_NoCircularContainment(eStructuralFeature, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eStructuralFeature, diagnostics, context);
+validate_EveryDataValueConforms(eStructuralFeature, diagnostics, context);
+validate_EveryReferenceIsContained(eStructuralFeature, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eStructuralFeature, diagnostics, context);
+validate_EveryProxyResolves(eStructuralFeature, diagnostics, context);
+validate_UniqueID(eStructuralFeature, diagnostics, context);
+validate_EveryKeyUnique(eStructuralFeature, diagnostics, context);
+validate_EveryMapEntryUnique(eStructuralFeature, diagnostics, context);
+validateENamedElement_WellFormedName(eStructuralFeature, diagnostics, context);
+validateETypedElement_ValidLowerBound(eStructuralFeature, diagnostics, context);
+validateETypedElement_ValidUpperBound(eStructuralFeature, diagnostics, context);
+validateETypedElement_ConsistentBounds(eStructuralFeature, diagnostics, context);
+validateETypedElement_ValidType(eStructuralFeature, diagnostics, context);
+validateEStructuralFeature_ValidDefaultValueLiteral(eStructuralFeature, diagnostics, context);
+
+
+Operation validation
+--------------------
+
+validate_NoCircularContainment(eOperation, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eOperation, diagnostics, context);
+validate_EveryDataValueConforms(eOperation, diagnostics, context);
+validate_EveryReferenceIsContained(eOperation, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eOperation, diagnostics, context);
+validate_EveryProxyResolves(eOperation, diagnostics, context);
+validate_UniqueID(eOperation, diagnostics, context);
+validate_EveryKeyUnique(eOperation, diagnostics, context);
+validate_EveryMapEntryUnique(eOperation, diagnostics, context);
+validateENamedElement_WellFormedName(eOperation, diagnostics, context);
+validateETypedElement_ValidLowerBound(eOperation, diagnostics, context);
+validateETypedElement_ValidUpperBound(eOperation, diagnostics, context);
+validateETypedElement_ConsistentBounds(eOperation, diagnostics, context);
+validateETypedElement_ValidType(eOperation, diagnostics, context);
+validateEOperation_UniqueParameterNames(eOperation, diagnostics, context);
+validateEOperation_UniqueTypeParameterNames(eOperation, diagnostics, context);
+validateEOperation_NoRepeatingVoid(eOperation, diagnostics, context);
+
+
+
+Parameter validation
+--------------------
+
+validate_NoCircularContainment(eParameter, diagnostics, context)) return false;
+validate_EveryMultiplicityConforms(eParameter, diagnostics, context);
+validate_EveryDataValueConforms(eParameter, diagnostics, context);
+validate_EveryReferenceIsContained(eParameter, diagnostics, context);
+validate_EveryBidirectionalReferenceIsPaired(eParameter, diagnostics, context);
+validate_EveryProxyResolves(eParameter, diagnostics, context);
+validate_UniqueID(eParameter, diagnostics, context);
+validate_EveryKeyUnique(eParameter, diagnostics, context);
+validate_EveryMapEntryUnique(eParameter, diagnostics, context);
+validateENamedElement_WellFormedName(eParameter, diagnostics, context);
+validateETypedElement_ValidLowerBound(eParameter, diagnostics, context);
+validateETypedElement_ValidUpperBound(eParameter, diagnostics, context);
+validateETypedElement_ConsistentBounds(eParameter, diagnostics, context);
+validateETypedElement_ValidType(eParameter, diagnostics, context);

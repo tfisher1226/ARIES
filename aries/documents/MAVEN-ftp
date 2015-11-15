@@ -1,0 +1,57 @@
+<profiles>
+  <profile>
+    <id>publish</id>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-antrun-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>ftp</id>
+          <phase>install</phase>
+          <configuration>
+            <tasks>
+              <ftp action="send" 
+                  server="${ftp.host}" remotedir="${ftp.remotedir}" 
+                  userid="${ftp.userid}" password="${ftp.password}" 
+                  depends="${ftp.depends}" verbose="${ftp.verbose}">
+                <fileset dir="${project.build.directory}">
+                  <include 
+                    name="${project.build.finalName}.${project.packaging}"/>
+                </fileset>
+              </ftp>
+            </tasks>
+          </configuration>
+          <goals>
+            <goal>run</goal>
+          </goals>
+        </execution>
+      </executions>
+      <dependencies>
+        <dependency>
+          <groupId>commons-net</groupId>
+          <artifactId>commons-net</artifactId>
+          <version>1.4.1</version>
+        </dependency>
+        <dependency>
+          <groupId>ant</groupId>
+          <artifactId>ant-commons-net</artifactId>
+          <version>1.6.5</version>
+        </dependency>
+        <dependency>
+          <groupId>ant</groupId>
+          <artifactId>ant-nodeps</artifactId>
+          <version>1.6.5</version>
+        </dependency>
+      </dependencies>
+    </plugin>
+    <properties>
+      <ftp.host>hostname</ftp.host>
+      <ftp.remotedir>/opt/path/to/install</ftp.remotedir>
+      <ftp.userid>user</ftp.userid>
+      <ftp.password>mypassword</ftp.password>
+      <ftp.depends>yes</ftp.depends>
+      <ftp.verbose>no</ftp.verbose>          
+    </properties>
+  </profile>
+</profiles>
+

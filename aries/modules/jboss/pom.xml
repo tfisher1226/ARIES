@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jboss</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JBOSS Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jboss-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jbossxb</artifactId>
+		</dependency>
+
+   		<dependency>
+			<groupId>org.jboss.el</groupId>
+			<artifactId>jboss-el</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.el</groupId>
+			<artifactId>jboss-el-api_2.2_spec</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.ws.native</groupId>
+			<artifactId>jbossws-native-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.ejb3</groupId>
+			<artifactId>jboss-ejb3-ext-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.as</groupId>
+			<artifactId>jboss-as-ejb3</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.invocation</groupId>
+			<artifactId>jboss-invocation</artifactId>
+		</dependency>
+	</dependencies>
+</project>
+

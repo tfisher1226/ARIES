@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project 
+	name="My Site Title"
+	xmlns="http://maven.apache.org/DECORATION/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+    
+	<publishDate position="right"/>
+	<version position="right"/>
+
+	<poweredBy>
+		<logo name="Maven" href="http://maven.apache.org/" img="http://maven.apache.org/images/logos/maven-feather.png"/>
+	</poweredBy>
+  
+	<bannerLeft>
+		<name>iCAMS</name>
+		<src>images/AER_logo_k.jpg</src>
+		<href>http://aerosource.aero.org/icams</href>
+	</bannerLeft>
+  
+	<bannerRight>
+		<src>http://maven.apache.org/images/maven-small.gif</src>
+	</bannerRight>
+  
+	<body>
+		<menu ref="parent" />
+		<menu ref="modules" />
+		<menu ref="reports" />
+
+		<menu name="Aries Project">
+			<item name="Overview" href="index.html"/>
+		</menu>
+	    
+		<menu ref="Aries Organization">
+			<item name="Aries Project" href="http://www.aries.org"/>
+			<item name="Ariel Specification" href="http://www.ariel.org/"/>
+		</menu>
+	
+		<menu ref="Software">
+			<item name="Maven" href="http://maven.apache.org/"/>
+			<item name="Apache" href="http://www.apache.org/"/>
+		</menu>
+	
+		<menu ref="Common Services">
+			<item name="Log Service" href="/placeholder.xhtml"/>
+			<item name="Queue Service" href="/placeholder.xhtml"/>
+			<item name="Event Service" href="/placeholder.xhtml"/>
+			<item name="Notification Service" href="/placeholder.xhtml"/>
+			<item name="Management Service" href="/placeholder.xhtml"/>
+		</menu>
+	
+		<menu ref="Common Frameworks">
+			<item name="Messaging Framework" href="/placeholder.xhtml"/>
+			<item name="Persistence Framework" href="/placeholder.xhtml"/>
+			<item name="Workflow Framework" href="/placeholder.xhtml"/>
+			<item name="User-Interface Framework" href="/placeholder.xhtml"/>
+			<item name="Utility Framework" href="/placeholder.xhtml"/>
+		</menu>
+	
+		<menu ref="Reference">
+			<item name="FAQs" href="/faqs.html"/>
+			<item name="Development Environment" href="/placeholder.xhtml"/>
+			<item name="Execution Environment" href="/placeholder.xhtml"/>
+			<item name="Deployment Procedures" href="/placeholder.xhtml"/>
+			<item name="User-Interface Guidelines" href="/placeholder.xhtml"/>
+			<item name="Design/Development Roadmap" href="/placeholder.xhtml"/>
+		</menu>
+	</body>
+</project>

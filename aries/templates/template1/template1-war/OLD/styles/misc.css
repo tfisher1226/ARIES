@@ -1,0 +1,49 @@
+
+
+/*
+.toolbarToggleItem,
+.toolbarToggleItemSelected {
+	text-align: center; 
+	vertical-align: middle;
+	font-size: 12px;
+	font-weight: normal;
+}
+.toolbarToggleItem {
+	background-color: transparent;
+}
+.toolbarToggleItem:hover {
+	background-color: #ddecff;
+}
+.toolbarToggleItemSelected {
+	background-color: #d3e6ff;
+	border: 1px solid #84acdd !important;
+}
+.toolbarToggleItemSelected:hover {
+	border: 1px solid #b9d7fc;
+}
+*/
+/*
+.toolbarToggleItem .rich-menu-item-icon,
+.toolbarToggleItem .rich-menu-item-label,
+.toolbarToggleItem .rich-menu-group-icon,
+.toolbarToggleItem .rich-menu-group-label,
+.toolbarToggleItemSelected .rich-menu-item-icon,
+.toolbarToggleItemSelected .rich-menu-item-label,
+.toolbarToggleItemSelected .rich-menu-group-icon,
+.toolbarToggleItemSelected .rich-menu-group-label {
+	width: 0px;
+	margin: 0px;
+	padding: 0px;  
+	text-align: left;
+	vertical-align: middle;  
+}
+.toolbarToggleItem .rich-menu-item-icon,
+.toolbarToggleItem .rich-menu-group-icon,
+.toolbarToggleItemSelected .rich-menu-item-icon,
+.toolbarToggleItemSelected .rich-menu-group-icon {
+	margin-right: 0px; 
+	padding-right: 0px; 
+	vertical-align: top;  
+}
+*/
+

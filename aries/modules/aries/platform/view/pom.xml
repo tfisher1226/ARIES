@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>aries-platform-view-layer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Platform View Layer Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+        <module>test</module>
+	</modules>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-view-layer-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+		<!-- ARIES -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-view-layer</artifactId>
+			<version>${aries.version}</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- EMF 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-emf</artifactId>
+			<version>${aries.version}</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+		-->
+		
+		<!-- JSF -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jsf</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- RICHFACES -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>richfaces-4</artifactId>
+			<version>${aries.version}</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- SEAM (frontend) 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam-ui</artifactId>
+			<version>${aries.version}</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+		-->
+        
+		<!-- SEAM -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam</artifactId>
+			<version>${aries.version}</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

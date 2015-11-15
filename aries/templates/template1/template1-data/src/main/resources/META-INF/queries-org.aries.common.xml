@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings
+	version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<package>org.aries.common.entity</package>
+
+	<entity class="AttachmentEntity">
+		<named-query name="getAttachments">
+			<query>
+				<![CDATA[
+					select x from Attachment x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getAttachmentBy">
+			<query>
+				<![CDATA[
+					select x from Attachment x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="EmailAccountEntity">
+		<named-query name="getEmailAccounts">
+			<query>
+				<![CDATA[
+					select x from EmailAccount x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getEmailAccountBy">
+			<query>
+				<![CDATA[
+					select x from EmailAccount x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="EmailAddressEntity">
+		<named-query name="getEmailAddresss">
+			<query>
+				<![CDATA[
+					select x from EmailAddress x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getEmailAddressBy">
+			<query>
+				<![CDATA[
+					select x from EmailAddress x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="EmailAddressListEntity">
+		<named-query name="getEmailAddressLists">
+			<query>
+				<![CDATA[
+					select x from EmailAddressList x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getEmailAddressListBy">
+			<query>
+				<![CDATA[
+					select x from EmailAddressList x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="EmailBoxEntity">
+		<named-query name="getEmailBoxs">
+			<query>
+				<![CDATA[
+					select x from EmailBox x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getEmailBoxBy">
+			<query>
+				<![CDATA[
+					select x from EmailBox x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="NotificationEntity">
+		<named-query name="getNotifications">
+			<query>
+				<![CDATA[
+					select x from Notification x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getNotificationBy">
+			<query>
+				<![CDATA[
+					select x from Notification x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="PersonNameEntity">
+		<named-query name="getPersonNames">
+			<query>
+				<![CDATA[
+					select x from PersonName x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getPersonNameBy">
+			<query>
+				<![CDATA[
+					select x from PersonName x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="PhoneNumberEntity">
+		<named-query name="getPhoneNumbers">
+			<query>
+				<![CDATA[
+					select x from PhoneNumber x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getPhoneNumberBy">
+			<query>
+				<![CDATA[
+					select x from PhoneNumber x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="StreetAddressEntity">
+		<named-query name="getStreetAddresss">
+			<query>
+				<![CDATA[
+					select x from StreetAddress x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getStreetAddressBy">
+			<query>
+				<![CDATA[
+					select x from StreetAddress x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+
+	<entity class="ZipCodeEntity">
+		<named-query name="getZipCodes">
+			<query>
+				<![CDATA[
+					select x from ZipCode x
+				]]>
+			</query>
+		</named-query>
+		<named-query name="getZipCodeBy">
+			<query>
+				<![CDATA[
+					select x from ZipCode x
+				]]>
+			</query>
+		</named-query>
+	</entity>
+</entity-mappings>

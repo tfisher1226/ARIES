@@ -1,0 +1,42 @@
+-Take super-user checkbox out of Login Dialog
+-The site is not yet tested using IE. Only Firefox has been tested so far
+-KeyFile upload not yet hooked up into login process...
+-Organization remove still not working/refreshing right...
+-Study Dept. information section not yet included...
+-Street Address field still not showing city and state and zip...
+-User creation/update/delete all not working now - just needs updating...
+-Membership record removal not working yet...
+-Most of the Membership information dialogs still need to have their validation 
+   hooked in so that errors and warnings are made visible in the dialog header
+-Prompt message alerts and warnings still have placeholders not being filled in...
+-Column selection is broken i.e. does not make columns appear according to selection
+-Column selection drop-down needs updating - buttons and actions are out of whack...
+-Address field not right when object exists but is empty...
+-Refresh button in dialog control is too wide...
+-Main menu items are not lined up properly...
+-"This web-site needs a different Google Maps API" prompt is occuring now because 
+   a new one needs to be created for this web-site (so Google maps won't show up yet 
+   for each member)
+-"Working..." label needs to be moved and made green
+-Take out "Artifact List" label
+-Expand/collapse toolbuttons need to have wait cursor
+-Expand/collapse tooltips need updating...
+
+
+Preferences
+-----------
+These options will be added:
+-User can choose between having single-click or double-click be the mouse action 
+   that triggers the membership information disalog windows to be displayed.
+-User can 
+-Have "workspace" be "remembered" after User logs-out so that when he/she logs back-in
+  then all previously open tabs will be re-opened at login-time.
+
+Organization
+------------
+-Add label as a field
+-Add zipcodes
+-Add Description
+-Add Regions
+-Add Contacts
+-Add panel for leaders

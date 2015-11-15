@@ -1,0 +1,148 @@
+/*
+ * Menu related
+ */
+
+.rich-menu-list-border {
+	border: 0px;
+	background-color: #eeeedd;
+}
+
+.rich-menu-list-bg {
+	border: 0px;
+	border-bottom: 1px solid #4d5634;
+	background-color: #eeeedd;
+}
+
+.rich-menu-item {
+	padding-left: 1px;
+	padding-right: 11px;
+	padding-top: 8px;
+	padding-bottom: 5px;
+	border-left: 1px solid #a7b771;
+	border-right: 1px solid #4d5634;
+	border-top: 0px solid #4d5534;
+	border-bottom: 0px solid #4d5534;
+	color: red !important;
+	text-align: left;
+}
+
+.rich-menu-item-label {
+	color: red !important;
+}
+
+.rich-menu-item:hover,
+.rich-menu-item-label:hover {
+}
+
+.rich-menu-item-icon {
+}
+
+.rich-menu-item-hover {
+	padding-left: 1px !important;
+	padding-right: 11px !important;
+	padding-top: 8px;
+	padding-bottom: 5px;
+	border-color: #a8d8eb;
+	border-color: #4d5534;
+	border-left: 1px solid #a7b771;
+	border-right: 1px solid #4d5634;
+	border-top: 0px solid #4d5534;
+	border-bottom: 0px solid #4d5534;
+	background-color: #deedf3;
+	text-align: left;
+	color: red !important;
+}
+
+.rich-menu-item-enabled {
+	color: red !important;
+}
+
+.rich-menu-item:hover,
+a.rich-menu-item,
+a.rich-menu-item:hover {
+		color: red !important;
+}
+
+.rich-menu-item-disabled {
+	color: #808080;
+}
+
+.rich-menu-item-label-disabled {
+}
+
+.rich-ddmenu-label {
+	padding-left: 6px !important;
+	padding-right: 6px !important;
+	border-left: 1px solid #a7b771;
+	border-right: 1px solid #4d5634;
+	border-top: 0px solid #4d5534;
+	border-bottom: 0px solid #4d5534;
+	background-image: url('/icams-view/images/aries/topmenu-back.jpg');
+	background-color: #818e58;
+	text-align: left;
+	color: red !important;
+}
+
+.rich-ddmenu-label-select {
+	border-left: 1px solid #a7b771;
+	border-right: 1px solid #4d5634;
+	border-top: 0px solid #4d5534;
+	border-bottom: 0px solid #4d5534;
+	background-color: #deedf3;
+	background-image: url('/icams-view/images/aries/topmenu-backhover.jpg');
+	text-align: left;
+	color: red !important;
+}
+
+
+
+/*
+ * Panel related
+ */
+
+.rich-mpnl-body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #f8f8f8;
+}
+
+.rich-mpnl-content {
+	margin: 0px;
+	padding: 0px;
+}
+
+.rich-mpnl-mask-div {
+	background-color: #fff;
+	filter: alpha(opacity=40); 
+	opacity: 0.02;
+	opacity: 0.01; 
+}
+
+.noMaskClass .rich-mpnl-mask-div {
+	display: none;
+}
+
+
+/*
+ * Table related
+ */
+ 
+.extdt-header {
+}
+
+.extdt-row-active {
+	background-color: rgb(255,240,255);
+}
+
+.extdt-row-selected {
+	background-color: #f5fafa;
+	background-color: #e6eae9;
+	background-color: #fde7c8;
+	color: #000;
+}
+
+.rich-filter-input {
+	width: 90%;
+	font-size: 9px;
+	font-weight: normal;
+}

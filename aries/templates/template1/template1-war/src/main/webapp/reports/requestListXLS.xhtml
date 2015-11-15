@@ -1,0 +1,60 @@
+<e:workbook xmlns:e="http://jboss.com/products/seam/excel" xmlns:f="http://java.sun.com/jsf/core">
+	<e:worksheet name="iCAMS Authorizations" value="#{requestList.filteredModel}" var="record" fitToPages="true" orientation="landscape">
+		<e:header>
+			<f:facet name="Left">
+				The Aerospace Corporation - Library Requests Report
+			</f:facet>
+			<f:facet name="Right">
+				Generated on #date# at #time#
+			</f:facet>
+		</e:header>
+		<e:column style="xls-column-width: 5000"> 
+			<f:facet name="header">
+				<e:cell value="Expedite?" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{viewUtil.getExpedite(record.request.expedite)}" forceType="text" />
+		</e:column>
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Requester" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{helper.toFullName(record.request.requester)}" />
+		</e:column>
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Submitter" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{helper.toFullName(record.request.requester)}" />
+		</e:column>
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Title" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{record.request.title}"/>
+		</e:column>
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Request Number" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{record.request.requestNumber}"/>
+		</e:column>
+		<e:column style="xls-column-width: 8000">
+			<f:facet name="header">
+				<e:cell value="Date Required" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{converter.toSimpleDate(record.request.dateRequired)}" forceType="text" />
+		</e:column>
+		<e:column style="xls-column-width: 8000">
+			<f:facet name="header">
+				<e:cell value="Date Submitted" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{converter.toSimpleDate(record.request.dateSubmitted)}" forceType="text" />
+		</e:column>
+		<e:column style="xls-column-width: 8000">
+			<f:facet name="header">
+				<e:cell value="Bin" style="xls-font: bold 10 Verdana"/>
+			</f:facet>
+			<e:cell value="#{record.request.requestBin.binName}" forceType="text" />
+		</e:column>
+	</e:worksheet>
+</e:workbook>

@@ -1,0 +1,22 @@
+Follow: http://www.seamframework.org/Seam3/SecurityModule
+
+Aries based applications can readily allow developers to develop complex domain-based security models in which various categories of application users are grouped into separate security domains.
+
+
+The generated Security Module provides access to a powerful set of authentication and authorization services for applications.  The Authentication framework is based on the JAAS standard and allows for total control over the user authentication process. The Authorization framework is based on a pluggable, extendable API and offers a number of features for locking down the sensitive parts of your application.  Authorization functionality ranges from simple role-based security checks through to access-control list (ACL) based permissions and advanced rule-based permissions.
+
+The generated Security Module also provides an Identity Management API for managing the users and roles within your application, and a Permission Management API for managing the permissions for individual domain objects and other user-defined permissions. 
+
+Maven artifacts are located in the XXX repository
+
+
+
+Salted Password Hashing
+http://crackstation.net/hashing-security.htm
+
+In cryptography, a salt is random data that are used as an additional input to a one-way function that hashes a password or passphrase.
+
+In a user account system, the most important aspect is how user passwords are protected. User account data-stores are often targets for hackers, so you absolutely must do something to protect your users' passwords if your data-store is ever breached. One way to protect passwords is to employ salted password hashing.  This nis the approach taken by the Aries Security subsystem.
+
+
+

@@ -1,0 +1,60 @@
+import 2pc.xsd;
+
+protocol 2PC {
+
+    participant Participant {
+        receive Coordination.prepare(Notification) {
+            option executePrepare: {
+            }
+            option sendPrepared: {
+            }
+            option sendAborted: {
+            }
+        }
+    }
+
+    participant Registration {
+        receive register(Participant) {
+            reply Response;
+        }
+    }
+
+    participant Activation {
+        receive activate(ActivationRequest) {
+            reply CoordinationContext;
+        }
+    }
+
+    participant Coordination {
+        receive status(Notification) {
+            
+        }
+        receive prepared(Notification) {
+        }
+        receive readOnly(Notification) {
+        }
+        receive committed(Notification) {
+        }
+        receive aborted(Notification) {
+        }
+        receive fault(Fault) {
+        }
+    }
+
+    participant CompletionInitiator {
+        receive committed(Notification) {
+        }
+        receive aborted(Notification) {
+        }
+        receive fault(Fault) {
+        }
+    }
+
+    participant CompletionCoordinator {
+        receive commit(Notification) {
+        }
+        receive rollback(Notification) {
+        }
+    }
+
+}

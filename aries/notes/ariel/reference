@@ -1,0 +1,31 @@
+Role
+
+Channel
+
+Participant
+-can have state
+-can be transactional
+-can involve n number of calls
+
+Message
+
+Exception
+
+Timeout
+
+Option
+
+
+
+Commands:
+---------
+
+receive
+invoke
+post
+reply
+send
+subscribe
+throw
+
+

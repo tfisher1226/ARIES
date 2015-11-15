@@ -1,0 +1,2 @@
+There are at least 2 distinct methods to represent hierarchies (or trees) with relational data: the adjacency list model and the nested set model. I believe that latter is a poor candidate to use with ORM-based technologies due to its set-oriented nature. The adjacency list model is more intuitive to understand and is a good fit for ORM technology. Using both we can introduce some optimization tricks to make our life easier. 
+

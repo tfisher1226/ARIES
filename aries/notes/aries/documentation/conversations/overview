@@ -1,0 +1,14 @@
+
+Extended Persistence Contexts
+
+Converations
+
+An interesting use case is when you combine extended persistence contexts with non-transactional methods. If you interact with an extended persistence context outside of a transaction, the inserts, updates, and deletes will be queued until you access the persistence context within a transaction. This means that any persist(), merge(), or remove() method you call will not actually result in a JDBC execution and thus an update of the database until you manually call EntityManager.flush().
+
+Why is this useful? Consider the usecase of a Setup Wizard on a website. The Wizard has seven steps, seven web pages to enter stuff in. It is extremely unwise to have a JTA transaction that spans multiple http requests, yet you do not want to commit anything to the database until all steps are complete. Your code can interact with the EntityManager as it wants and you do not have to worry about updates or writing a lot of gluecode in your application to do all the entity manager's work in the final step of the wizard. Efficient and highly performant. Because the managed persistent objects remain attached to the persistent context, all optmistic versioning checks can also be maintained within the application transaction. here's an example on how to do this. 
+
+Calling the never() method will update the managed customer object reference, but will not result in a database update until checkout() is called. The spec requires that any time you invoke a transactional method of a stateful bean, that the EntityManager join the transaction. Therefore, our never() update will be committed at the end of the checkout() method. 
+
+
+For what it's worth, understanding how persistence contexts flow in SFSB and in conversations is really tricky.  This part of Java EE is still too complex for easy development.
+

@@ -1,0 +1,67 @@
+Data Binding concepts:
+
+    -Observable: value, list, set, or map whose state changes can be observed
+    -Binding: keeps the state of two observables in sync, uni- or bidirectional
+    -Data Binding Context: a container for bindings
+    -Converter: used by a binding to convert values
+    -Validators: used by a binding to validate values
+    -Realms: serializes access to observables (every observable belongs to a realm)
+    -Tracked Getters: makes the system aware of observables that a piece of code depends on
+    -Master-Detail: used when you want to bind to attributes of the currently selected object, rather than a fixed object 
+
+
+Repository Objects:
+    bring together multiple datasource-specific data access adapters under one roof
+    hide them behind one interface similar to how the DAO hides its datasource-specific implementation details
+
+
+DAO:
+    created on the fly or cached in lightweight pools
+    should always be "fed" a connection when used
+    should always "validate" connection before using it
+    should only know about connection - nothing else i.e. no DataSource, no connection pool
+    should always be called in try-block where connection is obtained with finally-clause where connection properly released 
+    connection pool should be managed externally by management object
+
+
+
+User Repository
+
+getUser(name, password)
+getUser(badge)
+getAllUsers()
+
+
+Authorization Repository
+
+getAuthorizations(type)
+getAuthorizations(badge)
+getAuthorizations(level)
+getAuthorization(authorizationId)
+updateAuthorization(authorization, items)
+revokeAuthorization(authorizationId)
+removeAuthorization(authorizationId)
+getAuthorizationItems(level)
+
+
+Approval Repository
+
+getApproval(authorizations)
+getApprovals(badge)
+
+
+Audit Repository
+
+addEvent(event)
+getEvents(criteria)
+
+Admin access only:
+purgeEvents(criteria)
+
+
+Justfication Repository
+
+
+
+
+

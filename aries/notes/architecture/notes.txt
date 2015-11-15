@@ -1,0 +1,34 @@
+Informally, phyla can be thought of as grouping organisms based on general specialization of body plan
+
+At the most basic level, a phylum can be defined in two ways: as a group of organisms with a certain degree of morphological or developmental similarity (the phenetic definition), or a group of organisms with a certain degree of evolutionary relatedness (the phylogenetic definition)
+
+Genetics is the study of heredity. Heredity is a biological process where a parent passes certain genes onto their children or offspring. Every child inherits genes from both of their biological parents and these genes in turn express specific traits. Some of these traits may be physical for example hair and eye color and skin color etc.
+
+
+Genetic may refer to:
+
+    Genetics, in biology, the science of genes, heredity, and the variation of organisms
+        Genetic, used as an adjective, refers to heredity of traits
+        Gene, a unit of heredity in the genome of an organism
+        Genetic recombination, refers to the recombining of alleles resulting in a new molecule of DNA
+
+Genetics deals with the molecular structure and function of genes, gene behavior in the context of a cell or organism (e.g. dominance and epigenetics), patterns of inheritance from parent to offspring, and gene distribution, variation and change in populations, such as through Genome-Wide Association Studies. Given that genes are universal to living organisms, genetics can be applied to the study of all living systems, from viruses and bacteria, through plants and domestic animals, to humans (as in medical genetics).
+
+The fact that living things inherit traits from their parents has been used since prehistoric times to improve crop plants and animals through selective breeding. However, the modern science of genetics, which attempts to understand the process of inheritance,
+
+
+
+
+
+features a cloud-enabled internal architecture
+
+enables users to request, deploy, monitor and manage cloud computing services. It also provides traceable approvals and processes
+
+automate technical as well as business processes involved in deploying new IT services. It is an intermediate between on the one end a user with a service request, and on the other end a hypervisor that manages some hardware resource pool on which the service will run.
+
+
+Data-layer:
+-in-memory data grid (no need for SQL)
+-generation should include options for marking data for caching as well as marking queries for caching.
+
+

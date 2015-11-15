@@ -1,0 +1,74 @@
+
+
+
+Don't use the entitymanager-per-operation antipattern, that is, don't open and close an EntityManager for every simple database call in a single thread! Of course, the same is true for database transactions. Database calls in an application are made using a planned sequence, they are grouped into atomic units of work. (Note that this also means that auto-commit after every single SQL statement is useless in an application, this mode is intended for ad-hoc SQL console work.)
+
+The most common pattern in a multi-user client/server application is entitymanager-per-request. In this model, a request from the client is send to the server (where the JPA persistence layer runs), a new EntityManager is opened, and all database operations are executed in this unit of work. Once the work has been completed (and the response for the client has been prepared), the persistence context is flushed and closed, as well as the entity manager object. You would also use a single database transaction to serve the clients request. The relationship between the two is one-to-one and this model is a perfect fit for many applications.
+
+This is the default JPA persistence model in a Java EE environment (JTA bounded, transaction-scoped persistence context); injected (or looked up) entity managers share the same persistence context for a particular JTA transaction. The beauty of JPA is that you don't have to care about that anymore and just see data access through entity manager and demarcation of transaction scope on session beans as completely orthogonal.
+
+Database transaction demarcation
+
+Database (or system) transaction boundaries are always necessary. No communication with the database can occur outside of a database transaction (this seems to confuse many developers who are used to the auto-commit mode). Always use clear transaction boundaries, even for read-only operations. Depending on your isolation level and database capabilities this might not be required but there is no downside if you always demarcate transactions explicitly. You'll have to do operations outside a transaction, though, when you'll need to retain modifications in an EXTENDED persistence context.
+
+Optimistic concurrency control
+
+The only approach that is consistent with high concurrency and high scalability is optimistic concurrency control with versioning. Version checking uses version numbers, or timestamps, to detect conflicting updates (and to prevent lost updates). Hibernate provides for three possible approaches to writing application code that uses optimistic concurrency. The use cases we show are in the context of long application transactions but version checking also has the benefit of preventing lost updates in single database transactions.
+
+
+
+Generation from model
+---------------------
+
+Defaults:
+-cascade all is default
+-enum type is string
+-no entity created for enums or any element marked as transient 
+-no entity fields created or for any field marked as transient
+-oneToOne relation assumed for single valued references
+
+Validation:
+-no relation for enums, even when it is collection
+-non-transient elements need id field
+
+
+
+
+JPA Join Table with additional state:
+http://weblogs.java.net/blog/felipegaucho/archive/2009/10/24/jpa-join-table-additional-state
+
+
+What is default JPA behavior with OneToMany uni-directional relationship:
+http://stackoverflow.com/questions/8572554/onetomany-what-are-the-differences-between-join-table-and-foreign-key
+
+
+
+OneToMany
+---------
+
+-By default @OneToMany will create a join table only if you'll use unidirectional relationship.
+
+-The JPA provider will create a join table when there is no mappedBy attribute in @OneToMany annotation and there is no reference to the parent Entity from the child Entity.
+
+-On the other hand, if you use a bidirectional relationship, then join table will not be used, as there "many" side will be used to store the foreign key for this relationship.
+
+-You can force to use join table even in cases when you have bidirectional @OneToMany relationship with defined mappedBy attribute. You can achieve it using @JoinTable annotation on the owning side of the relationship.
+
+-There is also a possibility to use @JoinColumn in case where join table would be used by default (unidirectional @OneToMany relationship).
+
+-Applications that want to use a foreign key mapping strategy for one-to-many relationships should make these relationships bidirectional to ensure portability
+
+
+ManyToOne
+---------
+
+
+
+
+
+Every relationship that finishes with @Many will be lazy loaded by default: @OneToMany and @ManyToMany. Every relationship that finishes with @One will be eagerly loaded by default: @ManyToOne and @OneToOne. If you want to set a basic field (E.g. String name) with lazy loading just do: @Basic(fetch=FetchType.LAZY).
+
+Every basic field (E.g. String, int, double) that we can find inside a class will be eagerly loaded if the developer do not set it as lazy.
+
+A curious subject about default values is that you may find each JPA implementation (EclipseLink, Hibernate, OpenJPA) with a different behavior for the same annotation. 
+

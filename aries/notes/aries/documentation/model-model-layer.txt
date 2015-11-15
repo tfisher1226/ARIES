@@ -1,0 +1,29 @@
+https://www.ibm.com/developerworks/library/os-eclipse-dynamicemf/
+
+Why Dynamic EMF?
+
+The primary value of Dynamic EMF is that it allows you to build an Ecore-based model at run time with just few lines of code, then create and access instances of this dynamic model for a variety of purposes. Building a core model in this way helps avoid generating the interfaces and implementation classes when they are not required.
+
+This methodology of creating models and model instances is particularly useful in, though not limited to, the scenarios where:
+
+-No type-safe interfaces or implementation classes are needed - Only simple data objects are required to be shared among application components. In this case, generating model code using the EMF code generator would be overhead for the application because it would have to unnecessarily maintain and deploy the entire set of generated interfaces/classes. Using Dynamic EMF, a core model containing dynamic classes can be programmatically created and instantiated on the fly. The instances of these dynamic classes can then be used for sharing the data or for further processing by the application components.
+
+-Data model is known at run time only - In this scenario, since the model of the data is not known at development time, creating static models through the EMF code generator would not make a good option. Dynamic core models, which could be built and instantiated at run time, would be better suited to the application requirements in such cases.
+
+
+Creating a dynamic in-memory core model
+
+We start by building a dynamic Ecore-based model programmatically, then create dynamic instances of the model. Later, we will see how to read and write the values of elements present in the model instance.
+
+Creating dynamic Ecore-based model/metamodel
+
+We will consider a bookstore model to demonstrate the creation of our dynamic Ecore model. For clarity, we represent the model using the Unified Modeling Language (UML). 
+
+
+Serializing the dynamic model
+
+The dynamic model can be serialized using four fundamental interfaces of the EMF Persistence framework: Resource, ResourceSet, Resource.Factory, and URIConverter. The procedure of serialization will depend on whether we want to serialize the model in the same program in which we would deserialize it, or if we wish to serialize it in some other program independent of the program in which we would load or deserialize the model.
+
+Do the following if serialization and deserialization of the core model is to be done in the same program; if not, move on to Listing 7. To initialize the process of serialization, we first register XML resource factory to handle files with any extension, as shown in Listing 6. Next, we create an empty resource in the resource set by invoking the createResource() method on the ResourceSet instance and passing the actual location of the resource as URI. We add our EObject (bookStoreEObject) to the contents list of this resource and using the save() method, copy the resource to its persistence storage. (URIConverter can be used, if needed, by the resource set to locate the resource or to normalize an input URI into an actual URI of the resource.)
+
+

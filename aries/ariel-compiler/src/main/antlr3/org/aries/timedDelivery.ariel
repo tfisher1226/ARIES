@@ -1,0 +1,165 @@
+protocol TimedDelivery {
+
+    participant Customer {
+        receive orderProduct(product) {
+            invoke Distributer.orderProduct(product) {
+                message ProductDelivered: {
+                	commmit();
+                	commmit2();
+                    reply XXX;
+                }
+                message OrderRejected: {
+                    end;
+                }
+            }
+        }
+    }
+
+    participant Distributer {
+        receive orderProduct(productId) {
+        	execute then respond() {
+        		set timeout(24h);
+                branch: {
+                    supplyProduct(productId);
+                }
+                branch: {
+                    scheduleProduct(productId);
+                    listen ProductSupplied: {
+                        deliverProduct(product, schedule);
+                    }
+                }
+                exception: {
+                }
+                timeout: {
+                }
+        	}
+
+            supplyProduct(productId) {
+	            invoke SupplierGroup.getProduct(productId) {
+	                message ProductFound(product): {
+						option normalResponse: {
+							post ProductSupplied(product);
+						}
+						option abort(reason): {
+		                	cancelOrder(productId);
+							throw RequestCancelled(reason);
+						}
+	                }
+	                message ProductNotFound(reason): {
+						reply RequestRejected(reason);
+	                }
+	                timeout: {
+	                	cancelOrder(productId);
+	                }
+	            }
+            }
+
+            scheduleProduct(productId) {
+	            invoke CarrierGroup.scheduleDelivery(productId) {
+	                message DeliveryScheduled(schedule): {
+                        SupplierGroup.getProduct(productId);
+                        deliverProduct(product, schedule);
+					}
+	                message DeliveryRejected: {
+                        reply $message;
+	                }
+				    timeout: {
+					    cancelOrder(productId); 
+                        reply OrderRejected;
+				    }
+                }
+            }
+
+            deliverProduct(product, schedule) {
+  	            invoke CarrierGroup.deliverProduct(product, schedule) {
+                    message ProductDelivered(receipt): {
+			    		reply $message;
+				    }
+                    timeout: {
+	                	cancelOrder(productId);
+                    }
+                }
+            }
+
+    		cancelOrder(productId) {
+				execute {
+        		    set timeout(30s);
+	            	branch: send Supplier.cancelOrder(productId);
+	            	branch: send Carrier.cancelOrder(productId);
+                    timeout:;//ignore
+				}
+			}			
+
+			respond() {
+				reply ProductDelivered(receipt);
+			}
+        }
+    }
+
+    group SupplierGroup {
+        set participant(supplier);
+        set restriction(product.onSale);
+    }
+
+    participant Supplier {
+        receive getProduct(request) {
+			set transaction(required); 
+        	invoke productRepository.get(productId) {
+            	set timeout(2h);
+                message ProductFound(product): reply product;
+        		exception: throw ProductNotFound;
+                timeout: throw RepositoryError;
+        	}
+        }
+
+		persist productRepository {
+			set transaction(mandatory); 
+			items {
+				Map<String, supplier.Product> allProducts {
+					index(productId);
+					index(productName);
+				}
+			}
+		}
+    }
+
+    group CarrierGroup {
+        set participant(carrier);
+        set restriction(carrier.onSale);
+    }
+
+    participant Carrier {
+        receive scheduleDelivery(productId) {
+			set transaction(required); 
+            option: reply DeliveryScheduled(schedule);
+            option: reply DeliveryRejected(reason);
+        }
+
+        receive deliverProduct(product, schedule) {
+			set transaction(required);
+            set timeout(2m);
+            invoke Shipper.shipProduct(product, schedule) {
+                message ProductDelivered(receipt): {
+                    reply ProductDelivered(receipt);
+                }
+                exception: {
+                    reply TruckBrokeDown;
+                }                
+            }
+        }
+    }
+
+    participant Shipper {
+        set domain(supplier);
+        set role(shipper);
+        receive shipProduct(product, schedule) { 
+			set transaction(required); 
+           	set minResponse(1);
+           	set timeout(3m);
+            option: reply ProductShipped(receipt);
+            option: throw Exception(reason);
+        }
+    }
+
+}
+

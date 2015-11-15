@@ -1,0 +1,87 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- Membership List View -->
+	<h:panelGroup layout="block" rendered="true" style="width: auto; height: 100%; padding-left: 8px; background-color: inherit">
+			<a4j:outputPanel id="membershipViewPanel">
+
+			<div class="vspace6"/>
+			<h:outputLabel class="subtitle" rendered="#{mainManager.tabs.size > 0}">Membership View</h:outputLabel>
+			<rich:toggleControl value="" for="pageForm:switch" switchToState="membershipView"/>
+			<div class="vspace6"/>
+
+			<rich:tabPanel id="membershipTabPanel"
+				switchType="client" 
+				headerClass="tabHeaderClass"
+				activeTabClass="activeTabClass"
+				inactiveTabClass="inactiveTabClass"
+				disabledTabClass="disabledTabClass"
+				valueChangeListener="#{mainManager.selectedTab}"
+				selectedTab="#{mainManager.selectedTab.tabLabel}"
+				style="width: auto; height: auto; border-width: 0px; background-color: inherit">
+	
+				<!-- 
+				rendered="#{organizationTreeManager.selectedOrganization != null}"
+				<ui:repeat value="#{mainManager.memberListTabs}" var="tabManager">
+				<c:forEach items="#{mainManager.memberListTabs}" var="tabManager">
+				</c:forEach>
+				 -->
+	
+				<c:forEach items="#{mainManager.tabs}" var="tabManager">
+					<rich:tab name="#{tabManager.tabLabel}">
+						<f:facet name="label">
+							<a4j:outputPanel>
+							<h:panelGrid columns="3" columnClasses="formColumnAlignTop, formColumnAlignBottom, formColumn">
+								<h:graphicImage value="resource://images/icons/common/Default16.gif" style="" onclick=""/>
+								<h:outputText value="#{tabManager.tabLabel}" style="padding-left: 2px"/>
+								<h:graphicImage 
+									value="/images/icons/tabCloseSelected14f.gif"
+									rendered="#{mainManager.tabs.size >= 1}"
+									onmouseover="this.src='resource://images/icons/common/close.gif'"
+									onmouseout="this.src='resource://images/dialog/close.png'"
+									onclick="setCursorWait(this); deleteTab('#{tabManager.tabId}'); setCursorDefault(); Event.stop(event)"
+									style="cursor: pointer; padding-left: 0px">
+									<aries:tooltip value="Close this Tab"/>
+								</h:graphicImage>
+							</h:panelGrid>
+							<a4j:support 
+								event="onclick" 
+								immediate="true"
+								ajaxSingle="true"
+								action="#{mainManager.selectTab(tabManager.tabId)}"
+								onsubmit="">
+							</a4j:support>
+							</a4j:outputPanel>
+						</f:facet>
+
+						<c:if test="#{tabManager.tabId != 'blurb1'}">
+							<ui:include src="membershipListToolbar.xhtml">
+								<ui:param name="tabId" value="#{tabManager.tabId}" />
+								<ui:param name="memberListManager" value="#{tabManager}" />
+							</ui:include>
+							<ui:include src="membershipListTable.xhtml">
+								<ui:param name="tabId" value="#{tabManager.tabId}" />
+								<ui:param name="memberListManager" value="#{tabManager}" />
+							</ui:include>
+						</c:if>
+
+						<c:if test="#{tabManager.tabId == 'blurb1'}">
+							<ui:include src="/pages/help/documentViewToolbar.xhtml"/>
+							<ui:include src="/pages/help/documentViewPanel.xhtml"/>
+						</c:if>
+		    	    </rich:tab>
+				</c:forEach>
+			</rich:tabPanel>
+		</a4j:outputPanel>
+	</h:panelGroup>
+</ui:composition>

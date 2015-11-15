@@ -1,0 +1,5 @@
+
+JBoss AS7: Security : EJB3 Security
+Some things to remember are:
+Use the @org.jboss.ejb3.annotation.SecurityDomain   on your EJB3 beans.  Unless they are present, the security system is not enabled for the EJBs.  You can also use jboss.xml with the security-domain element, instead of the propreitary annotation. 
+

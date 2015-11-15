@@ -1,0 +1,56 @@
+
+
+Aerospace Resuable Components
+We break UI into building blocks that can be applied in uniform way.
+
+#
+# Containers
+#
+# Main top-level containers that contain elements. 
+# These are not meant to be nested containers, but instead  
+# meant to contain some simple collection of UI elements. 
+#
+-Page
+-Popup
+-Dialog
+-Report
+
+#
+# Menus
+#
+# Action containers and action bars where an action is a request to do something that is initiated by user-initiated . 
+#
+-Menu
+-MenuBar
+-ToolBar
+-ControlBar
+-StatusBar
+
+#
+# Widgets
+#
+-Link
+-Button
+-Field
+-Form
+-Table
+-Tree
+
+Form-based Input
+As a rule of thumb we don't include "form" tags (<h:form> in subcomponents but instead keep subcomponents independent of parent form. This makes it easier (and simpler) to include subcomponents into multiple different contexts.  We instead specify form tags within higher level components (i.e. ComponentNamePage, or ComponentNameDialog).
+
+
+
+
+
+			<!--  
+			<h:outputLabel id="nameLabel" for="nameField" value="Name" styleClass="formLabel"/>
+			<h:inputText id="nameField" value="#{notification.subject}" styleClass="formInput" style="width: 300px"/>
+
+			<h:outputLabel id="ccLabel" for="ccField" value="CC" styleClass="formLabel"/>
+			<h:inputText id="ccField" value="#{notification.ccAddressText}" styleClass="formInput" style="width: 300px"/>
+
+			<h:outputLabel id="bccLabel" for="bccField" value="BCC" styleClass="formLabel"/>
+			<h:inputText id="bccField" value="#{notification.bccAddressText}" styleClass="formInput" style="width: 300px"/>
+			-->
+			

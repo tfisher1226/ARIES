@@ -1,0 +1,56 @@
+http://www.ibm.com/developerworks/java/library/j-ejbexcept/index.html
+
+Exception handling is simple enough in a hello-world scenario. Whenever you encounter an exception in a method, you catch the exception and print the stack trace or declare the method to throw the exception. Unfortunately, this approach isn't sufficient to handle the types of exceptions that arise in the real world. In a production system, when an exception is thrown it's likely that the end user is unable to process his or her request. When such an exception occurs, the end user normally expects the following:
+
+    A clear message indicating that an error has occurred
+    A unique error number that he can use upon accessing a readily available customer support system
+    Quick resolution of the problem, and the assurance that his request has been processed, or will be processed within a set time frame
+
+Ideally, an enterprise-level system will not only provide these basic services to the customer, but will also have a few essential back-end mechanisms in place. The customer service team should, for example, receive immediate error notification, so that the service representative is aware of the problem before the customer calls for resolution. Furthermore, the service representative should be able to cross-reference a user's unique error number and the production logs for quick identification of the problem -- preferably up to the exact line number or the exact method. In order to provide both the end user and the support team with the tools and services they need, you must have a clear picture, as you are building a system, of everything that can go wrong with it once it is deployed.
+
+In this article we'll talk about exception handling in EJB-based systems. We'll start with a review of exception-handling basics, including the use of logging utilities, then move quickly into a more detailed discussion of how EJB technology defines and manages different types of exception. From there, we'll use code examples to look at the pros and cons of some common exception-handling solutions, and I'll reveal my own best practices for making the most of EJB exception handling.
+
+
+It is important to receive immediate error notification, so that system operators and administrators become aware of problems before the customers/users call for resolutions. 
+
+
+Exception categories
+
+Exceptions are classified in different ways. Here, we'll talk about how they're classified from an EJB perspective. The EJB spec classifies exceptions into three broad categories:
+
+    JVM exceptions: This type of exception is thrown by the JVM. An OutOfMemoryError is one common example of a JVM exception. There is nothing you can do about JVM exceptions. They indicate a fatal situation. The only graceful exit is to stop the application server, maybe beef up the hardware resources, and restart the system.
+    Application exceptions: An application exception is a custom exception thrown by the application or a third-party library. These are essentially checked exceptions; they denote that some condition in the business logic has not been met. Under these conditions, the caller of the EJB method can gracefully handle the situation and take an alternative path.
+    System exceptions: Most often system exceptions are thrown as subclasses of RuntimeException by the JVM. A NullPointerException, or an ArrayOutOfBoundsException, for example, will be thrown due to a bug in the code. Another type of system exception occurs when the system encounters an improperly configured resource such as a misspelled JNDI lookup. In this case, it will throw a checked exception. It makes a lot of sense to catch these checked system exceptions and throw them as unchecked exceptions. The rule of thumb is, if there isn't anything you can do about an exception, it's a system exception and it should be thrown as an unchecked exception.
+
+Note: A checked exception is a Java class that subclasses java.lang.Exception. By subclassing java.lang.Exception, you are forced to catch the exception at compile time. In contrast, an unchecked exception is one that subclasses java.lang.RuntimeException. Subclassing java.lang.RuntimeException ensures you will not be forced by the compiler to catch the exception. 
+
+
+
+
+Exceptions may be created in ARIES/ARIEL.  
+
+
+Exceptions and Transactions
+
+Exceptions when modeled, may be specified as causing transaction rollback (default) or not.
+
+You can control when a rollback is automatic or not; it only happens when the exception is either;
+
+- a runtime exception
+- an EjbException
+- any other exception marked with the annotation @ApplicationException
+
+
+generated code:
+
+@ApplicationException(rollback=false)  
+public class MyException extends RuntimeException {  
+  
+  ...  
+}
+
+
+If application exception is thrown from the session bean named SecuredRemoteSession, for example PasswordExpiredException, the exception is NOT wrapped and the client can catch it correctly.
+
+If application exception is thrown from the server side Interceptor named SessionTokenInterceptor, for example NotExistingSessionTokenException, the exception is wrapped into EjbException and the client can NOT catch the application exception directly.  This is NOT what I expect. I hope the application exception is NOT wrapped and thrown directly from EJB Container.
+

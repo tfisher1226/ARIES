@@ -1,0 +1,27 @@
+
+Use DTOs or not?
+
+I think there really is no right or wrong answer here. I don't think you can simply say I want one over the other because typically you may want a hybrid depending on what your clients are (webpage,ws,machine and/or local,remote).
+
+The important thing to remember here is what the pros and cons are to each offering and applying this based on your requirements.
+
+For Example:
+
+    If you were using SEAM, then you would want to avoid a heavily layered architecture because you have access to an extended persistence context. Other web technologies without this support tend to work better with a DTO which prepared the state upfront.
+    If you are sending a remote message the import thing is to keep it thin and lightweight, a DTO would typically work better here than a rich domain object. Here you can suppress transparently any ORM issues/behavior.
+    DTO pattern has the benefit of protecting your clients from domain changes. This is particularly important if your app is a web service, having a domain (entity) object which defines your contract might leave you unstuck at some point.
+
+By wrapping your system in layers and carefully exposing and securing them, you can produce various APIs for many clients of different types. 
+
+
+Several issues against using entities at presentation layer:
+
+    Lock-in: This eventually creates tight lock-in between your presentation and model. It becomes expensive to change either, in large projects, even impossible. Modern tools are not quite there yet.
+
+    Security: With model objects you easily transfer various database id information to your web pages. This is a clear security issue. Using dto:s you may hide these at the server with very simple session maps.
+
+    Difference of needs: GUI views are rarely direct lists of model objects. More often they are something more, combined beasts, guish. The needs of the GUI tend to creep-in to your model obscuring it.
+
+    Speed: With entities, every field is processed every time you read/write them. Since you are passing them directly to presentation layer you have a hard time trying to optimize your JPA -queries - almost impossible. I'm definitely going back to direct JDBC -access - like myBatis in future projects. Thus eliminating ORM.
+
+

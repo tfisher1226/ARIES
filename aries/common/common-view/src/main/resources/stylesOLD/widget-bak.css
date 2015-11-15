@@ -1,0 +1,724 @@
+.text,
+.tooltip,
+.label,
+.menu-label,
+.menu-item-label {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.text {
+	font-size: 12px;
+	font-size: 15px; 
+	font-weight: normal; 
+	font-variant: normal; 
+	color: black;
+}
+
+.text a {
+	text-decoration: underline;
+}
+
+.label {
+	display: block;
+	font-size: 13px;
+	text-align: left;
+}
+
+.input {
+	padding: 2px;
+	font-size: 13px;
+	font-family: arial, helvetica, sans-serif;
+	font-weight: normal;
+}
+
+.link {
+	clear: both;
+	padding: 0px;
+	padding-top: 0px;
+	font-size: 14px;
+	text-align: left;
+}
+
+.entry {
+	clear: both;
+	padding: 0px;
+	padding-top: 8px;
+	font-size: 14px;
+	text-align: left;
+}
+
+.entry .label {
+	float: left;
+	width: 120px;
+	padding-top: 10px;
+	padding-right: 5px;
+	font-weight: bold;
+	text-align: left;
+	background-color: red;
+}
+
+.entry .output {
+	float: left;
+	width: 200px;
+	padding-top: 10px;
+	text-align: left;
+}
+
+.entry .input {
+	float: left;
+	width: 200px;
+	text-align: left;
+	background-color: blue;
+}
+
+.entry .checkbox {
+	margin-top: 8px;
+}
+
+.select {
+	font-size: 13px;
+}
+
+.checkbox {
+}
+
+
+
+/*
+ * Menu related
+ * ------------
+ */
+
+.menuItem {
+}
+
+.menuLabel {
+	font-size: 13px; 
+	font-weight: normal;
+	color: darkBlue;
+}
+
+.menuLabel:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+.menuLabel2 {
+	font-size: 13px !important; 
+	font-weight: normal;
+}
+
+.menuLabel2:hover {
+	color: blue;
+	text-decoration: underline;
+	font-size: 13px !important; 
+	font-weight: normal;
+}
+
+.menuIconColumn { 
+	width: auto; 
+	padding-top: 0px; 
+	padding-bottom: 0px; 
+	text-align: right; 
+}
+
+.menuTextColumn { 
+	width: auto; 
+	padding-top: 2px; 
+	padding-left: 2px; 
+	padding-right: 4px; 
+}
+
+.menuItemColumn { 
+	width: auto; 
+	height: 20px; 
+	vertical-align: top; 
+	padding-top: 1px; 
+	padding-bottom: 2px; 
+	padding-left: 4px; 
+}
+
+
+
+/*
+ * GroupBox related
+ * ----------------
+ */
+
+.groupBox {
+	width: 100%;
+	margin-top: 8px;
+	padding: 20px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	text-align: left;
+	border: 1px solid #C3BBB6;
+}
+
+.groupBoxLabel {
+	margin-top: 6px;
+	margin-right: 10px;
+	text-align: left;
+	font-size: 15px;
+	font-family: arial, helvetica, sans-serif;
+	font-weight: normal;
+}
+
+
+/*
+ * HeaderBar related
+ * ------------------
+ */
+
+.headerbarLink {
+	height: 18px; 
+	margin: 0px; 
+	padding: 0px;
+	padding-right: 9px;
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.headbarLink:hover {
+}
+
+.headbarLink:hover,
+.headbarItem:hover {
+	text-decoration: underline;
+	color: blue;
+}
+
+
+/*
+ * Toolbar related
+ * ---------------
+ */
+
+.toolbar {
+	width: auto; 
+	height: 28px;
+	height: 30px; 
+	padding-left: 0px;
+	padding-right: 0px;
+	border: 1px solid #C3BBB6;
+	background-image: none;
+	background-color: #d3dce3; 
+	background-color: #e8eefa; 
+	background-color: #e6e7e8;
+	background-color: #e0eaf3;
+	background-color: #eef0f9;
+}
+
+.toolbar .rich-toolbar-item {
+	
+}
+
+.toolbarContent {
+	margin: 0px;
+	padding: 0px;
+}
+.toolbarContent .rich-ddmenu-label {
+	margin: 0px 2px;
+	padding: 0px 2px;
+}
+.toolbarContent .rich-ddmenu-label:hover {
+	padding: 0px;
+}
+.toolbarContent .rich-ddmenu-label-unselect {
+	border : 1px solid transparent;
+}
+
+.toolbarSeparator {
+	margin: 0px;
+	padding: 0px;
+}
+
+.toolbarItem
+.toolbarMenu {
+	padding: 6px !important;
+	text-align: center; 
+	vertical-align: middle;
+	font-size: 13px;
+	font-weight: normal;
+	color: #00b;
+	color: red;
+	color: darkBlue;
+}
+.ie7 .toolbarItem {
+	padding: 6px !important;
+}
+
+.toolbarLink {
+	height: 18px; 
+	margin: 0px; 
+	padding: 0px;
+	padding-right: 9px;
+	font-size: 13px;
+	font-weight: normal;
+	color: #00b;
+}
+
+.toolbarLabel {
+	font-size: 13px;
+	font-weight: normal;
+	color: darkBlue;
+}
+
+.toolbarItem .rich-menu-item-icon,
+.toolbarItem .rich-menu-item-label,
+.toolbarItem .rich-menu-group-icon,
+.toolbarItem .rich-menu-group-label {
+	width: 0px;
+	margin: 2px;
+	padding: 0px;  
+	text-align: left;  
+	vertical-align: middle;  
+}
+.toolbarMenu .rich-menu-item-icon,
+.toolbarMenu .rich-menu-item-label,
+.toolbarMenu .rich-menu-group-icon,
+.toolbarMenu .rich-menu-group-label,
+.toolbarLink .rich-menu-item-icon,
+.toolbarLink .rich-menu-item-label,
+.toolbarLink .rich-menu-group-icon,
+.toolbarLink .rich-menu-group-label {
+	width: 0px;
+	margin: 0px;
+	padding: 0px;  
+	text-align: left;  
+	vertical-align: middle;  
+}
+
+.toolbarItem .rich-menu-item-icon,
+.toolbarItem .rich-menu-group-icon {
+	margin-right: 4px; 
+	padding-right: 4px; 
+	vertical-align: top;  
+}
+.toolbarMenu .rich-menu-item-icon,
+.toolbarMenu .rich-menu-group-icon,
+.toolbarLink .rich-menu-item-icon,
+.toolbarLink .rich-menu-group-icon {
+	margin-right: 4px; 
+	padding-right: 4px; 
+	vertical-align: top;  
+}
+
+
+.toolGroup,
+.toolGroupLeft,
+.toolGroupRight {
+	margin: 0px;
+	padding: 1px; 
+	vertical-align: middle; 
+}
+
+.toolGroupLeft {
+	text-align: left; 
+}
+
+.toolGroupRight {
+	text-align: right; 
+}
+
+.toolbarContent .rich-menu-item,
+.toolbarContent .rich-menu-group,
+.toolbarContent .rich-menu-item-icon, 
+.toolbarContent .rich-menu-group-icon,
+.toolbarContent .rich-menu-item-enabled,
+.toolbarContent .rich-menu-group-enabled,
+.toolbarContent .rich-ddmenu-label {
+	margin: 0px;
+	padding: 0px; 
+}
+
+.toolbarContent .rich-menu-item-enabled,
+.toolbarContent .rich-menu-group-enabled {
+	border: 1px solid transparent;
+}
+
+.toolbarContent .rich-ddmenu-label:hover {
+	padding: 1px;
+}
+
+/*
+	border: 1px solid red;
+ * take out blow
+ */
+ 
+.toolbarGroupLeft {
+	margin: 0px;
+	padding: 0px; 
+	padding-left: 4px;
+	padding-right: 6px;
+	text-align: left; 
+}
+
+.toolbarGroupRight {
+	margin: 0px;
+	padding: 0px; 
+	padding-left: 6px;
+	padding-right: 4px;
+	text-align: right; 
+}
+
+
+/*
+ * Form related
+ * ------------
+ */
+
+.layoutPane {
+	padding: 0px; 
+	margin: 0px;
+	text-align: left; 
+	vertical-align: top;
+	border-spacing: 0px;
+	border-collapse: collapse; 
+}
+
+.layoutPane.td, 
+.layoutPane.th {
+	margin: 0px;
+	padding: 0;
+}
+
+.groupLabel {
+	font-size: 11px;
+	font-weight: bold;
+	color: rgb(0, 0, 64);
+}
+
+.groupPanel {
+	margin: 0px; 
+	margin-left: auto; 
+	margin-right: auto;
+	padding-top: 1px;
+	padding-bottom: 2px;
+	padding-left: 2px;
+	padding-right: 1px;
+	padding: 0px;
+	vertical-align: top;
+	text-align: left;
+	border: 1px solid #ccc;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	background-color: inherit;
+}
+
+.groupPanel.td, 
+.groupPanel.th {
+	margin: 0px;
+	padding: 0;
+}
+
+.formPanel {
+	padding: 0px; 
+	margin: 0px;
+	text-align: left; 
+	vertical-align: top;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+.formPanel.th,
+.formPanel.td,
+.formPanel.tbody {
+	margin: 0px;
+	padding: 0px;
+}
+
+.formColumn,
+.formColumnAlignLeft,
+.formColumnAlignCenter,
+.formColumnAlignRight,
+.formColumnAlignTop,
+.formColumnAlignTopLeft,
+.formColumnAlignTopCenter,
+.formColumnAlignTopRight,
+.formColumnAlignMiddle,
+.formColumnAlignMiddleLeft,
+.formColumnAlignMiddleCenter,
+.formColumnAlignMiddleRight,
+.formColumnAlignBottom,
+.formColumnAlignBottomLeft
+.formColumnAlignBottomCenter,
+.formColumnAlignBottomRight {
+	width: auto; 
+	height: auto; 
+}
+
+.formColumn,
+.formColumnAlignLeft,
+.formColumnAlignCenter,
+.formColumnAlignRight,
+.formColumnAlignTop,
+.formColumnAlignTopLeft,
+.formColumnAlignTopCenter,
+.formColumnAlignTopRight,
+.formColumnFillHorizontal,
+.formColumnFillVertical, 
+.formColumnFillBoth { 
+	vertical-align: top;
+}
+
+.formColumnAlignBottom,
+.formColumnAlignBottomLeft,
+.formColumnAlignBottomCenter,
+.formColumnAlignBottomRight {
+	vertical-align: bottom;	
+}
+
+.formColumnAlignMiddle,
+.formColumnAlignMiddleLeft,
+.formColumnAlignMiddleCenter,
+.formColumnAlignMiddleRight {
+	vertical-align: middle;	
+}
+
+.formColumn,
+.formColumnAlignLeft,
+.formColumnAlignTop,
+.formColumnAlignTopLeft,
+.formColumnAlignMiddle,
+.formColumnAlignMiddleLeft,
+.formColumnAlignBottom,
+.formColumnAlignBottomLeft,
+.formColumnFillHorzontal,
+.formColumnFillVertical, 
+.formColumnFillBoth { 
+	text-align: left;
+}
+
+.formColumnAlignRight,
+.formColumnAlignTopRight,
+.formColumnAlignMiddleRight,
+.formColumnAlignBottomRight {
+	text-align: right;
+}
+
+.formColumnAlignCenter,
+.formColumnAlignTopCenter,
+.formColumnAlignMiddleCenter,
+.formColumnAlignBottomCenter {
+	text-align: center;
+}
+
+.formColumnFillHorizontal { 
+	width: 100%; 
+	height: auto; 
+}
+
+.formColumnFillVertical { 
+	width: auto; 
+	height: 100%; 
+}
+
+.formColumnFillBoth { 
+	width: 100%; 
+	height: 100%; 
+}
+
+.formLabel {
+	display: block;
+	padding: 0px;
+	margin: 0px;
+	margin-top: 2px;
+	margin-left: 2px;
+	text-align: left;
+	font-size: 11px;
+	font-weight: normal;
+	white-space: nowrap;	
+}
+
+.formInput {
+	padding: 2px;
+	margin: 0px;
+	margin-top: 1px;
+	font-size: 11px;
+	font-weight: normal;
+	font-family: arial, helvetica, sans-serif;
+}
+
+.formCheckbox {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+}
+
+.formLabelColumn {
+	/*width: 120px;*/
+	/*padding-top: 14px;*/
+	text-align: left;
+}
+
+.formInputColumn {
+	width: 260px;
+	text-align: left;
+}
+
+.formControlColumn {
+	width: 380px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.formButton {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 11px;
+}
+
+
+/*
+ * Table related
+ * -------------
+ */
+
+.table {
+	font-size: 14px;
+}
+
+.tableHeader {
+	height: 18px;
+}
+
+.tableHeader,
+.tableHeaderExtended {
+	padding: 4px;
+	font-size: 12px;
+	text-align: left;
+	border-bottom: 1px solid #C3BBB6;
+}
+
+.tableCellInput {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.tableCellOutput {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.tableCellSelect {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+	
+.tableCellCheckbox {
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.tableRow {
+	margin: 0px;
+	padding: 0px;
+	height: 16px;
+	font-size: 12px;
+}
+
+.tableRowSelected {
+	background-color: red;
+}
+
+.tableRowActive {
+	background-color: green;
+}
+
+.noGrid {
+}
+
+.grid {
+	margin-left: auto; 
+	margin-right: auto;
+}
+
+
+/*
+ * ScrolledPanel related
+ * ---------------------
+ */
+
+.scrolledPanelBody {
+	margin: 0px;
+	padding: 0px;  
+	overflow: auto;
+}
+
+
+/*
+ * Editor related
+ * --------------
+ */
+
+.editor {
+	font-size: 12px;
+	font-family: arial, helvetica, sans-serif;
+}
+
+
+/*
+ * Tooltip related
+ * ---------------
+ */
+
+.tooltip {
+	padding: 6px 10px;
+	font-size: 14px;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #f6f6ff;
+	border: 1px solid darkBlue;
+	color: rgb(0,0,128);
+}
+
+
+/*
+ * Control related
+ * ---------------
+ */
+
+.controlbar {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	background-image: none;
+	background-color: #eee;
+}
+
+.controlbarContent {
+	margin: 0px;
+	padding: 0px;
+}
+
+.controlbarSeparator {
+	margin: 0px;
+	padding: 0px;
+}
+
+.controlPanel {
+	margin-top: 10px; 
+	padding: 10px; 
+	padding-top: 12px; 
+	border-top: 1px solid #bbb;
+}
+
+.calendarInput {
+	font-size: 14px;
+	font-weight: normal;
+}
+
+.ariesBorder {
+	border-right: 1px solid #C3BBB6;
+	border-bottom: 1px solid #C3BBB6;
+}

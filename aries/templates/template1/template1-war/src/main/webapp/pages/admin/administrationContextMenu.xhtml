@@ -1,0 +1,150 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript" language="javascript">
+	//<![CDATA[ 
+
+	function showAdministrationContextMenu(event, administrationName, administrationLevel, childLevel) {
+		var menu = #{rich:component('administrationContextMenu')};
+		menu.doShow(event, {
+			'administrationName': administrationName, 
+			'administrationLevel': administrationLevel, 
+			'childLevel': childLevel,
+			'canAdd': 'false'
+		});
+	}
+
+	function warnCannotDeleteAdministration(name, reason) {
+		showWarning(name, 'Cannot remove Administration Record', reason);
+	}
+
+	function checkPromptDeleteAdministration(name) {
+		showPrompt(name, 'Remove Administration Record from system', 'Do you wish to continue?', 'deleteAdministration', 'administrationTreePanel');
+	}
+	
+	//]]>
+	</script>
+
+<!-- 
+		attached="true"
+		attachTo="administrationTree"
+ -->	
+
+	<rich:contextMenu
+		submitMode="ajax"
+		attached="false"
+		disableDefaultMenu="true"
+		id="administrationContextMenu">
+
+		<rich:menuItem 
+			submitMode="ajax"  
+			disabled="false"
+			immediate="true"
+			ajaxSingle="true"
+			bypassUpdates="true"
+			icon="resource://images/icons/common/Group16.gif"
+	    	action="#{mainManager.viewMembers}"
+	    	onselect="setCursorWait(); showProgress('{administrationName}', 'Retrieving members...'); viewMembers()"
+    		oncomplete="setCursorDefault(this); hideProgress()"
+			labelClass="plainText"
+			styleClass="plainText">
+			<h:outputText value="View Members for {administrationName}..." styleClass="link contextMenuLabel"/>
+			<ui:include src="/common/tooltip.xhtml">
+				<ui:param name="tooltip" value="View membership list for {administrationName}"/>
+			</ui:include>
+		</rich:menuItem>
+
+		<rich:menuSeparator/> 
+		<rich:menuItem 
+			submitMode="ajax" 
+			disabled="false"
+			immediate="true"
+			ajaxSingle="true"
+			rendered="#{'{administrationLevel}' != 'GROUP'}"
+			icon="resource://images/icons/common/New16.gif"
+			action="#{administrationManager.newAdministration}"
+			onclick="setCursorWait(); showProgress('New {childLevel} for {administrationName}', 'Creating new administration record...')"
+			onselect="setCursorWait(); showProgress('New {childLevel} for {administrationName}', 'Creating new administration record...')"
+			oncomplete="Richfaces.showModalPanel('administrationInfoDialog'); setCursorDefault(); hideProgress()"
+			reRender="administrationInfoDialog">
+			<h:outputText value="New {childLevel} for {administrationName}..." styleClass="link contextMenuLabel"/>
+			<aries:tooltip value="Create new {childLevel} administration record for {administrationName}"/>
+		</rich:menuItem>
+
+		<rich:menuItem 
+			submitMode="ajax" 
+			disabled="false"
+			immediate="true"
+			ajaxSingle="true"
+			icon="resource://images/icons/common/Edit16.gif"
+			action="#{administrationManager.editAdministration}"
+			onclick="setCursorWait(); showProgress('{administrationName}', 'Retrieving administration record...')"
+			onselect="setCursorWait(); showProgress('{administrationName}', 'Retrieving administration record...')"
+			oncomplete="showAdministrationInfoDialog(event); setCursorDefault(); hideProgress()"
+			reRender="administrationInfoDialog">
+			<h:outputText value="Edit {administrationName}..." styleClass="link contextMenuLabel"/>
+			<aries:tooltip value="Edit administration record for {administrationName}"/>
+		</rich:menuItem>
+
+		<rich:menuSeparator/> 
+		<rich:menuItem 
+			submitMode="ajax" 
+			disabled="false"
+			icon="resource://images/icons/common/Remove16.gif"
+			action="#{administrationManager.promptDeleteAdministration}"
+			onclick="setCursorWait(this); showProgress('Analyzing {administrationName}', 'Checking permissions...')"
+			onselect="setCursorWait(this); showProgress('Analyzing {administrationName}', 'Checking permissions...')"
+			oncomplete="setCursorDefault(); hideProgress(); if (#{!messages.isMessagesExist('administrationInfoDialog')}) {checkPromptDeleteAdministration('#{administration.name}')} else {warnCannotDeleteAdministration('#{administration.name}', '#{messages.getMessage('administrationInfoDialog')}')}">
+			<h:outputText value="Remove {administrationName}" styleClass="link contextMenuLabel"/>
+			<aries:tooltip value="Remove administration record for {administrationName}"/>
+		</rich:menuItem>
+	</rich:contextMenu>
+</ui:composition>
+
+<!-- 
+-->
+
+	<!--  
+	<a4j:form>
+	    <a4j:jsFunction 
+	    	name="assignAdministration" 
+	    	immediate="true" 
+	    	ajaxSingle="true"
+	    	bypassUpdates="true"
+	    	oncomplete="alert(0)">
+	    	<a4j:actionparam name="administration" assignTo="#{administration}"  />  
+		</a4j:jsFunction>
+
+	    <a4j:jsFunction 
+	    	name="showAdministrationContextMenuZZZ"
+	    	immediate="true"
+	    	ajaxSingle="true"
+	    	requestDelay="0" 
+	    	bypassUpdates="true"
+	    	action="#{globals.doNothing}"
+	    	onbeforedomupdate="alert(0)"
+			oncomplete="alert(9); #{rich:component('administrationContextMenu')}.show(event)"
+			reRender="administrationContextMenu">
+		</a4j:jsFunction>
+		
+	    <a4j:jsFunction 
+	    	name="showAdministrationContextMenuXXX" 
+	    	requestDelay="0"
+	    	immediate="true" 
+	    	ajaxSingle="true"
+	    	bypassUpdates="true"
+	    	oncomplete="alert(0)">
+	    	<a4j:actionparam name="administration" assignTo="#{administration}"  />  
+		</a4j:jsFunction>
+	</a4j:form>
+	-->

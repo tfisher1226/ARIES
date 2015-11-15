@@ -1,0 +1,108 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript" language="javascript">
+	function warnCannotDeleteOrganization(name) {
+		showWarning(name, 'Cannot remove organization', 'Children organizations exist.');
+	}
+	function checkPromptDeleteOrganization(name) {
+		showPrompt(name, 'Remove organization from system', 'Do you wish to continue?', 'deleteOrganization', 'organizationTreePanel');
+	}
+	</script>
+		
+	<rich:contextMenu 
+		attached="true"
+		submitMode="server" 
+		disableDefaultMenu="true"
+		id="#{organizationContextMenuId}">
+
+		<rich:menuItem 
+			value="View Members" 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Group16.gif"
+	    	action="#{organizationManager.viewMembers}"
+           	onclick="setCursorWait(this); showProgress('#{item.name}', 'Retrieving members...')"
+    		oncomplete="setCursorDefault(this); hideProgress()"
+			reRender="organizationViewer"
+			labelClass="plainText"
+			styleClass="plainText">
+			<ui:include src="/common/tooltip.xhtml">
+				<ui:param name="tooltip" value="Create new organization record"/>
+			</ui:include>
+		</rich:menuItem>
+
+		<rich:menuSeparator /> 
+		<rich:menuItem 
+			value="New #{organizationManager.getChildLevel(item.level)}..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			rendered="#{item.level != 'GROUP'}"
+			icon="resource://images/icons/common/New16.gif"
+			action="#{organizationManager.newOrganization}"
+			onclick="setCursorWait()"
+			oncomplete="setCursorDefault(); showOrganizationInfoDialog(this)"
+			reRender="organizationInfoDialog">
+			<ui:include src="/common/tooltip.xhtml">
+				<ui:param name="tooltip" value="Create new organization record"/>
+			</ui:include>
+		</rich:menuItem>
+
+		<!--  
+		<rich:menuItem 
+			value="Open #{item.level}..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Open16.gif"
+			action="#{organizationManager.openOrganization}"
+			onclick="setCursorWait(); showProgress('Organization Records', 'Retrieving information...')"
+			oncomplete="setCursorDefault(); hideProgress()">
+			<ui:include src="/common/tooltip.xhtml">
+				<ui:param name="tooltip" value="Open organization record"/>
+			</ui:include>
+		</rich:menuItem>
+		-->
+
+		<rich:menuItem 
+			value="Edit #{item.name}..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Edit16.gif"
+			action="#{organizationManager.editOrganization}"
+			onclick="setCursorWait()"
+			oncomplete="setCursorDefault(); showOrganizationInfoDialog(this)"
+			reRender="organizationInfoDialog">
+			<ui:include src="/common/tooltip.xhtml">
+				<ui:param name="tooltip" value="Edit organization record"/>
+			</ui:include>
+		</rich:menuItem>
+
+		<rich:menuSeparator /> 
+		<rich:menuItem 
+			value="Remove #{item.name}" 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Remove16.gif"
+			action="#{organizationManager.promptDeleteOrganization}"
+			oncomplete="if (#{organization.childrens == null or organization.childrens.size == 0}) {checkPromptDeleteOrganization('#{organization.name}')} else {warnCannotDeleteOrganization('#{organization.name}')}">
+			<ui:include src="/common/tooltip.xhtml">
+				<ui:param name="tooltip" value="Remove organization record"/>
+			</ui:include>
+		</rich:menuItem>
+	</rich:contextMenu>
+</ui:composition>

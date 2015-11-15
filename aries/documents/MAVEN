@@ -1,0 +1,64 @@
+JBOss
+
+Most reliable open source initiative (arguably most efficient in overall performance and stability) most powerful open source initiaive.
+
+Benefits:
+-numerous watchdogs and warning mechanisms
+-very mature transaction system, very mature integration with multiple subsystems
+
+
+http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+
+
+
+Maven
+
+Challenge facing us now is different than before - much more diversity in dependencies; much more integration required; much more opportunity for things to go wrong; alot more interdependencies going on under the hood.  We need powerful tools to help us navigate through the mine field.
+
+Maven is a hiearchical object oriented build and deployment system.  Think of hierarchical make-files or build-files where different levels are aware of each other in different ways: inheritance and association.  Think of having a hierarchically organized file system where a build at any given directory will have dependencies on its parents but operate on its children.
+
+
+
+
+DEMO
+
+Shell commands:
+---------------
+
+compile
+package
+install
+deploy
+undeploy
+redeploy
+test
+site
+start
+stop
+
+
+Maven commands:
+---------------
+
+mvn compile
+mvn install
+mvn package
+mvn deploy
+mvn test
+mvn site
+
+mvn tomcat:run
+mvn tomcat:start
+mvn tomcat:stop
+mvn tomcat:deploy
+mvn tomcat:undeploy
+
+mvn jboss:start
+mvn jboss:stop
+mvn jboss:deploy
+mvn jboss:undeploy
+
+mvn jetty:run
+mvn jboss:start
+mvn jboss:stop
+

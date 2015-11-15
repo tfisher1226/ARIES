@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+#
+# Thomas Fisher (fisher@cs.tenet.berkeley.edu)
+#
+# $Id: .bash_alias,v 1.11 1993/11/08 17:05:42 tomf Exp $
+#
+
+alias a=alias
+alias apv=appletviewer
+alias c=clear
+alias cp=`cp -i`
+alias di=dirs
+alias en=`enscript -2r -G -h -f Helvetica8`
+alias em=`emacs -nw`
+alias f=finger
+alias g=`grep $1`
+alias h=history
+alias hn=hostname
+alias j=`jobs`
+alias jc=javac
+alias jpc=`javac -d /net/jupiter/java`
+alias k=`kill -9`
+alias ll=`ls -lF`
+alias lpc=/usr/ucb/lpc
+alias lpq=/usr/ucb/lpq
+alias lpr=`/usr/ucb/lpr -i4`
+alias ls=`ls -F`
+alias m=more
+alias ma=/usr/ucb/Mail
+#alias make=`(umask 2; \make $1)`
+alias mv=`mv -i`
+alias openwin=`openwin >&! ~/.openwinlog; clear`
+alias pd=`pushd $1`
+alias pop=popd
+alias rs=`set noglob; eval `resize``
+alias so=source
+alias up=uptime
+alias where=`who am i | sed -n 's/.*(\(.*\))/\1/p'`
+alias x=exit
+alias x11=`xinit >&! ~/.x11log; clear`
+alias z=suspend

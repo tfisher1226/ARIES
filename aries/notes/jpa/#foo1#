@@ -1,0 +1,22 @@
+07/24/13 20:49:13 INFO   [main] org.hibernate.annotations.common.Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+07/24/13 20:49:13 INFO   [main] org.hibernate.Version:41 - HHH000412: Hibernate Core {4.0.1.Final}
+07/24/13 20:49:13 INFO   [main] org.hibernate.cfg.Environment:224 - HHH000205: Loaded properties from resource hibernate.properties: {hibernate.connection.username=root, hibernate.connection.password=****, hibernate.bytecode.use_reflection_optimizer=false}
+07/24/13 20:49:13 INFO   [main] org.hibernate.cfg.Environment:342 - HHH000021: Bytecode provider name : javassist
+07/24/13 20:49:13 WARN   [main] org.hibernate.ejb.Ejb3Configuration:1311 - HHH000059: Defining hibernate.transaction.flush_before_completion=true ignored in HEM
+07/24/13 20:49:13 INFO   [main] org.hibernate.cfg.Configuration:714 - HHH000221: Reading mappings from resource: META-INF/queries.xml
+07/24/13 20:49:13 WARN   [main] org.hibernate.ejb.Ejb3Configuration:1131 - HHH000144: hibernate.connection.autocommit = false breaks the EJB3 specification
+07/24/13 20:49:14 INFO   [main] org.hibernate.dialect.Dialect:121 - HHH000400: Using dialect: org.hibernate.dialect.MySQLInnoDBDialect
+07/24/13 20:49:14 WARN   [main] org.hibernate.service.jta.platform.internal.JtaPlatformInitiator:98 - HHH000427: Using deprecated org.hibernate.transaction.TransactionManagerLookup strategy [hibernate.transaction.manager_lookup_class], use newer org.hibernate.service.jta.platform.spi.JtaPlatform strategy instead [hibernate.transaction.jta.platform]
+07/24/13 20:49:14 INFO   [main] org.hibernate.service.jta.platform.internal.JtaPlatformInitiator:114 - HHH000428: Encountered legacy TransactionManagerLookup specified; convert to newer org.hibernate.service.jta.platform.spi.JtaPlatform contract specified via hibernate.transaction.jta.platform setting
+07/24/13 20:49:14 INFO   [main] org.hibernate.engine.transaction.internal.TransactionFactoryInitiator:73 - HHH000268: Transaction strategy: org.hibernate.engine.transaction.internal.jta.CMTTransactionFactory
+07/24/13 20:49:14 INFO   [main] org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+07/24/13 20:49:14 WARN   [main] net.sf.ehcache.config.ConfigurationFactory:134 - No configuration found. Configuring ehcache from ehcache-failsafe.xml  found in the classpath: jar:file:/C:/workspace/.m2/repository/net/sf/ehcache/ehcache-core/2.5.0/ehcache-core-2.5.0.jar!/ehcache-failsafe.xml
+07/24/13 20:49:14 INFO   [main] org.hibernate.validator.util.Version:24 - Hibernate Validator 4.2.0.Final
+07/24/13 20:49:15 INFO   [main] org.hibernate.tool.hbm2ddl.SchemaExport:344 - HHH000227: Running hbm2ddl schema export
+07/24/13 20:49:19 INFO   [main] org.hibernate.tool.hbm2ddl.SchemaExport:406 - HHH000230: Schema export complete
+07/24/13 20:49:19 INFO   [main] org.hibernate.cache.spi.UpdateTimestampsCache:62 - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+07/24/13 20:49:19 INFO   [main] org.hibernate.cache.internal.StandardQueryCache:83 - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+07/24/13 20:49:20 INFO   [main] com.arjuna.ats.arjuna:88 - ARJUNA012163: Starting service com.arjuna.ats.arjuna.recovery.ActionStatusService on port 61595
+07/24/13 20:49:20 INFO   [main] com.arjuna.ats.arjuna:327 - ARJUNA012337: TransactionStatusManagerItem host: 127.0.0.1 port: 61595
+07/24/13 20:49:20 INFO   [main] com.arjuna.ats.arjuna:138 - ARJUNA012170: TransactionStatusManager started on port 61595 and host 127.0.0.1 with service com.arjuna.ats.arjuna.recovery.ActionStatusService
+07/24/13 20:49:20 DEBUG  [Listener:61595] com.arjuna.ats.arjuna:153 - Recovery listener existing com.arjuna.ats.arjuna.recovery.ActionStatusService

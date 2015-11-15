@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<arquillian 
+xmlns="http://jboss.org/schema/arquillian" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <container qualifier="jboss" default="true" mode="manual">
+        <!--
+        <protocol type="Servlet 3.0">
+            <property name="executionType">MANAGED</property>
+        </protocol>
+        -->
+
+        <configuration>
+            <property name="javaVmArguments">${server.jvm.args}</property>
+            <property name="jbossHome">c:/software/jboss-6.1.0.Final</property>
+			<!--  
+            <property name="serverConfig">arquillian-server-config.xml</property>
+            <property name="allowConnectingToRunningServer">true</property>
+			-->
+        </configuration>
+    </container>
+</arquillian>

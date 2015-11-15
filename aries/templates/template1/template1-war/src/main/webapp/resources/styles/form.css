@@ -1,0 +1,243 @@
+/*
+ * GroupBox related
+ * ----------------
+ */
+
+.groupLabel {
+	font-size: 11px;
+	font-weight: bold;
+	color: rgb(0, 0, 64);
+}
+
+.groupPanel {
+	margin: 0px; 
+	margin-left: auto; 
+	margin-right: auto;
+	margin-top: 4px;
+	padding-top: 1px;
+	padding-bottom: 2px;
+	padding-left: 2px;
+	padding-right: 1px;
+	padding: 0px;
+	vertical-align: top;
+	text-align: left;
+	border: 1px solid #ccc;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	background-color: inherit;
+}
+
+.groupPanel.td, 
+.groupPanel.th {
+	margin: 0px;
+	padding: 0;
+}
+
+
+/*
+ * Form related
+ * ------------
+ */
+
+.formLabel,
+.formLabelBold,
+.formLabelSoft,
+.formInput,
+.formOutput,
+.formCheckbox,
+.formSelect {
+	text-align: left;
+	font-size: #{userSkin.fontSize};
+	font-weight: #{userSkin.fontWeight};
+	color: #{userSkin.textColor};
+	white-space: nowrap;
+}
+
+/* does not work 
+.formInput input[type="text"], 
+.formInput input[type="password"] {
+	height: 16px;
+    padding: 2px;
+    padding-top: 3px;
+}
+*/
+
+.formLabelBold {
+	font-weight: bold;
+}
+
+.formLabelSoft {
+	color: #666;
+}
+
+.formLabel,
+.formLabelBold,
+.formLabelSoft {
+	display: block;
+	margin: 2px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding: 0px;
+}
+
+.formInput,
+.formOutput {
+	/*
+	margin: 0px;
+	margin-top: 0px;
+	padding: 0px 2px;
+	*/
+	border: #{userSkin.border};
+}
+
+.formInput:hover,
+.formOutput:hover {
+	border: 1px solid #{userSkin.highlightBorderColor};
+}
+
+.formInput:focus,
+.formOutput:focus {
+	border: 1px solid #{userSkin.focusBorderColor};
+}
+
+.formSelect {
+	width: 100%;
+}
+
+.formCheckbox {
+	margin: 0px;
+	padding: 0px;
+}
+
+.formLabelColumn {
+	text-align: left;
+}
+
+.formInputColumn {
+	width: 260px;
+	text-align: left;
+}
+
+.formControlColumn {
+	width: 380px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.formButton {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: normal;
+	font-size: 11px;
+}
+
+.formPanel {
+	padding: 0px; 
+	margin: 0px;
+	text-align: left; 
+	vertical-align: top;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+.formPanel.th,
+.formPanel.td,
+.formPanel.tbody {
+	margin: 0px;
+	padding: 0px;
+}
+
+.formColumn,
+.formColumnAlignLeft,
+.formColumnAlignCenter,
+.formColumnAlignRight,
+.formColumnAlignTop,
+.formColumnAlignTopLeft,
+.formColumnAlignTopCenter,
+.formColumnAlignTopRight,
+.formColumnAlignMiddle,
+.formColumnAlignMiddleLeft,
+.formColumnAlignMiddleCenter,
+.formColumnAlignMiddleRight,
+.formColumnAlignBottom,
+.formColumnAlignBottomLeft,
+.formColumnAlignBottomCenter,
+.formColumnAlignBottomRight {
+	width: auto; 
+	height: auto; 
+}
+
+.formColumn,
+.formColumnAlignLeft,
+.formColumnAlignCenter,
+.formColumnAlignRight,
+.formColumnAlignTop,
+.formColumnAlignTopLeft,
+.formColumnAlignTopCenter,
+.formColumnAlignTopRight,
+.formColumnFillHorizontal,
+.formColumnFillVertical, 
+.formColumnFillBoth { 
+	vertical-align: top;
+}
+
+.formColumnAlignBottom,
+.formColumnAlignBottomLeft,
+.formColumnAlignBottomCenter,
+.formColumnAlignBottomRight {
+	vertical-align: bottom;	
+}
+
+.formColumnAlignMiddle,
+.formColumnAlignMiddleLeft,
+.formColumnAlignMiddleCenter,
+.formColumnAlignMiddleRight {
+	vertical-align: middle;	
+}
+
+.formColumn,
+.formColumnAlignLeft,
+.formColumnAlignTop,
+.formColumnAlignTopLeft,
+.formColumnAlignMiddle,
+.formColumnAlignMiddleLeft,
+.formColumnAlignBottom,
+.formColumnAlignBottomLeft,
+.formColumnFillHorzontal,
+.formColumnFillVertical, 
+.formColumnFillBoth { 
+	text-align: left;
+}
+
+.formColumnAlignRight,
+.formColumnAlignTopRight,
+.formColumnAlignMiddleRight,
+.formColumnAlignBottomRight {
+	text-align: right;
+}
+
+.formColumnAlignCenter,
+.formColumnAlignTopCenter,
+.formColumnAlignMiddleCenter,
+.formColumnAlignBottomCenter {
+	text-align: center;
+}
+
+.formColumnFillHorizontal { 
+	/*width: 100%;*/ 
+	width: auto; 
+	height: auto; 
+}
+
+.formColumnFillVertical { 
+	width: auto; 
+	/*height: 100%;*/ 
+	height: auto; 
+}
+
+.formColumnFillBoth { 
+	width: 100%; 
+	height: 100%; 
+}
+
+.formField {
+}

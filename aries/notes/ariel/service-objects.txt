@@ -1,0 +1,10 @@
+
+Active and passive service objects
+
+A service object is an instance of a service.  Instances may be activated at different levels and may be active or passive in different scopes.
+
+An active instance of a service represents synchronous as well as asynchronous execution, whereas a passive instance of a service represents asychronous execution.
+
+
+
+

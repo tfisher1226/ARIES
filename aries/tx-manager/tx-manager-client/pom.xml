@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>tx-manager-client</artifactId>
+	<name>tx-manager-client</name>
+	<description>tx-manager-client</description>
+	<packaging>ejb</packaging>
+
+	<parent>
+        <groupId>org.aries</groupId>
+		<artifactId>tx-manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.properties</include>
+						<include>**/*.xml</include>
+						<include>**/*.sql</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+		
+<!--
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.wsdl</include>
+						<include>**/*.properties</include>
+						<include>**/*.launch</include>
+						<include>META-INF/wsdl/*.wsdl</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+-->
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-base</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-registry</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-validate</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

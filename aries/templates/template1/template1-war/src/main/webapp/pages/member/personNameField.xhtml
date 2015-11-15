@@ -1,0 +1,121 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="personNameField">
+		<ui:include src="personNameMenu.xhtml"/>
+		
+		<a4j:region>
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				value="#{member}" 
+				rows="1"
+				rendered="#{empty member.lastName}"
+				onRowMouseOver="memberDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="memberDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="memberDialogFieldHighlighter.processTableRowMouseOut(this)"
+				selectionMode="single" 
+				sortMode="single" 
+				rowClass="tableRow height14"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noGrid noBorder noSelection"
+				style="border-left: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="personNameMenu" operation="show"/>
+
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="personNameDialog" operation="show"/>
+
+				<rich:column 
+					sortable="false">
+					<h:outputText value="none specified" styleClass="disabled"/>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:region>
+		
+		<a4j:region>
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				value="#{member}" 
+				rows="1"
+				rendered="#{not empty member.lastName}"
+				onRowMouseOver="memberDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="memberDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="memberDialogFieldHighlighter.processTableRowMouseOut(this)"
+				selectionMode="single" 
+				sortMode="single" 
+				rowClass="tableRow height16"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noBorder noGrid"
+				style="border-left: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="personNameMenu" operation="show"/>
+
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="personNameDialog" operation="show"/>
+
+				<!--  
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="personNameDialog" operation="show">
+				</rich:componentControl>
+
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="personNameDialog" operation="show">
+					<f:param value="#{listObject}" name="member"/>
+					<a4j:actionparam value="#{listObject}" assignTo="#{member}"/>
+				</rich:componentControl>
+
+				<a4j:support 
+					event="onclick"
+					immediate="true"
+					ajaxSingle="true"
+					action="#{globals.doNothing}"
+					oncomplete="showPersonNameDialog()">
+					<a4j:actionparam value="#{member}" assignTo="#{member2}"/>
+				</a4j:support>
+				-->
+				
+				<rich:column sortable="false">
+					<h:outputText value="#{member.firstName} #{member.lastName} #{member.middleInitial}"/>
+				</rich:column>
+			</rich:dataTable>
+
+			<!--  
+			<a4j:commandButton 
+				value="..."
+				type="button"
+				onmousedown="setCursorWait(this)" 
+				onclick="showMemberNameDialog(); setCursorDefault()"
+				reRender="divisionSelectDialog"
+				styleClass="formButton" 
+				style="width: 20px"/>
+				-->
+
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

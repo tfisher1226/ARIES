@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jndi-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JNDI Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<jnp.client.version>5.0.5.Final</jnp.client.version>
+		<jnp.server.version>5.0.5.Final</jnp.server.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.naming</groupId>
+				<artifactId>jnp-client</artifactId>
+				<version>${jnp.client.version}</version>
+	            <exclusions>
+	            	<exclusion>
+	                	<groupId>org.jboss.logging</groupId>
+					    <artifactId>jboss-logging-spi</artifactId>
+	            	</exclusion>
+	            </exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.naming</groupId>
+				<artifactId>jnpserver</artifactId>
+				<version>${jnp.server.version}</version>
+	            <exclusions>
+	            	<exclusion>
+	                	<groupId>org.jboss.logging</groupId>
+					    <artifactId>jboss-logging-spi</artifactId>
+	            	</exclusion>
+	            </exclusions>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

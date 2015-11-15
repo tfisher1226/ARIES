@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:region>
+		<aries:contextMenu 
+			id="textMenu">
+
+			<aries:contextMenuItem 
+				value="Cut"
+				submitMode="none" 
+				icon="resource://images/icons/common/Cut16.gif"
+				tooltip="Cut selected text"
+	           	onclick="">
+			</aries:contextMenuItem>
+
+			<aries:contextMenuItem 
+				value="Copy"
+				submitMode="none" 
+				icon="resource://images/icons/common/Copy16.gif"
+				tooltip="Copy selected text"
+	           	onclick="">
+			</aries:contextMenuItem>
+
+			<aries:contextMenuItem 
+				value="Paste"
+				submitMode="none" 
+				icon="resource://images/icons/common/Paste16.gif"
+				tooltip="Paste text from clipboard"
+	           	onclick="">
+			</aries:contextMenuItem>
+		</aries:contextMenu>
+	</a4j:region>
+</ui:composition>

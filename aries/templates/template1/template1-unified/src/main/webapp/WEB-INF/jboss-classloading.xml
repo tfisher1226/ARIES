@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classloading xmlns="urn:jboss:classloading:1.0"
+	name="infosgi-service.war"
+	domain="infosgi-service.war.domain"
+	parent-first="false"
+	top-level-classloader="true"
+	export-all="NON_EMPTY"
+	import-all="false">
+
+</classloading>

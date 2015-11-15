@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>tx-manager</artifactId>
+	<name>tx-manager</name>
+	<description>tx-manager</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+    <!--
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+    -->
+
+	<modules>
+        <module>bom</module>
+        <module>test</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>tx-manager-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<!--  
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>tx-manager-ui</artifactId>
+	            <version>0.0.1-SNAPSHOT</version>
+				<scope>compile</scope>
+				<type>war</type>
+			</dependency>
+			-->
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-base</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-client</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-registry</artifactId>
+		</dependency>
+
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-recovery</artifactId>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-bridge</artifactId>
+		</dependency>
+
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+		-->
+	</dependencies>
+</project>

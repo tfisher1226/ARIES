@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<application>
+	<name>simple-service</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<package>org.aries.simple</package>
+	
+	<channels>
+		<channel name="rmiChannel1" type="RMI" port="@aries.port.rmi@"/>
+	</channels>
+	
+	<services group="org.aries">
+		<service name="simpleService" class="org.aries.SimpleService">
+			<listener channel="rmiChannel1"/>
+			<process name="getPersonById">
+				<parameter name="personId" type="java.lang.Long"/>
+				<result name="person" type="org.aries.model.Person"/>
+				<action name="getPersonById" class="org.aries.GetPersonAction">
+				</action>
+			</process>
+		</service>
+	</services>
+</application>

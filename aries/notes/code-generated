@@ -1,0 +1,31 @@
+
+temp example:
+
+	/**
+	 * Returns the <em>fileName</em> of this <code>Build File</code>.
+	 * @return the <em>fileName</em> of this <code>Build File</code>
+	 */
+	public String getFileName() {
+		return _fileName;
+	}
+
+	/**
+	 * Sets the <em>fileName</em> of this <code>Build File</code>.
+	 * @param value the <em>fileName</em> for this <code>Build File</code>
+	 */
+	public void setFileName(String value) {
+		_fileName = value;
+	}
+
+
+
+Hello Guy, I am sorry but I am unable to go. I just haven't been able to make the appropriate arrangements.  Gosh I was really hoping to go and chat with you about this project I have been working on and whether or not it there might be an area of possible collaboration with your company.  
+
+I will describe more later, but in short we have a simple modeling system that takes as inputs XSD, WSDL, BPEL, and ARIEL models and then generates code (along with more and more tests) that implement the models.  Anyway the idea I was thinking is that Atomikos customers could design cool systems using this modeliing approach then automatically generate code that is up and running and implementing distributed, transactional, load-balanced workflows (based on framework of AtomikosTransactionEssentials of course!).
+
+Talk to you later.
+
+Thank you very much again for the very nice opportunity of using the pass.
+
+Tom
+

@@ -1,0 +1,10 @@
+
+goals:
+-ease and efficiency of development
+-ease and efficiency of maintenance
+-ease and efficiency of testing and verification
+-ease and efficiency of single development lifecycle iteration
+-ease and efficiency of single deployment lifecycle iteration
+-easy upgrade over time to servers, databases, versions of frameworks etc... with minimal impact, minimal risk, and ultimately minimal cost.  Any problems in this area may sink the project or limit its lifetime
+
+

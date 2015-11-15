@@ -1,0 +1,127 @@
+
+
+
+
+		<!-- JAVAX 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>javax</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		-->
+
+		<!-- JNDI 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jndi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		-->
+
+		<!-- JAXB -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JAXWS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxws</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- JTA -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jta</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- EMF -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>eclipse-emf</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- EHCACHE -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- HORNETQ 
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>hornetq</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-base</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>import</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- PLATFORM-UTIL -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>import</scope>
+			<type>pom</type>
+		</dependency>
+			
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-engine</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+

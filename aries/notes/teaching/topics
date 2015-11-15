@@ -1,0 +1,59 @@
+
+
+Concepts
+-----------
+
+abstract algebra
+projectors and closure operators
+
+referential transparency
+
+concept of idempotence
+
+absolute value
+unary operation
+binary operation
+
+links:
+http://en.wikipedia.org/wiki/Idempotence
+
+
+
+
+Information Representation
+-----------------------------
+i.e. Data modeling
+
+Entity Relationships
+-cascading types
+-isolation levels
+
+
+
+Data Communication
+---------------------------
+Communication Protocols
+
+The concept of global types that can be seen as the language to describethemodelof thedistributedcommunications
+
+i.e., an abstract high-level view of the protocol that all the participants will
+haveto respectin orderto communicatein a multipartycommunication
+
+
+
+Transaction Processing
+---------------------------
+
+
+
+Workflow Processing
+---------------------------
+
+
+
+
+Terminology
+--------------
+
+
+

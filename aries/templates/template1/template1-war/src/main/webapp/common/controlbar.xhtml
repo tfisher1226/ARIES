@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<c:if test="#{empty itemSeparator}">
+		<c:set var="itemSeparator" value="none" /> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="controlbar" /> 
+	</c:if>
+
+	<c:if test="#{empty contentClass}">
+		<c:set var="contentClass" value="controlbarContent" /> 
+	</c:if>
+
+	<c:if test="#{empty separatorClass}">
+		<c:set var="separatorClass" value="controlbarSeparator" /> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value="" /> 
+	</c:if>
+
+	<rich:toolBar 
+		itemSeparator="#{itemSeparator}"
+		styleClass="controlbar"
+		contentClass="controlbarContent" 
+		separatorClass="controlbarSeparator"
+		style="border-width: 0px; background-image: none; background-color: #f0f0f0; #{style}">
+
+		<ui:insert />
+	</rich:toolBar>
+</ui:composition>

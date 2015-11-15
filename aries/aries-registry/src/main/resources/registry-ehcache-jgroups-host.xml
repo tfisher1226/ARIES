@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache 
+	name="serviceRegistryManager"
+	updateCheck="false" 
+	monitoring="autodetect"
+	dynamicConfig="true">
+
+
+	<!--
+		Sets the path to the directory where cache data and index files are created.  
+		If the path is a Java System Property it is replaced by its value in the running VM. 
+		Subdirectories can be specified below the property e.g. java.io.tmpdir/one 
+	-->
+	
+	<diskStore path="java.io.tmpdir/registry-cache"/> 
+	
+	
+	<!--
+		Specifies a CacheManagerPeerProviderFactory which will be used to create a 
+		CacheManagerPeerProvider, which discovers other CacheManagers in the cluster.  
+	-->
+
+	<!--
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="file=registry-jgroups.xml" />
+	-->
+
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"/>
+
+
+	<!--
+		Mandatory Default Cache configuration. These settings will be applied to 
+		caches created programmatically using CacheManager.add(String cacheName).
+	-->
+
+	<defaultCache 
+		eternal="false"
+		maxElementsInMemory="0" 
+		timeToIdleSeconds="100" 
+		timeToLiveSeconds="100" 
+		overflowToDisk="true">
+
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="
+				replicateAsynchronously=true, 
+				replicatePuts=true,
+				replicateUpdates=true, 
+				replicateUpdatesViaCopy=false, 
+				replicateRemovals=true" />
+	</defaultCache>
+
+
+	<!--
+		Cache configuration for "serviceRegistry" cache. 
+	 -->
+	 
+	<cache 
+		name="serviceRegistry" 
+		eternal="true"
+		maxElementsInMemory="0" 
+		clearOnFlush="false" 
+		overflowToDisk="false">
+
+		<!-- JGROUPS Cache Replication -->
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="
+				replicatePuts=true,
+				replicateUpdates=true, 
+				replicateUpdatesViaCopy=false, 
+				replicateRemovals=true,
+				replicateAsynchronously=true,
+				asynchronousReplicationIntervalMillis=1000"/>
+
+		<!-- General Exception Handling -->
+		<cacheExceptionHandlerFactory 
+			class="org.aries.cache.GeneralCacheExceptionHandlerFactory"
+			properties="logLevel=FINE"/>
+
+		<!-- JGROUPS Cache bootstrap 
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsBootstrapCacheLoaderFactory"
+			properties="bootstrapAsynchronously=false"/>
+			-->
+		
+		<!--  	
+		<pinning storage="onHeap | inMemory | inCache" />
+		-->
+	</cache>
+</ehcache>

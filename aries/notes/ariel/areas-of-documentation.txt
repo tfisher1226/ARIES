@@ -1,0 +1,34 @@
+
+WS-CDL to ARIEL translation
+We can get intial ideas from what was done with Scribble:
+https://community.jboss.org/wiki/WS-CDLToScribbleTranslation
+
+
+
+Stateless Processing
+--------------------
+
+
+Stateful Processing
+-------------------
+
+Simple and effective modeling of stateful processes
+
+
+
+Testing
+-------
+
+Byteman used for real-time code-injection and code-invocation
+
+Testing of startup and shutdown dependencies and scenarios
+
+
+
+
+Class-Loading
+-------------
+
+Proper organization of class-loaders and use of class-loading.
+Appropriate use of singletons.
+

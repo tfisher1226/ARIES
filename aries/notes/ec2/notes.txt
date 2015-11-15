@@ -1,0 +1,21 @@
+
+See this for a demo project: arquillian-demo-amazon.zip
+https://github.com/hasalex/arquillian-demo/tree/amazon
+
+
+
+1. Re: How to access JMX via a firewall on AS 7
+in standalone.xml, depending on which interfaces you have set up in your interfaces section, try setting up these socket bindings
+<socket-binding name="jmx-connector-registry" interface="management" port="1090"/>
+<socket-binding name="jmx-connector-server" interface="management" port="1091"/>
+
+ 
+
+to bind to an externally accessible interface
+
+
+The only way I found to connect a jconsole to my JBoss AS 7 on EC2 to pass through a SOCKS proxy.
+To start the proxy client :
+    ssh -vfND 6666 -i .amazon/aws1-sewatech-net.pem ec2-user@aws1.sewatech.net  
+To launch jconsole :
+    jconsole -J-DsocksProxyHost=localhost -J-DsocksProxyPort=6666 aws.sewatech.net:1090  

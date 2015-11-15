@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>hornetq</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries HornetQ JMS Dependencies</name>
+	<packaging>pom</packaging>
+
+	<modules>
+        <module>bom</module>
+        <module>test</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>javax-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>hornetq-bom</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<dependencies>
+        <dependency>
+			<groupId>org.jboss.spec.javax.jms</groupId>
+			<artifactId>jboss-jms-api_1.1_spec</artifactId>
+		</dependency>
+
+		<!--  
+        <dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>jms</artifactId>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.jboss.netty</groupId>
+			<artifactId>netty</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-core</artifactId>
+		</dependency> 
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jms</artifactId>
+		</dependency> 
+
+		<!--  
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jms-client</artifactId>
+		</dependency>
+		--> 
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-logging</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-bootstrap</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jboss-as-integration</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.neethi</groupId>
+			<artifactId>neethi</artifactId>
+		</dependency>
+	</dependencies>
+</project>
+

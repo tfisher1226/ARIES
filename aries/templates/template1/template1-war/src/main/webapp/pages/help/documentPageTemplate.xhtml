@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+<head>
+    <title>INFOSGI</title>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+	<meta http-equiv="pragma" content="no-cache"/> 
+    <meta http-equiv="expires" content="0"/>
+    <meta name="copyright" content="&copy; 2010, 2011 SGI-USA. All Rights Reserved."/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="robots" content="all"/> 
+
+	<!--
+	<link rel="shortcut icon" href="#{request.contextPath}/favicon.ico"/>
+	-->
+
+	<a4j:loadStyle src="/styles/rich.css"/>
+	<a4j:loadStyle src="/styles/button.css"/>
+	<a4j:loadStyle src="/styles/aries.css"/>
+	<a4j:loadStyle src="/styles/base.css"/>
+	<a4j:loadStyle src="/styles/text.css"/>
+	<a4j:loadStyle src="/styles/icons.css"/>
+	<a4j:loadStyle src="/styles/content.css"/>
+	<a4j:loadStyle src="/styles/header.css"/>
+	<a4j:loadStyle src="/styles/footer.css"/>
+	<a4j:loadStyle src="/styles/dialog.css"/>
+	<a4j:loadStyle src="/styles/message.css"/>
+	<a4j:loadStyle src="/styles/menu.css"/>
+	<a4j:loadStyle src="/styles/table.css"/>
+	<a4j:loadStyle src="/styles/tabpane.css"/>
+	<a4j:loadStyle src="/styles/tree.css"/>
+	<a4j:loadStyle src="/styles/toolbar.css"/>
+	<a4j:loadStyle src="/styles/widget.css"/>
+	<a4j:loadStyle src="/styles/nam.css"/>
+
+	<!-- 
+	<a4j:loadScript src="resource://jquery.js"/>
+ 	-->
+	<a4j:loadScript src="/scripts/aries.js" />
+	<a4j:loadScript src="/scripts/browser.js" />
+	<a4j:loadScript src="/scripts/cursor.js" />
+	<a4j:loadScript src="/scripts/dialog.js" />
+	<a4j:loadScript src="/scripts/initialize.js" />
+	<a4j:loadScript src="/scripts/progress.js" />
+	<a4j:loadScript src="/scripts/popup.js" />
+	<a4j:loadScript src="/scripts/table.js" />
+	<a4j:loadScript src="/scripts/util.js" />
+
+
+	<a4j:form>
+	    <a4j:jsFunction 
+	    	name="initializeGlobals" immediate="true" ajaxSingle="true" limitToList="true" requestDelay="0">
+			<a4j:actionparam name="w" value="winW" assignTo="#{globals.screenWidth}" noEscape="true"/>
+			<a4j:actionparam name="h" value="winH" assignTo="#{globals.screenHeight}" noEscape="true"/>
+		</a4j:jsFunction>
+	</a4j:form>
+	
+	<script type="text/javascript">
+	//<![CDATA[ 
+	window.onresize = function(event) {
+		initializeDimensions();
+		initializeGlobals();
+		initializeLayout();
+		//reRenderPage();
+	}
+	function initializePage() {
+		initializeDimensions();
+		initializeGlobals();
+		initializeLayout();
+	}
+	function initializeLayout() {
+		var contentPane = document.getElementById('content');
+		contentPane.style.minHeight = (winH - 70) + "px";
+	}
+	//]]>
+	</script>
+</head>
+
+<body onload="initializePage()" style="overflow: hidden">
+	<div id="container" style="width: auto; height: auto; display: block; overflow: hidden; background-color: inherit">
+
+        <center>
+	        <!-- CONTENT -->
+	   		<div id="content" style="clear: both">
+	   	   		<ui:insert name="content"/>
+			</div>
+        </center>
+	</div>
+</body>
+</html>

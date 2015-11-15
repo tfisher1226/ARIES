@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache
+	name="TransactionCoordinationRegistry"
+	updateCheck="false"
+	monitoring="autodetect"
+	dynamicConfig="true"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd">
+
+
+	<!--
+		Sets the path to the directory where cache data and index files are created.  
+		If the path is a Java System Property it is replaced by its value in the running VM. 
+		Subdirectories can be specified below the property e.g. java.io.tmpdir/one 
+	-->
+	
+	<diskStore path="java.io.tmpdir/transaction-registry-cache" /> 
+	
+	
+	<!--
+		Specifies a CacheManagerPeerProviderFactory which will be used to create a 
+		CacheManagerPeerProvider, which discovers other CacheManagers in the cluster.  
+	-->
+
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory" />
+
+	<!--
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"
+		properties="connect=UDP(mcast_addr=231.12.21.132;mcast_port=45566)" />
+		properties="file=transaction-registry-jgroups.xml" />
+	-->
+
+
+	<!--
+		Mandatory Default Cache configuration. These settings will be applied to 
+		caches created programmatically using CacheManager.add(String cacheName).
+	-->
+
+	<defaultCache 
+		eternal="false"
+		maxElementsInMemory="0"
+		timeToIdleSeconds="100"
+		timeToLiveSeconds="100"
+		overflowToDisk="true">
+
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="
+				replicateAsynchronously=true,
+				replicatePuts=true,
+				replicateUpdates=true,
+				replicateUpdatesViaCopy=false,
+				replicateRemovals=true" />
+	</defaultCache>
+
+
+	<!--
+		**************************************************************
+		Cache configuration for "ServiceRegistry" cache. 
+		**************************************************************
+	 -->
+
+	<cache 
+		name="ServiceRegistry" 
+		eternal="true"
+		maxElementsInMemory="0" 
+		clearOnFlush="false" 
+		overflowToDisk="false"
+		overflowToOffHeap="false">
+
+		<searchable>
+			<searchAttribute 
+				name="elementName" 
+				class="org.aries.cache.CachedItemNameAttributeExtractor" />
+		</searchable>
+		
+		<!-- JGROUPS Cache Replication -->
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="
+				replicatePuts=true,
+				replicateUpdates=true, 
+				replicateUpdatesViaCopy=false, 
+				replicateRemovals=true,
+				replicateAsynchronously=true,
+				asynchronousReplicationIntervalMillis=1000"/>
+
+		<!-- General Exception Handling -->
+		<cacheExceptionHandlerFactory 
+			class="org.aries.cache.GeneralCacheExceptionHandlerFactory"
+			properties="logLevel=FINE"/>
+
+		<!-- JGROUPS Cache bootstrap -->
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsBootstrapCacheLoaderFactory"
+			properties="bootstrapAsynchronously=false"/>
+		
+		<!--  	
+		<pinning storage="onHeap | inMemory | inCache" />
+		-->
+	</cache>
+
+
+	<!--
+		**************************************************************
+		Cache configuration for "TransactionRegistry" cache. 
+		**************************************************************
+	 -->
+
+	<cache 
+		name="TransactionRegistry" 
+		eternal="true"
+		maxElementsInMemory="0" 
+		clearOnFlush="false" 
+		overflowToDisk="false"
+		overflowToOffHeap="false">
+
+		<searchable>
+			<searchAttribute 
+				name="elementName" 
+				class="org.aries.cache.CachedItemNameAttributeExtractor" />
+		</searchable>
+		
+		<!-- JGROUPS Cache Replication -->
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			properties="
+				replicatePuts=true,
+				replicateUpdates=true, 
+				replicateUpdatesViaCopy=false, 
+				replicateRemovals=true,
+				replicateAsynchronously=true,
+				asynchronousReplicationIntervalMillis=1000"/>
+
+		<!-- General Exception Handling -->
+		<cacheExceptionHandlerFactory 
+			class="org.aries.cache.GeneralCacheExceptionHandlerFactory"
+			properties="logLevel=FINE"/>
+
+		<!-- JGROUPS Cache bootstrap -->
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.jgroups.JGroupsBootstrapCacheLoaderFactory"
+			properties="bootstrapAsynchronously=false"/>
+		
+		<!--  	
+		<pinning storage="onHeap | inMemory | inCache" />
+		-->
+	</cache>
+</ehcache>

@@ -1,0 +1,88 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript" language="javascript">
+	var userDialogFieldHighlighter = new org.aries.view.table.UserSelectHighlighter('#fff', '#ddecff', '#f5fafa');
+
+	function showUserDialog() { Richfaces.showModalPanel('userDialog'); }
+	function hideUserDialog() { Richfaces.hideModalPanel('userDialog'); }
+	</script>
+
+	<a4j:region 
+		renderRegionOnly="true">
+
+		<!-- User Dialog -->
+		<rich:modalPanel 
+			id="userDialog" 
+			autosized="true" 
+			trimOverlayedElements="true">
+			
+			<!-- TITLE -->
+			<ui:include src="/common/dialog/dialogHeaderBar.xhtml">
+				<ui:param name="dialogKey" value="userDialog"/>
+				<ui:param name="dialogTitle" value="User Information"/>
+			</ui:include>
+	
+			<ui:include src="userNameDialog.xhtml"/>
+			<ui:include src="userDivisionsDialog.xhtml"/>
+			<ui:include src="userOrganizationDialog.xhtml"/>
+			<ui:include src="userActivityGroupDialog.xhtml"/>
+			<ui:include src="userEmailAddressDialog.xhtml"/>
+			<ui:include src="userPhoneNumberDialog.xhtml"/>
+			<ui:include src="userStreetAddressDialog.xhtml"/>
+			
+			<!-- CONTENT -->
+			<a4j:form id="userDialogForm" ajaxSubmit="true">
+	
+				<h:panelGrid styleClass="layoutPane" layout="block" cellpadding="0" cellspacing="0" columns="1" columnClasses="formColumn" style="margin: 14px 10px 12px 10px; background-color: inherit"> 
+					<h:panelGrid styleClass="layoutPane" layout="block" cellpadding="0" cellspacing="0" columns="3" columnClasses="formColumn, formColumn, formColumn" style="background-color: inherit"> 
+						<h:panelGroup layout="block">
+							<ui:include src="userInfoLeftPanel.xhtml">
+								<ui:param name="form" value="userDialogForm"/>
+							</ui:include>
+						</h:panelGroup>
+			
+						<!--  
+						<h:panelGroup layout="block" style="margin-left: 12px">
+							<ui:include src="userInfoCenterPanel.xhtml"/>
+						</h:panelGroup>
+						-->
+		
+						<h:panelGroup layout="block" style="margin-left: 12px">
+							<ui:include src="userInfoRightPanel.xhtml">
+								<ui:param name="form" value="userDialogForm"/>
+							</ui:include>
+						</h:panelGroup>
+					</h:panelGrid>
+	
+					<!--  
+					<h:panelGroup layout="block" style="margin-top: 10px">
+						<ui:include src="userInfoBottomPanel.xhtml"/>
+					</h:panelGroup>
+					-->
+				</h:panelGrid>
+	
+				<aries:controlPane>
+					<ui:include src="userInfoControl.xhtml"/>
+				</aries:controlPane>
+	
+				<!--			
+				<s:validateAll>			
+				</s:validateAll>
+				-->
+			</a4j:form>
+		</rich:modalPanel>
+	</a4j:region>
+</ui:composition>
+
+

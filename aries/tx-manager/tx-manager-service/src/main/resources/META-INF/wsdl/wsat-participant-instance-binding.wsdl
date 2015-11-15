@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsa="http://www.w3.org/2005/08/addressing" 
+	xmlns:wsat="http://docs.oasis-open.org/ws-tx/wsat/2006/06"
+	targetNamespace="http://docs.oasis-open.org/ws-tx/wsat/2006/06"
+	xmlns:wsaw="http://www.w3.org/2006/02/addressing/wsdl">
+
+	<wsdl:import namespace="http://docs.oasis-open.org/ws-tx/wsat/2006/06"
+		location="wsat.wsdl" />
+
+	<wsdl:binding name="ParticipantInstance_SOAPBinding" type="wsat:ParticipantInstancePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		
+		<wsdl:operation name="PrepareOperation">
+			<soap:operation style="document" soapAction="http://docs.oasis-open.org/ws-tx/wsat/2006/06/Prepare"/>
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+
+		<wsdl:operation name="CommitOperation">
+			<soap:operation style="document" soapAction="http://docs.oasis-open.org/ws-tx/wsat/2006/06/Commit"/>
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+
+		<wsdl:operation name="RollbackOperation">
+			<soap:operation style="document" soapAction="http://docs.oasis-open.org/ws-tx/wsat/2006/06/Rollback"/>
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+
+		<wsdl:operation name="Fault">
+			<soap:operation soapAction="http://docs.oasis-open.org/ws-tx/wsat/2006/06/Fault"/>
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="ParticipantInstanceService">
+		<wsdl:port binding="wsat:ParticipantInstance_SOAPBinding" name="ParticipantInstancePortType">
+			<soap:address location="http://localhost:8080/tx-service/ParticipantInstanceService/ParticipantInstancePortType"/>
+			<wsaw:UsingAddressing required="true" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

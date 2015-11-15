@@ -1,0 +1,141 @@
+
+Transactions on JBoss
+
+The JTA Transaction Service
+
+This chapter discusses transaction management in JBoss and the JBossTX architecture. The JBossTX architecture allows for any Java Transaction API (JTA) transaction manager implementation to be used. JBossTX includes a fast in-VM implementation of a JTA compatible transaction manager that is used as the default transaction manager. We will first provide an overview of the key transaction concepts and notions in the JTA to provide sufficient background for the JBossTX architecture discussion. We will then discuss the interfaces that make up the JBossTX architecture and conclude with a discussion of the MBeans available for integration of alternate transaction managers.
+
+4.1. Transaction/JTA Overview
+
+For the purpose of this discussion, we can define a transaction as a unit of work containing one or more operations involving one or more shared resources having ACID properties. ACID is an acronym for atomicity, consistency, isolation and durability, the four important properties of transactions. The meanings of these terms is:
+
+    * Atomicity: A transaction must be atomic. This means that either all the work done in the transaction must be performed, or none of it must be performed. Doing part of a transaction is not allowed.
+    * Consistency: When a transaction is completed, the system must be in a stable and consistent condition.
+    * Isolation: Different transactions must be isolated from each other. This means that the partial work done in one transaction is not visible to other transactions until the transaction is committed, and that each process in a multi-user system can be programmed as if it was the only process accessing the system.
+    * Durability: The changes made during a transaction are made persistent when it is committed. When a transaction is committed, its changes will not be lost, even if the server crashes afterwards. 
+
+To illustrate these concepts, consider a simple banking account application. The banking application has a database with a number of accounts. The sum of the amounts of all accounts must always be 0. An amount of money M is moved from account A to account B by subtracting M from account A and adding M to account B. This operation must be done in a transaction, and all four ACID properties are important.
+
+The atomicity property means that both the withdrawal and deposit is performed as an indivisible unit. If, for some reason, both cannot be done nothing will be done.
+
+The consistency property means that after the transaction, the sum of the amounts of all accounts must still be 0.
+
+The isolation property is important when more than one bank clerk uses the system at the same time. A withdrawal or deposit could be implemented as a three-step process: First the amount of the account is read from the database; then something is subtracted from or added to the amount read from the database; and at last the new amount is written to the database. Without transaction isolation several bad things could happen. For example, if two processes read the amount of account A at the same time, and each independently added or subtracted something before writing the new amount to the database, the first change would be incorrectly overwritten by the last.
+
+The durability property is also important. If a money transfer transaction is committed, the bank must trust that some subsequent failure cannot undo the money transfer.
+4.1.1. Pessimistic and optimistic locking
+
+Transactional isolation is usually implemented by locking whatever is accessed in a transaction. There are two different approaches to transactional locking: Pessimistic locking and optimistic locking.
+
+The disadvantage of pessimistic locking is that a resource is locked from the time it is first accessed in a transaction until the transaction is finished, making it inaccessible to other transactions during that time. If most transactions simply look at the resource and never change it, an exclusive lock may be overkill as it may cause lock contention, and optimistic locking may be a better approach.With pessimistic locking, locks are applied in a fail-safe way. In the banking application example, an account is locked as soon as it is accessed in a transaction. Attempts to use the account in other transactions while it is locked will either result in the other process being delayed until the account lock is released, or that the process transaction will be rolled back. The lock exists until the transaction has either been committed or rolled back.
+
+With optimistic locking, a resource is not actually locked when it is first is accessed by a transaction. Instead, the state of the resource at the time when it would have been locked with the pessimistic locking approach is saved. Other transactions are able to concurrently access to the resource and the possibility of conflicting changes is possible. At commit time, when the resource is about to be updated in persistent storage, the state of the resource is read from storage again and compared to the state that was saved when the resource was first accessed in the transaction. If the two states differ, a conflicting update was made, and the transaction will be rolled back.
+
+In the banking application example, the amount of an account is saved when the account is first accessed in a transaction. If the transaction changes the account amount, the amount is read from the store again just before the amount is about to be updated. If the amount has changed since the transaction began, the transaction will fail itself, otherwise the new amount is written to persistent storage.
+4.1.2. The components of a distributed transaction
+
+There are a number of participants in a distributed transaction. These include:
+
+    * Transaction Manager: This component is distributed across the transactional system. It manages and coordinates the work involved in the transaction. The transaction manager is exposed by the javax.transaction.TransactionManager interface in JTA.
+    * Transaction Context: A transaction context identifies a particular transaction. In JTA the corresponding interface is javax.transaction.Transaction.
+    * Transactional Client: A transactional client can invoke operations on one or more transactional objects in a single transaction. The transactional client that started the transaction is called the transaction originator. A transaction client is either an explicit or implicit user of JTA interfaces and has no interface representation in the JTA.
+    * Transactional Object: A transactional object is an object whose behavior is affected by operations performed on it within a transactional context. A transactional object can also be a transactional client. Most Enterprise Java Beans are transactional objects.
+    * Recoverable Resource: A recoverable resource is a transactional object whose state is saved to stable storage if the transaction is committed, and whose state can be reset to what it was at the beginning of the transaction if the transaction is rolled back. At commit time, the transaction manager uses the two-phase XA protocol when communicating with the recoverable resource to ensure transactional integrity when more than one recoverable resource is involved in the transaction being committed. Transactional databases and message brokers like JBossMQ are examples of recoverable resources. A recoverable resource is represented using the javax.transaction.xa.XAResource interface in JTA.
+
+4.1.3. The two-phase XA protocol
+
+When a transaction is about to be committed, it is the responsibility of the transaction manager to ensure that either all of it is committed, or that all of is rolled back. If only a single recoverable resource is involved in the transaction, the task of the transaction manager is simple: It just has to tell the resource to commit the changes to stable storage.
+
+When more than one recoverable resource is involved in the transaction, management of the commit gets more complicated. Simply asking each of the recoverable resources to commit changes to stable storage is not enough to maintain the atomic property of the transaction. The reason for this is that if one recoverable resource has committed and another fails to commit, part of the transaction would be committed and the other part rolled back.
+
+To get around this problem, the two-phase XA protocol is used. The XA protocol involves an extra prepare phase before the actual commit phase. Before asking any of the recoverable resources to commit the changes, the transaction manager asks all the recoverable resources to prepare to commit. When a recoverable resource indicates it is prepared to commit the transaction, it has ensured that it can commit the transaction. The resource is still able to rollback the transaction if necessary as well.
+
+So the first phase consists of the transaction manager asking all the recoverable resources to prepare to commit. If any of the recoverable resources fails to prepare, the transaction will be rolled back. But if all recoverable resources indicate they were able to prepare to commit, the second phase of the XA protocol begins. This consists of the transaction manager asking all the recoverable resources to commit the transaction. Because all the recoverable resources have indicated they are prepared, this step cannot fail.
+4.1.4. Heuristic exceptions
+
+In a distributed environment communications failures can happen. If communication between the transaction manager and a recoverable resource is not possible for an extended period of time, the recoverable resource may decide to unilaterally commit or rollback changes done in the context of a transaction. Such a decision is called a heuristic decision. It is one of the worst errors that may happen in a transaction system, as it can lead to parts of the transaction being committed while other parts are rolled back, thus violating the atomicity property of transaction and possibly leading to data integrity corruption.
+
+Because of the dangers of heuristic exceptions, a recoverable resource that makes a heuristic decision is required to maintain all information about the decision in stable storage until the transaction manager tells it to forget about the heuristic decision. The actual data about the heuristic decision that is saved in stable storage depends on the type of recoverable resource and is not standardized. The idea is that a system manager can look at the data, and possibly edit the resource to correct any data integrity problems.
+
+There are several different kinds of heuristic exceptions defined by the JTA. The javax.transaction.HeuristicCommitException is thrown when a recoverable resource is asked to rollback to report that a heuristic decision was made and that all relevant updates have been committed. On the opposite end is the javax.transaction.HeuristicRollbackException, which is thrown by a recoverable resource when it is asked to commit to indicate that a heuristic decision was made and that all relevant updates have been rolled back.
+
+The javax.transaction.HeuristicMixedException is the worst heuristic exception. It is thrown to indicate that parts of the transaction were committed, while other parts were rolled back. The transaction manager throws this exception when some recoverable resources did a heuristic commit, while other recoverable resources did a heuristic rollback.
+4.1.5. Transaction IDs and branches
+
+In JTA, the identity of transactions is encapsulated in objects implementing the javax.transaction.xa.Xid interface. The transaction ID is an aggregate of three parts:
+
+    * The format identifier indicates the transaction family and tells how the other two parts should be interpreted.
+    * The global transaction id identified the global transaction within the transaction family.
+    * The branch qualifier denotes a particular branch of the global transaction.
+
+Transaction branches are used to identify different parts of the same global transaction. Whenever the transaction manager involves a new recoverable resource in a transaction it creates a new transaction branch.
+
+4.2. JBoss Transaction Internals
+
+The JBoss application server is written to be independent of the actual transaction manager used. JBoss uses the JTA javax.transaction.TransactionManager interface as its view of the server transaction manager. Thus, JBoss may use any transaction manager which implements the JTA TransactionManager interface. Whenever a transaction manager is used it is obtained from the well-known JNDI location, java:/TransactionManager. This is the globally available access point for the server transaction manager.
+
+If transaction contexts are to be propagated with RMI/JRMP calls, the transaction manager must also implement two simple interfaces for the import and export of transaction propagation contexts (TPCs). The interfaces are org.jboss.tm.TransactionPropagationContextImporter, and org.jboss.tm.TransactionPropagationContextFactory.
+
+Being independent of the actual transaction manager used also means that JBoss does not specify the format of type of the transaction propagation contexts used. In JBoss, a TPC is of type Object, and the only requirement is that the TPC must implementation the java.io.Serializable interface.
+
+When using the RMI/JRMP protocol for remote calls, the TPC is carried as a field in the org.jboss.ejb.plugins.jrmp.client.RemoteMethodInvocation class that is used to forward remote method invocation requests.
+4.2.1. Adapting a Transaction Manager to JBoss
+
+A transaction manager has to implement the Java Transaction API to be easily integrated with JBoss. As almost everything in JBoss, the transaction manager is managed as an MBean. Like all JBoss services, it should implement org.jboss.system.ServiceMBean to ensure proper life-cycle management.
+
+The primary requirement of the transaction manager service on startup is that it binds its implementation of the three required interfaces into JNDI. These interfaces and their JNDI locations are:
+
+    * The javax.transaction.TransactionManager interface is used by the application server to manage transactions on behalf of the transactional objects that use container managed transactions. It must be bound under the JNDI name java:/TransactionManager.
+    * The transaction propagation context factory interface org.jboss.tm.TransactionPropagationContextFactory is called by JBoss whenever a transaction propagation context is needed for for transporting a transaction with a remote method call. It must be bound under the JNDI name java:/TransactionPropagationContextImporter.
+    * The transaction propagation context importer interface org.jboss.tm.TransactionPropagationContextImporter is called by JBoss whenever a transaction propagation context from an incoming remote method invocation has to be converted to a transaction that can be used within the receiving JBoss server VM.
+
+Establishing these JNDI bindings is all the transaction manager service needs to do to install its implementation as the JBoss server transaction manager.
+4.2.2. The Default Transaction Manager
+
+JBoss is by default configured to use the fast in-VM transaction manager. This transaction manager is very fast, but does have two limitations.
+
+    * It does not do transactional logging, and is thus incapable of automated recovery after a server crash.
+    * While it does support propagating transaction contexts with remote calls, it does not support propagating transaction contexts to other virtual machines, so all transactional work must be done in the same virtual machine as the JBoss server.
+
+The corresponding default transaction manager MBean service is the org.jboss.tm.TransactionManagerService MBean. It has two configurable attributes:
+
+    * TransactionTimeout: The default transaction timeout in seconds. The default value is 300 seconds or 5 minutes.
+    * XidFactory: The JMX ObjectName of the MBean service that provides the org.jboss.tm.XidFactoryMBean implementation. The XidFactoryMBean interface is used to create javax.transaction.xa.Xid instances. This is a workaround for XA JDBC drivers that only work with their own Xid implementation. Examples of such drivers are the older Oracle XA drivers. If not specified a JBoss implementation of the Xid interface is used.
+
+4.2.2.1. org.jboss.tm.XidFactory
+
+The XidFactory MBean is a factory for javax.transaction.xa.Xid instances in the form of org.jboss.tm.XidImpl. The XidFactory allows for customization of the XidImpl that it constructs through the following attributes:
+
+    * BaseGlobalId: This is used for building globally unique transaction identifiers. This must be set individually if multiple JBoss instances are running on the same machine. The default value is the host name of the JBoss server, followed by a slash.
+    * GlobalIdNumber: A long value used as initial transaction id. The default is 0.
+    * Pad: The pad value determines whether the byte[] returned by the Xid getGlobalTransactionId and getBranchQualifier methods should be equal to maximum 64 byte length or a variable value <= 64. Some resource managers (Oracle for example) require ids that are max length in size.
+
+4.2.3. UserTransaction Support
+
+The JTA javax.transaction.UserTransaction interface allows applications to explicitly control transactions. For enterprise session beans that manage transaction themselves (BMT), a UserTransaction can be obtained by calling the getUserTransaction method on the bean context object, javax.ejb.SessionContext.
+
+Note: For BMT beans, do not obtain the UserTransaction interface using a JNDI lookup. Doing this violates the EJB specification, and the returned UserTransaction object does not have the hooks the EJB container needs to make important checks.
+
+To use the UserTransaction interface in other places, the org.jboss.tm.usertx.server.ClientUserTransactionService MBean must be configured and started. This MBean publishes a UserTransaction implementation under the JNDI name UserTransaction. This MBean is configured by default in the standard JBoss distributions and has no configurable attributes.
+
+When the UserTransaction is obtained with a JNDI lookup from a stand-alone client (a client operating in a virtual machine than the server's, for example), a very simple UserTransaction suitable for thin clients is returned. This UserTransaction implementation only controls the transactions on the server the UserTransaction object was obtained from. Local transactional work done in the client is not done within the transactions started by this UserTransaction object.
+
+When a UserTransaction object is obtained by looking up JNDI name UserTransaction in the same virtual machine as JBoss, a simple interface to the JTA TransactionManager is returned. This is suitable for web components running in web containers embedded in JBoss. When components are deployed in an embedded web server, the deployer will make a JNDI link from the standard java:comp/UserTransaction ENC name to the global UserTransaction binding so that the web components can lookup the UserTranaction instance under JNDI name as specified by the J2EE.
+
+
+
+Use of JMS APIs in Transactions
+The Bean Provider should not make use of the JMS request/reply paradigm (sending of a JMS message, followed by the synchronous receipt of a reply to that message) within a single transaction. Because a JMS message is typically not delivered to its final destination until the transaction commits, the receipt of the reply within the same transaction will not take place.
+Because the container manages the transactional enlistment of JMS sessions on behalf of a bean, the parameters of the createSession(boolean transacted, int acknowledgeMode), createQueueSession(boolean transacted, int acknowledgeMode) and createTopicSession( boolean transacted, int acknowledgeMode) methods are ignored. It is recommended that the Bean Provider specify that a session is transacted, but provide 0 for the value of the acknowledgment mode.
+The Bean Provider should not use the JMS acknowledge method either within a transaction or within an unspecified transaction context. Message acknowledgment in an unspecified transaction context is handled by the container.
+
+
+The Optional SessionSynchronization Interface for Stateful Session Beans
+A stateful session bean class can optionally implement the javax.ejb.SessionSynchronization interface. This interface provides the session bean instances with transaction synchronization notifications. The instances can use these notifications, for example, to manage database data they may cache within transactions' e.g., if the Java Persistence API is not used.
+The afterBegin notification signals a session bean instance that a new transaction has begun. The container invokes this method before the first business method within a transaction (which is not necessarily at the beginning of the transaction). The afterBegin notification is invoked with the transaction context. The instance may do any database work it requires within the scope of the transaction.
+The beforeCompletion notification is issued when a session bean instance's client has completed work on its current transaction but prior to committing the resource managers used by the instance. At this time, the instance should write out any database updates it has cached. The instance can cause the transaction to roll back by invoking the setRollbackOnly method on its session context.
+The afterCompletion notification signals that the current transaction has completed. A completion status of true indicates that the transaction has committed. A status of false indicates that a rollback has occurred. Since a session bean instance's conversational state is not transactional, it may need to manually reset its state if a rollback occurred.
+Only a stateful session bean with container-managed transaction demarcation may implement the SessionSynchronization interface. A stateless session bean must not implement the Session-Synchronization interface.
+There is no need for a session bean with bean-managed transaction demarcation to rely on the synchronization call backs because the bean is in control of the commit—the bean knows when the transaction is about to be committed and it knows the outcome of the transaction commit.
+
+

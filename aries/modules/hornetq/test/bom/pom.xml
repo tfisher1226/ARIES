@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>hornetq-test-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries HornetQ JMS Test Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<jboss.microcontainer.version>2.0.10.GA</jboss.microcontainer.version>
+		<hornetq.version>2.2.14.Final</hornetq.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.microcontainer</groupId>
+				<artifactId>jboss-kernel</artifactId>
+				<version>${jboss.microcontainer.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>apache-xerces</groupId>
+						<artifactId>xml-apis</artifactId>
+   					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.hornetq</groupId>
+				<artifactId>hornetq-bootstrap</artifactId>
+				<version>${hornetq.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
+

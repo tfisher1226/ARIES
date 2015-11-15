@@ -1,0 +1,44 @@
+Should I use an Element or an Attribute?
+
+-It is often confusing when to use an element as opposed to using an attribute within your XML Schema. Some designers have the opinion that elements describe data whereas attributes describe the Meta data, others would say that attributes are used for small pieces of data such as an order id, but really it is personal taste with no hard and fast rules as to when to use an attribute.
+
+-A good rule of thumb might be to only use an attribute if it can be considered an aggregate of the parent element that relies on the parent to make sense. Whereas a child Element may be perfectly happy to exist outside of the parent element, in other words it is a composite item that has a relationship with the parent element.
+
+-So an element named Shape may have an attribute called Color, i.e. Meta data about the Shape, and a child element that represents a sequence of called Points, an independent structure of data.
+
+-Using attributes as containers for data will mean you end up creating documents that are difficult to read and maintain, so try to use elements to describe your data.
+
+-Some limitations and possible problems with using attributes include:
+
+    -unlike elements, attributes cannot contain multiple values
+    -attributes are not easily expandable to incorporate future changes to the schema
+    -attributes cannot describe structure whereas child elements can contain a whole variety of child structures
+
+
+Best Practices when Writing XML Schema (XSD)
+
+    -All Element and attributes should use Upper Camel Case (UCC), e.g. (PostalAddress), and should avoid hyphens, spaces or other syntax.
+    -Readability is more important than tag length up to a point. There is always a line to draw between document size and readability, wherever possible favour readability.
+    -Avoid abbreviations and acronyms for element, attribute, and type names. Exceptions should be well known within your business area e.g. ID (Identifier), and POS (Point of Sale).
+    -Postfix all types with the name 'Type', e.g. AddressType. Several standards include Elements and ComplexTypes with the same name which leads to confusion.
+    -Enumerations should use names not numbers and the values should be again be UCC.
+    -Names should not include the name of the containing structure, e.g. CustomerName should be Name within the parent element Customer.
+    -Only produce complexTypes or simpleTypes for types that are likely to be re-used. If the structure will only exists in one place define it inline with an anonymous complexType.
+    -Avoid the use of mixed content.
+    -Only define root level elements if the element is capable of being the root element in an XML document. If you want the element to have Global scope, create a root level ComplexType or SimpleType instead.
+    -Use consistent name space aliases and avoid using the standard defined prefix:
+        -xml (defined in XML standard)
+        -xmlns (defined in Name spaces in XML standard)
+        -xs http://www.w3.org/2001/XMLSchema
+        -xsi http://www.w3.org/2001/XMLSchema-instance
+    -Try to think about versioning early on in your schema design. If its important for a new versions of a schema to be backwardly compatible, then all additions to the schema should be optional. If it is important that existing products should be able to read newer versions of a given document, then consider adding any and anyAttribute entries to the end of your definitions. See Versioning recommendations.
+    -Define a targetNamespace in your schema, this better identifies your schema and can make things easier to modularize and re-use.
+    -Set elementFormDefault="qualified" in the schema element of your schema. This makes qualifying the name spaces in the resulting XML simpler to read.
+
+
+
+
+Guide to Versioning XML Languages using new XML Schema 1.1 features
+http://www.w3.org/TR/xmlschema-guide2versioning
+
+

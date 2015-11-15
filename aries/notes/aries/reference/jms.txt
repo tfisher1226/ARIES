@@ -1,0 +1,2 @@
+JMS Bridge:
+http://middlewaremagic.com/weblogic/?tag=jboss-as7

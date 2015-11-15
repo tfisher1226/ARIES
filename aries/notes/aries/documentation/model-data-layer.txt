@@ -1,0 +1,165 @@
+http://docs.jboss.org/hibernate/stable/jpamodelgen/reference/en-US/html_single/
+
+
+Explain automation of generation of JPA 2 metamodel
+
+allow criteria queries to be constructed in a strongly-typed manner, using metamodel objects to provide type safety
+
+For developers it is important that the task of the metamodel generation can be automated.
+
+
+
+Explain usage of model language to build and maintain the master copy of the data model.
+
+Why is this better than writing POJOs?
+
+You might ask "why should I use EMF instead of creating the model by writing plain POJOs?".  There are two main benefits. These do not include the extra sets of generated code which are also extremely valuable.  The two main benefits are: 1) 
+
+
+Scalablity in Data Model structure and organization
+http://thegordian.blogspot.com/2008/11/how-scalable-are-my-models.html
+
+
+
+Generated Parts
+----------------
+
+For each top-level Element we generate the following:
+
+A ElementFactory which is builder that includes build operations of different signatures.
+
+Queries:
+Query for all
+Queries by primary key(s)
+Queries by indexed fields
+Queries by unique fields
+
+Insert operation
+Update operation
+Delete operation
+Import operation
+Export operation
+
+
+An ElementModel class
+An ElementEntity class
+An ElementAdapter class
+An ElementRepository class
+An ElementMapper class
+An ElementSearch class for describing dynamic queries.
+An ElementUtil class that provides useful operations like common conversions, comparisons, and validations.
+
+
+
+Generation of XSD
+-----------------
+
+Will handle hierarchical organizations.
+-proper configuration of elementFormDefault and attributeFormDefault.
+-proper handling of imported types and elements
+-proper handling of extended elements
+
+
+
+Relations:
+
+unidirectional one-to-one (has join table)
+unidirectional one-to-many (has join table)
+unidirectional many-to-one (has join table)
+
+bidirectional many-to-one/one-to-many associations (has join table)
+bidirectional one-to-one (has join table)
+
+
+Enumeration:
+
+Another commonly used type of attribute is an enumeration. 
+Enumeration-type attributes are implemented using the Java typesafe enum pattern[12].
+
+As shown, the enumeration class provides static int constants for the enumerations's values as well as static constants for the enumeration's singleton literal objects themselves. The int constants have the same names as the model's literal names[13] . The literal constants have the same names with _LITERAL appended.
+
+The constants provide convenient access to the literals when, for example, setting the category of a book: 
+ 
+
+Advantages of using EMF 
+
+With EMF you make your domain model explicit which helps to provide clear visibility of the model. EMF also provides change notification functionality to the model in case of model changes. EMF will generate interfaces and factory to create your objects; therefore it helps you to keep your application clean from the individual implementaiton classes.
+
+Another advantages is that you can regenerate the Java code from the model at any point in time. 
+
+
+
+Reference:
+http://docs.doctrine-project.org/en/latest/reference/association-mapping.html
+
+
+Picking Owning and Inverse Side
+
+For Many-To-Many associations you can chose which entity is the owning and which the inverse side. There is a very simple semantic rule to decide which side is more suitable to be the owning side from a developers perspective. You only have to ask yourself, which entity is responsible for the connection management and pick that as the owning side.
+
+Child element with inverse relation with parent is automatically and implicitely marked as both transient and contained.
+
+
+Associations
+
+	OneToOne_Unidirectional
+	OneToOne_SelfReferencing
+	OneToOne_Bidirectional
+
+	OneToMany_Unidirectional
+	OneToMany_Bidirectional
+	OneToMany_SelfReferencing
+
+	ManyToOne_Unidirectional
+	ManyToOne_Bidirectional
+	ManyToOne_SelfReferencing
+
+	ManyToMany_Unidirectional
+	ManyToMany_Bidirectional
+	ManyToMany_SelfReferencing
+
+
+Hierarchies
+
+A hierarchy is a set of levels having many-to-one relationships between each other, 
+and the set of levels collectively makes up a dimension.  In a relational database, 
+the different levels of a hierarchy can be stored in a single table (as in a star schema) 
+or in separate tables (as in a snowflake schema).
+
+Many-to-one relationships are often enforced by foreign key/primary key relationships, 
+and the relationships typically are between fact and dimension tables and between levels 
+in a hierarchy. The relationship is often used to describe classifications or groupings. 
+For example, in a geography schema having tables Region, State, and City, there are many 
+states that are in a given region, but no states are in two regions. Similarly for cities, 
+a city is in only one state (cities that have the same name but are in more than one state 
+must be handled slightly differently). The key point is that each city exists in exactly 
+one state, but a state may have many cities, hence the term "many-to-one".
+
+Balanced and unbalanced hierarchies
+
+When a dimension has a recursive hierarchy, you do not need to create any levels. 
+Instead, you need to specify any required member information.
+
+Balanced hierarchies
+
+In balanced hierarchies (balanced/standard), the branches of the hierarchy all descend to 
+the same level, with each member's parent being at the level immediately above the member. 
+An common example of a balanced hierarchy is one that represents time, where the depth of 
+each level (year, quarter, and month) is consistent. 
+
+Unbalanced hierarchies
+
+Unbalanced hierarchies includes levels that have a consistent parent-child relationship, 
+but have logically inconsistent levels. The hierarchy branches can also have inconsistent 
+depths. An example of an unbalanced hierarchy is an organization chart, which show reporting 
+relationships among employees in an organization. The levels within the organizational 
+structure are unbalanced, with some branches in the hierarchy having more levels than others.
+
+Ragged hierarchies
+
+In ragged hierarchies, the parent member of at least one member of a dimension is not in the 
+level immediately above the member. Like unbalanced hierarchies, the branches of the hierarchies 
+can descend to different levels.
+
+
+

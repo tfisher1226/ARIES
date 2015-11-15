@@ -1,0 +1,52 @@
+Our process represents a novel approach to software engineering
+   -where the master source is minimal but essential - and the inference engine generates the end-system
+
+
+Clear and well-defined notion of what is a source item - 
+
+-That which is to be considered "master copy" of the "source" of the system.
+
+-Where the word "source" refers to all concepts, specifications, and files considered to be essential to preseving the entire state of the system - and will need to be preserved and mainted and version-controlled over time - possibly over many generations.
+
+-Specifications for the system that are to be maintained over time as the system grows and evolves over a lifetime of multiple and possibly numerous generations.  
+
+
+Clear notion of how to represent a "source item" -
+
+-Multiple views to include different types of constructs and comments that can be truned "on" and "off" by dynamic configuration of the target generation.  So many cool attributes and capabilities can be "turned on" and "off" at generation-time... and at generation-time a series of model analyses will be run to verify that that selection to be "valid" or not and why...
+
+
+Clear understanding of what an editor should be for the essential management of these source items.
+
+-Use WinMerge as a basis but with tabs and tree on the left... allow for "souped-up" version of change control and turning on and off of different options, capabilities, comments and things attached to each source item.  And allowing ways to manage the configurations in hierarchical way.
+
+-Need to provide easy management of mutliple STAGING workspaces - to handle different generations / versions of generated output.
+
+
+Identification and specification of the different generation lifecycle phases - for thorough model-driven software generation.
+
+
+
+Defining a notion of "correctness" that can be guaranteed and proven at runtime.
+
+-Implicit vs explicit correctness
+
+
+
+
+Clear specification and definition of the multi-phase sequence of steps required to process a file written in ARIEL.
+
+
+
+
+
+
+Clear definition of a set of measures / metrics to evaluate the "thoroughness" of a model for a distributed software system.
+
+
+
+
+
+
+
+

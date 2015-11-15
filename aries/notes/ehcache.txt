@@ -1,0 +1,13 @@
+RMI-based Manual Peer Discovery URLs
+//localhost:40000/personCache   # person-service
+//localhost:40001/personCache   # audit-service
+//localhost:40002/personCache   # scheduler-service
+//localhost:40003/personCache   # scheduler-view
+//localhost:40004/personCache   # justification-service
+//localhost:40005/personCache   # notification-service
+//localhost:40006/personCache   # icams-service
+//localhost:40007/personCache   # icams-view
+//localhost:40008/personCache   # libreq-service
+//localhost:40009/personCache   # libreq-view
+//localhost:40010/personCache   # tnts-service
+//localhost:40011/personCache   # tnts-view

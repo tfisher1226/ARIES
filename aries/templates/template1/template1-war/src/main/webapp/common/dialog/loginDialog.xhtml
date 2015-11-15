@@ -1,0 +1,86 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript">
+	function showLoginDialog() {Richfaces.showModalPanel('loginDialog')}
+	function hideLoginDialog() {Richfaces.hideModalPanel('loginDialog')}
+	</script>
+
+	<c:if test="#{empty id}">
+		<c:set var="id" value="loginDialog"/> 
+	</c:if>
+	
+	<!--  
+	<ui:include src="/dialogs/uploadDialog.xhtml">
+		<ui:param name="key" value="login"/>
+		<ui:param name="manager" value="#{userManager}"/>
+		<ui:param name="action" value="uploadKey"/>
+		<ui:param name="reRender" value="loginPanel"/>
+	</ui:include>
+	-->
+	
+	<!-- Login Dialog -->
+	<rich:modalPanel 
+		id="#{id}" 
+		autosized="true" 
+		keepVisualState="false">
+
+		<!-- TITLE -->
+		<aries:dialogTitleBar
+			dialogKey="loginDialog"
+			dialogTitle="Identification Required"/>
+	
+		<!-- HEADER -->
+		<a4j:outputPanel id="loginDialogHeader" style="">
+			<h:panelGrid columns="2" columnClasses="dialogHeaderColumn1, dialogHeaderColumn2" style="width: 100%; vertical-align: top; border-bottom: 1px solid #bbb; background-color: white;">
+				<h:panelGroup layout="block" style="padding: 6px">
+					<h:outputText value="#{dialogTitle}" styleClass="dialogTitle" style="font-size: 16px; font-weight: bold"/>
+	
+					<!-- MESSAGES -->
+					<a4j:outputPanel id="loginDialogMessages">
+						<div class="largeError" style="text-align: left">
+							<rich:spacer height="6"/>
+							<h:messages globalOnly="true"/>
+						</div>
+					</a4j:outputPanel>
+				</h:panelGroup>
+
+				<c:if test="#{not empty dialogIcon}">
+					<h:panelGroup layout="block" style="">
+						<h:graphicImage value="#{dialogIcon}"/>
+					</h:panelGroup>
+				</c:if>
+			</h:panelGrid>
+		</a4j:outputPanel>
+	
+		<!-- CONTENT -->
+		<a4j:form id="loginForm" focus="loginField">
+
+			<rich:hotKey 
+				key="return"
+				selector="##{rich:clientId('loginField')}"  
+				handler="#{rich:element('loginButton')}.onclick(); return false"/>
+				
+			<h:panelGrid styleClass="layoutPane" layout="block" columns="1" columnClasses="formColumn" style="margin: 12px 12px 5px 12px; background-color: inherit"> 
+
+				<!-- INPUT -->
+				<rich:spacer height="8"/>
+				<ui:include src="loginPanel.xhtml"/>
+			</h:panelGrid>
+
+			<!-- CONTROL -->
+			<rich:spacer height="8"/>
+			<ui:include src="loginControl.xhtml"/>
+		</a4j:form>
+	</rich:modalPanel>
+</ui:composition>

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>richfaces-4-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries RICHFACES Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<richfaces.version>4.5.5.Final</richfaces.version>
+        <richfaces.colorpicker.version>4.3.1-SNAPSHOT</richfaces.colorpicker.version>
+        <guava.version>12.0</guava.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--  
+			<dependency>
+				<groupId>org.richfaces</groupId>
+				<artifactId>richfaces-bom</artifactId>
+				<version>${richfaces.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			-->
+
+	        <dependency>
+	            <groupId>org.richfaces</groupId>
+	            <artifactId>richfaces</artifactId>
+	            <version>${richfaces.version}</version>
+	        </dependency>
+	
+            <!--
+			<dependency>
+				<groupId>org.richfaces</groupId>
+                <artifactId>richfaces-root-parent</artifactId>
+				<version>${richfaces.colorpicker.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+				<exclusions>
+					<exclusion>
+                        <groupId>org.richfaces</groupId>
+                        <artifactId>richfaces-bom</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.richfaces.sandbox.ui.colorpicker</groupId>
+				<artifactId>colorpicker-parent</artifactId>
+				<version>${richfaces.colorpicker.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+				<exclusions>
+					<exclusion>
+                        <groupId>org.richfaces</groupId>
+                        <artifactId>richfaces-bom</artifactId>
+					</exclusion>
+					<exclusion>
+                        <groupId>org.richfaces</groupId>
+                        <artifactId>richfaces-root-parent</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.richfaces.sandbox.ui.colorpicker</groupId>
+				<artifactId>colorpicker-ui</artifactId>
+				<version>${richfaces.colorpicker.version}</version>
+				<exclusions>
+					<exclusion>
+                        <groupId>org.richfaces</groupId>
+                        <artifactId>richfaces-bom</artifactId>
+					</exclusion>
+					<exclusion>
+                        <groupId>org.richfaces</groupId>
+                        <artifactId>richfaces-root-parent</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+            -->
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

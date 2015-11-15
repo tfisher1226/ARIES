@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpel:process name="SampleBpelProcess"
+              targetNamespace="http://timcarpenter.net/bpel"
+              suppressJoinFailure="yes"
+              xmlns:fn="http://www.w3.org/2005/xpath-functions"
+              xmlns:wsa="http://www.w3.org/2005/08/addressing"
+              xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema"
+              exitOnStandardFault="yes">
+              
+    <bpel:sequence>
+        <bpel:empty/>
+    </bpel:sequence>
+</bpel:process>

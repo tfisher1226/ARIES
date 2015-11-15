@@ -1,0 +1,14 @@
+http://www.ibm.com/developerworks/webservices/library/ws-whichwsdl/
+http://www.ws-i.org/Profiles/BasicProfile-1.1.html
+
+Rules of thumb:
+-Stick to WS-I standards/recommendations
+-Avoid overloaded in methods in serviceimpl (thereby avoiding need to use document/literal non-wrapped).  Also WSDL 2.0 will not allow overloaded operations. 
+-The primary reason to prefer the RPC/encoded style is for data graphs. Imagine that you have a binary tree and need to send that... The standard way to send data graphs is to use the href tag, which is part of the RPC/encoded style. Under any literal style, the href attribute is not available, so the graph linkage is lost (see Listing 14 and Figure 2). You still have a root node, A, which points to a node B to the left and another node B to the right. These B nodes are equal, but they are not the same node. Data have been duplicated instead of being referenced twice. There are various ways you can do graphs in literal styles, but there are no standard ways; so anything you might do would probably not interoperate with the service on the other end of the wire.
+
+WS-I's Basic Profile dictates that in the RPC/literal response message, the name of the child of soap:body is "... the corresponding wsdl:operation name suffixed with the string 'Response'. That's exactly what the conventional wrapped pattern's response element is called.  That's exactly what the conventional wrapped pattern's response element is called. So soap response with this convention apply to the RPC/literal message as well as the document/literal wrapped message.
+
+Summary
+
+There are four binding styles (there are really five, but document/encoded is meaningless). While each style has its place, under most situations the best style is document/literal wrapped.
+

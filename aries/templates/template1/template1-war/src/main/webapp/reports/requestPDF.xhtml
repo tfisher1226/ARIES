@@ -1,0 +1,56 @@
+<p:document xmlns:p="http://jboss.com/products/seam/pdf"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"   
+   xmlns:c="http://java.sun.com/jstl/core"	
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:rich="http://richfaces.org/rich"
+   title="Library Request"
+   pageSize="LETTER">
+   
+	<f:facet name="header">
+	  <p:font size="9">
+	    <p:header borderWidthTop="0" borderWidthBottom="0.4" alignment="center">
+	      <p:paragraph indentationLeft="50">Library Request #{libRequest.requestNumber} [#{libRequest.requestBin.binName}]</p:paragraph>
+	    </p:header>
+	    <p:footer borderWidthTop="1" borderColorTop="black" borderWidthBottom="0" alignment="center">
+	      The Aerospace Corporation - #{helper.toTimeString(currentDate)}
+	    </p:footer>
+	  </p:font>
+	</f:facet>
+	
+	<p:paragraph>
+		<p:font size="7">		
+			<p:table columns="7" widthPercentage="100" widths="1 2 1 2 2 1 1" spacingBefore="10">
+				<p:cell colspan="7">Requester Information</p:cell>
+				<p:cell> </p:cell>
+				<p:cell>Name</p:cell>
+				<p:cell>Badge</p:cell>
+				<p:cell>Phone Number</p:cell>
+				<p:cell>Building</p:cell>
+				<p:cell>Mail Stop</p:cell>
+				<p:cell>Cost Center</p:cell>
+				<ui:repeat var="record" value="#{requestPersonnel}">
+					<p:cell>#{record.type}</p:cell>
+	     			<p:cell>#{helper.toFullName(record)}</p:cell>
+	     			<p:cell>#{record.badgeNumber}</p:cell>
+	     			<p:cell>#{record.phoneNumber}</p:cell>
+	     			<p:cell>#{record.building}</p:cell>	
+	     			<p:cell>#{record.mailStop}</p:cell>	 
+	     			<p:cell>#{libRequest.costCenter}</p:cell>    				     			    			     			
+	     		</ui:repeat>
+	     	</p:table>
+	     	
+	   		<p:table columns="2" widthPercentage="100" widths="1 3" spacingBefore="10">
+     			<p:cell colspan="2">Request Details</p:cell>
+     			<p:cell>Request Type</p:cell>
+     			<p:cell>#{libRequest.requestType.requestTypeName}</p:cell>
+	     		<p:cell>Date Required</p:cell>
+	     		<p:cell>#{libRequest.dateRequired} #{viewUtil.getExpedite(libRequest.expedite)}</p:cell>
+	     		<p:cell colspan="2">Special Instructions</p:cell>
+	     		<p:cell colspan="2">#{libRequest.instructions}</p:cell>
+     			<p:cell colspan="2">Citation</p:cell>
+     			<p:cell colspan="2"><p:html value="#{libRequest.citation}"/></p:cell>
+     		</p:table>   		
+     	</p:font>
+	</p:paragraph>
+</p:document>

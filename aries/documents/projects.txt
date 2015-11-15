@@ -1,0 +1,41 @@
+Breakdown of project structure:
+
+Project level files:
+
+Source folders:
+src/main/java
+src/test/java
+src/main/resources
+src/test/resources
+
+Configuration files:
+pom.xml
+
+Resource files:
+beanContext.xml
+beanContext.properties
+persistence.xml
+deployment.xml
+jbm-queue-service.xml
+jboss-esb.xml
+log4j.xml
+
+
+
+
+aero-approval-client
+aero-approval-service
+
+aero-audit-client
+aero-audit-service
+
+aero-common-client
+aero-common-model
+aero-common-platform
+aero-common-service
+
+aero-email-client
+aero-email-service
+
+aero-platform-
+

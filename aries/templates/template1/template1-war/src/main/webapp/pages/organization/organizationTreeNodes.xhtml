@@ -1,0 +1,96 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<rich:treeNode 
+		type="TEMP"
+		requestDelay="0"
+		immediate="true"
+		ajaxSingle="true"
+		icon="/icons/FolderOpen16.gif"
+		iconLeaf="/icons/FolderOpen16.gif">
+	</rich:treeNode>
+	
+	<aries:treeNode
+		nodeType="ZONE"
+		immediate="true"
+		ajaxSingle="true"
+		acceptedTypes="REGION"
+		icon="resource://images/icons/common/FolderOpen16.gif"
+		iconLeaf="resource://images/icons/common/File16.gif"
+		oncontextmenu="showOrganizationContextMenu(event, '#{item.label}', '#{item.type}', 'Region')"
+		oncomplete="showOrganizationView('membershipView')"
+		ondblclick="#{ondblclick}">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="REGION"
+		immediate="true"
+		ajaxSingle="true"
+		acceptedTypes="AREA"
+		icon="resource://images/icons/common/FolderOpen16.gif"
+		iconLeaf="resource://images/icons/common/File16.gif"
+		oncontextmenu="showOrganizationContextMenu(event, '#{item.label}', '#{item.type}', 'Area')"
+		oncomplete="showOrganizationView('membershipView')"
+		ondblclick="#{ondblclick}">
+	</aries:treeNode> 
+
+	<aries:treeNode
+		nodeType="AREA"
+		immediate="true"
+		ajaxSingle="true"
+		acceptedTypes="CHAPTER"
+		dropListener="#{organizationTreeManager.dropListener}"
+		icon="resource://images/icons/common/FolderOpen16.gif"
+		iconLeaf="resource://images/icons/common/File16.gif"
+		oncontextmenu="showOrganizationContextMenu(event, '#{item.label}', '#{item.type}', 'Chapter')"
+		oncomplete="showOrganizationView('membershipView')"
+		ondblclick="#{ondblclick}">
+	</aries:treeNode>
+
+	<aries:treeNode
+		nodeType="CHAPTER"
+		immediate="true"
+		ajaxSingle="true"
+		acceptedTypes="DISTRICT"
+		icon="resource://images/icons/common/FolderOpen16.gif"
+		iconLeaf="resource://images/icons/common/File16.gif"
+		oncontextmenu="showOrganizationContextMenu(event, '#{item.label}', '#{item.type}', 'District')"
+		oncomplete="showOrganizationView('membershipView')"
+		ondblclick="#{ondblclick}">
+	</aries:treeNode>
+
+	<aries:treeNode
+		nodeType="DISTRICT"
+		immediate="true"
+		ajaxSingle="false"
+		bypassUpdates="false"
+		limitToList="false"
+		acceptedTypes="GROUP"
+		icon="resource://images/icons/common/FolderOpen16.gif"
+		iconLeaf="resource://images/icons/common/File16.gif"
+		oncontextmenu="showOrganizationContextMenu(event, '#{item.label}', '#{item.type}', 'Group')"
+		ondblclick="#{ondblclick}"
+		reRender="organizationToolbarPanel">
+	</aries:treeNode>
+	
+	<aries:treeNode
+		nodeType="GROUP"
+		immediate="true"
+		ajaxSingle="true"
+		icon="resource://images/icons/common/FolderOpen16.gif"
+		iconLeaf="resource://images/icons/common/File16.gif"
+		oncontextmenu="showOrganizationContextMenu(event, '#{item.label}', '#{item.type}', null)"
+		oncomplete="showOrganizationView('membershipView')"
+		ondblclick="#{ondblclick}">
+	</aries:treeNode>
+</ui:composition>

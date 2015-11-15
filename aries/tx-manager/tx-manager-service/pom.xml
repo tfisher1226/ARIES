@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>tx-manager-service</artifactId>
+	<name>tx-manager-service</name>
+	<description>Project object model for: tx-manager-service</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>ejb</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>tx-manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+
+	<!--
+	<properties>
+        <version.jbossas>6.1.0.Final</version.jbossas>
+        <version.jbossts>4.13.1.Final</version.jbossts>
+        <version.junit>4.8.2</version.junit>
+        <version.byteman>2.0.1</version.byteman>
+		<version.arquillian>1.0.0.CR3</version.arquillian>
+		<version.arquillian.junit>1.0.1.Final</version.arquillian.junit>
+		<version.apache.httpcomponents>4.1.2</version.apache.httpcomponents>
+
+		<byteman.home>${project.build.directory}/byteman</byteman.home>
+        <general.server.jvm.args>
+            -Xms64m -Xmx512m -XX:MaxPermSize=256m
+        </general.server.jvm.args>
+        <byteman.server.jvm.args>
+            -Dorg.jboss.byteman.debug=true -Dorg.jboss.byteman.verbose=true
+            -Dorg.jboss.byteman.contrib.dtest.rmiregistry.port=1199
+            -Djboss.modules.system.pkgs=org.jboss.byteman
+            -javaagent:${byteman.home}/byteman.jar=port:9091,listener:true,sys:${byteman.home}/byteman-dtest.jar
+        </byteman.server.jvm.args>
+        <jpda.server.jvm.args></jpda.server.jvm.args>
+	</properties>
+	-->
+
+    <build>
+		<!-- 
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+			                    <pluginExecution>
+			                        <pluginExecutionFilter>
+			                            <artifactId>maven-dependency-plugin</artifactId>
+			                            <versionRange>[2.8,)</versionRange>
+			                            <goals>
+			                                <goal>copy</goal>
+			                            </goals>
+			                        </pluginExecutionFilter>
+			                        <action>
+			                            <ignore />
+			                        </action>
+			                    </pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		-->
+
+        <plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+        	<!--  
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>byteman.copy</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.jboss.byteman</groupId>
+                                    <artifactId>byteman</artifactId>
+                                    <version>${version.byteman}</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.jboss.byteman</groupId>
+                                    <artifactId>byteman-dtest</artifactId>
+                                    <version>${version.byteman}</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${byteman.home}</outputDirectory>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
+			<!--             
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <enableAssertions>true</enableAssertions>
+                    <includes>
+                        <include>**/*Tests.java</include>
+                    </includes>
+
+                    <systemPropertyVariables>
+                        <server.jvm.args>${general.server.jvm.args} ${byteman.server.jvm.args} ${jpda.server.jvm.args}</server.jvm.args>
+                        <java.rmi.server.codebase>file://target/test-classes/</java.rmi.server.codebase>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-base</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-registry</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--  
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>tx-manager-recovery</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+	</dependencies>
+</project>

@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="organizationPanel">
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Select Organization</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+
+					<aries:panel style="width: 366px; height: 200px; margin: 0px; padding: 0px; overflow: auto">
+			
+						<rich:tree 
+							var="item"
+							nodeFace="#{item.type}"
+							value="#{organizationTreeManager.rootNode}" 
+							switchType="client" 
+							ajaxKeys="#{null}"
+							requestDelay="0"
+							ajaxSingle="false"
+							ajaxSubmitSelection="true"
+							rightClickSelection="false"
+							adviseNodeOpened="#{organizationSelectManager.adviseNodeOpened}"
+							adviseNodeSelected="#{organizationSelectManager.adviseNodeSelected}"
+							nodeSelectListener="#{organizationSelectManager.nodeSelected}"
+							highlightedClass="treeNodeHighlighted"
+							selectedClass="treeNodeSelected"
+							styleClass="tree">
+			
+							<ui:include src="/pages/organization/organizationTreeNodes.xhtml">
+								<ui:param name="ondblclick" value="saveOrganizationSelection()"/>
+								<ui:param name="contextMenu" value="organizationContextMenu"/>
+							</ui:include>
+						</rich:tree>
+					</aries:panel>
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

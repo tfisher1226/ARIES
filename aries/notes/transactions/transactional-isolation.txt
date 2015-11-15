@@ -1,0 +1,3 @@
+
+JTA does not support setting custom isolation levels for individual transactions: You have to rely on proprietary features of the transaction manager to have access to such functionality.
+

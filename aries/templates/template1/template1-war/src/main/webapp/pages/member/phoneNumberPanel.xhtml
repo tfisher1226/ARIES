@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="phoneNumberPanel">
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Phone Number Contact Information</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 12px 8px 12px 8px">		
+
+					<rich:spacer height="2"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 0px">
+						<h:outputLabel id="homePhoneLabel" styleClass="formLabel text12" for="homePhoneField" style="display: block; width: 50px">Home</h:outputLabel>
+						<h:inputText id="homePhoneField" styleClass="formInput text12" value="#{member.homePhone}" style="width: 300px"
+							converter="phoneNumberConverter" 
+							validator="phoneNumberValidator"/>
+					</h:panelGrid>
+
+					<rich:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 0px">
+						<h:outputLabel id="workPhoneLabel" styleClass="formLabel text12" for="workPhoneField" style="display: block; width: 50px">Work</h:outputLabel>
+						<h:inputText id="workPhoneField" styleClass="formInput text12" value="#{member.workPhone}" style="width: 300px" 
+							converter="phoneNumberConverter" 
+							validator="phoneNumberValidator"/>
+					</h:panelGrid>
+
+					<rich:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 0px">
+						<h:outputLabel id="cellPhoneLabel" styleClass="formLabel text12" for="cellPhoneField" style="display: block; width: 50px">Cell</h:outputLabel>
+						<h:inputText id="cellPhoneField" styleClass="formInput text12" value="#{member.cellPhone}" style="width: 300px" 
+							converter="phoneNumberConverter" 
+							validator="phoneNumberValidator"/>
+					</h:panelGrid>
+
+					<rich:spacer height="8"/>
+					<h:panelGrid styleClass="formPanel" columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin-top: 0px">
+						<h:outputLabel id="otherPhoneLabel" styleClass="formLabel text12" for="otherPhoneField" style="display: block; width: 50px">Other</h:outputLabel>
+						<h:inputText id="otherPhoneField" styleClass="formInput text12" value="#{member.otherPhone}" style="width: 300px"
+							converter="phoneNumberConverter" 
+							validator="phoneNumberValidator"/>
+					</h:panelGrid>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

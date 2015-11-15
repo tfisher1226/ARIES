@@ -1,0 +1,62 @@
+http://ws.apache.org/wsif/providers/wsdl_extensions/jms_extension.html
+
+    <message name="JMSInputMessage">
+        <part name="part1" type="xsd:base64Binary"/>
+    </message>   
+
+    <portType name="JMSInPortType">
+        <operation name="JMSInOperation">
+            <input name="input1" message="tns:JMSInputMessage"/>
+        </operation>
+    </portType>
+
+    <binding name="JMSInBinding" type="tns:JMSInPortType">
+        <jms:binding/>
+        <operation name="JMSInOperation">
+            <jms:operation destination="DefaultQueue" destinationType="Queue" transaction="NoTransaction" concurrencyMode="cc" maxConcurrentConsumers="1"/>
+            <input name="input1">
+                <jms:message messageType="BytesMessage" bytesPart="part1"/>
+            </input>
+        </operation>
+    </binding>
+
+Jms fault, fault property and fault indicator
+
+The JMS fault, fault property and fault indicator tags are WSDL extensions that describe the Native JMS binding for a fault message. These tags appear in the fault message of a JMS binding operation. These faults are problems that the backend web service wishes to report to the client. In Native JMS these are mapped to either body parts or JMS properties. There is a JMS property that is the fault indicator. If this fault indicator is set, this message describes a fault, not an output message. The fault indicator also shows which fault occurred. 
+
+<binding name="xxx" type="xxx">
+  <jms:binding type="ObjectMessage"/>
+  <format:typeMapping encoding="Java" style="Java" />
+  <operation name="xxx">
+    <input name="xxx" />
+    <output name="xxx" />
+    <fault name="xxx">
+      <jms:faultIndicator type="property">
+        <jms:faultProperty 
+          name="xxx" 
+          type="xxx" 
+          value="xxx" 
+          part="xxx"/>
+      </jms:faultIndicator>
+      <jms:fault parts="a b c"/>
+      <jms:property 
+        name="xxx" 
+        type="xxx" 
+        part="xxx"/>
+    </fault>
+  </operation>
+</binding>
+
+</binding>
+
+- There can be multiple fault messages for a particular operation. Each fault message describes a different fault that this operation can return.
+- The <jms:faultIndicator tag describes how to recognise this fault message. The type of the faultIndicator must be set to property which means that this faultIndicator is described by a JMS property. Other faultIndicator types may be supported in the future. WSIF currently supports each fault message having exactly one jms:faultIndicator.
+- The <jms:faultProperty tag appears in the <jms:faultIndicator, if the faultIndicator type is property (which is the only value allowed currently). The jms:faultProperty describes the JMS property that indicates that this message is a fault. The faultProperty name is the name of the JMS property. The type is the type of the JMS property, which must also match the type of the message part that this faultProperty maps to. Also the value must be able to be converted into this type. The value is the value that the JMS property must be set to, if the message describes this fault. The part is the message part that maps to this faultProperty. The name, type and value are mandatory, whereas the part is optional. There cannot be two fault messages for the same operation that have the same faultProperty name and value.
+- The <jms:fault tag describes which message parts will be set for this fault. The parts is a space separated list of message parts.
+- For a description of the <jms:property tag, please see above.
+
+
+I really think your kind of work sounds fun actually. really dones sounds like your work is a great.
+
+I'm working on web-based system which includes 7 different workbenches where each workbench has its own set of tool icons, menus with icons, and each tool having more menus with icons etc... Anyway it is kind of fun organizing all these graphics, but I don't have much experience at.
+

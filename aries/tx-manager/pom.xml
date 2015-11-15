@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>tx-manager</artifactId>
+	<name>tx-manager</name>
+	<description>tx-manager</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>tx-manager-app</module>
+		<module>tx-manager-base</module>
+		<module>tx-manager-model</module>
+		<module>tx-manager-registry</module>
+		<module>tx-manager-client</module>
+		<module>tx-manager-service</module>
+		<!--  
+		<module>tx-manager-recovery</module>
+		-->
+		<module>tx-manager-bridge</module>
+		<module>tx-manager-test</module>
+	</modules>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-test-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>tx-manager-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>tx-manager-test-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>util</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>logging</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>testing</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>javax</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>commons</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jta</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxb</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jaxws</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>hornetq</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>hornetq-test</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>arquillian</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>byteman</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-launcher</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>aries-registry</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>nam-model</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-util</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-net</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-net</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-runtime</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-runtime</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-cache</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-cache</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-event</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-action</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-model</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-data</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-service</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-service</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-client</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-client</artifactId>
+			<version>${aries.version}</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jndi</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jndi</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jmx</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jmx</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jms</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jms</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxb</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxws</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-jaxws</artifactId>
+			<version>${aries.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-rmi</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>common-ejb</artifactId>
+			<version>${aries.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>	
+</project>

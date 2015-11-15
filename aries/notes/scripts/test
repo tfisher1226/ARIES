@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#mvn -o -DargLine="-Xmx1024m -Xms512m -XX:MaxPermSize=512m24" site
+
+MAVEN_OPTS="-Xmx1024m -Xms512m -XX:MaxPermSize=512m"
+export MAVEN_OPTS
+mvn !* site
+

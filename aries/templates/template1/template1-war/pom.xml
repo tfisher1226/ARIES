@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>template1-war</artifactId>
+	<name>template1-war</name>
+	<description>template1-war</description>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>template1</artifactId> 
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- the default value is the filter list under build -->
+					<!-- specifying a filter will override the filter list under build 
+					<filters>
+						<filter>properties/config.prop</filter>
+					</filters>
+					-->
+
+					<!-- default: jpg,jpeg,gif,bmp,png 
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+					-->
+
+					<!--  
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+ 							<includes>
+								<include>WEB-INF/components.xml</include>
+								<include>WEB-INF/web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+					-->
+				</configuration>
+			</plugin>
+
+			<!--  
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xhtml</include>
+						<include>META-INF/*.xml</include>
+						<include>images/**/*.png</include>
+						<include>images/**/*.gif</include>
+						<include>images/**/*.jpg</include>
+						<include>styles/**/*.css</include>
+						<include>scripts/**/*.js</include>
+						<include>scripts/**/*.xhtml</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			-->
+		</plugins>
+
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-platform-client-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- ARIES -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>aries-view-layer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- JSF -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>jsf</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- SEAM (frontend) -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>seam-ui</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- RICHFACES -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>richfaces-4</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+			<type>pom</type>
+		</dependency>
+
+        <dependency>
+            <groupId>org.jboss.seam</groupId>
+            <artifactId>jboss-seam</artifactId>
+            <version>2.3.0.Final</version>
+            <scope>provided</scope>
+            <type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>admin</groupId>
+			<artifactId>admin-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>test</scope>
+			<type>test-jar</type>
+		</dependency>
+				
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>template1-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>template1-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>notification-model</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aries</groupId>
+			<artifactId>notification-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

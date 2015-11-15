@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty hideDelay}">
+		<c:set var="hideDelay" value="100" /> 
+	</c:if>
+
+	<c:if test="#{empty submitMode}">
+		<c:set var="submitMode" value="ajax" /> 
+	</c:if>
+
+	<rich:dropDownMenu 
+		hideDelay="#{hideDelay}" 
+		submitMode="#{submitMode}"
+		styleClass="toolbarMenu" 
+		style="padding: 4px; text-align: left">
+		
+		<f:facet name="label">
+			<h:panelGroup layout="block" style="">
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumnAlignBottom" style="border-collapse: collapse">
+					<c:if test="#{empty icon}">
+						<h:graphicImage value="resource://images/spacer.gif" width="3" height="16"/>
+					</c:if>
+					<c:if test="#{not empty icon}">
+						<h:panelGroup layout="block" style="padding-left: 2px">
+							<h:graphicImage value="#{icon}" />
+							<c:if test="#{not empty value}">
+								<rich:spacer width="4"/>
+							</c:if>
+						</h:panelGroup>
+					</c:if>
+					<c:if test="#{not empty value}">
+						<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+							<h:outputText value="#{value}" styleClass="toolbarLabel" style="padding-right: 2px; vertical-align: bottom; #{labelStyle}"/>
+							<c:if test="#{not empty icon}">
+								<rich:spacer width="1"/>
+							</c:if>
+						</h:panelGroup>
+					</c:if>
+				</h:panelGrid>
+			</h:panelGroup>
+		</f:facet>
+
+			<ui:insert/>
+
+		<!--  
+		<h:panelGroup 
+			layout="block" 
+			styleClass="formPanel" 
+			style="padding: 4px; text-align: left; background-color: red">
+		</h:panelGroup>
+		-->
+
+	</rich:dropDownMenu>
+</ui:composition>

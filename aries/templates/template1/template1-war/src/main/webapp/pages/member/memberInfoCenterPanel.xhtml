@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<rich:spacer height="2"/>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2"> 
+		<h:outputLabel styleClass="formLabel" style="width: 60px">Name</h:outputLabel>
+		<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+			<ui:include src="personNameField.xhtml"/>
+		</h:panelGroup>
+	</h:panelGrid>
+
+	<rich:spacer height="8"/>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2"> 
+		<h:outputLabel styleClass="formLabel" style="width: 60px">Email</h:outputLabel>
+		<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+			<ui:include src="emailAddressField.xhtml"/>
+		</h:panelGroup> 
+	</h:panelGrid>
+		
+	<rich:spacer height="8"/>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumnAlignTop, formColumn"> 
+		<h:outputLabel styleClass="formLabel" style="width: 60px; padding-top: 2px">Phones</h:outputLabel>
+		<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+			<ui:include src="phoneNumberField.xhtml"/>
+		</h:panelGroup> 
+	</h:panelGrid>
+
+	<rich:spacer height="8"/>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2"> 
+		<h:outputLabel styleClass="formLabel" style="width: 60px; padding-top: 2px">Address</h:outputLabel>
+		<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+			<ui:include src="streetAddressField.xhtml"/>
+		</h:panelGroup> 
+	</h:panelGrid>
+	
+
+	<!--  
+	<div class="groupLabel">Email</div>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2"> 
+		<h:inputText styleClass="formInput" style="width: 184px" value="#{member.emailAddress}" 
+			converter="emailAddressConverter"
+			validator="emailAddressValidator"/>
+		<h:selectBooleanCheckbox value="true" label="" style="padding-left: 4px"/>
+	</h:panelGrid>
+	-->
+	
+	<!--  		
+	<div class="vspace8"/>
+	<div class="groupLabel">Name</div>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2"> 
+	
+		<div class="formLabel" style="width: 60px">First</div>
+		<h:inputText styleClass="formInput" style="width: 150px" required="true" value="#{member.firstName}"/>
+
+		<div class="formLabel" style="width: 60px">Last</div>
+		<h:inputText styleClass="formInput" style="width: 150px" required="true" value="#{member.lastName}"/>
+
+		<div class="formLabel" style="width: 60px">Middle</div>
+		<h:inputText styleClass="formInput" style="width: 150px" value="#{member.middleInitial}"/>
+	</h:panelGrid>
+	-->
+
+	<!--  
+	<div class="vspace8"/>
+	<div class="groupLabel">Phone</div>
+	<h:panelGrid styleClass="groupPanel" layout="block" columns="2"> 
+	
+		<div class="formLabel" style="width: 60px">Home</div>
+		<h:inputText styleClass="formInput" style="width: 150px" value="#{member.homePhone}"
+			converter="phoneNumberConverter" 
+			validator="phoneNumberValidator"/>
+
+		<div class="formLabel" style="width: 60px">Work</div>
+		<h:inputText styleClass="formInput" style="width: 150px" value="#{member.workPhone}" 
+			converter="phoneNumberConverter" 
+			validator="phoneNumberValidator"/>
+
+		<div class="formLabel" style="width: 60px">Cell</div>
+		<h:inputText styleClass="formInput" style="width: 150px" value="#{member.cellPhone}" 
+			converter="phoneNumberConverter" 
+			validator="phoneNumberValidator"/>
+	</h:panelGrid>
+	-->
+</ui:composition>

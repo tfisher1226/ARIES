@@ -1,0 +1,69 @@
+
+DAO fundamentals
+
+The DAO pattern is one of the standard J2EE design patterns. Developers use this pattern to separate low-level data access operations from high-level business logic. A typical DAO implementation has the following components:
+
+    * A DAO factory class
+    * A DAO interface
+    * A concrete class that implements the DAO interface
+    * Data transfer objects (sometimes called value objects)
+
+The concrete DAO class contains logic for accessing data from a specific data source. In the sections that follow you'll learn techniques for designing and implementing data access objects. See Resources to learn more about the DAO design pattern.
+
+
+Transaction demarcation
+
+The important thing to remember about DAOs is that they are transactional objects. Each operation performed by a DAO -- such as creating, updating, or deleting data -- is associated with a transaction. As such, the concept of transaction demarcation is extremely important.
+
+Transaction demarcation is the manner in which transaction boundaries are defined. The J2EE specification describes two models for transaction demarcation: programmatic and declarative.
+
+
+Design considerations
+
+As stated previously, DAOs are transactional objects. A typical DAO performs transactional operations such as create, update, and delete. When designing a DAO, start by asking yourself the following questions:
+
+    * How will transactions start?
+    * How will transactions end?
+    * Which object will be responsible for starting a transaction?
+    * Which object will be responsible for ending a transaction?
+    * Should the DAO be responsible for starting and ending transactions?
+    * Will the application need to access data across multiple DAOs?
+    * Will a transaction involve one DAO or multiple DAOs?
+    * Will a DAO invoke methods on another DAO?
+
+Knowing the answers to these questions will help you choose the transaction demarcation strategy that is best for your DAOs. There are two main strategies for transaction demarcation in DAOs. One approach makes the DAO responsible for demarcating transactions; the other defers transaction demarcation to the object that is calling the DAO's methods. If you choose the former approach, you will embed transaction code inside the DAO class. If you choose the latter approach, transaction demarcation code will be external to the DAO class. We'll use simple code examples to better understand how each of these approaches works.
+
+
+Logging and DAOs
+
+A well-implemented DAO class will use logging to capture details about its run-time behavior. You may choose to log exceptions, configuration information, connection status, JDBC driver metadata, or query parameters. Logs are useful in all phases of development. I often examine application logs during development, during testing, and in production.
+
+In this section, I'll present a code example that shows how to incorporate Jakarta Commons Logging into a DAO. Before we get to that, let's review a couple of basics. 
+
+
+Exception handling in DAOs
+
+We've looked at transaction demarcation and logging and you now have a deeper understanding of how each applies to data access objects. Our third and final discussion point is exception handling. Following a few simple exception handling guidelines will make your DAOs easier to use, more robust, and more maintainable.
+
+When implementing the DAO pattern, consider the following questions:
+
+    * Will methods in the DAO's public interface throw checked exceptions?
+    * If yes, what checked exceptions will be thrown?
+    * How will exceptions be handled within the DAO implementation class?
+
+In the process of working with the DAO pattern, our team developed a set of guidelines for exception handling. Follow these guidelines to greatly improve your DAOs:
+
+    * DAO methods should throw meaningful exceptions.
+
+    * DAO methods should not throw java.lang.Exception. A java.lang.Exception is too generic. It does not convey any information about the underlying problem.
+
+    * DAO methods should not throw java.sql.SQLException. SQLException is a low-level JDBC exception. A DAO should strive to encapsulate JDBC rather than expose JDBC to the rest of the application.
+
+    * Methods in the DAO interface should throw checked exceptions only if the caller can reasonably be expected to handle the exception. If the caller won't be able to handle the exception in a meaningful way, consider throwing an unchecked (run-time) exception.
+
+    * If your data access code catches an exception, do not ignore it. DAOs that ignore caught exceptions are difficult to troubleshoot.
+
+    * Use chained exceptions to translate low-level exceptions into high-level ones.
+
+    * Consider defining standard DAO exception classes. The Spring Framework (see Resources) provides an excellent set of predefined DAO exception classes.
+

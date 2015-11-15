@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:toolbar type="tab"> 
+		<aries:toolbarGroup location="left">
+		
+			<!--  
+			<h:outputText value="Records per page" styleClass="text11" style="padding-left: 4px; padding-right: 6px"/>
+       		<h:inputText value="#{memberRecordsPerPage}" converter="integerConverter" style="font-size: 11px; width: 20px; border: 1px solid #C3BBB6">
+       			<a4j:support event="onkeyup" reRender="membershipListTable" requestDelay="0" ajaxSingle="true"/>
+       		</h:inputText>
+			<span class="hspace4"/>
+       		-->
+
+			<aries:toolButton
+				submitMode="ajax"
+				immediate="true"
+				ajaxSingle="true"
+				bypassUpdates="true"
+				limitToList="true"
+				icon="resource://images/icons/common/New16.gif"
+				manager="#{userInfoManager}"
+				action="newUser"
+				onclick="setCursorWait(); showProgress('User Records', 'Creating new record...')"
+				oncomplete="setCursorDefault(); Richfaces.showModalPanel('userDialog'); hideProgress()"
+				tooltip="Create new User Record"
+				reRender="userDialog"
+				linkClass="text16 link"
+				offset="true"/>
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup location="right">
+			<aries:toolButton
+				icon="resource://images/icons/common/Refresh16.gif"
+				tooltip="Re-read information from server"
+		   		manager="#{administrationManager}"
+		   		action="refreshTab" 
+				onclick="setCursorWait(this); showProgress('Document Service', 'Refreshing #{mainManager.selectedTab.tabLabel}...')"
+				oncomplete="setCursorDefault(this); hideProgress()"
+		   		reRender="#{mainManager.selectedTab.viewId}"
+				linkClass="text16 link"/>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

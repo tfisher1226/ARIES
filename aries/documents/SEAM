@@ -1,0 +1,194 @@
+SEAM
+
+http://www.theserverside.com/news/1364119/JBoss-Seam-A-Deep-Integration-Framework
+
+
+Seam supports Open Session In View by default.
+"Open Session In View" -- to keep the persistence session open in the page rendering phase -- supports lazy-loading
+it is often not trivial to implement this as it requires non-trivial amounts of code between web framework and persistence framework.
+
+Seam provides first class support for Ajax
+
+All Seam components, with the exception of EJB3 Stateless Session Beans, are stateful.
+
+
+
+
+Dependency Bijection
+
+To really appreciate Seam's component management capabilities, we have to look at bijection with multiple components interacting with each other.
+
+Dependency bijection allows us to manage complex relationships among components using very simple annotations.
+
+
+The following page shows a text field backed by an entity bean, a button backed by a POJO, and data table backed by a List object.
+
+Your name: <h:inputText value="#{person.name}"/><br/>
+
+<h:commandButton type="submit" value="Say Hello" action="#{manager.sayHello}"/>
+
+<h:dataTable value="#{fans}" var="fan">
+  <h:column>
+    <h:outputText value="#{fan.name}"/>
+  </h:column>
+</h:dataTable>
+
+
+Below are the code for the Person entity bean and the Manager POJO.
+
+@Entity
+@Name("person")
+public class Person implements Serializable {
+
+  private long id;
+  private String name;
+
+  @Id @GeneratedValue
+  public long getId() { return id;}
+  public void setId(long id) { this.id = id; }
+
+  public String getName() { return name; }
+  public void setName(String name) { this.name = name; }
+}
+
+
+@Name("manager")
+public class Manager {
+
+  @In @Out
+  private Person person;
+
+  @Out
+  private List <Person> fans;
+
+  @In
+  private EntityManager em;
+
+  public String sayHello () {
+    em.persist (person);
+    person = new Person ();
+    fans = em.createQuery("select p from Person p").getResultList();
+    return null;
+  }
+}
+
+
+Notice in manager component:
+-the JPA EntityManager is "injected" at bean creation time
+-the person is "injected" when the sayHello() runs and fans is "outjected" when sayHello() exits
+The injection and outjection ("dependency bijection") both happen in the current web request scope, so that the #{person.name} value from the user input is used by the sayHello()
+
+
+
+JPA Lazy Loading
+
+One of the most important features in an Object-Relational Mapping framework is to support "lazy loading" of related objects. 
+Without lazy loading, a simple object query could drag out a substantial chunk of the database into the result set.
+
+
+
+Support Hibernate Validators on JSF Input Pages
+
+In a multi-tiered enterprise application, the web framework and the ORM persistence framework typically have different data validation mechanisms. The web framework validates user input when the wen form is submitted, and the persistence framework validates data before they are saved into the database. They are clearly redundant in most use cases.
+
+Seam allows you to annotate data validation constraints directly on entity beans, and then automatically uses those validator annotations to constrain input data when the entity bean is used to back JSF input fields.
+
+
+@Entity
+@Name("person")
+@Table(name="extperson")
+public class Person implements Serializable {
+  private long id;
+  private String name;
+  private int age;
+
+  @Id @GeneratedValue
+  public long getId() { return id;}
+  public void setId(long id) { this.id = id; }
+
+  @NotNull
+  @Pattern(regex="^[a-zA-Z.-]+ [a-zA-Z.-]+", message="Need a firstname and a lastname")
+  public String getName() { return name; }
+  public void setName(String name) {this.name = name;}
+
+  @NotNull
+  @Range(min=3, max=100, message="Age must be between 3 and 100")
+  public int getAge() { return age; }
+  public void setAge(int age) { this.age = age; }
+}
+
+The following JSF page is then automatically "wired" with validation logic. If the user submits invalid values, the page would would automatically re-display itself with the invalid fields highlighted.
+
+<s:validateAll>
+
+  Your name:<br/>
+  <s:decorate>
+    <h:inputText value="#{person.name}"/>
+  </s:decorate>
+
+  Your age:<br/>
+  <s:decorate>
+    <h:inputText value="#{person.age}"/>
+  </s:decorate>
+
+</s:validateAll>
+
+
+The error highlight can be configured via simple JSF facets and CSS styles. You can add an image before the invalid field, surround it with a CSS box as follows. The <s:message/> displays the message attribute on the validator annotation when the validation fails.
+
+<f:facet name="beforeInvalidField">
+  <h:graphicImage styleClass="errorImg" value="error.png"/>
+</f:facet>
+<f:facet name="afterInvalidField">
+  <s:message styleClass="errorMsg" />
+</f:facet>
+<f:facet name="aroundInvalidField">
+  <s:div styleClass="error"/>
+</f:facet>
+
+
+Many Ways to do Ajax
+
+There are several ways to do Ajax in Seam: 
+-Seam nicely integrates leading Ajax JSF component suites such as Ajax4jsf and RichFaces. 
+-They provide Ajax-enabled JSF controls, such as input fields, data tables, interactive panels, drag and drop panels etc...
+-Those Ajax controls allow you to write Ajax web applications without a single line of JavaScript code. 
+-Seam takes care of the plumbing for those Ajax components, and makes them easier to setup than in the plain JSF environment. 
+
+The example below shows Ajax data input fields. The values in each field are validated and invalid fields highlighted as soon as field focus is lost.
+
+<s:validateAll>
+
+  Your name:<br/>
+  <a4j:outputPanel id="nameInput">
+    <s:decorate>
+      <h:inputText value="#{person.name}">
+        <a4j:support event="onblur" reRender="nameInput"/>
+      </h:inputText>
+    </s:decorate>
+  </a4j:outputPanel>
+
+  Your age:<br/>
+  <a4j:outputPanel id="ageInput">
+    <s:decorate>
+      <h:inputText value="#{person.age}">
+        <a4j:support event="onblur" reRender="ageInput"/>
+      </h:inputText>
+    </s:decorate>
+  </a4j:outputPanel>
+
+</s:validateAll>
+
+
+
+
+
+
+
+
+
+
+
+
+Seam Mail - an email is just facelet!
+

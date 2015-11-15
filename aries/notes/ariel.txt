@@ -1,0 +1,91 @@
+Look at: 
+http://en.wikipedia.org/wiki/Business_Process_Execution_Language
+http://en.wikipedia.org/wiki/BPEL4People
+http://www.theserverside.com/news/1364554/BPEL-and-Java
+
+Look at Riftsaw for good feature list description:
+http://www.jboss.org/riftsaw
+
+Look at SPIN for overview and nice description of purpose
+http://en.wikipedia.org/wiki/SPIN_model_checker
+http://en.wikipedia.org/wiki/Promela
+
+
+Unlike BPEL, in ARIEL process specification is done independent of how processes are invoked.  In BPEL the designer uses the "receive" activity to indicate when input is obtained from client.  In ARIEL, the process is implicitly initiated upon input from client.
+
+ARIEL processes are not as general purpose as processes specified in BPEL, but instead impose a set of restrictions: 1) triggered in response to incoming messages to the owning service.
+
+
+Enables usage of effective validation techniques
+-type-based validation techniques
+
+
+In ARIEL notation services are thought of as method calls.  This type of method call signature however it is not quite the same as the traditional method call signature in a funtional programming language (such as Java).  This traditional type of method call is essentially identical to the signature of a synchronous call to a local or remote service.  There are the parameter types, possible exceptions, and expected return type.  This is functional programming...  In Event-driven programming, method call signatures are different.  For one, they are asynchronous, they may have an arbitrary number of different return types, and they will have a timeout.  From the client perspective, when the call is made a FutureResult type of value is returned.  And a set of callbacks that represent the different return types.  In terms of implementation, each callback is essentially its own service call.
+
+
+
+Language constructs
+-------------------------------------------------------------------------------------
+
+First class objects:
+  -Protocol
+
+Imported objects:
+  -Providers
+  -Transports
+  -Services
+  -Links
+
+Control flow constructs:
+  -sub-routines
+  -conditional
+  -iteration
+
+
+
+Service workbench toolset components
+-------------------------------------------------------------------------------------
+
+Service
+
+Execution
+
+Transaction
+
+Participant
+
+Action
+
+
+
+
+Deployment workbench toolset components
+-------------------------------------------------------------------------------------
+
+<server
+    name="loan-quote-credit-service"
+    type="jboss-6.0.0.Final"
+    config="default"
+    initial="1"
+    min="1"
+    max="10">
+</server>
+
+
+
+
+Queue type
+----------
+
+The moment you place Queue on a service without any attribute, you already get a lot of functionality. 
+As an example, let's take a simple scenario to demonstrate what where and how this Queue is used.
+We put a Queue on service-A. Next Service-B calls Service-A.... (itemize below what happens...)
+
+
+
+
+Representative examples include the standard notation for cryptographic protocols [1],  message sequence charts, and UML sequence diagrams.
+
+[1] R. M. Needham and M. D. Schroeder. Using encryption for authentication in large networks of computers. Commun. ACM, 1978.
+
+[2] B. C. Pierce and D. N. Turner. Pict: A programming language based on the pi-calculus. In Proof, Language and Interaction: Essays in Honour of Robin Milner. MIT Press, 2000.

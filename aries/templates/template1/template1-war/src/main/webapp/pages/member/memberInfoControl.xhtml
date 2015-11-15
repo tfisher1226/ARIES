@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel>
+		<aries:controlbar> 
+			<aries:toolbarGroup location="left">
+				<aries:toolButton
+					immediate="true"
+					submitMode="none"
+					ajaxSingle="true"
+					bypassUpdates="true"
+					tooltip="Show Help on Member Information Dialog"
+					manager="#{globals}"
+					action="doNothing"
+					icon="resource://images/icons/common/Help24.gif"
+					onclick="setCursorWait(this); showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here'); setCursorDefault()"
+					reRender="#{dialogName}Panel"
+					rendered="true"
+					enabled="true">
+				</aries:toolButton>
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup location="right">
+				<aries:dialogButton
+					default="false"
+					icon="resource://images/icons/common/Refresh16.gif"
+					iconDisabled="resource://images/icons/common/RefreshDisabled16.gif"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="setCursorWait(this); showProgress('Membership Information: #{member.lastName}', 'Refreshing information...')"
+					oncomplete="setCursorDefault(); hideProgress()"
+					reRender="memberDialogForm"
+					offset="true">
+				</aries:dialogButton>
+
+				<aries:dialogButton
+					default="false"
+					value="Preferences"
+					submitMode="none"
+					icon="resource://images/icons/common/Configure16.gif"
+					iconDisabled="resource://images/icons/common/Configure16.gif"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="setCursorWait(this); showWarning('', 'Placeholder for Preferences Window', 'Set of simple preferences will be provided here')"
+					oncomplete="setCursorDefault()"
+					reRender="memberDialogForm"
+					offset="true">
+				</aries:dialogButton>
+				
+				<ui:include src="/common/button/dialogButton.xhtml">
+					<ui:param name="value" value="Save"/>
+					<ui:param name="rendered" value="#{empty member.id}"/>
+					<ui:param name="immediate" value="false"/>
+					<ui:param name="icon" value="resource://images/icons/common/Save16.gif"/>
+					<ui:param name="iconDisabled" value="resource://images/icons/common/SaveDisabled16.gif"/>
+					<ui:param name="manager" value="#{memberInfoManager}"/>
+					<ui:param name="action" value="saveMember"/>
+					<ui:param name="onclick" value="setCursorWait(this); showProgress('Membership Records', 'Saving changes...')"/>
+					<ui:param name="oncomplete" value="setCursorDefault(); Richfaces.hideModalPanel('progressDialog'); if (#{!messages.isMessagesExist('memberDialog')}) hideMemberDialog()"/>
+					<ui:param name="reRender" value="membershipViewPanel, memberDialogMessages"/>
+					<ui:param name="enabled" value="#{superUser}"/>
+					<ui:param name="offset" value="true"/>
+				</ui:include>
+
+				<aries:dialogButton
+					value="Close"
+					submitMode="none"
+					rendered="#{not empty member.id}"
+					icon="resource://images/icons/common/Cancel16.gif"
+					onclick="Richfaces.hideModalPanel('memberDialog')"
+					offset="true">
+				</aries:dialogButton>
+
+				<aries:dialogButton
+					value="Cancel"
+					submitMode="none"
+					rendered="#{empty member.id}"
+					icon="resource://images/icons/common/Cancel16.gif"
+					onclick="Richfaces.hideModalPanel('memberDialog')"
+					offset="true">
+				</aries:dialogButton>
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:panel>
+</ui:composition>

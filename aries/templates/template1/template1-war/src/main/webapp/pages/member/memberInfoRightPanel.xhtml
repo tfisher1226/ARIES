@@ -1,0 +1,167 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel 
+		id="memberPhotoPanel">
+		
+		<a4j:outputPanel 
+			styleClass="formPane" 
+			layout="block" 
+			style="width: 140px; height: 140px; cursor: pointer; border: 1px solid #ccc; background-color: #fff">
+
+		</a4j:outputPanel>
+
+		<!--  
+		<rich:spacer height="2"/>
+		<f:view contentType="text/html">
+			<rich:gmap
+			    id="map"
+			    zoom="10"
+			    lat="34.0800569"
+			    lng="-118.112695"
+			    gmapVar="map"
+			    gmapKey="ABQIAAAAMGzz_lVBEmDj0HO-GBnllRTqMlWACSTwyWQaX1GZ45tOxiiBQxSZrGoP6kRPgmVy3QeUoda-XtNtfA"
+			    mapType="G_NORMAL_MAP"
+			    showGMapTypeControl="false"
+			    showGScaleControl="true"
+			    showGLargeMapControl="false"
+			    oninit="initializeMap()"
+			    style="width: 140px; height: 140px; cursor: pointer; border: 1px solid #ccc; background-color: white"/>
+			    <aries:tooltip value="Click to enlarge"/>
+
+				<script type="text/javascript">
+					function initializeMap() {
+						//alert(9);
+						//map.setCenter(new GLatLng(34.0800569, -118.112695), 14);
+						map.addOverlay(new GMarker(new GLatLng(34.0800569, -118.112695)));
+					}
+				</script>
+		</f:view>
+		-->		
+
+		<!--  
+		<h:panelGroup layout="block" style="width: 100px; text-align: right">
+			<div class="vspace6"/>
+
+			<h:panelGrid layout="block" columns="2" style="">
+				<rich:inputNumberSlider 
+					showInput="false" 
+					minValue="1" 
+					maxValue="18" 
+					value="10" 
+					onchange="map.setZoom(this.value)" 
+					style="width: 100px">
+					<ui:include src="/common/tooltip.xhtml">
+						<ui:param name="tooltip" value="Drag to Zoom"/>
+					</ui:include>
+				</rich:inputNumberSlider>
+			</h:panelGrid>
+
+			<a4j:commandLink>
+				<div class="text12">[click to expand]</div>
+				<ui:include src="/common/tooltip.xhtml">
+					<ui:param name="tooltip" value="Show expanded map in new window"/>
+				</ui:include>
+			</a4j:commandLink>
+		</h:panelGroup>
+		-->
+	</a4j:outputPanel>
+	
+	<!--  
+	<a4j:outputPanel id="memberOrganizationPanel">
+		<div class="groupLabel">Organization</div>
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="3" style=""> 
+	
+			<div class="formLabel" style="width: 60px">Name</div>
+			<h:inputText styleClass="formInput" style="width: 160px" value="#{member.organization.name}" readonly="true"/>
+			<a4j:commandButton styleClass="formButton" style="width: 20px" type="button" value="..." 
+				action="#{organizationSelectManager.setRendered(true)}"
+				onclick="setCursorWait(this)"
+				oncomplete="showOrganizationSelectDialog(this); setCursorDefault(this)"
+				reRender="organizationSelectDialog"/>
+	
+			<div class="formLabel" style="width: 60px">Division</div>
+			<h:inputText styleClass="formInput" style="width: 160px" value="#{selectedDivisionText} #{selectedSubDivisionText}" readonly="true"/>
+			<a4j:commandButton styleClass="formButton" style="width: 20px" type="button" value="..."
+				action="#{divisionSelectManager.setRendered(true)}"
+				onclick="setCursorWait()"
+				oncomplete="setCursorDefault(this); showDivisionSelectDialog(this)"
+				reRender="divisionSelectDialog"/>
+		</h:panelGrid>
+	</a4j:outputPanel>
+	-->
+
+	<!--  
+	<div class="vspace8"/>
+	<a4j:outputPanel id="memberStudyDeptPanel" style="margin-top: 10px">
+		<div class="groupLabel">Study Dept. Level</div>
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="background-color: inherit"> 
+	
+			<h:inputTextarea 
+				value="" 
+				readonly="true"
+				disabled="true" 
+				onclick="" 
+				onmouseover="setCursorPointer(this)"
+				onmouseout="setCursorDefault(this)"
+				styleClass="formInput"
+				style="width: 222px; height: 17px; max-height: 17px; color: #000; cursor: pointer"/>
+
+			<h:panelGroup layout="block" style="width: 18px; height: 18px; margin-top: 3px; padding: 1px; border: 1px solid #bbb; text-align: center; vertical-align: middle">
+			<ui:include src="/common/toolbar/toolButton.xhtml">
+				<ui:param name="tooltip" value="Edit Study Dept. Information..."/>
+				<ui:param name="manager" value="#{globals}"/>
+				<ui:param name="action" value="doNothing"/>
+				<ui:param name="image" value="resource://images/icons/common/Default16.gif"/>
+				<ui:param name="onclick" value="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"/>
+				<ui:param name="reRender" value=""/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+			</ui:include>
+			</h:panelGroup>
+		</h:panelGrid>
+	</a4j:outputPanel>
+	-->
+	
+	<!-- 
+	<div class="vspace8"/>
+	<a4j:outputPanel id="memberLeadershipPanel" style="margin-top: 10px">
+		<div class="groupLabel">Leadership Roles</div>
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="background-color: inherit"> 
+	
+			<h:inputTextarea 
+				value="" 
+				readonly="true"
+				disabled="true" 
+				onclick="" 
+				onmouseover="setCursorPointer(this)"
+				onmouseout="setCursorDefault(this)"
+				styleClass="formInput"
+				style="width: 222px; height: 17px; max-height: 17px; color: #000; cursor: pointer"/>
+
+			<h:panelGroup layout="block" style="width: 18px; height: 18px; margin-top: 3px; padding: 1px; border: 1px solid #bbb; text-align: center; vertical-align: middle">
+			<ui:include src="/common/toolbar/toolButton.xhtml">
+				<ui:param name="tooltip" value="Edit Leadership Information..."/>
+				<ui:param name="manager" value="#{globals}"/>
+				<ui:param name="action" value="doNothing"/>
+				<ui:param name="image" value="resource://images/icons/common/Edit16.gif"/>
+				<ui:param name="onclick" value="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"/>
+				<ui:param name="reRender" value=""/>
+				<ui:param name="rendered" value="true"/>
+				<ui:param name="enabled" value="true"/>
+			</ui:include>
+			</h:panelGroup>
+		</h:panelGrid>
+	</a4j:outputPanel>
+	-->
+</ui:composition>

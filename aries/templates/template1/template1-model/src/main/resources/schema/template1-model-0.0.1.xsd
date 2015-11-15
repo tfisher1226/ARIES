@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:common="http://www.aries.org/common/0.0.1"
+	xmlns:template1="http://template1.org/model/0.0.1" 
+	targetNamespace="http://template1.org/model/0.0.1">
+	
+	<xs:import namespace="http://www.aries.org/common/0.0.1" schemaLocation="aries-common-0.0.1.xsd"/>
+	
+	<!--
+		Organization Info
+		***************** 
+	 -->
+
+	<xs:element name="organization" type="template1:Organization" />
+	<xs:complexType name="Organization">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="level" type="template1:OrganizationLevel" minOccurs="0" maxOccurs="1" />
+			<xs:element name="parent" type="template1:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="children" type="template1:Organization" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="creator" type="template1:User" minOccurs="0" maxOccurs="1" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organizationId" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="OrganizationLevel">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SGIUSA" />
+			<xs:enumeration value="TEAM" />
+			<xs:enumeration value="ZONE" />
+			<xs:enumeration value="REGION" />
+			<xs:enumeration value="AREA" />
+			<xs:enumeration value="CHAPTER" />
+			<xs:enumeration value="DISTRICT" />
+			<xs:enumeration value="GROUP" />
+			<xs:enumeration value="UNIT" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--
+		Member Info
+		*********** 
+	 -->
+
+	<xs:element name="members" type="template1:Members" />
+	<xs:complexType name="Members">
+		<xs:sequence>
+			<xs:element name="record" type="template1:Member" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="member" type="template1:Member" />
+	<xs:complexType name="Member">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="division" type="template1:Division" minOccurs="0" maxOccurs="1" />
+			<xs:element name="interests" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="languages" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="template1:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="notes" type="template1:Note" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="status" type="xs:int" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="Division">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="YWD" />
+			<xs:enumeration value="YMD" />
+			<xs:enumeration value="YD" />
+			<xs:enumeration value="WD" />
+			<xs:enumeration value="MD" />
+			<xs:enumeration value="ALL" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<xs:element name="note" type="template1:Note" />
+	<xs:complexType name="Note">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="author" type="template1:User" minOccurs="0" maxOccurs="1" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--
+		Event Info
+		********** 
+	 -->
+
+	<xs:element name="event" type="template1:Event" />
+	<xs:complexType name="Event">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="template1:Organization" minOccurs="0" maxOccurs="1"  />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--
+		User Info
+		********* 
+	 -->
+
+	<xs:element name="users" type="template1:Users" />
+	<xs:complexType name="Users">
+		<xs:sequence>
+			<xs:element name="record" type="template1:User" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="user" type="template1:User" />
+	<xs:complexType name="User">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="password" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAccount" type="common:EmailAccount" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="template1:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="roles" type="template1:UserRole" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--  
+	<xs:element name="password" type="template1:Password" />
+	<xs:complexType name="Password">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="password" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="passwordSalt" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	
+	<xs:element name="userPermission" type="template1:UserPermission" />
+	<xs:complexType name="UserPermission">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="template1:Organization" minOccurs="0" maxOccurs="1" />
+			<xs:element name="groups" type="template1:UserGroup" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="roles" type="template1:UserRole" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="operations" type="template1:UserOperation" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="userGroup" type="template1:UserGroup" />
+	<xs:complexType name="UserGroup">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="template1:Organization" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="UserRole">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="USER" />
+			<xs:enumeration value="HOST" />
+			<xs:enumeration value="MANAGER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="UserOperation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="PRINT" />
+			<xs:enumeration value="EMAIL" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

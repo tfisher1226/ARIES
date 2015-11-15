@@ -1,0 +1,95 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+
+	<script type="text/javascript">
+		var studyDeptExamTableHighlighter = new org.aries.view.table.UserSelectHighlighter('#fff', '#fde7c8', '#f5fafa');
+	</script>
+
+	<a4j:outputPanel id="studyDeptExamTablePanel">
+		<ui:include src="studyDeptExamMenu.xhtml"/>
+
+		<h:panelGroup
+			layout="block"
+			rendered="#{empty studyDeptExams or studyDeptExams.rowCount == 0}"
+			style="width: auto; height: 20px; padding-top: 4px; padding-left: 2px; border: 0px solid #C3BBB6;">
+			<h:outputText styleClass="label" value="No records to display" style="font-size: 12px"/>
+		</h:panelGroup>
+
+		<rich:dataTable 
+			width="100%"
+			var="listObject"
+			rowKeyVar="index" 
+			id="studyDeptExamTable"
+			value="#{studyDeptExams}" 
+			rows="#{studyDeptExams.rowCount}"
+			rendered="#{studyDeptExams.rowCount > 0}"
+			onRowMouseOver="studyDeptExamTableHighlighter.processTableRowMouseOver(this)"
+			onRowMouseDown="studyDeptExamTableHighlighter.processTableRowMouseDown(this)"
+			onRowMouseOut="studyDeptExamTableHighlighter.processTableRowMouseOut(this)"
+			selectionMode="single" 
+			sortMode="single" 
+			rowClass="smallTableRow"
+			headerClass="smallTableHeader" 
+			activeClass="tableRowActive"
+			selectedClass="tableRowSelected"
+			styleClass="smallTable"
+			style="border: 1px solid #ccc">
+
+			<rich:componentControl 
+				event="onRowContextMenu"
+				for="studyDeptExamContextMenu" operation="show"/>
+
+			<a4j:support 
+				event="onRowMouseUp" 
+				immediate="true"
+				requestDelay="0"
+				disableDefault="true"
+                action="#{studyDeptExamManager.setSelection(listObject)}"/>
+
+			<a4j:support 
+				event="onRowDblClick" 
+				action="#{studyDeptExamManager.editStudyDeptExam}"
+				onsubmit="setCursorWait(this)"
+				oncomplete="setCursorDefault(this); showStudyDeptExamDialog()"
+				reRender="studyDeptExamDialog"/>
+				
+			<rich:column 
+				sortable="false" 
+				style="width: 80px">
+				<f:facet name="header">
+					<h:outputText value="Level"/>
+				</f:facet>
+				<h:outputText value="#{listObject.record.examLevel}"/>
+			</rich:column>
+
+			<rich:column 
+				sortable="false" 
+				style="width: 80px">
+				<f:facet name="header">
+					<h:outputText value="Language"/>
+				</f:facet>
+				<h:outputText value="#{listObject.record.examLanguage}"/>
+			</rich:column>
+
+			<rich:column 
+				sortable="false" 
+				style="width: 100px">
+				<f:facet name="header">
+					<h:outputText value="Date"/>
+				</f:facet>
+				<h:outputText value="#{listObject.record.examDate}"/>
+			</rich:column>
+		</rich:dataTable>
+	</a4j:outputPanel>
+</ui:composition>

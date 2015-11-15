@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<project  
+	xmlns:common="http://www.aries.org/common/0.0.1"
+	xmlns:system="http://www.aries.org/nam/system/0.0.1" 
+	xmlns:process="http://www.aries.org/nam/process/0.0.1"
+	xmlns="http://nam/model/0.0.1">
+
+	<name>loanbroker</name>
+	<description>Example application set - Loan Broker Request Processor</description>
+
+	<configurations>
+		<configuration>
+			<type>pom</type>
+			<groupId>org.aries</groupId>
+			<artifactId>parent</artifactId>
+		</configuration>
+
+		<configuration>
+			<type>pom</type>
+			<groupId>org.aries</groupId>
+			<artifactId>common</artifactId>
+			<parent groupId="org.aries" artifactId="common" />
+		</configuration>
+	</configurations>
+	
+	<applications>
+		<application>
+			<groupId>org.aries.bank</groupId>
+			<artifactId>bank</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<namespace>http://www.aries.org/loan-quote-bank</namespace>
+	
+			<configuration>
+				<type>pom</type>
+				<name>bank</name>
+				<groupId>org.aries.bank</groupId>
+				<artifactId>bank</artifactId>
+				<parent groupId="org.aries" artifactId="common" />
+			</configuration>
+
+			<information>
+				<namespace>
+					<name>org.aries.bank</name>
+					<prefix>bank</prefix>
+					<uri>http://www.aries.org/loan-quote-bank</uri>
+					<element name="account" type="common:Account">
+						<attribute name="id" type="xs:long" unique="true" />
+						<attribute name="ssn" type="xs:string" required="true" />
+						<attribute name="username" type="xs:string" required="true" />
+						<attribute name="password" type="xs:string" required="true" />
+						<attribute name="amount" type="xs:double" />
+					</element>
+					<element name="request" type="common:Request">
+						<attribute name="borrowerSsn" type="xs:string" required="true" />
+						<attribute name="borrowerName" type="xs:string" required="true" />
+						<attribute name="loanAmount" type="xs:double" required="true" />
+						<attribute name="loanDuration" type="xs:int" required="true" />
+					</element>
+					<element name="response" type="common:Response">
+						<attribute name="bankName" type="xs:string" required="true" />
+						<attribute name="loanQuote" type="xs:string" required="true" />
+						<attribute name="interestRate" type="xs:double" />
+					</element>
+				</namespace>
+			</information>
+
+			<modules>
+				<module>
+					<type>model</type>
+					<groupId>org.aries.bank</groupId>
+					<artifactId>bank-model</artifactId>
+					<packaging>jar</packaging>
+					<resources>
+						<resource type="xsd" path="loanbroker-bank.xsd" />
+					</resources>
+					<dependencies>
+						<dependency groupId="org.aries" artifactId="common-model" />
+					</dependencies>
+				</module>
+		
+				<module>
+					<type>data</type>
+					<groupId>org.aries.bank</groupId>
+					<artifactId>bank-data</artifactId>
+					<packaging>jar</packaging>
+					<dependencies>
+						<dependency groupId="org.aries" artifactId="common-data" />
+					</dependencies>
+					<repositories>
+						<repository ref="bankRepository" />
+					</repositories>
+				</module>
+		
+				<module>
+					<type>service</type>
+					<groupId>org.aries.bank</groupId>
+					<artifactId>bank-service</artifactId>
+					<packaging>war</packaging>
+		
+					<resources>
+						<resource type="wsdl" path="loanbroker-bank.wsdl" />
+					</resources>
+		
+					<dependencies>
+						<dependency groupId="org.aries" artifactId="common-data" />
+						<dependency groupId="org.aries" artifactId="bank-data" />
+					</dependencies>
+
+					<services domain="org.aries.bank">
+						<listener ref="bankListener" />
+						<router ref="bankRouter" />
+		
+						<service name="getLoanQuote" transacted="true">
+							<listener ref="loanQuoteListener" />
+		
+							<execution name="">
+								<action name="getInterestRate">
+									<input type="string" name="ssn" />
+									<output type="double" name="interestRate" />
+									<!-- <processor name="creditInfoRepository" method="saveMember" /> -->
+								</action>
+								<action name="printLoanQuote">
+									<input type="String" name="ssn" />
+									<input type="String" name="bankName" />
+									<input type="double" name="interestRate" />
+									<output type="String" name="loanQuote" />
+								</action>
+							</execution>
+						</service>
+					</services>
+				</module>
+			</modules>
+		</application>
+
+		<application>
+			<groupId>org.aries.broker</groupId>
+			<artifactId>broker</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<namespace>http://www.aries.org/loan-quote-broker</namespace>
+	
+			<configuration>
+				<type>pom</type>
+				<name>broker</name>
+				<groupId>org.aries.broker</groupId>
+				<artifactId>broker</artifactId>
+				<parent groupId="org.aries" artifactId="common" />
+			</configuration>
+
+			<information>
+				<namespace>
+					<name>org.aries.broker</name>
+					<prefix>broker</prefix>
+					<uri>http://www.aries.org/loan-quote-broker</uri>
+					<element name="request" type="common:Request">
+						<attribute name="borrowerSsn" type="xs:string" />
+						<attribute name="borrowerName" type="xs:string" />
+						<attribute name="loanAmount" type="xs:double" />
+						<attribute name="loanDuration" type="xs:int" />
+					</element>
+					<element name="response" type="common:Response">
+						<attribute name="bankName" type="xs:string" />
+						<attribute name="loanQuote" type="xs:string" />
+						<attribute name="interestRate" type="xs:double" />
+					</element>
+				</namespace>
+			</information>
+
+			<modules>
+				<module>
+					<type>model</type>
+					<groupId>org.aries.broker</groupId>
+					<artifactId>broker-model</artifactId>
+					<packaging>jar</packaging>
+					<resources>
+						<resource type="xsd" path="loanbroker-broker.xsd" />
+					</resources>
+					<dependencies>
+						<dependency groupId="org.aries" artifactId="common-model" />
+					</dependencies>
+				</module>
+		
+				<module>
+					<type>service</type>
+					<groupId>org.aries.broker</groupId>
+					<artifactId>broker-service</artifactId>
+					<packaging>war</packaging>
+
+					<resources>
+						<resource type="wsdl" path="loanbroker-broker.wsdl" />
+					</resources>
+		
+					<services domain="org.aries.broker">
+						<listener ref="brokerListener" />
+						<router ref="brokerRouter" />
+		
+						<service name="getLoanQuote" pattern="twoway">
+							<listener ref="loanQuoteListener" />
+		
+							<execution pattern="serial">
+								<action name="doCreditCheckAction">
+									<input type="string" name="borrowerName" />
+									<input type="string" name="borrowerSsn" />
+									<output type="int" name="creditHistory" />
+									<output type="int" name="creditScore" />
+		
+		                            <!--
+									<catch type="exception" />
+									<invoke service="/credit-service" method="doCreditCheck">
+										<medium>ejb</medium>
+										<medium>jms</medium>
+										<medium>jaxws</medium>
+										<medium>ftp</medium>
+									</invoke>
+		                            -->
+								</action>
+		
+								<action name="getLoanQuoteAction">
+									<input type="string" name="borrowerName" />
+									<input type="string" name="borrowerSsn" />
+		
+		                            <!--
+									<inquire domain="bank" type="LoanQuote">
+										<input type="int" name="creditHistory" />
+										<input type="int" name="creditScore" />
+										<input type="double" name="loanAmount" />
+										<input type="int" name="loanDuration" />
+										
+										<handler name="loanQuoteProcessor" limit="10" timeout="30000">
+											<result type="double" name="interestRate" required="true" />
+											<result type="string" name="loanQuote" />
+											<rule value="interestRate" desired="min" />
+										</handler>
+									</inquire>
+		                            -->
+								</action>
+							</execution>
+						</service>
+					</services>
+				</module>
+			</modules>
+		</application>
+	</applications>
+
+
+	<persistence>
+		<domain>org.aries.bank</domain>
+
+		<resources>
+			<resource type="xsd" path="loanbroker-bank.xsd" />
+		</resources>
+
+		<data-sources>
+			<data-source>
+				<name>bankDataSource</name>
+				<jndi-name>BankDS</jndi-name>
+				<connection-url>jdbc:mysql://localhost:3306/namdb</connection-url>
+				<driver-class>com.mysql.jdbc.Driver</driver-class>
+				<max-active>10</max-active>
+				<max-idle>10</max-idle>
+				<max-wait>10</max-wait>
+				<user-name>manager</user-name>
+				<password>manager</password>
+			</data-source>
+		</data-sources>
+
+		<persistence-units>
+			<persistence-unit>
+				<name>bankDataUnit</name>
+				<transacted>true</transacted>
+				<data-source ref="bankDataSource" />
+				<entities>
+					<entity type="org.aries.data.entity.EmailAddress" />
+					<entity type="org.aries.data.entity.PhoneNumber" />
+					<entity type="org.aries.data.entity.StreetAddress" />
+					<entity type="aries:account" />
+				</entities>
+			</persistence-unit>
+		</persistence-units>
+
+		<repositories>
+			<repository name="bankRepository">
+				<persistence-unit ref="bankDataUnit" />
+				<interface>
+					<method type="aries:account" name="getAccountById">
+						<param type="aries:long" name="accountId" />
+					</method>
+					<method type="aries:account-list" name="getAccounts">
+						<param type="aries:long" name="accountId" use="optional" />
+						<param type="aries:string" name="lastName" use="optional" />
+					</method>
+				</interface>
+			</repository>
+		</repositories>
+	</persistence>
+
+
+	<messaging>
+		<!--  
+		<default-invalid-channel />
+		-->
+
+		<providers>
+			<provider>
+				<name>JBossMQ</name>
+				<jndi-name>jboss-jms</jndi-name>
+				<connection-url>localhost:1099</connection-url>
+				<context-factory>org.jnp.interfaces.NamingContextFactory</context-factory>
+			</provider>
+		</providers>
+
+		<adapters>
+			<adapter>
+				<type>JMS</type>
+				<name>JMSConnector</name>
+				<transacted>true</transacted>
+                <session-type>TOPIC</session-type>
+				<provider ref="JBossMQ" />
+				<connection-pool>
+					<initial-size>1</initial-size>
+					<min-size>4</min-size>
+					<max-size>4</max-size>
+				</connection-pool>
+				<security>
+					<user>admin</user>
+					<password>admin</password>
+					<realm>LoanBrokerRealm</realm>
+				</security>
+			</adapter>
+		</adapters>
+
+		<listeners>
+			<listener>
+				<name>serviceListener</name>
+				<asynchronous>true</asynchronous>
+				<no-local-receipt>true</no-local-receipt>
+				<receive-channel ref="serviceRequestChannel" />
+				<invalid-channel ref="invalidMessageChannel" />
+				<expired-channel ref="expiredMessageChannel" />
+			</listener>
+		</listeners>
+
+		<channels>
+			<channel>
+				<name>serviceRequestChannel</name>
+				<jndi-name>topic/topicA</jndi-name>
+				<transfer-mode>TEXT</transfer-mode>
+				<redelivery-delay>10000</redelivery-delay>
+				<max-delivery-attempts>3</max-delivery-attempts>
+				<adapter ref="JMSConnector" />
+			</channel>
+	
+			<channel>
+				<name>invalidMessageChannel</name>
+				<jndi-name>topic/topicA</jndi-name>
+				<transfer-mode>TEXT</transfer-mode>
+				<redelivery-delay>10000</redelivery-delay>
+				<max-delivery-attempts>3</max-delivery-attempts>
+				<adapter ref="JMSConnector" />
+			</channel>
+	
+			<channel>
+				<name>expiredMessageChannel</name>
+				<jndi-name>topic/topicA</jndi-name>
+				<transfer-mode>TEXT</transfer-mode>
+				<redelivery-delay>10000</redelivery-delay>
+				<max-delivery-attempts>3</max-delivery-attempts>
+				<adapter ref="JMSConnector" />
+			</channel>
+		</channels>
+
+		<endpoints>
+			<!--  
+			<dispatcher name="serviceDispatcher">
+				<channel>serviceRequestChannel</channel>
+				<delivery-mode>NON_PERSISTENT</delivery-mode>
+				<time-to-live>720000</time-to-live>
+				<priority>true</priority>
+				<durable>true</durable>
+				<timeout>360000</timeout>
+			</dispatcher>
+			-->
+	
+			<invoker>
+				<name>serviceInvoker</name>
+				<delivery-mode>NON_PERSISTENT</delivery-mode>
+				<time-to-live>720000</time-to-live>
+				<durable>true</durable>
+				<priority>true</priority>
+				<timeout>360000</timeout>
+				<channel ref="serviceRequestChannel" />
+			</invoker>
+		</endpoints>
+
+		<!--  
+		<router name="serviceRouter">
+			<logic ruleset="serviceRouter.drl" />
+		</router>
+		-->
+	</messaging>
+</project>

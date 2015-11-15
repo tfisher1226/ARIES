@@ -1,0 +1,137 @@
+about maintenance
+    even the most well-thoughtout, well-designed systems can turn into painful mess
+
+
+make sure we don't run before we can walk
+identify the baby steps we need to take
+identify the sequence (dependencies) of these steps
+  i.e. the dotted lines between points A and B
+  we declare/record our progress in these baby steps
+
+
+organization of file system
+organization of workspace system
+organization of AEROSPACE workspace
+organization of eclipse environment
+organization of shell environment
+organization of maven repository
+organization of report system
+
+specification of execution environment
+    -global properties 
+        -file organization (examples)
+        -location, deployment and versioning
+        -spring property configurator
+
+    -execution launch process
+    -runtime management process
+
+specification of test environment
+
+
+breakdown of process
+   requirements to modules
+   modules to projects
+       types of projects
+   project dependencies
+       types of dependencies
+
+identification of services
+identification of clients
+identification of network data model
+identification of database data model
+identification of persistence units
+identification of communication links
+identification of views
+
+
+use this for describing the process to specifying network data model and representing in Java and WSDL (using JAXWS and JAXB) - Basically copy this:
+c:/pub/jbossws-cxf-bin-dist/tests/java/org/jboss/test/ws/jaxws/samples/jaxbintros/
+
+While this setup is quite standard I focused on keeping the syntax as simple as possible.
+
+
+description of logging system
+description of notification system
+description of verification system
+description of deployment system
+
+
+
+breakdown of service
+
+    characterization
+        -processor units
+        -incoming links
+        -incoming data
+        -outcoming links
+        -outcoming data
+        -link configuration
+        -data configuration
+        -transaction demarcations
+        -exported state-changes
+        -exported exceptions
+        -management beans
+
+    implementation
+        -actions
+        -agent
+        -cache
+        -properties
+        -state
+        -helpers
+        -data sources
+        -events
+        -publishers
+        -subscribers
+
+
+
+breakdown of client
+    service access
+        -static
+        -dynamic
+
+
+structure of client
+structure of client tests
+
+structure of service
+structure of service tests
+
+org.jboss.test.ws.projectGenerator.ProjectGeneratorTestCase
+org.jboss.test.ws.management.recording.CustomRecordProcessorTestCase
+
+
+benefits of maven
+-version management
+-dependency management
+-build/assembly
+-deployment
+
+maven tomcat context goals
+maven tomcat container goals
+
+maven jboss context goals
+maven jboss container goals
+
+web-service endpoints
+web-service clients
+web-service transports
+   -local transport (inVM)
+        supports URIs of the structure:  local://{endpoint_name}
+
+
+
+
+
+JPA-based JUnit Test Best Practices
+not really unit tests - what value? - must be integration tests - what exactly is the difference between them?
+
+
+
+
+NOTES:
+
+http://wiki.apache.org/tomcat/FAQ/Logging
+

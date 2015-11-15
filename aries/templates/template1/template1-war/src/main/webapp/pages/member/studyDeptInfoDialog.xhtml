@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript">
+	function showStudyDeptInfoDialog() { Richfaces.showModalPanel('studyDeptInfoDialog') }
+	function hideStudyDeptInfoDialog() { Richfaces.hideModalPanel('studyDeptInfoDialog') }
+	</script>
+
+	<!-- StudyDeptInfoDialog -->
+	<rich:modalPanel id="studyDeptInfoDialog" autosized="true" width="480" trimOverlayedElements="false">
+
+		<!-- TITLE -->
+		<ui:include src="/common/dialog/dialogHeaderBar.xhtml">
+			<ui:param name="dialogKey" value="studyDeptInfoDialog"/>
+			<ui:param name="dialogTitle" value="Study Dept. Information for #{member.lastName}, #{member.firstName}"/>
+		</ui:include>
+		
+		<!-- CONTENT -->
+		<a4j:form id="studyDeptInfoForm">
+			<h:panelGrid styleClass="layoutPane" layout="block" columns="1" columnClasses="formColumn" style="width: 100%; background-color: inherit"> 
+				<ui:include src="studyDeptInfoPanel.xhtml"/>
+			</h:panelGrid>
+
+			<h:panelGroup layout="block" style="margin-top: 12px">
+				<ui:include src="studyDeptInfoControl.xhtml"/>
+			</h:panelGroup>
+		</a4j:form>
+	</rich:modalPanel>
+</ui:composition>
+
+

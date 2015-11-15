@@ -1,0 +1,20 @@
+Why is this better than writing POJOs?
+ 
+You might ask why should I use EMF instead of creating the model by writing plain POJOs?. Without considering benefits like the generated editor for rapid testing and all the additional frameworks available for EMF, let's look at two very simple and exemplary benefits.
+ 
+Before we look at the generated code (we will do that in a minute), let`s consider the amount of code we have just produced. The Eclipse metrics plugin tells us that we have generated over 1,000 LOC, while only 150 are part of utility classes. Even very simple code is considered to be worth 1$ per LOC. So, we have earned $1,000 just by clicking some buttons 
+
+
+
+EMF as an Additional Persistence Framework
+ 
+There are several frameworks for storing and versioning EMF model instances. Here are three that we can see right now:
+CDO
+EMFStore
+Teneo
+
+ARIES may not be as mature as any of these frameworks.  But there is clear motiviation for ARIES because of two reasons: 1) thoroughness of generated code including tests, and 2) simplicity in model creation.  Also autogeneration of JPA Entities, and JAXB representations.
+
+
+
+

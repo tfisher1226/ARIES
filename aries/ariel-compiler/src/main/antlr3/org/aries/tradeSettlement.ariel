@@ -1,0 +1,156 @@
+protocol Settlement {
+
+    role tradeReceiver {
+        set user(administrator);
+    }
+
+    role settlementManager {
+        set user(administrator);
+    }
+
+    role persistenceManager {
+        set user(administrator);
+    }
+
+    role confirmationManager {
+        set user(administrator);
+    }
+
+    role instructionManager {
+        set user(administrator);
+    }
+
+    channel TradeChannel {
+        add sender(tradeSender);
+        add receiver(tradeReceiver);
+        add manager(settlementManager);
+        add queue(incomingQueue);
+    }
+
+    channel ValidationChannel {
+        add receiver(tradeReceiver);
+        add manager(settlementManager);
+        add manager(confirmationManager);
+        add manager(instructionManager);
+    }
+
+    participant Gateway {
+        subscribe TradeChannel.incomingQueue {
+            message IncomingTrade: {
+                split ($message.transactions: tradeTransaction) {
+                    send ValidationChannel($tradeTransaction);
+                }
+            }
+        }
+    }
+
+    participant ValidationManager {
+        subscribe ValidationChannel {
+            message TradeTransaction: {
+                option: {
+                    send InvalidChannel($message);
+                }
+                option: {
+                    invoke PersistenceManager.persistTransaction($message) {
+                        message Ok: send EnrichmentChannel($message);
+                        exception:
+                        timeout: {
+                            send DeferredChannel($message);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    participant PersistenceManager {
+        receive persistTransaction($tradeTransaction) {
+            option: reply Ok;
+            option: throw Exception;
+        }
+    }
+
+    participant EnrichmentManager {
+        set role(settlementManager);
+        subscribe EnrichmentChannel {
+            message TradeTransaction[transaction.type == FixedIncome]: {
+                sendToBooking($message);
+            }
+            message TradeTransaction[transaction.type == Equity]: {
+                sendToConfirmation($message);
+                listen TradeConfirmed {
+                    sendToBooking($message);
+                }
+            }
+            message TradeTransaction[*]: {
+                execute {
+                    branch: bookTradeTransaction($message);
+                    branch: sendToConfirmation(tradeTransaction);
+                }
+            }
+        }
+
+        sendToBooking(tradeTransaction) {
+            send BookingChannel.incomingQueue(tradeTransaction);
+        }
+
+        sendToConfirmation(tradeTransaction) {
+            send ConfirmationChannel.incomingQueue(tradeTransaction);
+        }
+    }
+
+    participant BookingManager {
+        set role(settlementManager);
+        subscribe BookingChannel {
+            message TradeTransaction: {
+                send BookingManager.bookTransaction($message);
+            }
+        }
+    }
+
+    participant ConfirmationManager {
+        set role(confirmationManager);
+        subscribe ConfirmationChannel {
+            message TradeTransaction: {
+                invoke confirmTransaction($message) {
+                    message TradeConfirmed: {
+                        send AggregationManager:
+                    }
+                    message TradeNotConfirmed:
+                    exception:
+                    timeout: {
+                        send UnconfirmedChannel($message);
+                    }
+                }
+            }
+        }
+
+        receive confirmTransaction(tradeTransaction) {
+            option {
+                reply TradeConfirmed;
+            }
+            option {
+                reply TradeNotConfirmed;
+            }
+        }
+    }
+
+    participant AggregationManager {
+        role settlementManager;
+        subscribe AggregationChannel {
+            message TradeTransaction: {
+                send InstructionChannel($message);
+            }
+        }
+    }
+
+    participant InstructionManager {
+        role instructionManager;
+        subscribe InstructionChannel {
+            message TradeTransaction: {
+                send BookingManager.bookTransaction($message);
+            }
+        }
+    }
+
+}

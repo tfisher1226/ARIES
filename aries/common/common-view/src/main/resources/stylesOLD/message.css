@@ -1,0 +1,107 @@
+.error,
+.fatal,
+.info,
+.warn {
+	font-size: 13px;
+}
+
+.smallError, 
+.smallFatal,
+.smallInfo,
+.smallWarn {
+	font-size: 12px;
+}
+
+.largeError,
+.largeFatal,
+.largeInfo,
+.largeWarn {
+	font-size: 14px;
+}
+
+.error,
+.smallError,
+.largeError,
+.fatal,
+.smallFatal,
+.largeFatal,
+.info,
+.smallInfo,
+.largeInfo,
+.warn,
+.smallWarn,
+.largeWarn {
+	text-align: center;
+	list-style: none;
+}
+
+.error,
+.smallError,
+.largeError,
+.fatal,
+.smallFatal,
+.largeFatal {
+	font-weight: bold;
+	color: rgb(224,0,30);
+}
+
+.warn,
+.smallWarn,
+.largeWarn {
+	font-weight: normal;
+	color: #d0aa05;
+	color: black;
+}
+
+.info,
+.smallInfo,
+.largeInfo {
+	font-weight: normal;
+	color: #777;
+	color: black;
+}
+
+.error div,
+.smallError div,
+.largeError div,
+.fatal div,
+.smallFatal div,
+.largeFatal div,
+.info div,
+.smallInfo div,
+.largeInfo div,
+.warn div,
+.smallWarn div,
+.largeWarn div {
+	text-align: left;
+}
+
+.error input,
+.smallError input,
+.largeError input,
+.fatal input,
+.smallFatal input,
+.largeFatal input,
+.info input,
+.smallInfo input,
+.largeInfo input,
+.warn input,
+.smallWarn input,
+.largeWarn input {
+	border: 1px solid #600;
+}
+
+.error ul,
+.smallError ul,
+.largeError ul,
+.fatal ul,
+.smallFatal ul,
+.largeFatal ul,
+.info ul,
+.smallInfo ul,
+.largeInfo ul,
+.warn ul,
+.smallWarn ul,
+.largeWarn ul {
+	list-style: none;
+}

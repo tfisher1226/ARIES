@@ -1,0 +1,152 @@
+channel TradeChannel;
+channel ValidationChannel;
+channel InvalidChannel;
+channel DeferredChannel;
+channel EnhancementChannel;
+channel ConfirmationChannel;
+channel UnconfirmedChannel;
+
+
+protocol Settlement {
+
+    user systemAdmin {
+        principle: "admin";
+        credential: "password1234";
+    }
+
+    role tradeReceiver {
+        user: systemAdmin;
+    }
+
+    role settlementManager {
+        user: systemAdmin;
+    }
+
+    role persistenceManager {
+        user: systemAdmin;
+    }
+
+    role confirmationManager {
+        user: systemAdmin;
+    }
+
+    role instructionManager {
+        user: systemAdmin;
+    }
+
+    channel ValidationChannel {
+        role tradeReceiver;
+        role settlementManager;
+        role confirmationManager;
+        role instructionManager;
+    }
+
+
+    participant Gateway {
+        role tradeReceiver;
+        subscribe TradeChannel {
+            message IncomingTrade: {
+                split ($message.transactions: tradeTransaction) {
+                    send ValidationChannel($tradeTransaction);
+                }
+            }
+        }
+    }
+
+    participant ValidationManager {
+        role settlementManager;
+        subscribe ValidationChannel {
+            message TradeTransaction: {
+                option {
+                    send InvalidChannel($message);
+                }
+                option {
+                    invoke PersistenceManager.persistTransaction($message) {
+                        message Ok: {
+                            send EnhancementChannel($message);
+                        }
+                        exception:
+                        timeout: {
+                            send DeferredChannel($message);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    participant PersistenceManager {
+        role persistenceManager;
+        receive persistTransaction($tradeTransaction) {
+            option reply(Ok);
+            option reply(Exception);
+        } 
+    }
+
+    participant EnhancementManager {
+        role settlementManager;
+        subscribe EnhancementChannel {
+            message TradeTransaction: {
+                concurrent {
+                    send BookingManager.bookTransaction($message);
+                    send ConfirmationManager.confirmTransaction($message);
+                }
+            }
+        }
+    }
+
+    participant BookingManager {
+        role settlementManager;
+        subscribe BookingChannel {
+            message TradeTransaction: {
+                send BookingManager.bookTransaction($message);
+            }
+        }
+    }
+
+    participant ConfirmationManager {
+        role confirmationManager;
+        subscribe ConfirmationChannel {
+            message TradeTransaction: {
+                invoke confirmTransaction($message) {
+                    message TradeConfirmed: {
+                        send AggregationManager:
+                    }
+                    message TradeNotConfirmed:
+                    exception:
+                    timeout: {
+                        send UnconfirmedChannel($message);
+                    }
+                }
+            }
+        }
+
+        action confirmTransaction(tradeTransaction) {
+            option {
+                reply(TradeConfirmed);
+            }
+            option {
+                reply(TradeNotConfirmed);
+            }
+        }
+    }
+
+    participant AggregationManager {
+        role settlementManager;
+        subscribe AggregationChannel {
+            message TradeTransaction: {
+                send InstructionChannel($message);
+            }
+        }
+    }
+
+    participant InstructionManager {
+        role instructionManager;
+        subscribe InstructionChannel {
+            message TradeTransaction: {
+                send BookingManager.bookTransaction($message);
+            }
+        }
+    }
+
+}

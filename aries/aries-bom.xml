@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>aries-bom</artifactId>
+	<name>aries-bom</name>
+	<description>aries-bom</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- Java version -->
+		<java.major.version>1.6</java.major.version>
+		<java.minor.version>0</java.minor.version>
+		
+		<!-- Miscellaneous settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Surefire Plugin settings -->
+        <aries.surefire.fork.mode>once</aries.surefire.fork.mode>
+        <aries.surefire.format>xml</aries.surefire.format>
+        <aries.surefire.usefile>false</aries.surefire.usefile>
+        <aries.surefire.parallel.mode />
+        <aries.surefire.fork.vmargs>-enableassertions</aries.surefire.fork.vmargs>
+        <aries.server.launcher.vmargs>-ea</aries.server.launcher.vmargs>
+		<!--  
+        <aries.surefire.fork.mode>perTest</aries.surefire.fork.mode>
+		-->
+
+		<!-- Plugin versions -->
+		<maven.jaxb2.plugin.version>0.8.0</maven.jaxb2.plugin.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-base</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-client-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-service-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-data-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-platform-view-layer</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>util</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<!--  
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>javax</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>commons</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jaxb</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jaxws</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jta</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jsf</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>jboss</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>richfaces</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>eclipse-jdt</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>eclipse-emf</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>hibernate</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>seam</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>seam-ui</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>spring</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>hsql</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>mysql</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			-->
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>logging</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>testing</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

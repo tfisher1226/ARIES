@@ -1,0 +1,48 @@
+Resources
+
+* Transaction Processing: Concepts and Techniques , by Jim Grey and Andreas Reuter, is the definitive work on the subject of transaction processing.
+http://www.amazon.com/exec/obidos/ASIN/1558601902/none0b69/104-1464220-8871162
+
+* Principles of Transaction Processing, by Philip Bernstein and Eric Newcomer, is a fine introduction to the subject; it covers a lot of history as well as concepts.
+http://www.amazon.com/exec/obidos/ASIN/1558604154/none0b69/104-1464220-8871162
+
+* The Java Transaction Service specification is quite readable and offers a high-level explanation of how an object transaction monitor fits into distributed applications.
+http://www.oracle.com/technetwork/java/javaee/tech/index.html
+
+
+
+Notes:
+
+Make WorkflowManager an interface, then make DefaultWorkflowManager (the first of many ones to come...) and make it ThreadLocal
+
+Make RestaurantManager generic and make it ThreadLocal, and merge it into WorkfklowManager
+
+Interfaces to create:
+
+UserTransaction
+TransactionContext
+TransactionManager
+TransactionManagerFactory?
+Participant
+
+
+Classes to create:
+
+UserTransactionImpl
+TransactionContextImpl
+TransactionManagerImpl
+TransactionManagerFactoryImpl
+ParticipantImpl
+
+TransactionManager manages ThreadLocal state for set of participants for current thread
+
+
+
+
+Powerful, but dangerous
+
+Just like with declarative transaction demarcation, in Aries there is no transaction management code in the component methods. Not only does this make the resulting component code easier to read (because it is not cluttered with transaction management code), but it has another, more significant advantage -- the transactional semantics of the component can be changed at application assembly time, without modifying or even accessing the source code for the component.
+
+While being able to specify transaction demarcation separate from the code is a very powerful feature, making poor decisions at assembly time can render your application unstable or seriously impair its performance. The responsibility for correctly demarcating container-managed transactions is shared between the component developer and the application assembler. The component developer needs to provide sufficient documentation as to what the component does, so that the application deployer can make intelligent decisions on how to structure the application's transactions. The application assembler needs to understand how the components in the application interact, so that transactions can be demarcated in a way that enforces application consistency and doesn't impair performance.
+
+

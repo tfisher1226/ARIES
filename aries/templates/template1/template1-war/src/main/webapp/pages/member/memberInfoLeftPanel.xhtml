@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGrid styleClass="layoutPane" layout="block" columns="1" columnClasses="formColumn" style="margin-top: 2px"> 
+		<a4j:outputPanel styleClass="formPane" id="photoField" layout="block" style="width: 100px; height: 120px; cursor: pointer; border: 1px solid #ccc; background-color: #fff">
+
+			<ui:include src="/common/imageFieldMenu.xhtml">
+				<ui:param name="fieldName" value="memberPhoto"/>
+			</ui:include>
+
+			<rich:componentControl 
+				event="onContextMenu"
+				for="memberPhotoMenu" 
+				operation="show"/>
+					
+			<a4j:support
+				event="onDblClick"
+				onsubmit="setCursorWait(this)"
+				oncomplete="setCursorDefault(this); showUploadDialog()"
+				reRender="uploadDialog"/>
+		</a4j:outputPanel>
+	</h:panelGrid>
+</ui:composition>

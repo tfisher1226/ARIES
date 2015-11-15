@@ -1,0 +1,121 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="leadershipListTablePanel">
+		<ui:include src="leadershipListMenu.xhtml"/>
+
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				id="leadershipListTable2"
+				value="#{member}" 
+				rows="1"
+				rendered="#{empty leadershipList or leadershipList.rowCount == 0}"
+				selectionMode="single" 
+				sortMode="single" 
+				border="1"
+				onRowMouseOver="memberDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="memberDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="memberDialogFieldHighlighter.processTableRowMouseOut(this)"
+				rowClass="tableRow height16"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noGrid noBorder noSelection"
+				style="border: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="leadershipListContextMenu" operation="show"/>
+
+				<!--  
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="leadershipInfoDialog" operation="show"/>
+					-->
+				
+				<a4j:support 
+					event="#{openActionTrigger}" 
+					action="#{leadershipInfoManager.viewLeadershipInfo}"
+					onsubmit="setCursorWait(this)"
+					oncomplete="setCursorDefault(this); showLeadershipInfoDialog()"
+					reRender="leadershipInfoDialog"/>
+
+				<rich:column 
+					sortable="false">
+					<h:outputText value="none specified" style="color: #aaa"/>
+				</rich:column>
+			</rich:dataTable>
+			
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				id="leadershipListTable"
+				value="#{leadershipList}" 
+				rows="#{leadershipList.rowCount}"
+				rendered="#{leadershipList.rowCount > 0}"
+				selectionMode="single" 
+				sortMode="single"
+				border="1" 
+				onRowMouseOver="memberDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="memberDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="memberDialogFieldHighlighter.processTableRowMouseOut(this)"
+				rowClass="smallTableRow"
+				headerClass="smallTableHeader" 
+				activeClass="smallTableRowActive"
+				selectedClass="smallTableRowSelected"
+				styleClass="table noGrid noSelection"
+				style="border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="leadershipListMenu" operation="show"/>
+
+				<!--  
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="leadershipInfoDialog" operation="show"/>
+					-->
+
+				<a4j:support 
+					event="onRowClick" 
+					action="#{leadershipInfoManager.viewLeadershipInfo}"
+					onsubmit="setCursorWait(this)"
+					oncomplete="setCursorDefault(this); showLeadershipInfoDialog()"
+					reRender="leadershipInfoDialog"/>
+					
+				<!--  				
+				<a4j:support 
+					event="onRowDblClick" 
+					action="#{leadershipInfoManager.viewLeadershipInfo}"
+					onsubmit="setCursorWait(this)"
+					oncomplete="setCursorDefault(this); showLeadershipInfoDialog()"
+					reRender="leadershipInfoDialog"/>
+					-->
+
+				<a4j:support 
+					event="onRowMouseUp" 
+					immediate="true"
+					requestDelay="0"
+					disableDefault="true"
+	                action="#{leadershipListManager.setSelection(listObject)}"/>
+	
+				<rich:column 
+					sortable="false">
+					<h:outputText value="#{listObject.roleName}"/>
+				</rich:column>
+			</rich:dataTable>
+	</a4j:outputPanel>
+</ui:composition>

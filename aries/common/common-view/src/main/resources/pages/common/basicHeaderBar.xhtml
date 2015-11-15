@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<a4j:outputPanel 
+		layout="block" 
+		id="basicHeaderBar"
+		style="width: auto; height: 30px; padding-top: 6px">
+		
+		<rich:toolBar 
+			itemSeparator="none"
+			styleClass="toolbar" 
+			contentClass="toolbarContent"
+			separatorClass="toolbarSeparator"
+			style="width: auto; background-color: #fff; border: 0px">
+	
+			<rich:toolBarGroup location="left" styleClass="toolbarGroup">
+				<ui:include src="/pages/common/navigationLink.xhtml">
+					<ui:param name="text" value="Welcome"/>
+					<ui:param name="tooltip" value="Go to Welcome Page"/>
+					<ui:param name="image" value="resource://images/icons/common/Home16.gif"/>
+					<ui:param name="manager" value="#{globals}"/>
+					<ui:param name="action" value="showMainPage"/>
+					<ui:param name="background" value="#fff"/>
+				</ui:include>
+			</rich:toolBarGroup>
+			
+			<rich:toolBarGroup location="right" styleClass="toolbarGroup">
+				<span class="hspace12"/>
+				<ui:include src="/pages/common/toolButton.xhtml">
+					<ui:param name="text" value="Print"/>
+					<ui:param name="tooltip" value="Print this Page"/>
+					<ui:param name="image" value="resource://images/icons/common/Print16.gif"/>
+					<ui:param name="manager" value="#{globals}"/>
+					<ui:param name="action" value="doNothing"/>
+					<ui:param name="onclick" value="showProgress('Printing Page', 'Preparing page for printer...', '')"/>
+					<ui:param name="oncomplete" value="hideProgress(); window.print()"/>
+					<ui:param name="background" value="#fff"/>
+					<ui:param name="enabled" value="true"/>
+				</ui:include>
+	
+				<span class="hspace12"/>
+				<ui:include src="/pages/common/toolButton.xhtml">
+					<ui:param name="text" value="Help"/>
+					<ui:param name="tooltip" value="Show Help Documentation"/>
+					<ui:param name="image" value="resource://images/icons/common/Help16.gif"/>
+					<ui:param name="manager" value="#{globals}"/>
+					<ui:param name="action" value="doNothing"/>
+					<ui:param name="onclick" value="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"/>
+					<ui:param name="oncomplete" value="hideProgress()"/>
+					<ui:param name="background" value="#fff"/>
+					<ui:param name="enabled" value="true"/>
+				</ui:include>
+			</rich:toolBarGroup>
+		</rich:toolBar>
+	</a4j:outputPanel>
+</ui:composition>
+

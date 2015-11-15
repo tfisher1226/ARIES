@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>common</artifactId>
+	<description>common</description>
+	<name>common</name>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>aries-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent</relativePath>
+	</parent>
+	
+	<modules>
+		<module>common-util</module>
+		<module>common-net</module>
+		<module>common-rmi</module>
+		<module>common-emf</module>
+		<module>common-ejb</module>
+		<module>common-jmx</module>
+		<module>common-jdbc</module>
+		<module>common-jaxb</module>
+		<module>common-jaxws</module>
+		<module>common-jndi</module>
+		<module>common-jms</module>
+		<module>common-runtime</module>
+		<module>common-model</module>
+		<module>common-data</module>
+		<module>common-event</module>
+		<module>common-action</module>
+		<module>common-queue</module>
+		<module>common-cache</module>
+		<module>common-client</module>
+		<module>common-service</module>
+		<module>common-process</module>
+		<module>common-transaction</module>
+		<module>common-launcher</module>
+		<module>common-workflow</module>
+		<module>common-security</module>
+		<module>common-view</module>
+	</modules>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+		<aries.deploy.exploded>false</aries.deploy.exploded>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-test-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>commons-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-data</artifactId>
+				<version>${aries.version}</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-service</artifactId>
+				<version>${aries.version}</version>
+				<scope>provided</scope>
+				<type>ejb</type>
+			</dependency>
+			
+            <!--
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>notification-model</artifactId>
+				<version>${aries.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>notification-client</artifactId>
+				<version>${aries.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>notification-data</artifactId>
+				<version>${aries.version}</version>
+				<scope>provided</scope>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>notification-data</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+				<scope>test</scope>
+			</dependency>
+            -->
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- JAVAX -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>javax</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- COMMONS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>commons</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+
+		<!-- UTILS -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- LOGGING -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>logging</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- JUNIT -->
+		<dependency>
+			<groupId>org.aries.pom</groupId>
+			<artifactId>junit</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided	</scope>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+</project>

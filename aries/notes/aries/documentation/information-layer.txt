@@ -1,0 +1,106 @@
+
+Attribute
+---------
+
+Models attributes, which are the leaf components of an object's
+data. They are identified by name and they have a type. Lower and
+upper bounds are specified in the attribute for multiplicity.
+
+
+Reference
+---------
+
+Models one end of an association between two classes. They are
+identified by name and type, where that type represents the class
+at the other end of the association. Bidirectionality is supported by
+pairing a reference with its opposite, i.e., a reference in the class
+representing the other end of the association. Lower and upper
+bounds are specified in the reference for multiplicity. A reference
+can support a stronger type of association called
+containment. For a multi-valued reference, a subset of attributes of the referenced
+class can be identified as the key, i.e., as uniquely identifying an
+instance among the references
+
+There are two basic types of references, containment references and cross references. Traditionally only cross references can be turned into proxies to be resolvable again later. As of EMF 2.4 containment references can become proxies as well, although this requires a non-default generation pattern and possibly the adoption of the application to create and manage additional resources.
+
+It is important to note that turning an object into a proxy only sets its eProxyURI and nothing else. Particularly it does not unset any attributes or references. As a result proxies are always bigger than their unproxied pendants and they still carry their strong references to other objects! Go figure...
+
+Now we could try to manually unset the nasty references that still prevent our objects from being garbage collected. But this can be a tedious and error-prone task. Especially bi-directional cross references can be hard to tackle because of the implicit inverse operations when unsetting one end. While it does not seem completely unfeasible it remains questionable whether the EMF proxy mechanism is appropriate to make our models scale well. To sum up:
+
+    Containment relationships between objects in a resource usually prevent from proxying.
+    Hence only complete resources look like candidates for unloading.
+    Detection of incoming references is expensive.
+    Proxying of incoming references does not automatically influence strong reachability.
+    Manual removal of strong references is at least inconvenient. 
+
+It seems as if we are stuck now, but let us step back to look at our model from a distance. In the end, our model is just a directed graph, the nodes are Java objects and the edges are strong Java references. And this last observation seems to be the root cause of our scalability problem!
+
+Imagine all these objects had a unique identifying value and all these associations were more like unconstrained foreign keys in a relational database system. We could point to objects without making them strongly reachable. Can we?
+
+Yes, we can! EMF offers a different generation pattern called reflective delegation and a different run-time base class called EStoreEObjectImpl which can be used to implement models that transparently support the needed characteristics. Fasten your seat belt...
+
+Reflective delegation changes the code that is generated for your implementation classes in three ways. Member fields are no longer generated for features. The getters and setters for single-valued features no longer access a member field’s value but rather delegate to the reflective eGet and eSet methods. And the getters for many-valued features return special EList implementations which also delegate to some reflective methods. With this generation pattern we can effectively remove all modeled state from our EObjects, including the unloved strong references. But where does it go instead?
+
+Since we removed the state from our generated classes and the default base class EObjectImpl is not able to store modeled state it is obvious that we need a different base class, which can easily be achieved with the generator property Root Extends Class. While we could write our own implementation of InternalEObject it is usually sufficient to use or subclass EStoreEObjectImpl. Instances of this class delegate all their state access to an EStore which can be provided by the application. We only need to write our own EStore implementation with a dozen or so methods to fulfill the contract and ensure that each EStoreEObjectImpl instance points to an appropriate store instance. I have seen frameworks which maintain a separate store instance for each model object, others let all objects of a resource or a resource set share a single store and others (like CDO, explained later on) are even more complex. I think the right choice depends on how exactly the store is required to handle the object data. Before we dive into CDO’s approach we have to look at a tricky problem that all possible store implementation have to solve.
+
+In addition to the modeled state of an object all stores have to maintain the eContainer and the eContainerFeatureID properties of an EObject. Although it is not immediately obvious the EStore interface only provides methods to get these values but no methods to set them! Since our store needs to provide these values and the framework does not pass them in explicitly we must, if we want or not, derive these values implicitly from the modification method calls (those that can influence the containment) and our knowledge about the model (which are the containment references?). Solving this problem is typically not a one hour task!
+
+Now let us look at how the CDO Model Repository framework faces the problem. Here are some of the requirements for objects in CDO:
+
+    Loadable on demand, even across containment relationships
+    Garbage collectable, if not used anymore
+    Replaceable by newer versions (passive update) or older versions (temporality)
+    Easily and efficiently transferable through a network wire 
+
+These requirements lead to a considerably complex design which I am trying to strip down here a bit:
+
+CDO's implementation of EObject subclasses EStoreEObjectImpl and shares the same store instance with all objects in the resource set that come from the same repository which, together with the virtual current time is represented by a CDOView. CDO's implementation of EStore is stateless other than knowing its view. The modeled state of an object is stored in CDORevision instances which represent the immutable states of an object between commit operations. The revisions internally store the CDOIDs of target objects instead of strong references to them. Each object stores a strong reference to the revision that is active at the time configured in the view. A view softly or weakly caches objects keyed by their CDOID. The revisions are cached separately in the CDOSession, by default with a two-level cache (configurable fixed size LRU cache plus memory sensitive cache to take over evicted revisions). Since revisions are immutable they can be shared among different local views.
+
+With this design neither the framework nor the objects and revisions keep strong references to other objects or revisions and the garbage collector is able to do its job as soon as the application releases its strong references. The reflective delegation causes each access to a model property to go through the store, which uses the revision of the object to determine the CDOID of the target object. This id is then used to lookup the target object in the view cache. If the object is missing, either because it was never loaded or it has already been garbage collected, the needed revision is looked up in the session cache. The revision always knows the class of the object so that the view can create a new EObject instance and wire it with the revision. If revisions are missing from the sessions cache they are loaded from the repository server.
+
+
+
+
+
+
+
+
+DataType
+--------
+
+Models simple types whose structure is not modeled. Instead
+they act as a wrapper that denotes a primitive or object type
+fully defined in Java. They are identified by name and are most
+commonly used as attribute types.
+
+
+Additional things generated with the Model
+-------------------------------------------
+
+ModelChangeMonitor
+ModelChangeRecorder
+
+
+
+How Scalable is my Model?
+-------------------------
+
+I need to list out the best practices and rules-of-thumb.
+-usage of weak references
+
+http://thegordian.blogspot.com/2008/11/how-scalable-are-my-models.html
+
+To answer the headline question we first need to gather a common understanding of what scalability means in this context. We can summarize the things we can do with a model into two categories:
+
+    Use the model in main memory
+    Preserve the model state between sessions 
+
+For a model to be scalable it is required that the resource consumption for its usage and preservation is not a function of the model size [provide reference].
+
+Scalability does not necessarily imply that it is always darned fast to use or preserve a single model object. Rather it guarantees that performance and foot print are the same or at least similar, whether the object is the only one contained in a resource or it is contained in a huge object graph. Usually the resource consumption should be a function of the model change.
+
+Some persistence approaches obviously need to violate this constraint. For example saving model changes to a text file will always write the whole model as opposed to only the changes (respective enhancement requests in the EMF newsgroup showed me that this is not as obvious as I thought before). Even loading a single object usually requires to deserialize a whole resource file.
+
+
+
+

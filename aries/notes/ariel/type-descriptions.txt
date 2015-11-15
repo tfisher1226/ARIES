@@ -1,0 +1,31 @@
+
+RoleType
+
+A roleType enumerates potential observable behavior a participant can exhibit in order to interact. For example, the "Buyer" roleType is associated with the purchasing of goods or services and the "Supplier" roleType is associated with providing those goods or services for a fee.
+
+The attribute name is used to specify a distinct name for each roleType element declared within a choreography package.
+
+Within the roleType element, a behavior element specifies a subset of the observable behavior a participant exhibits. A roleType MUST contain one or more behavior elements. The attribute name within the behavior element is used to specify a distinct name for each behavior element declared within a roleType element.
+
+The behavior element defines an OPTIONAL interface attribute, which identifies a WSDL interface type. A behavior without an interface describes a roleType that is not required to support a specific Web Service interface.
+
+
+RelationshipType
+
+A relationshipType identifies the roleTypes and behaviors, where mutual commitments MUST be made for collaborations to be successful. For example, the relationshipTypes between a "Buyer" and a "Seller" could include:
+
+    A "Purchasing" relationshipType, for the initial procurement of goods or services, and
+
+    A "Customer Management" relationshipType to allow the "Supplier" to provide service and support after the goods have been purchased or the service provided
+
+Although relationshipTypes are always between two roleTypes, choreographies involving more than two roleTypes are possible. For example, if the purchase of goods involved a third-party "Shipper" contracted by the "Supplier" to deliver the "Supplier's" goods, then, in addition to the "Purchasing" and "Customer Management" relationshipTypes described above, the following relationshipTypes might exist:
+
+    A "Logistics Provider" relationshipType between the "Supplier" and the "Shipper", and
+
+    A "Goods Delivery" relationshipType between the "Buyer" and the "Shipper"
+
+
+
+
+
+

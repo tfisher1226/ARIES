@@ -1,0 +1,69 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- INCLUDES -->
+	<ui:include src="memberOptionMenu.xhtml"/>
+
+	<h:panelGroup layout="block">
+		
+		<rich:toolBar 
+			itemSeparator="none"
+			styleClass="controlbar" 
+			contentClass="controlbarContent"
+			separatorClass="controlbarSeparator" 
+			style="width: auto; background-image: none; background-color: #f0f0f0; border: 0px;">
+
+			<rich:toolBarGroup location="left" styleClass="toolbarGroup">
+
+				<!-- 
+				<ui:include src="/common/button/dialogButton.xhtml">
+					<ui:param name="text" value="Other..."/>
+					<ui:param name="immediate" value="true"/>
+					<ui:param name="ajaxSingle" value="true"/>
+					<ui:param name="image" value="resource://images/icons/common/Plus16.gif"/>
+					<ui:param name="onclick" value="showMemberOptionSelectMenu(this)"/>
+					<ui:param name="rendered" value="true"/>
+					<ui:param name="enabled" value="#{superUser}"/>
+				</ui:include>
+				-->
+				
+				<!-- 
+				<rich:dropDownMenu hideDelay="200">
+					<f:facet name="label">
+						<h:panelGrid columns="2" columnClasses="menuIconColumn, menuTextColumn">
+							<h:graphicImage value="resource://images/icons/common/Plus16.gif"/>
+							<h:outputText styleClass="toolbarItem" value="File"/>
+						</h:panelGrid>
+					</f:facet>
+					
+					<rich:menuItem>
+						<a4j:commandLink 
+							value="Placeholder..."
+							action="#{memberInfoManager.openMember}"
+							onclick="showProgress('INFOSGI', 'Transferring information...')"
+							oncomplete="hideProgress()"
+							rerender="sample1OutputField, sample1InputField"
+							styleClass="menuLabel">
+							<rich:toolTip followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+								<span style="white-space: nowrap; display: block; text-align: left">
+									<h:outputText value="Placeholder"/> 
+								</span>
+							</rich:toolTip>
+						</a4j:commandLink> 
+					</rich:menuItem>
+				</rich:dropDownMenu>
+				 -->
+			</rich:toolBarGroup>
+		</rich:toolBar>
+	</h:panelGroup>
+</ui:composition>

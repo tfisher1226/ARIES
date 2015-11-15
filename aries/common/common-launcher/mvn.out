@@ -1,0 +1,15 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 0.250s
+[INFO] Finished at: Thu Mar 26 13:30:45 PDT 2015
+[INFO] Final Memory: 5M/490M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Could not find goal 'analysis' in plugin org.apache.maven.plugins:maven-dependency-plugin:2.8 among available goals copy, analyze, unpack, list-repositories, resolve, resolve-plugins, build-classpath, list, analyze-dep-mgt, sources, analyze-duplicate, copy-dependencies, unpack-dependencies, go-offline, get, purge-local-repository, properties, analyze-report, tree, analyze-only, help -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoNotFoundException

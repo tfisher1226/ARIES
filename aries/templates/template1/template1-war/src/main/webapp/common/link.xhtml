@@ -1,0 +1,97 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty label}">
+		<c:set var="label" value="not specified"/> 
+	</c:if>
+
+	<c:if test="#{empty tooltip}">
+		<c:set var="tooltip" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty linkClass}">
+		<c:set var="linkClass" value="text16 link"/>
+	</c:if>
+
+	<c:if test="#{empty linkStyle}">
+		<c:set var="linkStyle" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolbarItem"/> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value="padding: 0px"/> 
+	</c:if>
+	
+	<c:if test="#{empty onclick}">
+		<c:set var="onclick" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty oncomplete}">
+		<c:set var="oncomplete" value=""/> 
+	</c:if>
+
+	<aries:toolbar 
+		style="border: 0px solid #ddd; background-color: white">
+		
+		<aries:toolbarGroup 
+			location="left">
+
+			<rich:menuItem
+				submitMode="ajax"
+				disabled="false"
+				rendered="true"
+				immediate="true"
+				ajaxSingle="true"
+				requestDelay="0"
+				action="#{globals.doNothing}"
+				onclick="setCursorWait(this); #{onclick}"
+				oncomplete="setCursorDefault(this); showPage('#{target}'); #{oncomplete}"
+				styleClass=""
+				labelClass=""
+				style="#{style}; border-color: white; background-color: white">
+				<f:facet name="icon">
+					<c:if test="#{empty icon}">
+						<h:graphicImage value="resource://images/spacer.gif" width="0" height="0" style="backgrund-color: cyan"/>
+					</c:if>
+					<c:if test="#{not empty icon}">
+						<h:graphicImage value="#{icon}" style="padding-right: 0px"/>
+					</c:if>
+				</f:facet><span class="#{linkClass}" style="display: inline-block; width: auto; vertical-align: middle; #{linkStyle}">
+				<ui:insert/></span>
+
+				<aries:tooltip value="#{tooltip}"/>
+			</rich:menuItem>
+
+			<!-- 
+			<a4j:commandLink
+				action="#{emailManager.newEmailMessage}"
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this); showPage('home/contact')"
+				style="text-decoration: none">
+
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumnAlignMiddle">
+					<h:graphicImage value="resource://images/icons/message/NewMessage24.gif" style="margin-right: 8px"/>
+					<h:outputText styleClass="toolbarLabel, text16" value="Request Information" style="white-space: nowrap; color: #000099"/>
+				</h:panelGrid>
+
+				<ui:include src="/common/tooltip.xhtml">
+					<ui:param name="tooltip" value="Send us a request for information"/>
+				</ui:include>
+			</a4j:commandLink>
+			-->
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

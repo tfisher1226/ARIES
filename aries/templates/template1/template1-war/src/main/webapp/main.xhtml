@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main-page-template.xhtml">
+
+	<!-- PAGE BODY -->
+	<ui:define name="content">
+	
+		<!-- IMPORTED DIALOGS -->
+		<aries:popupDialog/>
+		<aries:messageDialog/>
+		<aries:progressDialog/>
+		<aries:themeDialog/>
+	
+<!-- ${template1_application_dialogs} -->
+		
+		<!--  
+		<ui:include src="sections/user/userWizard.xhtml" />
+		-->
+				
+		<!-- PAGE FORM -->
+		<aries:form id="pageForm">
+		
+			<!-- IMPORTED ACTIONS --> 
+			<ui:include src="${template1_page_folder}/actions.xhtml"/>
+
+			<!-- PAGE HEADER -->
+			<aries:header 
+				titleText="${template1_title} Application"
+				titleImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"
+				backgroundImageXX="/infosgi/resources/graphics/infosgi-title-back.jpg"/>
+
+			<!-- PAGE MENUBAR --> 
+			<ui:include src="${template1_page_folder}/menubar.xhtml"/>
+			
+			<!-- PAGE CONTENT -->
+			<aries:formPane 
+				columns="2"
+				width="#{globals.screenWidth}" 
+				height="#{globals.screenHeight-140}">
+				
+				<ui:include src="${template1_page_folder}/navigator.xhtml"/>
+				<ui:include src="${template1_page_folder}/viewer.xhtml"/>
+			</aries:formPane>
+
+			<!-- PAGE FOOTER -->
+			<aries:footer/>
+		</aries:form>
+	</ui:define>
+</ui:composition>

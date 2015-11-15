@@ -1,0 +1,76 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty selected}">
+		<c:set var="selected" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty submitMode}">
+		<c:set var="submitMode" value="ajax"/> 
+	</c:if>
+
+	<c:if test="#{empty manager}">
+		<c:set var="manager" value="#{globals}"/> 
+	</c:if>
+
+	<c:if test="#{empty action}">
+		<c:set var="action" value="doNothing"/> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolbarToggleItem"/> 
+	</c:if>
+
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="toolbarLabel"/> 
+	</c:if>
+
+	<c:if test="#{empty labelStyle}">
+		<c:set var="labelStyle" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value=""/> 
+	</c:if>
+
+	<rich:menuItem
+		id="#{id}"
+		submitMode="#{submitMode}"
+		disabled="false"
+		rendered="true"
+		immediate="true"
+		ajaxSingle="true"
+		requestDelay="0"
+		action="#{manager[action]}"
+		onclick="setCursorWait(this); #{onclick}"
+		oncomplete="setCursorDefault(this); #{oncomplete}"
+		styleClass="#{selected ? 'toolbarToggleItemSelected' : 'toolbarToggleItem'}" 
+		style="padding: 3px 2px 2px 2px"
+		reRender="#{reRender}">
+
+		<f:facet name="icon">
+			<c:if test="#{empty icon}">
+				<h:graphicImage value="resource://images/spacer.gif" width="0" height="1"/>
+			</c:if>
+			<c:if test="#{not empty icon}">
+				<h:graphicImage value="#{icon}" style=""/>
+			</c:if>
+		</f:facet>
+		
+		<c:if test="#{not empty label}">
+			<h:outputText value="#{label}" styleClass="#{labelClass}" style="white-space: nowrap; #{labelStyle}"/>
+		</c:if>
+
+		<aries:tooltip value="#{tooltip}"/>
+	</rich:menuItem>
+</ui:composition>

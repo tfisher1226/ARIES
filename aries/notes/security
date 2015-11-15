@@ -1,0 +1,17 @@
+http://www.omg.org/mda/mda_files/MDA_Comparison-TMC_final.pdf
+
+Traditional development vs. MDA based development
+
+For the most part, the two applications built by the teams were very similar. However, one interesting area
+where the two teams diverged was in the area of security.
+
+To address security, the traditional team used an authentication filter. This filter checks to see if the
+currently requested page is restricted and, if it is, checks to see if the user is signed in (sign-in information is
+stored in the HTTP Session). The team wrote this filter from scratch. The filter implements the
+javax.servlet.Filter interface, supplied by Sun Microsystems.
+
+By way of comparison, the MDA team used their MDA tool to assist with development of the security
+system. Their MDA tool provided a security framework allowing them to select from a variety of
+authentication methods, including simple authentication, digest-based, form-based, and programmatic. The
+team chose to use the programmatic approach. The framework also provided login and logout JSP pages
+that the team customized for the PetStore requirements.

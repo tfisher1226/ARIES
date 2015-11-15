@@ -1,0 +1,6 @@
+
+-vmargs must be the last argument
+
+example:
+
+C:\eclipse\eclipse.exe -nosplash -vmargs -Xms512m -Xmx512m -XX ermSize=128m -XX:MaxPermSize=128m

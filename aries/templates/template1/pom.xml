@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>template1</artifactId>
+	<name>template1</name>
+	<description>template1</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>project/template1-model</module>
+		<module>project/template1-client</module>
+		<module>project/template1-data</module>
+		<module>project/template1-service</module>
+		<module>project/template1-war</module>
+		<module>project/template1-ear</module>
+	</modules>
+
+	<properties>
+		<template1.version>0.0.1-SNAPSHOT</template1.version>
+		<template1.deploy.exploded>true</template1.deploy.exploded>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>template1-model</artifactId>
+				<version>${template1.version}</version>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>template1-client</artifactId>
+				<version>${template1.version}</version>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>template1-data</artifactId>
+				<version>${template1.version}</version>
+				<type>jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>template1-service</artifactId>
+				<version>${template1.version}</version>
+				<type>ejb</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>template1-ui</artifactId>
+				<version>${template1.version}</version>
+				<type>war</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
+

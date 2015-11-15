@@ -1,0 +1,61 @@
+
+Eclipse Galileo 3.5 and 3.5.1 settings
+Currently (November 2009), I am testing with jdk6 update 17 the following configuration set of options (with Galileo -- eclipse 3.5.x, see above for 3.4): (of course, adapt the relative paths present in this eclipse.ini to the correct paths for your setup)
+
+Note: for eclipse3.5, replace startup and launcher.library lines by:
+
+-startup
+plugins/org.eclipse.equinox.launcher_1.0.200.v20090520.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_1.0.200.v20090519
+eclipse.ini 3.5.1
+-data
+../../workspace
+-showlocation
+-showsplash
+org.eclipse.platform
+--launcher.XXMaxPermSize
+384m
+-startup
+plugins/org.eclipse.equinox.launcher_1.0.201.R35x_v20090715.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_1.0.200.v20090519
+-vm
+c:/Java/jdk1.6.0_17/jre/bin/client/jvm.dll
+-vmargs
+-Dosgi.requiredJavaVersion=1.5
+-Xms128m
+-Xmx384m
+-Xss4m
+-XX:PermSize=128m
+-XX:MaxPermSize=384m
+-XX:CompileThreshold=5
+-XX:MaxGCPauseMillis=10
+-XX:MaxHeapFreeRatio=70
+-XX:+UseConcMarkSweepGC
+-XX:+CMSIncrementalMode
+-XX:+CMSIncrementalPacing
+-Dcom.sun.management.jmxremote
+-Dorg.eclipse.equinox.p2.reconciler.dropins.directory=C:/jv/eclipse/mydropins
+
+
+Eclipse 3.3 supports a new argument to the launcher: --launcher.XXMaxPermSize.
+If the VM being used is a Sun VM and there is not already a -XX:MaxPermSize= VM argument, then the launcher will automatically add -XX:MaxPermSize=256m to the list of VM arguments being used.
+The 3.3 launcher is only capable of identifying Sun VMs on Windows.
+
+
+
+If you're going with jdk6 update 14, I'd suggest using using the G1 garbage collector which seems to help performance.
+
+To do so, remove these settings:
+
+-XX:+UseConcMarkSweepGC
+-XX:+CMSIncrementalMode
+-XX:+CMSIncrementalPacing
+
+and replace them with these:
+
+-XX:+UnlockExperimentalVMOptions
+-XX:+UseG1GC
+
+

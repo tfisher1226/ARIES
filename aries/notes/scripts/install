@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set workingDir = `pwd`
+. c:/workspace/AEROSPACE/aero/scripts/setenv.sh
+cd $WORKSPACE/common; mvn clean; mvn -e -DskipTests=true install;
+cd $WORKSPACE/audit; mvn clean; mvn -e -DskipTests=true install;
+#cd $WORKSPACE/approval; mvn clean; mvn -e -DskipTests=true install;
+cd $WORKSPACE/authorization; mvn clean; mvn -e -DskipTests=true install;
+cd $WORKSPACE/icams-view; mvn clean; mvn -e -DskipTests=true install;
+cd $workingDir
+

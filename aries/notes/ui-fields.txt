@@ -1,0 +1,27 @@
+
+
+
+<html>
+<f:view>
+    <head>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <title>JSP Page</title>
+         <script type="text/javascript" src="../../resource/js/jquery.min.js"/>
+         <script type="text/javascript"> 
+             function typedName()
+             {
+                  //Get The value using styleClass id
+                  var userName = jQuery.trim($('.textBox').val());
+                  alert("Name is : " + userName);
+             }
+
+             // If i am not use above typedName() script and load src, then
+             // the following testButton() clicked script perfectly worked.
+
+             function testButton()
+             {
+                  alert("Test Button Clicked");
+             }
+          </script>
+</head>
+

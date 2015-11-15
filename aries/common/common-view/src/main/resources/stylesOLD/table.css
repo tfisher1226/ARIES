@@ -1,0 +1,17 @@
+.table {
+	border-collapse: collapse;
+}
+
+.tableScroller {
+    margin: 0px;
+    padding: 0px;
+}
+
+th, td {
+    padding: 0;
+}
+
+.noGrid .rich-table-cell {
+	border-width: 0px;
+}
+

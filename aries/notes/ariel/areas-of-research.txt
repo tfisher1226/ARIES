@@ -1,0 +1,28 @@
+Deployment modeling
+  -multi-level deployment
+  -multi-level security
+  -control the deployment of networks involving 1000s of nodes
+
+Verificaton modeling
+  -Multi-level testing and verification scenarios
+  -Automated generation of tests, test configuration files, and test data files
+
+Modeling of Application and Module Dependencies
+
+Multi-level verification of distributed architectures
+
+Exploration of predicate-based invocation mechanism (e.g. usage of when) where this construct
+becomes indispensable would become important for understanding its status in structured
+concurrent programming.
+
+
+Precise appreciation of what high-level global abstraction would be
+suitable for describing communication-centred software behaviour, and how they relate
+to theirlocal (communication-based) realisation,is an important topic for future study.
+
+
+Enabling of Big-data modeling with minimal and intuitive input.
+
+
+As for the implementation areas, I expect alot of criticism since there are so many fundamentally differing opinions.  However, as long as the implementation structures are simple, clear and understandable, and clearly testable, the implemntation can stand up to criticism.
+

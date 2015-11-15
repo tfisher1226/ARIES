@@ -1,0 +1,8 @@
+#!/bin/sh
+
+. c:/workspace/AEROSPACE/aero/scripts/setenv.sh
+
+set cwd=`pwd`
+cd $WORKSPACE
+ls -l */target/*.[jwer]ar
+cd $cwd

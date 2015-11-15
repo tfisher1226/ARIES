@@ -1,0 +1,20 @@
+
+Active and passive data objects
+
+The life cycle of a data object
+
+A data object referenced in an Ariel program can have one of a set of different lifestyles depending on its level of persistence and upon its nature of usage.  In any of the lifestyles a data object may be Transactional or not where Transactional means that the data object may be included within transactional state of a transaction.  Such an object is said to be Transactional, or referred to as a Transactional Object.
+
+A transactional data object not in use is assumed to be held in a passive state, with its state residing in an object store and activated on demand. The fundamental life cycle of a data object in Aries is shown in Figure 2.2, "Life cycle of a persistent Object in Aries".
+
+Figure:
+http://docs.jboss.org/jbosstm/5.0.0.M2/guides/arjunacore-development_guide/index.html#d0e592
+
+Note:
+During its life time, a persistent object may be made active then passive many times. 
+
+
+
+
+
+

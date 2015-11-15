@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<ui:include src="textMenu.xhtml"/>
+
+	<h:outputLabel styleClass="groupLabel">Identity</h:outputLabel>
+	<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 8px; padding-left: 4px; margin-top: 2px">
+
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+			<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px">Name</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+				<ui:include src="userNameField.xhtml">
+					<ui:param name="personBean" value="#{user}"/>
+				</ui:include>
+			</h:panelGroup> 
+		</h:panelGrid>
+	
+		<rich:spacer height="6"/>
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+			<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px">Username</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+				<ui:include src="textField.xhtml">
+					<ui:param name="bean" value="#{user}"/>
+					<ui:param name="field" value="userId"/>
+				</ui:include>
+			</h:panelGroup> 
+		</h:panelGrid>
+
+		<rich:spacer height="6"/>
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+			<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px">Password</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+				<ui:include src="textField.xhtml">
+					<ui:param name="bean" value="#{user}"/>
+					<ui:param name="field" value="password"/>
+				</ui:include>
+			</h:panelGroup> 
+		</h:panelGrid>
+	</h:panelGroup> 
+
+	<div class="height20"/>
+	<h:outputLabel styleClass="groupLabel">Contact Information</h:outputLabel>
+	<h:panelGroup styleClass="groupPanel" layout="block" style="padding: 8px; padding-left: 4px; margin-top: 2px">
+
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+			<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px">Email</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+				<ui:include src="userEmailAddressField.xhtml"/>
+			</h:panelGroup> 
+		</h:panelGrid>
+
+		<rich:spacer height="6"/>
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+			<h:outputLabel styleClass="formLabel" layout="block" style="width: 70px; padding-top: 2px">Phones</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+				<ui:include src="userPhoneNumberField.xhtml"/>
+			</h:panelGroup> 
+		</h:panelGrid>
+
+		<rich:spacer height="6"/>
+		<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumn"> 
+			<h:outputLabel styleClass="formLabel" style="width: 70px; padding-top: 2px">Address</h:outputLabel>
+			<h:panelGroup styleClass="formPanel" layout="block" style="width: 220px; height: auto; cursor: pointer">
+				<ui:include src="userStreetAddressField.xhtml"/>
+			</h:panelGroup> 
+		</h:panelGrid>
+	</h:panelGroup> 
+</ui:composition>

@@ -1,0 +1,62 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<ui:include src="textPanel.xhtml"/>
+	
+	<a4j:outputPanel 
+		id="#{field}Panel">
+		
+		<a4j:region>
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				value="#{bean}" 
+				rows="1"
+				rendered="true"
+				onRowMouseOver="userDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="userDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="userDialogFieldHighlighter.processTableRowMouseOut(this)"
+				selectionMode="single" 
+				sortMode="single" 
+				rowClass="tableRow text12"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noGrid noBorder noSelection"
+				style="border-left: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="textMenu" operation="show"/>
+
+				<a4j:support 
+					event="onRowClick" 
+					onsubmit="show#{field}TextPanel(this)"/>
+
+				<a4j:support 
+					event="onRowDblClick" 
+					onsubmit="show#{field}TextPanel(this)"/>
+
+				<rich:column 
+					sortable="false">
+					
+					<h:outputText 
+						id="#{field}Component" 
+						value="#{not empty bean[field] ? bean[field] : 'none specified'}" 
+						styleClass="#{not empty bean[field] ? '' : 'disabled'}"/>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

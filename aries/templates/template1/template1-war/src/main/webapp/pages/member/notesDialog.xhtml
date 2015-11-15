@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:form>
+	    <a4j:jsFunction 
+	    	immediate="true" 
+	    	ajaxSingle="true" 
+	    	requestDelay="0"
+	    	name="showNotesDialog"
+			oncomplete="Richfaces.showModalPanel('notesDialog')">
+		</a4j:jsFunction>
+		
+	    <a4j:jsFunction 
+	    	immediate="true" 
+	    	ajaxSingle="true" 
+	    	requestDelay="0"
+	    	name="hideNotesDialog"
+			oncomplete="Richfaces.hideModalPanel('notesDialog')">
+		</a4j:jsFunction>
+	</a4j:form>
+
+
+	<style>
+	.notesDialogColumn1 { width: 140px; vertical-align: top; padding-right: 20px;}
+	.notesDialogColumn2 { width: 400px; vertical-align: top; }
+	</style>
+
+
+	<!-- Notes Dialog -->
+	<rich:modalPanel id="notesDialog" autosized="true">
+
+		<!-- TITLE -->
+		<f:facet name="header" style="padding-left: 12px; text-align: left">
+			Notes
+		</f:facet>
+
+		<!-- CLOSE ICON -->
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="resource://images/dialog/close.png" style="cursor: pointer">
+					<rich:componentControl for="notesDialog" operation="hide" event="onclick"/>
+				</h:graphicImage>
+			</h:panelGroup>
+		</f:facet>
+
+		<!-- HEADER -->
+		<h:panelGrid columns="2" columnClasses="dialogHeaderColumn1, dialogHeaderColumn2" style="width: 100%; vertical-align: top; border-bottom: 1px solid #bbb; background-color: white;">
+			<h:panelGroup layout="block" style="padding-top: 6px;">
+				<h:outputText value="#{memberInfoManager.title}" styleClass="dialogTitle" style="padding-left: 8px;"/>
+
+				<!-- MESSAGES -->
+				<a4j:outputPanel id="notesDialogHeaderMessages">
+					<ui:include src="/messages.xhtml">
+						<ui:param name="module" value="member"/>
+					</ui:include>
+				</a4j:outputPanel>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" style="">
+				<h:graphicImage value="/images/aries/aries-logo-dialog.jpg"/>
+			</h:panelGroup>
+		</h:panelGrid>
+
+		<!-- CONTENT -->
+		<h:form id="notesForm">
+			<s:validateAll>
+
+			<rich:spacer height="14"/>
+			<h:panelGroup layout="block" styleClass="groupPanel">
+			<h:panelGrid columns="2" columnClasses="formColumn, formColumn" styleClass="grid"> 
+				
+				<div class="formLabel" style="white-space: nowrap; padding-right: 12px">
+					Notes
+				</div>
+				<h:inputTextarea 
+					readonly="#{!fsaUser}" 
+					value="#{memberInfoManager.record.notes}"
+					styleClass="formInput" style="width: 400px; height: 120px; border: 1px solid #ccc">
+				</h:inputTextarea> 
+			</h:panelGrid>
+			</h:panelGroup>
+			</s:validateAll>
+
+			<h:panelGroup layout="block" 
+				styleClass="controlPanel">
+				
+				<rich:toolBar 
+					itemSeparator="none"
+					styleClass="toolbar" 
+					contentClass="toolbarContent"
+					separatorClass="toolbarSeparator" 
+					style="width: auto; background-color: #f0f0f0; border: 0px;">
+
+					<rich:toolBarGroup location="left" styleClass="toolbarGroup">
+						<ui:include src="/common/toolbar/toolButton.xhtml">
+							<ui:param name="tooltip" value="Show Help on Notes Dialog"/>
+							<ui:param name="manager" value="#{globals}"/>
+							<ui:param name="action" value="doNothing"/>
+							<ui:param name="image" value="resource://images/icons/common/Help24.gif"/>
+							<ui:param name="onclick" value="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"/>
+							<ui:param name="reRender" value="notesDialogHeaderMessages"/>
+							<ui:param name="rendered" value="true"/>
+							<ui:param name="enabled" value="true"/>
+						</ui:include>
+					</rich:toolBarGroup>
+
+					<rich:toolBarGroup location="right" styleClass="toolbarGroup">
+						<ui:include src="/common/button/dialogButton.xhtml">
+							<ui:param name="text" value="Save"/>
+							<ui:param name="tooltip" value="Save currently specified values"/>
+							<ui:param name="image" value="resource://images/icons/common/Save16.gif"/>
+							<ui:param name="imageDisabled" value="resource://images/icons/common/SaveDisabled16.gif"/>
+							<ui:param name="manager" value="#{memberInfoManager}"/>
+							<ui:param name="action" value="saveRecord"/>
+							<ui:param name="oncomplete" value="hideNotesDialog()"/>
+							<ui:param name="reRender" value="memberDialogForm"/>
+							<ui:param name="rendered" value="true"/>
+							<ui:param name="enabled" value="#{fsaUser}"/>
+						</ui:include>
+
+						<ui:include src="/common/button/dialogButton.xhtml">
+							<ui:param name="text" value="Cancel"/>
+							<ui:param name="ajaxSingle" value="true"/>
+							<ui:param name="image" value="resource://images/icons/common/Cancel16.gif"/>
+							<ui:param name="manager" value="#{memberInfoManager}"/>
+							<ui:param name="action" value="cancelDialog"/>
+							<ui:param name="onclick" value="hideNotesDialog()"/>
+							<ui:param name="rendered" value="true"/>
+							<ui:param name="enabled" value="true"/>
+							<ui:param name="offset" value="true"/>
+						</ui:include>
+					</rich:toolBarGroup>
+				</rich:toolBar>
+			</h:panelGroup>
+		</h:form>
+	</rich:modalPanel>
+</ui:composition>

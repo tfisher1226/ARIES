@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<handler-chains 
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee javaee_web_services_1_2.xsd">
+
+	<handler-chain>
+		<protocol-bindings>##SOAP11_HTTP</protocol-bindings>
+
+        <!-- 
+			JSR 181 does not seem to directly define how the handler chain is 
+			constructed from this xml, although JSR 109 6.2.2.3 seems to indicate the 
+			parser is required to maintain the declared ordering. Since we need the 
+			OutboundBridgeHandler to be invoked before the HeaderContextProcessor,
+			we list them in that order. 
+		-->
+
+		<handler>
+			<handler-name>TransactionBridgeHandler</handler-name>
+			<handler-class>common.tx.bridge.outbound.JaxWSTxOutboundBridgeHandler</handler-class>
+		</handler>
+
+		<handler>
+			<handler-name>HeaderContextProcessor</handler-name>
+			<handler-class>common.tx.handler.client.JaxWSHeaderContextProcessor</handler-class>
+		</handler>
+	</handler-chain>
+</handler-chains>

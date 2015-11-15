@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
+	
+	<handler-chain>
+		<handler>
+			<handler-name>Instance Identifier Handler</handler-name>
+			<handler-class>org.aries.tx.client.handler.InstanceIdentifierInHandler</handler-class>
+		</handler>
+		<!--  
+		<handler>
+			<handler-name>WSSEHeaderHandler</handler-name>
+			<handler-class>org.aries.jaxws.WSSEHeaderHandler</handler-class>
+		</handler>
+		<handler>
+			<handler-name>Instance Identifier Handler</handler-name>
+			<handler-class>common.tx.handler.WSAHeaderHandler</handler-class>
+		</handler>
+		-->
+	</handler-chain>
+</handler-chains>

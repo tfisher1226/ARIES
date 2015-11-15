@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript" language="javascript">
+	//<![CDATA[ 
+
+	function showOrganizationContextMenu(event, organizationName, organizationLevel, childLevel) {
+		var menu = #{rich:component('organizationContextMenu')};
+		menu.doShow(event, {
+			'organizationName': organizationName, 
+			'organizationLevel': organizationLevel, 
+			'childLevel': childLevel,
+			'canAdd': 'false'
+		});
+	}
+
+	function warnCannotDeleteOrganization(name, reason) {
+		showWarning(name, 'Cannot remove Organization Record', reason);
+	}
+
+	function checkPromptDeleteOrganization(name) {
+		showPrompt(name, 'Remove Organization Record from system', 'Do you wish to continue?', 'deleteOrganization', 'organizationTreePanel');
+	}
+	
+	//]]>
+	</script>
+
+	<aries:contextMenu
+		id="organizationContextMenu">
+
+		<aries:contextMenuItem 
+			value="View Members for {organizationName}..."
+			tooltip="View membership list for {organizationName}"
+			icon="resource://images/icons/common/Group16.gif"
+			manager="#{mainManager}"
+	    	action="viewMembers"
+	    	onselect="setCursorWait(this); showProgress('{organizationName}', 'Retrieving members...'); viewMembers()"
+    		oncomplete="setCursorDefault(this); hideProgress()"/>
+
+		<rich:menuSeparator/> 
+		<aries:contextMenuItem 
+			rendered="#{'{organizationLevel}' != 'GROUP'}"
+			value="New {childLevel} for {organizationName}..."
+			tooltip="Create new {childLevel} organization record for {organizationName}"
+			icon="resource://images/icons/common/New16.gif"
+			manager="#{organizationManager}"
+			action="newOrganization"
+			onselect="setCursorWait(this); showProgress('New {childLevel} for {organizationName}', 'Creating new organization record...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showOrganizationInfoDialog()"
+			reRender="organizationInfoDialog"/>
+
+		<!-- 
+		onselect="setCursorWait(); showProgress('New {childLevel} for {organizationName}', 'Creating new organization record...')"
+		onselect="setCursorWait(); showProgress('{organizationName}', 'Retrieving organization record...')"
+		onselect="setCursorWait(this); showProgress('Analyzing {organizationName}', 'Checking permissions...')"
+		 -->
+
+		<aries:contextMenuItem 
+			disabled="false"
+			value="Edit {organizationName}..."
+			tooltip="Edit organization record for {organizationName}"
+			icon="resource://images/icons/common/Edit16.gif"
+			manager="#{organizationManager}"
+			action="editOrganization"
+			onselect="setCursorWait(this); showProgress('{organizationName}', 'Retrieving organization record...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showOrganizationInfoDialog()"
+			reRender="organizationInfoDialog"/>
+
+		<rich:menuSeparator/> 
+		<aries:contextMenuItem 
+			disabled="false"
+			value="Remove {organizationName}"
+			tooltip="Remove organization record for {organizationName}"
+			icon="resource://images/icons/common/Remove16.gif"
+			manager="#{organizationManager}"
+			action="promptDeleteOrganization"
+			onselect="setCursorWait(this); showProgress('Analyzing {organizationName}', 'Checking permissions...')"
+			oncomplete="setCursorDefault(this); hideProgress(); if (#{!messages.isMessagesExist('organizationInfoDialog')}) {checkPromptDeleteOrganization('#{organization.name}')} else {warnCannotDeleteOrganization('#{organization.name}', '#{messages.getMessage('organizationInfoDialog')}')}"/>
+	</aries:contextMenu>
+</ui:composition>

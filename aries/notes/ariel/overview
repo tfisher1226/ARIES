@@ -1,0 +1,79 @@
+What is the problem we are trying to solve?
+
+We first recognize that an architecture is characterized by its data types, services and interactions among the applications and services.
+
+We want to represent a distributed architecture by representing each domain, each application, each service, and each of the potential interactions amongn the applications and services that may possibly exist.  For each interaction, we allow the designer the ability to appropriately and thoroughly characterize each interaction.  NAM provides the designer with a full set of building blocks to establish each of structures needed.
+
+What is ARIEL?
+
+ARIEL - ARIEL is a language to design and auto-generate Java EE based distributed systems.  The auto-generated output results in multi-module maven driven application projects that are immediately testable, executable, manageable and moniterable.
+
+ARIEL is based on a notion of structured communication called a <i>Conversation</i>.  A <i>Conversation</i> binds a series of communications between multiple parties into a single behavioral unit.  The communications of a conversational unit are distinguished from the communications of other units.
+
+offers a clean way to describe a complex structure of communications with rigorous operational semantics, allowing structured description of interactive behaviour.
+
+Implemented systems exist as ARIES models which are self-monitoring, and self-checking at runtime. Periodic tests are run in idle periods and raise errors if / when somthing occurs that is unexpected.
+
+Runtime systems exist as ARIES models.
+
+
+where mutual commitments MUST be made for collaborations to be successful
+
+Some Warning:
+to be effective, service collaboration patterns, have to provide for easy re-combination of services while preserving service independence and self-sufficiency. This relates to solving both intra- and inter-enterprise business problems.
+A number of problems appear when message exchange starts to prevail the functionality, i.e. the message exchange overshadows the purpose of the services and reasons for combinations. 
+Collaboration Patterns have to resolve this problem. The most popular collaboration patterns are Orchestration and Choreography. Since many do not share one common definition of the latter, we will use choreography as it is defined in the WS-CDL recommendation (http://www.w3.org/TR/ws-cdl-10-primer). So, the Orchestration Collaboration Pattern procreates service combinations based on the answers to the questions of WHAT to do and WHY, while the Choreography Collaboration Pattern focuses on HOW the interactions between services should happen. 
+From this point going further, we will discuss the part of the WS-CDL, which tries to make a "global contract" out of a structure of interactions between multiple services.
+OASIS Reference Architecture Foundation for SOA standard-draft states that services interact because they need to, want to, and able to. Particularly, a service becomes of interest to a consumer because of offered functionality and Real World Effect rather than because of the mechanics of its interface and related message exchange.
+Even if participants willingly agreed with the choreography "global contract", this does not mean that this willingness lasts forever. So, to make the "global contract" more realistic, it has to be accompanied by the "rainy day" scenarios. However, the more participants in the choreography the possible variation of failure should be observed and agreed. An agreement with all this mass of scenarios usually leads to some special work to be done by (inside) each participant. If an entity has to participate in multiple choreographies at the same time (as we said, the value of SOA in easy re-compositions), do you still think that choreography's "global contract" is for SOA? I believe you know exactly where any manager would like me to go, together with such SOA, if I try to offer a service collaboration model that requires changes all the time with no responsibility for the final result.
+
+Instead of the WS-CDL "global contract" for service collaboration I've proposed to use the pattern of Distributed Orchestration.
+
+When WS-CDL justifies the need for the "global contract", which scripts all interactions between all participants in certain order, it referred to the independence of the businesses (or services) that do not accept a central conductor, i.e. existing Orchestration Pattern is not suitable in the WS-CDL opinion. Also, WS-CDL outlines that the participants of the WS-CDL's "global contract" agree to participate and follow agreed sequence of interactions. Unfortunately, the agreement is just an agreement, it is not a guarantee. Recall, for the services to interact (and a business is a service to the consumers of the business products) all three conditions have to be in place - interest, willingness and ability. Now, imagine that a financial regulator has issued new policy and businesses should be compliant; if not compliant, they have to pay fines and these may be millions of dollars.
+
+Do you think the businesses are interested in this regulation or do they want to invest a couple of millions into the compliance that does not bring them a penny? Well, they certainly can implement the compliance procedures but is it enough to rely on the business' good behaviour? What if a business simply cannot perform its agreed actions because of the lack of resources at the moment when the agreed message has arrived? What if such message does not arrive at all because another participant failed to perform its actions due to any reasons? And the last one, what happens with the whole "global contract" is several participants fail to perform as agreed at the same time (and there is no one here who is responsible for overall outcome of the collective collaboration/choreography)? If you think that these are all my fantasies, just recall what happened with the choreography-based emergency plan when the hurricane Katrina hit New Orleans ...
+
+Even if participants willingly agreed with the choreography "global contract", this does not mean that this willingness lasts forever. So, to make the "global contract" more realistic, it has to be accompanied by the "rainy day" scenarios. However, the more participants in the choreography the possible variation of failure should be observed and agreed. An agreement with all this mass of scenarios usually leads to some special work to be done by (inside) each participant. If an entity has to participate in multiple choreographies at the same time (as we said, the value of SOA in easy re-compositions), do you still think that choreography's "global contract" is for SOA? I believe you know exactly where any manager would like me to go, together with such SOA, if I try to offer a service collaboration model that requires changes all the time with no responsibility for the final result.
+
+Instead of the WS-CDL "global contract" for service collaboration I've proposed to use the pattern of Distributed Orchestration.
+
+The Distributed Orchestration pattern helps in organising cooperation between different services in resolving a common task. The pattern is based on two pillars: 1) the use of natural activities of the service; 2) the use of the partner-and-supply chains of the service in its natural form instead of direct invocation.
+
+The Distributed Orchestration pattern may be applied to different types of entities - services, SW applications, business organisations - and assumes that:
+
+    1. Each collaborating entity provides its native capabilities and is fully responsible (to its owners) for restoring these capabilities in the case of failure
+    2. Each collaborating entity (service) performs in its native functional realm with no implementation changes attributed to particular collaboration
+    3. Only a few core services have to be invoked to start collaborative work; these core services will engage their regular partners and suppliers in a regular manner to fulfil their part of the common task, if needed
+    4. Entity collaboration may be facilitated, initiated and directed the enforcement of shared policies
+    5. The preconditions for any collaboration between two or more entities are: 1) a need to collaborate, 2) a willingness to collaborate, and 3) an ability to collaborate.
+
+Since each entity (service) in normal conditions creates and maintains its relationships with partners and the supply net, it is assumed that if an element in this net fails, the rest of the net (or primary interested entities) initiatively fix this problem by finding and engaging an alternative service. Using Distributed Orchestration pattern, we do no need to prescribe fail-over activities to each collaborating service for each potential combination of failure cases - the services do this by themselves. The latter statement is based on that each of the participating services is the conductor for its own activities and needs. That is, the centralised administration and enforcement attributed to the orchestration's conductor becomes distributed among all participants.
+
+
+Some Goals:
+1) we should be able to able to describe communication-centered behaviour clearly and accutately and in a modular way
+2) we should be able to validate and detect critical properties of communicating processes
+3) we should be able to control runtime behaviour pr processes including their composition
+
+Session types are abstractions for structuring communication. The notion of session becomes central when describing/designing protocol interactions between communicating processes.  Such descriptions exhibit highly structured  sequences of interactions involving, for example, branching and recursion, splitting/forking and joining.
+
+
+Global session types
+Global types retain the friendly type of sytax of binary session types while capturing complex causal chains of multiparty asynchronous interactions.
+
+In this section, we address the notion of structured exceptions for distributed, concurrent, asynchronously communicating programs based on session types motivated by collaboration with industry partners in web services and financil protocols. These tpe application domains contain a wealth of structured conversation patterns arising from practical needs, and many of these ptterns crucially rely uppon dynamic escape: a conversation interrupted by a special communication action, after which all peers move to a different stage in processing.  Hence an exception affects not only a sincle sequential thread of control but a collection of parallel processes; and an escape needs to move into another dialogue in a concerted manner.  The distinguishing feature of these exceptions in comparision with traditional counterpart is that they demand not only local but also coordinated actions among the communicating peers.  Such exceptions are referred to as interactional exceptions.
+
+Assertions
+-global
+-local
+
+
+Exceptions
+diverse forms of partial failure
+interactional exceptions allow communicating processes to asynchronously and collabolraively escape from the middle of a dialogue (session) and reach another in a coordinated fashion.  New Exception types guarantee communciation safety and offer a precise type-abstraction of advanced conversation patterns found in practice.
+
+Deadlock
+
+Livelock
+
+

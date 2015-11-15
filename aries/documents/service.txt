@@ -1,0 +1,42 @@
+
+What is a service? This question cannot be answered in the abstract. Service modeling is an entirely contextual activity. 
+
+Despite their rich history, service design practices remain nascent. The identification and definition of sharable and reusable services is still more art than science.
+
+
+What is a service?
+What other services is it like?
+How do I get from design to software?
+What meta data do I need to make it effective?
+
+Can you answer these questions? Do you have places in your service development process where these questions are answered in a consistent way? 
+Service oriented methodology is a set of software architecture practices that provide us a way to get answers to these questions and document 
+them in a way that's effective and meaningful for everyone who has a stake.
+
+
+Near where I live, in Dublin, is an extensive park called St. Anne's Park. It's part of what was the Guinness 
+estate (yes, that Guinness!).  There is a Greek Temple, built in the park as tea house by the Guinness family. 
+It’s has very ornate mosaics on the floor, and is almost perfect classical design...
+
+But, it's a Folly. Follies are buildings, or parts of buildings that have no purpose other than as an ornament; 
+they are purposely-built as ornaments; they are often eccentric in design or construction; 
+there is often an element of fakery in their construction.
+
+The Guinness family built this because they were wealthy, and just because they could. 
+We can't afford to do that in our organizations any more and especially these days... 
+What we build must be relevant, driven by the right business context, and play its part in an overall ecosystem. 
+As you could see from its state of repair, there's no great motivation to maintain the tea house. 
+It’s not valuable any more to maintain it, if it ever was...
+
+Put simply, if you create services without a service model and (especially without standards), 
+then you are creating custom (one-off) application integration interfaces and not doing service oriented architecture. 
+
+If context is not driving you to create the right services, then they are most likely not adding value to your applications architecture, they are making it worse.
+
+
+service making WS invocation:
+-create WS message
+-route message to webservice
+-retrieve webservice response
+-process webservice response
+

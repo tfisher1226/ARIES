@@ -1,0 +1,20 @@
+The final word on the final keyword:
+http://renaud.waldura.com/doc/java/final-keyword.shtml
+
+Use of Immutable Objects:
+
+An immutable object is an object which state is guaranteed to stay identical over its entire lifetime. While it is perfectly possible to implement immutability without final, its use makes that purpose explicit, to the human (the software developer) and the machine (the compiler).
+
+Immutable objects carry some very desirable characteristics:
+
+    they are simple to understand and easy to use
+    they are inherently thread-safe: they require no synchronization
+    they make great building blocks for other objects 
+    
+Create an immutable class by meeting all of the following conditions:
+
+    Declare all fields private final.
+    Set all fields in the constructor.
+    Don't provide any methods that modify the state of the object; provide only getter methods (no setters).
+    Declare the class final, so that no methods may be overridden.
+    Ensure exclusive access to any mutable components, e.g. by returning copies. 

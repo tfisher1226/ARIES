@@ -1,0 +1,6 @@
+http://docs.jboss.org/seam/2.1.1.GA/reference/en-US/html/conversations.html#d0e6433
+
+http://www.infoq.com/news/2008/01/seam-conversations
+
+http://kasper.eobjects.org/2010/05/watch-out-for-manual-flushing-in-jboss.html
+

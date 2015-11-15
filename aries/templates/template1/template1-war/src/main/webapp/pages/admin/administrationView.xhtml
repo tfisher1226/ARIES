@@ -1,0 +1,74 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- Administration View -->
+	<h:panelGroup layout="block" rendered="true" style="width: auto; height: 100%; padding-left: 8px; background-color: inherit">
+		<a4j:outputPanel id="administrationViewPanel">
+
+			<div class="vspace6"/>
+			<span class="subtitle">Administration View</span>
+			<rich:toggleControl value="" for="pageForm:switch" switchToState="administrationView"/>
+			<div class="vspace6"/>
+
+			<rich:tabPanel id="administrationTabPanel"
+				switchType="client" 
+				headerClass="tabHeaderClass"
+				activeTabClass="activeTabClass"
+				inactiveTabClass="inactiveTabClass"
+				disabledTabClass="disabledTabClass"
+				valueChangeListener="#{administrationManager.selectedTab}"
+				selectedTab="#{administrationManager.selectedTab.tabLabel}"
+				style="width: auto; height: auto; border-width: 0px; background-color: inherit">
+	
+				<!-- 
+				rendered="#{organizationTreeManager.selectedOrganization != null}"
+				<ui:repeat value="#{administrationManager.administrationTabs}" var="tabManager">
+				<c:forEach items="#{administrationManager.administrationTabs}" var="tabManager">
+				</c:forEach>
+				 -->
+	
+				<c:forEach items="#{administrationManager.tabs}" var="tabManager">
+					<rich:tab name="#{tabManager.tabLabel}" style="">
+						<f:facet name="label">
+							<a4j:outputPanel>
+							<h:panelGrid columns="3" columnClasses="formColumnAlignTop, formColumnAlignBottom, formColumn">
+								<h:graphicImage value="resource://images/icons/common/Default16.gif" style="" onclick=""/>
+								<h:outputText value="#{tabManager.tabLabel}" style="padding-left: 2px"/>
+								<h:graphicImage 
+									value="/images/icons/tabCloseSelected14f.gif"
+									rendered="#{administrationManager.tabs.size >= 1}"
+									onmouseover="this.src='resource://images/icons/common/close.gif'"
+									onmouseout="this.src='resource://images/dialog/close.png'"
+									onclick="setCursorWait(this); deleteTab('#{tabManager.tabId}'); setCursorDefault(); Event.stop(event)"
+									style="cursor: pointer; padding-left: 0px">
+									<aries:tooltip value="Close this Tab"/>
+								</h:graphicImage>
+							</h:panelGrid>
+							<a4j:support 
+								event="onclick" 
+								immediate="true"
+								ajaxSingle="true"
+								action="#{administrationManager.selectTab(tabManager.tabId)}"
+								onsubmit="">
+							</a4j:support>
+							</a4j:outputPanel>
+						</f:facet>
+						
+						<ui:include src="/pages/user/userListToolbar.xhtml"/>
+						<ui:include src="/pages/user/userListTable.xhtml"/>
+		    	    </rich:tab>
+				</c:forEach>
+			</rich:tabPanel>
+		</a4j:outputPanel>
+	</h:panelGroup>
+</ui:composition>

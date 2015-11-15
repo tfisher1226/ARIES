@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:intf="http://www.aries.com/demo/Restaurant"
+	xmlns:impl="http://www.aries.com/demo/Restaurant"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+	targetNamespace="http://www.aries.com/demo/Restaurant">
+
+	<wsdl:message name="bookSeatsRequest">
+		<wsdl:part name="howMany" type="xsd:int" />
+	</wsdl:message>
+
+	<wsdl:message name="bookSeatsResponse">
+	</wsdl:message>
+
+	<wsdl:portType name="RestaurantPortType">
+		<wsdl:operation name="bookSeats" parameterOrder="howMany">
+			<wsdl:input name="bookSeatsRequest" message="intf:bookSeatsRequest" />
+			<wsdl:output name="bookSeatsResponse" message="intf:bookSeatsResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="RestaurantServiceSoapBinding" type="intf:RestaurantPortType">
+		<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="bookSeats">
+			<wsdlsoap:operation soapAction="" />
+
+			<wsdl:input name="bookSeatsRequest">
+				<wsdlsoap:body use="literal"
+					namespace="http://www.aries.com/demo/Restaurant" />
+			</wsdl:input>
+
+			<wsdl:output name="bookSeatsResponse">
+				<wsdlsoap:body use="literal"
+					namespace="http://www.aries.com/demo/Restaurant" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="RestaurantService">
+		<wsdl:port name="RestaurantPortType" binding="intf:RestaurantServiceSoapBinding">
+			<wsdlsoap:address location="http://localhost:8082/tx-service/RestaurantPortType" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,228 @@
+import Order;
+import CreditCheck;
+import CreditOk;
+import InsufficientCredit;
+import OrderConfirmation;
+import OrderRejected;
+import OutOfStock;
+
+
+
+cvc-elt.4.2: Cannot resolve 'ns5:SgiusaUser' to a type definition for element 'ns3:value'.
+
+
+protocol PurchaseBook {
+    Role Buyer;
+    Role Seller;
+    Role Supplier;
+    Role CreditAgency;
+
+	request orderBook {
+        buyer->seller@infosgiLink() {
+
+            Map<Book, Boolean> availabilityMap;
+
+            inStock: {
+                processOrder();
+            }
+
+            outOfStock: {
+                execute SupplierInventoryCheck {
+                    BookAvailable: {
+                        processOrder();
+                    }
+                    BookUnavailable: {
+                        Seller-->Buyer(OutOfStock);
+                    }
+                }
+            }
+
+            processOrder() {
+                execute CreditCheck {
+                    CreditApproved: {
+                        Seller-->Buyer(OrderAccepted);
+                        orderBooksFromSupplier();
+                    }
+                    CreditNotApproved:
+                        Seller-->Buyer(OrderRejected);
+                    }
+                }
+            }
+
+            orderBooksFromSupplier() {
+                split (BookOrderRequest.bookOrders: bookOrder) {
+                    $book = execute OrderBookFromSupplier($bookOrder) {
+                        updateAvailability($book);
+
+                        BookUnavailable:
+                            Seller-->Buyer(BookUnavailable);
+                        }
+                        BookAvailable: {
+                        }
+                        timeout[10s]: {
+                        }
+                        error[*]: {
+                        }
+                    }
+                }
+                join {
+                    done: {
+                        if (booksAvailable()) {
+                            Seller-->Buyer(BookShipment);
+                        }
+                    }
+                    timeout: {
+                    }
+                }
+            }
+
+            updateAvailability(Book book) {
+                
+            }
+
+            booksAvailable() {
+                iterate (
+            }
+        }
+    }
+
+    request OrderBookFromSupplier {
+        Seller-->Supplier(bookOrder) {
+            bookAvailable: {
+                Supplier-->Seller(BookAvailable);
+            }
+            bookUnavailable: {
+                Supplier-->Seller(BookUnavailable);
+            }
+        }
+    }
+
+    request SupplierInventoryCheck {
+        Seller-->Supplier(InventoryCheck) {
+            bookAvailable: {
+                Supplier-->Seller(BookAvailable);
+            }
+            bookUnavailable: {
+                Supplier-->Seller(BookUnavailable);
+            }
+        }
+    }
+
+    request CreditCheck {
+        Seller-->CreditAgency(CreditCheck) {
+            creditApproved: {
+		        CreditAgency-->Seller(CreditApproved);
+            }
+            creditRejected: {
+			    CreditAgency-->Seller(CreditNotApproved);
+            }
+        }
+    }
+}
+
+
+
+protocol Purchasing {
+    role Buyer;
+    role Seller;
+    role CreditAgency;
+    role Supplier;
+
+     {
+
+    request Buyer->Seller(OrderRequest) {
+        reply OrderAccepted {
+            
+        }
+
+        reply OutOfStock {
+            
+            Seller-->Buyer(OutOfStock);
+        }
+
+        reply OutOfStock OrderRejected {
+        }
+    }
+
+    request CreditRequest {
+        reply CreditApproved {
+        }
+
+        reply CreditNotApproved {
+        }
+    }
+}
+
+
+
+protocol Purchasing {
+    Role Buyer;
+    Role Seller;
+    Role CreditAgency;
+
+	request OrderBook {
+        Buyer-->Seller(Order) {
+            outOfStock: {
+                Seller-->Buyer(OutOfStock);
+            }
+
+            inStock: {
+                execute CreditCheck {
+                    CreditApproved: {
+                        Seller-->Buyer(OrderAccepted);
+                    }
+                    CreditNotApproved:
+                        Seller-->Buyer(OrderRejected);
+                    }
+                }
+            }
+        }
+    }
+
+    request CreditCheck {
+        Seller-->CreditAgency(CreditCheck) {
+            creditApproved: {
+		        CreditAgency-->Seller(CreditApproved);
+            }
+            creditRejected: {
+			    CreditAgency-->Seller(CreditNotApproved);
+            }
+        }
+    }
+}
+
+
+
+
+protocol Purchasing (role Buyer) {
+	Buyer introduces Seller;
+		    Seller-->CreditAgency(CreditCheck) {
+                creditApproved: {
+			        CreditAgency-->Seller(CreditOk);
+			        Seller-->Buyer(OrderConfirmation);
+                }
+                creditRejected: {
+			        CreditAgency-->Seller(InsufficientCredit);
+			        Seller-->Buyer(OrderRejected);
+                }
+            }
+        }
+
+
+	choice at Seller {
+		OutOfStock from Seller to Buyer;
+	} or {
+
+		Seller introduces CreditAgency;
+
+		CreditCheck from Seller to CreditAgency;
+
+		choice at CreditAgency {
+			CreditOk from CreditAgency to Seller;
+			Confirmation from Seller to Buyer;
+		} or {
+			InsufficientCredit from CreditAgency to Seller;
+			OrderRejected from Seller to Buyer;
+		}
+	}
+}

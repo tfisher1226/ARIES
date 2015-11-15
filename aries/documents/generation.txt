@@ -1,0 +1,3 @@
+org.jboss.test.ws.projectGenerator.ProjectGeneratorTestCase
+org.jboss.test.ws.management.recording.CustomRecordProcessorTestCase
+

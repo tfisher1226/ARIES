@@ -1,0 +1,31 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	template="/template.xhtml">
+
+	<ui:define name="content">
+
+		<style>
+		</style>
+
+User may export to Excel whatever data is currently displayed in the table view.  
+User can double-click on an organization, bring up its members in the table view, 
+then filter the table in any way the user wishes (using the filter boxes at the top of each column), 
+then press the Excel button and whatever filtered data is displayed in the table then gets exported 
+into Excel.  An Excel window will be popped up automatically.  If by chance the user does not have 
+Excel, User can simply download/install OpenOffice (MS Office equivalent) and that will automatically 
+be used instead of Excel.
+
+Column selection 
+
+The column selection menu can be used to determine which columns get exported into Excel.
+
+	</ui:define>
+</ui:composition>

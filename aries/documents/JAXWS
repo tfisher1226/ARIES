@@ -1,0 +1,13 @@
+
+
+Model-driven Template-Powered Generation of Data-Oriented Web Apps:
+http://www.elver.org/webappgen/index.html
+
+Developing Web Services with EMF SDOs for complex XML schema
+http://www.ibm.com/developerworks/webservices/library/ws-emfsdo/
+
+IEEE International Symposium on Service-Oriented System Engineering
+
+
+JAXWS supports four Message Exchange Protocols(MEP) are supported: request-response, one way, asynchronous polling, and callback. Each of these invocation MEPs are required with JAXB data bound java.lang.Object, javax.xml.transform.Source, javax.xml.soap.SOAPMessage and javax.activation.DataSource object requests.
+

@@ -1,0 +1,118 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{not empty offset and offset and rendered}">
+		<span class="hspace10"/>
+	</c:if>
+
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty enabled}">
+		<c:set var="enabled" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty default}">
+		<c:set var="default" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty submitMode}">
+		<c:set var="submitMode" value="ajax"/> 
+	</c:if>
+
+	<c:if test="#{empty immediate}">
+		<c:set var="immediate" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty ajaxSingle}">
+		<c:set var="ajaxSingle" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty ajaxRendered}">
+		<c:set var="ajaxRendered" value="false"/> 
+	</c:if>
+	
+	<c:if test="#{empty requestDelay}">
+		<c:set var="requestDelay" value="0"/> 
+	</c:if>
+
+	<c:if test="#{empty bypassUpdates}">
+		<c:set var="bypassUpdates" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="resource://images/icons/common/Default16.gif"/> 
+	</c:if>
+
+	<c:if test="#{empty iconDisabled}">
+		<c:set var="iconDisabled" value="resource://images/icons/common/DefaultDisabled16.gif"/> 
+	</c:if>
+	
+	<rich:menuItem
+		disabled="false"
+		rendered="#{rendered and enabled}"
+		submitMode="#{submitMode}"
+		immediate="#{immediate}"
+		ajaxSingle="#{ajaxSingle}"
+		ajaxRendered="#{ajaxRendered}"
+		requestDelay="#{requestDelay}"
+		bypassUpdates="#{bypassUpdates}"
+		action="#{manager[action]}"
+		onmousedown="this.style.paddingTop=4; this.style.paddingBottom=2; this.style.paddingLeft=11; this.style.paddingRight=9"
+		onmouseup="this.style.paddingTop=3; this.style.paddingBottom=3; this.style.paddingLeft=10; this.style.paddingRight=10"
+		onmouseout="this.style.paddingTop=3; this.style.paddingBottom=3; this.style.paddingLeft=10; this.style.paddingRight=10"
+		onclick="setCursorWait(this); this.style.cursor = 'wait'; #{onclick}"
+		oncomplete="setCursorDefault(this); this.style.cursor = 'default'; #{oncomplete}"		 
+		reRender="#{reRender}"
+		styleClass="button"
+		style="padding: 3px 12px; background-color: #f0f0f0; #{style}">
+
+		<f:facet name="icon">
+			<h:panelGroup layout="block" style="text-align: center; vertical-align: bottom">
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" />
+					<c:if test="#{not empty value}">
+						<rich:spacer width="5"/>
+					</c:if>
+				</c:if>
+				<h:outputText 
+					value="#{value}"
+					onclick="setCursorWait(this); this.style.cursor = 'wait'"
+					oncomplete="setCursorDefault(this); this.style.cursor = 'default'"
+					styleClass="buttonLabel" />
+			</h:panelGroup>
+		</f:facet>
+		<aries:tooltip value="#{tooltip}"/>
+	</rich:menuItem>
+
+	<rich:menuItem
+		disabled="true"
+		rendered="#{rendered and !enabled}"
+		styleClass="buttonDisabled"
+		style="padding: 3px 12px; background-color: #f0f0f0; #{style}">
+		
+		<f:facet name="iconDisabled">
+			<c:if test="#{not empty iconDisabled}">
+				<h:graphicImage value="#{iconDisabled}" />
+				<c:if test="#{not empty value}">
+					<rich:spacer width="5"/>
+				</c:if>
+			</c:if>
+			<h:outputText
+				value="#{value}"
+				styleClass="buttonLabelDisabled" 
+				style="padding-top: 4px" />
+		</f:facet>
+	</rich:menuItem>
+</ui:composition>

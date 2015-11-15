@@ -1,0 +1,3 @@
+If High Availability (HA) or scalability is a concern, system designers should develop applications with this in mind from the get-go. 
+This approach is best taken in the early configuration and application design stage as it is usually difficult process to change 
+a non-clustered application into a clustered application.

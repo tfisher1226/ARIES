@@ -1,0 +1,21 @@
+Aries framework provides facility for the following BPEL related functionality:
+
+-distributed shared process state
+
+-In current BPEL implementations, saving of process state at scope completion is only intended to save the contents of the process variables, not the underlying state of the BPEL processing engine.  In Aries, the underlying state is saved as well.  This gives the compensation handler the added ability of being able to access the current state of the process.
+
+-use of BPEL's compensation feature to reverse and undo previous activities at correct times in overall process flow depending upon whether or not transaction context exists.  This breaks the restriction of having the invocation of a compensation handler to
+within a fault handler; i.e. when running within transactional context the compensation handler will execute at rollback time instead of when the immediate scope is complete.  In TX context the immediate scope will run to completion (whether terminted normally or terminated by exception) without the commit section or rollback section (the compensation handler) being executed (because they execute only when the surrounding transaction has come to completion.
+
+-integration of compensation handlers and their associated fault handlers with both local and distributed transactional behavior behavior, and short-term as well as long-term transactions.
+
+-integration of compensation handlers with intermediate process state
+
+-parallel execution of compensation handlers
+
+
+Also, additional functionality:
+
+-providing for explicit cancellation at specified "cancellation points" of a process after it has started.
+
+

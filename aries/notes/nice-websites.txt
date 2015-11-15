@@ -1,0 +1,11 @@
+
+http://jaxb.java.net/maven-jaxb-schemagen/generate-mojo.html
+
+http://jaxb.java.net/nonav/2.2.1/docs/vendorCustomizations.html#javaType
+
+http://java.net/jira/browse/JAXB-289
+
+http://paykegymnastics.com/AlhambraClassSchedule.html
+
+http://www.activebpel.org/samples/samples-2/BPEL_Samples/Resources/Docs/soap_client.html
+

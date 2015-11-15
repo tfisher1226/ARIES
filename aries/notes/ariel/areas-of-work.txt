@@ -1,0 +1,16 @@
+
+
+Eclipse integration
+-------------------
+
+Create Aries project templates
+Create Aries application quickstarts
+
+
+
+JBoss integration
+-----------------
+
+Establish easy way for different port ranges to be specified and applied at command line
+Establish scheme for replication and clustering of Application instances
+Establish scheme for replication and clustering of Service instances

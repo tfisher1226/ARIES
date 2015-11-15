@@ -1,0 +1,41 @@
+
+http://www.eclipse.org/workinggroups/oaw/
+
+http://www.itemis.com/itemis-ag/services-and-solutions/eclipse-modeling/language=en/35056/openarchitectureware-oaw
+
+
+
+Encryption / Decryption
+------------------------
+
+http://www.vogella.com/articles/EclipseEMFPersistence/article.html#javacode_save
+
+
+Lots of Examples
+----------------
+
+http://www.vogella.com/code/index.html
+
+
+
+
+Containment and Reference
+-------------------------
+	
+
+Reference: A reference is a plain "A knows B" relation. Separate references do not influence each other. A can know B and B can know C. Hence, if you have A, you can go to C over B. If you remove the reference, A, B and C will still exist, they just don't know each other any more.
+
+Containment: A containment is the "A has B" kind of relation. Usually used for lists, e.g. "A has multiple B". ECore/EMF can then perform atomic commands on such collections, such as move all objects from one containment to another. It can also enforce constraints, such as a minimum amount of contained objects or a maximum amount of contained objects, or ensuring that the contained object is not contained in any other containment.
+
+Example:
+
+Assume you have an object called ShoppingCart with a reference called Customer and a containment called OrderedProducts. The OrderedProducts has a reference to a Product.
+
+What does this model tell you?
+
+    You can assign a Customer to the ShoppingCart. If you remove the Customer from the ShoppingCart, the Customer object itself will still exist (e.g. in the database)
+    The OrderedProduct objects need a ShoppingCart to exist. If you remove one from the ShoppingCart, it will cease to exist.
+    Each OrderedProduct has a reference to an existing Product in the database. If you remove one of the OrderedProducts from the ShoppingCart, the Product in the database will still be there - just the order of that product for that specific customer is gone
+
+
+

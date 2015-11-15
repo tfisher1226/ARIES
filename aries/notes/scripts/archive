@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ -z $WORKSPACE ]; then
+	echo "WORKSPACE must be set"
+	exit 1
+fi
+
+set file="aero.tar"
+set cwd=`pwd`
+cd $WORKSPACE
+rm -f aero.tar*
+tar cf aero.tar [a-z]*
+gzip aero.tar
+cd $cwd

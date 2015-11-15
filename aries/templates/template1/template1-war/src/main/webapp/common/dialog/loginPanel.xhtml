@@ -1,0 +1,70 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<style>
+	.loginLabel {
+		display: block;
+		margin: 0px;
+		padding: 2px;
+		text-align: left;
+		white-space: nowrap;
+	}
+	.loginInput {
+		margin: 0px;
+		padding: 3px;
+		border: 1px solid #9999cc;
+	}
+	.loginInput:hover {
+		border: 1px solid #3399ff;
+	}
+	.loginInput:focus {
+		border: 1px solid #003399;
+	}
+	</style>
+
+	<div class="groupLabel text14">Enter user-name and password</div>
+	<a4j:outputPanel styleClass="groupPanel" layout="block" style="margin-top: 4px">
+
+		<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 10px">		
+			<rich:spacer height="6"/>
+
+			<h:panelGrid columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 3px">
+				<h:outputLabel id="loginLabel" styleClass="loginLabel text12" for="loginField" style="display: block; width: 90px">User-name</h:outputLabel>
+				<h:inputText id="loginField" styleClass="loginInput text14" value="#{identity.username}" style="width: 276px"/>
+			</h:panelGrid>
+	
+			<h:panelGrid columns="2" columnClasses="formColumnAlignBottom, formColumn" style="margin: 3px">
+				<h:outputLabel id="passwordLabel" for="passwordField" styleClass="loginLabel text12" style="display: block; width: 90px">Password</h:outputLabel>
+				<h:inputSecret id="passwordField" styleClass="loginInput text14" value="#{identity.password}" style="width: 276px"/>
+			</h:panelGrid> 
+
+			<h:panelGrid columns="3" columnClasses="formColumnAlignBottom, formColumn, formColumnAlignMiddle" style="margin: 3px">
+				<h:outputLabel id="keyFileLabel" disabled="true" for="keyFileField" styleClass="disabled loginLabel text12" style="display: block; width: 90px">Key File</h:outputLabel>
+				<h:inputText id="keyFileField" disabled="true" styleClass="disabled loginInput text14" value="#{uploadManager.fileName}" style="width: 244px; margin-right: 3px"/>
+				<h:commandButton disabled="true" styleClass="formButton" style="width: 26px; height: 26px" type="button" value="..." 
+					onclick="Richfaces.showModalPanel('loginUploadDialog')"
+					reRender="loginUploadDialog"/>
+			</h:panelGrid> 
+
+			<!--  
+			<h:panelGrid columns="2" style="margin: 3px; margin-top: 10px">
+				<h:outputLabel id="superUserLabel" for="superUserField" styleClass="loginLabel text12" style="display: block; width: 90px">Super-user</h:outputLabel>
+				<h:selectBooleanCheckbox id="superUserField" styleClass="formCheckbox" value="#{globals.superUser}"/>
+			</h:panelGrid>
+			--> 
+
+			<h:panelGrid columns="2" style="margin: 3px; margin-top: 5px">
+				<h:outputLabel id="rememberMeLabel" for="rememberMeField" styleClass="loginLabel text12" style="display: block; width: 90px">Remember</h:outputLabel>
+				<h:selectBooleanCheckbox id="rememberMeField" styleClass="formCheckbox" value="#{rememberMe.enabled}"/>
+			</h:panelGrid> 
+		</h:panelGrid> 
+	</a4j:outputPanel>
+</ui:composition>

@@ -1,0 +1,77 @@
+<settings 
+	xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+	<localRepository>c:/workspace/.m2/repository</localRepository>
+
+	<interactiveMode>true</interactiveMode>
+
+	<usePluginRegistry>false</usePluginRegistry>
+
+	<offline>false</offline>
+
+	<servers>
+		<server>
+			<id>aeroago-snapshot</id>
+			<username>admin</username>
+			<password>admin123</password>
+		</server>
+
+		<server>
+			<id>tomcat6</id>
+			<username>tomcat</username>
+			<password>tomcat</password>
+			<filePermissions>664</filePermissions>
+			<directoryPermissions>775</directoryPermissions>
+			<configuration></configuration>
+		</server>
+	</servers>
+
+    <!--
+	<proxies>
+		<proxy>
+			<id>www-proxy-west.aero.org</id>
+			<active>true</active>
+			<protocol>http</protocol>
+			<host>www-proxy-west.aero.org</host>
+			<port>8080</port>
+			<username>25796</username>
+			<password>Sun</password>
+			<nonProxyHosts></nonProxyHosts>
+		</proxy>
+	</proxies>
+    -->
+
+<!--
+	<profiles>
+		<profile>
+		<id>base</id>
+		<activation>
+			<activeByDefault/>
+		</activation>
+		<repositories>
+				<repository>
+						<id>aeroago-snapshot</id>
+						<url>http://agologdev01:8080/nexus/content/repositories/aeroago-snapshot</url>
+						<layout>default</layout>
+						<snapshots>
+							<enabled>true</enabled>
+						</snapshots>
+				</repository>
+		</repositories>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>base</activeProfile>
+	</activeProfiles>
+-->
+
+<!--
+	<pluginGroups />
+
+	<mirrors />
+-->
+
+</settings>

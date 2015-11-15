@@ -1,0 +1,25 @@
+Programming in the large is all about abstraction, loose coupling and separation of concerns. Java EE promotes the ability to use complex functionality without understanding how it is implemented. As long as you follow the instructions this works surprisingly well. With an app server at your disposal you require only the sketchiest understanding of distributed transactions to write code that consumes a message and updates a database in an ACID fashion. Which on the whole is a good thing, since not all that many people actually want to understand all the plumbing that makes it work. There is a snag though: this apparent simplicity can cause some users to think the Java EE container is not doing all that much work and can easily be replaced or done without. Likewise it makes it difficult to tell the difference between a full fledged container that will support the functionality you need and a cut down framework or lightweight container that may not.
+
+Spring is not a JTA.
+
+It's an abstraction layer on top of a transaction manager, not an implementation of one. For transactions involving only a single resource, it simply delegates the hard bits to that resource manager - so called 'native transactions'. Simple, fast and mostly adequate if you need only a single resource. You don't get transaction lifecycle events, but you're probably using an ORM that provides the equivalent of the beforeCompletion hook for its cache anyhow.
+
+For transactions with more than one resource, you need to wire in a real transaction manager to Spring. You can do this with bitronix, atomikos or JBossTS, usually just by specifying the right TransactionManager and UserTransaction implementation bean classes. But your problems don't end there, because...
+
+Spring is not a JCA.
+
+The roles, responsibilities and relationship between the JTA and JCA components of an app server are critical considerations when you're trying to do without one. The JTA manages transaction lifecycle - begin/commit/rollback. Most importantly, it make appropriate calls on any enlisted XAResources as the transaction progresses. But here is the bit that most users don't pay attention to: A JTA does not magically know what resources you want to participate in the transaction. Telling it that is the JCA's job.
+
+In a full on app server, the JCA manages connections to resource managers such as databases and message queues. If you deploy those drivers/connectors in a manner that identifies them as XA enabled, the JCA ensures that they are correctly associated with the transaction. Application code simply e.g. looks up the JNDI name for a connection pool and calls getConnection(). The JCA intercepts the call, get the XAResource for the connection and passes it to the transaction manager.
+
+In some cases you don't need a full JCA. You can often make do with a transaction manager aware XA connection pool, which is essentially a subset of the JCA functionality. But you can't get away with only an XA aware driver or a non-XA connection pool. Trying to do that leads to some interesting behaviour: your app will deploy and run, but you have a transaction and a connection that know nothing about one another. Committing or rolling back the transaction won't commit or rollback the work in the database. oops.
+
+So, you also need to wire in a JCA or suitable connection pooling implementation. Most 'standalone' JTA implementations ship with a simple connection management solution that is suitable for light use. The one in JBossTS is called the TransactionalDriver. For serious deployments you want IronJacamar or some other JCA that has robust and fast connection management.
+
+So now you have wired up your JTA and JCA in Spring, but you are still not done because...
+
+The standard contract between JTA and JCA does not include recovery management setup. Wiring up resources for crash recovery requires a proprietary solution that differs for each transaction manager. The connection manager that ships with the transaction manager may do this more or less automatically, but third party JCAs or XA aware connection pools probably won't. So, go read the transaction manager documentation and write a few test cases.
+
+phew, that was a lot of work, wasn't it? Spring is good at what it does, but its not an out of box replacement for all the transactional plumbing in a Java EE app server. Nor is tomcat - you'll have much the same steps to perform there. In both cases it is possible, but not as simple as unzipping and starting JBossAS. Do you really want to make your life harder than it has to be? 
+
+

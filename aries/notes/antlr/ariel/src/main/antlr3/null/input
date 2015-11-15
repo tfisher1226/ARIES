@@ -1,0 +1,66 @@
+protocol Bookshop {
+
+    role buyer {
+    }
+
+    role seller {
+    }
+
+    role supplier {
+    }
+
+    group suppliers {
+        role supplier;
+    }
+
+    participant Buyer {
+        role buyer;
+        receive orderBooks(books) {
+            invoke seller.order(books) {
+                message OrderAccepted: {
+                }
+                message OrderRejected: {
+                    end;
+                }
+            }
+        }
+    }
+
+    participant Seller {
+        role seller;
+        receive orderBooks(books) {
+            invoke Suppliers.query(books), timeout=3m, min=1, max=5 {
+                message BooksAvailable:
+                }
+                message Exception: {
+                }
+            }            
+        }
+
+        receive purchaseBooks(payment) {
+        }
+    }
+
+    participant Supplier {
+        role supplier;
+
+        receive queryBooks(books) {
+        }
+
+        receive reserveBooks(books) {
+        }
+
+        receive shipBooks(books) {
+            invoke shipper.shipBooks(books) {
+                message BooksShipped: {
+                }
+            }
+        }
+    }
+
+    participant Shipper {
+        role shipper;
+        receive shipBooks(books) {
+        }
+    }
+}

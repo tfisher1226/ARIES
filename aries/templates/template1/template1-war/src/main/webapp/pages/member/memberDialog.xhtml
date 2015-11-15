@@ -1,0 +1,125 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!--  
+	<a4j:form>
+	    <a4j:jsFunction name="renderMemberDialog" reRender="memberDialog" />
+	    <a4j:jsFunction name="showMemberDialogXXX" oncomplete="Richfaces.showModalPanel('memberDialog')" reRender="memberDialog">
+	        <a4j:actionparam name="xxx" value="#{member}" assignTo="#{personBean}"/> 
+	    </a4j:jsFunction>
+	    <a4j:jsFunction name="hideMemberDialogXXX" oncomplete="Richfaces.hideModalPanel('memberDialog')" />
+	</a4j:form>
+	-->
+	
+	<script type="text/javascript">
+	var memberDialogFieldHighlighter = new org.aries.view.table.UserSelectHighlighter('#fff', '#ddecff', '#f5fafa');
+
+	var memberDialogVisible;
+
+	function showMemberDialog() { Richfaces.showModalPanel('memberDialog') }
+	function hideMemberDialog() { Richfaces.hideModalPanel('memberDialog') }
+	function resizeMemberDialog() { hideMemberDialog(); showMemberDialog() }
+	function isVisibleMemberDialog() { return memberDialogVisible; }
+	
+	function showPromptRemoveLeadershipRole(memberName, leadershipRole, rerenderList) {
+		showPrompt('Remove Position for '+memberName, leadershipRole, 'Do you wish to continue?', 'org.sgiusa.removeLeadershipRole', rerenderList);
+		setCursorDefault(); 
+	}
+	function showPromptRemoveStudyDeptExam(memberName, studyDeptExam, rerenderList) {
+		showPrompt('Remove Study Dept. Position for '+memberName, studyDeptExam, 'Do you wish to continue?', 'org.sgiusa.removeStudyDeptExam', rerenderList);
+		setCursorDefault(); 
+	}
+	</script>
+
+	<!--  
+	<script type="text/javascript">
+	function initializeProgressDialog(event) {
+		//alert(event.parameters.xxx_subtitle);
+		//showObject(document.getElementById('progressDialogForm:progressDialogSubtitle'));
+		document.getElementById('progressDialogForm:progressDialogSubtitle').innerHTML = Richfaces.xxx_params.subtitle;
+		document.getElementById('progressDialogForm:progressDialogMessage').innerHTML = Richfaces.xxx_params.message;
+		memberDialogVisible = true;
+	}
+	</script>
+	-->
+
+	<a4j:region 
+		renderRegionOnly="true">
+
+		<!-- Member Dialog -->
+		<rich:modalPanel 
+			id="memberDialog" 
+			autosized="true" 
+			trimOverlayedElements="true"
+			onshow="memberDialogVisible = true"
+			onhide="memberDialogVisible = false"
+			style="background-color: red">
+	
+			<!-- TITLE -->
+			<ui:include src="/common/dialog/dialogHeaderBar.xhtml">
+				<ui:param name="dialogKey" value="memberDialog"/>
+				<ui:param name="dialogTitle" value="Membership Information"/>
+			</ui:include>
+	
+			<!-- INCLUDES 
+			<ui:include src="/common/dialog/messageDialog.xhtml">
+				<ui:param name="dialogKey" value="PromptRemoveLeadershipRole"/>
+				<ui:param name="dialogRerenderList" value="leadershipListTablePanel, leadershipRoleTablePanel"/>
+			</ui:include>
+			-->
+
+
+			
+			<!-- CONTENT -->
+			<a4j:form id="memberDialogForm">
+	
+				<h:panelGrid styleClass="layoutPane" layout="block" cellpadding="0" cellspacing="0" columns="1" columnClasses="formColumn" style="margin: 14px 10px 12px 10px; background-color: inherit"> 
+					<h:panelGrid styleClass="layoutPane" layout="block" cellpadding="0" cellspacing="0" columns="3" columnClasses="formColumn, formColumn, formColumn" style="background-color: inherit"> 
+						<h:panelGroup layout="block">
+							<ui:include src="memberInfoLeftPanel.xhtml"/>
+						</h:panelGroup>
+			
+						<h:panelGroup layout="block" style="margin-left: 12px">
+							<ui:include src="memberInfoCenterPanel.xhtml"/>
+						</h:panelGroup>
+		
+						<h:panelGroup layout="block" style="margin-left: 12px">
+							<ui:include src="memberInfoRightPanel.xhtml"/>
+						</h:panelGroup>
+					</h:panelGrid>
+	
+					<h:panelGroup layout="block" style="margin-top: 10px">
+						<ui:include src="memberInfoBottomPanel.xhtml"/>
+					</h:panelGroup>
+				</h:panelGrid>
+	
+				<!--  
+				<h:panelGroup layout="block" style="margin-left: 12px">
+					<ui:include src="memberOptionControl.xhtml"/>
+				</h:panelGroup>
+				-->
+	
+				<aries:controlPane>
+					<ui:include src="memberInfoControl.xhtml"/>
+				</aries:controlPane>
+	
+				<!--			
+				<s:validateAll>			
+				</s:validateAll>
+				-->
+			</a4j:form>
+		</rich:modalPanel>
+	</a4j:region>
+</ui:composition>
+
+

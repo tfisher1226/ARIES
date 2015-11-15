@@ -1,0 +1,72 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{not empty offset and offset and rendered}">
+		<span class="hspace10"/>
+	</c:if>
+
+	<h:graphicImage value="#{icon}" rendered="#{enabled}">
+		<rich:toolTip rendered="#{not empty tooltip}" followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+			<span style="white-space: nowrap; display: block; text-align: left">
+				<h:outputText value="#{tooltip}"/>
+			</span>
+		</rich:toolTip>
+	</h:graphicImage>
+	<h:graphicImage value="#{iconDisabled}" rendered="#{!enabled}"/>
+
+	<span class="hspace5"/>
+	<c:if test="#{not empty manager and not empty action}">
+		<h:commandLink 
+			value="#{text}"
+			immediate="true"
+			rendered="#{enabled}"
+	   		action="#{manager[action]}"
+			onmouseover="this.style.cursor = 'hand';"
+			onmouseout="this.style.cursor = 'default';"
+			onclick="#{onclick}"
+			oncomplete="#{oncomplete}"
+			target="#{target}"
+			reRender="#{reRender}"
+			style="font-size: 13px; font-weight: normal; color: #008">
+			<rich:toolTip rendered="#{not empty tooltip}" followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+				<span style="white-space: nowrap; display: block; text-align: left">
+					<h:outputText value="#{tooltip}"/>
+				</span>
+			</rich:toolTip>
+		</h:commandLink>
+	</c:if>
+
+	<c:if test="#{empty manager or empty action}">
+		<h:commandLink 
+			value="#{text}"
+			immediate="true"
+			rendered="#{enabled}"
+			onmouseover="this.style.cursor = 'hand';"
+			onmouseout="this.style.cursor = 'default';"
+			onclick="#{onclick}"
+			reRender="#{reRender}"
+			style="font-size: 13px; font-weight: normal; color: #008">
+			<rich:toolTip rendered="#{not empty tooltip}" followMouse="true" direction="top-right" showDelay="200" styleClass="tooltip">
+				<span style="white-space: nowrap; display: block; text-align: left">
+					<h:outputText value="#{tooltip}"/>
+				</span>
+			</rich:toolTip>
+		</h:commandLink>
+	</c:if>
+	 
+	<h:outputText 
+		value="#{text}"
+		rendered="#{!enabled}"
+		style="font-size: 13px; font-weight: normal; color: #aaa">
+	</h:outputText> 
+</ui:composition>

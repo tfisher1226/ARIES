@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration 
+	xmlns="urn:hornetq"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:hornetq /schema/hornetq-jms.xsd">
+
+   <queue name="sgiusaQueueA">
+      <entry name="/sgiusaQueueA"/>
+   </queue>
+
+   <queue name="sgiusaQueueB">
+      <entry name="/sgiusaQueueB"/>
+   </queue>
+
+   <queue name="sgiusaQueueC">
+      <entry name="/sgiusaQueueC"/>
+   </queue>
+
+   <queue name="sgiusaQueueD">
+      <entry name="/sgiusaQueueD"/>
+   </queue>
+
+   <queue name="sgiusaQueueE">
+      <entry name="/sgiusaQueueE"/>
+   </queue>
+
+</configuration>
+    

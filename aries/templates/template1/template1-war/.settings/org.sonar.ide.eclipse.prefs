@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+projectArtifactId=${template1_artifactId}
+projectBranch=
+projectGroupId=${template1_groupId}
+sonarServerUrl=http\://localhost\:9000
+version=1

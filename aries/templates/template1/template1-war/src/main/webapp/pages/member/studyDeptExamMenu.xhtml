@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:contextMenu 
+		id="studyDeptExamContextMenu">
+
+		<aries:contextMenuItem 
+			value="New Study Dept. Exam..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/New16.gif"
+			manager="#{studyDeptExamManager}"
+			action="newStudyDeptExam"
+			onclick="setCursorWait(this); showProgress('New Study Dept. Exam', 'Creating new record...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showStudyDeptExamDialog()"
+			reRender="studyDeptExamDialog">
+			<aries:tooltip value="Create new Study Dept. Exam"/>
+		</aries:contextMenuItem>
+
+		<aries:contextMenuItem 
+			value="Edit Study Dept. Exam..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Edit16.gif"
+			manager="#{studyDeptExamManager}"
+			action="editStudyDeptExam"
+			onclick="setCursorWait(this); showProgress('Study Dept. Exam', 'Preparing for edit...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showStudyDeptExamDialog()"
+			reRender="studyDeptExamDialog">
+			<aries:tooltip value="Edit selected Study Dept. Exam"/>
+		</aries:contextMenuItem>
+
+		<aries:contextMenuItem 
+			value="Remove Study Dept. Exam..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Remove16.gif"
+			manager="#{studyDeptExamManager}"
+			action="promptRemoveStudyDeptExam"
+			onclick="setCursorWait(this)"
+			oncomplete="setCursorDefault(this); showPromptRemoveStudyDeptExam('#{helper.toNameString(member)}', '#{helper.toString(studyDeptExam)}', 'studyDeptExamTablePanel, studyDeptInfoFieldPanel')">
+			<aries:tooltip aries:tooltip="Remove selected Study Dept. Exam"/>
+		</aries:contextMenuItem>
+	</aries:contextMenu>
+</ui:composition>

@@ -1,0 +1,10 @@
+
+
+Durability
+
+For durability to make sense, should the app server in which an MDB is deployed to be separated from the JMS Provider (server), so that if the app server shuts down and is restarted later, the MDB can be sent the messages that it had missed while the app server was down?
+
+The durability property is more intended for those situations where the client thinks everything is okay since the server's topic has accepted the message, but then it can not actually be delivered to all intended recipients, since one or more of them were down.
+
+But if the server never accepted the message (because it too was down) the client can not think everything is okay and so no messages will be mysteriously missed.
+

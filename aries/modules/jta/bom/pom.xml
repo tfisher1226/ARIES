@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jta-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JAXB Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<jta.version>1.1</jta.version>
+		<jboss.jta.version>4.16.4.Final</jboss.jta.version>
+		<jboss.jts.version>4.16.4.Final</jboss.jts.version>
+		<!--  
+		<jboss.jta.version>4.13.1.Final</jboss.jta.version>
+		<jboss.jts.version>4.13.1.Final</jboss.jts.version>
+		-->
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--  
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+	            <version>${jta.version}</version>
+			</dependency>
+			-->
+
+			<dependency>
+				<groupId>org.jboss.spec.javax.transaction</groupId>
+				<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+				<version>1.0.1.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.spec.javax.resource</groupId>
+				<artifactId>jboss-connector-api_1.5_spec</artifactId>
+				<version>1.0.0.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.spec.javax.ejb</groupId>
+				<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+				<version>1.0.0.CR2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.jbossts</groupId>
+				<artifactId>jbossjta</artifactId>
+				<version>${jboss.jta.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.jboss.ws</groupId>
+						<artifactId>jbossws-common</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.jbossas</groupId>
+						<artifactId>jboss-server-manager</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.ws.native</groupId>
+						<artifactId>jbossws-native-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.hibernate.javax.persistence</groupId>
+						<artifactId>hibernate-jpa-2.0-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.logging</groupId>
+						<artifactId>jboss-logging-spi</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>emma</groupId>
+						<artifactId>emma_ant</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!--  
+			-->
+			<dependency>
+				<groupId>org.jboss.jbossts</groupId>
+				<artifactId>jbossjts</artifactId>
+				<version>${jboss.jta.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.jboss.jbossts</groupId>
+				<artifactId>jbossjts-integration</artifactId>
+				<version>${jboss.jta.version}</version>
+			</dependency>
+
+            <!--
+			<dependency>
+				<groupId>org.jboss.jbossts</groupId>
+				<artifactId>jbossjts</artifactId>
+				<version>${jboss.jts.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.jboss.ws</groupId>
+						<artifactId>jbossws-common</artifactId>
+	  				</exclusion>
+					<exclusion>
+						<groupId>org.jboss.jbossas</groupId>
+						<artifactId>jboss-server-manager</artifactId>
+	  				</exclusion>
+					<exclusion>
+						<groupId>org.jboss.ws.native</groupId>
+						<artifactId>jbossws-native-core</artifactId>
+	  				</exclusion>
+					<exclusion>
+                        <groupId>org.hibernate.javax.persistence</groupId>
+                        <artifactId>hibernate-jpa-2.0-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>ant</groupId>
+						<artifactId>ant</artifactId>
+					</exclusion>
+  				</exclusions>
+			</dependency>
+            -->
+		</dependencies>
+	</dependencyManagement>
+</project>

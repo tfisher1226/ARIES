@@ -1,0 +1,350 @@
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>org.jboss.jsfunit</groupId>
+		<artifactId>jboss-jsfunit</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>examples-arquillian</artifactId>
+	<packaging>pom</packaging>
+	<name>examples-arquillian</name>
+
+	<properties>
+		<arquillian.version>1.0.0.Alpha5</arquillian.version>
+
+		<!-- Using a SNAPSHOT here causes Maven to download stuff like crazy -->
+		<!--<version.jboss_60>6.0.0-SNAPSHOT</version.jboss_60> -->
+		<version.jboss_60>6.0.0.Final</version.jboss_60>
+		<version.jboss_51>5.1.0.GA</version.jboss_51>
+	</properties>
+
+	<modules>
+		<module>hellojsf</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-junit</artifactId>
+				<version>${arquillian.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.jbossas</groupId>
+				<artifactId>jboss-as-client</artifactId>
+				<version>${version.jboss_60}</version>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.jsfunit</groupId>
+				<artifactId>jsfunit-arquillian</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<!--<version>1.6.1</version> -->
+				<version>1.5.10</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>jboss6x</id>
+			<build>
+				<testResources>
+					<testResource>
+						<directory>src/test/resources</directory>
+						<filtering>true</filtering>
+						<includes>
+							<include>**/*.xml</include>
+							<include>**/*.properties</include>
+						</includes>
+					</testResource>
+				</testResources>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jbossas-remote-6</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jbossas-remote-6</artifactId>
+					<version>${arquillian.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-as-client</artifactId>
+					<type>pom</type>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>jbossas-managed-6</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jbossas-managed-6</artifactId>
+					<version>${arquillian.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-server-manager</artifactId>
+					<version>1.0.3.GA</version>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-as-client</artifactId>
+					<type>pom</type>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>jbossas-embedded-6</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jbossas-embedded-6</artifactId>
+					<version>${arquillian.version}</version>
+				</dependency>
+
+				<!-- Exclude Seam core. See JBAS-8503 -->
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-as-depchain</artifactId>
+					<version>${version.jboss_60}</version>
+					<type>pom</type>
+					<exclusions>
+						<exclusion>
+							<groupId>org.jboss.seam.integration</groupId>
+							<artifactId>jboss-seam-int-jbossas</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+
+			</dependencies>
+
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>org.jboss.jbossas</groupId>
+						<artifactId>jboss-as-depchain</artifactId>
+						<version>${version.jboss_60}</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<additionalClasspathElements>
+								<additionalClasspathElement>${JBOSS_HOME}/client/jbossws-native-core.jar</additionalClasspathElement>
+								<!-- Because jbossweb.sar contains shared web.xml, which must be 
+									visible from same CL as TomcatDeployer.class.getClassLoader -->
+								<additionalClasspathElement>${JBOSS_HOME}/server/default/deploy/jbossweb.sar</additionalClasspathElement>
+							</additionalClasspathElements>
+
+							<redirectTestOutputToFile>true</redirectTestOutputToFile>
+							<trimStackTrace>false</trimStackTrace>
+							<printSummary>true</printSummary>
+							<forkMode>once</forkMode>
+
+							<!-- MaxPermSize Required to bump the space for relective data like 
+								classes, methods, etc. EMB-41. Endorsed required for things like WS support 
+								(EMB-61) -Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed -->
+							<argLine>-Xmx512m -XX:MaxPermSize=256m
+								-Djava.net.preferIPv4Stack=true
+								-Djava.util.logging.manager=org.jboss.logmanager.LogManager
+								-Djava.endorsed.dirs=${JBOSS_HOME}/lib/endorsed
+								-Djboss.home=${JBOSS_HOME}
+								-Djboss.boot.server.log.dir=target/jboss6x</argLine>
+						</configuration>
+					</plugin>
+				</plugins>
+
+			</build>
+		</profile>
+
+		<profile>
+			<id>jbossas-remote-5.1</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jbossas-remote-5.1</artifactId>
+					<version>${arquillian.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-as-client</artifactId>
+					<version>${version.jboss_51}</version>
+					<type>pom</type>
+				</dependency>
+			</dependencies>
+			<build>
+				<testResources>
+					<testResource>
+						<directory>src/test/resources</directory>
+					</testResource>
+				</testResources>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jetty-embedded</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jetty-embedded-7</artifactId>
+					<version>${arquillian.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-webapp</artifactId>
+					<version>7.0.2.v20100331</version>
+					<scope>test</scope>
+				</dependency>
+				<!-- plus and naming requires for using JNDI -->
+				<dependency>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-plus</artifactId>
+					<version>7.0.2.v20100331</version>
+					<scope>test</scope>
+				</dependency>
+
+				<!-- Weld servlet, EL and JSP required for testing CDI injections -->
+				<dependency>
+					<groupId>org.jboss.weld.servlet</groupId>
+					<artifactId>weld-servlet</artifactId>
+					<version>1.1.0.Final</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish.web</groupId>
+					<artifactId>el-impl</artifactId>
+					<version>2.2</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>javax.servlet.jsp</groupId>
+					<artifactId>jsp-api</artifactId>
+					<version>2.2</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>tomcat-embedded</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-tomcat-embedded-6</artifactId>
+					<version>${arquillian.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>catalina</artifactId>
+					<version>6.0.29</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>coyote</artifactId>
+					<version>6.0.29</version>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.tomcat</groupId>
+					<artifactId>jasper</artifactId>
+					<version>6.0.29</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+			<build>
+				<testResources>
+					<testResource>
+						<directory>src/test/resources-tomcat</directory>
+					</testResource>
+				</testResources>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

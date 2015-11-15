@@ -1,0 +1,67 @@
+Categories of types of projects: configurations and applications and modules.
+
+Handful of application types: ear, war, standalone
+Handful of module types: jar, rar, sar
+
+Handful of jar types: 
+    model
+    service
+    client
+    data
+    registry
+
+
+
+Aries configurations (categories of dependencies):
+
+commons
+drools
+ehcache
+emf
+hibernate
+activemq
+hornetq
+hsql
+mysql
+javax
+jaxb
+jaxws
+jboss
+jndi
+jpa
+jsf
+jta
+xts
+plexus
+richfaces
+seam-ui
+seam
+selenium
+spring
+logging
+testing
+util
+
+aries-base
+aries-base-test
+aries-client-layer
+aries-client-layer-test
+aries-data-layer
+aries-data-layer-test
+aries-model-layer
+aries-model-layer-test
+aries-service-layer
+aries-service-layer-test
+aries-view-layer
+
+platform-all
+platform-base
+platform-client-layer
+platform-client-layer-test
+platform-data-layer
+platform-data-layer-test
+platform-model-layer
+platform-model-layer-test
+platform-service-layer
+platform-service-layer-test
+platform-view-layer

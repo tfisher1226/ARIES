@@ -1,0 +1,115 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty value}">
+		<c:set var="value" value="none"/> 
+	</c:if>
+	
+	<c:if test="#{empty tooltip}">
+		<c:set var="tooltip" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true"/> 
+	</c:if>
+	
+	<c:if test="#{empty disabled}">
+		<c:set var="disabled" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty submitMode}">
+		<c:set var="submitMode" value="ajax"/> 
+	</c:if>
+
+	<c:if test="#{empty immediate}">
+		<c:set var="immediate" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty ajaxSingle}">
+		<c:set var="ajaxSingle" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty requestDelay}">
+		<c:set var="requestDelay" value="0"/> 
+	</c:if>
+
+	<c:if test="#{empty bypassUpdates}">
+		<c:set var="bypassUpdates" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty limitToList}">
+		<c:set var="limitToList" value="true"/> 
+	</c:if>
+	
+	<c:if test="#{empty process}">
+		<c:set var="process" value=""/> 
+	</c:if>
+	
+	<c:if test="#{empty reRender}">
+		<c:set var="reRender" value="placeholder"/> 
+	</c:if>
+
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="resource://images/icons/common/Default16.gif"/> 
+	</c:if>
+	
+	<c:if test="#{empty iconDisabled}">
+		<c:set var="iconDisabled" value="resource://images/icons/common/Default16.gif"/> 
+	</c:if>
+
+	<c:if test="#{empty reRender}">
+		<c:set var="reRender" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="contextMenuLabel link"/> 
+	</c:if>
+	
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value=""/> 
+	</c:if>
+	
+	<!-- 
+		icon="#{icon}"
+		iconDisabled="#{iconDisabled}"
+	-->	
+
+	<rich:menuItem 
+		rendered="#{rendered}"
+		disabled="#{disabled}"
+		submitMode="#{submitMode}" 
+		immediate="#{immediate}"
+		ajaxSingle="#{ajaxSingle}"
+		requestDelay="#{requestDelay}"
+		bypassUpdates="#{bypassUpdates}"
+		limitToList="#{limitToList}"
+		ignoreDupResponses="true"
+		action="#{manager[action]}"
+		process="#{process}"
+		onclick="#{onclick}"
+		oncomplete="#{oncomplete}"
+		reRender="#{reRender}"
+		styleClass=""
+		style="">
+		
+		<f:facet name="icon">
+			<h:graphicImage value="#{icon}" style="padding-left: 1px; padding-bottom: 1px"/>
+		</f:facet>
+		<h:outputText value="#{value}" styleClass="menuLabel link"/>
+		<aries:tooltip value="#{tooltip}"/>
+	</rich:menuItem>
+</ui:composition>

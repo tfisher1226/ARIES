@@ -1,0 +1,19 @@
+
+
+
+Multi-tenancy is a recurrent non functional requirement. Indeed, many important IT-systems are meant to be shared among multiple tenants. The data are often distributed over several databases or schemas. This, for different reasons:
+
+    Security: The data belong to different customers and some level of isolation is required;
+    Performances: Distributing the data over multiple systems may help to master performance issues;
+    Legacy: Sometimes, old and new systems must cohabit for a (long) time;
+    Maintenability: A database or a schema can be updated without putting the rest of the application at risk.
+
+Although data are distributed, the application code should remain tenant agnostic. Furthermore, choosing between the different tenants is often made at runtime based on credentials (e.g. user Joe has access to customer AAAA while user Jane sees data of customer BBB).
+
+Java EE 7 will address this problem and much more, but in the mean time here is the way that I use to address this problematic using EJB 3.1 and JPA 2.0
+
+
+Multi-tenancy architecture with serveral datasources
+Figure: multi-tenancy-architecture.png
+
+

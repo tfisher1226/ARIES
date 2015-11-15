@@ -1,0 +1,6 @@
+http://en.wikipedia.org/wiki/Parallel_computing#Parallel_programming_languages
+
+One concept used in programming parallel programs is the future concept, where one part of a program promises to deliver a required datum to another part of a program at some future time.
+
+
+Application checkpointing is a technique whereby the computer system takes a "snapshot" of the application - a record of all current resource allocations and variable states, akin to a core dump; this information can be used to restore the program if the computer should fail. Application checkpointing means that the program has to restart from only its last checkpoint rather than the beginning. While checkpointing provides benefits in a variety of situations, it is specially useful in highly parallel systems with a large number of processors used in high performance computing.

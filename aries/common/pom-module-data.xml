@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>data-module</artifactId>
+	<name>data-module</name>
+	<description>data-module</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.aries</groupId>
+		<artifactId>common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>data-module</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<dependencies>
+				<dependency>
+					<groupId>org.hibernate.javax.persistence</groupId>
+					<artifactId>hibernate-jpa-2.0-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-entitymanager</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-ehcache</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>com.sun.faces</groupId>
+					<artifactId>jsf-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>common-util</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>common-data</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>common-data</artifactId>
+					<scope>test</scope>
+					<type>test-jar</type>
+				</dependency>
+				
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>common-runtime</artifactId>
+					<scope>provided</scope>
+				</dependency>
+		
+				<!-- 
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>notification-model</artifactId>
+					<scope>provided</scope>
+					<type>jar</type>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>notification-data</artifactId>
+					<scope>provided</scope>
+					<type>jar</type>
+				</dependency>
+		
+				<dependency>
+					<groupId>org.aries</groupId>
+					<artifactId>notification-data</artifactId>
+					<type>test-jar</type>
+					<scope>test</scope>
+				</dependency>
+				-->
+			</dependencies>
+		</profile>
+	</profiles>
+</project>

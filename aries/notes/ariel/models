@@ -1,0 +1,23 @@
+
+Completion conditions:
+
+first M
+first M within time T
+first M within time T that meet condition C 
+first M within time T that meet condition C before exception E
+
+first M that meet condition C 
+first M that meet condition C before exception E
+
+first M before exception E
+
+
+
+join limit 5, timeout 3m, condition($quote.amount < 100)
+
+join timeout 3m, condition($quote.amount < 100)
+
+
+
+
+

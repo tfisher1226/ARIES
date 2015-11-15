@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>seam-ui-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Seam Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<seam.version>2.3.1.Final</seam.version>
+        <jexcelapi.version>2.6.12</jexcelapi.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--  
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>parent</artifactId>
+				<version>${seam.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			-->
+
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam</artifactId>
+				<version>${seam.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam-ui</artifactId>
+				<version>${seam.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>org.jboss.seam</artifactId>
+						<groupId>jboss-seam</groupId>
+					</exclusion>
+                    <exclusion>
+                        <groupId>commons-beanutils</groupId>
+                        <artifactId>commons-beanutils</artifactId>
+                    </exclusion>
+				</exclusions>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam-mail</artifactId>
+				<version>${seam.version}</version>
+				<exclusions>
+					<exclusion>
+                        <groupId>org.jboss.spec.javax.faces</groupId>
+                        <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam-debug</artifactId>
+				<version>${seam.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam-pdf</artifactId>
+				<version>${seam.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>jboss-seam</groupId>
+						<artifactId>org.jboss.seam</artifactId>
+					</exclusion>
+					<exclusion>
+                        <groupId>org.jboss.spec.javax.faces</groupId>
+                        <artifactId>jboss-jsf-api_2.1_spec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.lowagie</groupId>
+						<artifactId>itext-rtf</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam-excel</artifactId>
+				<version>${seam.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>org.jboss.seam</artifactId>
+						<groupId>jboss-seam</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sourceforge.jexcelapi</groupId>
+				<artifactId>jxl</artifactId>
+				<version>${jexcelapi.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+			</dependency>
+
+            <!--
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>jboss-seam-remoting</artifactId>
+				<version>${seam.version}</version>
+			</dependency>
+            -->
+		</dependencies>
+	</dependencyManagement>
+</project>

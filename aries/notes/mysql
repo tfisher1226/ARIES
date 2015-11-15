@@ -1,0 +1,63 @@
+
+show innodb status;
+SHOW ENGINE INNODB STATUS\G
+
+show full processList;
+
+set innodb_lock_wait_timeout=100
+
+show variables like 'innodb_lock_wait_timeout';
+
+show open tables where in_use>0;
+
+SELECT @@GLOBAL.tx_isolation, @@tx_isolation, @@session.tx_isolation;
+
+SET tx_isolation = 'READ-COMMITTED';
+SET tx_isolation = 'REPEATABLE-READ';
+
+SET GLOBAL tx_isolation = 'READ-COMMITTED';
+SET GLOBAL tx_isolation = 'REPEATABLE-READ';
+
+
+SHOW STATUS LIKE 'Connections';
+
+SET GLOBAL interactive_timeout = 86400;
+SET GLOBAL wait_timeout = 86400;
+
+
+
+You can set this per-user on a per-hour basis.
+
+grant usage on *.* to user1234@'%' with max_user_connections 10;
+
+Under the WITH option for the MySQL GRANT command yu gave the following:
+
+with_option:
+    GRANT OPTION
+  | MAX_QUERIES_PER_HOUR count
+  | MAX_UPDATES_PER_HOUR count
+  | MAX_CONNECTIONS_PER_HOUR count
+  | MAX_USER_CONNECTIONS count
+
+You can set
+
+    queries per hour
+    updates per hour
+    inserts per hour
+    connection per hour
+
+
+SELECT COUNT(1) ConnectionCount,user FROM sgiusadb.member WHERE user <> 'system user' GROUP BY user;
+
+
+UPDATE mysql.user SET max_connections = 1000 WHERE user='myuser' AND host='10.1.2.30'; 
+FLUSH PRIVILEGES;
+
+UPDATE mysql.user SET
+    max_questions = 0,
+    max_updates = 0,
+    max_connections = 0
+WHERE user='myuser' AND host='10.1.2.30';
+FLUSH PRIVILEGES;
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar 
+	version="3.0"
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
+	<display-name>async_echo</display-name>
+
+	<enterprise-beans>
+		<session>
+			<ejb-name>RuntimeContext</ejb-name>
+			<ejb-ref>
+				<ejb-ref-name>RuntimeContext</ejb-ref-name>
+				<ejb-ref-type>Session</ejb-ref-type>
+				<remote>common.runtime.RuntimeContext</remote>
+			</ejb-ref>
+			<!--  
+			<env-entry>
+				<description>admin email</description>
+				<env-entry-name>adminEmail</env-entry-name>
+				<env-entry-value>admin@example.x</env-entry-value>
+			</env-entry>
+			-->
+		</session>
+	</enterprise-beans>
+
+	<interceptors>
+		<interceptor>
+			<interceptor-class>org.jboss.seam.ejb.SeamInterceptor</interceptor-class>
+		</interceptor>
+	</interceptors>
+
+	<assembly-descriptor>
+		<interceptor-binding>
+			<ejb-name>*</ejb-name>
+			<interceptor-class>org.jboss.seam.ejb.SeamInterceptor</interceptor-class>
+		</interceptor-binding>
+	</assembly-descriptor>
+</ejb-jar>

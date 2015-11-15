@@ -1,0 +1,55 @@
+Current architectural structure and choices of technologies result in many important and essential "viewports i.e. expansion directions" into the future. Give several examples here...
+
+The relationship between the set of development artifacts that have been designed and delivered by the development team and the executable runtime environment can be defined through the management UI.  
+
+This operation can be carried out by the deployment team which focuses on understanding and mastering how the development artifacts can be deployed to meet the needs of the user-community.
+
+
+
+Design Artifacts (those artifacts resulting from design)
+--------------------------------------------------------
+
+Applications
+Modules
+Servers
+Processes
+Nodes
+
+
+Development Artifacts (those artifacts resulting from design)
+--------------------------------------------------------------
+
+Includes:
+Configuration of each specific Server and Node
+Implementation of each specific Application and Module
+
+Applications (war-files)
+  -view based applications (e.g. icams-view)
+  -service based applications (e.g. person-service)
+
+Modules (jar-files)
+  -client-oriented
+  -model-oriented
+  -data-oriented
+
+Server configuration
+  -datasource configuration
+  -resource allocation (command-line parameters)
+
+Node configuration
+  -resource allocation
+
+
+
+Relationships
+----------------
+
+Which Servers run on which Nodes
+Which Applications are deployed into which Servers
+
+
+
+Miscellaneous
+----------------
+
+No absolute paths coded into model files

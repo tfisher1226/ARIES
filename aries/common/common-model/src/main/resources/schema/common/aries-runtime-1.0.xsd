@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:runtime="http://www.aries.org/runtime"
+	targetNamespace="http://www.aries.org/runtime">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.aries.runtime" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+<!-- 
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd"/>
+ -->
+
+	<xs:element name="process" type="runtime:Process" />
+	<xs:complexType name="Process">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="version" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="correlationId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="country" type="runtime:ProcessState" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="process-state" type="runtime:ProcessState" />
+	<xs:complexType name="ProcessState">
+		<xs:sequence>
+			<xs:element name="host" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="port" type="xs:int" minOccurs="0" maxOccurs="1" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="version" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="processId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="values" type="xs:anyType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="process-key" type="runtime:ProcessKey" />
+	<xs:complexType name="ProcessKey">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="version" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="processId" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

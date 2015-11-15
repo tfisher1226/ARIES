@@ -1,0 +1,23 @@
+http://stackoverflow.com/questions/4791891/jaxb-generated-classes-serializable-with-jax-ws-binding
+
+public class SerializablePlugin extends Plugin
+{
+
+  @Override
+  public boolean run(Outline outline, Options options, ErrorHandler errorHandler) throws SAXException
+  {
+   for (ClassOutline classOutline : outline.getClasses())
+   {
+    JDefinedClass definedClass = classOutline.implClass;
+    definedClass._implements(codeModel.ref(Serializable.class));
+   }
+   return true;
+  }
+
+ ...
+}
+
+WsimportOptions wsimportOptions = new WsimportOptions();
+wsimportOptions.getSchemaCompiler().getOptions().activePlugins.add(new SerializablePlugin());
+
+

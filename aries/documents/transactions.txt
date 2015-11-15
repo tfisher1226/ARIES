@@ -1,0 +1,278 @@
+http://www.jboss.org/jbosstm/downloads/4-9-0-GA.html
+http://www.jboss.org/jbosstm/documentation/Q42006index.html
+
+
+Transactions
+
+-many varieties of custom apps in world today
+    -some are simple while many are sophistacted systems of
+     broad combinations of open source and commercial s/w
+
+-while many apps work fine, most suffer from random and (at times)
+   unexplainable data integrity problems
+       -incorrect account balances
+       -multiple orders shipped to customers
+       -orders "lost" by the system
+       -or general synchronization issues between tables
+
+-these types of problems are usually always caused by ineffective 
+  or missing transaction management strategy
+
+
+Why talk about transactions now?
+
+-can be considered as the core challenge of SOA systems
+
+
+
+What is a transaction?
+
+-mechanistic (or administrative) aid to achieving correctness
+-Provides all-or-nothing property to work conducted within specific scope
+    -does so in presence of failures
+-ensures that shared resources are protected from multiple users
+-complexity is hidden by transaction system
+-note: just because one or more transaction(s) are used does not mean 
+  transactional integrity is maintained
+-involves recorded and recoverable units of work
+-fundamental concept in distributed computing
+
+
+What is transactional integrity?
+
+-a measure of reliability (or robustness):
+    -systems can be measured by their ability to maintain transactional integrity
+-becomes more and more difficult to maintain as resources and computing become 
+  more and more distributed
+-can be considered as the core challenge of SOA systems
+    (resulting problems can be extremely costly in diverse ways)
+-requires coordinated transactions 
+    (which may or may not involve human steps)
+-may involve compensation steps (undo actions)
+-guaranteed execution/delivery, once and only once
+
+
+Goals of transactional integrity?
+
+-reduce / eliminate states of (or potentials for states of) inconsistency
+-ensure transactional data remains in a reliable and consistent state regardless 
+  of unexpected functional/environmental changes
+    -if such integrity is compromised by a single component then the entire system 
+     can be considered jeopardized
+-distributed failure recovery
+
+
+
+What are distributed vs. local transactions?
+
+-simply means having multiple participants
+-requires developer to manage transactions, not connections
+-typically using JTA (or JTS) for distributed transactions
+-may be single-JVM or may span multiple-JMVs
+    -single-JVM transactions do not deal with transaction context propagation
+    -multiple-JVM transactions are dependent on the communication protocol used
+
+
+What are nested-transactions vs. flat-transactions?
+
+-also called inner-transactions
+-nesting levels may be arbitrary in depth
+-occurs when a new transaction is started when execution is already processing 
+  inside an existing transaction
+-failure (and subsequent rollback of) a nested transaction may or may not
+  affect overall outcome of parent transaction(s)
+
+
+What are transaction models?
+
+-local transaction model
+    (not a framework but just a local resource manager)
+    -developer manages connections, not transactions
+-declarative transaction model
+-programmitic transaction model
+
+
+Advanced transaction models
+-dependencies, sharing, nesting, delegation
+-user-defined transaction models
+
+
+Transaction strategies
+
+
+Transaction resources
+
+
+Transaction participants
+
+
+Transaction context
+
+-propagation
+
+
+Transaction coordinator
+
+
+What is transaction recovery?
+
+-involves use of Logging manager:
+   -logging transactional significant events
+   -logging two-phase commit states
+   -logging all data related to all transaction participants
+-involves use of Recovery manager: 
+   -uses log after a crash to reestablish integrity
+   -reconnects to all participating resources/sub-coordinators
+   -reconnects to all resources (JDBC, JCA, JMS connections)
+   -commits or rolls back transactions depending on state
+-challenges:
+   -lack of specification, implementation, and documentation
+   -amplified in distributed cases
+
+
+What are transactions in the world of web-services?
+
+-strategy that (more than any other) delivers on promise of distributed computing
+-requires more relaxed forms of transactions
+    -i.e. not strict enforcement of ACID properties
+-requires coordination of outcomes from multiple diverse services
+    WS-Coordination and WS-Transaction provide WSDL for such coordinated behavior
+
+
+What are goals of web-services transactions?
+
+-enables independent organizations as participants
+    (to conduct reliable/automated business activities)
+-enable support for short-term and long-term activities
+    (WS-AtomicTransaction and WS-BusinessActivity)
+
+
+
+WS-Coordination -- defines the Coordination-Framework
+WS-Coordination supports, integrates, and unifies several popular coordination models
+   -provides mechanisms/technologies to allow interoperations among diverse types of participants
+
+WS-Transaction -- defines the Coordination-Protocols
+    WS-AtomicTransaction - protocols to handle short-lived activities (locks held)
+    WS-BusinessActivity - protocols to handle long-lived activities (no locks held)
+        (typically involves compensation and reconciliation tasks)
+
+
+WS-AtomicTransaction (WS-AT) and BusinessActivity (WS-BA)
+-specifications released by Arjuna, BEA, IBM, IONA and Microsoft
+-separates coordination from transactions
+-defines two transaction models
+    -AtomicTransaction
+        -closely coupled, interoperability
+    -BusinessActivity
+        -compensation based, for long duration activities
+
+
+WS-AtomicTransaction:
+
+-coordination protocols
+    -completion protocol (with or without ACK): 
+        -the completion protocol initiates commit processing
+        -based on registered participants, the coordinator begins with volatile2PC then 
+            proceeds through durable2PC - the final result is signaled to the initiator
+
+    -two-phase commit (2PC): coordinates registered participants to reach a commit or 
+      abort decision, and ensures that all participants are informed of the final result
+        -The 2PC protocol has two variants:
+            -volatile2PC protocol: 
+                participants managing volatile resources such 
+                as a cache should register for this protocol
+            -durable2PC protocol:
+                participants managing durable resources such 
+                as a database should register for this protocol
+    -notification protocol:
+
+-A participant can register for more than one of these protocols by sending multiple Register messages
+
+
+WS-BusinessActivity:
+
+-business-to-business interactions may be complex
+    -involving many parties
+    -spanning many different organisations
+    -potentially lasting for hours or days
+
+-cannot afford to lock resources on behalf of an individual indefinitely
+
+-failures of certain participants may not trigger rollback of outcome
+    -like in nested-transactions where work in nested scope may be provisional
+
+-rollbacks may need to undo only a subset of work
+
+
+
+Best practices:
+
+-Transaction management should be contained within the method that starts the transaction
+    -This is typically a business method
+    -only this method should either commit or rollback
+        -underlying methods should only request rollback
+         (i.e. avoid marking the transaction as rollback only and instead
+          throw appropriate exceptions to be caught by the starting-method
+        -true for declarative as well as programmatic models
+    -the rationale for this is two-fold:
+      1) spreading transaction management through different layers
+         of an app adds complexity and reduced maintainability
+      2) once the transaction has been marked as rollback only
+         it cannot be reversed which means an possible corrective 
+         action that the method might like to make becomes impossible
+
+-Corollary to the above point: underlying methods (of the method that started the transaction)
+  should include as much information in the exception thrown to make it possible for the 
+  starting-method to make right decision to rollback or not
+    -for example: say a confirrmation email could not be sent
+        (this may or may not be considered a cause for rollback
+         the starting-method should make this decision)
+
+
+3. Atomic Transaction Protocols
+This specification defines the following protocols for atomic transactions.
+ Completion: The completion protocol initiates commitment processing. Based on each protocol's registered participants, the coordinator begins with Volatile 2PC then proceeds through Durable 2PC. The final result is signaled to the initiator.
+ Two-Phase Commit (2PC): The 2PC protocol coordinates registered participants to reach a commit or abort decision, and ensures that all participants are informed of the final result. The 2PC protocol has two variants:
+Volatile 2PC: Participants managing volatile resources such as a cache should register for this protocol.
+ Durable 2PC: Participants managing durable resources such as a database should register for this protocol.
+A participant can register for more than one of these protocols by sending multiple Register messages.
+
+
+Characteristics of extended transactions
+
+Activity
+An activity is a unit of (distributed) work that may, or may not be transactional
+An activity is created, made to run, and then completed
+During its lifetime an activity may have transactional and non-transactional periods
+The result of a completed activity is its outcome
+Activities may be nested
+
+Task
+A task is a short-duration unit of work
+Each task may execute on different, distributed systems or domains
+How tasks are implemented is typically unimportant to the application
+Tasks may be nested
+
+The structuring mechanisms available are sequential and concurrent composition of transactions
+These mechanisms are sufficient if an application function can be represented as a single top-level transaction. Frequently with Web services this is not the case
+Top-level transactions are most suitably viewed as short-lived entities (tasks)
+Activities can be structured as many independent tasks to form an overall application
+This structuring allows an activity to acquire and use resources for only the required duration within this long-running transactional activity
+
+Long-running transactional characteristics
+Task failures do not necessarily affect the overall activity
+long-running applications are generally constructed such that some form of (application-specific) compensation may be required to attempt to return the state of the system to (application-specific) consistency
+For example see the diagram below - when abort occurs compensation must take place (rollback not possible)
+Obviously other forms of transaction composition are possible.
+
+There are several ways in which some or all of the application requirements outlined above could be met. However, it is unrealistic to believe that the "one-size fits all" paradigm will suffice, in other words, a single approach to extended transactions is unlikely to be sufficient for all (or even the majority of) applications. Whereas in case of the last example, a transactional workflow system with scripting facilities for expressing the composition of the activity with compensation (a workflow) may be the most suitable approach; a less elaborate solution might be desirable for the first three examples.
+
+
+
+J2EE servers are required only to implement the flat transaction model. This model is sufficient in situations where the transactional resources are centralized and under the control of one party. The ACID properties of such transactions can be maintained without compromise. This transactional model is adequate for Web service applications with short-running transactions and those in which transactions do not span organizational boundaries.
+
+The flat transaction mode is inadequate to address the transactional needs of some business transactions in Web services, which frequently involve the assembly of disparate services. These disparate services may have been written with their own, autonomous transaction boundaries and may control their own resources. Web services for business-to-business integration can also be long-running, causing inefficiency as a result of the locking mechanism used for achieving isolation in traditional transaction models.
+
+Relaxing the isolation property of transactions and allowing subtransactions to make visible state-change effects before the larger transaction completes solves the problem of inefficient resource locking in long-running transactions. Allowing a transaction to complete even if only a subset of subtransactions completes (i.e., relaxing the atomic property) allows a business transaction to be composed based on application needs.
+

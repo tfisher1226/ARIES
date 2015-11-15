@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:common="http://www.aries.org/common"
+	targetNamespace="http://www.aries.org/common">
+
+	<!-- 
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.aries.common" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+	-->
+
+	<!-- 
+		Map type
+	-->
+
+	<xs:element name="map" type="common:Map"/>
+	<xs:complexType name="Map">
+		<xs:sequence>
+			<xs:element name="mapEntries" type="common:MapEntry" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="map-entry" type="common:MapEntry"/>
+	<xs:complexType name="MapEntry">
+		<xs:sequence>
+			<xs:element name="key" type="xs:anyType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="value" type="xs:anyType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+
+	<!-- 
+		Property type
+	-->
+
+	<xs:element name="properties" type="common:Properties"/>
+	<xs:complexType name="Properties">
+		<xs:sequence>
+			<xs:element name="properties" type="common:Property" maxOccurs="unbounded" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="property" type="common:Property"/>
+	<xs:complexType name="Property">
+		<xs:complexContent>
+			<xs:extension base="xs:anyType">
+				<xs:attribute name="id" type="xs:long"/>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="value" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+
+	<!-- 
+		AbstractEvent type
+	-->
+	
+	<xs:element name="abstractEvent" type="common:AbstractEvent"/>
+	<xs:complexType name="AbstractEvent">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:long"/>
+			<xs:element maxOccurs="1" minOccurs="1" ref="common:abstractUser"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 
+		Attachment type
+	-->
+
+	<xs:element name="attachment" type="common:Attachment" />
+	<xs:complexType name="Attachment">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="size" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="fileName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="fileData" type="xs:base64Binary" minOccurs="0" maxOccurs="1" />
+			<xs:element name="contentType" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 
+		AbstractNote type
+	-->
+	
+	<xs:element name="abstractNote" type="common:AbstractNote"/>
+	<xs:complexType name="AbstractNote">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="id" type="xs:long"/>
+			<xs:element minOccurs="0" name="text" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="author" type="common:AbstractUser"/>
+			<xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="lastUpdate" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+
+	<!-- 
+		Logging related
+	-->
+	
+	<xs:simpleType name="Status">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INFO" />
+			<xs:enumeration value="PROMPT" />
+			<xs:enumeration value="WARNING" />
+			<xs:enumeration value="ERROR" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Country">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="USA" />
+			<xs:enumeration value="CAN" />
+			<xs:enumeration value="MEX" />
+			<xs:enumeration value="PR" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="State">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AL" />
+			<xs:enumeration value="AK" />
+			<xs:enumeration value="AZ" />
+			<xs:enumeration value="AR" />
+			<xs:enumeration value="CA" />
+			<xs:enumeration value="CO" />
+			<xs:enumeration value="CT" />
+			<xs:enumeration value="DE" />
+			<xs:enumeration value="FL" />
+			<xs:enumeration value="GA" />
+			<xs:enumeration value="HI" />
+			<xs:enumeration value="ID" />
+			<xs:enumeration value="IL" />
+			<xs:enumeration value="IN" />
+			<xs:enumeration value="IA" />
+			<xs:enumeration value="KS" />
+			<xs:enumeration value="KY" />
+			<xs:enumeration value="LA" />
+			<xs:enumeration value="ME" />
+			<xs:enumeration value="MD" />
+			<xs:enumeration value="MA" />
+			<xs:enumeration value="MI" />
+			<xs:enumeration value="MN" />
+			<xs:enumeration value="MS" />
+			<xs:enumeration value="MO" />
+			<xs:enumeration value="MT" />
+			<xs:enumeration value="NE" />
+			<xs:enumeration value="NV" />
+			<xs:enumeration value="NH" />
+			<xs:enumeration value="NJ" />
+			<xs:enumeration value="NM" />
+			<xs:enumeration value="NY" />
+			<xs:enumeration value="NC" />
+			<xs:enumeration value="ND" />
+			<xs:enumeration value="OH" />
+			<xs:enumeration value="OK" />
+			<xs:enumeration value="OR" />
+			<xs:enumeration value="PA" />
+			<xs:enumeration value="RI" />
+			<xs:enumeration value="SC" />
+			<xs:enumeration value="SD" />
+			<xs:enumeration value="TN" />
+			<xs:enumeration value="TX" />
+			<xs:enumeration value="UT" />
+			<xs:enumeration value="VT" />
+			<xs:enumeration value="VA" />
+			<xs:enumeration value="WA" />
+			<xs:enumeration value="WV" />
+			<xs:enumeration value="WI" />
+			<xs:enumeration value="WY" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Language">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ENGLISH" />
+			<xs:enumeration value="SPANISH" />
+			<xs:enumeration value="FRENCH" />
+			<xs:enumeration value="ITALIAN" />
+			<xs:enumeration value="GERMAN" />
+			<xs:enumeration value="PORTUGUESE" />
+			<xs:enumeration value="JAPANESE" />
+			<xs:enumeration value="CHINESE" />
+			<xs:enumeration value="KOREAN" />
+			<xs:enumeration value="VIETNAMESE" />
+			<xs:enumeration value="THAI" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- 
+		AbstractUser type
+	-->
+	
+	<xs:element name="abstractUser" type="common:AbstractUser"/>
+	<xs:complexType name="AbstractUser">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="id" type="xs:long"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="userId" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="passwordHash" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="passwordSalt" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="firstName" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="lastName" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="common:PhoneNumber"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="emailAddress" type="common:EmailAddress"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="enabled" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="RoleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MANAGER" />
+			<xs:enumeration value="USER" />
+			<xs:enumeration value="HOST" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="Capability">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="EXPORT" />
+			<xs:enumeration value="EMAIL" />
+			<xs:enumeration value="PRINT" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- 
+		Registration type
+	-->
+
+	<xs:element name="registration" type="common:Registration" />
+	<xs:complexType name="Registration">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="date" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="user" type="common:AbstractUser" minOccurs="1" />
+			<xs:element name="cancelled" type="xs:boolean" minOccurs="0" />
+			<xs:element name="aborted" type="xs:boolean" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 
+		Person type
+	-->
+	
+	<xs:element name="person" type="common:Person"/>
+	<xs:complexType name="Person">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="id" type="xs:long"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="userId" type="xs:string"/>
+			<xs:element minOccurs="1" maxOccurs="1" name="name" type="common:PersonName"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="common:PhoneNumber"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="emailAddress" type="common:EmailAddress"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="streetAddress" type="common:StreetAddress"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!-- 
+		PersonName type
+	-->
+	
+	<xs:element name="person-name" type="common:PersonName" />
+	<xs:complexType name="PersonName">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="id" type="xs:long"/>
+			<xs:element name="lastName" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="middleInitial" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+
+	<!-- 
+		StreetAddress type
+	-->
+	
+	<xs:element name="street-address" type="common:StreetAddress" />
+	<xs:complexType name="StreetAddress">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="city" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="country" type="common:Country" minOccurs="0" maxOccurs="1" />
+			<xs:element name="latitude" type="xs:double" minOccurs="0" maxOccurs="1" />
+			<xs:element name="longitude" type="xs:double" minOccurs="0" maxOccurs="1" />
+			<xs:element name="state" type="common:State" minOccurs="0" maxOccurs="1" />
+			<xs:element name="street" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="zipCode" type="common:ZipCode" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 
+		ZipCode type
+	-->
+	
+	<xs:element name="zip-code" type="common:ZipCode" />
+	<xs:complexType name="ZipCode">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="country" type="common:Country" minOccurs="0" maxOccurs="1" />
+			<xs:element name="extension" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="number" type="xs:string" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 
+		PhoneNumber type
+	-->
+	
+	<xs:element name="phone-number" type="common:PhoneNumber" />
+	<xs:complexType name="PhoneNumber">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="common:PhoneLocation" minOccurs="0" maxOccurs="1" default="HOME" />
+			<xs:element name="country" type="common:Country" minOccurs="0" maxOccurs="1" />
+			<xs:element name="area" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="number" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="extension" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="PhoneLocation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HOME" />
+			<xs:enumeration value="WORK" />
+			<xs:enumeration value="CELL" />
+			<xs:enumeration value="FAX" />
+			<xs:enumeration value="OTHER" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!-- 
+		EmailAddress type
+	-->
+	
+	<xs:element name="emailAddress" type="common:EmailAddress" />
+	<xs:complexType name="EmailAddress">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="url" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="phoneNumber" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="organization" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="email-address-list" type="common:EmailAddressList" />
+	<xs:complexType name="EmailAddressList">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="addresses" type="common:EmailAddress" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 
+		EmailMessage type
+	-->
+	
+	<xs:element name="emailMessage" type="common:EmailMessage" />
+	<xs:complexType name="EmailMessage">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="content" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="subject" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="timestamp" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="sourceId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="smtpHost" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="smtpPort" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="fromAddress" type="common:EmailAddress" nillable="true" minOccurs="1" maxOccurs="1" />
+			<xs:element name="toAddresses" type="common:EmailAddressList" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="bccAddresses" type="common:EmailAddressList" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="ccAddresses" type="common:EmailAddressList" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="replytoAddresses" type="common:EmailAddressList" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="adminAddresses" type="common:EmailAddressList" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="attachments" type="common:Attachment" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="sendAsHtml" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- 
+		EmailAccount type
+	-->
+	
+	<xs:element name="emailAccount" type="common:EmailAccount" />
+	<xs:complexType name="EmailAccount">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="passwordHash" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="passwordSalt" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailBoxes" type="common:EmailBox" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="emailBox" type="common:EmailBox" />
+	<xs:complexType name="EmailBox">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAccount" type="common:EmailAccount" minOccurs="0" maxOccurs="1" />
+			<xs:element name="parentBox" type="common:EmailBox" minOccurs="0" maxOccurs="1" />
+			<xs:element name="messages" type="common:EmailMessage" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty disabled}">
+		<c:set var="disabled" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty submitMode}">
+		<c:set var="submitMode" value="ajax"/> 
+	</c:if>
+
+	<c:if test="#{empty immediate}">
+		<c:set var="immediate" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty ajaxSingle}">
+		<c:set var="ajaxSingle" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty requestDelay}">
+		<c:set var="requestDelay" value="0"/> 
+	</c:if>
+
+	<c:if test="#{empty bypassUpdates}">
+		<c:set var="bypassUpdates" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty limitToList}">
+		<c:set var="limitToList" value="true"/> 
+	</c:if>
+
+	<!--  
+	<c:if test="#{empty manager}">
+		<c:set var="manager" value="#{globals}"/> 
+	</c:if>
+
+	<c:if test="#{empty action}">
+		<c:set var="action" value="doNothing"/> 
+	</c:if>
+	-->
+
+	<c:if test="#{empty process}">
+		<c:set var="process" value=""/> 
+	</c:if>
+	
+	<c:if test="#{empty reRender}">
+		<c:set var="reRender" value="placeholder"/> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolbarItem"/> 
+	</c:if>
+
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="toolbarLabel"/> 
+	</c:if>
+
+	<c:if test="#{empty labelStyle}">
+		<c:set var="labelStyle" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty style}">
+		<c:set var="style" value=""/> 
+	</c:if>
+	
+	<c:if test="#{empty interactive}">
+		<c:set var="interactive" value="#{current != name}"/> 
+	</c:if>
+
+	<c:if test="#{not interactive}">
+		<h:panelGroup layout="block" rendered="#{rendered}" style="border: 1px solid #9999cc; background-color: #eaeaf6; text-decoration: none; #{style};">
+			<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumn" >
+				<c:if test="#{empty icon}">
+					<h:graphicImage value="resource://images/spacer.gif" width="0" height="16"/>
+				</c:if>
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" style="margin-right: 3px"/>
+				</c:if>
+				<c:if test="#{not empty label}">
+					<h:outputText value="#{label}" styleClass="#{labelClass}" style="white-space: nowrap"/>
+				</c:if>
+			</h:panelGrid>
+		</h:panelGroup>
+	</c:if>
+
+	<c:if test="#{interactive}">
+		<rich:menuItem
+			disabled="#{disabled}"
+			rendered="#{rendered}"
+			submitMode="#{submitMode}"
+			immediate="#{immediate}"
+			process="#{process}"
+			ajaxSingle="#{ajaxSingle}"
+			requestDelay="#{requestDelay}"
+			bypassUpdates="#{bypassUpdates}"
+			limitToList="#{limitToList}"
+			action="#{manager[action]}"
+			onclick="setCursorWait(this); #{onclick}"
+			oncomplete="#{oncomplete}; setCursorDefault(this)"
+			reRender="#{reRender}"
+			styleClass="toolbarItem" 
+			style="padding: 4px">
+
+			<f:facet name="icon">
+				<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+					<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumnAlignBottom" style="margin: 0px; padding: 0px; border-width: 0px; border-collapse: collapse; background-color: inherit">
+						<c:if test="#{empty icon}">
+							<h:graphicImage value="resource://images/spacer.gif" width="3" height="16"/>
+						</c:if>
+						<c:if test="#{not empty icon}">
+							<h:panelGroup layout="block" style="padding-left: 2px">
+								<h:graphicImage value="#{icon}" />
+								<c:if test="#{not empty label}">
+									<rich:spacer width="4"/>
+								</c:if>
+							</h:panelGroup>
+						</c:if>
+						<c:if test="#{not empty label}">
+							<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+								<h:outputText value="#{label}" styleClass="toolbarLabel" style="padding-right: 2px; vertical-align: bottom; white-space: nowrap; #{labelStyle}"/>
+								<c:if test="#{not empty icon}">
+									<rich:spacer width="1"/>
+								</c:if>
+							</h:panelGroup>
+						</c:if>
+					</h:panelGrid>
+				</h:panelGroup>
+			</f:facet>
+			
+			<aries:tooltip value="#{tooltip}"/>
+		</rich:menuItem>
+	</c:if>
+</ui:composition>

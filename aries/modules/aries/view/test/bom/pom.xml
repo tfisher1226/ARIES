@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>aries-view-layer-test-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries View Layer Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-test-bom</artifactId>
+				<version>${aries.version}</version>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>tx-manager-test-bom</artifactId>
+				<version>${aries.version}</version>
+				<type>pom</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-model</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-client</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-view</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-jndi</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-jmx</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>common-jms</artifactId>
+				<version>${aries.version}</version>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

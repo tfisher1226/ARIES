@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:form>
+	    <a4j:jsFunction name="renderStreetAddressDialog" reRender="streetAddressDialog" />
+	    <a4j:jsFunction name="showStreetAddressDialog" reRender="streetAddressDialog" oncomplete="Richfaces.showModalPanel('streetAddressDialog')" />
+	    <a4j:jsFunction name="hideStreetAddressDialog" reRender="streetAddressDialog" oncomplete="Richfaces.hideModalPanel('streetAddressDialog')" />
+	    <a4j:jsFunction name="renderStreetAddressState" reRender="streetAddressField" />
+	</a4j:form>
+	
+	<a4j:region renderRegionOnly="true">
+	
+		<aries:dialog 
+			dialogWidth="406"
+			dialogHeight="320"
+			dialogName="streetAddressDialog"
+			dialogBean="#{streetAddressManager}"
+			dialogAction="submit"
+			dialogRenderer="renderStreetAddressState">
+			<h:panelGroup layout="block">
+
+				<ui:include src="streetAddressPanel.xhtml"/>
+			</h:panelGroup>
+		</aries:dialog>
+	</a4j:region>
+</ui:composition>

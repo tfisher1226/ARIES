@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>jboss-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries JBOSS-related Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<jboss.version>7.1.1.Final</jboss.version>
+		<!--  
+        <JBOSS_HOME>${env.JBOSS_HOME}</JBOSS_HOME>
+		<jboss.home>c:/software/jboss-6.1.0.Final</jboss.home>
+		<jboss.server>node03</jboss.server>
+		<jboss.app.version>5</jboss.app.version>
+		<jboss.el_api.version>1.0.0.Final</jboss.el_api.version>
+		-->
+		<jboss.el.version>1.0_02.CR6</jboss.el.version>
+		<jboss.el_api_2_2.version>1.0.0.Final</jboss.el_api_2_2.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!--  
+			<dependency>
+				<groupId>org.jboss</groupId>
+				<artifactId>run</artifactId>
+				<version>${jboss.version}</version>
+				<scope>system</scope>
+				<systemPath>${jboss.home}/bin/run.jar</systemPath>
+			</dependency>
+			-->
+		
+			<!--  
+			<dependency>
+				<groupId>org.jboss.jbossas</groupId>
+				<artifactId>jboss-as-component-matrix</artifactId>
+				<version>${jboss.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			-->
+
+   		    <dependency>
+			    <groupId>org.jboss.el</groupId>
+			    <artifactId>jboss-el</artifactId>
+				<version>${jboss.el.version}</version>
+		    </dependency>
+
+			<dependency>
+				<groupId>org.jboss.spec.javax.el</groupId>
+				<artifactId>jboss-el-api_2.2_spec</artifactId>
+				<version>${jboss.el_api_2_2.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.el</groupId>
+						<artifactId>el-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss</groupId>
+				<artifactId>jbossxb</artifactId>
+				<version>2.0.3.GA</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.jboss.logging</groupId>
+						<artifactId>jboss-logging-spi</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>sun-jaxb</groupId>
+						<artifactId>jaxb-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.jboss</groupId>
+				<artifactId>jboss-common-core</artifactId>
+				<version>2.2.17.GA</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.jboss.ws.native</groupId>
+				<artifactId>jbossws-native-core</artifactId>
+				<version>3.4.1.GA</version>
+				<exclusions>
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+	  				</exclusion>
+                    <!--
+					<exclusion>
+						<groupId>com.sun.istack</groupId>
+						<artifactId>istack-commons-runtime</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>woodstox</groupId>
+						<artifactId>wstx-asl</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.codehaus.woodstox</groupId>
+						<artifactId>wstx-asl</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache</groupId>
+						<artifactId>xmlsec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache</groupId>
+						<artifactId>xmlsec</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>gnu-getopt</groupId>
+						<artifactId>getopt</artifactId>
+					</exclusion>
+                    -->
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.ejb3</groupId>
+				<artifactId>jboss-ejb3-ext-api</artifactId>
+				<version>2.0.0</version>
+				<exclusions>
+					<exclusion>
+						<groupId>system</groupId>
+						<artifactId>jdk-tools</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>jboss-as-ejb3</artifactId>
+				<version>${jboss.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.invocation</groupId>
+				<artifactId>jboss-invocation</artifactId>
+				<version>1.1.1.Final</version>
+			</dependency>
+			
+	        <!--
+			<dependency>
+				<groupId>org.jboss.spec.javax.el</groupId>
+				<artifactId>jboss-el-api_2.2_spec</artifactId>
+				<version>${jboss.el_api.version}</version>
+			</dependency>
+	        -->
+		</dependencies>
+	</dependencyManagement>
+</project>
+

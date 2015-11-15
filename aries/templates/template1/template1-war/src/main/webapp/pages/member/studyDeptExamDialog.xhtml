@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<script type="text/javascript">
+	function showStudyDeptExamDialog() {Richfaces.showModalPanel('studyDeptExamDialog')}
+	function hideStudyDeptExamDialog() {Richfaces.hideModalPanel('studyDeptExamDialog')}
+	</script>
+	
+	<!-- StudyDeptExamDialog -->
+	<rich:modalPanel
+		width="400" 
+		autosized="true" 
+		id="studyDeptExamDialog" 
+		onmaskclick="hideStudyDeptExamDialog()" 
+		style="height: auto">
+
+		<!-- TITLE -->
+		<ui:include src="/common/dialog/dialogHeaderBar.xhtml">
+			<ui:param name="dialogKey" value="studyDeptExam"/>
+			<ui:param name="dialogTitle" value="StudyDept Exam for #{member.lastName}, #{member.firstName}"/>
+		</ui:include>
+
+		<!-- CONTENT -->
+		<a4j:outputPanel id="studyDeptExamContent" rendered="true">
+			<a4j:form id="studyDeptExamForm">
+
+				<h:panelGrid styleClass="layoutPane" layout="block" columns="1" columnClasses="formColumn" style="margin: 8px 10px; background-color: inherit"> 
+					<ui:include src="studyDeptExamPanel.xhtml"/>
+				</h:panelGrid>
+
+				<h:panelGroup layout="block" style="margin-top: 12px">
+					<ui:include src="studyDeptExamControl.xhtml"/>
+				</h:panelGroup>
+			</a4j:form>
+		</a4j:outputPanel> 
+	</rich:modalPanel>
+</ui:composition>
+

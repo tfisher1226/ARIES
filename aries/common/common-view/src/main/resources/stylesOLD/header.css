@@ -1,0 +1,38 @@
+#header-title,
+#header-subtitle {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+	text-align: left;
+	color: #12036a;
+}
+
+#header-title {
+	margin-top: 18px;
+	font-size: 22px;
+}
+
+#header-subtitle {
+	padding-top: 4px;
+	font-size: 15px;
+}
+
+#header-left {
+	float: left;
+	padding-top: 6px;
+	padding-left: 6px;
+}
+
+#header-center {
+}
+
+#header-right {
+	float: right;
+	padding-top: 4px;
+	text-align: right;
+	vertical-align: top;
+}
+
+#header-image {
+	border-spacing: 0px;
+    border-width: 0px;
+}

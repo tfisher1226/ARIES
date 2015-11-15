@@ -1,0 +1,6 @@
+Started off just trying to automate the creation of J2EE descripters and EJB source files.  Grsdually evolved into he creation of a foundation of models collectively desscribing aspects of distributed and cloud based applications.
+
+If one can imagine a tree of transactional participants where the root of the tree is the initiator of the transaction.  Each node in the tree is essentially a code block, in other words, a set of commands that may run in sequence or in parallel depending upon the configuration.  The code block will typically contain protocol action commands the represent flow of data with specific transactional participants.
+
+If desired the model can be configured such that only the root node can be cancel or abort the transaction. Whereas by default, the transaction may be cancelled or aborted initialted from any node in the tree.
+

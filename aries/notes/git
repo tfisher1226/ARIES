@@ -1,0 +1,57 @@
+
+mkdir ARIES
+cd ARIES
+git init
+
+
+git config --list
+git config user.name "Bob"
+git config user.email "bob@example.com"
+
+git config --global user.name "Bob"
+git config --global user.email "bob@example.com"
+
+Create a global .gitignore
+git config --global core.excludesfile ~/.gitignore_global
+
+
+Throwing changes away
+git checkout somefile.txt
+
+What if you have already added the changes to the index? You can restore the index to the last commit using git reset:
+git reset HEAD somefile.txt
+
+You can also restore the whole index:
+git reset HEAD
+
+HEAD always refers to the last commit
+
+Reverting commits
+If you have already committed your changes, you can make use of git’s built-in undocommand called git revert <commit>:
+git revert 068b9b9
+
+To see the difference from one commit compared to its parent, use git show <commit>:
+git show 3720b35
+
+To see the diffs for the complete history, use git log -p
+git log -p
+
+Tagging commits
+git tag <name> <commit> assigns a tag to a commit. If <commit> is omitted, the last commit gets tagged:
+git tag working 3720b35
+git tag broken
+
+
+Adding the Remote Master Repository
+git remote add [name] [master git location]
+git remote add ALMA //Alma/Git/alma.git
+
+git remote add origin https://github.com/tfisher1226/ARIES.git
+git remote rm origin
+
+This sends your commits in your “master” branch to GitHub
+Use "-u" for every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands.
+git push -u origin master
+
+all push operations after this use:
+git push origin master

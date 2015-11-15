@@ -1,0 +1,13 @@
+use mysql;
+drop database if exists template1DB;
+create database template1DB;
+delete from user where user='template1User';
+delete from db where user='template1User';
+FLUSH PRIVILEGES;
+create user 'template1User'@'localhost' identified by 'template1Password';
+create user 'template1User'@'%' identified by 'template1Password';
+-- set password for 'template1User' = password('template1Password');
+grant all on template1DB.* to 'template1User';
+grant all on template1DB.* to 'template1User'@'localhost' identified by 'template1Password';
+grant all on template1DB.* to 'template1User'@'%' identified by 'template1Password';
+use template1DB;

@@ -1,0 +1,27 @@
+Region usage in form processing:
+
+<h:panelGroup>
+ <a4j:region renderRegionOnly="true">
+   <h:inputText id="name" value="#{bean.name}" required="true"
+	requiredMessage="Name is required" 
+        validatorMessage="Must be 3 characters or longer">
+	<a4j:support event="onblur" />
+	<f:validateLength minimum="3" />
+   </h:inputText>
+ <rich:message for="name" />
+ </a4j:region>
+</h:panelGroup>
+...
+...
+<h:panelGroup>
+   <a4j:region renderRegionOnly="true">
+	<h:inputText id="age" value="#{bean.age}" 
+                 size="4" required="true"
+		requiredMessage="Age is required" 
+                validatorMessage="Invalid age">
+	   <a4j:support event="onblur" />
+	   <f:validateLongRange minimum="0" />
+	 </h:inputText>
+	 <rich:message for="age" />
+   </a4j:region>
+</h:panelGroup>

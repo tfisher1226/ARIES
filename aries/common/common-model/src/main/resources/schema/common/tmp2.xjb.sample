@@ -1,0 +1,28 @@
+<jxb:bindings
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    version="2.1">
+
+    <jxb:bindings schemaLocation="customer.xsd">
+        <jxb:bindings node="//xs:element[@name='customer']/xs:complexType/xs:sequence/xs:element[@name='phone-number']">
+            <jxb:property collectionType="java.util.LinkedList"/>
+        </jxb:bindings>
+    </jxb:bindings>
+
+
+    <jaxb:bindings schemaLocation="myschema.xsd">
+        <jaxb:bindings node="//xs:complexType[@name='physicianList']//xs:element[@name='Physician']">
+            <jaxb:property name="physicians"/>
+        </jaxb:bindings>
+    </jaxb:bindings>
+
+<bindings
+    node="wsdl:definitions/wsdl:types/xsd:schema[@targetNamespace='http://www.yoursite.com/services/mynamespace']">
+    <jxb:globalBindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <jxb:serializable />
+    </jxb:globalBindings>
+</bindings>
+    
+</jxb:bindings>
+

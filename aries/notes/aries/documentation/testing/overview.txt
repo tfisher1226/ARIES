@@ -1,0 +1,49 @@
+We currently generate tests using Arquillian, Byteman and Mockito.
+
+Tests are generated for each functional module that is created.   Tests are structured differently according to which type of Architectural module that the tests belong to.
+
+
+Types of Tests
+--------------
+
+Unit-test
+Integration-test without container (manually constructed environment)
+Integration-test with container with test running as client external to container
+Integration-test with container with test running internally within container 
+    -test packaged as a war deployed inside of ear being tested
+    -test packaged as a jar deployed inside of ear being tested
+Integration-test with container with multi-ear deployment
+
+Arquillian without
+Arquillian with Byteman (which is the addition of testing of fine-grained exception handling).
+
+All tests run using JUnit framework
+
+
+Options
+-------
+
+-selection of test category
+    -unit test
+    -IT
+    -CIT
+
+-include byteman scripts in code
+
+
+Generated artifacts
+-------------------
+
+Config files
+    -beans.xml
+    -components.xml
+    -persistence.xml
+    -queries.xml
+    -import.sql
+    -jndi properties
+    -hibernate properties
+    -seam properties
+
+Byteman scripts
+
+

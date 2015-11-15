@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<script type="text/javascript">
+	function show#{field}TextPanel(element) {
+		var point = getPositionOf(element, 'LR');
+		Richfaces.showModalPanel('#{field}TextPanel', {left: point[0], top: point[1]-23});
+		var input = document.getElementById('#{form}:#{field}TextField');
+		input.focus();
+		input.select();
+	}
+	function save#{field}TextPanel() {
+		var input = document.getElementById('#{form}:#{field}Component');
+		alert(input);
+		input.value = "HI";
+	}
+	function hide#{field}TextPanel() {
+		Richfaces.hideModalPanel('#{field}TextPanel');
+	}
+	</script>
+	
+	<!-- TextPanel -->
+	<rich:modalPanel 
+		id="#{field}TextPanel" 
+		autosized="true" 
+		moveable="false"
+		shadowDepth="0"
+		onhide=""
+		onmaskclick="hide#{field}TextPanel()" 
+		style="">
+
+		<!-- CONTENT -->
+		<a4j:region>
+			<rich:hotKey 
+				key="return"
+				selector="##{field}TextField"
+				handler="hide#{field}TextPanel(); rerender#{field}Component()"/>
+	
+			<a4j:jsFunction 
+				name="rerender#{field}Component"
+				reRender="#{field}Component"/>
+	
+			<h:panelGrid styleClass="formPanel" columns="1" columnClasses="formColumn" style="">
+				<h:inputText id="#{field}TextField" styleClass="formInput text12" value="#{bean[field]}" style="width: 214px; height: 16px">
+
+					<a4j:support 
+						event="onmouseout"
+						onsubmit="hide#{field}TextPanel(); rerender#{field}Component()"/>
+	
+					<a4j:support 
+						event="onblur"
+						onsubmit="hide#{field}TextPanel(); rerender#{field}Component()"/>
+				</h:inputText>
+			</h:panelGrid>
+		</a4j:region>
+	</rich:modalPanel>
+</ui:composition>

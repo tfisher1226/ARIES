@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="/pages/help/documentPageTemplate.xhtml">
+
+	<ui:define name="content">
+	<rich:panel 
+		bodyClass="panelBody" 
+		style="width: #{screenWidth-480}px; height: #{screenHeight-4}px">
+
+		<h:panelGrid 
+			layout="block" 
+			columns="1" 
+			columnClasses="formColumn" 
+			styleClass="formPanel" 
+			style="height: 1200px; width: 936px; margin: 0px; background-color: #fff; vertical-align: top"> 
+
+			<rich:spacer height="40px"/>
+			<h:panelGroup layout="block" style="width: auto; height: 16px; background-color: lightBlue"/>
+
+			<h:panelGrid 
+				layout="block" 
+				columns="1" 
+				columnClasses="formColumn" 
+				styleClass="formPanel" 
+				style="height: 1024px; margin: 60px; margin-top: 0px; background-color: pink; vertical-align: top"> 
+
+				<h:panelGrid layout="block" columns="1" columnClasses="formColumnAlignMiddle" style="width: 100%; height: 60px; background-color: red">
+					<h:outputLabel layout="block" style="padding-left: 10px; font-size: 42px; color: #bbb">
+					ARIES CLOUD COMPUTING
+					</h:outputLabel>
+				</h:panelGrid>
+
+				<h:panelGrid layout="block" columns="1" columnClasses="formColumnAlignMiddle" style="width: 100%; height: 40px; background-color: purple">
+					<h:outputLabel layout="block" style="padding-left: 10px; font-size: 24px; color: #fff">
+					AT A GLANCE
+					</h:outputLabel>
+				</h:panelGrid>
+	
+				<h:panelGrid 
+					styleClass="formPanel" 
+					layout="block" 
+					columns="3" 
+					columnClasses="formColumn, formColumn, formColumn" 
+					style="width: auto; height: 400px; background-color: #fde7c8"> 
+			
+					<h:panelGrid 
+						styleClass="formPanel" 
+						layout="block" 
+						columns="1" 
+						columnClasses="formColumn" 
+						style="width: 272px; height: auto; margin: 0px; background-color: cyan"> 
+						<ui:insert name="leftColumn"/>
+					</h:panelGrid>
+			
+					<h:panelGrid 
+						styleClass="formPanel" 
+						layout="block" 
+						columns="1" 
+						columnClasses="formColumn" 
+						style="width: 272px; margin: 0px; background-color: lightGreen"> 
+						<ui:insert name="centerColumn"/>
+					</h:panelGrid>
+			
+					<h:panelGrid 
+						styleClass="formPanel" 
+						layout="block" 
+						columns="1" 
+						columnClasses="formColumn" 
+						style="width: 272px; margin: 0px; background-color: blue"> 
+						<ui:insert name="rightColumn"/>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<h:panelGroup layout="block" style="width: auto; height: 100%; background-color: pink"/>
+
+			</h:panelGrid>
+		</h:panelGrid>
+	</rich:panel>
+	</ui:define>
+</ui:composition>

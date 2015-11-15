@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<site>
+
+  <project name="Aero Common">
+  
+    <bannerLeft>
+      <name>iCAMS</name>
+      <src>images/AER_logo_k.jpg</src>
+      <href>http://aerosource.aero.org/icams</href>
+    </bannerLeft>
+  
+    <bannerRight>
+      <src>http://maven.apache.org/images/maven-small.gif</src>
+    </bannerRight>
+    
+  	<publishDate position="right"/>
+  	
+  	<version position="right"/>
+  	
+  	<poweredBy>
+  		<logo name="Aerospace Application Development Department" 
+  		href="https://aerosource.aero.org/add"
+  		img="images/AER_logo_k.jpg"/>
+  	</poweredBy>
+  	
+  
+  <body>
+    <menu name="Aero Common" inherit="top">
+    	<item name="Overview" href="index.html"/>
+    </menu>
+    <menu ref="parent"/>
+    <menu ref="modules"/>
+    <menu ref="reports"/>
+    <links>
+   	  <item name="Aerosource Project" href="http://aerosource/icams"/>
+      <item name="Inside Aerospace" href="http://info.aero.org/"/>
+      <item name="Aerospace Corporation" href="http://www.aero.org/"/>
+    </links>
+  </body>
+</site>

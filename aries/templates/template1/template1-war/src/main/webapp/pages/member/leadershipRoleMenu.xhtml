@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:contextMenu 
+		id="leadershipRoleContextMenu">
+
+		<aries:contextMenuItem 
+			value="New Leadership Role..." 
+			icon="resource://images/icons/common/New16.gif"
+			manager="#{leadershipRoleManager}"
+			action="newLeadershipRole"
+			onclick="setCursorWait(this); showProgress('New Leadership Role', 'Creating new record...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLeadershipRoleDialog()"
+			reRender="leadershipRoleDialog">
+			<aries:tooltip value="Create new Leadership Role"/>
+		</aries:contextMenuItem>
+
+		<aries:contextMenuItem 
+			value="Edit Leadership Role..." 
+			icon="resource://images/icons/common/Edit16.gif"
+			manager="#{leadershipRoleManager}"
+			action="editLeadershipRole"
+			onclick="setCursorWait(this); showProgress('Leadership Role', 'Preparing for edit...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showLeadershipRoleDialog()"
+			reRender="leadershipRoleDialog">
+			<aries:tooltip value="Edit selected Leadership Role"/>
+		</aries:contextMenuItem>
+
+		<aries:contextMenuItem 
+			value="Remove Leadership Role..." 
+			submitMode="ajax" 
+			immediate="true"
+			disabled="false"
+			icon="resource://images/icons/common/Remove16.gif"
+			manager="#{leadershipRoleManager}"
+			action="promptRemoveLeadershipRole"
+			onclick="setCursorWait(this)"
+			oncomplete="setCursorDefault(this); showPromptRemoveLeadershipRole('#{helper.toNameString(member)}', '#{helper.toString(leadershipRole)}', 'leadershipRoleTablePanel, leadershipInfoFieldPanel')">
+			<aries:tooltip aries:tooltip="Remove selected Leadership Role"/>
+		</aries:contextMenuItem>
+	</aries:contextMenu>
+</ui:composition>

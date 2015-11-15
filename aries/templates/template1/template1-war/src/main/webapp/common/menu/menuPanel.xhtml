@@ -1,0 +1,43 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<c:if test="#{empty labelOnly}">
+		<c:set var="rendered" value="false"/> 
+	</c:if>
+
+	<c:if test="#{labelOnly}">
+		<h:panelGroup layout="block" style="padding: 6px 6px; border: 1px solid purple; background-color: lightBlue; text-decoration: underline">
+			<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumn" >
+				<c:if test="#{not empty icon}">
+					<h:graphicImage value="#{icon}" style="margin-right: 4px"/>
+				</c:if>
+				<h:outputText styleClass="toolbarLabel" value="#{label}"/>
+			</h:panelGrid>
+		</h:panelGroup>
+	</c:if>
+	
+	<c:if test="#{not labelOnly}">
+		<rich:dropDownMenu hideDelay="100" styleClass="toolbarMenu" style="padding: 4px 6px">
+			<f:facet name="label">
+				<h:panelGrid columns="2" columnClasses="formColumn, formColumn" onclick="showPage('#{url}')">
+					<h:graphicImage value="#{icon}" style="padding-right: 4px"/>
+					<h:outputText styleClass="toolbarLabel" value="#{label}"/>
+				</h:panelGrid>
+			</f:facet>
+	
+			<rich:menuItem submitMode="none" disabled="true" >
+				<rich:panel style="width: 300px; height: 200px">
+				</rich:panel>
+			</rich:menuItem>
+		</rich:dropDownMenu>
+	</c:if>
+</ui:composition>

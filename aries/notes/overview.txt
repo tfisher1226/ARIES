@@ -1,0 +1,420 @@
+We provide assistance to companies and organizations in the area of software engineering.  We help you organize your development infrastructure and environment and layout the architectural infrastructure to your enterprise computing systems and(or) cloud based systems.  Your resulting system will be both efficient and cost effective in terms of performance, mainteneance and extension overtime.
+
+We focus on using the most basic approaches to modeling your system.  From these models we generate computing structures (i.e source codes, modules and related configurations). 
+
+We teach you to use these models in simple, intuitive and appropriate ways they were meant to be used
+
+
+ARIES is a distributed transactional architectural framework.  It is decentralized, scalable and elastic in terms of handling arbitrary spikes in system and user load.  As for being scalable, it is dynamically configurable at runtime.  As for being elastic it is dynamically self-monitoring and will "scale itself out" in response to moniiored load in order to handle spikes in volume and load.
+
+ARIES is not only light-weight but efficient, reliable and fully transactional.  What we mean by fully transactional is that both long-term as well as short-term transactions are supported.  All transactionality is integrated with asynchronouns messaging, i.e. synchronous service invocation is not required for short-term transactions.  In addition to database and message queues as transactional resources, ARIES Transactions supports in-memory transfers and operations on distributed cache as transactional resources.
+
+Transactions
+
+Change Visibility
+
+The isolation level offered in ARIES is READ_COMMITTED. ARIES in-memory transfers or cache operations can work as an XAResource in which case, full two-phase commit is supported.  Mutating changes are not visible to other transactions in the local JVM or across the cluster until COMMIT has been called.  Until then, read such as by cache.get(...) by other transactions will return the old copy. Reads do not block.
+
+Transactional modes
+
+Transactional modes are a powerful extension of Ehcache allowing you to perform atomic operations on your caches and potentially other data stores, eg: to keep your cache in sync with your database.
+
+    local When you want your changes across multiple caches to be performed atomically. Use this mode when you need to update your caches atomically, ie: have all your changes be committed or rolled back using a straight simple API. This mode is most useful when a cache contains data calculated out of other cached data.
+
+    xa Use this mode when you cache data from other data stores (eg: DBMS, JMS) and want to do it in an atomic way under the control of the JTA API but don't want to pay the price of full two-phase commit. In this mode, your cached data can get out of sync with the other resources participating in the transactions in case of a crash so only use it if you can afford to live with stale data for a brief period of time.
+
+    xa_strict Same as xa but use it only if you need strict XA disaster recovery guarantees. In this mode, the cached data can never get out of sync with the other resources participating in the transactions, even in case of a crash but you pay a high price in performance to get that extra safety. This is the only mode that can work with nonstop caches (beginning with Ehcache 2.4.1).
+
+
+
+What is ARIEL?
+
+ARIEL is a language for describing how peer-to-peer participants collaborate in a conversation. The language uses XML, and some aspects are inspired by the pi-calculus.
+
+ARIEL is a text based language describing global (choreography) and local (service endpoint) behaviour.
+
+ARIEL enables the business stake holder, the business analyst, the enterprise architect and the application engineer to share their views of the same system in a synchronised fashion, by providing the means for each level of detail to be captured without that detail being necessarily exposed to the others. Also ARIEL provides the necessary provenance to enforce requirements at each level. In this fashion, ARIEL also enables the A in SOA, since it provides the manner in which architecture can be modelled, described and implemented.
+
+Scribble is a language to describe application-level protocols among communicating systems. A protocol represents an agreement on how participating systems interact with each other. Without a protocol, it is hard to do a meaningful interaction: participants simply cannot communicate effectively, since they do not know when to expect the other parties to send their data, or whether the other party is ready to receive a datum it is sending. In fact it is not clear what kinds of data is to be used for each interaction. It is too costly to carry out communications based on guess works and with inevitable communication mismatch (synchronisation bugs). Simply, it is not feasible as an engineering practice.
+
+Scribble presents a stratified description language:
+    The bottom layer is the type layer, in which we describe the bare skeleton of conversations structures as types for interactions (known in the literature as session type).
+    The assertion layer allows elaboration of a type-layer description using assertions.
+    Finally the third layer, protocol document layer, allows description of multiple protocols and constraints over them.
+Each layer offers distinct behavioural assurance for validated programs.
+
+
+How can ARIEL be used?
+
+The development and validation of programs against protocol descriptions could proceed as follows:
+
+    A programmer specifies a set of protocols to be used in her application.
+    She can verify that those protocols are valid, free from livelocks and deadlocks.
+    She develops her application referring to those protocols, potentially using communication constructs available in the chosen programming language.
+    She validates her programs against protocols using a protocol checker, which detects lack of conformance.
+    At the execution time, a local monitor can validate messages with respect to given protocols, optionally blocking invalid messages from being delivered.
+
+
+
+
+
+Due to an unpredictable economic climate, organizations are more focused than ever on getting the maximum value out of IT assets. What are these assets? In general, they include software, tests, documentation, and people.  The ARIES approach seeks to dramatically cut costs in developing and maintaining software and tests, and as a result, dramatically reduce costs spent on IT staff.
+
+Cost reducuction in IT Development
+----------------------------------
+
+Cost reducuction in Developing and Maintaining Software
+
+
+Cost reduction in IT Staffing
+-----------------------------
+
+Cost reducuction in Staffing is largely defined by the reduction of workforce, the reduction of specific risks, and the increase of predictability in development estimates, and increased system reliability: runtime monitoring, runtime management, system uptime by way of replication and load-balancing.
+
+
+
+Simple
+Readable
+Testable
+Reliable
+Transactable
+Scalable
+Extendable
+Interfaceable
+Tolerable
+Reproducable
+
+
+Designing Testable Architectures
+
+
+Create testable architectures which result in testable application implementations.
+http://www.jboss.org/savara/ta.html
+
+Use example of how to introduce Aries/Nam by followinf what was done for Teiid:
+http://www.jboss.org/teiid
+
+
+ the participants could define software systems, or also people. Where interactions are defined to a party representing a person, these could be implemented using a service that wraps use of a task management system.
+
+In contrast with typical programs written in Java, Aries-based systems and services are generally transactional, asynchronous, statefull and sometimes long-running processes.  In addition an Aries-based service can be designed to be multi-modal - the ability to transparently allow intra-service interactions using different protocols and methods.  For example, WS, JMS, EJB, CORBA.  All of which can co-exist in short-term as well as long-term transactions.
+
+
+Language to express cloud-based architectures.
+
+We would like to thing that it (Ariel) is fully integreated with XSD, BPEL, and WSDL. But this would of course would be impossible.  Instead it is fully integrsted with these in terms of providing a thorough range of flexibility in architectural design.
+
+
+Terms
+-----
+
+(see terms)
+
+
+Code Generation
+---------------
+
+-code is easily readable
+-amenable to being tested, i.e. structured intuitively and appropriate to being easily tested and verified.
+-amenable to being easily debugged, i.e. users can step through and easily observe the workings of the code and easily observe various intermediate results.
+-can also fine-tune your BPEL code by observing exactly the code that it is generating
+
+-The resulting generated code modules leverage J2EE or .NET application server environments, where they can make use of the services provided by application servers, such as security, transactions, scalability, integration with databases, as well as integration with components such as EJBs (Enterprise Java Beans), and messaging systems such as JMS (Java Message Service), etc.
+
+-BPEL is inherently a stateful language and the generated code modules uses JTA transactions (as well as XA when appropriate) to manage that state.  Every BPEL process executes in the context of one or more transactions.  Each BPEL process is essentially a long running transaction in that its state is maintained until the process runs to completion or is expired.
+
+When a process starts to execute the process manager does one of two things with transactions:
+
+    -It starts a new transaction for the process, or
+    -It enlists the process in an already open transaction.
+
+BPEL uses this transaction to update process state in the database and also log audit events in the database. When invoked through a web service the BPEL process will use the first option as there will not be a transaction context available.  When invoked through the Java API in a transactional environment then the process manager may use either option depending on the parameters used in the call.
+
+
+Code Formatting
+
+Code formatting profiles are supported. A code formating profile allows the user to customize the format of the source code produced by the generator.  A set of default code formatting profiles are provided. The user may then customize one of these to meet his/her needs.
+
+
+Understanding the behavior of defaults
+--------------------------------------
+
+Understanding the various defaults (and combinations of defaults) provided by / recommmended by a particular standard and using them in the way that is recommended by the creators of the standard.  This type of understanding is most often not documented in any one place or in some cases anywhere for that matter.  This type of thorough understanding is gained only through years of experience.
+
+
+Additions to standard BPEL
+--------------------------
+
+-BPELJ adds "partner links" that use Java interfaces in addition to WSDL port types. 
+-In addtion, serialized Java objects can be passed between the Java services rather then limiting all messages to XML documents. 
+
+
+Formal approach to protocol verification
+In a sequential programming language such as Java or C, a type stipulates the data type or object type of a variable.  In typed languages, variables are, for the most part, declared first before being used.  An extension of this view in the context of the distributed system, LinkTypes define the rules of engagement between potential communicating components.
+
+
+Verification of generated sources
+---------------------------------
+
+The ultimate objective of the grand challenge effort in software verification can not be restricted to the formal verification of single software components (programs). We propose to target a more formal treatment of the overall reliability of the system as a whole, where we explicitly take into account that it will always be possible for individual software components to fail in unexpected circumstances, despite our best efforts to verify them. Despite such local failures, the overal system reliability should be unassailable. Despite component failure, it should be possible to design software systems that provably meet certain realiability standards. 
+
+We identify and characterize the different types of software components into a finite set made up of certain specific types.  The stategy for the verification of a type is specific to that type.  We have a different verification strategy for each different type of component.
+
+
+Model-driven software verification
+----------------------------------
+http://lars-lab.jpl.nasa.gov/publications.html
+
+
+Runtime Verification
+--------------------
+
+When code is limited in the system-wide actions it may perform, vulnerabilities in one application area cannot be used to exploit resources of other areas as well as the rest of the machine.
+
+In terms of verification of security protections, it is impractical to rely upon static analysis.  This is because it is not possible to know all the values of variables it may process, addresses it will need, or the precise timing of events that such things will be required.  
+
+Combination of some static analysis with some runtime analysis. Together provide a reasonable and comprehensive level of assurance in the protection against breaches in security.  Operator observes runtime state by viewing security event log.
+
+
+Analysis aware design 
+---------------------
+
+
+Similar works
+-------------
+
+-Scribble
+-SPATEL
+-Blite
+
+
+
+Standards
+---------
+
+Java SE 6.0 APIs
+Java EE 5.0 APIs
+
+JSF 1.2
+Servlet 2.5
+EJB 3.0
+JAX-WS 2.0
+JMS 1.1
+JNDI 1.2
+JCA 1.5
+JTA 1.1
+JACC/JAAS 1.0
+JMX 1.2
+J2EE Deployment 1.2
+J2EE Management 1.1
+JDBC 3.0
+JPA 2.0
+
+Supporting Tools
+----------------
+
+Maven 3
+Seam 2.2.3
+
+
+
+Service Implementation and Testing
+
+Once a service has been designed, the next step is to get it implemented. However, in general it can be difficult to ensure that a service implementation meets it design and more importantly its responsibilities in terms of the overall architecture and business requirements.
+
+With "Testable Architecture" it will be possible to use previous artifacts to help ensure that the service implementation meets these objectives. When certain implementation languages are used, that enable the communication structure to be inferred, it will be possible to statically conformance check the implementation against the design. Where this is not possible, or in addition to, it will be possible to use the Scenarios defining the business requirements as service unit tests.
+
+Additional, once the overall system is deployed into a test or production environment, it will be possible continously monitor the interactions to ensure they continue to conform to the architectural specification (Global Model).
+Runtime
+
+The runtime environment is continously monitored to ensure that the business processes are executing correctly in accordance with the business requirements and architecture.
+
+This mechanism can ensure that business processes execute as expected, but it also provides a valuable source of activity monitoring that can be analysed by the business to understand how their processes are performing and can improve (i.e. BAM).
+
+In the fast-paced world of software development, rigorous and well-organized testing is often an ideal that quickly falls by the wayside.
+
+It galls me to have to give up long-term design considerations and benefits to make testing possible.
+
+Creating Readable Tests 
+Creating Maintainable Tests
+
+Types of Tests
+--------------
+
+Each type of test tool has its own specific strengths, and is best suited to a particular phase of software development: 
+
+-Unit Tests
+-Assertion Tests
+-Function Tests
+-Acceptance Tests
+-Stress Tests
+
+-Assertion/black-box level testing Performed early on, as the code is first being written. Assertions are culled from the design specification, and tests are developed to verify conformance to that design. These are also used during regression testing to ensure adherence to the specification.
+
+-API/white-box-level testing - Performed as the code becomes more stable and mature. Usually involves developing test cases based upon knowledge of the code - doing statement or branch coverage.
+ 
+
+Messaging
+---------
+
+Loose coupling
+Publishers are loosely coupled to subscribers, and need not even know of their existence. With the topic being the focus, publishers and subscribers are allowed to remain ignorant of system topology. Each can continue to operate normally regardless of the other. In the traditional tightly coupled client/server paradigm, the client cannot post messages to the server while the server process is not running, nor can the server receive messages unless the client is running. Many pub/sub systems decouple not only the locations of the publishers and subscribers, but also decouple them temporally. A common strategy used by middleware analysts with such pub/sub systems is to take down a publisher to allow the subscriber to work through the backlog (a form of bandwidth throttling).
+
+Scalability
+Pub/sub provides the opportunity for better scalability than traditional client/server, through parallel operation, message caching, tree-based or network-based routing, etc. However, in certain types of tightly coupled, high-volume enterprise environments, as systems scale up to become data centers with thousands of servers sharing the pub/sub infrastructure, current vendor systems often lose this benefit; scalability for pub/sub products under high load in these contexts is a research challenge. 
+
+while pub/sub scales very well with small installations, a major difficulty is that the technology often scales poorly in larger ones. These manifest themselves as instabilities in throughput (load surges followed by long silence periods), slowdowns as more and more applications use the system (even if they are communicating on disjoint topics), and so-called IP broadcast storms, which can shut down a local area network by saturating it with overhead messages that choke out all normal traffic, even traffic unrelated to pub/sub.
+
+An unauthorized publisher may be able to introduce incorrect or damaging messages into the pub/sub system. This is especially true with systems that broadcast or multicast their messages. Encryption (e.g. Transport Layer Security (SSL/TLS)) can be the only strong defense against unauthorized access.
+
+
+Code Quality Analyses
+---------------------
+
+A large part of software project development is managing the analysis of the software that is being produced.  There is <i>Static anaylsis</i> and <i>Runtime analysis</i>.  Static analysis is carried out at compile-time; <i>Runtime Anaylsis</i> carried-out at during execution of the system in different environments (i.e. development-env, intergration-env, as well as production-env.  We focus upon and rely upon these different reports.  We help you identify and understand the ins-and-outs of the different types of reports and the tools that produce them. The reports are created on a periodic basis (e.g. nightly).  The reports are saved and compared with each other overtime thereby generating another set of reports/graphs indicating software progress overtime.
+
+
+Static Analysis
+----------------
+
+-Sonatype's sonar analysis tool
+-Maven's dependency tree report
+-Maven's dependency hierarchy report
+-Maven's dependency plugin analyze tool 
+  -Used undeclared dependencies
+  -Unused declared dependencies
+-Cobertura's compile time analysis tools
+-Maven dependency browser tool
+
+Runtime Analysis
+----------------
+
+
+
+
+Links
+
+A link is a communication exchange between two endpoints. A link can be declared globally or within a scope. Links define the interface between two communicating endpoints by specifying the messages and the Port Types that are used by each. Each link can have one or two roles, and each link is defined by a Name and the service that will receive the message.
+
+
+
+
+Endpoints
+---------
+
+-Listener (service-side)
+-Invoker (client-side)
+-Publisher (service-side)
+-Subscriber (client-side)
+-Dispatcher (client-side)
+-Router (service-side)
+
+invocation models
+distribution models
+subscription models
+publication models
+
+
+
+
+As for last weeks testing, she had very good relaxing schedule but stimulating at the same time so she could do her best.  I think the experience of going through several days of testing and really living in the moment day to day as she prepares in different ways.  It all contributes to the development of her understanding and familiarity with testing.  From what I saw, the experience this past week of preparation, appropriate seriousness, and focus on her testing was likely more valuable than the testing itself.  She got to bed early every night, ate large amounts of healthy foods, got up early in relaxing way, carried out stimulating physical workouts at gym class, and carried out discussion related to purpose of testing and ability of one to focus on it etc...  In short, I was pleased with her efforts, and with her advancement in understanding. Overall I believe it was a great experience for her.
+
+
+System Event Tracking  / Journaling
+-----------------------------------
+
+A servlet is generated to maintain a journal of cluster-wide system events.  It registers with each transaction manager for synchronization callbacks when it is initialized. The servlet provides a table detailing every completed transaction on the server since registration. 
+
+
+Exception Propagation and Handling
+----------------------------------
+
+The principle of least privilege is an important design consideration in enhancing the protection of data and functionality from faults as well as breaches in security.
+
+
+Identification and Permission Management
+------------------------------------------
+
+-Without additional configuration, components are generated to perform at their minimal level of security following the principle of least privilege.  In other words, regardless of implementation, components are configured to access only the information and resources that are necessary for its legitimate purpose.  The user may then provide additional configuration (on a component by component basis) to specify the required keys and types of credentials for increased levels of permissions.
+
+
+Security Implementations
+
+
+Transport-Level Security
+------------------------
+
+http://docs.oracle.com/cd/E23943_01/web.1111/e13713/transport.htm
+Transport-level security refers to securing the connection between a client application and a Web service with Secure Sockets Layer (SSL).
+
+
+Runtime Menegement
+------------------
+
+Running in standard user mode gives customers increased protection against inadvertent system-level damage. Additional permissions may be configured on a principal by pricipal basis.
+
+
+The base level of access is considered the 
+
+
+
+	protected void iCallTheExternalService() {
+		HelloWorldProxy proxy = ProxyLocator.getInstance().get("theExternalService_PartnerLink");
+		this.outVar_sayHelloResponse = proxy.sayHello(this.inVar_sayHello);
+	}
+
+
+
+Logging
+-------
+
+any application that senses an error publishes an appropriate message, and the messages are displayed on a console by the logger daemon, which subscribes to the "errors" topic. If the logger happens to crash, publishers won't have any way to see this, and all the error messages will vanish. (It should be noted that in a client/server system, you still have the question of how the error generating clients would deal with the un-logged errors if an error logging server crashes. Adding redundant error logging servers to a client/server system adds code complexity and contact info maintenance tasks for each of the error generating applications. On the other hand, in a pub/sub system, adding a number of redundant logging subscribers requires no changes to any of the error publishers.)
+
+
+
+
+Assertions
+----------
+Configurable via external config file. 
+-Useful in order to observe the entire set on a per category basis
+-Dynamic runtime reconfiguration
+   Includes:
+        -error message
+        -exception type
+        -tolerance level
+        -enable/disable
+        -internal condition specification (not just simple enable/disable).  This is usable in verification runs where certin faults are forced i.e. injected into the run
+Programming by contract, enforcing contract
+-Pre-conditions, post-conditions
+-Can be individually identified
+-have ability to disable them individually or by groups
+-Can specifc
+Assertions are free of side effects.
+Assertions traditionally do not allow for recovery from errors; assertion failure will traditionally throw Exception and if not caught will halt the thread's execution abruptly possibly prematurally.
+Assertions also do not traditionally display user-friendly error messages.
+
+The idea is to provide a more rigorous basis for exception condition handling by defining precisely what is "normal" and "abnormal" behavior. Specifically, the approach is based on two concepts:
+
+
+
+Exception Handling
+------------------
+
+Not distinguishing between to-be-called (checked) exceptions and not-to-be-called (unchecked) exceptions makes the written program more convenient, but less robust, as an uncaught exception results in an abort with a stack trace.[25]
+
+Checked exceptions can, at compile time, reduce the incidence of unhandled exceptions surfacing at runtime in a given application; the unchecked exceptions (RuntimeExceptions and Errors in Java) remain unhandled.[citation needed]
+
+However, usage of checked exceptions can evolve into inappropriate coding: by requiring extensive throws declarations, revealing implementation details and reducing encapsulation, or encourage coding poorly considered try/catch blocks that can hide legitimate exceptions from their appropriate handlers.  Such problems can/will become unmnageable in a growing codebase.  For example, consider an interface declared to throw exceptions X & Y.  In a later version of the code, one wants to throw exception Z, it would make the new code incompatible with the earlier uses.  Furthermore, with the adapter pattern, where one body of code declares an interface that is implemented by a different body of code, so that code can be plugged in and called by the first, the adapter code may have a rich set of exceptions to describe problems, but is now forced to use the exception types declared in the interface.  This can be good or bad depending upon the implementation.  In short, the main point is that checked exceptions require additional specification and management.  The take-away is two-fold: 1) use checked exceptions only when necessary; 2) unchecked exceptions need some specifications and manageability.
+
+Using a minimal throws Exception declaration or catch (Exception e) is sufficient for satisfying the checking in Java. While this may have some use, it essentially circumvents the checked exception mechanism, being a coding choice discouraged by professional Java code designers.
+
+Unchecked exception types should not be handled except, with consideration, at the outermost levels of scope. These often represent scenarios that do not allow for recovery: RuntimeExceptions frequently reflect programming defects,[29] and Errors generally represent unrecoverable JVM failures. The view is that, even in a language that supports checked exceptions, there are cases where the use of checked exceptions is not appropriate.
+
+Properly distinguish between checked and unchecked exceptions and proper application of the usage of each.
+
+
+
+Packaging
+---------
+-Application EAR
+-Shared Library EAR

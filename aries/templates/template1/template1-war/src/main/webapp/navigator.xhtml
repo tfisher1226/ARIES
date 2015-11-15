@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:panel
+		width="300px" 
+		margin="10px">
+
+		<aries:label 
+			height="30px" 
+			value="Navigator"
+			marginLeft="8px"/>
+		
+		<aries:tabPane 
+			id="template1_contextNavigatorPane">
+
+			<aries:tab
+				label="Component List"
+				icon="/icons/common/Default16.gif">
+				
+				<aries:panel
+					width="300px" 
+					height="#{globals.screenHeight-200}px">
+				
+					<aries:formPane margin="10px"> 
+						<aries:label type="H5" value="Data Model" />
+
+						<br/>
+						<aries:bullet type="H6" value="admin.model" onclick="showSection('adminModelPane')" />
+
+						<br/>
+						<aries:indentPane> 
+							<aries:label type="H6" value="Elements" />
+							<aries:bullet type="H6" value="Permission" onclick="showSection('permissionElementPanel')" />
+							<aries:bullet type="H6" value="Preferences" onclick="showSection('preferencesElementPanel')" />
+							<aries:bullet type="H6" value="Role" onclick="showSection('roleElementPanel')" />
+							<aries:bullet type="H6" value="User" onclick="showSection('userElementPanel')" />
+						</aries:indentPane>
+						
+						<br/>
+						<aries:indentPane> 
+							<aries:label type="H6" value="Types" />
+							<aries:bullet type="H6" value="Capability" onclick="showSection('capabilityTypePanel')" />
+							<aries:bullet type="H6" value="RoleType" onclick="showSection('roleTypePanel')" />
+						</aries:indentPane>
+					</aries:formPane>
+				</aries:panel>
+			</aries:tab>
+		</aries:tabPane>
+	</aries:panel>
+</ui:composition>

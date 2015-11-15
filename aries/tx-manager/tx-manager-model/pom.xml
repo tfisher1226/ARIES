@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries</groupId>
+	<artifactId>tx-manager-model</artifactId>
+	<name>tx-manager-model</name>
+	<description>tx-manager-model</description>
+	<packaging>jar</packaging>
+
+	<parent>
+        <groupId>org.aries</groupId>
+		<artifactId>tx-manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+						<include>**/*.xml</include>
+						<include>**/*.properties</include>
+					</includes>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<specVersion>2.2</specVersion>
+							<forceRegenerate>true</forceRegenerate>
+							<schemaDirectory>${basedir}/src/main/resources/schema</schemaDirectory>
+							<generateDirectory>${basedir}/src/main/java</generateDirectory>
+							<schemaIncludes>
+								<!--  
+								<schemaInclude>envelope.xsd</schemaInclude>
+								<schemaInclude>ws-addr.xsd</schemaInclude>
+								<schemaInclude>wsat.xsd</schemaInclude>
+								<schemaInclude>wscoord.xsd</schemaInclude>
+								-->
+								<!-- sample application support -->
+								<schemaInclude>async_echo.xsd</schemaInclude>
+							</schemaIncludes>
+							<strict>true</strict>
+							<extension>true</extension>
+							<verbose>true</verbose>
+							<debug>false</debug>
+							<args>
+								<arg>-enableIntrospection</arg>
+							</args>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<delete file="src/main/java/JAXBDebug.java" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+	</dependencies>
+</project>

@@ -1,0 +1,54 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="userActivityGroupPanel">
+		<h:panelGroup rendered="true">
+		
+			<h:outputLabel styleClass="groupLabel text13" style="padding-top: 2px">Select Activity Group(s)</h:outputLabel>
+			<h:panelGroup styleClass="groupPanel" layout="block" style="margin-top: 4px; background-color: inherit">
+				<h:panelGrid styleClass="formPanel" layout="block" columns="1" columnClasses="formColumn" style="margin: 8px 2px">		
+
+					<h:panelGrid styleClass="formPanel" layout="block" columns="2" columnClasses="formColumn, formColumn" style="">
+							<h:selectManyCheckbox 
+								styleClass="formCheckbox" 
+								layout="pageDirection" 
+								value="#{activityGroupSelectManager.selectedActivityGroups1}" 
+								converter="activityGroupConverter"
+								style="width: 170px; padding-left: 4px">
+		
+								<s:selectItems 
+									var="activityGroup"  
+									value="#{activityGroups1}" 
+									hideNoSelectionLabel="true"
+									label="#{activityGroup}"/>
+							</h:selectManyCheckbox>
+			
+							<h:selectManyCheckbox 
+								styleClass="formCheckbox" 
+								layout="pageDirection" 
+								value="#{activityGroupSelectManager.selectedActivityGroups2}" 
+								converter="activityGroupConverter"
+								style="width: 200px; margin-left: 6px; padding-left: 4px">
+		
+								<s:selectItems 
+									var="activityGroup"  
+									value="#{activityGroups2}" 
+									hideNoSelectionLabel="true"
+									label="#{activityGroup}"/>
+							</h:selectManyCheckbox>
+					</h:panelGrid>
+				</h:panelGrid> 
+			</h:panelGroup>
+		</h:panelGroup>
+	</a4j:outputPanel>
+</ui:composition>

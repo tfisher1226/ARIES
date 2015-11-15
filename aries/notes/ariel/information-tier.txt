@@ -1,0 +1,12 @@
+
+
+Information Driven Collaborations
+
+An ARIES 'information' document allows one to define the information types to referenced and exchanged within a choreography that will influence the observable behavior of the collaborating participants.
+
+Participants make progress within a collaboration when acceptable pieces of information are exchanged information.  
+
+Information Types
+
+Information types describe the type of information used within a choreography. By introducing this abstraction, a Protocol definition avoids directly referencing the data types, as defined within a WSDL document or an XML Schema document.
+

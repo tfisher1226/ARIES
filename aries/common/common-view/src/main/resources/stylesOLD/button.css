@@ -1,0 +1,182 @@
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+}
+
+.plainButton,
+.plainButtonDisabled,
+.plainDialogButton,
+.plainDialogButtonDisabled {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 2px;
+	padding-right: 12px;
+	padding: 0px;
+}
+
+.smallDialogButton,
+.smallDialogButtonDisabled {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding: 0px;
+}
+
+.smallPlainDialogButton,
+.smallPlainDialogButtonDisabled {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 2px;
+	padding-right: 12px;
+	padding: 0px;
+}
+
+.button,
+.buttonDisabled,
+.dialogButton,
+.dialogButtonDisabled,
+.plainButton,
+.plainButtonDisabled,
+.plainDialogButton,
+.plainDialogButtonDisabled,
+.smallDialogButton,
+.smallDialogButtonDisabled,
+.smallPlainDialogButton,
+.smallPlainDialogButtonDisabled {
+	border: 1px solid #999;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #eee;
+	background-image: url('/aries/images/button-background.gif');
+}
+
+.button,
+.buttonDisabled,
+.plainButton,
+.plainButtonDisabled,
+.dialogButton,
+.dialogButtonDisabled,
+.plainDialogButton,
+.plainDialogButtonDisabled {
+}
+
+.smallDialogButton,
+.smallDialogButtonDisabled,
+.smallPlainDialogButton,
+.smallPlainDialogButtonDisabled {
+}
+
+.button:hover,
+.plainButton:hover,
+.dialogButton:hover,
+.plainDialogButton:hover,
+.smallDialogButton:hover,
+.smallPlainDialogButton:hover {
+	border: 1px solid #479ff9;
+	background-color: #ddd;
+	background-image: url('/aries/images/button-background-hover.gif');
+}
+
+.buttonDisabled,
+.plainButtonDisabled,
+.dialogButtonDisabled,
+.plainDialogButtonDisabled,
+.smallDialogButtonDisabled,
+.smallPlainDialogButtonDisabled {
+	border: 1px solid #ccc;
+	background-color: #f4f4f4;
+	background-image: url('/aries/images/button-background-disabled.gif');
+}
+
+.buttonLabel,
+.buttonLabelDisabled,
+.plainButtonLabel,
+.plainButtonLabelDisabled,
+.dialogButtonLabel,
+.dialogButtonLabelDisabled,
+.plainDialogButtonLabel,
+.plainDialogButtonLabelDisabled {
+	padding: 0px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #008;
+}
+
+.smallDialogButtonLabel,
+.smallDialogButtonLabelDisabled {
+	padding: 0px;
+	font-weight: normal;
+	text-decoration: none;
+	color: #008;
+}
+
+.buttonLabel,
+.buttonLabelDisabled,
+.plainButtonLabel,
+.plainButtonLabelDisabled {
+	font-size: 12px; 
+}
+
+.dialogButtonLabel,
+.dialogButtonLabelDisabled,
+.plainDialogButtonLabel,
+.plainDialogButtonLabelDisabled {
+	font-size: 11px; 
+}
+
+.smallDialogButtonLabel,
+.smallPlainDialogButtonLabel {
+	font-size: 10px; 
+}
+
+.buttonLabel:hover,
+.plainButtonLabel:hover,
+.dialogButtonLabel:hover,
+.plainDialogButtonLabel:hover,
+.smallDialogButtonLabel:hover {
+	text-decoration: none;
+	color: #00a;
+}
+
+.buttonLabelDisabled,
+.plainButtonLabelDisabled,
+.dialogButtonLabelDisabled,
+.plainDialogButtonLabelDisabled,
+.smallDialogButtonLabelDisabled {
+	font-weight: normal;
+	color: #999;
+}
+
+
+/*
+ * Remove gap between icon and label
+ */
+ 
+.dialogButton .rich-menu-item-icon,
+.dialogButton .rich-menu-group-icon,
+.smallDialogButton .rich-menu-item-icon,
+.smallDialogButton .rich-menu-group-icon {
+    width: 0px;
+	margin: 0px;
+	padding: 0px;  
+	padding-right: 6px;  
+}  
+
+.plainDialogButton .rich-menu-item-icon,
+.plainDialogButton .rich-menu-group-icon,
+.smallPlainDialogButton .rich-menu-item-icon,
+.smallPlainDialogButton .rich-menu-group-icon {
+    width: 0px;  
+	margin: 0px;
+	padding: 0px;  
+} 
+
+	

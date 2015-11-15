@@ -1,0 +1,24 @@
+"How do we convince people that in programming simplicity and clarity -- in short: what mathematicians call 'elegance' -- are not a dispensable luxury, but a crucial matter that decides between success and failure?"
+-- Edsger W. Dijkstra
+
+
+Underlying guideline or premise of object oriented methodology is that we don't add complexity unless it is needed.  We need to keep various implementation levels as simple as possible.
+
+Convenience methods should be left out of framework classes - put them into related util classes
+
+Any method of some class that is non-private *must* have at least one test for it.
+
+Program the method with Assert's where a simple message is included in each Assert.  The collection of Assert's in the method dictate what makes up the set of tests that *cover* the method.  If all Assert's within a method are exercised (tested against) then the first and primary level of test-coverage can be said to be complete.
+
+For a given method, the Developer therefore must focus his/her attention on making sure the set of Assert's is complete.   This is where human intervention is required. We are not yet at the point where *all* tests can be generated.  The Developer must inspect and make sure the testing of Assert's and the testing of various combinations of the Assert's is complete to satisfaction.
+
+The implementation of Assert's should be done at development time.  Development of tests can eb done after first level of tests are generated.  In short, Developer must follow this guideline and make Assertions part of required work basline deliverable.   
+
+
+Data Binding provides a flexible way of connecting a domain model with the User Interface. Change in the domain model and the user interface will be automatically synchronized.
+
+
+Other misc:
+
+Don't use overloading when it comes to EJB 3 lifecycle and interceptor methods
+

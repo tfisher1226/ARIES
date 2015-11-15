@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<wsdl:definitions 
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:intf="http://www.aries.com/demo/Theatre"
+	xmlns:impl="http://www.aries.com/demo/Theatre"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:apachesoap="http://xml.apache.org/xml-soap" 
+	targetNamespace="http://www.aries.com/demo/Theatre">
+
+	<wsdl:message name="bookSeatsRequest">
+		<wsdl:part name="how_many" type="xsd:int" />
+		<wsdl:part name="which_area" type="xsd:int" />
+	</wsdl:message>
+
+	<wsdl:message name="bookSeatsResponse">
+	</wsdl:message>
+
+	<wsdl:portType name="TheatrePortType">
+		<wsdl:operation name="bookSeats" parameterOrder="how_many which_area">
+			<wsdl:input name="bookSeatsRequest" message="intf:bookSeatsRequest" />
+			<wsdl:output name="bookSeatsResponse" message="intf:bookSeatsResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="TheatreServiceSoapBinding" type="intf:TheatrePortType">
+		<wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+
+		<wsdl:operation name="bookSeats">
+			<wsdlsoap:operation soapAction="" />
+
+			<wsdl:input name="bookSeatsRequest">
+				<wsdlsoap:body use="literal"
+					namespace="http://www.aries.com/demo/Theatre" />
+			</wsdl:input>
+
+			<wsdl:output name="bookSeatsResponse">
+				<wsdlsoap:body use="literal"
+					namespace="http://www.aries.com/demo/Theatre" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="TheatreService">
+		<wsdl:port name="TheatrePortType" binding="intf:TheatreServiceSoapBinding">
+			<wsdlsoap:address location="http://localhost:8084/tx-service/TheatreService/TheatrePortType" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

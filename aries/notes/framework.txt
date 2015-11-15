@@ -1,0 +1,94 @@
+Identification of Topics/Areas for discussion and specification
+--------------------------------------------------------------
+
+1) User-interface:
+-UI component hierarchy
+-UI inheritance hierarchy
+-UI validation methodology
+-Identification of common UI files/components
+-Method of usage of javascript and css
+    -common javascript methods and objects
+    -javascript integration interface with markup
+-Orgnization of backing beans
+-Naming conventions for all areas:
+       -markup components (xhtml components)
+       -backing beans
+
+
+2) Data model layer:
+-Identification of purpose/function/organization
+-Discussion of source format (i.e. java vs. xsd)
+-Introduction of JAXB and related benefits
+
+
+3) Data access layer:
+-Repository interface and function
+-DAO structure, function and organization
+-Application of schema (i.e. entity beans)
+    -Entity bean structure and organization
+-Mapping between model objects and data objects
+    -Implementation details with mapping objects
+-Identification of common frameworks/components
+
+
+4) Service breakdown:
+-Definition of a Service
+-Organization of a Service (parts/functions)
+-Structure of a Service (tier definition)
+-Methods of Intra-service communications
+-Identification of Eclipse project types
+-Structure of Eclipse project types
+
+
+5) Workflow breakdown:
+-Identification/specification of stages
+-Application of queueing among stages
+-Application of routing among stages
+
+
+6) Communications layer:
+-UI to backing bean communication
+-Internal intra-service communication
+-External (gateway) communication
+-Methods of enforcement of security
+
+
+7) Runtime environment:
+-Breakdown of runtime environment
+-Identification of executables
+-Specification of external properties
+    -Location of property files
+    -When and how properties are acquired
+    -Managing of versions of property files 
+    -Maintenance of property files
+-Method(s) of system deployment
+-Method(s) of system startup/shutdown
+-Identification of methods for logging
+
+
+8) Other areas:
+
+-Application of event propagation
+    -Integration of email notification
+    -Discussion of other forms of notification
+
+-Application of exception handling
+
+-Application of data caching
+    -Areas to apply caching
+    -Methods of caching
+
+-Application of transactions
+    -Transaction demarcation/lifetime
+    -Transaction characteristics (implementation details)
+    -Discussion of application within workflow stages
+
+-Application of testing
+    -Identification of areas to focus on tests
+    -Identification of types of tests
+        -Establishment of common framework/components
+    -Matchup of areas to test with types of tests
+
+-Service replication and failover...
+
+

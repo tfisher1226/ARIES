@@ -1,0 +1,32 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../main/config/ehcache.xsd">
+    <diskStore path="java.io.tmpdir/one"/>
+
+    <cacheManagerPeerProviderFactory
+         class="net.sf.ehcache.distribution.jgroups.JGroupsCacheManagerPeerProviderFactory"/>
+
+    <defaultCache
+            maxElementsInMemory="10"
+            eternal="false"
+            timeToIdleSeconds="100"
+            timeToLiveSeconds="100"
+            overflowToDisk="true">
+	<cacheEventListenerFactory
+		    class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+		        properties="replicateAsynchronously=true, replicatePuts=true,
+			replicateUpdates=true, replicateUpdatesViaCopy=false,
+			replicateRemovals=true" />
+    </defaultCache>
+
+
+	<cache name="sampleCache1"
+		   maxElementsInMemory="0"
+		   maxElementsOnDisk="0"
+		   eternal="true"
+		   copyOnWrite="false">
+		   <cacheEventListenerFactory
+			       class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"
+			           properties="replicateAsynchronously=true, replicatePuts=true,
+				   replicateUpdates=true, replicateUpdatesViaCopy=false,
+				   replicateRemovals=true" />
+	</cache>
+</ehcache>

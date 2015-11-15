@@ -1,0 +1,17 @@
+
+
+
+
+
+Generation of Code from Java
+
+-future establishment of templates
+
+-ground up approach 
+        -toward providing a thorough solution
+        -toward answering the following questions:
+          1) how to best generate code
+          1) how to best model the generation input
+
+
+We seek to answer the question, what does it mean to be protocol driven?

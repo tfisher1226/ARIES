@@ -1,0 +1,78 @@
+BASE_SKIN = "baseSkin";
+
+BUTTON_FAMILY_FONT = "buttonFamilyFont";
+BUTTON_SIZE_FONT = "buttonSizeFont";
+BUTTON_STYLE_FONT = "buttonStyleFont";
+BUTTON_WEIGHT_FONT = "buttonWeightFont";
+BUTTON_RADIUS_CORNER = "buttonRadiusCorner";
+
+CONTROL_BACKGROUND_COLOR = "controlBackgroundColor";
+CONTROL_BORDER_COLOR = "controlBorderColor";
+CONTROL_TEXT_COLOR = "controlTextColor";
+
+GENERAL_BACKGROUND_COLOR = "generalBackgroundColor";
+GENERAL_LINK_COLOR = "generalLinkColor";
+GENERAL_LINK_HOVER_COLOR = "hoverLinkColor";
+GENERAL_LINK_VISITED_COLOR = "visitedLinkColor";
+GENERAL_FAMILY_FONT = "generalFamilyFont";
+GENERAL_SIZE_FONT = "generalSizeFont";
+GENERAL_STYLE_SHEET = "generalStyleSheet";
+GENERAL_TEXT_COLOR = "generalTextColor";
+OVER_ALL_BACKGROUND = "overAllBackground";
+
+HEADER_BACKGROUND_COLOR = "headerBackgroundColor";
+HEADER_FAMILY_FONT = "headerFamilyFont";
+HEADER_GRADIENT_COLOR = "headerGradientColor";
+HEADER_SIZE_FONT = "headerSizeFont";
+HEADER_TEXT_COLOR = "headerTextColor";
+HEADER_FONT_WEIGHT = "headerWeightFont";
+
+PANEL_RADIUS_CORNER = "panelRadiusCorner";
+PANEL_TEXT_COLOR = "panelTextColor";
+PANEL_BORDER_COLOR = "panelBorderColor";
+SUB_BORDER_COLOR = "subBorderColor";
+
+SELECT_BACKGROUND_COLOR = "selectBackgroundColor";
+SELECT_CONTROL_COLOR = "selectControlColor";
+
+SHADOW_BACKGROUND_COLOR = "shadowBackgroundColor";
+SHADOW_OPACITY = "shadowOpacity";
+
+TABLE_BACKGROUND_COLOR = "tableBackgroundColor";
+TABLE_HEADER_BACKGROUND_COLOR = "tableHeaderBackgroundColor";
+TABLE_HEADER_TEXT_COLOR = "tableHeaderTextColor";
+TABLE_FOOTER_BACKGROUND_COLOR = "tableFooterBackgroundColor";
+TABLE_SUB_HEADER_BACKGROUND_COLOR = "tableSubHeaderBackgroundColor";
+TABLE_SUB_FOOTER_BACKGROUND_COLOR = "tableSubFooterBackgroundColor";
+TABLE_BORDER_COLOR = "tableBorderColor";
+TABLE_BORDER_WIDTH = "tableBorderWidth";
+
+ACTIVETAB_STYLE_FONT = "activetabStyleFont";
+ACTIVETAB_WEIGHT_FONT = "activetabWeightFont";
+TAB_FAMILY_FONT = "tabFamilyFont";
+TAB_RADIUS_CORNER = "tabRadiusCorner";
+TAB_SIZE_FONT = "tabSizeFont";
+TAB_STYLE_FONT = "tabStyleFont";
+TAB_WEIGHT_FONT = "tabWeightFont";
+TAB_BACKGROUND_COLOR = "tabBackgroundColor";
+DISABLED_TAB_STYLE_FONT = "disabledTabStyleFont";
+DISABLED_TAB_WEIGHT_FONT = "disabledTabWeightFont";
+DISABLED_TAB_TEXT_COLOR = "tabDisabledTextColor";
+
+TOOLTIP_TEXT_COLOR
+TOOLTIP_BACKGROUND_COLOR = "tipBackgroundColor";
+TOOLTIP_BORDER_COLOR = "tipBorderColor";
+
+EDIT_BACKGROUND_COLOR = "editBackgroundColor";
+EDITOR_BACKGROUND_COLOR = "editorBackgroundColor";
+EDITOR_MAIN_TEXT_COLOR = "editorMainTextColorColor";
+EDITOR_MAIN_BACKGROUND_COLOR = "editorMainBackgroundColor";
+
+GRADIENT_TYPE = "gradientType";
+TRIM_COLOR = "trimColor";
+ADDITIONAL_BACKGROUND_COLOR = "additionalBackgroundColor";
+EXTENDED_STYLE_SHEET = "extendedStyleSheet";
+INTERFACE_LEVEL_3D = "interfaceLevel3D";
+
+
+

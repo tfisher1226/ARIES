@@ -1,0 +1,41 @@
+Performance Considerations
+
+Those who want minimal application response-time variance (or minimizing GC pause times), will likely want all the cache to be off-heap. Assuming that 1GB of heap is needed for the rest of the app, they will set their Java config as follows:
+
+java -Xms1G -Xmx1G -XX:maxDirectMemorySize=7G
+
+And their Ehcache config as:
+
+<cache
+ maxEntriesLocalHeap=100
+ overflowToOffHeap="true"
+ maxBytesLocalOffHeap="6G"
+... />
+
+Direct Memory and Off-heap Memory Allocations
+----------------------------------------------------------------------
+
+To accommodate server communications layer requirements, the value of maxDirectMemorySize must be greater than the value of maxBytesLocalOffHeap. The exact amount greater depends upon the size of maxBytesLocalOffHeap. The minimum is 256MB, but if you allocate 1GB more to the maxDirectMemorySize, it will certainly be sufficient. The server will only use what it needs and the rest will remain available. 
+
+Those who want best possible performance for a hot set of data, while still reducing overall application repsonse time variance, will likely want a combination of on-heap and off-heap. The heap will be used for the hot set, the offheap for the rest. So, for example if the hot set is 1M items (or 1GB) of the 7GB data. They will set their Java config as follows
+
+java -Xms2G -Xmx2G -XX:maxDirectMemorySize=6G
+
+
+Relative Speeds
+-----------------------------------
+
+Ehcache comes with a MemoryStore and a DiskStore. The MemoryStore is approximately an order of magnitude faster than the DiskStore. The reason is that the DiskStore incurs the following extra overhead:
+
+    Serialization of the key and value
+    Eviction from the MemoryStore using an eviction algorithm
+    Reading from disk
+
+Note that writing to disk is not a synchronous performance overhead because it is handled by a separate thread.
+
+
+Always use some amount of Heap
+-----------------------------------
+
+For performance reasons, Ehcache should always use as much heap memory as possible without triggering GC pauses. Use BigMemory (the off-heap store) to hold the data that cannot fit in heap without causing GC pauses.
+

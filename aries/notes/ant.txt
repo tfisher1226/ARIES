@@ -1,0 +1,8 @@
+    <fileset dir="${src.dir}" id="src.files">
+      <include name="**/*.java"/>
+    </fileset>
+
+<pathconvert pathsep="," property="javafiles" refid="src.files"/>
+
+This example takes the set of files determined by the fileset (all files ending in .java), joins them together separated by commas, and places the resulting list into the property javafiles. The directory separator is not specified, so it defaults to the appropriate character for the current platform. Such a list could then be used in another task, like javadoc, that requires a comma separated list of files. 
+

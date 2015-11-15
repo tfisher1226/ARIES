@@ -1,0 +1,9 @@
+Goals of this talk:
+
+-Enterprise concepts are more and more applicable to common everyday systems
+
+-gain understanding of:
+    -distributed failure recovery
+    -basic concepts of WS-Coordination and WS-Transaction
+
+

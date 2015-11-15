@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns="http://www.aries.org/security/0.0.1" 
+	targetNamespace="http://www.aries.org/security/0.0.1">
+
+	<xs:annotation>
+		<xs:appinfo>
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.aries.security" />
+			</jaxb:schemaBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
+</xs:schema>
+

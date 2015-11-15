@@ -1,0 +1,36 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:form>
+	    <a4j:jsFunction name="renderUserPhoneNumberDialog" reRender="userPhoneNumberDialog" />
+	    <a4j:jsFunction name="showUserPhoneNumberDialog" reRender="userPhoneNumberDialog" oncomplete="Richfaces.showModalPanel('userPhoneNumberDialog')" />
+	    <a4j:jsFunction name="hideUserPhoneNumberDialog" reRender="userPhoneNumberDialog" oncomplete="Richfaces.hideModalPanel('userPhoneNumberDialog')" />
+	    <a4j:jsFunction name="renderUserPhoneNumberState" reRender="userPhoneNumberField" />
+	</a4j:form>
+	
+	<a4j:region renderRegionOnly="true">
+	
+		<aries:dialog 
+			dialogWidth="406"
+			dialogHeight="320"
+			dialogName="userPhoneNumberDialog"
+			dialogBean="#{phoneNumberManager}"
+			dialogAction="submit"
+			dialogRenderer="renderUserPhoneNumberState">
+			<h:panelGroup layout="block">
+
+				<ui:include src="userPhoneNumberPanel.xhtml"/>
+			</h:panelGroup>
+		</aries:dialog>
+	</a4j:region>
+</ui:composition>

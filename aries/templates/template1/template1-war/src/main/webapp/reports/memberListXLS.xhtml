@@ -1,0 +1,39 @@
+<e:workbook xmlns:e="http://jboss.com/products/seam/excel" xmlns:f="http://java.sun.com/jsf/core">
+	
+	<e:worksheet name="Member List" value="#{memberList.filteredModel}" var="memberRow" fitToPages="true" orientation="landscape">
+		
+		<e:header>
+			<f:facet name="Left">
+				Membership Name List
+			</f:facet>
+			<f:facet name="Right">
+				Generated on #date# at #time#
+			</f:facet>
+		</e:header>
+
+
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Division" style="xls-font: bold 10 Verdana" />
+			</f:facet>
+			<e:cell forceType="text"
+				value="#{memberRow.record.division.label}"/>
+		</e:column>
+
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Name" style="xls-font: bold 10 Verdana" />
+			</f:facet>
+			<e:cell forceType="text"
+				value="#{memberRow.record.lastName}, #{memberRow.record.firstName}"/>
+		</e:column>
+
+		<e:column style="xls-column-width: 5000">
+			<f:facet name="header">
+				<e:cell value="Home Phone" style="xls-font: bold 10 Verdana" />
+			</f:facet>
+			<e:cell forceType="text"
+				value="#{memberRow.record.homePhone}"/>
+		</e:column>
+	</e:worksheet>
+</e:workbook>

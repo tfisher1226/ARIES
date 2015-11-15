@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkpoints
+	xmlns="http://www.aries.org/validate/0.0.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.aries.org/validate/0.0.1 file:/workspace/ARIES/aries-validate/src/main/resources/schema/aries-validate-0.0.1.xsd">
+
+	<version>0.0.1</version>
+	<enabled>true</enabled>
+	
+	<checkpoint>
+		<condition>
+			<name>checkpoint1</name>
+			<type>notNull</type>
+			<exception>java.lang.RuntimeException</exception>
+			<message>Request not specified</message>
+		</condition>
+	</checkpoint>
+
+	<checkpoint>
+		<name>checkpoint2</name>
+		<condition>
+			<name>condition1</name>
+			<type>notNull</type>
+			<expression>$request</expression>
+			<message>Request not specified</message>
+		</condition>
+		<condition>
+			<name>condition2</name>
+			<type>notNull</type>
+			<expression>$request/input</expression>
+			<message>Request input not specified</message>
+		</condition>
+		<condition>
+			<name>condition3</name>
+			<type>notEmpty</type>
+			<expression>$request/input</expression>
+			<message>Request input empty</message>
+		</condition>
+	</checkpoint>
+
+	<checkpoint>
+		<condition>
+			<name>checkpoint3</name>
+			<type>isTrue</type>
+			<expression>$request/booleanField</expression>
+			<exception>java.lang.IllegalArgumentException</exception>
+			<message>Boolean field false</message>
+		</condition>
+	</checkpoint>
+
+	<checkpoint>
+		<name>checkpoint4</name>
+		<condition>
+			<type>isFalse</type>
+			<expression>$message/header/expired</expression>
+			<exception>java.net.ProtocolException</exception>
+			<message>Message expired</message>
+		</condition>
+		<condition>
+			<type>equals</type>
+			<expected>message1234</expected>
+			<expression>$message/header/messageId</expression>
+			<exception>java.lang.SecurityException</exception>
+			<message>Message expired</message>
+		</condition>
+	</checkpoint>
+</checkpoints>

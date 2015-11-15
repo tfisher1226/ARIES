@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:toolbar type="tab">
+		<aries:toolbarGroup location="left">
+			<a4j:outputPanel id="adminToolbarPanel">
+				<!--  
+				<h:outputLabel styleClass="text12" style="padding-left: 6px">#{admin.name}</h:outputLabel>
+		       	-->
+			</a4j:outputPanel>
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup location="right">
+			<aries:toolButton
+				ajaxSingle="true"
+				icon="resource://images/icons/common/CollapseAll16.gif"
+				tooltip="Click here to Collapse nodes"
+		   		manager="#{administrationTreeManager}" 
+		   		action="collapse" 
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this)"
+		   		reRender="administrationTreePanel"
+				linkClass="text16 link"/>
+				
+			<aries:toolButton
+				ajaxSingle="true"
+				icon="resource://images/icons/common/ExpandAll16.gif"
+				tooltip="Click here to Expand nodes"
+		   		manager="#{administrationTreeManager}" 
+		   		action="expand" 
+				onclick="setCursorWait(this)"
+				oncomplete="setCursorDefault(this)"
+		   		reRender="administrationTreePanel"
+				linkClass="text16 link"/>
+				
+			<aries:toolButton
+				ajaxSingle="true"
+				icon="resource://images/icons/common/Refresh16.gif"
+				tooltip="Re-read information from server"
+		   		manager="#{administrationTreeManager}" 
+		   		action="refresh" 
+				onclick="setCursorWait(this); showProgress('Administration Service', 'Refreshing Administration Information...')"
+				oncomplete="setCursorDefault(this); hideProgress()"
+		   		reRender="administrationTreePanel, detailView"
+				linkClass="text16 link"/>
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set workingDir = `pwd`
+. c:/workspace/AEROSPACE/aero/scripts/setenv
+cd $WORKSPACE/person-service; mvn -e -DskipTests=true tomcat:deploy;
+#cd $WORKSPACE/audit-service; mvn -e -DskipTests=true tomcat:deploy;
+cd $WORKSPACE/authorization-service; mvn -e -DskipTests=true tomcat:deploy;
+#cd $WORKSPACE/authentication-service; mvn -e -DskipTests=true tomcat:deploy;
+cd $WORKSPACE/approval-service; mvn -e -DskipTests=true tomcat:deploy;
+cd $WORKSPACE/justification-service; mvn -e -DskipTests=true tomcat:deploy;
+cd $WORKSPACE/icams-view; mvn -e -DskipTests=true tomcat:deploy;
+cd $workingDir

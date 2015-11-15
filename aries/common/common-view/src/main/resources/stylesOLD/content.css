@@ -1,0 +1,162 @@
+#header {
+}
+
+#footer {
+}
+
+#menubar {
+}
+
+#container {
+}
+
+#content {
+}
+
+.title,
+.subtitle,
+.navigation {
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+}
+
+.title {
+	padding-top: 20px;
+	font-size: 24px;
+}
+
+.title a {
+	text-decoration: none;
+}
+
+.subtitle {
+	font-size: 18px;
+}
+
+.navigation {
+	padding-top: 16px;
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.section {
+	width: auto;
+	text-align: left;
+}
+
+.panel {
+	width: 500px;
+	padding: 24px;
+	margin-top: 8px;
+	text-align: left;
+	border: 1px solid #C3BBB6;
+}
+
+#status {
+	float: right;
+	padding-right: 15px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: right;
+}
+
+.control {
+	clear: both;
+	padding: 8px;
+	text-align: right;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.break {
+	clear: both;
+}
+
+.icon {
+	padding-top: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.highlight {
+    background-color: #fcc;
+}
+
+.enabled {
+	color: #000;
+}
+
+.disabled {
+	color: #ddd;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+.noBorder {
+	border-width: 0px;
+}
+
+.plainText {
+	font-weight: normal;	
+	text-decoration: none;
+}
+
+.roundedCorners {
+	border: 1px solid #888;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.alignLeft { align: left; }
+.alignRight { align: right; }
+.alignCenter { align: center; }
+.alignTop { vertical-align: bottom; }
+.alignBottom { vertical-align: bottom; }
+.alignMiddle { vertical-align: bottom; }
+
+.width0 { width: 0px; }
+.width2 { width: 2px; }
+.width4 { width: 4px; }
+.width6 { width: 6px; }
+.width8 { width: 8px; }
+.width10 { width: 10px; }
+.width12 { width: 12px; }
+.width14 { width: 14px; }
+.width16 { width: 16px; }
+.width18 { width: 18px; }
+.width20 { width: 20px; }
+.width22 { width: 22px; }
+.width24 { width: 24px; }
+.width26 { width: 26px; }
+.width28 { width: 28px; }
+.width30 { width: 30px; }
+
+.height0 { height: 0px; }
+.height2 { height: 2px; }
+.height4 { height: 4px; }
+.height6 { height: 6px; }
+.height8 { height: 8px; }
+.height10 { height: 10px; }
+.height12 { height: 12px; }
+.height14 { height: 14px; }
+.height16 { height: 16px; }
+.height18 { height: 18px; }
+.height20 { height: 20px; }
+.height22 { height: 22px; }
+.height24 { height: 24px; }
+.height26 { height: 26px; }
+.height28 { height: 28px; }
+.height30 { height: 30px; }

@@ -1,0 +1,41 @@
+
+
+protocol TPC {
+    Role client; 
+    Role service; 
+    Role activation; 
+    Role registration; 
+    Role coordinator;
+    Role participant;
+    Role completionInitiator;
+    Role completionCoordinator;
+
+
+    begin() {
+        activate(application);
+        RegistrationRequest request = new RegistrationRequest();
+        RegistrationResponse response = registration.register(request);
+    }
+
+    request activate {
+        application-->activation() {
+            context:
+                execute register();            
+            timeout:            
+            error:            
+        }
+    }
+
+    request register {
+        application-->registration() {
+            
+        }
+    }
+
+    request enroll {
+        application-->registration() {
+            
+        }
+    }
+
+}

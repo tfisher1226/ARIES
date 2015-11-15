@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0" 
+	jaxb:version="2.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:security="http://www.aries.org/security" 
+	targetNamespace="http://www.aries.org/security">
+	
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="aries-common-1.0.xsd"/>
+	
+	<!--
+		User Info
+		********* 
+	 -->
+	
+	<xs:element name="users" type="security:Users" />
+	<xs:complexType name="Users">
+		<xs:sequence>
+			<xs:element name="record" type="security:User" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="user" type="security:User" />
+	<xs:complexType name="User">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="password" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAccount" type="common:EmailAccount" minOccurs="0" maxOccurs="1" />
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" maxOccurs="1" />
+			<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userPermissions" type="security:UserPermission" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="userPermission" type="security:UserPermission" />
+	<xs:complexType name="UserPermission">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="userGroups" type="security:UserGroup" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="userRoles" type="security:UserRole" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="userOperations" type="security:UserOperation" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="userGroup" type="security:UserGroup" />
+	<xs:complexType name="UserGroup">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1" />
+			<xs:element name="groupId" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="UserRole">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="USER" />
+			<xs:enumeration value="HOST" />
+			<xs:enumeration value="MANAGER" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="UserOperation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="PRINT" />
+			<xs:enumeration value="EMAIL" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--  	
+	<xs:element name="event" type="security:Event" />
+	<xs:complexType name="Event">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="userId" type="xs:string" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="organization" type="security:Organization" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="divisions" type="security:Division" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="subDivisions" type="security:SubDivision" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	-->
+</xs:schema>

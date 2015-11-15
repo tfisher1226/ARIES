@@ -1,0 +1,5 @@
+Follow this:
+http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Web_Platform/5/html/JBoss_WS_CXF_User_Guide/WS_RM_Messaging_Tutorial.html
+
+Follow this:
+http://maven.apache.org/plugins/maven-ear-plugin/

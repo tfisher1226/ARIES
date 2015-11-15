@@ -1,0 +1,26 @@
+Use Arquillion website as example for first page:
+http://arquillian.org
+
+1) intro
+2) Don't write another test until you study this one
+3) Earn your first Arquillian green bar!
+
+
+Use this as basis for another first page:
+http://www.jboss.org/arquillian.html
+
+
+Section: Guides
+---------------
+
+Getting Starting
+-provide subsections
+
+Creating executable applications
+Creating deployable archives
+
+Functional Testing
+Testing in the Cloud
+  -Deployment and execution in Amazon Elastic Cloud
+
+

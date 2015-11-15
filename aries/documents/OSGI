@@ -1,0 +1,38 @@
+OSGI overview
+
+OSGi is one of the most important technologies to have arisen in the last 20 years. This does not mean, however, that OSGi is a revolutionary technology. In fact, OSGi is important because it represents the logical next step in the long-term evolution of software development.
+
+To understand what I mean, let’s go back 20 to 30 years to the time when object oriented languages first became popular. One of the main reasons we adopted OO at that time was because it allowed us to hide many of the implementation details of our code.
+
+
+Where we’re headed
+
+Now imagine what it would be like if you could hide not only the methods within a class but entire sets of classes within a JAR. Imagine that JARs could define public contracts the same way classes do, and that these contracts would be enforced both during development and at runtime. Imagine that we could achieve all of the benefits of information hiding (managing complexity, code reuse, testability, refactoring, etc.) at an entirely new level.
+
+OSGi makes this possible by offering up the standard Java package as a new unit of information hiding. When our code is running inside of an OSGi framework, each package in a JAR can be either exposed or hidden from consumers of that JAR.
+
+Just as a class has a small set of public methods representing its contract with consumers, a modularized JAR (a bundle in OSGi terms) has a small set of exported packages representing its public contract. The bulk of our code lives in internal packages hidden from other JARs.
+
+Imagine being able to rename classes, split or combine classes, move classes from one package to another, move entire packages from one JAR to another, all without having to worry about impacting the consumers of a JAR. So many of these types of refactorings are skipped now out of fear. Package level information hiding gives us the confidence we need to perform these refactorings, allowing us to react with agility to the changing needs of our users.
+
+Modularity is inevitable
+
+Whether OSGi in particular succeeds or not, JAR level information hiding is inevitable. The benefits are simply too great to ignore, and in 5 or 10 years we’ll all be wondering how we could have possibly lived without it.
+
+Currently, OSGi is the only tool we have to accomplish this. Luckily for us it’s a well though-out, well tested, standards-based solution. I can’t think of one reason (besides perhaps its name) to develop an alternative to OSGi. It’s here. It works. Let’s use it.
+
+
+Why a Module System?
+
+Steve McConnell has a great quote that really gets at the heart of what OSGi is trying to achieve. In Code Complete, he writes: Software development has advanced in large part by increasing the granularity of the aggregations that we have to work with.
+
+Module systems provide version support for distributed bundles (where "bundle" goes way beyond "OSGi bundle".) Dependency hell is also an issue; lifecycle is also an issue.  These three things are imortant, versioning still hasn't made it into web services, EJB versioning is enforced via JNDI, but few use it (nobody in the wild that I know of), jar dependencies are managed normally with parallel jar deployments (except for JCA and WARs, both of which have different ways of managing dependencies).
+
+Java EE has solutions, although not necessarily good ones: WARs and JCA can contain jar files, EJB jars can refer to other jar files through their manifests, and of course app servers can provide a higher-level class repository; versioning is provided through JNDI as long as you're not using different versions of the same web app or web services. Lifecycle exists for webapps (load-on-startup servlets, context listeners) and JCA, but EJB 3.1 might have a lifecycle mechanism - it's not sure yet.
+
+OSGi and JSR-277 are attempts to standardize module deployments for Java, without forcing a Java EE mindset, and without Java EE's weaknesses regarding dependencies and versioning and - for that matter - lifecycle
+
+Effeciently stop and start a module while the application keeps running
+
+Effeciently allow multiple different versions of a module to be loaded at one time,
+

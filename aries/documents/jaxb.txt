@@ -1,0 +1,142 @@
+http://java.sun.com/webservices/docs/2.0/tutorial/doc/JAXBUsing4.html
+http://java.sun.com/javase/6/docs/technotes/tools/share/xjc.html
+http://download.oracle.com/docs/cd/B19306_01/appdev.102/b14252/adx_j_jaxb.htm
+
+
+Goal: 
+-highlight important features of JAXB2
+-describe areas of JAXB's application to Web Services
+
+Intro:
+-JAXB2 defines a standard Java/XML binding from Java representations to XML schema components and vice versa
+-JAXB2 tackles a very tough problem - both Java and XML schema are complex and expressive
+    -Implementing standard binding is a big and complex task - specification is 370+ pages
+
+Terms:
+Java/XML Map
+    -A set of Java/XML Mappings
+    -A given Java class may map to different schema types
+    -A Mapping takes place based on annotations to Java classes
+Java/XML Mapping
+    -The relationship between a Java program element and an XML schema component
+    -Can be expressed simply as a pair <J,X>
+    -Is implemented by a Serializer and a Deserializer
+    -Without serialization says nothing about implementation
+    -Critically important for a Web Services Platform Architecture
+Java/XML Binding
+    -A map from a specific Java element to a specific XML schema component
+    -Annotations on Java classes define the binding
+Java/XML Binding Tool
+     -Converts Java types to XML types according to a standard mapping
+     -Implements a standard way of converting Java to XML (and vice versa)
+     -Works with mappings based on one of two types of sources:
+         1) existing XML schema components resulting in generated Java elements ("Start from XML")
+         2) existing Java elements resulting in generated XML schema components ("Start from Java")
+     -Mappings always include either 1) generated Java, or 2) generated XML schema
+     -Mappings cover two different areas:
+         -Java instances to XML document elements
+         -Java classes to XML schema components
+Java/XML Mapping Tool
+     -Mappings involve both existing Java elements and existing XML schema definitions
+     -In a true mapping tool:
+         1) mappings are defined separately from the schema and from Java
+             -so at runtime one can change the mappings
+         2) multiple mappings may be supported at runtime
+             (impossible in JAXB because a Java class may have only one set of annotations)
+     -An example of a true mapping tool is Castor
+         -can do both binding and mapping
+         -keys off external mapping files (rather than annotations)
+     -Another mapping tool (experiemtal) is ASF included in SOAJ
+     -Many programmers prefer binding tools as opposed to mapping tools
+           -relieves programmers from having to do tedious work
+
+Schema Compiler
+
+Schema Generator
+
+
+JAXB2
+    -A binding tool than a mapping tool, because:
+        -mappings are defined by annotations in Java (i.e tightly coupled with Java)
+            -cannot support multiple mappings at runtime (only one set of annotations!)
+        -mappings are static in that they cannot be changed at runtime
+    -Lots of mappings exist that cannot be supported without using XmlAdapter
+
+JAXB2 Annotations
+
+JAXB2 Binding Language
+
+
+Binding vs. Mapping
+    -Binding involves schema compiler and schema generator
+    -Binding tools are easy to work with - you don't have to define mappings
+        -One can use a Schema Compiler or a Schema Generator to do it
+        -Relieves programmers from having to do tedious work
+
+
+Relationship between Binding and Mapping
+
+
+Anonymous Type
+    -An XML schema element that has an empty name attribute i.e. name=""
+         -in other words it has no defined name, the global element name is defined elsewhere
+
+
+
+JAXB2 Limitations
+    -JAXB2 has limitations on the type mappings it can support
+    -Limited to type mappings that can be produced by a Schema Compiler or a Schema Generator
+        -i.e. the standard JAXB2 Java/XML mappings and customizations that can be expressed in:
+           the annotations or the JAXB2 Binding Language
+        -lots of mappings exist that cannot be supported without using XmlAdapter
+    -Where does that leave us?  Type mappings are critically central to Web Services...
+    -Does it mean the JAXWS Web Service Platform is not well-suited for SOA?
+         -No. It just means we need to use some programming constructs and techniques
+             to appropriately deal with the limitations 
+    -JAXWS is a toolset and JAXB is the binding tool with that toolset
+    -To implement SOA requires additional constructs, techniques and practices layered on toop of JAXWS/JAXB (TODO provide notes on these...)
+    -Overall, JAXB2 is an excellant binding tool and good foundation for implementing type mappings
+
+Application specific techniques for implementing type mappings in JAXB2
+    1) Use JAXB2 Annotations to influence schema generation to obtain desired schema
+    2) Use JAXB2 Binding Language to influence schema compilation to obtain Java classes
+    3) Use JAXB2 XmlAdapter to implement custom marshalling from existing Java to existing XML
+    4) Use custom Java code to map from existing Java elements to JAXB generated Java elements
+        and then use JAXB2 marshalling to create XML schema components / XML document elements 
+
+
+
+A single Namespace gets mapped to a single Java package (and vice versa)
+    -In Java, may be specified using the @XmlSchema.namespace annotation
+    -In XML schema, may be specified using the jaxb:package declaration
+
+
+JAXB2 Annotations
+
+@XmlRootElement
+    -Tells JAXB2 runtime that a particular Java class maps to a global XML schema element definition
+
+@XmlElement
+    -Tells JAXB2 runtime that a particular property or field maps to an XML schema element
+    -Maps a single field in a Java class to a corresponding XML schema element
+
+@XmlAccessorType
+    -Tells JAXB runtime what parts of a Java class (fields) get mapped by default
+
+@XmlType
+    -Tells JAXB runtime which schema type to map a class to 
+    -May also specify parrticular aspects of the mapping
+    -attributes: name and propOrder 
+
+
+JAXB2 XML Schema Declarations
+
+jaxb:package
+jaxb:globalBindings
+    localScoping="topLevel"
+
+
+
+
+Notes: 
+-For entities it is easier and more straight forward to edit entities grouped together in schema files rather than edit entities by editing (and maintaining) a single Java file per entity

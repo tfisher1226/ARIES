@@ -1,0 +1,33 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<h:panelGroup layout="block">
+		<div class="groupLabel">File Upload</div>
+		<h:panelGrid styleClass="groupPanel" layout="block" columns="2">
+			<rich:fileUpload 
+				id="#{key}UploadField"
+				immediateUpload="true" 
+				acceptedTypes="xml"
+				listWidth="400" 
+				listHeight="56"
+				addControlLabel="Browse for file to upload..."
+  				doneLabel="File has been uploaded"
+				maxFilesQuantity="#{uploadManager.fileCount}"
+				fileUploadListener="#{uploadManager.uploadListener}"
+				onupload="showProgress('File Upload', 'Uploading file...')">
+				<a4j:support event="onuploadcomplete" onsubmit="hideProgress()" reRender="#{key}UploadControl" />
+				<f:facet name="label">
+					<h:outputText value="{_KB}KB from {KB}KB uploaded - {mm}:{ss}"/>
+				</f:facet>
+			</rich:fileUpload> 
+		</h:panelGrid>
+	</h:panelGroup>
+</ui:composition>

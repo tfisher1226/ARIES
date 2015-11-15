@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-web>
+	<context-root>/infosgi-service</context-root>
+
+    <!-- 
+    Use the JaasSecurityMgr other security domain for 
+    authentication and authorization of secured web content.
+    <security-domain>java:/jaas/other</security-domain>
+	<security-domain>java:/jaas/appfuse</security-domain>
+     -->
+
+	<!--  
+	<resource-ref>
+		<res-ref-name>jdbc/mysql</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<jndi-name>java:jdbc/mysql</jndi-name>
+	</resource-ref>
+	<depends>jboss:service=Timer</depends>
+	-->
+
+	<class-loading>
+		<loader-repository>sgiusa.org:loader=infosgi-service
+			<loader-repository-config>java2ParentDelegation=false</loader-repository-config>
+		</loader-repository>
+	</class-loading>
+</jboss-web>

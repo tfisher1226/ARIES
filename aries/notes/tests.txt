@@ -1,0 +1,241 @@
+Unit testing integrated into the modeling-development cycle 
+ 
+One of the key principles of unit testing is that you should always write your tests first.  Enterprise 
+Architect helps you to do this.  When you add a new method to a class, run the test case 
+transformation on the class.  Enterprise Architect creates a corresponding test method that you can 
+generate and fill in the details.  This can easily be done before the code you are testing has been 
+created.
+
+In addition to the integrated JUnit and NUnit testing capabilities, Enterprise Architect also enables 
+you to attach arbitrarily complex tests to any model element. Keeping the model elements and the 
+testing documentation in one integrated model significantly improves the communication between 
+the test-team and the software developers and architects. Again, the detailed search facilities make it 
+easy to find failing test cases, test cases not run and tests cases that have been passed. Using the 
+testing and search capabilities, it is easy to navigate through the model and quickly locate problem 
+spots, design flaws and other critical issues. Enterprise Architect is not only a UML Modeling 
+environment; it is also a complete Test Management environment.
+
+
+Types of Tests
+--------------
+
+Unit Tests
+    * run before package
+    * want 100% success before moving on generally
+
+Integration Tests
+    * require the artifact, so run after package but before install.
+    * generally want 100% before moving on.
+    * May use junit or other plugin like cactus, including deploying to a server
+
+Acceptance Tests
+    * also called functional or regression tests.
+    * not run every time, probably a report and/or part of a profile.
+    * run after install, before deploy
+    * Regression tests (acceptance tests from previous milestones) should be at 100%
+    * acceptance (also called functional) tests only need to get to 100% at release time.
+    * performance/stress tests - another form of acceptance test.
+
+
+
+Integration Testing:
+--------------------
+
+http://docs.codehaus.org/display/MAVENUSER/Maven+and+Integration+Testing
+
+Integration and Functional Testing with Maven 2.0
+Put your Integration tests in a separate module
+
+Better Builds With Maven describes a single example module containing only integration tests. In the case of a multi-module "reactor" project, where each module may need some integration testing, you have some choices available to you.
+Create Multiple Integration Test POMs
+
+You can, if you wish, create multiple integration test modules, one for each source module in your project. For example, if you've got two child projects "foo" and "bar", you could create a "foo-integration-test" module and a "bar-integration-test" module to test "foo" and "bar" respectively.
+
+The advantage of doing it this way is that it's very clear which integration tests belong to which project. It's also easy for project owners to know which integration tests they're responsible for. The big drawback here is that you've just doubled the number of POM files in your reactor, which can be difficult to manage. Each project will need to be separately referenced in the root POM.
+Put all Integration Tests into One Big Module
+
+This is obviously much simpler to wire up in a POM file; simplicity is a virtue in project management.
+
+The disadvantage of doing it this way is that it tends to separate the integration tests from the code they're attempting to test. As a result, you may find that no one "owns" the integration tests; typically you'll have some one person whose job it is to analyze the integration tests and find bugs. QA is hard, but it's even harder when it's unclear who "owns" test failures.
+Alternatives to Isolating the Integration Tests
+
+If for some reason you can't put the integration tests in a separate module, here are some ideas.
+Integration Tests Only
+
+If you have only integration tests in the same module as your webapp, you can configure Surefire to skip the test phase, then run in the integration-test phase. See this page.
+Both Unit and Integration Tests in the Same Module
+
+If you need to run both unit and integration tests in the same module, it's possible, just not very pretty.
+
+There is only one testSourceDirectory per module, so all of your test classes must reside in one directory structure, usually src/test/java.
+
+In the 'test' phase, configure Surefire to exclude the tests in (for example) **/systest/**.
+
+Bind another execution of maven-surefire-plugin to the integration-test phase, and reverse the exclusion pattern.
+
+You can see an example of this in the Shale Usecases example app pom.xml file.
+Using the Maven Failsafe Plugin to run Integration Tests
+
+The Maven Failsafe Plugin is a fork of the Maven Surefire Plugin designed to help when running integration tests.
+
+If you use this approach, you keep all your tests for a module in the testSourceDirectory, e.g. src/test/java. By default the Failsafe Maven Plugin looks for integration tests matching the patterns */IT.java, **/IT.java and */*ITCase.java.  You will notice that these bindings do not overlap with the default surefire bindings.  To use the Maven Failsafe Plugin you need to add the following to your pom.xml file.
+
+<project>
+  [...]
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+  [...]
+</project>
+
+You will then have the following lifecycle bindings
+Phase                Plugin execution goal
+test                 surefire:test
+integration-test 	 failsafe:integration-test
+verify               failsafe:verify 
+
+The advantage to using the Maven Failsafe Plugin is that it will not stop the build during the integration-test phase if there are test failures.  The recommendation is that you do not directly invoke the pre-integration-test, integration-test or post-integration-test phases but that instead you run integration tests by specifying the verify phase, e.g.
+
+mvn verify
+
+This allows you to set-up your integration test environment during the pre-integration-test phase, run your integration tests during the integration-test phase, cleanly tear-down your integration test environment during the post-integration-test phase before finally checking the integration test results and failing the build if necessary. Here is an example using jetty for hosting an integration test environment:
+
+The Future
+
+Rumor has it that a future version of Maven will support something like src/it/java in the integration-test phase, in addition to src/test/java in the test phase.
+
+
+
+Persistence Layer Testing
+-----------------------------------
+
+Keep two copies of persistence.xml file. One for testing and another for normal build.
+
+Can also proceed without using persistence.xml. The advantage is that the maven build and the Eclipse JUnit test will work without modifications.
+
+public class PersistenceTestSupport {
+
+    protected EntityManager em;
+    protected EntityTransaction et;
+
+    /**
+     * Setup the the {@code EntityManager} and {@code EntityTransaction} for
+     * local junit testing.
+     */
+    public void setup() {
+
+        Properties props = new Properties();
+        props.put("hibernate.hbm2ddl.auto", "create-drop");
+        props.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        props.put("hibernate.connection.url", "jdbc:mysql://localhost/db_name");
+        props.put("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+        props.put("hibernate.connection.username", "user");
+        props.put("hibernate.connection.password", "****");
+
+        Ejb3Configuration cfg = new Ejb3Configuration();
+        em = cfg.addProperties(props)
+            .addAnnotatedClass(Class1.class)
+            .addAnnotatedClass(Class2.class)
+            .addAnnotatedClass(Classn.class)
+            .buildEntityManagerFactory()
+            .createEntityManager();
+
+        et = em.getTransaction();
+    }
+}
+
+Also can proceed to use a custom class loader to do something similar to redirect the running application to use a "test-specific" persistence.xml file. For normal deployment, container injection is used, but for testing use a different "custom" ClassLoader.
+
+Thread currentThread = Thread.currentThread();
+ClassLoader saveClassLoader = currentThread.getContextClassLoader();
+currentThread.setContextClassLoader(new ClassLoaderProxy(saveClassLoader));
+
+EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("test");
+em = emFactory.createEntityManager();
+
+and,
+
+public class ClassLoaderProxy extends ClassLoader {
+
+        public ClassLoaderProxy(final ClassLoader parent) {
+                super();
+        }
+
+        @Override
+        public Enumeration<URL> getResources(final String name) throws IOException {
+                if (!"META-INF/persistence.xml".equals(name)) {
+                        return super.getResources(name);
+                } else {
+                        System.out.println("Redirecting persistence.xml to test-persist.xml");
+                        return super.getResources("META-INF/test-persist.xml");
+                }
+        }
+}
+
+
+1) There are two persistence.xml files (one named persistence.xml that is used outside testing and one named test-persist.xml that is used for tests).
+2) The custom class loader is only active for unit tests (for deployment everything is normal)
+3) The custom class loader redirects requests for "META-INF/persistence.xml" to the test version ("META-INF/test-persist.xml").
+
+
+Another approach is to use a separate persistence.xml for testing (test/../META-INF/persistence.xml but override the Scanner as follows: -
+
+testing persistence.xml needs to contain
+
+<property name="hibernate.ejb.resource_scanner" value = "...TestScanner" />
+
+Code for new class TestScanner is as follows.
+
+import java.lang.annotation.Annotation;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Set;
+import org.hibernate.ejb.packaging.NamedInputStream;
+import org.hibernate.ejb.packaging.NativeScanner;
+
+
+public class TestScanner extends NativeScanner
+{
+
+@Override
+public Set <Class <?> > 
+getClassesInJar (URL jar, Set <Class <? extends Annotation> > annotations)
+{  return super.getClassesInJar (getUpdatedURL (jar), annotations); }
+
+@Override
+public Set <NamedInputStream> 
+getFilesInJar (URL jar, Set <String> patterns)
+{  return super.getFilesInJar (getUpdatedURL (jar), patterns); }
+
+@Override
+public Set <Package> 
+getPackagesInJar (URL jar, Set <Class <? extends Annotation> > annotations)
+{  return super.getPackagesInJar (getUpdatedURL (jar), annotations); }
+
+private URL getUpdatedURL (URL url)
+{
+  String oldURL = url.toExternalForm ();
+  String newURL = oldURL.replaceAll ("test-classes", "classes");
+  URL result;
+  try {
+    result = newURL.equals (oldURL) ? url : new URL (newURL);
+  } catch (MalformedURLException e)
+  {  // Whatever  }
+  return result;
+}
+
+}
+

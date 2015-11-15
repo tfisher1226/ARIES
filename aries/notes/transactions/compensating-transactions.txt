@@ -1,0 +1,1595 @@
+Hiearchical dependencies among transactions
+
+There are no special constructs for the sequencing or hierarchical structuring of transactions.  If an action is begun while another action is running then it is hierarchically related and dependent upon the current transaction... 
+
+This allows for a modular structure to applications, whereby objects can be implemented using atomic actions within their operations without the application programmer having to worry about the applications which use them, and whether or not the applications will use atomic actions as well. Thus, in some applications actions may be top-level, whereas in others they may be nested. Objects written in this way can then be shared between application programmers, and TxCore will guarantee their consistency.
+
+If a nested action is aborted, all of its work will be undone, although strict two-phase locking means that any locks it may have obtained will be retained until the top-level action commits or aborts. If a nested action commits then the work it has performed will only be committed by the system if the top-level action commits. If the top-level action aborts then all of the work will be undone.
+
+The committing or aborting of a nested action does not automatically affect the outcome of the action within which it is nested. This is application dependent, and allows a programmer to structure atomic actions to contain faults, undo work, etc. 
+
+
+Asynchronously committing a transaction
+
+By default, the Transaction Service executes the commit protocol of a top-level transaction in a synchronous manner. All registered resources will be told to prepare in order by a single thread, and then they will be told to commit or rollback. This has several possible disadvantages:
+
+    In the case of many registered resources, the prepare operating can logically be invoked in parallel on each resource. The disadvantage is that if an “early” resource in the list of registered resource forces a rollback during prepare, possibly many prepare operations will have been made needlessly.
+
+    In the case where heuristic reporting is not required by the application, the second phase of the commit protocol can be done asynchronously, since its success or failure is not important. 
+
+Therefore, JBoss Transaction Service provides runtime options to enable possible threading optimizations. By setting the CoordinatorEnvironmentBean.asyncPrepare environment variable to YES, during the prepare phase a separate thread will be created for each registered participant within the transaction. By setting CoordinatorEnvironmentBean.asyncCommit to YES, a separate thread will be created to complete the second phase of the transaction if knowledge about heuristics outcomes is not required.
+4.4. Independent top-level transactions
+
+In addition to normal top-level and nested atomic actions, TxCore also supports independent top-level actions, which can be used to relax strict serializability in a controlled manner. An independent top-level action can be executed from anywhere within another atomic action and behaves exactly like a normal top-level action. Its results are made permanent when it commits and will not be undone if any of the actions within which it was originally nested abort.
+Independent Top-Level Action
+
+Figure 4.1. Independent Top-Level Action
+
+Top-level actions can be used within an application by declaring and using instances of the class TopLevelTransaction. They are used in exactly the same way as other transactions. 
+
+
+Transactions within save_state and restore_state methods
+
+Exercise caution when writing the save_state and restore_state operations to ensure that no atomic actions are started, either explicitly in the operation or implicitly through use of some other operation. This restriction arises due to the fact that TxCore may invoke restore_state as part of its commit processing resulting in the attempt to execute an atomic action during the commit or abort phase of another action. This might violate the atomicity properties of the action being committed or aborted and is thus discouraged.
+
+Example 4.2. 
+
+If we consider the Example 3.7, “Array Class” given previously, the set and get operations could be implemented as shown below.
+
+This is a simplification of the code, ignoring error conditions and exceptions.
+
+public boolean set (int index, int value)
+
+{
+
+   boolean result = false;
+
+   AtomicAction A = new AtomicAction();
+
+
+   A.begin();
+
+
+   // We need to set a WRITE lock as we want to modify the state.
+
+
+   if (setlock(new Lock(LockMode.WRITE), 0) == LockResult.GRANTED)
+
+   {
+
+      elements[index] = value;
+
+      if ((value > 0) &&(index > highestIndex
+
+         highestIndex = index;
+
+      A.commit(true);
+
+      result = true;
+
+   }
+
+   else
+
+      A.rollback();
+
+
+   return result;
+
+}
+
+public int get (int index)  // assume -1 means error
+
+{
+
+   AtomicAction A = new AtomicAction();
+
+
+   A.begin();
+
+
+   // We only need a READ lock as the state is unchanged.
+
+
+   if (setlock(new Lock(LockMode.READ), 0) == LockResult.GRANTED)
+
+   {
+
+      A.commit(true);
+
+
+             return elements[index];
+
+   }
+
+   else
+
+      A.rollback();
+
+
+   return -1;
+
+}
+
+
+4.6. Garbage collecting objects
+
+Java objects are deleted when the garbage collector determines that they are no longer required. Deleting an object that is currently under the control of a transaction must be approached with caution since if the object is being manipulated within a transaction its fate is effectively determined by the transaction. Therefore, regardless of the references to a transactional object maintained by an application, TxCore will always retain its own references to ensure that the object is not garbage collected until after any transaction has terminated.
+4.7. Transaction timeouts
+
+By default, transactions live until they are terminated by the application that created them or a failure occurs. However, it is possible to set a timeout (in seconds) on a per-transaction basis such that if the transaction has not terminated before the timeout expires it will be automatically rolled back.
+
+In TxCore, the timeout value is provided as a parameter to the AtomicAction constructor. If a value of AtomicAction.NO_TIMEOUT is provided (the default) then the transaction will not be automatically timed out. Any other positive value is assumed to be the timeout for the transaction (in seconds). A value of zero is taken to be a global default timeout, which can be provided by the property CoordinatorEnvironmentBean.defaultTimeout, which has a default value of 60 seconds.
+Note
+
+Default timeout values for other JBoss Transaction Service components, such as JTS, may be different and you should consult the relevant documentation to be sure.
+
+When a top-level transaction is created with a non-zero timeout, it is subject to being rolled back if it has not completed within the specified number of seconds. JBoss Transaction Service uses a separate reaper thread which monitors all locally created transactions, and forces them to roll back if their timeouts elapse. If the transaction cannot be rolled back at that point, the reaper will force it into a rollback-only state so that it will eventually be rolled back.
+
+By default this thread is dynamically scheduled to awake according to the timeout values for any transactions created, ensuring the most timely termination of transactions. It may alternatively be configured to awake at a fixed interval, which can reduce overhead at the cost of less accurate rollback timing. For periodic operation, change the CoordinatorEnvironmentBean.txReaperMode property from its default value of DYNAMIC to PERIODIC and set the interval between runs, in milliseconds, using the property CoordinatorEnvironmentBean.txReaperTimeout. The default interval in PERIODIC mode is 120000 milliseconds.
+Warning
+
+In earlier versions the PERIODIC mode was known as NORMAL and was the default behavior. The use of the configuration value NORMAL is deprecated and PERIODIC should be used instead if the old scheduling behavior is still required.
+
+If a value of 0 is specified for the timeout of a top-level transaction, or no timeout is specified, then JBoss Transaction Service will not impose any timeout on the transaction, and the transaction will be allowed to run indefinitely. This default timeout can be overridden by setting the CoordinatorEnvironmentBean.defaultTimeout property variable when using to the required timeout value in seconds, when using ArjunaCore, ArjunaJTA or ArjunaJTS.
+Note
+
+As of JBoss Transaction Service 4.5, transaction timeouts have been unified across all transaction components and are controlled by ArjunaCore.
+4.7.1. Monitoring transaction timeouts
+
+If you want to be informed when a transaction is rolled back or forced into a rollback-only mode by the reaper, you can create a class that inherits from class com.arjuna.ats.arjuna.coordinator.listener.ReaperMonitor and overrides the rolledBack and markedRollbackOnly methods. When registered with the reaper via the TransactionReaper.addListener method, the reaper will invoke one of these methods depending upon how it tries to terminate the transaction.
+Note
+
+The reaper will not inform you if the transaction is terminated (committed or rolled back) outside of its control, such as by the application. 
+
+
+Hints and tips
+
+5.1. General
+
+    5.1.1. Using transactions in constructors
+    5.1.2. save_state and restore_state methods
+
+5.2. Direct use of StateManager
+
+5.1. General
+5.1.1. Using transactions in constructors
+
+Examples throughout this manual use transactions in the implementation of constructors for new persistent objects. This is deliberate because it guarantees correct propagation of the state of the object to the object store. The state of a modified persistent object is only written to the object store when the top-level transaction commits. Thus, if the constructor transaction is top-level and it commits, the newly-created object is written to the store and becomes available immediately. If, however, the constructor transaction commits but is nested because another transaction that was started prior to object creation is running, the state is written only if all of the parent transactions commit.
+
+On the other hand, if the constructor does not use transactions, inconsistencies in the system can arise. For example, if no transaction is active when the object is created, its state is not saved to the store until the next time the object is modified under the control of some transaction.
+
+Example 5.1. Nested Transactions In Constructors
+
+AtomicAction A = new AtomicAction();
+
+Object obj1;
+
+Object obj2;
+
+
+obj1 = new Object();       // create new object
+
+obj2 = new Object("old");     // existing object
+
+
+A.begin(0);
+
+obj2.remember(obj1.get_uid());   // obj2 now contains reference to obj1
+
+A.commit(true);            // obj2 saved but obj1 is not
+
+
+The two objects are created outside of the control of the top-level action A. obj1 is a new object. obj2 is an old existing object. When the remember operation of obj2 is invoked, the object will be activated and the Uid of obj1 remembered. Since this action commits, the persistent state of obj2 may now contain the Uid of obj1. However, the state of obj1 itself has not been saved since it has not been manipulated under the control of any action. In fact, unless it is modified under the control of an action later in the application, it will never be saved. If, however, the constructor had used an atomic action, the state of obj1 would have automatically been saved at the time it was constructed and this inconsistency could not arise.
+5.1.2. save_state and restore_state methods
+
+TxCore may invoke the user-defined save_state operation of an object at any time during the lifetime of an object, including during the execution of the body of the object’s constructor. This is particularly a possibility if it uses atomic actions. It is important, therefore, that all of the variables saved by save_state are correctly initialized. Exercise caution when writing the save_state and restore_state operations, to ensure that no transactions are started, either explicitly in the operation, or implicitly through use of some other operation. The reason for this restriction is that TxCore may invoke restore_state as part of its commit processing. This would result in the attempt to execute an atomic transaction during the commit or abort phase of another transaction. This might violate the atomicity properties of the transaction being committed or aborted, and is thus discouraged. In order to support crash recovery for persistent objects, all save_state and restore_state methods of user objects must call super.save_state and super.restore_state.
+5.1.2.1. Packing objects
+
+All of the basic types of Java (int, long, etc.) can be saved and restored from an InputObjectState or OutputObjectState instance by using the pack and unpack routines provided by InputObjectState and OutputObjectState. However packing and unpacking objects should be handled differently. This is because packing objects brings in the additional problems of aliasing. Aliasing happens when two different object references may point at the same item. For example:
+
+Example 5.2. Aliasing
+
+public class Test
+
+{
+
+    public  Test (String s);
+
+    ...
+
+        private String s1;
+
+    private String s2;
+
+};
+
+
+public Test (String s)
+
+{
+
+    s1 = s;
+
+    s2 = s;
+
+}
+
+
+Here, both s1 and s2 point at the same string. A naive implementation of save_state might copy the string twice. From a save_state perspective this is simply inefficient. However, restore_state would unpack the two strings into different areas of memory, destroying the original aliasing information. The current version of TxCore packs and unpacks separate object references.
+5.2. Direct use of StateManager
+
+The examples throughout this manual derive user classes from LockManager. These are two important reasons for this.
+
+    Firstly, and most importantly, the serializability constraints of atomic actions require it.
+
+    It reduces the need for programmer intervention. 
+
+However, if you only require access to TxCore's persistence and recovery mechanisms, direct derivation of a user class from StateManager is possible.
+
+Classes derived directly from StateManager must make use of its state management mechanisms explicitly. These interactions are normally undertaken by LockManager. From a programmer's point of view this amounts to making appropriate use of the operations activate, deactivate, and modified, since StateManager's constructors are effectively identical to those of LockManager.
+
+Example 5.3. activate
+
+boolean activate ()
+
+boolean activate (String storeRoot)
+
+Activate loads an object from the object store. The object’s UID must already have been set via the constructor and the object must exist in the store. If the object is successfully read then restore_state is called to build the object in memory. Activate is idempotent so that once an object has been activated further calls are ignored. The parameter represents the root name of the object store to search for the object. A value of null means use the default store.
+
+Example 5.4. deactivate
+
+boolean deactivate ()
+
+boolean deactivate (String storeRoot)
+
+The inverse of activate. First calls save_state to build the compacted image of the object which is then saved in the object store. Objects are only saved if they have been modified since they were activated. The parameter represents the root name of the object store into which the object should be saved. A value of null means use the default store.
+
+Example 5.5. modified
+
+void modified ()
+
+Must be called prior to modifying the object in memory. If it is not called, the object will not be saved in the object store by deactivate. 
+
+
+Chapter 6. Constructing a Transactional Objects for Java application
+
+6.1. Queue description
+6.2. Constructors and finalizers
+6.3. Required methods
+
+    6.3.1. save_state, restore_state, and type
+    6.3.2. enqueue and dequeue methods
+    6.3.3. queueSize method
+    6.3.4. inspectValue and setValue methods
+
+6.4. The client
+6.5. Comments
+
+Development Phases of a TxCore Application
+
+    First, develop new classes with characteristics like persistence, recoverability, and concurrency control.
+
+    Then develop the applications that make use of the new classes of objects. 
+
+Although these two phases may be performed in parallel and by a single person, this guide refers to the first step as the job of the class developer, and the second as the job of the applications developer. The class developer defines appropriate save_state and restore_state operations for the class, sets appropriate locks in operations, and invokes the appropriate TxCore class constructors. The applications developer defines the general structure of the application, particularly with regard to the use of atomic actions.
+
+This chapter outlines a simple application, a simple FIFO Queue class for integer values. The Queue is implemented with a doubly linked list structure, and is implemented as a single object. This example is used throughout the rest of this manual to illustrate the various mechanisms provided by TxCore. Although this is an unrealistic example application, it illustrates all of the TxCore modifications without requiring in depth knowledge of the application code.
+Note
+
+The application is assumed not to be distributed. To allow for distribution, context information must be propagated either implicitly or explicitly.
+6.1. Queue description
+
+The queue is a traditional FIFO queue, where elements are added to the front and removed from the back. The operations provided by the queue class allow the values to be placed on to the queue (enqueue) and to be removed from it (dequeue), and values of elements in the queue can also be changed or inspected. In this example implementation, an array represents the queue. A limit of QUEUE_SIZE elements has been imposed for this example.
+
+Example 6.1. Java interface definition of class queue
+
+public class TransactionalQueue extends LockManager
+
+{
+
+    public TransactionalQueue (Uid uid);
+
+    public TransactionalQueue ();
+
+    public void finalize ();
+
+
+    public void enqueue (int v) throws OverFlow, UnderFlow,
+
+                                       QueueError, Conflict;
+
+    public int dequeue  () throws OverFlow, UnderFlow,
+
+                                  QueueError, Conflict;
+
+
+    public int queueSize ();
+
+    public int inspectValue (int i) throws OverFlow,
+
+                                           UnderFlow, QueueError, Conflict;
+
+    public void setValue (int i, int v) throws OverFlow,
+
+                                               UnderFlow, QueueError, Conflict;
+
+
+    public boolean save_state (OutputObjectState os, int ObjectType);
+
+    public boolean restore_state (InputObjectState os, int ObjectType);
+
+    public String type ();
+
+
+    public static final int QUEUE_SIZE = 40; // maximum size of the queue
+
+
+    private int[QUEUE_SIZE] elements;
+
+    private int numberOfElements;
+
+};
+
+
+6.2. Constructors and finalizers
+
+Using an existing persistent object requires the use of a special constructor that takes the Uid of the persistent object, as shown in Example 6.2, “Class TransactionalQueue”.
+
+Example 6.2. Class TransactionalQueue
+
+ public TransactionalQueue (Uid u)
+
+{
+
+    super(u);
+
+
+    numberOfElements = 0;
+
+}
+
+The constructor that creates a new persistent object is similar:
+
+    public TransactionalQueue ()
+
+{
+
+    super(ObjectType.ANDPERSISTENT);
+
+
+    numberOfElements = 0;
+
+
+    try
+
+        {
+
+            AtomicAction A = new AtomicAction();
+
+
+            A.begin(0); // Try to start atomic action
+
+
+            // Try to set lock
+
+
+            if (setlock(new Lock(LockMode.WRITE), 0) == LockResult.GRANTED)
+
+                {
+
+                    A.commit(true); // Commit
+
+                }
+
+            else           // Lock refused so abort the atomic action
+
+                A.rollback();
+
+        }
+
+    catch (Exception e)
+
+        {
+
+            System.err.println(Object construction error: +e);
+
+            System.exit(1);
+
+        }
+
+}
+
+
+The use of an atomic action within the constructor for a new object follows the guidelines outlined earlier and ensures that the object’s state will be written to the object store when the appropriate top level atomic action commits (which will either be the action A or some enclosing action active when the TransactionalQueue was constructed). The use of atomic actions in a constructor is simple: an action must first be declared and its begin operation invoked; the operation must then set an appropriate lock on the object (in this case a WRITE lock must be acquired), then the main body of the constructor is executed. If this is successful the atomic action can be committed, otherwise it is aborted.
+
+The finalizer of the queue class is only required to call the terminate and finalizer operations of LockManager.
+
+public void finalize ()
+
+{
+
+    super.terminate();
+
+    super.finalize();
+
+}     
+
+6.3. Required methods
+6.3.1. save_state, restore_state, and type
+
+Example 6.3. Method save_state
+
+public boolean save_state (OutputObjectState os, int ObjectType)
+
+{
+
+    if (!super.save_state(os, ObjectType))
+
+        return false;
+
+
+    try
+
+        {
+
+            os.packInt(numberOfElements);
+
+
+            if (numberOfElements > 0)
+
+                {
+
+                    for (int i = 0; i < numberOfElements; i++)
+
+                        os.packInt(elements[i]);
+
+                }
+
+
+            return true;
+
+        }
+
+    catch (IOException e)
+
+        {
+
+            return false;
+
+        }
+
+}
+
+
+Example 6.4. Method restore_state
+
+public boolean restore_state (InputObjectState os, int ObjectType)
+
+{
+
+    if (!super.restore_state(os, ObjectType))
+
+        return false;
+
+
+    try
+
+        {
+
+            numberOfElements = os.unpackInt();
+
+
+            if (numberOfElements > 0)
+
+                {
+
+                    for (int i = 0; i < numberOfElements; i++)
+
+                        elements[i] = os.unpackInt();
+
+                }
+
+
+            return true;
+
+        }
+
+    catch (IOException e)
+
+        {
+
+            return false;
+
+        }
+
+}
+
+
+Example 6.5. Method type
+
+Because the Queue class is derived from the LockManager class, the operation type should be:
+
+public String type ()
+
+{
+
+    return "/StateManager/LockManager/TransactionalQueue";
+
+}       
+
+
+6.3.2. enqueue and dequeue methods
+
+If the operations of the queue class are to be coded as atomic actions, then the enqueue operation might have the structure given below. The dequeue operation is similarly structured, but is not implemented here.
+
+Example 6.6. Method enqueue
+
+public void enqueue (int v) throws OverFlow, UnderFlow, QueueError
+
+{
+
+    AtomicAction A = new AtomicAction();
+
+    boolean res = false;
+
+
+    try
+
+        {
+
+            A.begin(0);
+
+
+            if (setlock(new Lock(LockMode.WRITE), 0) == LockResult.GRANTED)
+
+                {
+
+                    if (numberOfElements < QUEUE_SIZE)
+
+                        {
+
+                            elements[numberOfElements] = v;
+
+                            numberOfElements++;
+
+                            res = true;
+
+                        }
+
+                    else
+
+                        {
+
+                            A.rollback();
+
+                            throw new UnderFlow();
+
+                        }
+
+                }
+
+
+            if (res)
+
+                A.commit(true);
+
+            else
+
+                {
+
+                    A.rollback();
+
+                    throw new Conflict();
+
+                }
+
+        }
+
+    catch (Exception e1)
+
+        {
+
+            throw new QueueError();
+
+        }
+
+}       
+
+
+6.3.3. queueSize method
+
+Example 6.7. Method queueSize
+
+public int queueSize () throws QueueError, Conflict
+
+{
+
+    AtomicAction A = new AtomicAction();
+
+    int size = -1;
+
+
+    try
+
+        {
+
+            A.begin(0);
+
+
+            if (setlock(new Lock(LockMode.READ), 0) == LockResult.GRANTED)
+
+                size = numberOfElements;
+
+    
+
+            if (size != -1)
+
+                A.commit(true);
+
+            else
+
+                {
+
+                    A.rollback();
+
+
+                    throw new Conflict();
+
+                }
+
+        }
+
+    catch (Exception e1)
+
+        {
+
+            throw new QueueError();
+
+        }
+
+
+    return size;
+
+}       
+
+
+6.3.4. inspectValue and setValue methods
+Note
+
+The setValue method is not implemented here, but is similar in structure to Example 6.8, “Method inspectValue”.
+
+Example 6.8. Method inspectValue
+
+public int inspectValue (int index) throws UnderFlow,
+
+                                           OverFlow, Conflict, QueueError
+
+{
+
+    AtomicAction A = new AtomicAction();
+
+    boolean res = false;
+
+    int val = -1;
+
+
+    try
+
+        {
+
+            A.begin();
+
+
+            if (setlock(new Lock(LockMode.READ), 0) == LockResult.GRANTED)
+
+                {
+
+                    if (index < 0)
+
+                        {
+
+                            A.rollback();
+
+                            throw new UnderFlow();
+
+                        }
+
+                    else
+
+                        {
+
+                            // array is 0 - numberOfElements -1
+
+
+                            if (index > numberOfElements -1)
+
+                                {
+
+                                    A.rollback();
+
+                                    throw new OverFlow();
+
+                                }
+
+                            else
+
+
+                                {
+
+                                    val = elements[index];
+
+                                    res = true;
+
+                                }
+
+                        }
+
+                }
+
+
+            if (res)
+
+                A.commit(true);
+
+            else
+
+                {
+
+                    A.rollback();
+
+                    throw new Conflict();
+
+                }
+
+        }
+
+    catch (Exception e1)
+
+        {
+
+            throw new QueueError();
+
+        }
+
+
+    return val;
+
+}
+
+
+6.4. The client
+
+Rather than show all of the code for the client, this example concentrates on a representative portion. Before invoking operations on the object, the client must first bind to the object. In the local case this simply requires the client to create an instance of the object.
+
+Example 6.9. Binding to the Object
+
+ public static void main (String[] args)
+
+{
+
+    TransactionalQueue myQueue = new TransactionalQueue();
+
+    Before invoking one of the queues operations, the client starts a transaction. The queueSize operation is shown below:
+
+    AtomicAction A = new AtomicAction();
+
+    int size = 0;
+
+ 
+
+    try
+
+        {
+
+            A.begin(0);
+
+
+            try
+
+                {
+
+                    size = queue.queueSize();
+
+                }
+
+            catch (Exception e)
+
+                {
+
+                }
+
+
+            if (size >= 0)
+
+                {
+
+                    A.commit(true);
+
+
+                    System.out.println(Size of queue: +size);
+
+                }
+
+            else
+
+                A.rollback();
+
+        }
+
+    catch (Exception e)
+
+        {
+
+            System.err.println(Caught unexpected exception!);
+
+        }
+
+}
+
+
+6.5. Comments
+
+Since the queue object is persistent, the state of the object survives any failures of the node on which it is located. The state of the object that survives is the state produced by the last top-level committed atomic action performed on the object. If an application intends to perform two enqueue operations atomically, for example, you can nest the enqueue operations in another enclosing atomic action. In addition, concurrent operations on such a persistent object are serialized, preventing inconsistencies in the state of the object.
+
+However, since the elements of the queue objects are not individually concurrency controlled, certain combinations of concurrent operation invocations are executed serially, even though logically they could be executed concurrently. An example of this is modifying the states of two different elements in the queue. The platform Development Guide addresses some of these issues. 
+
+
+
+Appendix A. Object store implementations
+
+A.1. The ObjectStore
+
+This appendix examines the various TxCore object store implementations and gives guidelines for creating other implementations and plugging into an application.
+
+This release of JBoss Transaction Service contains several different implementations of a basic object store. Each serves a particular purpose and is generally optimized for that purpose. Each of the implementations implements the ObjectStoreAPI interface, which defines the minimum operations which must be provided for an object store implementation to be used by the Transaction Service. You can override the default object store implementation at runtime by setting the com.arjuna.ats.arjuna.objectstore.objectStoreType property variable to one of the types described below.
+
+Example A.1. Class StateStatus
+
+
+
+/*
+
+ * This is the base class from which all object store types are derived.
+
+ * Note that because object store instances are stateless, to improve
+
+ * efficiency we try to only create one instance of each type per process.
+
+ * Therefore, the create and destroy methods are used instead of new
+
+ * and delete. If an object store is accessed via create it *must* be
+
+ * deleted using destroy. Of course it is still possible to make use of
+
+ * new and delete directly and to create instances on the stack.
+
+ */
+
+
+public class StateStatus
+
+{
+
+    public static final int OS_ORIGINAL;
+
+    public static final int OS_SHADOW;
+
+    public static final int OS_UNCOMMITTED;
+
+    public static final int OS_UNCOMMITTED_HIDDEN;
+
+    public static final int OS_UNKNOWN;
+
+}
+
+
+public class StateType
+
+{
+
+    public static final int OS_COMMITTED;
+
+    public static final int OS_COMMITTED_HIDDEN;
+
+    public static final int OS_HIDDEN;
+
+    public static final int OS_INVISIBLE;
+
+}
+
+
+public abstract class ObjectStore implements BaseStore, ParticipantStore,
+
+                                             RecoveryStore, TxLog
+
+{
+
+    public ObjectStore (String osRoot);
+
+    public synchronized boolean allObjUids (String s, InputObjectState buff)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean allObjUids (String s, InputObjectState buff,
+
+                                            int m) throws ObjectStoreException;
+
+
+    public synchronized boolean allTypes (InputObjectState buff)
+
+        throws ObjectStoreException;
+
+    public synchronized int currentState(Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean commit_state (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean hide_state (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean reveal_state (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized InputObjectState read_committed (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized InputObjectState read_uncommitted (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean remove_committed (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean remove_uncommitted (Uid u, String tn)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean write_committed (Uid u, String tn,
+
+                                                 OutputObjectState buff)
+
+        throws ObjectStoreException;
+
+    public synchronized boolean write_uncommitted (Uid u, String tn,
+
+                                                   OutputObjectState buff)
+
+        throws ObjectStoreException;
+
+    public static void printState (PrintStream strm, int res);
+
+};
+
+
+JBoss Transaction Service programmers do not usually need to interact with any of the object store implementations directly, apart from possibly creating them in the first place. Even this is not necessary if the default store type is used, since JBoss Transaction Service creates stores as necessary. All stores manipulate instances of the class ObjectState. These instances are named using a type (via the object's type() operation) and a Uid.
+
+For atomic actions purposes, object states in the store can be principally in two distinct states: OS_COMMITTED or OS_UNCOMMITTED. An object state starts in the OS_COMMITTED state, but when it is modified under the control of an atomic action, a new second object state may be written that is in the OS_UNCOMMITTED state. If the action commits, this second object state replaces the original and becomes OS_COMMITTED. If the action aborts, this second object state is discarded. All of the implementations provided with this release handle these state transitions by making use of shadow copies of object states. However, any other implementation that maintains this abstraction is permissible.
+
+Object states may become hidden, and thus inaccessible, under the control of the crash recovery system.
+
+You can browse the contents of a store through the allTypes and allObjUids operations. allTypes returns an InputObjectState containing all of the type names of all objects in a store, terminated by a null name. allObjUids returns an InputObjectState containing all of the Uids of all objects of a given type, terminated by the special Uid.nullUid().
+A.1.1. Persistent object stores
+
+This section briefly describes the characteristics and optimizations of each of the supplied implementations of the persistent object store. Persistent object states are mapped onto the structure of the file system supported by the host operating system.
+A.1.1.1. Common functionality
+
+In addition to the features mentioned earlier, all of the supplied persistent object stores obey the following rules:
+
+    Each object state is stored in its own file, which is named using the Uid of the object.
+
+    The type of an object, as given by the type() operation, determines the directory into which the object is placed.
+
+    All of the stores have a common root directory that is determined when JBoss Transaction Service is configured. This directory name is automatically prepended to any store-specific root information.
+
+    All stores also have the notion of a localized root directory that is automatically prepended to the type of the object to determine the ultimate directory name. The localized root name is specified when the store is created. The default name is defaultStore. 
+
+<ObjectStore root Directory from configure>     <filename>/JBossTS/ObjectStore/</filename>
+   <ObjectStore Type1>                          <filename>FragmentedStore/</filename>
+      <Default root>                            <filename>defaultStore/</filename>
+         <StateManager>                         <filename>StateManager</filename>
+            <LockManager>                       <filename>LockManager/</filename>
+               <User Types>      
+      <Localised root 2>                        <filename>myStore/</filename>
+         <StateManager>                         <filename>StateManager/</filename>
+
+   <ObjectStore Type2>                          <filename>ActionStore/</filename>
+         <Default root>                         <filename>defaultStore/</filename>
+
+A.1.1.2. The shadowing store
+
+The shadowing store s the original version of the object store, which was provided in prior releases. It is implemented by the class ShadowingStore. It is simple but slow. It uses pairs of files to represent objects. One file is the shadow version and the other is the committed version. Files are opened, locked, operated upon, unlocked, and closed on every interaction with the object store. This causes a lot of I/O overhead.
+
+If you are overriding the object store implementation, the type of this object store is ShadowingStore.
+A.1.1.3. No file-level locking
+
+Since transactional objects are concurrency-controlled through LockManager, you do not need to impose additional locking at the file level. The basic ShadowingStore implementation handles file-level locking. Therefore, the default object store implementation for JBoss Transaction Service, ShadowNoFileLockStore, relies upon user-level locking. This enables it to provide better performance than the ShadowingStore implementation.
+
+If you are overriding the object store implementation, the type of this object store is ShadowNoFileLockStore.
+A.1.1.4. The hashed store
+
+The HashedStore has the same structure for object states as the ShadowingStore, but has an alternate directory structure that is better suited to storing large numbers of objects of the same type. Using this store, objects are scattered among a set of directories by applying a hashing function to the object's Uid. By default, 255 sub-directories are used. However, you can override this by setting the ObjectStoreEnvironmentBean.hashedDirectories environment variable accordingly.
+
+If you are overriding the object store implementation, the type of this object store is HashedStore.
+A.1.1.5. The JDBC store
+
+The JDBCStore uses a JDBC database to save persistent object states. When used in conjunction with the Transactional Objects for Java API, nested transaction support is available. In the current implementation, all object states are stored as Binary Large Objects (BLOBs) within the same table. The limitation on object state size imposed by using BLOBs is 64k. If you try to store an object state which exceeds this limit, an error is generated and the state is not stored. The transaction is subsequently forced to roll back.
+
+When using the JDBC object store, the application must provide an implementation of the JDBCAccess interface, located in the com.arjuna.ats.arjuna.objectstore package:
+
+Example A.2. Interface JDBCAccess
+
+ public interface JDBCAccess
+
+{
+
+    public Connection getConnection () throws SQLException;
+
+    public void putConnection (Connection conn) throws SQLException;
+
+    public void initialise (Object[] objName);
+
+}
+
+
+The implementation of this class is responsible for providing the Connection which the JDBC ObjectStore uses to save and restore object states:
+
+getConnection
+
+    Returns the Connection to use. This method is called whenever a connection is required, and the implementation should use whatever policy is necessary for determining what connection to return. This method need not return the same Connection instance more than once. 
+putConnection
+
+    Returns one of the Connections acquired from getConnection. Connections are returned if any errors occur when using them. 
+initialise
+
+    Used to pass additional arbitrary information to the implementation. 
+
+The JDBC object store initially requests the number of Connections defined in the ObjectStoreEnvironmentBean.jdbcPoolSizeInitial property and will use no more than defined in the ObjectStoreEnvironmentBean.jdbcPoolSizeMaximum property.
+
+The implementation of the JDBCAccess interface to use should be set in the ObjectStoreEnvironmentBean.jdbcUserDbAccessClassName property variable.
+
+If overriding the object store implementation, the type of this object store is JDBCStore.
+
+A JDBC object store can be used for managing the transaction log. In this case, the transaction log implementation should be set to JDBCActionStore and the JDBCAccess implementation must be provided via the ObjectStoreEnvironmentBean.jdbcTxDbAccessClassName property variable. In this case, the default table name is JBossTSTxTable.
+
+You can use the same JDBCAccess implementation for both the user object store and the transaction log.
+A.1.1.6. The cached store
+
+This object store uses the hashed object store, but does not read or write states to the persistent backing store immediately. It maintains the states in a volatile memory cache and either flushes the cache periodically or when it is full. The failure semantics associated with this object store are different from the normal persistent object stores, because a failure could result in states in the cache being lost.
+
+If overriding the object store implementation, the type of this object store is CacheStore.
+
+Configuration Properties
+
+ObjectStoreEnvironmentBean.cacheStoreHash
+
+    sets the number of internal stores to hash the states over. The default value is 128. 
+ObjectStoreEnvironmentBean.cacheStoreSize
+
+    the maximum size the cache can reach before a flush is triggered. The default is 10240 bytes. 
+ObjectStoreEnvironmentBean.cacheStoreRemovedItems
+
+    the maximum number of removed items that the cache can contain before a flush is triggered. By default, calls to remove a state that is in the cache will simply remove the state from the cache, but leave a blank entry (rather than remove the entry immediately, which would affect the performance of the cache). When triggered, these entries are removed from the cache. The default value is twice the size of the hash. 
+ObjectStoreEnvironmentBean.cacheStoreWorkItems
+
+    the maximum number of items that are allowed to build up in the cache before it is flushed. The default value is 100. ObjectStoreEnvironmentBean.cacheStoreScanPeriod sets the time in milliseconds for periodically flushing the cache. The default is 120 seconds. 
+ObjectStoreEnvironmentBean.cacheStoreSync
+
+    determines whether flushes of the cache are sync-ed to disk. The default is OFF. To enable, set to ON. 
+
+A.1.1.7. LogStore
+
+This implementation is based on a traditional transaction log. All transaction states within the same process (VM instance) are written to the same log (file), which is an append-only entity. When transaction data would normally be deleted, at the end of the transaction, a delete record is added to the log instead. Therefore, the log just keeps growing. Periodically a thread runs to prune the log of entries that have been deleted.
+
+A log is initially given a maximum capacity beyond which it cannot grow. After it reaches this size, the system creates a new log for transactions that could not be accommodated in the original log. The new log and the old log are pruned as usual. During the normal execution of the transaction system, there may be an arbitrary number of log instances. These should be garbage collected by the system,(or the recovery sub-system, eventually.
+
+Check the Configuration Options table for how to configure the LogStore.
+Appendix B. Class definitions
+
+This appendix contains an overview of those classes that the application programmer will typically use. The aim of this appendix is to provide a quick reference guide to these classes for use when writing applications in TxCore. For clarity only the public and protected interfaces of the classes will be given.
+
+Example B.1. Class LockManager
+
+public class LockResult
+
+{
+
+    public static final int GRANTED;
+
+    public static final int REFUSED;
+
+    public static final int RELEASED;
+
+};
+
+
+public class ConflictType
+
+{
+
+    public static final int CONFLICT;
+
+    public static final int COMPATIBLE;
+
+    public static final int PRESENT;
+
+};
+
+
+public abstract class LockManager extends StateManager
+
+{
+
+    public static final int defaultRetry;
+
+    public static final int defaultTimeout;
+
+    public static final int waitTotalTimeout;
+
+
+    public final synchronized boolean releaselock (Uid lockUid);
+
+    public final synchronized int setlock (Lock toSet);
+
+    public final synchronized int setlock (Lock toSet, int retry);
+
+    public final synchronized int setlock (Lock toSet, int retry, int sleepTime);
+
+    public void print (PrintStream strm);
+
+    public String type ();
+
+    public boolean save_state (OutputObjectState os, int ObjectType);
+
+    public boolean restore_state (InputObjectState os, int ObjectType);
+
+
+    protected LockManager ();
+
+    protected LockManager (int ot);
+
+    protected LockManager (int ot, int objectModel);
+
+    protected LockManager (Uid storeUid);
+
+    protected LockManager (Uid storeUid, int ot);
+
+    protected LockManager (Uid storeUid, int ot, int objectModel);
+
+
+    protected void terminate ();
+
+};
+
+
+Example B.2. Class StateManager
+
+public class ObjectStatus
+
+{
+
+    public static final int PASSIVE;
+
+    public static final int PASSIVE_NEW;
+
+    public static final int ACTIVE;
+
+    public static final int ACTIVE_NEW;
+
+};
+
+
+public class ObjectType
+
+{
+
+    public static final int RECOVERABLE;
+
+    public static final int ANDPERSISTENT;
+
+    public static final int NEITHER;
+
+};
+
+ 
+
+public abstract class StateManager
+
+{
+
+    public boolean restore_state (InputObjectState os, int ot);
+
+    public boolean save_state (OutputObjectState os, int ot);
+
+    public String type ();
+
+
+    public synchronized boolean activate ();
+
+    public synchronized boolean activate (String rootName);
+
+    public synchronized boolean deactivate ();
+
+    public synchronized boolean deactivate (String rootName);
+
+    public synchronized boolean deactivate (String rootName, boolean commit);
+
+
+    public synchronized int status ();
+
+    public final Uid get_uid ();
+
+    public void destroy ();
+
+    public void print (PrintStream strm);
+
+
+    protected void terminate ();
+
+
+    protected StateManager ();
+
+    protected StateManager (int ot);
+
+    protected StateManager (int ot, int objectModel);
+
+    protected StateManager (Uid objUid);
+
+    protected StateManager (Uid objUid, int ot);
+
+    protected StateManager (Uid objUid, int ot, int objectModel);
+
+    protected synchronized final void modified ();
+
+};
+
+
+Example B.3. Classes OutputObjectState and InputObjectState
+
+class OutputObjectState extends OutputBuffer
+
+{
+
+    public OutputObjectState (Uid newUid, String typeName);
+
+
+    public boolean notempty ();
+
+    public int size ();
+
+    public Uid stateUid ();
+
+    public String type ();
+
+};
+
+class InputObjectState extends ObjectState
+
+{
+
+    public OutputObjectState (Uid newUid, String typeName, byte[] b);
+
+
+    public boolean notempty ();
+
+    public int size ();
+
+    public Uid stateUid ();
+
+    public String type ();
+
+};
+
+
+Example B.4. Classes OutputBuffer and InputBuffer
+
+public class OutputBuffer
+
+{
+
+    public  OutputBuffer ();
+
+
+    public final synchronized boolean valid ();
+
+    public synchronized byte[] buffer();
+
+    public synchronized int length ();
+
+
+    /* pack operations for standard Java types */
+
+
+    public synchronized void packByte (byte b) throws IOException;
+
+    public synchronized void packBytes (byte[] b) throws IOException;
+
+    public synchronized void packBoolean (boolean b) throws IOException;
+
+    public synchronized void packChar (char c) throws IOException;
+
+    public synchronized void packShort (short s) throws IOException;
+
+    public synchronized void packInt (int i) throws IOException;
+
+    public synchronized void packLong (long l) throws IOException;
+
+    public synchronized void packFloat (float f) throws IOException;
+
+    public synchronized void packDouble (double d) throws IOException;
+
+    public synchronized void packString (String s) throws IOException;
+
+};
+
+public class InputBuffer
+
+{
+
+    public  InputBuffer ();
+
+
+    public final synchronized boolean valid ();
+
+    public synchronized byte[] buffer();
+
+    public synchronized int length ();
+
+
+    /* unpack operations for standard Java types */
+
+
+    public synchronized byte unpackByte () throws IOException;
+
+    public synchronized byte[] unpackBytes () throws IOException;
+
+    public synchronized boolean unpackBoolean () throws IOException;
+
+    public synchronized char unpackChar () throws IOException;
+
+    public synchronized short unpackShort () throws IOException;
+
+    public synchronized int unpackInt () throws IOException;
+
+    public synchronized long unpackLong () throws IOException;
+
+    public synchronized float unpackFloat () throws IOException;
+
+    public synchronized double unpackDouble () throws IOException;
+
+    public synchronized String unpackString () throws IOException;
+
+};
+
+
+Example B.5. Class Uid
+
+public class Uid implements Cloneable
+
+{
+
+    public Uid ();
+
+    public Uid (Uid copyFrom);
+
+    public Uid (String uidString);
+
+    public Uid (String uidString, boolean errorsOk);
+
+    public synchronized void pack (OutputBuffer packInto) throws IOException;
+
+    public synchronized void unpack (InputBuffer unpackFrom) throws IOException;
+
+
+    public void print (PrintStream strm);
+
+    public String toString ();
+
+    public Object clone () throws CloneNotSupportedException;
+
+    public synchronized void copy (Uid toCopy) throws UidException;
+
+    public boolean equals (Uid u);
+
+    public boolean notEquals (Uid u);
+
+    public boolean lessThan (Uid u);
+
+    public boolean greaterThan (Uid u);
+
+
+    public synchronized final boolean valid ();
+
+    public static synchronized Uid nullUid ();
+
+};
+
+
+Example B.6. Class AtomicAction
+
+public class AtomicAction
+
+{
+
+    public AtomicAction ();
+
+
+    public void begin () throws SystemException, SubtransactionsUnavailable,
+
+                                NoTransaction;
+
+    public void commit (boolean report_heuristics) throws SystemException, 
+
+                                                          NoTransaction, HeuristicMixed,
+
+                                                          HeuristicHazard,TransactionRolledBack;
+
+    public void rollback () throws SystemException, NoTransaction;
+
+    public Control control () throws SystemException, NoTransaction;
+
+    public Status get_status () throws SystemException;
+
+    /* Allow action commit to be supressed */    
+
+    public void rollbackOnly () throws SystemException, NoTransaction;
+
+
+    public void registerResource (Resource r) throws SystemException, Inactive;
+
+    public void registerSubtransactionAwareResource (SubtransactionAwareResource sr)
+
+        throws SystemException, NotSubtransaction;
+
+    public void registerSynchronization (Synchronization s) throws SystemException,
+
+                                                                   Inactive;
+
+};
+
+
+
+
+
+
+
+Compensating Transactions
+
+ACID transactions are a useful tool for application developers and can provide very strong guarantees, even in the presence of failures. However, ACID transactions are not always appropriate for every situation. In this series of blog posts. I'll present several such scenarios and show how an alternative non-ACID transaction model can be used.
+
+The isolation property of an ACID transaction is typically achieved through optimistic or pessimistic concurrency control. Both approaches can impose negative impacts on certain classes of applications, if the duration of the transaction exceeds a few seconds (see here for a good explanation). This can frequently be the case for transactions involving slow participants (humans, for example) or those distributed over high latency networks (such as the Internet). Also, some actions cannot simply be rolled back; such as, the sending of an email or the invocation of some third-party service.
+
+
+In the Narayana project, we have support for three Extended Transaction models; Nested Top Level Transactions, Nested Transactions and a compensation-based model based on Sagas. In this series of blog posts I'll be focusing on the compensation-based approach.
+
+Transaction Synchronization
+
+
+
+Fault Isolation
+
+Let's deal with the understanding bit first. Many people use the term 'nested transactions' to mean different things. A true nested transaction is used mainly for fault isolation of specific tasks within a wider transaction.
+
+
+tm.begin();
+doStuffWithOuterTransaction();
+tm.begin();
+try {
+  doStuffWithInnerTransaction();
+  tm.commit();
+} catch(Exception e) {
+  handleFailureOfInnerTransaction();
+}
+doMoreStuffWithOuterTransaction();
+tm.commit();
+
+
+This construct is useful where we have some alternative way to achieve the work done by the inner transaction and can call it from the exception handler. Let's try a concrete example:
+
+
+tm.begin(); // outer tx
+bookTheatreTickets();
+tm.begin(); // inner tx
+try {
+  bookWithFavoriteTaxiCompany();
+  tm.commit(); // inner tx
+} catch(Exception e) {
+  tm.begin(); // inner tx
+  bookWithRivalTaxiFirm();
+  tm.commit(); // inner tx
+}
+bookRestaurantTable();
+tm.commit(); // outer tx
+
+
+So, when everything goes smoothly you have behaviour equivalent to a normal flat transaction. But when there is minor trouble in a non essential part of the process, you can shrug it off and make forward progress without having to start over and risk losing your precious theatre seats.
+
+As it turns out there are a number of reasons this a not widely used.
+
+Firstly, it's not all that common to have a viable alternative method available for the inner update in system level transactions. It's more common for business process type long running transactions, where ACID is frequently less attractive than an extended tx model such as WS-BA anyhow. What about the case where you have no alternative method, don't care if the inner tx fails, but must not commit its work unless the outer transaction succeeds? That's what afterCompletion() is for.
+
+Secondly, but often of greater practical importance, nested transactions are not supported by any of the widely deployed databases, message queuing products or other resource managers. That severely limits what you can do in the inner transaction. You're basically limited to using the TxOJ resource manager bundled with JBossTS, as described in Mark's posts. Give up any thought of updating your database conditionally - it just won't work. JDBC savepoints provide somewhat nested transaction like behaviour for non-XA situations, but they don't work in XA situations. Nor does the XA protocol, foundation of the interoperability between transaction managers and resource managers, provide any alternative. That said, it's theoretically possible to fudge things a bit. Let's look at that example again in XA terms. - See more at: http://planet.jboss.org/post/nested_transactions_101#sthash.Rq2LnMtw.dpuf
+
+tm.begin(); // outer tx
+bookTheatreTickets(); // enlist db-A.
+tm.begin(); // inner tx
+try {
+bookWithFavoriteTaxiCompany(); // enlist db-B.
+tm.commit(); // inner tx - prepare db-B. Don't commit it though. Don't touch db-A.
+} catch(Exception e) {
+// oh dear, the prepare on db-B failed. roll it back. Don't rollback db-A though.
+tm.begin(); // inner tx
+bookWithRivalTaxiFirm(); // enlist db-C
+tm.commit(); // inner tx - prepare db-C but don't commit it or touch db-A
+}
+bookRestaurantTable(); // enlist db-D
+tm.commit(); // outer tx - prepare db-A and db-D. Commit db-A, db-C and db-D. - See more at: http://planet.jboss.org/post/nested_transactions_101#sthash.Rq2LnMtw.dpuf
+
+This essentially fakes a nested transaction by manipulating the list of resource managers in a single flat transaction - we cheated a bit by removing db-B part way through, so the tx is not true ACID across all the four participants, only three. JBossTS does not support this, because it's written by purists who think you should use an extended transaction model instead. Also, we don't want to deal with irate users whose database throughput has plummeted because of the length of time that locks are being held on db-B and db-C.
+
+Fortunately, you may not actually need true nested transactions anyhow. There is another sort of nested transaction, properly known as nested top-level, which not only works with pretty much any environment, but is also handy for many common use cases.
+
+The distinction is founded on the asymmetry of the relationship between the outer and inner transactions. For true nested transactions, failure of the inner tx need not impact the outcome of the outer tx, whilst failure of the outer tx will ensure the inner tx rolls back. For nested top-level, the situation is reversed: failure of the outer transaction won't undo the inner tx, but failure of the inner tx may prevent the outer one from committing. Sound familiar? The most widely deployed use case for nested top-level is ensuring that an audit log entry of the processing attempt is made, regardless of the outcome of the business activity.
+
+
+tm.begin();
+doUnauditedStuff();
+writeAuditLogForProcessingAttempt();
+doSecureBusinessSystemUpdate();
+tm.commit();
+
+
+The ACID properties of the flat tx don't achieve what we want here - the audit log entry must be created regardless of the success or failure of the business system update, whereas we have it being committed only if the business system update also commits. Let's try that again:
+
+
+tm.begin(); // tx-A
+doUnauditedStuff();
+Transaction txA = tm.suspend();
+tm.begin(); // new top level tx-B
+try {
+  writeAuditLogForProcessingAttempt();
+  tm.commit(); //  tx-B
+} catch(Exception e) {
+  tm.resume(txA);
+  tm.rollback(); // tx-A
+  return;
+}
+tm.resume(txA);
+doSecureBusinessSystemUpdate();
+tm.commit(); // tx-A
+
+
+Well, that's a little better - we'll not attempt the business logic processing unless we have first successfully written the audit log, so we're guaranteed to always have a log of any update that does take place. But there is a snag: the audit log will only show the attempt, not the success/failure outcome of it. What if that's not good enough? 
+
+presumed abort
+
+Let's steal a leaf from the transaction optimization handbook: presumed abort.
+
+tm.begin(); // tx-A
+doUnauditedStuff();
+Transaction txA = tm.suspend();
+tm.begin(); // new top level tx-B
+try {
+  writeAuditLogForProcessingAttempt("attempting update, assume it failed");
+  tm.commit(); //  tx-B
+} catch(Exception e) {
+  tm.resume(txA);
+  tm.rollback(); // tx-A
+  return;
+}
+tm.resume(txA);
+doSecureBusinessSystemUpdate();
+writeAuditLogForProcessingAttempt("processing attempt completed successfully");
+tm.commit(); // tx-A
+
+
+So now we have an audit log will always show an entry and always show if it succeeded or not. Also, I'll hopefully never have to answer another nested transaction question from scratch. Success all round I'd say. - See more at: http://planet.jboss.org/post/nested_transactions_101#sthash.Rq2LnMtw.dpuf
+
+

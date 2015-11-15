@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>mysql-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries MYSQL Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<mysql.version>5.1.34</mysql.version>
+		<!--  
+		<mysql.version>5.1.16</mysql.version>
+		-->
+		<!--  
+		<jdbc.connection.url>jdbc:mysql://localhost:3306</jdbc.connection.url>
+		<jdbc.driver>com.mysql.jdbc.Driver</notification.jdbc.driver>
+		<jdbc.user>admin</notification.jdbc.user>
+		<jdbc.password>admin</notification.jdbc.password>
+		<min.pool.size>1</min.pool.size>
+		<max.pool.size>10</max.pool.size>
+		<hibernate.dialect>org.hibernate.dialect.MySQLInnoDBDialect</hibernate.dialect>
+		<hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+		<hibernate.show_sql>true</hibernate.show_sql>
+		-->
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

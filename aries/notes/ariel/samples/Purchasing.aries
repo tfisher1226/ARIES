@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model/0.0.1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model/0.0.1 file:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>bookshop</name>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<imports>
+		<import type="xsd" file="/schema/bookshop.xsd"/>
+	</imports>
+
+	<providers>
+		<provider
+			type="jms" 
+			name="@jms.provider.name@"
+			connection-url="@jms.provider.jndi.url@"
+			context-factory="@jms.provider.jndi.context-factory@" 
+			url-pkg-prefixes="@jms.provider.jndi.url-pkg-prefixes@"
+			security-principal="@jms.provider.jndi.username@"
+			security-credentials="@jms.provider.jndi.password@"/>
+	</providers>
+
+	<links>
+		<linkType name="publicChannel" />
+		<linkType name="supplierServiceLinkType" />
+		<linkType name="shipmentServiceLinkType" />
+		<linkType name="paymentServiceLinkType" />
+
+		<link name="bookshopLink" type="publicChannel">
+			<role name="user">
+				<rmi-transport port="@aries.port.rmi@"/>
+				<!--  
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jms.provider.name@" 
+					connectionFactory="@jms.provider.connection-factory@"
+					destinationName="@jms.asyncEchoCaller.destination@"/>
+				-->
+			</role>
+		</link>
+	</links>
+	
+	<applications>
+		<application>
+			<name>nam</name>
+			<groupId>org.aries</groupId>
+			<artifactId>nam</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<namespace>http://nam.ui.org/model/0.0.1</namespace>
+		</application>
+	</applications>
+</project>

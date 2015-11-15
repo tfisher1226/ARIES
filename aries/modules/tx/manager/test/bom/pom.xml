@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>tx-manager-test-bom</artifactId>
+	<name>tx-manager Test Bom</name>
+	<description>tx-manager Test Bom</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tx.manager.version>0.0.1-SNAPSHOT</tx.manager.version>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-base</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-client</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-client</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-registry</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+
+			<!--  
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-recovery</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			-->
+
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-bridge</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-service</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>ejb</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-service</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.aries</groupId>
+				<artifactId>tx-manager-test</artifactId>
+				<version>${tx.manager.version}</version>
+				<type>test-jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

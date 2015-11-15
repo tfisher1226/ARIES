@@ -1,0 +1,61 @@
+Why generate at compile time?
+-----------------------------
+
+It makes for cleaner and better desgin to focus on the generation of quality code without having to deal with runtime management of exceptions and proper handling of them i.e. recovery and compensation.
+
+
+Can configure source code generation in different ways:
+-invoke EJB's as opposed to invoking only web-services, use existing transaction context
+
+A BPEL process by convention can only be started/invoked when it receives an incoming WSDL message
+
+Look at Riftsaw for god feature list description:
+http://www.jboss.org/riftsaw
+
+
+-----
+
+change types for:
+Entity
+
+
+
+{UnaryExpr,
+    {FunctionCall,abs,(
+        {AdditiveExpr,
+            {UnaryExpr, {VariableReferenceExpr,$intVar}} + 
+            {UnaryExpr,
+                {FunctionCall,number,({UnaryExpr,{LiteralExpr,'2'}})}
+            }
+        }
+    )}
+}
+
+FunctionCallExpr> abs($intVar + number('2'))
+BinaryExpr> $intVar + number('2')
+VariableReferenceExpr> $intVar
+FunctionCallExpr> number('2')
+LiteralExpr> '2'
+
+
+  FunctionCallExpr: name=abs, prefix=, #arguments=1, text=abs($intVar + number('2'))
+  arguments:
+       AdditiveExpr: op=+ text=$intVar + number('2')
+       LHS:
+         UnaryExpr: text=$intVar
+         expression:
+           VariableReferenceExpr: variable=intVar, prefix=, text=$intVar
+       RHS:
+         UnaryExpr: text=number('2')
+         expression:
+           FunctionCallExpr: name=number, prefix=, #arguments=1, text=number('2')
+           arguments:
+                UnaryExpr: text='2'
+                expression:
+                  LiteralExpr: literal=2, text='2'
+
+
+<ns1:createOrder xmlns:ns1="http://jboss.org/bpel/ordering">
+        					<itemId/>
+        					<quantity/>
+        				</ns1:createOrder>

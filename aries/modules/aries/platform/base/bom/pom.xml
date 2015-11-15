@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.pom</groupId>
+	<artifactId>aries-platform-base-bom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Platform BASE Bom</name>
+	<packaging>pom</packaging>
+
+	<properties>
+		<java.major.version>1.6</java.major.version>
+		<java.minor.version>0</java.minor.version>
+		<aries.version>0.0.1-SNAPSHOT</aries.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- ARIES -->
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>aries-base-bom</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			
+			<!-- LOGGING -->
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>logging</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+
+			<!-- JUNIT -->
+			<dependency>
+				<groupId>org.aries.pom</groupId>
+				<artifactId>junit</artifactId>
+				<version>${aries.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

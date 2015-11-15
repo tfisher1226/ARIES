@@ -1,0 +1,338 @@
+<?xml version="1.0"?>
+
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.aries.maven.plugin</groupId>
+	<artifactId>aries-maven-bpel-plugin</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Aries Maven BPEL Plugin</name>
+    <!--
+	<url>http://code.google.com/p/maven-bpel-compiler-plugin/</url>
+    -->
+	<description>Plugin to compile BPEL processes during a Maven build</description>
+	<packaging>maven-plugin</packaging>
+	<inceptionYear>2012</inceptionYear>
+
+      	<repositories>
+      		<repository> 
+      			<id>repository.jboss.org</id>
+      			<name>repository.jboss.org</name>
+      			<url>http://repository.pentaho.org/artifactory/repo</url> 
+      			<snapshots>
+      				<enabled>true</enabled> 
+      			</snapshots> 
+      		</repository>
+      	</repositories>
+        	
+	<developers>
+		<developer>
+			<id>tfisher</id>
+			<email>tfisher@rozene.com</email>
+			<name>Tom Fisher</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>8</timezone>
+		</developer>
+	</developers>
+
+	<!-- 
+	<scm>
+		<connection>scm:svn:http://maven-bpel-compiler-plugin.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://maven-bpel-compiler-plugin.googlecode.com/svn/trunk/</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://code.google.com/p/maven-bpel-compiler-plugin/source/browse/</url>
+	</scm>
+	-->
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+		</license>
+	</licenses>
+
+    <!--
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/maven-bpel-compiler-plugin/issues/list</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<site>
+			<id>GoogleCode</id>
+			<name>GoogleCode - SVN</name>
+			<url>scm:svn:https://maven-bpel-compiler-plugin.googlecode.com/svn/site</url>
+		</site>
+	</distributionManagement>
+    -->
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+                   <!--
+                   <inherited>true</inherited>
+                   -->
+
+<dependencies>
+      <dependency>
+        <groupId>org.apache.maven.surefire</groupId>
+        <artifactId>surefire-junit47</artifactId>
+        <version>2.18.1</version>
+      </dependency>
+    </dependencies>
+
+					<configuration>
+						<includes>
+							<include>**/*Test.java</include>
+							<include>**/*Tests.java</include>
+							<include>**/*TestCase.java</include>
+							<include>**/*TestCases.java</include>
+						</includes>
+
+						<!-- exclude **/Abstract*Test.java **/Abstract*TestCase.java -->
+					<excludes>
+						<exclude>**/*$*</exclude>
+					</excludes>
+
+					<!--  
+					<includes>
+						<include>**/*IT.java</include>
+					</includes>
+					-->
+					
+                       <!--
+					<runOrder>alphabetical</runOrder>
+					<reportFormat>${aries.surefire.format}</reportFormat>
+					<disableXmlReport>true</disableXmlReport>
+                       -->
+
+                       <!--
+					<parallel>${aries.surefire.parallel.mode}</parallel>
+					<forkMode>${aries.surefire.fork.mode}</forkMode>
+					<childDelegation>false</childDelegation>
+                       -->
+
+                       <forkCount>1</forkCount>
+                       <reuseForks>false</reuseForks>
+					<useFile>${aries.surefire.usefile}</useFile>
+					<argLine>${aries.surefire.fork.vmargs}</argLine>
+
+					<useSystemClassLoader>true</useSystemClassLoader>
+
+					<!-- make sure maven puts byteman jars in classpath rather than in a manifest jar 
+					<useManifestOnlyJar>false</useManifestOnlyJar>
+					-->
+
+					<!--         
+					<additionalClasspathElements>
+						<additionalClasspathElement>${java.home}/lib/tools.jar</additionalClasspathElement>
+					</additionalClasspathElements>
+					-->
+
+					<environmentVariables>
+						<JBOSS_HOME>${jboss.home}</JBOSS_HOME>
+						<!-- make sure we do NOT pickup any unwanted byteman jars -->
+						<BYTEMAN_HOME></BYTEMAN_HOME>
+					</environmentVariables>
+
+					<systemPropertyVariables>
+						<useRandomPorts>true</useRandomPorts>
+						<java.awt.headless>${java.awt.headless}</java.awt.headless>
+						<server.launcher.vmargs>${aries.server.launcher.vmargs}</server.launcher.vmargs>
+
+						<!-- 
+							If we close the port after a client in the same JVM has opened a keep-alive 
+							connection, on some Linux's, the socket remains consumed until some timeout occurs. 
+							That may cause some tests to timeout/hang. 
+						-->
+						<org.apache.cxf.transports.http_jetty.DontClosePort>false</org.apache.cxf.transports.http_jetty.DontClosePort>
+						
+						<!-- make sure we do NOT pickup any unwanted byteman jars -->
+						<org.jboss.byteman.home></org.jboss.byteman.home>
+						<org.jboss.byteman.verbose>true</org.jboss.byteman.verbose>
+						<org.jboss.byteman.contrib.bmunit.verbose>true</org.jboss.byteman.contrib.bmunit.verbose>
+
+						<arquillian.launch>hornetQ01_local</arquillian.launch>
+						<NODE_01>c:/software/jboss-as-7.1.1.Final-node1</NODE_01>
+						<NODE_02>c:/software/jboss-as-7.1.1.Final-node2</NODE_02>
+						<NODE_03>c:/software/jboss-as-7.1.1.Final-node3</NODE_03>
+						<NODE_04>c:/software/jboss-as-7.1.1.Final-node4</NODE_04>
+						<NODE_05>c:/software/jboss-as-7.1.1.Final-node5</NODE_05>
+					</systemPropertyVariables>
+				</configuration>
+               </plugin>
+		</plugins>
+
+		<!-- For scm deployment -->
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-scm</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+
+			<extension>
+				<groupId>org.apache.maven.scm</groupId>
+				<artifactId>maven-scm-manager-plexus</artifactId>
+				<version>1.0</version>
+			</extension>
+
+			<extension>
+				<groupId>org.apache.maven.scm</groupId>
+				<artifactId>maven-scm-provider-svnexe</artifactId>
+				<version>1.0</version>
+			</extension>
+		</extensions>
+	</build>
+
+    <!--
+	<repositories>
+		<repository>
+			<id>MavenCentral</id>
+			<name>Maven Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>WSO2 Maven Repository</id>
+			<name>WSO2 Maven Repository</name>
+			<url>http://dist.wso2.net/maven2</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+    -->
+
+    <!--
+	<pluginRepositories>
+		<pluginRepository>
+			<id>MavenCentral</id>
+			<name>Maven Plugin Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+		</pluginRepository>
+	</pluginRepositories>
+    -->
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-api</artifactId>
+			<version>1.13.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.sonatype.aether</groupId>
+			<artifactId>aether-util</artifactId>
+			<version>1.13.1</version>
+		</dependency> 
+
+		<!--  
+		<dependency>
+			<groupId>org.apache.woden</groupId>
+			<artifactId>woden</artifactId>
+			<version>1.0M8</version>
+		</dependency>
+		-->
+
+		<!--  
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>9.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-xpath</artifactId>
+			<version>8.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-xqj</artifactId>
+			<version>8.7</version>
+			<scope>test</scope>
+		</dependency>
+		-->
+		
+		<dependency>
+			<groupId>org.apache.ode</groupId>
+			<artifactId>ode-bpel-compiler</artifactId>
+			<version>1.3.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.woden</groupId>
+					<artifactId>woden</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jibx</groupId>
+					<artifactId>jibx-bind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jibx</groupId>
+					<artifactId>jibx-run</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-harness</artifactId>
+			<version>2.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
+

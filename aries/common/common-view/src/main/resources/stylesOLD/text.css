@@ -1,0 +1,86 @@
+.text1,
+.text2,
+.text3,
+.text4,
+.text5,
+.text6,
+.text7,
+.text8,
+.text9,
+.text10,
+.text11,
+.text12,
+.text13,
+.text14,
+.text15,
+.text16,
+.text17,
+.text18,
+.text20,
+.text24 {
+	color: black;
+	font-weight: normal;
+	font-family: arial, helvetica, sans-serif;
+}
+
+.text24 { font-size: 24px; }
+.text20 { font-size: 20px; }
+.text18 { font-size: 18px; }
+.text17 { font-size: 17px; }
+.text16 { font-size: 16px; }
+.text15 { font-size: 15px; }
+.text14 { font-size: 14px; }
+.text13 { font-size: 13px; }
+.text12 { font-size: 12px; }
+.text11 { font-size: 11px; }
+.text10 { font-size: 10px; }
+.text9 { font-size: 9px; }
+.text8 { font-size: 8px; }
+.text7 { font-size: 7px; }
+
+.header1,
+.header2,
+.header3,
+.header4,
+.header5,
+.header6,
+.header7,
+.header8,
+.header9,
+.header10,
+.header11,
+.header12,
+.header13,
+.header14,
+.header15,
+.header16,
+.header17,
+.header18,
+.header20,
+.header24 {
+	font-weight: bold;
+	font-family: arial, helvetica, sans-serif;
+}
+
+
+.header24 { font-size: 24px; }
+.header20 { font-size: 20px; }
+.header18 { font-size: 18px; }
+.header17 { font-size: 17px; }
+.header16 { font-size: 16px; }
+.header15 { font-size: 15px; }
+.header14 { font-size: 14px; }
+.header13 { font-size: 13px; }
+.header12 { font-size: 12px; }
+.header11 { font-size: 11px; }
+.header10 { font-size: 10px; }
+.header9 { font-size: 9px; }
+.header8 { font-size: 8px; }
+.header7 { font-size: 7px; }
+
+.header1 { font-size: 24px; }
+.header2 { font-size: 20px; }
+.header3 { font-size: 18px; }
+.header4 { font-size: 17px; }
+.header5 { font-size: 16px; }
+.header6 { font-size: 15px; }

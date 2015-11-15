@@ -1,0 +1,10 @@
+Distributed programming with shared state is always a challenge.
+
+Network latency is too high for fine grained access and it
+is hard to execute fine grained methods in a transaction
+context over the network.
+
+A remote business interface should be only provided if it
+is going to be used from outside the JVM and not injected
+into Servlet, Backing Bean or other web component.
+

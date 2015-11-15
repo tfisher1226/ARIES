@@ -1,0 +1,51 @@
+<p:document 
+	title="Library Request"
+	pageSize="LETTER"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich" 
+	xmlns:p="http://jboss.com/products/seam/pdf">
+
+	<f:facet name="header">
+		<p:font size="8">
+			<p:header borderWidth="0" alignment="center">
+				<p:paragraph indentationLeft="10">SGI-USA Membership Name List</p:paragraph>
+			</p:header>
+		</p:font>
+		<p:font size="5">
+			<p:footer borderWidthTop="1" borderColorTop="black" borderWidthBottom="0" alignment="left">
+	      		Copyright (c) SGI-USA - #{helper.toTimeString(currentDate)}
+	    	</p:footer>
+		</p:font>
+	</f:facet>
+
+	<p:paragraph>
+		<p:table columns="7" widthPercentage="100" widths="1 2 8 10 6 6 14" spacingBefore="0">
+			<p:font size="12">
+				<p:cell colspan="7" alignment="top">SGI-USA Membership Name List</p:cell>
+			</p:font>
+			<p:font size="6">
+				<p:cell></p:cell>
+				<p:cell>Div.</p:cell>
+				<p:cell>Name</p:cell>
+				<p:cell>Email</p:cell>
+				<p:cell>Home Phone</p:cell>
+				<p:cell>Cell Phone</p:cell>
+				<p:cell>Address</p:cell>
+			</p:font>
+			<p:font size="5">
+				<ui:repeat var="rowObject" value="#{memberListManager.memberList}">
+					<p:cell></p:cell>
+					<p:cell>#{rowObject.record.division}</p:cell>
+					<p:cell>#{helper.toFullName(rowObject.record)}</p:cell>
+					<p:cell>#{rowObject.record.emailAddress}</p:cell>
+					<p:cell>#{helper.toPhoneString(rowObject.record.homePhone)}</p:cell>
+					<p:cell>#{helper.toPhoneString(rowObject.record.cellPhone)}</p:cell>
+					<p:cell>#{helper.toAddressString(rowObject.record.streetAddress)}</p:cell>
+				</ui:repeat>
+			</p:font>
+		</p:table>
+	</p:paragraph>
+</p:document>

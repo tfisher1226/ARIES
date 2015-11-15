@@ -1,0 +1,152 @@
+
+
+Message Types:
+--------------
+
+OrderRequest(BookList)
+OrderAccepted(Invoice)
+OrderRejected(Reason)
+
+PurchaseRequest(Payment)
+PaymentAccepted(Receipt
+PaymentRejected(Reason)
+
+BookQuery(BookList)
+BooksAvailable(BookList)
+BooksUnavailable(BookList)
+
+BookReservation(BookList)
+BooksReserved(BookList)
+BooksUnavailable(BookList)
+
+Exception(Reason)
+
+
+Role Types:
+-----------
+
+order-accepted-listener
+book-order-client
+
+seller-order-listener
+seller-order-client
+seller-payment-listener
+seller-payment-client
+
+book-available-listener
+book-unavailable-listener
+
+supplier-order-listener
+supplier-order-client
+
+payment-accepted-listener
+
+
+Services
+--------
+
+Buyer:
+orderBooks
+
+Seller:
+orderBooks
+purchaseBooks
+
+Supplier:
+queryBooks
+reserveBooks
+shipBooks
+
+
+protocol Bookshop {
+
+    begin {
+        buyer.orderBooks(books) {
+            end;
+        }
+    }
+
+    participant buyer {
+        action orderBooks(books)  {
+            invoke seller.order(books) {
+                message OrderAccepted: {
+                    invoke seller.purchaseBooks(payment) {
+                        message PaymentAccepted: {
+                            print(receipt);
+                            end;
+                        }
+                        message PaymentRejected: {
+                            end;
+                        }
+                    }
+                }
+                message OrderRejected: {
+                    end;
+                }
+            }
+        }
+    }
+
+    participant seller {
+        action orderBooks(books) {
+            invoke suppliers.query(books), timeout=3m, min=1, max=5 {
+                message BooksAvailable:
+                    aggregate(min($bookInfo.price));
+                }
+                message Exception: {
+                    reply(Exception);
+                }
+                timeout: {
+                    done;
+                }
+                done {
+                    option: {
+                        reply(OrderAccepted(invoice));
+                    }
+                    option: {
+                        reply(OrderRejected);
+                    }
+                }
+            }            
+        }
+
+        action purchaseBooks(payment) {
+            reply(Receipt);
+        }
+    }
+
+    participant supplier {
+        action queryBooks(books) {
+            option: {
+                reply(BooksAvailable);
+            }
+            option: {
+                reply(BooksUnavailable);
+            }
+        }
+
+        action reserveBooks(books) {
+            option: {
+                reply(BooksReserved);
+            }
+            option: {
+                reply(BooksUnavailable);
+            }
+        }
+
+        action shipBooks(books) {
+            invoke shipper.shipBooks(books) {
+                message BooksShipped: {
+                    post(BooksShipped);
+                }
+            }
+        }
+    }
+
+    participant shipper {
+        action shipBooks(books) {
+            reply(BooksShipped);
+        }
+    }
+
+}

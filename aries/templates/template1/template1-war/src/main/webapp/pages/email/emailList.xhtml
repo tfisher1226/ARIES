@@ -1,0 +1,86 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- Organization List Page -->
+	<ui:define name="content">
+
+		<script type="text/javascript">
+		function showPromptRemoveMember(title, rerenderList) {
+			showPromptRemoveMemberMessage('prompt', title, 'Remove Membership Record', 'Do you wish to continue?', true, 'removeMember', rerenderList)
+			setCursorDefault(); 
+		}
+		</script>
+	
+		<a4j:form>
+		    <a4j:jsFunction 
+		    	immediate="true" 
+		    	ajaxSingle="true" 
+		    	requestDelay="0"
+		    	name="viewMembers"
+		    	action="#{organizationManager.viewMembers}"
+				oncomplete="hideProgress(); setCursorDefault()"
+				reRender="organizationViewer">
+			</a4j:jsFunction>
+		</a4j:form>
+	
+		<!-- INCLUDES -->
+		<ui:include src="memberListColumnSelectPanel.xhtml"/>
+		<ui:include src="organizationInfoDialogOLD.xhtml"/>
+		<ui:include src="organizationSelectDialog.xhtml"/>
+		<ui:include src="divisionSelectDialog.xhtml"/>
+		<ui:include src="activityGroupSelectDialog.xhtml"/>
+		<ui:include src="leadershipInfoDialog.xhtml"/>
+		<ui:include src="leadershipRoleDialog.xhtml"/>
+
+		<!-- DIALOG INCLUDES -->
+		<ui:include src="/common/dialog/messageDialog.xhtml">
+			<ui:param name="dialogKey" value="PromptRemoveMember"/>
+			<ui:param name="dialogRerenderList" value="organizationViewer"/>
+		</ui:include>
+
+		<!--  
+		<ui:include src="activityGroupSelectDialog.xhtml"/>
+		-->
+
+		<!-- FORM -->
+		<h:form id="emailListForm">
+
+			<!-- NAVIGATION -->
+			<ui:include src="organizationListHeader.xhtml"/>
+	
+			<!-- MESSAGES -->
+			<ui:include src="/messages.xhtml">
+				<ui:param name="module" value="organizationList"/>
+			</ui:include>
+
+			<rich:messages >
+			</rich:messages>
+			
+			<!-- CONTENT -->
+			<div class="section">
+				<h:panelGrid styleClass="layoutPane" layout="block" columns="2" columnClasses="formColumn, formColumnFillHorizontal" style="width: 100%; background-color: inherit">
+
+					<!-- Organization Navigator -->
+					<h:panelGroup layout="block" style="width: 320px">
+						<ui:include src="organizationNavigator.xhtml"/>
+					</h:panelGroup>
+	
+					<!-- Organization Viewer -->
+					<h:panelGroup layout="block" style="padding-left: 20px">
+						<ui:include src="organizationViewer.xhtml"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

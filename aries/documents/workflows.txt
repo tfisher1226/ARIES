@@ -1,0 +1,31 @@
+
+ICAMS Workflows
+-----------------
+
+
+Initiator                   Workflow
+---------                   ---------
+
+Financial systems admin     Create delegation of authority
+Delegator
+
+Financial systems admin     Create exception to policy
+Delegator                   
+
+Financial systems admin     Grant an authorization
+Delegator                   
+
+Financial systems admin     Revoke an authorization
+
+Financial systems admin     Approve an authorization
+Approver                    
+
+Requestor                   Create an authorization to be granted
+
+Financial systems admin     Override previously approved delegation/exception
+
+Financial systems admin     Update standard authorization matrix
+
+
+
+

@@ -1,0 +1,6 @@
+http://wiki.eclipse.org/EclipseLink/Examples/MOXy/JPA/Relationships
+
+To specify the EcliseLink MOXy JAXB implementation you need to include a jaxb.properties file in with your model classes (i.e. Contract) with the following entry:
+
+javax.xml.bind.context.factory=org.eclipse.persistence.jaxb.JAXBContextFactory
+

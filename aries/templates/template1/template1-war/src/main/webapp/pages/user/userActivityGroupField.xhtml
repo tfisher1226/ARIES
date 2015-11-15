@@ -1,0 +1,94 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel id="userActivityGroupField">
+		<ui:include src="userActivityGroupMenu.xhtml"/>
+
+		<a4j:region>
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				value="#{user}" 
+				rows="1"
+				rendered="#{activityGroupList.rowCount == 0}"
+				onRowMouseOver="userDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="userDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="userDialogFieldHighlighter.processTableRowMouseOut(this)"
+				selectionMode="single" 
+				sortMode="single" 
+				rowClass="tableRow height14"
+				headerClass="tableHeader" 
+				activeClass="tableRowActive"
+				selectedClass="tableRowSelected"
+				styleClass="table noGrid noBorder noSelection"
+				style="border-left: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="userActivityGroupMenu" operation="show"/>
+
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="userActivityGroupDialog" operation="show"/>
+
+				<rich:column 
+					sortable="false">
+					<h:outputText value="none specified" style="color: #aaa"/>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:region>
+
+		<a4j:region>
+			<rich:dataTable 
+				width="100%"
+				var="listObject"
+				rowKeyVar="index" 
+				border="1"
+				value="#{activityGroupList}" 
+				rows="#{activityGroupList.rowCount}"
+				rendered="#{activityGroupList.rowCount > 0}"
+				onRowMouseOver="userDialogFieldHighlighter.processTableRowMouseOver(this)"
+				onRowMouseDown="userDialogFieldHighlighter.processTableRowMouseDown(this)"
+				onRowMouseOut="userDialogFieldHighlighter.processTableRowMouseOut(this)"
+				selectionMode="single" 
+				sortMode="single" 
+				rowClass="smallTableRow"
+				headerClass="smallTableHeader" 
+				activeClass="smallTableRowActive"
+				selectedClass="smallTableRowSelected"
+				styleClass="table noGrid noBorder noSelection"
+				style="border-left: 1px solid #ccc; background-color: #fff">
+
+				<rich:componentControl 
+					event="onRowContextMenu"
+					for="userActivityGroupMenu" operation="show"/>
+
+				<rich:componentControl 
+					event="#{openActionTrigger}"
+					for="userActivityGroupDialog" operation="show"/>
+
+				<a4j:support 
+					event="onRowMouseDown" 
+					immediate="true"
+					requestDelay="0"
+					disableDefault="true"
+	                action="#{activityGroupListManager.setSelection(listObject)}"/>
+
+				<rich:column sortable="false">
+					<h:outputText value="#{listObject.activityGroup}"/>
+				</rich:column>
+			</rich:dataTable>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

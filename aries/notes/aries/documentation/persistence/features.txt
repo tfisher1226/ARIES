@@ -1,0 +1,13 @@
+
+Hierarchical data
+
+multiple query files one for each unit, while only one persistence.xml file with all units included.
+
+primary key options potentially using external keyStore.
+
+default: cascade=ALL
+
+
+Restrictions
+- no extension of non-concrete types, in other words only abstract types can be extended.
+

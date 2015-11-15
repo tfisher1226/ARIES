@@ -1,0 +1,60 @@
+http://wiki.parleys.com/display/PARLEYS/Home#title=SOA%20Development%20using%20JBossESB;talk=16285764;slide=3
+
+
+What is SOA?
+
+-type of distributed system where the agents are services
+-adoption essential to the business agility and IT flexibility promised by WS
+-SOA does not come shrink wrapped and ready to deploy - many things to configure
+-represents / requires a different development mentality and methodology
+-not about exposing individual object on the "bus"
+-must meet needs of proper handling of business data
+
+
+What characterizes SOA?
+
+-loose coupling
+-degrees of coupling
+-service registration
+-decentralization of resources
+-data repository access and management
+-business rule specification and management
+-automated message delivery and transformation
+-service orchestration
+-transaction processing
+-fault tolerance
+-clustering
+-governance
+
+
+How is SOA different from EAI?
+
+-EAI (enterprise application integration) evolved in response to meeting direct business needs
+-purpose: to make diverse applications and partner systems in an enterprise communicate
+-focus: reliability and consistency as well as immediate practicality
+    (typically driven by need to meet business objectives in cost-effective ways)
+-typically based on centralized communication backbone
+    -hub and spoke
+    -enterprise bus
+-SOA calls for increased degrees of decentralization
+-SOA more like fantasy where EAI is practicality
+
+
+How is SOA distinguished from Web Services?
+
+-SOA is an architecture while web-services define an interoperability that supports SOA
+-SOA is about orchestrating and composing services to make higher level services 
+-web-services make corresponding technologies available in cross platform environments
+-vendors have often slapped web-services on their products calling them service-oriented
+    (this amounts to little more than putting lipstick on the pig)
+-web-services on top of messaging middleware, does not make SOA 
+-SOA implementations are often highly asynchronous whereas web-services tend to 
+    lend themselves to being synchronous
+-use of web services is only one way to go about building SOA
+
+
+
+ESB
+
+-can act as a web-server, mail server, ftp server, file-server etc...
+

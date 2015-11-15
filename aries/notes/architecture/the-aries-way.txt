@@ -1,0 +1,44 @@
+Benefit is to create realy simple de-coupled components. And then progress to build up your system as hierarchical compositions of these components.
+
+These components are well-structured where the structure is dictated by the selection of "parts" being used (at that snapshot in time).
+
+I have found myself all too guilty of developing big monolithic components, but when I step back and simplify the design, many of the problems go away.
+
+We feel the following component types together form the appropriate set of building blocks required to establish architectures.
+
+The structure, organization and breakdown of functions is unique to each type.
+
+
+emphasize:
+        -seperation of concerns
+        -testability
+        -ease of maintenance
+        -ease of management
+        -ease of distributablity and replication
+        -ease of changing data sharing in different ways
+        -minimizing the nightmare of dependency management
+        -minimizing the challenges and tasks invloved in adequate version management
+
+Each module executable / testable in isolation
+
+benefits:
+        -helps identify and eliminate unneccessary (or redundant) tests
+        -mixing and substituting of adapters can be done without recompilation
+        -enabled simplistic view of underlying architecture for management to review and understand
+        -enabled recording of events for playback
+        -application easily executable in headless mode
+        -ease of knowing when and where to use which type of test
+        -ease of knowing when the testing "is enough" i.e. when the tests that have been provided are thorough in terms of testing "what needs to be tested"
+        -easy identificaton of use-cases
+        -reinforces the preferred way of writing use cases 
+                    -A common mistake is to write use cases that contain intimate knowledge of the technology with in the implementation of the module being used/tested.
+
+Use-cases are designed for each module, characterized by that module's type.
+The use cases are shorter, easier to read, less expensive to maintain, making the entire architecture more stable over time.
+
+Layered description of architecture is not appropriate
+
+
+
+
+

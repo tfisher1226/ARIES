@@ -1,0 +1,284 @@
+
+Avoid Unneeded Features
+
+-Avoid unnecessary features for maximum JMS performance.
+
+JMS provides a powerful messaging facility with support for transactions, persistence, durable subscribers, and message selection and sorting. While these are important features of WebLogic's JMS implementation, they do affect the messaging system's performance. Selecting the correct acknowledgment mode or using nonpersistent messages where appropriate can greatly increase the throughput of a JMS application.
+
+
+Selection Performance Costs
+
+-Use selectors that only examine message header fields. A selector that examines message properties will be slower, and examining the message body produces the slowest message selectors.
+
+JMS message selectors are a convenient and powerful means to filter messages from a queue or topic, but care must be taken to ensure that selection does not deter overall system performance.
+
+Every JMS message sent to a destination must be compared against the consumers' message selectors. Message selectors that only consider message header fields will run the fastest. A selector that uses the message properties is slower, and if a selector examines the message body, it will be even slower.
+
+-Message selectors are more efficient when used with topics than queues.
+
+Message selection is well suited to JMS topics. The WebLogic JMS implementation can efficiently evaluate the selectors and deliver the messages to the appropriate consumers. If no topic consumers select the message, it does not need to be retained.
+
+However, message selection with queues can incur performance overheads if it is not used carefully. When a consumer does not select a message, it must be retained in the queue. Each selector must be compared against every undelivered message in the queue. If a message is never selected, it continues to consume resources.
+
+
+Using Asynchronous Message Consumers Where Possible
+
+-Use asynchronous message consumers.
+
+JMS supports both synchronous and asynchronous message consumers. It is recommended that, where possible, asynchronous message consumers be used. Asynchronous message consumers provide better resource usage because threads are not blocked waiting for messages.
+
+Synchronous message consumers always block a thread in the client. If the receive call is made from an external client, the WebLogic JMS implementation will not block a thread in the WebLogic Server. This is important for server scalability because the server cannot dedicate a blocking thread to each client. However, the thread in the client is blocked until the receive call returns.
+
+If a synchronous receive call is made from within the WebLogic Server, a server thread must block until the receive call returns. Threads are valuable resources within a scalable server, and it is unacceptable to block these threads for long periods of time. Asynchronous consumers make better use of threads, especially within the server process.
+
+
+Prefer JTA Transactions to Transacted Sessions
+
+-Use JTA UserTransactions rather than transacted sessions.
+
+Many JMS applications require transactional messaging. Transacted sessions provide a convenient means to use transactions within JMS, but other components such as EJBs or JDBC access cannot participate in these transactions. The JTA UserTransaction interface enables nontransacted sessions to participate in a transaction that can encompass other components, including JDBC or EJB. However, JMS does not provide a method to include an asynchronous consumer's message receipt in a JTA transaction. The problem is that there is no way to explicitly start a UserTransaction before the onMessage() callback. In this case, transacted sessions could be used or, as we'll see in Chapter 11, EJB's message-driven beans are asynchronous message listeners whose message receipt may optionally participate in a JTA transaction.
+
+
+MS Transactions and Error Handling
+
+-Send invalid messages to a separate error destination.
+
+Large applications are often divided into multiple systems or separate processes, and JMS provides the communication between these subsystems. This workflow is PTP and is modeled with a queue. To ensure that messages are not lost, the JMS work is handled within a transaction. In production applications, it is possible that a message will contain application data that includes invalid data or errors. A transactional JMS client needs to be careful when handling invalid messages. If the transaction aborts, the message will be returned to the queue and delivered again to the consumer. Unless this error is transient, the second delivery will cause a transaction rollback, and the process continues.
+
+One common solution is to introduce a separate error destination. When an invalid message is discovered, the message is sent to the error destination, and the JMS transaction commits. This ensures that the message is not redelivered. A message consumer on the error queue can handle the invalid messages appropriately. A simple solution is to use JavaMail to send an email to the customer or system administrator informing them of the error condition.
+
+
+Another common solution separates the message acknowledgment from the JDBC or EJB transaction. This is desirable if the JDBC or EJB layer will detect that the message is invalid and abort the transaction. The message consumer needs to ensure that message is still acknowledged. The JMS consumer uses the CLIENT_ACKNOWLEDGE or AUTO_ACKNOWLEDGE modes. When a message is received, the transaction will begin; the JDBC or EJB work is performed within the transaction; and the message consumer commits or aborts the transaction.
+
+Then, the message consumer acknowledges the message. This opens the possibility that the transaction will commit, but the system will fail before the message is acknowledged. The application can often prepare for this case by making the message actions idempotent or by detecting this situation. For instance, an e-commerce application might send a JMS message that processes new customer accounts. If each message includes a customer ID number, the message consumer can determine whether this customer has already been processed.
+
+
+
+Best Practices
+
+Keep track of whether a message has already been recieved and processed (i.e. by tracking message ID and status of associated processing).
+
+
+
+Optimization with Connection
+
+A connection represents an open connection (TCP/IP) from the JMS client to the JMS server. Connection is used to create Session objects that in turn create message producers and consumers.
+
+A Connection object is created by ConnectionFactory  that could either be a TopicConnection or a QueueConnection.
+
+When you create and use a Connection, consider the following optimization techniques : 
+
+   1. Start the Connection when appropriate
+   2. Process messages concurrently
+   3. Close the Connection when finished
+
+1. Start the Connection when appropriate
+
+You need to start a  Connection using the start() method to start allowing the flow of messages from the producer to the JMS server. When do you start the Connection?
+
+If you start a connection before starting the subscriber/Receiver (consumer) then the messages have to wait in the JMS server or they persist if they are durable messages, this is an unnecessary overhead so to avoid this ,first  start Consumers and then start the Producer Connection.
+
+2. Process messages concurrently
+
+JMS provides a facility to process messages concurrently by getting a ConnectionConsumer that uses server session pool. The server session pool is a pool of Sessions, each one executes separate message concurrently. This facility gives an application ability to process messages concurrently thus improving performance.
+
+You can create ConnectionConsumer  using these methods.
+
+For Queues :
+
+public ConnectionConsumer createConnectionConsumer(
+       Queue queue, 
+       String messageSelector, 
+       ServerSessionPool sessionPool, 
+       int maxMessages) throws JMSException
+
+For Topics :
+
+public ConnectionConsumer createConnectionConsumer(
+       Topic topic, 
+       String messageSelector, 
+       ServerSessionPool sessionPool, 
+       int maxMessages) throws JMSException
+
+In these methods the main parameters are maxMessages and ServerSessionPool. maxMessages denote the maximum number of messages that can be simultaneously assigned to a server session. ServerSessionPool is an administered object that you configure in vendor specific manner. This process works similar to Message driven beans where you can process multiple messages concurrently. This gives good performance and scalability. Some of the JMS vendors support this facility, but some vendors don't. So see your JMS server documentation for detailed information .
+
+3. Close the Connection when finished
+
+You need to close the external resources like network  or a database connection explicitly as soon as you are done with them. Similarly a JMS connection is also a TCP/IP  connection to the JMS server , you need to close the Connection using the close() method as and when you finish your work ,so that when you close the Connection it closes it's Session and Producer/Consumer objects also.
+
+
+
+
+
+JMS Deployment Practices:
+
+Configuration Best Practices:
+
+The following sections outline a basic procedure on how to configure JMS applications:
+
+    Configure JMS Servers and Persistent Stores.
+
+    Configure a JMS Module
+
+    Configure JMS Resources
+
+    Configure SAF Agents, Stores, and Imported Destination
+
+Configure JMS Servers and Persistent Stores.
+
+Before you start configuring JMS servers and persistent stores, consider the following:
+
+    Destinations, connection factories, and other JMS resources are configured separately from their host JMS servers and persistent stores. The best practice steps for configuring JMS resources will be described later.
+
+    If you plan to leverage WebLogic distributed destinations, you will need to configure a WebLogic cluster with a JMS server and a custom persistent store on each WebLogic server in the cluster. WebLogic JMS distributed destination features require a WebLogic cluster to work.
+
+    Migratable targets are only supported with clusters. If you are not using a cluster, you may want to reconsider and use a cluster of size one. This enables the use of migratable targets, and migratable targets enable a useful restart-in-place capability as mentioned below. This also helps "future-proof" your application, as it simplifies the process of expanding from a single server to multiple servers.
+
+Use the following steps to configure JMS servers and persistent stores:
+
+    Create a custom store on each WebLogic server that will host a JMS server. If there's already a custom store on a WebLogic server, you can skip this step as its usually more convenient and more performant for services to share a store. (Why use a custom store? Custom stores provide more flexibility in tuning and administration. In addition, the default file store is not migratable -- only custom stores are migratable.)
+
+    In a cluster, target each store to its host server's "default migratable target". If you have decided not to use a cluster, target each store directly to its host server. Migratable targets enable restart-in-place options on a store failure, and also enable service migration options.
+
+    It is recommended to always target to migratable targets when available (instead of direct server targets). Migratable targets are compatible with the whole server migration option, and usually should be configured even when whole server migration is the primary fail-over option.
+
+    Configure a JMS server on each WebLogic server. Configure the JMS server to reference the store that was created in step 1. Target the JMS server to the same target that was used for the store. Multiple JMS servers can reference the same store.
+
+    Configure message count quotas on each JMS server. There is no default quota, so configuring one helps protect against out-of-memory conditions. Rule of thumb: conservatively assume that each message consumes 512 bytes of memory even if it is paged out.
+
+    Although JMS paging is enabled by default, verify that the default behavior is valid for your environment.
+
+Configure a JMS Module
+
+A homogenous set of JMS servers is either a single JMS server that is meant to host non-distributed destinations, or a set of similarly configured JMS servers that each host the same distributed destination. Configure a JMS module and a single associated subdeployment for each homogenous set of JMS servers:
+
+    Create a system module. Target it to a single cluster (if using clusters) or a single WebLogic Server instance. You must always target the module even when leveraging subdeployments.
+
+    It is almost always preferable to use system modules instead of deployable application modules. System modules can be created using the administration console, the JMX API (Java MBeans), or WLST, there is no equivalent tooling for deployable modules. The only way to modify deployable modules is to manually edit the XML and redeploy.
+
+    Create exactly one subdeployment per module. Subdeployments are sometimes referred to as "advanced targeting" on the administration console. A single subdeployment aids simplicity - it's much easier for third parties to understand the targeting, and it reduces the chances of making configuration errors. If a single subdeployment is not sufficient, create two modules.
+
+    Populate the subdeployment only with JMS servers - not WebLogic servers. Only include the JMS servers that you wish to host destinations. This ensures that when the JMS resources are configured, they are targeted to the correct JMS servers. For modules that support non-distributed destinations, the subdeployment must only reference a single JMS Server. If you have a mix of distributed and non-distributed destinations, use two modules each with its own subdeployment.
+
+Configure JMS Resources
+
+Configure your JMS resources and target them properly.
+
+    Create destinations and target them to a single subdeployment (called "advanced targeting" on the console). Note that only distributed destinations can be targeted to a subdeployment target that resolves to multiple JMS servers. If you have a mix of distributed destinations, stand-alone destinations, and imported destinations, use two modules each with its own subdeployment. See Targeting Best Practices.
+
+    Create and use custom connection factories instead of using default connection factories. Default connection factories are not tunable.
+
+    In most cases, you can use default targeting with connection factories as default targeting causes the resource to inherit the module's target. For connection factories that are only used by remote clients, use the module's subdeployment target.
+
+Configure SAF Agents, Stores, and Imported Destination
+
+SAF agents, their stores, and their imported destinations should follow the same best practices as JMS servers, their stores, and JMS destinations. Avoid targeting a SAF agent at a cluster, as such a SAF agent is not be able to use migratable targets.
+
+
+
+
+Targeting guidelines for JMS resources:
+
+    Avoid default targeting, WebLogic server targeting, and cluster targeting with destinations. Instead use advanced targeting (subdeployment targeting) for destinations and ensure that the subdeployment references only JMS servers or SAF agents.This applies to all destination types, including non-distributed, distributed, and imported.
+
+    Even if the current JMS Servers or SAF Agents in your domain are only used for your specific application, this is a best practice because:
+
+        New JMS Servers or SAF Agents that are unrelated to your current application can be introduced by other applications, web services, or 3rd-party products.
+
+        In the future, your application may require different destinations and different JMS Servers or SAF Agents for scalability or management purposes.
+
+    Always use advanced targeting when configuring Web Services deployments and error queues, this includes both development and production environments.
+
+    To use an error destination within a distributed queue, it must be targeted to the same subdeployment as its parent destination.
+
+    In most cases, you can use default targeting with connection factories as default targeting causes the resource to inherit the module's target. For connection factories that are only used by remote clients, use the module's subdeployment target.
+
+
+
+
+
+Integration and Multi-Domain Best Practices:
+
+The following section provides best practice information for integration and multi-domain environments using WebLogic Server:
+
+    For server side applications that communicate with destinations in a remote WebLogic cluster or server, see "Integrating Remote JMS Providers" in Programming JMS for Oracle WebLogic Server.
+
+    Interoperating WebLogic Server domains have the following restrictions:
+
+        Domain names must be unique.
+
+        WebLogic server names must be unique, even if they are in two different domains.
+
+        JMS server names must be unique, even if they are in two different domains.
+
+        Interoperating domains may have special Security considerations.
+
+
+
+
+
+Understanding WebLogic JMS Client Options
+
+For client applications (applications that have a runtime environment independent of WebLogic Server) there are multiple JMS client options, including: Java, .NET, and C clients. See "JMS Clients" in Programming Stand-alone Clients for Oracle WebLogic Server.
+
+Note:
+WebLogic JMS clients do not directly support foreign transaction managers. Use the WebLogic TM if possible. For advanced users, the transaction subsystem Interposed Transaction Manager feature may be used as an XA resource.
+Understanding WebLogic URLs
+
+Applications that are communicating with a remote WebLogic Server instance or cluster must specify a URL when creating their JNDI InitialContext objects and/or setting application attributes in order to connect to a server or a cluster.
+
+    Do not specify URLs for applications that run on the same server or cluster as their JMS resources. When an initial context is created without specifying URLs, it automatically references the local server or cluster JNDI.
+
+    If a URL resolves to multiple addresses, WebLogic Server clients will randomly select an address in the list to start with and then automatically try each address in turn until one succeeds.
+
+    In production systems, consider using DNS round robin or a hardware load balancer for initial hostname resolution rather than using the multiple host/port URL notation shown in URL syntax.
+
+URL syntax
+
+The WebLogic URL syntax is:
+
+[t3|t3s|http|https|iiop|iiops]://address[,address]...
+
+where
+
+    address = hostlist : portlist
+
+    hostlist = hostname [,hostname]...
+
+    portlist = portrange [+portrange]...
+
+    portrange = port [-port]
+
+Use port-port to indicate a port range, and + to separate multiple port ranges. For example, a simple address is typically something like t3://hostA:7001; the address t3://hostA,hostB:7001-7002 is equivalent to the following addresses.
+
+    t3://hostA,hostB:7001+7002
+
+    t3://hostA:7001-7002,hostB:7001-7002
+
+    t3://hostA:7001+7002,hostB:7001+7002
+
+    t3://hostA:7001,hostA:7002,hostB:7001,hostB:7002
+
+Strict Message Ordering Best Practices
+
+If strictly ordered message processing is required, then application design and configuration needs to carefully take this requirement into account.
+
+The simplest and most capable option is to leverage the WebLogic JMS Unit-of-Order feature. This option normally requires minimal or even no changes to applications, plus it works with distributed destinations, scheduled messages, delayed messages, transactions, and store-and-forward. See "Using Message Unit-of-Order" in Programming JMS for Oracle WebLogic Server.
+High Availability Best Practices
+
+If High Availability (HA) or scalability is a concern, develop applications so that they leverage clustered WebLogic features. This approach is best taken in the early configuration and application design stage as it is usually difficult process to change a non-clustered application into a clustered application.
+
+In WebLogic JMS, a message is only available if its host JMS server for the destination is running. If a message is in a central persistent store, the only JMS server that can access the message is the server that originally stored the message. WebLogic includes features for automatically restarting and/or migrating a JMS server after a failure. It also includes features for clustering (distributing) a destination across multiple JMS servers within the same cluster.
+
+HA is normally accomplished using both:
+
+    Distributed destinations
+
+    HA Servers/Services. JMS Servers can be automatically restarted and/or migrated using either Whole Server Migration or Automatic Service Migration.
+
+Distributed Queues vs Distributed Topics
+
+Distributed queues are generally fairly easy to apply to an arbitrary clustered queueing use case. Distributed topics have a series of fundamental limitations that can restrict their applicability.
+
+
+

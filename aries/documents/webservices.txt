@@ -1,0 +1,156 @@
+
+
+Goals:
+-ease of implementation
+-ease of maintenance
+-no dependence on vendor
+-adherence to current and emerging standards
+-decoupled medium - no dependence on soap
+
+-Get rid of XML configuration
+XML configuration for Web applications was always suspect it's tedious and error prone, and it's best delegated to a framework, perhaps through annotations or other conventions.
+
+-Simplify navigation
+
+
+
+What makes Web-service communication really robust is when it is backed approproately with a core backbone enterprise messaging system.  Likewise the same for system monitoring, notification and management.  When backed with appropriate enterprise communication medium, large scale monitoring and notification (large scale in terms of information quantity, frequency and diversity) can be realized.  Queues are confuigured using a rule based system that tells individual queues and groups of queues when and where to overflow into disk and into database.
+
+
+
+
+Turning on WS-RM 1.0
+
+http://community.jboss.org/wiki/JBossWS-CXFWS-ReliableMessagingtutorial
+
+In order to turn on WS-RM in JBossWS-CXF four steps are necessary:
+
+-extend WSDL with WS-Policy containing both WSRM and WS-Addressing policy 
+-provide jbossws-cxf.xml endpoint configuration file 
+-provide client CXF configuration 
+-update client code to read CXF configuration file
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- Created WS-Policy with WSRM addressing assertions -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <wsp:UsingPolicy/>
+  <wsp:Policy wsu:Id="wsrm10policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <wswa:UsingAddressing xmlns:wswa="http://www.w3.org/2006/05/addressing/wsdl">
+      <wsp:Policy/>
+    <wswa:UsingAddressing>
+    <wsrmp:RMAssertion xmlns:wsrmp="http://schemas.xmlsoap.org/ws/2005/02/rm/policy"/>
+  </wsp:Policy>
+
+
+
+
+Implementations in comparison
+
+-For an area such as database access, the developer develops code against a standard not against a product.  Unfortunately, up to just recently this has not been the case for Web Services.
+
+-Indeed there is the JAX-WS specification, but there are still too many unanswered questions as well as alternative approaches
+
+
+Apache Axis2
+fairly reasonable amount of forums and examples
+Axis 2 is the follow-up of the popular Axis1 framework 
+re-developed from scratch with redesign of entire deployment model
+Axis 2 deployed into servers as an independent web-application
+The Axis 2 web application itself is a container for Web Services
+Writing an Axis 2 project requires a lot of knowledge about the build tool Ant.  Knowledge about the build tool is essential to write an Axis 2 project.
+A Web Service is regarded as an independent package which must be explicity installed into the Axis 2 runtime environment
+has excellant hot deployement feature
+
+
+Apache CXF
+forces usage of SOAP?
+moderate amount of forums and examples
+CXF came up from a fusion of the XFire and Ionas Celtix projects.
+CXF was developed with the intention to integrate it into other systems
+This is reflected in CXF API and the use of the Spring framework
+Has A proprietary API as well as the standardized JAX-WS (which is less mature)
+
+
+JAX-WS
+truly vendor neutral
+tremendous amount of forums and examples
+is the successor of the JAX-RPC specification
+is message based and supports asynchronous communication
+configuration is specified and managed by annotations
+Easy implementation and deployment - annotation added to a POJO
+highly recommended by people having alot of experience in web-services
+suitable WSDL can be generated from annotated POJO(s)
+other annotations exert influence on generated WSDL
+    -for example: other namespaces or element names can be used
+JAXB annotations can be used to define serialization in every detail
+well attuned and combinable with other Java and Java EE specifications
+    -for example: a SLSB may act as a Web Service at the same time
+
+        @WebService
+        @Stateless
+        public class MyService {
+               public String hello(String name) {
+                      return "Hallo"+name;
+               }
+        }
+
+The implementation stack provides support for the following standards:
+    * WS-Addressing
+    * WS-Policy
+    * WS-Security
+    * WS-Transaction
+    * WS-Reliable Messaging
+    * WS-Trust
+    * WS-SecureConversation
+
+numerous tutorials und samples exist for JAX-WS and each of these standards
+application servers such as JBoss or Tomcat can be upgraded with JAX-WS within about 10 minutes
+
+
+WS-* Standards
+
+The support of the WS-Standards family can be decisive for the selection of a SOAP engine. 
+    -for example, messages sent to services can be secured with signatures as described in the Web Service Security standard
+        -this is important and meaningful for several reasons:
+            -
+The following shows the support for WS*-Standards of the toolkits
+
+Standards              Axis2      CXF     JAX-WS/Metro     
+WS-Addressing            X         X          X
+WS-Coordination          X(2)                 X
+WS-MetadataExchange                           X
+WS-Policy                X         X          X
+WS-ReliableMessaging     X(3)      X          X
+Web Services Security    X(1)      X(4)       X
+WS-SecureConversation    X(1)                 X
+WS-SecurityPolicy                             X
+WS-Transaction           X(2)                 X
+WS-Trust                 X                    X
+WS-Federation           
+
+(1) Supported by the additional module Apache Rampart
+(2) Supported by the additional module Apache Kandula2
+(3) Supported by the additional module Apache Sandesha2
+(4) By Apache WSS4J Interceptor 
+
+
+About Axis2
+A special feature of Axis2 is the support of removable binding frameworks, for example XMLBeans. Axis2 together with the XMLBeans framework included is well suited for Web Services which are using very complex schema definitions.  The disadvantages of Axis 2 are its complexity as well as the insufficient JAX-WS support.
+
+Those who prefer a seamless integration with the Spring framework are well advised to use the JAX-WS implementation.
+
+JAX-WS is overall easiest to implement.
+
+JAX-WS has indisputable commitment to and support for emerging global standards.
+
+Regarding WS-transactions, the JBoss-WS implementation of JAX-WS is indisputably the best available anywhere in the industry period.
+
+
+
+http://74.125.155.132/search?q=cache:k3YKatSirTcJ:srikanthnukala.net/devblog/2009/06/29/axis2-vs-jax-ws-vs-apache-cxf-vc-spring-ws/+apache+cxf+vs+jax-ws&cd=4&hl=en&ct=clnk&gl=us
+
+
+RestEasy vs CXF JAX-RS
+
+http://community.jboss.org/thread/1619
+

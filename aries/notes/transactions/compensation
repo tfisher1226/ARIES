@@ -1,0 +1,33 @@
+BPEL and compensation
+Is BPEL a good tool for implementing compensation? It really depends, and you really have to know what you are doing.
+
+I have heard renowned BPEL and workflow experts mention that compensating transactions are "perhaps" best modeled at the business logic level.
+
+BPEL, nor workflow nor WS-BA are ideal for compensation unless the compensating party doesn't care whether it needs to compensate eventually. In other words, if the compensation is business as usual to the provider of the compensatable service then BPEL might be OK (though certainly not desirable - see below).
+
+
+Why is that? Put yourself in the place of a service that is asked to compensate by a BPEL engine somewhere. Also suppose that you are in a B2B ecosystem where you don't necessarily trust the party that owns the BPEL engine. Now what would you rather do: trust the BPEL to compensate - eventually (which might be never!) or rather deal with compensation yourself, say after a timeout? I would definitely choose the latter. I don't want someone else to decide when I need to compensate. I want to decide for myself, and the Aries Transaction model allows for that.
+
+What about WS-BA? It is a step in the right direction, but unfortunately it is a bloated protocol, very inefficient and loaded with application-level messages that pollute the compensating part. Even worse, it also suffers in a large part from the lack of timeout and depends on the BPEL to at least trigger compensation. 
+Also, WS-BA doesn't allow for application logic on close - I won't go and bother you with the entire spec details but it is like a try..catch...finally where the exception is raised by the client (ugly!) and where the finally block can only be empty! Again, the Aries Transaction model is far superior, more efficient and more elegant. It is also more natural for compensation than any BPEL engine will ever be. 
+
+One last note on BPEL and this supposed "modeling the compensation in the business process": I was talking to an IBM architect the other day. He said that they were doing a large telco project with BPEL to co-ordinate things. One of the things he complained about was exactly this: they have to model the compensation and error logic as explicit workflow paths, and it was literally overloading everything with complexity. Moreover, this complexity is hard to test. As he correctly put it, they were implementing a transaction manager at the business logic (BPEL) level, over and again in every process model. In addition, this was also hard to test he said and that it was virtually killing the project - especially if there were change requests to consider.
+
+Designing Transactions in Aries allows you to focus on the critical path of your workflow models. We take care of the rest. Now imagine what a reduction in complexity that is, and how much more reliable things get! So no, compensation should NOT be modeled at the business level. Except on rare occasions maybe
+
+
+
+
+
+
+
+As BPEL itself is considered to be stateless, Alex, one of my colleques and the fellows from the WSBPEL spec team, came up with the concepts of compensation.
+
+Compensations consist of 2 parts,
+the compensation handler, and the compensate activity
+
+Defintion:
+    -Each scope can have one compensation handler
+    -A compensation handler defines an undo sequence for the scope it is bound to, for example "cancel flight"
+    -A compensation handler can be called directly (by specifying a scope) or indirectly by a compensate activity 
+

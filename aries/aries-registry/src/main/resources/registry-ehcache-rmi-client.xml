@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache 
+	name="serviceRegistryManager"
+	updateCheck="false" 
+	monitoring="autodetect"
+	dynamicConfig="true">
+
+
+	<!--
+		Sets the path to the directory where cache data and index files are created.  
+		If the path is a Java System Property it is replaced by its value in the running VM. 
+		Subdirectories can be specified below the property e.g. java.io.tmpdir/one 
+	-->
+	
+	<diskStore path="java.io.tmpdir/registry-cache"/> 
+	
+	
+	<!--
+		Specifies a CacheManagerPeerProviderFactory which will be used to create a 
+		CacheManagerPeerProvider, which discovers other CacheManagers in the cluster.  
+	-->
+	
+	<cacheManagerPeerProviderFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+		properties="
+			peerDiscovery=manual, 
+			rmiUrls=
+				//localhost:40000/serviceRegistry|
+				//localhost:40002/serviceRegistry"/>
+
+	<!--
+		Specifies a CacheManagerPeerListenerFactory which will be used to create a 
+		CacheManagerPeerListener, which listens for messages from cache replicators 
+		participating in the cluster. 
+	-->
+
+	<cacheManagerPeerListenerFactory
+		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+		properties="
+			hostName=localhost, 
+			port=40001, 
+			socketTimeoutMillis=2000"/>
+
+	<!--
+		Mandatory Default Cache configuration. These settings will be applied to 
+		caches created programmatically using CacheManager.add(String cacheName).
+	-->
+
+	<defaultCache 
+		eternal="false"
+		maxElementsInMemory="0" 
+		timeToIdleSeconds="100" 
+		timeToLiveSeconds="100" 
+		overflowToDisk="true">
+
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="
+				replicateAsynchronously=true, 
+				replicatePuts=true,
+				replicateUpdates=true, 
+				replicateUpdatesViaCopy=false, 
+				replicateRemovals=true" />
+	</defaultCache>
+
+
+	<!--
+		Cache configuration for "serviceRegistry" cache. 
+	 -->
+	 
+	<cache 
+		name="serviceRegistry" 
+		eternal="true"
+		maxElementsInMemory="0" 
+		clearOnFlush="false" 
+		overflowToDisk="false">
+
+		<!-- RMI Cache Replication -->
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+			properties="
+				replicatePuts=true, 
+				replicatePutsViaCopy=true,
+				replicateUpdates=true,
+		    	replicateUpdatesViaCopy=true, 
+		    	replicateRemovals=true,
+				replicateAsynchronously=false, 
+				asynchronousReplicationIntervalMillis=1000"
+		    propertySeparator=","/>
+
+		<!-- General Exception Handling -->
+		<cacheExceptionHandlerFactory 
+			class="org.aries.cache.GeneralCacheExceptionHandlerFactory"
+			properties="logLevel=FINE"/>
+
+		<!-- RMI Cache bootstrap -->
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+			properties="bootstrapAsynchronously=true, maximumChunkSizeBytes=5000000"
+			propertySeparator=","/>
+	</cache>
+</ehcache>

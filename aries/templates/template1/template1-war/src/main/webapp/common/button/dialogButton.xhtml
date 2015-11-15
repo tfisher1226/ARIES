@@ -1,0 +1,163 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty enabled}">
+		<c:set var="enabled" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty default}">
+		<c:set var="default" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty submitMode}">
+		<c:set var="submitMode" value="ajax"/> 
+	</c:if>
+
+	<c:if test="#{empty immediate}">
+		<c:set var="immediate" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty ajaxSingle}">
+		<c:set var="ajaxSingle" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty ajaxRendered}">
+		<c:set var="ajaxRendered" value="false"/> 
+	</c:if>
+	
+	<c:if test="#{empty requestDelay}">
+		<c:set var="requestDelay" value="0"/> 
+	</c:if>
+
+	<c:if test="#{empty bypassUpdates}">
+		<c:set var="bypassUpdates" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty limitToList}">
+		<c:set var="limitToList" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty process}">
+		<c:set var="process" value=""/> 
+	</c:if>
+
+	<c:if test="#{empty manager}">
+		<c:set var="manager" value="#{globals}"/> 
+	</c:if>
+
+	<c:if test="#{empty action}">
+		<c:set var="action" value="doNothing"/> 
+	</c:if>
+	
+	<!--  
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="resource://images/icons/common/Default16.gif"/> 
+	</c:if>
+
+	<c:if test="#{empty iconDisabled}">
+		<c:set var="iconDisabled" value="resource://images/icons/common/DefaultDisabled16.gif"/> 
+	</c:if>
+	-->
+
+	<c:set var="horizontalPadding" value="#{empty value ? '1px' : '6px'}"/>
+
+	<c:if test="#{not empty offset and offset and rendered}">
+		<span class="hspace8"/>
+	</c:if>
+
+	<c:if test="#{empty id}">
+		<c:set var="id" value="id#{globals.nextId()}"/>
+	</c:if>
+
+	<rich:menuItem 
+		id="#{id}"
+		disabled="false"
+		rendered="#{rendered and enabled}"
+		submitMode="#{submitMode}"
+		immediate="#{immediate}"
+		ajaxSingle="#{ajaxSingle}"
+		ajaxRendered="#{ajaxRendered}"
+		requestDelay="#{requestDelay}"
+		bypassUpdates="#{bypassUpdates}"
+		limitToList="#{limitToList}"
+		process="#{process}"
+		action="#{manager[action]}"
+		onmousedown="this.style.paddingTop=4; this.style.paddingBottom=2; this.style.paddingLeft=11; this.style.paddingRight=9"
+		onmouseup="this.style.paddingTop=3; this.style.paddingBottom=3; this.style.paddingLeft=10; this.style.paddingRight=10"
+		onmouseout="this.style.paddingTop=3; this.style.paddingBottom=3; this.style.paddingLeft=10; this.style.paddingRight=10"
+		onclick="#{onclick}"
+		oncomplete="#{oncomplete}"		 
+		reRender="#{reRender}"
+		styleClass="dialogButton"
+		style="padding: 0px #{horizontalPadding}; background-color: #f0f0f0; #{style}">
+
+		<f:facet name="icon">
+			<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+				<center>
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumnAlignBottom" style="margin: 0px; padding: 0px; border-width: 0px; background-color: inherit">
+					<c:if test="#{empty icon}">
+						<h:graphicImage value="resource://images/spacer.gif" width="0" height="16"/>
+					</c:if>
+					<c:if test="#{not empty icon}">
+						<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+							<h:graphicImage value="#{icon}" />
+							<c:if test="#{not empty value}">
+								<rich:spacer width="2"/>
+							</c:if>
+						</h:panelGroup>
+					</c:if>
+					<c:if test="#{not empty value}">
+						<h:outputText value="#{value}" styleClass="dialogButtonLabel" />
+					</c:if>
+				</h:panelGrid>
+				</center>
+			</h:panelGroup>
+		</f:facet>
+		<aries:tooltip value="#{tooltip}"/>
+	</rich:menuItem>
+
+	<rich:menuItem
+		disabled="true"
+		rendered="#{rendered and !enabled}"
+		iconDisabled="#{iconDisabled}"
+		styleClass="dialogButtonDisabled"
+		style="padding: 0px #{horizontalPadding}; background-color: #f0f0f0; #{style}">
+		
+		<f:facet name="iconDisabled">
+			<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+				<center>
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumnAlignMiddle" style="margin: 0px; padding: 0px; border-width: 0px; background-color: inherit">
+					<c:if test="#{empty iconDisabled}">
+						<h:graphicImage value="resource://images/spacer.gif" width="0" height="16"/>
+					</c:if>
+					<c:if test="#{not empty iconDisabled}">
+						<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+							<h:graphicImage value="#{iconDisabled}" />
+							<c:if test="#{not empty value}">
+								<rich:spacer width="2"/>
+							</c:if>
+						</h:panelGroup>
+					</c:if>
+					<c:if test="#{not empty value}">
+						<h:outputText value="#{value}" styleClass="dialogButtonLabelDisabled" />
+					</c:if>
+				</h:panelGrid>
+				</center>
+			</h:panelGroup>
+		</f:facet>
+	</rich:menuItem>
+</ui:composition>

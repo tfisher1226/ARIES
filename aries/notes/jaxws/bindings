@@ -1,0 +1,8 @@
+<jaxws:bindings wsdlLocation="WSDL_LOCATION" xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" jaxb:version="2.0">
+    <jaxws:bindings node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='C']/xs:import[@namespace='A']">.
+        <jaxb:schemaBindings>
+            <jaxb:package name="B" />
+        </jaxb:schemaBindings>
+    </jaxws:bindings>
+</jaxws:bindings>
+

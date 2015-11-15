@@ -1,0 +1,5 @@
+
+Use this example to reset all to full:
+
+cacls AEROSPACE /T /G tfisher:F
+

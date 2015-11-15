@@ -1,0 +1,75 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup 
+		layout="block"
+		id="#{key}UploadControl" 
+		styleClass="popupControlPane">
+		
+		<aries:toolbar>
+			<aries:toolbarGroup 
+				location="left">
+				
+				<aries:toolButton
+					tooltip="Show Help on File Upload Dialog"
+					manager="#{globals}"
+					action="doNothing"
+					icon="resource://images/icons/common/Help24.gif"
+					onclick="showWarning('', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here')"
+					reRender="#{key}UploadDialog"
+					rendered="true"
+					enabled="true"/>
+			</aries:toolbarGroup>
+
+			<aries:toolbarGroup 
+				location="right">
+			
+				<!--  
+				<aries:smallDialogButton
+					text="Save"
+					enabled="true"
+					rendered="true"
+					immediate="false"
+					icon="resource://images/icons/common/SaveSmall16.gif"
+					iconDisabled="resource://images/icons/common/SaveDisabled16.gif"
+					manager="#{uploadHandler}"
+					action="#{uploadHandlerAction}"
+					onclick="setCursorWait(this); showProgress('File Upload', 'Processing uploaded data...')"
+					oncomplete="hideProgress(); setCursorDefault(); if(#{!messagesExist}) Richfaces.hideModalPanel('#{key}UploadDialog')"
+					reRender="#{key}UploadMessages #{reRender}"	/>
+				-->
+
+				<aries:smallDialogButton
+					text="Save"
+					rendered="true"
+					enabled="#{uploadManager.fileData != null}"
+					immediate="false"
+					icon="resource://images/icons/common/SaveSmall16.gif"
+					iconDisabled="resource://images/icons/common/SaveDisabled16.gif"
+					manager="#{uploadHandler}"
+					action="#{uploadHandlerAction}"
+					onclick="setCursorWait(this); showProgress('File Upload', 'Processing uploaded data...')"
+					oncomplete="hideProgress(); setCursorDefault(); if(#{!messagesExist}) Richfaces.hideModalPanel('#{key}UploadDialog')"
+					reRender="#{reRender}"/>
+
+				<aries:smallDialogButton
+					text="Cancel"
+					icon="resource://images/icons/common/Cancel16.gif"
+					onclick="Richfaces.hideModalPanel('#{key}UploadDialog')"
+					reRender="#{reRender}"
+					rendered="true"
+					enabled="true"
+					offset="true"/>
+			</aries:toolbarGroup>
+		</aries:toolbar> 
+	</h:panelGroup>
+</ui:composition>

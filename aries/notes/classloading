@@ -1,0 +1,76 @@
+For JBoss AS 7:
+
+WAR Class Loading
+
+The war is considered to be a single module, so classes defined in WEB-INF/lib are treated the same as classes in WEB-INF/classes. All classes packaged in the war will be loaded with the same class loader.
+
+
+EAR Class Loading
+
+Ear deployments are multi-module deployments. This means that not all classes inside an ear will necessarily have access to all other classes in the ear, unless explicit dependencies have been defined. By default the EAR/lib directory is a single module, and every WAR or EJB jar deployment is also a separate module. Sub deployments (wars and ejb-jars) always have a dependency on the parent module, which gives them access to classes in EAR/lib, however they do not always have an automatic dependency on each other. This behaviour is controlled via the ear-subdeployments-isolated setting in the ee subsystem configuration:
+
+<subsystem xmlns="urn:jboss:domain:ee:1.0" >            
+  <ear-subdeployments-isolated>false</ear-subdeployments-isolated>
+</subsystem>
+
+By default this is set to false, which allows the sub-deployments to see classes belonging to other sub-deployments within the .ear.
+
+For example, consider the following .ear deployment:
+myapp.ear
+ |
+ |--- web.war
+ |
+ |--- ejb1.jar
+ |
+ |--- ejb2.jar
+
+If the ear-subdeployments-isolated is set to false, then the classes in web.war can access classes belonging to ejb1.jar and ejb2.jar. Similarly, classes from ejb1.jar can access classes from ejb2.jar (and vice-versa).
+
+
+
+Portability
+
+The Java EE specification says that portable applications should not rely on sub deployments having access to other sub deployments unless an explicit Class-Path entry is set in the MANIFEST.MF. So portable applications should always use Class-Path entry to explicitly state their dependencies.
+
+
+
+It is also possible to override the ear-subdeployments-isolated element value at a per deployment level. See the section on jboss-deployment-structure.xml below.
+
+Dependencies: Manifest Entries
+
+Deployments (or more correctly modules within a deployment) may set up dependencies on other modules by adding a Dependencies: manifest entry. This entry consists of a comma separated list of module names that the deployment requires. The available modules can be seen under the modules directory in the application server distribution. For example to add a dependency on javassist and apache velocity you can add a manifest entry as follows:
+
+Dependencies: org.javassist export,org.apache.velocity export services,org.antlr
+
+Each dependency entry may also specify some of the following parameters by adding them after the module name:
+
+    export This means that the dependencies will be exported, so any module that depends on this module will also get access to the dependency.
+    services By default items in META-INF of a dependency are not accessible, this makes items from META-INF/services accessible so services in the modules can be loaded.
+    optional If this is specified the deployment will not fail if the module is not available.
+    annotations If a jandex index has be created for the module these annotations will be merged into the deployments annotation index. The Jandex index can be generated using the Jandex ant task , and must be named META-INF/jandex.idx. Note that it is not necessary to break open the jar being indexed to add this to the modules class path, a better approach is to create a jar containing just this index, and adding it as an additional resource root in the module.xml file.
+
+
+Adding a dependency to all modules in an EAR
+
+Using the export parameter it is possible to add a dependency to all sub deployments in an ear. If a module is exported from a Dependencies: entry in the top level of the ear (or by a jar in the ear/lib directory) it will be available to all sub deployments as well.
+
+To generate a MANIFEST.MF entry when using maven put the following in your pom.xml:
+
+<build>
+   ...
+   <plugins>
+     <plugin>
+       <groupId>org.apache.maven.plugins</groupId>
+       <artifactId>maven-war-plugin</artifactId>
+       <configuration>
+          <archive>
+             <manifestEntries>
+                <Dependencies>org.slf4j</Dependencies>
+             </manifestEntries>
+          </archive>
+       </configuration>
+     </plugin>
+   </plugins>
+</build>
+
+If your deployment is a jar you must use the maven-jar-plugin rather than the maven-war-plugin.

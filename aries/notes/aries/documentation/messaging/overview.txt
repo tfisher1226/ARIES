@@ -1,0 +1,68 @@
+http://docs.oracle.com/cd/E13222_01/wls/docs91/ejb/message_beans.html
+
+
+
+
+
+Producer Pools
+
+You might want to create a producer pool that sends messages to a Channel.  This producer pool can then be shared by among any clients that wish to send messages to that Channel.  This is done by writing a class that populates a static pool with producers; and a class that manages that pool.  And then injecting this Manager into any potential client wishing to send messages to that channel.  Since Sessions must be single threaded, make sure there is only one producer per session within the producer pool. 
+
+
+
+Acknowledgement Patterns
+http://wso2.com/library/articles/2013/01/jms-message-delivery-reliability-acknowledgement-patterns/
+
+Acknowledgement is a consumer side concept. Acknowledgement is the way that a consumer informs the JMS provider that it has successfully received a message. On the producer side, the only notion of acknowledgement consists of a successful invocation of either the topic publishe’s publish method or the queue sender’s send method. If an acknowledgement is given for a message it indicates that the JMS provider must not deliver that same message to the consumer in question again and also the JMS provider can release any resources it is holding on behalf of the said message (i.e if a JMS queue is considered after acknowledgement of successful delivery, that message is removed from the queue). In order to minimize resource consumption, consumer applications need to acknowledge messages as quickly as possible after successful delivery. 
+
+
+
+1. Duplicates allowed acknowledgement pattern
+
+Using this mode, the session acknowledges messages in a lazy way. This pattern has pros and cons.
+
+Pros
+
+    Provides faster message processing as the client does not try to acknowledge immediately after a message is delivered. 
+
+Cons
+
+    If JMS fail happens, the same message can be delivered multiple times creating duplicates.
+    Only applications that can tolerate message duplication should use this acknowledgement model. 
+
+In a general JMS client this mode can be configured using DUPS_OK_ACKNOWLEDGE constant in the Session interface. 
+
+2. Auto Acknowledge acknowledgement pattern
+
+In Auto Acknowledgement model for each message session it automatically acknowledges whether the client has received the message or not. It is important to see what are the scenarios that can have reliability issues with auto-acknowledgement mode. Usually, message receipt can be done in two ways - synchronously and asynchronously. In these two different models, the acknowledgement happens at different times and bring different results.
+
+    Synchronous: acknowledgement happens just before the call to a message consumer's “receive” or “receiveNoWait” method returns a message. Thus if the JMS provider or message consumer crashes before “receive” returns the message to the consumer, the message will be lost. 
+
+
+
+3. Client Acknowledge acknowledgement pattern
+
+This acknowledgement mode gives consumer applications more control over message acknowledge. For an example the consumer can group a set of messages and then specifically invoke “acknowledge” method to instruct the JMS provider that the message, together with all other messages received up to this point, has been successfully consumed.
+There are few things to be noted in this acknowledgement pattern.
+
+    When a consumer uses client acknowledge, it can use “recover” method to revert back to its last check point. It can instruct the session to redeliver all messages that have not been yet acknowledged by the consumer.
+    If a client crashes and later again re-connects to its topic or queue the session will be recovered and all unacknowledged messages will be delivered again. 
+
+4. Other Acknowledgement Patterns
+
+These acknowledgement modes are JMS provider specific, and therefore, they compromise the JMS application portability.
+
+
+
+
+Transacted Sessions
+
+A transacted session is a related group of consumed or produced messages that is treated as a single unit of work. A transaction, as it generally means, can either be committed or rollback.
+
+    When the session’s “commit” method is called, all the consumed messages in that group are acknowledged or the produced messages are sent.
+    When the session’s rollback method is called, produced messages are destroyed or consumed messages are recovered. 
+
+A transacted session always has a “current” transaction and applications do not explicitly start a transacted session. When commit or rollback is called current transaction ends and a new one immediately starts. Other than Transacted session there are two other ways acknowledgements can happen - known as Message-driven beans with CMTD and Message-driven beans with BMTD.
+
+Following tree demonstrate the transaction options a typical JMS client can use
+

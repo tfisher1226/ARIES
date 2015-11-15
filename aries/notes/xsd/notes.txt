@@ -1,0 +1,52 @@
+http://www.kohsuke.org/xmlschema/XMLSchemaDOsAndDONTs.html
+
+
+The Difference Between Optional and Not Required
+
+When creating an InfoPath form from an external schema, you might encounter an issue where InfoPath still requires that the field be filled in even though the element or attribute was specified as optional. The solution comes from a proper understanding of the difference between "optional" and "not required".
+
+To verify whether a field is truly optional, you can open your form template in the InfoPath designer, choose Form Options from the Tools menu and then click Edit Default Values. In the Edit Default Values dialog box you will see that any schema element specified as optional has an active check box next to it. To include this optional field as part of the default XML for a new form, leave the box checked. To exclude it, clear the check box. All of the non-optional elements have a grayed-out check box, meaning you cannot clear the check box.
+
+The confusion happens when InfoPath still requires that an optional field be filled in. This field may be optional, but it is still required. Required is different from optional. Optional means that the field does not need to be present in the XML. You can have a field that is optional and required, meaning that if it is present in the XML then it must be filled in. To clarify:
+
+Optional: Does not need to be present in the XML.
+
+Not Required: Does not need to have a value.
+
+You can have any combination:
+
+    Optional + Not Required
+    Optional + Required
+    Not Optional + Not Required
+    Not Optional + Required
+
+There are differences in how to establish these combinations in your schema depending on whether you have an element or an attribute. Attributes have an additional restriction that could force it to always be required--but there is a workaround.
+
+Schema Elements:
+
+In order to set a schema element as optional, you include the minOccurs="0" attribute. In order to set a schema element as not required, you include the nillable="true" attribute. String data types are not required by default, though you can force them to be required. Other data types, such as Boolean, Integer, Date, Time, etc. are all required by default. In order to make one of these data types not required, you must set the nillable attribute equal to true for the element in the schema. Following are a few examples:
+
+An optional + not required element of type date:
+
+<xsd:element name="Date" type="xsd:date" nillable="true" minOccurs="0"/>
+
+A not optional + required element of type string:
+
+<xsd:element name="Name" type="xsd:string" nillable="false"/>
+
+A not optional + not required element of type anyURI:
+
+<xsd:element name="Email" type="xsd:anyURI" nillable="true"/>
+
+Schema Attributes:
+
+In order to set a schema attribute as optional, you do not need to add anything as attributes are optional by default; but you might prefer to include the use="optional" attribute. In order to set a schema attribute as not optional, you must include the use="required" attribute. Attributes have no equivalent to the nillable attribute on elements. If you want an attribute to be not required, you must specify the string data type. All other data types will require the attribute to have a value. Following are a couple of examples:
+
+An optional + required attribute of type integer:
+
+<xsd:attribute name="number" type="xsd:integer" use="optional"/>
+
+A not optional + not required attribute of type string, to be used as type dateTime:
+
+<xsd:attribute name="dateTime" type="xsd:string" use="required"/>
+

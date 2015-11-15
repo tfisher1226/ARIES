@@ -1,0 +1,33 @@
+
+
+Use these to get detailed information about what the garbage collector is doing, 
+these params are a good start (substitute some preferred path and file in place of gc.log)
+
+-XX:+PrintGCDetails 
+-XX:+PrintGCDateStamps 
+-XX:+PrintGCApplicationStoppedTime 
+-XX:+PrintGCApplicationConcurrentTime 
+-Xloggc:gc.log 
+-verbose:gc
+
+
+If you're using a large MX (like 12GB below) it is best (or mandatory) to be using 64-bit.  
+One can save the memory overhead of 64-bit addressing by using the -XX:+UseCompressedOops option. 
+It will typically save about 40% of memory, so one's 12GB will go a lot further.
+
+Depending on what one is doing, the concurrent collector might be better as well, particularly 
+to reduce long GC pause times. I'd recommend trying these options as I've found them to work well:
+
+-Xmx12g 
+-XX:NewRatio=4 
+-XX:SurvivorRatio=8 
+-XX:+UseCompressedOops
+-XX:+UseConcMarkSweepGC 
+-XX:+UseParNewGC 
+-XX:+DisableExplicitGC
+-XX:+UseCMSInitiatingOccupancyOnly 
+-XX:+CMSClassUnloadingEnabled
+-XX:+CMSScavengeBeforeRemark 
+-XX:CMSInitiatingOccupancyFraction=68
+
+

@@ -1,0 +1,33 @@
+http://www.oracle.com/technetwork/articles/marx-jpa-087268.html
+
+
+Common Themes Behind These Recommendations
+
+A few general themes permeate most of the recommended approaches outlined in this article:
+
+    The approaches outlined here focus on the readability and maintainability of JPA-based application code.
+    Portability between JPA provider implementations is generally desirable. Even when implementation portability cannot be maintained, provider-specific functionality should be easily identifiable and isolated from common functionality.
+    JPA code should be portable across datasources. When database-specific features must be used, they should be isolated in configuration files rather than tainting the code.
+    JPA-based code should usually work in Java SE and Java EE contexts.
+    The most important characteristic of maintainable and readable code is the quality of the code itself. Clean code that speaks for itself is preferable to annotations. Self-explanatory code and annotations are preferable to comments that are necessary to explain convoluted code.
+    The practices discussed in this article generally require very little extra effort to implement and provide long-term maintenance benefits at little or no cost in initial development time.
+
+
+Access Fields Rather Than Properties
+
+I prefer to specify object-relational mapping by annotating entity fields directly, rather than annotating get/set methods (properties), for several reasons. No single reason overwhelmingly favors specifying persistence via fields rather than via properties, but the combined benefits of field persistence specification make it the more attractive approach.
+
+Because persistence is all about storing, updating, and retrieving the data itself, it seems cleaner to denote the persistence directly on the data rather than indirectly via the get and set methods. There is also no need to remember to mark the getter but not the setter for persistence. It is also cleaner to mark a field as transient to indicate that it should not be persisted than to mark a get() method as transient. By using fields rather than properties, you don’t need to ensure that the get and set methods follow the JavaBeans naming conventions related to the underlying fields. I prefer the ability to look at a class’s data members and determine each member’s name, each member’s datatype, comments related to each data member, and each member’s persistence information all in one location.
+
+The order of business logic and persistence in get/set methods is not guaranteed. Developers can leave business logic out of these methods, but if fields are annotated instead, it does not matter if business logic is added to the get or set methods later.
+
+A developer may want methods that manipulate or retrieve more than one attribute at a time or that do not have “get” or “set” in their names. With field annotations, the developer has the freedom to write and name these methods as desired without the need to place the @Transient annotation or the “transient” keyword in front of methods not directly related to persistence.
+
+
+Support for optimistic concurrency control with versioning
+
+Version checking uses version numbers, or timestamps, to detect conflicting updates (and to prevent lost updates). Hibernate provides for three possible approaches to writing application code that uses optimistic concurrency. The use cases we show are in the context of long application transactions but version checking also has the benefit of preventing lost updates in single database transactions.
+
+if (dbFoo.getVersion() != foo.getVersion) 
+   throw new StaleObjectStateException();
+

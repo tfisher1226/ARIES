@@ -1,0 +1,11 @@
+
+Augmenting BPEL for Transactional Computing
+
+Using Maven for Hierarchical Project Object Modeling
+
+http://127.0.0.1:8280/tx-service/AsynctestCallbackPTService/AsynctestCallbackPT
+http://127.0.0.1:8082/tx-service/AsynctestCallbackPTService/AsynctestCallbackPT?wsdl
+
+http://127.0.0.1:8280/AsyncEchoCallerPTService/AsyncEchoCallerPT
+http://127.0.0.1:8280/tx-service/AsyncEchoCallerPTService/AsyncEchoCallerPT?wsdl
+

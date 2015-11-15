@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<site>
+  <bannerLeft>
+    <name>iCAMS</name>
+    <src>images/AER_logo_k.jpg</src>
+    <href>http://aerosource.aero.org/icams</href>
+  </bannerLeft>
+  
+  <bannerRight>
+    <src>http://maven.apache.org/images/maven-small.gif</src>
+  </bannerRight>
+  
+  <body>
+    <menu name="iCAMS Project">
+    	<item name="Overview" href="index.html"/>
+    </menu>
+    
+    <menu ref="organization"/>
+    <links>
+   	  <item name="Aerosource Project" href="http://aerosource/icams"/>
+      <item name="Inside Aerospace" href="http://info.aero.org/"/>
+      <item name="Aerospace Corporation" href="http://www.aero.org/"/>
+    </links>
+
+    <menu ref="software"/>
+    <links>
+      <item name="Maven" href="http://maven.apache.org/"/>
+      <item name="Apache" href="http://www.apache.org/"/>
+    </links>
+
+    <menu ref="common services"/>
+      <item name="Log Service" href="/placeholder.xhtml"/>
+      <item name="Queue Service" href="/placeholder.xhtml"/>
+      <item name="Person Service" href="/placeholder.xhtml"/>
+      <item name="Audit Service" href="/placeholder.xhtml"/>
+      <item name="Notification Service" href="/placeholder.xhtml"/>
+      <item name="Justification Service" href="/placeholder.xhtml"/>
+      <item name="Management Service" href="/placeholder.xhtml"/>
+
+    <menu ref="common frameworks"/>
+      <item name="Messaging Framework" href="/placeholder.xhtml"/>
+      <item name="Persistence Framework" href="/placeholder.xhtml"/>
+      <item name="Workflow Framework" href="/placeholder.xhtml"/>
+      <item name="User-Interface Framework" href="/placeholder.xhtml"/>
+      <item name="Utility Framework" href="/placeholder.xhtml"/>
+
+    <menu ref="reference"/>
+      <item name="FAQs" href="/faqs.html"/>
+      <item name="Development Environment" href="/placeholder.xhtml"/>
+      <item name="Execution Environment" href="/placeholder.xhtml"/>
+      <item name="Deployment Procedures" href="/placeholder.xhtml"/>
+      <item name="User-Interface Guidelines" href="/placeholder.xhtml"/>
+      <item name="Design/Development Roadmap" href="/placeholder.xhtml"/>
+  </body>
+</site>
