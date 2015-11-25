@@ -57,7 +57,7 @@ public class UserServiceInterceptor extends MessageInterceptor<UserService> {
 		try {
 			Long id = message.getPart("id");
 			User user = userServiceHandler.getUserById(id);
-			Assert.notNull(user, "User must exist");
+			Assert.notNull(user, "User not found for: "+id);
 			message.addPart("user", user);
 			
 		} catch (Throwable e) {
@@ -75,7 +75,7 @@ public class UserServiceInterceptor extends MessageInterceptor<UserService> {
 		try {
 			String userName = message.getPart("userName");
 			User user = userServiceHandler.getUserByUserName(userName);
-			Assert.notNull(user, "User must exist");
+			Assert.notNull(user, "User not found: "+userName);
 			message.addPart("user", user);
 			
 		} catch (Throwable e) {

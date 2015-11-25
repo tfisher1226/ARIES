@@ -8,6 +8,7 @@ import org.aries.Assert;
 import org.aries.launcher.Bootstrap;
 import org.aries.launcher.Launcher;
 import org.aries.runtime.BeanContext;
+import org.aries.util.ExceptionUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +69,7 @@ public class SkinServiceLaunchTest extends TestCase {
 			
 		} catch (Exception e) {
 			//e.printStackTrace();
+			e = ExceptionUtil.getRootCause(e);
 			Assert.isInstanceOf(FileNotFoundException.class, e);
 			//throw new RuntimeException(e);
 		}
