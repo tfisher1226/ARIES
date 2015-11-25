@@ -60,6 +60,14 @@
 								</copy>
 
 								<!-- pull "admin" model sources to local home -->
+								<copy todir="${admin.model.home}/nam" overwrite="true" verbose="true">
+									<fileset dir="${source.model.home}/nam" casesensitive="yes">
+										<include name="**/*.aries" />
+										<include name="**/*.xsd" />
+									</fileset>
+								</copy>
+								
+								<!-- pull "admin" model sources to local home -->
 								<copy todir="${admin.model.home}/admin" overwrite="true" verbose="true">
 									<fileset dir="${source.model.home}/admin" casesensitive="yes">
 										<include name="**/*.ariel" />
