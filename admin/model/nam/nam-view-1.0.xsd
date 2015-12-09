@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	xmlns="http://nam/ui" 
+	xmlns:nam="http://nam/model"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://nam/ui"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" >
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+	<xs:import namespace="http://nam/model" schemaLocation="nam-common-1.0.xsd" />
+
+
+	<!--
+		Module type
+	-->
+
+	<xs:element name="userInterfaces" type="UserInterfaces" />
+	<xs:complexType name="UserInterfaces">
+		<xs:sequence>
+			<xs:element name="type" type="UserInterface" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="userInterface" type="UserInterface" />
+	<xs:complexType name="UserInterface">
+		<xs:all>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="UserInterfaceType" />
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="label" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="groupId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="artifactId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="namespace" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="description" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="creator" type="xs:string" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="id" type="xs:long" />
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+	
+    <xs:simpleType name="UserInterfaceType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WEB" />
+			<xs:enumeration value="PHONE" />
+			<xs:enumeration value="TABLET" />
+			<xs:enumeration value="DESKTOP" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<!-- 
+		View layer root type
+	-->
+
+	<xs:element name="view" type="View" />
+	<xs:complexType name="View">
+		<xs:sequence>
+			<xs:element name="import" type="nam:Import" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="domain" type="xs:string" minOccurs="0" />
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element ref="relations" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="controls" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+	<xs:element name="controls">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="tree" />
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="tree" type="Tree" />
+	<xs:complexType name="Tree">
+		<xs:complexContent>
+			<xs:extension base="nam:Component">
+				<xs:sequence>
+					<xs:element ref="treeNodes" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:element name="treeNodes" type="TreeNodes" />
+	<xs:complexType name="TreeNodes">
+		<xs:sequence>
+			<xs:element name="rootNode" type="TreeNode" />
+			<xs:element ref="treeNode" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="treeNode" type="TreeNode" />
+	<xs:complexType name="TreeNode">
+		<xs:sequence>
+			<xs:element name="subNode" type="SubNode" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="label" type="xs:string" />
+		<xs:attribute name="element" type="xs:string" />
+		<xs:attribute name="data" type="xs:string" />
+		<xs:attribute name="folder" type="xs:boolean" default="false" />
+		<xs:attribute name="domain" type="xs:boolean" default="false" />
+		<xs:attribute name="expanded" type="xs:boolean" default="false" />
+	</xs:complexType>
+	
+	<xs:element name="subNode" type="SubNode" />
+	<xs:complexType name="SubNode">
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="data" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:element name="relations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="relation" type="Relation" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="relation" type="Relation" />
+	<xs:complexType name="Relation">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="pattern" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="container" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
+

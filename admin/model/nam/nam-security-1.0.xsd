@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	xmlns:validate="http://www.aries.org/validate"
+	targetNamespace="http://nam/model">
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+	<xs:import namespace="http://www.aries.org/validate" schemaLocation="../common/aries-validate-1.0.xsd" />
+	<xs:include schemaLocation="nam-common-1.0.xsd" />
+	
+	<!--
+		Action enumeration
+		******************
+	-->
+	
+	<xs:simpleType name="Action">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="EXPORT" />
+			<xs:enumeration value="EMAIL" />
+			<xs:enumeration value="PRINT" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		ActionName enumeration
+		**********************
+	-->
+	
+	<xs:simpleType name="ActionName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALL" />
+			<xs:enumeration value="NONE" />
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="EXPORT" />
+			<xs:enumeration value="EMAIL" />
+			<xs:enumeration value="PRINT" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Permission element
+		******************
+	-->
+	
+	<xs:element name="permission" type="Permission" />
+	<xs:complexType name="Permission">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="user" type="xs:string" minOccurs="0" />
+				<xs:element name="target" type="xs:string" minOccurs="0" />
+				<xs:element name="organization" type="xs:string" minOccurs="0" />
+				<xs:element name="actions" type="Action" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Preferences element
+		*******************
+	-->
+	
+	<xs:element name="preferences" type="Preferences" />
+	<xs:complexType name="Preferences">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="user" type="xs:string" minOccurs="0" />
+				<xs:element name="themeId" type="xs:string" minOccurs="0" />
+				<xs:element name="openNodes" type="common:Map" minOccurs="0" />
+				<xs:element name="selectedNode" type="xs:long" minOccurs="0" />
+				<xs:element name="enableTooltips" type="xs:boolean" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Registration element
+		********************
+	-->
+	
+	<xs:element name="registration" type="Registration" />
+	<xs:complexType name="Registration">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="user" type="User" minOccurs="1" />
+				<xs:element name="loginCount" type="xs:long" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Role element
+		************
+	-->
+	
+	<xs:element name="role" type="Role" />
+	<xs:complexType name="Role">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+				<xs:element name="roleType" type="RoleType" minOccurs="1" />
+				<xs:element name="groups" type="Role" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="permissions" type="Permission" minOccurs="1" maxOccurs="unbounded" nillable="true" />
+				<xs:element name="conditional" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+				
+				<!-- TODO move these out of here - this 
+				<xs:element minOccurs="0" maxOccurs="1" name="defaultTransport" type="xs:string" />
+				<xs:element minOccurs="0" maxOccurs="unbounded" name="transports" type="Transport" />
+				-->
+				
+				<!-- THis is needed to support WSDL partnerLink 
+				<xs:element name="portType" type="xs:string" minOccurs="1" />
+				-->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		RoleType enumeration
+		********************
+	-->
+	
+	<xs:simpleType name="RoleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MANAGER" />
+			<xs:enumeration value="USER" />
+			<xs:enumeration value="HOST" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		RoleTypeName enumeration
+		************************
+	-->
+	
+	<xs:simpleType name="RoleTypeName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Manager" />
+			<xs:enumeration value="User" />
+			<xs:enumeration value="Host" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<!--
+		Security element
+		****************
+		TODO get rid of this - it is unused
+	-->
+
+	<xs:element name="security" type="Security"/>
+	<xs:complexType name="Security">
+		<xs:sequence>
+			<xs:element maxOccurs="1" minOccurs="1" name="user" type="xs:string"/>
+			<xs:element maxOccurs="1" minOccurs="1" name="password" type="xs:string"/>
+			<xs:element minOccurs="0" maxOccurs="1" name="realm" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="common:property"/>
+		</xs:sequence>
+		<xs:attribute name="runAs" type="xs:string" use="optional"/>
+		<xs:attribute name="rolesAllowed" type="xs:string" use="optional"/>
+		<xs:attribute name="moduleName" type="xs:string" use="optional"/>
+		<xs:attribute name="useCallerIdentity" type="xs:string" use="optional"/>
+		<xs:attribute name="callbackHandler" type="xs:string" use="optional"/>
+	</xs:complexType>
+	
+	
+	<!--
+		User element
+		************
+	-->
+	
+	<xs:element name="user" type="User" />
+	<xs:complexType name="User">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<!--  
+			<xs:element name="name" type="common:PersonName" minOccurs="1" />
+			-->
+			<xs:element name="personName" type="common:PersonName" minOccurs="1" />
+			<xs:element name="userName" type="xs:string" minOccurs="1" />
+			<xs:element name="passwordHash" type="xs:string" minOccurs="1" />
+			<xs:element name="passwordSalt" type="xs:string" minOccurs="0" />
+			<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="1" />
+			<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" />
+			<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" />
+			<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" />
+			<xs:element name="roles" type="Role" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="permissions" type="Permission" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+			<xs:element ref="preferences" minOccurs="0" />
+			<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		UserCriteria element
+		********************
+	-->
+	
+	<xs:element name="userCriteria" type="UserCriteria" />
+	<xs:complexType name="UserCriteria">
+		<xs:sequence>
+				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
+				<xs:element name="userName" type="xs:string" minOccurs="0" />
+				<xs:element ref="common:personName" minOccurs="0" />
+				<xs:element ref="common:emailAddress" minOccurs="0" />
+				<xs:element ref="common:streetAddress" minOccurs="0" />
+				<xs:element ref="role" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Users element
+		*************
+	-->
+	
+	<xs:element name="users" type="Users" />
+	<xs:complexType name="Users">
+		<xs:sequence>
+				<xs:element name="records" type="User" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

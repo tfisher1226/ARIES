@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:ui="http://nam/ui"
+	xmlns:aries="http://www.aries.org/common"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/nam/nam-common-1.0.aries" include="true" />
+	<import file="/nam/nam-network-1.0.aries" include="true" />
+	<import file="/nam/nam-operation-1.0.aries" include="true" />
+	<import file="/nam/nam-information-1.0.aries" include="true" />
+	<import file="/nam/nam-persistence-1.0.aries" include="true" />
+	
+	<domain>org.aries</domain>
+	<name>nam</name>
+	
+	<namespace 
+        prefix="nam" 
+        name="nam-model" 
+        uri="http://nam/model">
+
+		<!--
+			Project related structures
+			**************************
+		 -->
+
+		<element name="Projects">
+			<listItem name="projects" type="Project" contained="true" />
+		</element>
+
+		<element name="Project" root="true" hierarchical="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="domain" type="xs:string" useForEquals="true" />
+			<item name="namespace" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="creator" type="xs:string" />
+			<item name="projects" type="Projects" contained="true" />
+			<item name="applications" type="Applications" contained="true" />
+			<item name="modules" type="Modules" contained="true" />
+			<item name="providers" type="Providers" contained="true" />
+			<!--
+			<item name="extensions" type="Extensions" contained="true" />
+			-->
+			<item name="networks" type="Networks" contained="true" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+
+
+		<!--
+			Domain related structures
+			*************************
+		 -->
+
+		<element name="Domain" root="true" hierarchical="false">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="namespace" type="Namespace" />
+			<item name="description" type="xs:string" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Application</itemType>
+				<itemType>Module</itemType>
+				<itemType>Information</itemType>
+				<itemType>Persistence</itemType>
+				<itemType>Service</itemType>
+				<itemType>Listener</itemType>
+				<itemType>Router</itemType>
+				<itemType>Library</itemType>
+			</listItem>
+		</element>
+
+
+		<!--
+			Application related structures
+			******************************
+		 -->
+
+		<element name="Applications">
+			<listItem name="applications" type="Application" contained="true" />
+		</element>
+
+		<element name="Application" root="true" hierarchical="true">
+			<item name="type" type="ApplicationType" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="groupId" type="xs:string" />
+			<item name="artifactId" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="contextRoot" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="packaging" type="xs:string" />
+			<item name="creator" type="xs:string" />
+			<!--
+			<listItem name="properties" type="common:Property" />
+			<listItem name="resources" type="common:Resource" />
+			<listItem name="dependencies" type="common:Dependency" />
+			-->
+			<item name="modules" type="Modules" />
+			<!--
+			<listItem name="modules" type="Module" contained="true" />
+			<listItem name="services" type="common:Services" />
+			<listItem name="processes" type="common:Process" />
+			<item name="information" type="Information" />
+			<item name="persistence" type="Persistence" />
+			-->
+			<item name="userInterfaces" type="ui:UserInterfaces" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		<enumeration name="ApplicationType">
+			<literal name="WEB" label="Web Application" />
+			<literal name="ENTERPRISE" label="Enterprise Application" />
+			<literal name="STANDALONE" label="Standalone Application" />
+		</enumeration>
+
+
+		<!--
+			Module related structures
+			*************************
+		 -->
+
+		<element name="Modules">
+			<listItem name="modules" type="Module" contained="true" />
+		</element>
+
+		<element name="Module" hierarchical="true">
+			<item name="type" type="ModuleType" />
+			<item name="level" type="ModuleLevel" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="groupId" type="xs:string" />
+			<item name="artifactId" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="packaging" type="PackageType" />
+			<item name="creator" type="xs:string" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+
+		<enumeration name="ModuleType">
+			<literal name="POM" label="Pom" />
+			<literal name="MODEL" label="Model" />
+			<literal name="DATA" label="Persistence" />
+			<literal name="CLIENT" label="Client" />
+			<literal name="SERVICE" label="Service" />
+			<literal name="VIEW" label="View" />
+			<literal name="TEST" label="Test" />
+			<literal name="WAR" label="War" />
+			<literal name="EAR" label="Ear" />
+		</enumeration>
+
+		<enumeration name="ModuleLevel">
+			<literal name="PROJECT_LEVEL" label="Project Level" />
+			<literal name="GROUP_LEVEL" label="Group Level" />
+			<literal name="APPLICATION_LEVEL" label="Application Level" />
+		</enumeration>
+		
+		<enumeration name="PackageType">
+			<literal name="JAR" label="jar" />
+			<literal name="WAR" label="war" />
+			<literal name="EAR" label="ear" />
+			<literal name="RAR" label="rar" />
+			<literal name="SAR" label="sar" />
+			<literal name="NONE" label="none" />
+		</enumeration>
+
+
+		
+		<!--
+			Service related structures
+			**************************
+		 -->
+
+		<element name="Service" root="true">
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="domain" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="element" type="xs:string" />
+			<item name="packageName" type="xs:string" />
+			<item name="interfaceName" type="xs:string" />
+			<item name="className" type="xs:string" />
+			<item name="portType" type="xs:string" />
+
+			<item name="transacted" type="Transacted" />
+			<listItem name="namespaces" type="Namespace" />
+			<listItem name="channelsAndListenersAndOperations" type="java.io.Serializable">
+				<itemType>Channel</itemType>
+				<itemType>Listener</itemType>
+				<itemType>Operation</itemType>
+				<itemType>Component</itemType>
+				<itemType>Sender</itemType>
+				<itemType>Invoker</itemType>
+				<itemType>Callback</itemType>
+				<itemType>Execution</itemType>
+			</listItem>
+			<item name="process" type="Process" />
+			<listItem name="properties" type="Property" />
+
+<!--
+			<listItem name="channels" type="Channel" />
+			<listItem name="listeners" type="Listener" />
+			<listItem name="operations" type="Operation" />
+			<listItem name="components" type="Component" />
+			<listItem name="callbacks" type="Type" />
+-->
+
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+
+		<element name="Callback" extends="Service" root="true">
+			<item name="direction" type="Direction" />
+			<item name="sendingService" type="Service" />
+			<item name="receivingService" type="Service" />
+		</element>
+
+
+		<!--
+			Component related structures
+			****************************
+		 -->
+
+		<element name="Component" extends="Element" root="true">
+			<item name="componentType" type="ComponentType" required="true" />
+			<item name="baseType" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="element" type="xs:string" />
+			<item name="packageName" type="xs:string" />
+			<item name="interfaceName" type="xs:string" />
+			<item name="className" type="xs:string" />
+			<item name="published" type="xs:boolean" />
+			<item name="cached" type="xs:boolean" />
+			<item name="transacted" type="Transacted" />
+			<listItem name="components" type="Component" />
+			<listItem name="operations" type="Operation" />
+		</element>
+		
+		<enumeration name="ComponentType">
+			<literal name="Cache" label="Cache" />
+			<literal name="Process" label="Process" />
+			<literal name="Handler" label="Handler" />
+			<literal name="Scheduler" label="Scheduler" />
+			<literal name="Persistence" label="Persistence" />
+			<literal name="Custom" label="Custom" />
+		</enumeration>
+		
+		
+		<!--
+			Process related structures
+			**************************
+		 -->
+
+		<element name="Process" extends="Component" root="true">
+			<item name="stateful" type="xs:boolean" />
+			<item name="object" type="xs:anyType" />
+			<listItem name="dataUnits" type="Unit" />
+			<listItem name="cacheUnits" type="Cache" />
+			<item name="state" type="ProcessState" />
+		</element>
+		
+		<element name="ProcessState">
+			<item name="distributed" type="xs:boolean" />
+			<listItem name="variables" type="Variable" />
+		</element>
+		
+		
+		        
+		<element name="Variable">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="type" type="xs:string" required="true" useForEquals="true" />
+			<item name="object" type="xs:anyType" />
+		</element>
+		
+
+        <!--
+			Messaging related structures
+			****************************
+		 -->
+
+		<element name="Messaging" root="true">
+			<listItem name="imports" type="nam:Import" />
+			<item name="domain" type="xs:string" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Resource</itemType>
+				<itemType>Provider</itemType>
+				<itemType>Channels</itemType>
+				<itemType>Listeners</itemType>
+				<itemType>Links</itemType>
+				<itemType>Intereactors</itemType>
+				<itemType>Transports</itemType>
+			</listItem>
+			<item name="imported" type="xs:boolean" default="false" />
+			<item name="included" type="xs:boolean" />
+			<item name="exposed" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		<element name="Interactor">
+			<item name="name" type="xs:string" useForEquals="true" useForLabel="true" />
+			<item name="role" type="xs:string" useForEquals="true" />
+			<item name="link" type="xs:string" useForEquals="true" />
+			<item name="invalid" type="xs:string" />
+			<item name="channel" type="xs:string" />
+			<item name="target" type="xs:string" />
+			<item name="service" type="xs:string" />
+			<item name="asynchronous" type="xs:boolean" default="false" />
+			<item name="timeToLive" type="xs:long" default="720000" />
+			<item name="transacted" type="xs:boolean" default="false" />
+			<item name="durable" type="xs:boolean" default="true" />
+			<item name="priority" type="xs:boolean" default="false" />
+			<item name="timeout" type="xs:long" default="360000" />
+			<item name="deliveryMode" type="DeliveryMode" default="NON_PERSISTENT" />
+			<item name="interaction" type="Interaction" />
+		</element>
+		
+		<enumeration name="Interaction">
+			<literal name="ACCEPT" label="Accept" />
+			<literal name="CALL" label="Call" />
+			<literal name="LISTEN" label="Listen" />
+			<literal name="INVOKE" label="Invoke" />
+			<literal name="POST" label="Post" />
+			<literal name="PUBLISH" label="Publish" />
+			<literal name="RECEIVE" label="Receive" />
+			<literal name="REPLY" label="Reply" />
+			<literal name="SEND" label="Send" />
+			<literal name="SUBSCRIBE" label="Subscribe" />
+		</enumeration>
+		
+		<enumeration name="TransferMode">
+			<literal name="TEXT" label="Text" />
+			<literal name="BINARY" label="Binary" />
+		</enumeration>
+		
+		<enumeration name="DeliveryMode">
+			<literal name="PERSISTENT" label="Persistent" />
+			<literal name="NON PERSISTENT" label="Non Persistent" />
+		</enumeration>
+		
+		<enumeration name="AcknowledgeMode">
+			<literal name="LAZY" label="Lazy" />
+			<literal name="AUTO" label="Auto" />
+			<literal name="CLIENT" label="Client" />
+		</enumeration>
+		
+		<element name="Listener" extends="Interactor" root="true">
+			<item name="receiveChannel" type="Channel" />
+			<item name="invalidChannel" type="Channel" />
+			<item name="expiredChannel" type="Channel" />
+			<item name="noLocalReceipt" type="xs:boolean" default="true" />
+		</element>
+
+		<element name="Channel" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="host" type="xs:string" />
+			<item name="port" type="xs:integer" />
+			<item name="jndiName" type="xs:string" />
+			<item name="transferMode" type="TransferMode" />
+			<item name="acknowledgeMode" type="AcknowledgeMode" />
+			<item name="redeliveryDelay" type="xs:integer" default="3000" />
+			<item name="maxDeliveryAttempts" type="xs:integer" default="3" />
+			<item name="adapter" type="Adapter" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Sender</itemType>
+				<itemType>Receiver</itemType>
+				<itemType>Invoker</itemType>
+			</listItem>
+			<listItem name="clients" type="xs:string" />
+			<listItem name="services" type="xs:string" />
+			<listItem name="managers" type="xs:string" />
+		</element>
+
+		<element name="Transport" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="type" type="TransportType" useForEquals="true" />
+			<item name="host" type="xs:string" />
+			<item name="port" type="xs:integer" />
+			<item name="scope" type="xs:string" />
+			<item name="transferMode" type="TransferMode" />
+			<item name="transacted" type="xs:boolean" />
+			<item name="provider" type="xs:string" />
+		</element>
+
+		<enumeration name="TransportType">
+			<literal name="RMI" label="RMI" />
+			<literal name="EJB" label="EJB" />
+			<literal name="HTTP" label="HTTP" />
+			<literal name="JMS" label="JMS" />
+		</enumeration>
+		
+		<element name="RMITransport" extends="Transport">
+		</element>
+
+		<element name="EJBTransport" extends="Transport">
+			<item name="jndiName" type="xs:string" />
+		</element>
+
+		<element name="HTTPTransport" extends="Transport">
+			<item name="url" type="xs:string" />
+			<item name="portType" type="xs:string" />
+			<item name="context" type="xs:string" />
+		</element>
+
+		<element name="JMSTransport" extends="Transport">
+			<item name="jndiName" type="xs:string" />
+			<item name="portType" type="xs:string" />
+			<item name="destination" type="xs:string" />
+			<item name="destinationType" type="DestinationType" />
+			<item name="connectionFactory" type="xs:string" />
+			<item name="redeliveryDelay" type="xs:int" />
+			<item name="maxDeliveryAttempts" type="xs:int" />
+		</element>
+
+		<enumeration name="DestinationType">
+			<literal name="QUEUE" label="Queue" />
+			<literal name="TOPIC" label="Topic" />
+		</enumeration>
+
+		
+		<!--
+			Deployment related structures
+			*****************************
+		 -->
+
+		<element name="Deployment" root="true" hierarchical="true">
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="domain" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="url" type="xs:string" />
+		</element>
+
+		<enumeration name="Direction">
+			<literal name="IN" label="In" />
+			<literal name="OUT" label="Out" />
+		</enumeration>
+	</namespace>
+
+
+	<namespace 
+        prefix="ui" 
+        name="nam-ui" 
+        uri="http://nam/ui">
+
+		<!--
+			Control related structures
+			**************************
+		 -->
+
+		<element name="Controls">
+			<listItem name="tables" type="Table" />
+			<listItem name="trees" type="Tree" />
+		</element>  
+
+		<element name="Control" extends="nam:Component" root="true">
+		</element>
+
+
+        <!--
+			Conversation related structures
+			*******************************
+		 -->
+
+        <element name="Conversations">
+			<listItem name="conversation" type="Conversation" />
+		</element>
+
+		<element name="Conversation" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="process" type="nam:Process" required="true" useForEquals="true" />
+		</element>
+
+        
+		<!--
+			Graphics related structures
+			****************************
+		 -->
+
+		<element name="Graphics">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="value" type="xs:string" />
+		</element>
+		
+		
+        <!--
+			Invocation related structures
+			*****************************
+		 -->
+
+        <element name="Invocations">
+			<listItem name="invocations" type="Invocation" />
+		</element>
+
+		<element name="Invocation" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="service" type="nam:Service" required="true" useForEquals="true" />
+		</element>
+
+        
+        <!--
+			Layout related structures
+			**************************
+		 -->
+
+        <element name="Layouts">
+			<listItem name="layouts" type="Layout" />
+		</element>
+
+		<element name="Layout" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+		</element>
+
+		<enumeration name="LayoutType">
+			<literal name="TYPE01" label="Type01" />
+		</enumeration>
+
+        
+		<!--
+			Relation related structures
+			***************************
+		 -->
+
+        <element name="Relations">
+			<listItem name="relations" type="Relation" />
+		</element>
+
+		<element name="Relation" root="true">
+			<item name="name" type="xs:string" />
+			<item name="pattern" type="xs:string" />
+			<listItem name="container" type="xs:string" />
+			<listItem name="type" type="xs:string" />
+		</element>
+
+        
+        <!--
+			Section related structures
+			**************************
+		 -->
+
+        <element name="Sections">
+			<listItem name="sections" type="Section" />
+		</element>
+
+		<element name="Section" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+		</element>
+
+        
+        <!--
+			Table related structures
+			************************
+		 -->
+
+		<element name="Table" extends="Control" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+		</element>
+
+        
+        <!--
+			Table related structures
+			************************
+		 -->
+
+		<element name="Table" extends="Control" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+		</element>
+
+        
+        <!--
+			Tree related structures
+			***********************
+		 -->
+
+		<element name="Tree" extends="Control" root="true">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="treeNodes" type="TreeNodes" />
+		</element>
+
+		<element name="TreeNodes">
+			<listItem name="treeNodes" type="TreeNode" />
+		</element>
+
+		<element name="TreeNode" root="true">
+		</element>
+
+
+        <!--
+			UI related structures
+			*********************
+		 -->
+
+		<element name="UserInterfaces">
+			<listItem name="userInterfaces" type="UserInterface" contained="true" />
+		</element>
+
+		<element name="UserInterface" root="true">
+			<item name="type" type="UserInterfaceType" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="groupId" type="xs:string" />
+			<item name="artifactId" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="languages" type="nam:Languages" contained="true" />
+			<item name="graphics" type="Graphics" contained="true" />
+			<item name="sections" type="Sections" contained="true" />
+			<item name="layouts" type="Layouts" contained="true" />
+			<item name="controls" type="Controls" contained="true" />
+			<item name="invocations" type="Invocations" contained="true" />
+			<item name="conversations" type="Conversations" contained="true" />
+			<item name="creator" type="xs:string" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+
+		<enumeration name="UserInterfaceType">
+			<literal name="WEB" label="web" />
+			<literal name="MOBILE" label="mobile" />
+			<literal name="TABLET" label="tablet" />
+			<literal name="DESKTOP" label="desktop" />
+		</enumeration>
+		
+		
+		<!--
+			View related structures
+			***********************
+		 -->
+
+		<element name="View" root="true">
+			<listItem name="imports" type="nam:Import" />
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="domain" type="xs:string" required="true" useForEquals="true" />
+			<item name="controls" type="Controls" />
+			<item name="relations" type="Relations" />
+		</element>
+	</namespace>
+</information>
+
