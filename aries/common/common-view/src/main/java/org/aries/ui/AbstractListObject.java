@@ -12,10 +12,18 @@ public abstract class AbstractListObject<R> implements Serializable {
 	
 	private boolean checked;
 
+	private String backgroundColor = "white";
 
+
+	public Object getKey() {
+		return toString();
+	}
+	
+	public String getLabel() {
+		return toString();
+	}
+	
 	public boolean isSelected() {
-//		if (selected)
-//			System.out.println();
 		return selected;
 	}
 
@@ -24,20 +32,29 @@ public abstract class AbstractListObject<R> implements Serializable {
 	}
 	
 	public boolean isChecked() {
-		return selected;
+//		if (checked)
+//			System.out.println(this);
+		return checked;
 	}
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
-		setSelected(checked);
+	}
+
+	public String getIcon() {
+		return "/icons/common/Default16.gif";
 	}
 	
-	public Object getKey() {
-		return toString();
+	public String getBackgroundColor() {
+//		if (checked)
+//			return "#eef";
+//		if (selected)
+//			return "#FFEBDA";
+		return "inherit";
 	}
-	
-	public String getLabel() {
-		return toString();
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 	
 }

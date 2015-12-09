@@ -14,11 +14,11 @@ import org.aries.util.text.TextUtil;
 
 public abstract class AbstractWizardPage<T> implements Serializable {
 	
-	public abstract void initialize(T object);
-	
 	private String url;
 	
 	private String name;
+	
+	private String icon;
 	
 	private String owner;
 	
@@ -33,6 +33,8 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 	private boolean visible;
 
 	private boolean enabled;
+	
+	private boolean newMode;
 
 	private boolean backVisible;
 
@@ -50,6 +52,10 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 
 	private boolean populateEnabled;
 
+	private boolean saveVisible;
+
+	private boolean saveEnabled;
+
 //	private AbstractWizardPage<T> previousPage;
 //	
 //	private AbstractWizardPage<T> nextPage;
@@ -65,6 +71,10 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 		nextEnabled = true;
 		finishVisible = true;
 		finishEnabled = true;
+		populateVisible = false;
+		populateEnabled = false;
+		saveVisible = false;
+		saveEnabled = false;
 		validator = new Validator();
 	}
 	
@@ -82,6 +92,14 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public String getOwner() {
@@ -144,6 +162,14 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 		this.enabled = enabled;
 	}
 
+	public boolean isNewMode() {
+		return newMode;
+	}
+
+	public void setNewMode(boolean newMode) {
+		this.newMode = newMode;
+	}
+	
 	public boolean isBackVisible() {
 		return backVisible;
 	}
@@ -208,6 +234,22 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 		this.populateEnabled = populateEnabled;
 	}
 
+	public boolean isSaveVisible() {
+		return saveVisible;
+	}
+
+	public void setSaveVisible(boolean saveVisible) {
+		this.saveVisible = saveVisible;
+	}
+
+	public boolean isSaveEnabled() {
+		return saveEnabled;
+	}
+
+	public void setSaveEnabled(boolean saveEnabled) {
+		this.saveEnabled = saveEnabled;
+	}
+	
 //	public AbstractWizardPage<T> getPreviousPage() {
 //		return previousPage;
 //	}
@@ -225,9 +267,18 @@ public abstract class AbstractWizardPage<T> implements Serializable {
 //	}
 	
 
-//	public <T> void initialize(T object) {
-//		//nothing by default
-//	}
+	public void initialize(T object) {
+		if (!newMode) {
+			setBackVisible(false);
+			setBackEnabled(false);
+			setNextVisible(false);
+			setNextEnabled(false);
+			setFinishVisible(false);
+			setFinishEnabled(false);
+		}
+		setSaveVisible(!newMode);
+		setSaveEnabled(!newMode);
+	}
 	
 	public boolean isValid() {
 		validator.reset();

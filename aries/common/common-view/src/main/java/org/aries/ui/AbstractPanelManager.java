@@ -218,6 +218,10 @@ public abstract class AbstractPanelManager {
 		this.visible = visible;
 	}
 	
+	public void toggleVisible() {
+		visible = !visible;
+	}
+	
 	public boolean isImmediate() {
 		return immediate;
 	}

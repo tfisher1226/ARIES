@@ -85,10 +85,15 @@ public class NameUtil {
 	
 	//TODO make this better
 	public static String toPlural(String name) {
-		if (name.equalsIgnoreCase("child"))
-			return name + "ren";
+		if (name.endsWith("y")) {
+			int length = name.length();
+			name = name.substring(0, length-2);
+			return name + "ies";
+		}
 		if (name.endsWith("s"))
 			return name + "es";
+		if (name.equalsIgnoreCase("child"))
+			return name + "ren";
 		return name + "s";
 	}
 	

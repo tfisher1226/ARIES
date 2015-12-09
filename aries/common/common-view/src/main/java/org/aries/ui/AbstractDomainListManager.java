@@ -12,9 +12,10 @@ import javax.faces.model.DataModel;
 import org.aries.Assert;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.model.ListTableModel;
+import org.richfaces.event.PanelToggleEvent;
 
 
-public abstract class AbstractDomainListManager<R, T> extends AbstractRecordListManager<R> {
+public abstract class AbstractDomainListManager<R, T extends AbstractListObject<R>> extends AbstractRecordListManager<R> {
 	
 	public abstract String getRecordName(R record);
 
@@ -44,6 +45,8 @@ public abstract class AbstractDomainListManager<R, T> extends AbstractRecordList
 	protected String selectedRecordIndex;
 
 	protected T selectedRowObject;
+	
+	protected boolean checkedState;
 	
 	
 //	public Collection<R> getRecordList() {
@@ -124,7 +127,10 @@ public abstract class AbstractDomainListManager<R, T> extends AbstractRecordList
 		if (selectedRecordIndex != null) {
 			int rowIndex = Integer.parseInt(selectedRecordIndex);
 			if (rowIndex < objectList.size()) {
+				//if (selectedRowObject != null)
+				//	selectedRowObject.setSelected(false);
 				selectedRowObject = objectList.get(rowIndex);
+				selectedRowObject.setSelected(true);
 				selectedRecord = getRecord(selectedRowObject);
 				dataModel.setRowIndex(rowIndex);
 				setSelectedRecord(selectedRecord);
@@ -136,7 +142,14 @@ public abstract class AbstractDomainListManager<R, T> extends AbstractRecordList
 		return selectedRowObject != null;
 	}
 	
-	
+	public boolean getCheckedState() {
+		return checkedState;
+	}
+
+	public void setCheckedState(boolean checkedState) {
+		this.checkedState = checkedState;
+	}
+
 	public String getHeader(Object recordKey) {
 		if (recordKey != null && !recordKey.toString().isEmpty()) {
 			R record = recordByKeyMap.get(recordKey);
@@ -257,4 +270,8 @@ public abstract class AbstractDomainListManager<R, T> extends AbstractRecordList
 		//do nothing for now - otherwise call the abstract helper 
 	}
 
+	public void toggle(PanelToggleEvent event) {
+		setVisible(event.getExpanded());
+	}
+    
 }

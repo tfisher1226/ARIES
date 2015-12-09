@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 @Named("helper")
 public class Helper extends AbstractPanelManager implements Serializable {
 	
-	private String contentWidth = "1000";
+	private String contentWidth = "860";
 
 	private String contentHeight = "auto";
 
@@ -38,7 +38,7 @@ public class Helper extends AbstractPanelManager implements Serializable {
 
 	private String wizard_middleSection_height = "240";
 
-	private String wizard_rightSection_width = "205";
+	private String wizard_rightSection_width = "185";
 	
 	private String wizard_rightSection_height = "auto";
 	

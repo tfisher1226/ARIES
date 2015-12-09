@@ -69,6 +69,7 @@ public abstract class AbstractWizard<T> extends AbstractViewManager implements S
 		Iterator<AbstractWizardPage<T>> iterator = getPages().iterator();
 		while (iterator.hasNext()) {
 			AbstractWizardPage<T> page = iterator.next();
+			page.setNewMode(newMode);
 			page.initialize(instance);
 		}
 	}
@@ -304,6 +305,14 @@ public abstract class AbstractWizard<T> extends AbstractViewManager implements S
 		return page != null ? page.isPopulateEnabled() && newMode : false;
 	}
 
+	public boolean isSaveVisible() {
+		return page != null ? page.isSaveVisible() && !newMode : false;
+	}
+
+	public boolean isSaveEnabled() {
+		return page != null ? page.isSaveEnabled() && !newMode : false;
+	}
+	
 	public String refresh() {
 		return page != null ? page.getUrl() : null;
 	}
@@ -338,8 +347,11 @@ public abstract class AbstractWizard<T> extends AbstractViewManager implements S
 			return null;
 		try {
 			//TODO do any other completion logic here?
+			if (seamConversationHelper == null)
+				seamConversationHelper = BeanContext.getFromSession("seamConversationHelper");
 			seamConversationHelper.end();
-			return null;
+			//TODO fix this
+			return "";
 		} catch (Exception e) {
 			log.error(e);
 			return null;
