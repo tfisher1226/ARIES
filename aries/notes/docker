@@ -1,0 +1,55 @@
+
+# download lates JBoss Wildfly image
+docker pull jboss/wildfly
+
+# verify the available images in our Docker platform:
+docker images
+
+# retrieve currently running images
+docker ps
+
+# retrieve last run image
+docker ps -l
+
+# run jboss/wildfly image interactively
+docker run -it jboss/wildfly
+
+# gets the IP address assigned to the running server
+docker inspect -f '{{ .NetworkSettings.IPAddress }}' 16e8290c6be3
+
+# remove current machine called default
+docker-machine rm default
+
+# use docker machine to regenerate certs
+docker-machine regenerate-certs default
+
+VM=default
+docker-machine stop $VM
+docker-machine rm -f $VM
+rm -rf ~/.docker/machine/machines/$VM
+docker-machine -D create -d virtualbox --virtualbox-memory 2048 $VM
+docker-machine start $VM
+
+
+docker-machine stop default
+docker-machine kill default
+docker-machine start default
+docker-machine env default --shell bash
+
+docker run --name mysqldb -e MYSQL_USER=admin -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=admin_db -e MYSQL_USER2=nam -e MYSQL_PASSWORD2=password -e MYSQL_DATABASE2=nam_db -e MYSQL_ROOT_PASSWORD=supersecret -p 3306:3306 -d mysql
+
+docker build --tag=mysqlapp .
+
+docker run -p 8080:8080 --link mysqldb:mydatabaseserver mysqlapp
+
+http://192.168.99.101:8080/javaee6angularjsmysql/
+
+curl http://192.168.99.101:8080/employees/resources/employees/
+
+http://192.168.99.101:9990/management
+
+docker inspect dda66cd219a5
+
+docker info
+
+mysql -uadmin -pJcM5FCphMOp4 -h172.17.42.1 -P3307
