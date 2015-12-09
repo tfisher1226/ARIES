@@ -1,6 +1,7 @@
 package aries.codegen;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public abstract class AbstractDataLayerFileBuilder extends AbstractFileBuilder {
 	
 	public List<ModelFile> buildFiles(boolean isTest, Persistence persistence) throws Exception {
 		List<ModelFile> modelFiles = new ArrayList<ModelFile>();
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
 			Unit unit = iterator.next();
@@ -71,7 +72,7 @@ public abstract class AbstractDataLayerFileBuilder extends AbstractFileBuilder {
 
 	protected String getQueriesfileName(Unit unit) {
 		Persistence persistence = context.getPersistence();
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		if (units.size() == 1)
 			return "queries.xml";
 		String unitName = NameUtil.uncapName(unit.getName());

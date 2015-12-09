@@ -3,20 +3,25 @@ package nam.model.domain;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import nam.model.Domain;
-import nam.model.service.ServicePageManager;
-import nam.model.util.DomainUtil;
-import nam.ui.design.SelectionContext;
 
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.ui.PageManager;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
+
+import nam.model.Domain;
+import nam.model.application.ApplicationPageManager;
+import nam.model.module.ModulePageManager;
+import nam.model.network.NetworkPageManager;
+import nam.model.provider.ProviderPageManager;
+import nam.model.service.ServicePageManager;
+import nam.model.util.DomainUtil;
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -30,7 +35,25 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 	private DomainDataManager domainDataManager;
 
 	@Inject
+	private DomainInfoManager domainInfoManager;
+	
+	@Inject
 	private DomainListManager domainListManager;
+	
+	@Inject
+	private ApplicationPageManager applicationPageManager;
+	
+	@Inject
+	private ModulePageManager modulePageManager;
+	
+	@Inject
+	private NetworkPageManager networkPageManager;
+	
+	@Inject
+	private ProviderPageManager providerPageManager;
+	
+	@Inject
+	private ServicePageManager servicePageManager;
 	
 	@Inject
 	private DomainRecord_OverviewSection domainOverviewSection;
@@ -50,12 +73,11 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 	
 	public DomainPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("domain");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -68,16 +90,20 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
 		domainDataManager.setScope(scope);
 		domainListManager.refresh();
-		}
+	}
 	
 	public void refreshMembers(String scope) {
-		domainListManager.refresh();
+		applicationPageManager.refreshLocal(scope);
+		modulePageManager.refreshLocal(scope);
+		networkPageManager.refreshLocal(scope);
+		providerPageManager.refreshLocal(scope);
+		servicePageManager.refreshLocal(scope);
 	}
 	
 	public String getDomainListPage() {
@@ -102,6 +128,43 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 	
 	public String getDomainManagementPage() {
 		return "/nam/model/domain/domainManagementPage.xhtml";
+	}
+	
+	public void handleDomainSelected(@Observes @Selected Domain domain) {
+		selectionContext.setSelection("domain",  domain);
+		domainInfoManager.setRecord(domain);
+	}
+	
+	public void handleDomainUnselected(@Observes @Unselected Domain domain) {
+		selectionContext.unsetSelection("domain",  domain);
+		domainInfoManager.unsetRecord(domain);
+	}
+	
+	public void handleDomainChecked() {
+		String scope = "domainSelection";
+		DomainListObject listObject = domainListManager.getSelection();
+		Domain domain = selectionContext.getSelection("domain");
+		boolean checked = domainListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			domainInfoManager.setRecord(domain);
+			selectionContext.setSelection(scope,  domain);
+		} else {
+			domainInfoManager.unsetRecord(domain);
+			selectionContext.unsetSelection(scope,  domain);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("application"))
+			applicationPageManager.refreshLocal(scope);
+		if (target.equals("module"))
+			modulePageManager.refreshLocal(scope);
+		if (target.equals("network"))
+			networkPageManager.refreshLocal(scope);
+		if (target.equals("provider"))
+			providerPageManager.refreshLocal(scope);
+		if (target.equals("service"))
+			servicePageManager.refreshLocal(scope);
+		refreshLocal(scope);
 	}
 	
 	public String initializeDomainListPage() {
@@ -184,9 +247,6 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 		addBreadcrumb(pageLevelKey, "Domains", "showDomainManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Domain", "showDomainWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showDomainWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showDomainWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showDomainWizardPage('Documentation')");
 		
 		domainIdentificationSection.setOwner("domainWizard");
 		domainConfigurationSection.setOwner("domainWizard");
@@ -203,7 +263,7 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -223,10 +283,6 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 		addBreadcrumb(pageLevelKey, "Domains", "showDomainManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(domainName, "showDomainWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showDomainWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showDomainWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showDomainWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showDomainWizardPage('Documentation')");
 		
 		domainOverviewSection.setOwner("domainWizard");
 		domainIdentificationSection.setOwner("domainWizard");
@@ -245,7 +301,7 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -264,64 +320,84 @@ public class DomainPageManager extends AbstractPageManager<Domain> implements Se
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Domains");
+		setPageIcon("/icons/nam/Domain16.gif");
 		setSectionType("domain");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Domains");
 		setSectionIcon("/icons/nam/Overview16.gif");
-	}
-	
-	public void initializeView(String elementType, String viewTitle, String sectionName) {
-		String pageManagerName = NameUtil.uncapName(elementType) + "PageManager";
-		PageManager<?> pageManager = BeanContext.getFromSession(pageManagerName);
-		initializeView(pageManager, viewTitle, sectionName);
-	}
-	
-	public void initializeView(PageManager<?> pageManager, String viewTitle, String sectionName) {
-		pageManager.setSectionName(sectionName);
-		pageManager.setSectionTitle(viewTitle);
-		pageManager.setSectionType("domain");
-		pageManager.setSectionIcon("/icons/nam/ApplicationDomain16.gif");
-	}
-	
-	public String initializeModuleDomainsView() {
-		String sectionTitle = "Module Domains";
-		//String viewTitle = getServiceLabel(service);
-		String currentArea = selectionContext.getCurrentArea();
-		initializeView(currentArea, sectionTitle, "ModuleDomains");
-		String viewLevelKey = "moduleDomains";
+		String viewLevelKey = "domainOverview";
 		clearBreadcrumbs(viewLevelKey);
 		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
-		addBreadcrumb(viewLevelKey, "Modules", "showModuleManagementPage()");
-		//String url = getServiceSummaryPage();
-		selectionContext.setMessageDomain(viewLevelKey);
-		//selectionContext.resetOrigin();
-		//selectionContext.setUrl(url);
+		addBreadcrumb(viewLevelKey, "Domains", "showDomainManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
+	}
+	
+	public String initializeDomainApplicationsView() {
+		setSectionType("domain");
+		setSectionName("Applications");
+		setSectionTitle("Applications");
+		setSectionIcon("/icons/nam/Application16.gif");
+		selectionContext.setMessageDomain("domainApplications");
+		applicationPageManager.refreshLocal("domainSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
 	
-	public String initializeServiceDomainsView() {
-		String sectionTitle = "Service Domains";
-		//String viewTitle = getServiceLabel(service);
-		String currentArea = selectionContext.getCurrentArea();
-		initializeView(currentArea, sectionTitle, "ServiceDomains");
-		String viewLevelKey = "serviceDomains";
-		clearBreadcrumbs(viewLevelKey);
-		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
-		addBreadcrumb(viewLevelKey, "Services", "showServiceManagementPage()");
-		//String url = getServiceSummaryPage();
-		selectionContext.setMessageDomain(viewLevelKey);
-		//selectionContext.resetOrigin();
-		//selectionContext.setUrl(url);
+	public String initializeDomainModulesView() {
+		setSectionType("domain");
+		setSectionName("Modules");
+		setSectionTitle("Modules");
+		setSectionIcon("/icons/nam/Module16.gif");
+		selectionContext.setMessageDomain("domainModules");
+		modulePageManager.refreshLocal("domainSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
 	
+	public String initializeDomainNetworksView() {
+		setSectionType("domain");
+		setSectionName("Networks");
+		setSectionTitle("Networks");
+		setSectionIcon("/icons/nam/Network16.gif");
+		selectionContext.setMessageDomain("domainNetworks");
+		networkPageManager.refreshLocal("domainSelection");
+		refreshLocal("projectList");
+		sections.clear();
+		return null;
+	}
+	
+	public String initializeDomainProvidersView() {
+		setSectionType("domain");
+		setSectionName("Providers");
+		setSectionTitle("Providers");
+		setSectionIcon("/icons/nam/Provider16.gif");
+		selectionContext.setMessageDomain("domainProviders");
+		providerPageManager.refreshLocal("domainSelection");
+		refreshLocal("projectList");
+		sections.clear();
+		return null;
+	}
+	
+	public String initializeDomainServicesView() {
+		setSectionType("domain");
+		setSectionName("Services");
+		setSectionTitle("Services");
+		setSectionIcon("/icons/nam/Service16.gif");
+		selectionContext.setMessageDomain("domainServices");
+		servicePageManager.refreshLocal("domainSelection");
+		refreshLocal("projectList");
+		sections.clear();
+		return null;
+	}
 	
 	public String initializeDomainSummaryView(Domain domain) {
 		//String viewTitle = getDomainLabel(domain);

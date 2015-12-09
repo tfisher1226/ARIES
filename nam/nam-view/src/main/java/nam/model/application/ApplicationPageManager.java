@@ -3,6 +3,8 @@ package nam.model.application;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,6 +14,7 @@ import nam.model.domain.DomainPageManager;
 import nam.model.element.ElementPageManager;
 import nam.model.module.ModulePageManager;
 import nam.model.namespace.NamespacePageManager;
+import nam.model.project.ProjectPageManager;
 import nam.model.provider.ProviderPageManager;
 import nam.model.service.ServicePageManager;
 import nam.model.type.TypePageManager;
@@ -22,6 +25,10 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
+import org.aries.ui.event.Checked;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unchecked;
+import org.aries.ui.event.Unselected;
 
 
 @SessionScoped
@@ -35,7 +42,13 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	private ApplicationDataManager applicationDataManager;
 
 	@Inject
+	private ApplicationInfoManager applicationInfoManager;
+	
+	@Inject
 	private ApplicationListManager applicationListManager;
+	
+	@Inject
+	private ProjectPageManager projectPageManager;
 	
 	@Inject
 	private DomainPageManager domainPageManager;
@@ -51,6 +64,9 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	
 	@Inject
 	private ElementPageManager elementPageManager;
+	
+	@Inject
+	private TypePageManager typePageManager;
 	
 	@Inject
 	private ComponentPageManager componentPageManager;
@@ -94,7 +110,6 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	
 	public ApplicationPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -103,7 +118,7 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	}
 
 	public void refreshLocal() {
-		refreshLocal("application");
+		refreshLocal("projectList");
 	}
 	
 	public void refreshMembers() {
@@ -112,7 +127,7 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -121,14 +136,13 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	}
 	
 	public void refreshMembers(String scope) {
-		modulePageManager.refresh(scope);
-		servicePageManager.refresh(scope);
-		elementPageManager.refresh(scope);
-		namespacePageManager.refresh(scope);
-		componentPageManager.refresh(scope);
-		providerPageManager.refresh(scope);
-		TypePageManager typePageManager = BeanContext.getFromSession("typePageManager");
-		typePageManager.refresh(scope);
+		modulePageManager.refreshLocal(scope);
+		servicePageManager.refreshLocal(scope);
+		elementPageManager.refreshLocal(scope);
+		typePageManager.refreshLocal(scope);
+		namespacePageManager.refreshLocal(scope);
+		componentPageManager.refreshLocal(scope);
+		providerPageManager.refreshLocal(scope);
 	}
 	
 	public String getApplicationListPage() {
@@ -158,6 +172,43 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	public String getProjectSelectionPage() {
 		return getApplicationWizardPage() + "?section=projectSelection";
 	}
+
+	public void handleApplicationSelected(@Observes @Selected Application application) {
+		selectionContext.setSelection("application",  application);
+		applicationInfoManager.setRecord(application);
+	}
+	
+	public void handleApplicationUnselected(@Observes @Unselected Application application) {
+		selectionContext.unsetSelection("application",  application);
+		applicationInfoManager.unsetRecord(application);
+	}
+	
+	public void handleApplicationChecked() {
+		String scope = "applicationSelection";
+		ApplicationListObject listObject = applicationListManager.getSelection();
+		Application application = selectionContext.getSelection("application");
+		boolean checked = applicationListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			applicationInfoManager.setRecord(application);
+			selectionContext.setSelection(scope,  application);
+		} else {
+			applicationInfoManager.unsetRecord(application);
+			selectionContext.unsetSelection(scope,  application);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("module"))
+			modulePageManager.refreshLocal(scope);
+		if (target.equals("service"))
+			servicePageManager.refreshLocal(scope);
+		if (target.equals("element"))
+			elementPageManager.refreshLocal(scope);
+		if (target.equals("component"))
+			componentPageManager.refreshLocal(scope);
+		if (target.equals("provider"))
+			providerPageManager.refreshLocal(scope);
+		refreshLocal(scope);
+	}
 	
 	public String initializeApplicationListPage() {
 		String pageLevelKey = "applicationList";
@@ -170,14 +221,19 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		selectionContext.setMessageDomain(pageLevelKey);
 		selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
+		String scope = "projectList";
+		refreshLocal(scope);
 		sections.clear();
 		return url;
 	}
 	
 	public String initializeApplicationTreePage() {
+		setPageTitle("Applications");
+		setPageIcon("/icons/nam/Application16.gif");
+		setSectionTitle("Bookshop2 Applications"); 
 		String pageLevelKey = "applicationTree";
 		clearBreadcrumbs(pageLevelKey);
-		addBreadcrumb(pageLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(pageLevelKey, "Bookshop2", "showMainPage()");
 		addBreadcrumb(pageLevelKey, "Applications", "showApplicationTreePage()");
 		String url = getApplicationTreePage();
 		selectionContext.setCurrentArea("application");
@@ -185,7 +241,8 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		selectionContext.setMessageDomain(pageLevelKey);
 		selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		sections.clear();
+		ApplicationTreeManager applicationTreeManager = BeanContext.getFromSession("applicationTreeManager");
+		applicationTreeManager.refreshModel();
 		return url;
 	}
 
@@ -239,11 +296,11 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		addBreadcrumb(pageLevelKey, "Applications", "showApplicationManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Application", "showApplicationWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Modules", "showApplicationWizardPage('Modules')");
-		addBreadcrumb(wizardLevelKey, "Services", "showApplicationWizardPage('Services')");
-		addBreadcrumb(wizardLevelKey, "Elements", "showApplicationWizardPage('Elements')");
-		addBreadcrumb(wizardLevelKey, "Components", "showApplicationWizardPage('Components')");
-		addBreadcrumb(wizardLevelKey, "Providers", "showApplicationWizardPage('Providers')");
+//		addBreadcrumb(wizardLevelKey, "Modules", "showApplicationWizardPage('Modules')");
+//		addBreadcrumb(wizardLevelKey, "Services", "showApplicationWizardPage('Services')");
+//		addBreadcrumb(wizardLevelKey, "Elements", "showApplicationWizardPage('Elements')");
+//		addBreadcrumb(wizardLevelKey, "Components", "showApplicationWizardPage('Components')");
+//		addBreadcrumb(wizardLevelKey, "Providers", "showApplicationWizardPage('Providers')");
 
 		applicationIdentificationSection.setOwner("applicationWizard");
 		applicationConfigurationSection.setOwner("applicationWizard");
@@ -270,7 +327,7 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -290,11 +347,11 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		addBreadcrumb(pageLevelKey, "Applications", "showApplicationManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(applicationName, "showApplicationWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Modules", "showApplicationWizardPage('Modules')");
-		addBreadcrumb(wizardLevelKey, "Services", "showApplicationWizardPage('Services')");
-		addBreadcrumb(wizardLevelKey, "Elements", "showApplicationWizardPage('Elements')");
-		addBreadcrumb(wizardLevelKey, "Components", "showApplicationWizardPage('Components')");
-		addBreadcrumb(wizardLevelKey, "Providers", "showApplicationWizardPage('Providers')");
+//		addBreadcrumb(wizardLevelKey, "Modules", "showApplicationWizardPage('Modules')");
+//		addBreadcrumb(wizardLevelKey, "Services", "showApplicationWizardPage('Services')");
+//		addBreadcrumb(wizardLevelKey, "Elements", "showApplicationWizardPage('Elements')");
+//		addBreadcrumb(wizardLevelKey, "Components", "showApplicationWizardPage('Components')");
+//		addBreadcrumb(wizardLevelKey, "Providers", "showApplicationWizardPage('Providers')");
 		
 		applicationOverviewSection.setOwner("applicationWizard");
 		applicationIdentificationSection.setOwner("applicationWizard");
@@ -323,7 +380,7 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -342,7 +399,7 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refreshLocal();
+		//refreshLocal();
 		return url;
 	}
 	
@@ -368,22 +425,34 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Applications");
+		setPageIcon("/icons/nam/Application16.gif");
 		setSectionType("application"); 
 		setSectionName("Overview"); 
 		setSectionTitle("Overview of Applications");
-		setSectionIcon("/icons/nam/Overview16.gif"); 
+		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "applicationOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Applications", "showApplicationManagementPage()");
+		String scope = "projectList";
+		projectPageManager.refreshLocal(scope);
+		applicationDataManager.setScope(scope);
+		applicationListManager.refresh();
+		sections.clear();
 	}
 	
 	public String initializeApplicationDomainsView() {
 		setSectionType("application"); 
 		setSectionName("Domains"); 
 		setSectionTitle("Domains");
-		setSectionIcon("/icons/nam/Domain16.gif"); 
+		setSectionIcon("/icons/nam/ApplicationDomain16.gif"); 
+		String url = getApplicationManagementPage();
 		selectionContext.setMessageDomain("applicationDomains");
-		domainPageManager.refresh("application");
-		applicationListManager.refresh();
+		domainPageManager.refreshLocal("projectList");
+		refreshLocal("domainSelection");
 		sections.clear();
-		return null;
+		return url;
 	}
 	
 	public String initializeApplicationModulesView() {
@@ -391,11 +460,12 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		setSectionName("Modules"); 
 		setSectionTitle("Modules");
 		setSectionIcon("/icons/nam/Module16.gif"); 
+		String url = getApplicationManagementPage();
 		selectionContext.setMessageDomain("applicationModules");
-		modulePageManager.refresh("application");
-		applicationListManager.refresh();
+		modulePageManager.refreshLocal("applicationSelection");
+		refreshLocal("projectList");
 		sections.clear();
-		return null;
+		return url;
 	}
 	
 	public String initializeApplicationServicesView() {
@@ -403,11 +473,12 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		setSectionName("Services"); 
 		setSectionTitle("Services");
 		setSectionIcon("/icons/nam/Service16.gif"); 
+		String url = getApplicationManagementPage();
 		selectionContext.setMessageDomain("applicationServices");
-		servicePageManager.refresh("application");
-		applicationListManager.refresh();
+		servicePageManager.refreshLocal("applicationSelection");
+		refreshLocal("projectList");
 		sections.clear();
-		return null;
+		return url;
 	}
 
 	public String initializeApplicationElementsView() {
@@ -415,12 +486,13 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		setSectionName("Elements"); 
 		setSectionTitle("Elements");
 		setSectionIcon("/icons/nam/Element16.gif"); 
+		String url = getApplicationManagementPage();
 		selectionContext.setMessageDomain("applicationElements");
-		namespacePageManager.refresh("application");
-		elementPageManager.refresh("application");
-		applicationListManager.refresh();
+		namespacePageManager.refreshLocal("applicationSelection");
+		elementPageManager.refreshLocal("namespaceSelection");
+		refreshLocal("projectList");
 		sections.clear();
-		return null;
+		return url;
 	}
 	
 	public String initializeApplicationComponentsView() {
@@ -428,11 +500,12 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		setSectionName("Components"); 
 		setSectionTitle("Components");
 		setSectionIcon("/icons/nam/Component16.gif"); 
+		String url = getApplicationManagementPage();
 		selectionContext.setMessageDomain("applicationComponents");
-		componentPageManager.refresh("application");
-		applicationListManager.refresh();
+		componentPageManager.refreshLocal("applicationSelection");
+		refreshLocal("projectList");
 		sections.clear();
-		return null;
+		return url;
 	}
 	
 	public String initializeApplicationProvidersView() {
@@ -440,11 +513,12 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		setSectionName("Providers"); 
 		setSectionTitle("Providers");
 		setSectionIcon("/icons/nam/Provider16.gif"); 
+		String url = getApplicationManagementPage();
 		selectionContext.setMessageDomain("applicationProviders");
-		providerPageManager.refresh("application");
-		applicationListManager.refresh();
+		providerPageManager.refreshLocal("applicationSelection");
+		refreshLocal("projectList");
 		sections.clear();
-		return null;
+		return url;
 	}
 	
 	public String initializeApplicationSummaryView(Application application) {
@@ -454,13 +528,14 @@ public class ApplicationPageManager extends AbstractPageManager<Application> imp
 		setSectionName("Summary"); 
 		setSectionTitle("Summary of Application Records");
 		setSectionIcon("/icons/nam/Application16.gif");
+		String url = getApplicationManagementPage();
 		String viewLevelKey = "applicationSummary";
 		clearBreadcrumbs(viewLevelKey);
 		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
 		addBreadcrumb(viewLevelKey, "Applications", "showApplicationManagementPage()");
 		selectionContext.setMessageDomain(viewLevelKey);
 		sections.clear();
-		return null;
+		return url;
 	}
 	
 	protected String getApplicationLabel(Application application) {

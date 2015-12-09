@@ -39,7 +39,13 @@
 			action="#{timeoutListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Timeout Records', 'Refreshing current Timeout List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="timeoutListActions, timeoutListMenu, timeoutListToolbar, timeoutListPane">
+			render="timeoutListActions timeoutListMenu timeoutListToolbar timeoutNameListToolbar timeoutListTable timeoutNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{timeoutDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="timeoutListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -58,7 +64,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="timeoutListActions, timeoutListToolbar, #{render}">
+			render="timeoutListActions timeoutListToolbar timeoutNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{timeoutListManager.selectedRecordIndex}" />
@@ -68,7 +74,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="timeout" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="timeoutListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="timeoutListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +93,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="timeoutListActions, timeoutListToolbar, #{render}">
+			render="timeoutListActions timeoutListToolbar timeoutNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{timeoutListManager.selectedRecordIndex}" />
@@ -115,7 +121,7 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="timeoutListActions, timeoutListMenu, timeoutListToolbar">
+			render="timeoutListActions timeoutListMenu timeoutListToolbar timeoutNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
@@ -123,6 +129,36 @@
 			
 			<!-- provide event queue settings -->
 			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** executeHandleTimeoutChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Timeout.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleTimeoutChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{timeoutPageManager.handleTimeoutChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="timeoutListActions timeoutListToolbar timeoutNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{timeoutListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{timeoutListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{timeoutListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{timeoutDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="timeoutListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +252,8 @@
 				function processTimeoutListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateTimeoutListState(event, rowIndex, recordKey, recordLabel);
 					enableTimeoutListActions('timeout');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromTimeoutList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +275,24 @@
 						executeActionFromTimeoutList(rowIndex, recordKey, 'Timeout', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processTimeoutListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Timeout List item.
+				  -->
+					
+				function processTimeoutListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleTimeoutListItemChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

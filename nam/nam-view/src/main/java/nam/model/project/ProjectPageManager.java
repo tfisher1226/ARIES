@@ -3,8 +3,16 @@ package nam.model.project;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.aries.runtime.BeanContext;
+import org.aries.ui.AbstractPageManager;
+import org.aries.ui.AbstractWizardPage;
+import org.aries.ui.Breadcrumb;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Project;
 import nam.model.application.ApplicationPageManager;
@@ -13,10 +21,6 @@ import nam.model.network.NetworkPageManager;
 import nam.model.provider.ProviderPageManager;
 import nam.model.util.ProjectUtil;
 import nam.ui.design.SelectionContext;
-
-import org.aries.ui.AbstractPageManager;
-import org.aries.ui.AbstractWizardPage;
-import org.aries.ui.Breadcrumb;
 
 
 @SessionScoped
@@ -28,6 +32,9 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 	
 	@Inject
 	private ProjectDataManager projectDataManager;
+
+	@Inject
+	private ProjectInfoManager projectInfoManager;
 
 	@Inject
 	private ProjectListManager projectListManager;
@@ -74,12 +81,11 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 
 	public ProjectPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("project");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -92,7 +98,7 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -101,10 +107,10 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 	}
 	
 	public void refreshMembers(String scope) {
-		applicationPageManager.refresh(scope);
-		modulePageManager.refresh(scope);
-		networkPageManager.refresh(scope);
-		providerPageManager.refresh(scope);
+		applicationPageManager.refreshLocal(scope);
+		modulePageManager.refreshLocal(scope);
+		networkPageManager.refreshLocal(scope);
+		providerPageManager.refreshLocal(scope);
 	}
 	
 	public String getProjectListPage() {
@@ -129,6 +135,41 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 
 	public String getProjectManagementPage() {
 		return "/nam/model/project/projectManagementPage.xhtml";
+	}
+	
+	public void handleProjectSelected(@Observes @Selected Project project) {
+		selectionContext.setSelection("project",  project);
+		projectInfoManager.setRecord(project);
+	}
+	
+	public void handleProjectUnselected(@Observes @Unselected Project project) {
+		selectionContext.unsetSelection("project",  project);
+		projectInfoManager.unsetRecord(project);
+	}
+	
+	public void handleProjectChecked() {
+		String scope = "projectSelection";
+		ProjectListObject listObject = projectListManager.getSelection();
+		Project project = selectionContext.getSelection("project");
+		boolean checked = projectListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			projectInfoManager.setRecord(project);
+			selectionContext.setSelection(scope,  project);
+		} else {
+			projectInfoManager.unsetRecord(project);
+			selectionContext.unsetSelection(scope,  project);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("application"))
+			applicationPageManager.refreshLocal(scope);
+		if (target.equals("module"))
+			modulePageManager.refreshLocal(scope);
+		if (target.equals("network"))
+			networkPageManager.refreshLocal(scope);
+		if (target.equals("provider"))
+			providerPageManager.refreshLocal(scope);
+		refreshLocal(scope);
 	}
 	
 	public String initializeProjectListPage() {
@@ -211,10 +252,10 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		addBreadcrumb(pageLevelKey, "Projects", "showProjectManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Project", "showProjectWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Applications", "showProjectWizardPage('Applications')");
-		addBreadcrumb(wizardLevelKey, "Modules", "showProjectWizardPage('Modules')");
-		addBreadcrumb(wizardLevelKey, "Networks", "showProjectWizardPage('Networks')");
-		addBreadcrumb(wizardLevelKey, "Providers", "showProjectWizardPage('Providers')");
+		//addBreadcrumb(wizardLevelKey, "Applications", "showProjectWizardPage('Applications')");
+		//addBreadcrumb(wizardLevelKey, "Modules", "showProjectWizardPage('Modules')");
+		//addBreadcrumb(wizardLevelKey, "Networks", "showProjectWizardPage('Networks')");
+		//addBreadcrumb(wizardLevelKey, "Providers", "showProjectWizardPage('Providers')");
 
 		projectIdentificationSection.setOwner("projectWizard");
 		projectConfigurationSection.setOwner("projectWizard");
@@ -239,7 +280,7 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -259,10 +300,10 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		addBreadcrumb(pageLevelKey, "Projects", "showProjectManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(projectName, "showProjectWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Applications", "showProjectWizardPage('Applications')");
-		addBreadcrumb(wizardLevelKey, "Modules", "showProjectWizardPage('Modules')");
-		addBreadcrumb(wizardLevelKey, "Networks", "showProjectWizardPage('Networks')");
-		addBreadcrumb(wizardLevelKey, "Providers", "showProjectWizardPage('Providers')");
+		//addBreadcrumb(wizardLevelKey, "Applications", "showProjectWizardPage('Applications')");
+		//addBreadcrumb(wizardLevelKey, "Modules", "showProjectWizardPage('Modules')");
+		//addBreadcrumb(wizardLevelKey, "Networks", "showProjectWizardPage('Networks')");
+		//addBreadcrumb(wizardLevelKey, "Providers", "showProjectWizardPage('Providers')");
 		
 		projectOverviewSection.setOwner("projectWizard");
 		projectIdentificationSection.setOwner("projectWizard");
@@ -289,7 +330,7 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -308,15 +349,23 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Projects");
+		setPageIcon("/icons/nam/Project16.gif");
 		setSectionType("project");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Projects");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "projectOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Projects", "showProjectManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeProjectApplicationsView() {
@@ -325,8 +374,8 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		setSectionTitle("Applications");
 		setSectionIcon("/icons/nam/Application16.gif");
 		selectionContext.setMessageDomain("projectApplications");
-		applicationPageManager.refresh("project");
-		projectListManager.refresh();
+		applicationPageManager.refreshLocal("projectSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -337,8 +386,8 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		setSectionTitle("Modules");
 		setSectionIcon("/icons/nam/Module16.gif");
 		selectionContext.setMessageDomain("projectModules");
-		modulePageManager.refresh("project");
-		projectListManager.refresh();
+		modulePageManager.refreshLocal("projectSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -349,8 +398,8 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		setSectionTitle("Networks");
 		setSectionIcon("/icons/nam/Network16.gif");
 		selectionContext.setMessageDomain("projectNetworks");
-		networkPageManager.refresh("project");
-		projectListManager.refresh();
+		networkPageManager.refreshLocal("projectSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -361,8 +410,8 @@ public class ProjectPageManager extends AbstractPageManager<Project> implements 
 		setSectionTitle("Providers");
 		setSectionIcon("/icons/nam/Provider16.gif");
 		selectionContext.setMessageDomain("projectProviders");
-		providerPageManager.refresh("project");
-		projectListManager.refresh();
+		providerPageManager.refreshLocal("projectSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}

@@ -32,7 +32,7 @@ public class TimeoutConverter extends AbstractConverter implements Converter, Se
 		if (value == null)
 			return null;
 		Timeout timeout = (Timeout) value;
-		return TimeoutUtil.toString(timeout);
+		return TimeoutUtil.getLabel(timeout);
 	}
 	
 }

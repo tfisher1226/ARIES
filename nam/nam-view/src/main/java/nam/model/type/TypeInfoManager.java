@@ -12,9 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Unselected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Project;
@@ -88,22 +85,8 @@ public class TypeInfoManager extends AbstractNamRecordManager<Type> implements S
 	}
 	
 	protected void initialize(Type type) {
-		TypeUtil.initialize(type);
 		typeWizard.initialize(type);
 		setContext("type", type);
-	}
-	
-	public void handleTypeSelected(@Observes @Selected Type type) {
-		selectionContext.setSelection("type",  type);
-		typePageManager.refreshMembers("typeSelection");
-		typePageManager.updateState(type);
-		setRecord(type);
-	}
-	
-	public void handleTypeUnselected(@Observes @Unselected Type type) {
-		selectionContext.unsetSelection("type",  type);
-		typePageManager.refreshMembers("typeSelection");
-		unsetRecord(type);
 	}
 	
 	@Override

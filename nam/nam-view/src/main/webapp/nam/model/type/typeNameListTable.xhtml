@@ -1,10 +1,18 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
 	
+	<c:if test="#{empty addSelectorColumn}">
+		<c:set var="addSelectorColumn" value="#{false}"/>
+	</c:if>
+	
+	<!-- table panel -->
 	<aries:outputPane
 		id="typeNameListTablePanel">
 
@@ -13,13 +21,15 @@
 			<ui:param name="tableId" value="typeNameListTable" />
 		</ui:include>
 		
+		<!-- table -->
 		<aries:table
 			id="typeNameListTable"
 			value="#{typeListManager.dataModel}"
 			rowCount="#{typeListManager.dataModel.rowCount}"
 			visible="#{typeListManager.dataModel.rowCount > 0}"
-			onrowmousedown="processTypeListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowclick="processTypeListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processTypeListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onchange="processTypeListSelectionChanged(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}', '#{target}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
 			styleClass="noTableHeader"
 			tablePanelStyleClass="none"
@@ -35,16 +45,16 @@
 			<!-- Type Namespace 
 			<aries:textColumn header="Namespace">
 				<aries:formPane id="namespaceColumn" columns="2">
-					<h:outputText value="#{rowItem.qualifiedName}" style="margin-left: 3px; white-space: nowrap; #{labelStyle}" />
+					<h:outputText value="#{rowItem.qualifiedName}" styleClass="tableColumn" />
 				</aries:formPane>
 			</aries:textColumn>
 			-->
 
-			<!-- Type Name -->
+			<!-- type name -->
 			<aries:textColumn header="Name">
-				<aries:formPane id="nameColumn" columns="2">
-					<h:graphicImage library="graphics" name="/icons/nam/Element16.gif" />
-					<h:outputText value="#{rowItem.qualifiedName}" style="margin-left: 3px; white-space: nowrap; #{labelStyle}" />
+				<aries:formPane columns="2">
+					<h:graphicImage library="graphics" name="#{rowItem.icon}" />
+					<h:outputText value="#{rowItem.qualifiedName}" styleClass="tableColumn" />
 				</aries:formPane>
 			</aries:textColumn>
 		</aries:table>

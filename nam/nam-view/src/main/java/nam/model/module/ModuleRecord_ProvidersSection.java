@@ -34,6 +34,11 @@ public class ModuleRecord_ProvidersSection extends AbstractWizardPage<Module> im
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Provider16.gif";
+	}
+	
+	@Override
 	public void initialize(Module module) {
 		setEnabled(true);
 		setBackEnabled(true);

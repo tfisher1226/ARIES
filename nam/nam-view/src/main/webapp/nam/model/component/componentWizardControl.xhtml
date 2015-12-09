@@ -42,6 +42,7 @@
 					onclick="showProgress('Nam', '#{componentWizard.title}', 'Re-rendering current page...');"
 					oncomplete="hideProgress();"
 					render="componentWizard"
+					padding="2px 4px"
 					offset="true" />
 				
 				<!-- populate button -->
@@ -58,7 +59,8 @@
 					action="populateDefaultValues"
 					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="componentMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- back button -->
@@ -68,15 +70,16 @@
 					mode="ajax"
 					execute="@this"
 					id="componentWizardPreviousButton"
-					icon="/icons/arrow/PreviousPage16.gif"
-					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
 					rendered="#{componentWizard.backVisible}"
 					enabled="#{componentWizard.backEnabled}"
 					manager="#{componentWizard}"
 					action="back"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Component', 'Moving to previous section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="componentMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- next button -->
@@ -86,15 +89,16 @@
 					mode="ajax"
 					execute="@form"
 					id="componentWizardNextButton"
-					icon="/icons/arrow/NextPage16.gif"
-					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
 					rendered="#{componentWizard.nextVisible}"
 					enabled="#{componentWizard.nextEnabled}"
 					manager="#{componentWizard}"
 					action="next"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Component', 'Moving to next section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="componentMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- finish button -->
@@ -104,15 +108,16 @@
 					mode="ajax"
 					execute="@form"
 					id="componentWizardFinishButton"
-					icon="/icons/common/Default16.gif"
-					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
 					rendered="#{componentWizard.finishVisible}"
 					enabled="#{componentWizard.finishEnabled}"
 					manager="#{componentWizard}"
 					action="finish"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Component', 'Validating and submitting new Component...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="componentMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- cancel button -->
@@ -127,6 +132,7 @@
 					action="cancel"
 					onclick="setCursorWait(this); showProgress('Nam', 'Component Management', 'Cancelling creation of Component...');"
 					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px"
 					offset="true" />
 			</aries:toolbarGroup>
 		</aries:controlbar>

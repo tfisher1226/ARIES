@@ -716,7 +716,7 @@ public class AriesModelBuilder {
 			return;
 		
 		List<Element> elements = PersistenceUtil.getElements(persistence);
-		List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+		Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 		Iterator<Namespace> iterator4 = namespaces.iterator();
 		while (iterator4.hasNext()) {
 			Namespace namespace = iterator4.next();
@@ -798,7 +798,7 @@ public class AriesModelBuilder {
 
 	public List<Module> buildProjectModelModules(Project project, Information model) {
 		List<Module> modules = new ArrayList<Module>();
-		List<Namespace> namespaces = InformationUtil.getNamespaces(model);
+		Collection<Namespace> namespaces = InformationUtil.getNamespaces(model);
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {
 			Namespace namespace = iterator.next();
@@ -871,7 +871,7 @@ public class AriesModelBuilder {
 
 	public List<Module> buildProjectDataModules(Project project, Persistence model) {
 		List<Module> modules = new ArrayList<Module>();
-		List<Namespace> namespaces = PersistenceUtil.getNamespaces(model);
+		Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(model);
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {
 			Namespace namespace = iterator.next();

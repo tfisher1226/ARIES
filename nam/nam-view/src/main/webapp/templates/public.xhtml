@@ -65,9 +65,13 @@
 					iconImageXX="/resources/graphics/default-page-icon.jpg" />
 	
 				<!-- MENUBAR -->
-				<ui:include src="/nam/actions.xhtml"/>
-				<ui:include src="/nam/menubar.xhtml"/>
-	
+				<div style="width: 100%; border: 0px solid #ccc">
+					<div style="width: #{helper.contentWidth}px; margin: 0 auto; border: 0px solid red">
+						<ui:include src="/nam/actions.xhtml"/>
+						<ui:include src="/nam/menubar.xhtml"/>
+					</div>
+				</div>
+					
 				<h:panelGroup 
 					layout="block" 
 					style="width: auto; margin-left: 256px; background-color: inherit">

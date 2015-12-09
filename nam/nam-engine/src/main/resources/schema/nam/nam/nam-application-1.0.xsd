@@ -577,17 +577,38 @@
 			<xs:documentation xml:lang="en">The specification of a Component.
 			</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="annotation" type="Annotation" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="field" type="Field" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1" />
-		</xs:sequence>
-		<xs:attribute name="type" type="xs:string" />
-		<xs:attribute name="extends" type="xs:string" />
-		<xs:attribute name="public" type="xs:boolean" />
-		<xs:attribute name="cached" type="xs:boolean" />
-		<xs:attribute name="name" type="xs:string" />
-		<xs:attribute name="ref" type="xs:string" />
+		<xs:complexContent>
+			<xs:extension base="Element">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="componentType" type="ComponentType" />
+					<xs:element minOccurs="0" maxOccurs="1" name="baseType" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="version" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="element" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="packageName" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="interfaceName" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="className" type="xs:string" />
+					<xs:element minOccurs="0" maxOccurs="1" name="published" type="xs:boolean" />
+					<xs:element minOccurs="0" maxOccurs="1" name="cached" type="xs:boolean" />
+					<xs:element minOccurs="0" maxOccurs="1" name="transacted" type="Transacted" />
+					<xs:element minOccurs="0" maxOccurs="1" ref="components" />
+					<xs:element minOccurs="0" maxOccurs="unbounded" ref="operation" />
+					<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+					<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+				</xs:sequence>
+				<xs:attribute name="ref" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
+
+    <xs:simpleType name="ComponentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="base" />
+			<xs:enumeration value="cache" />
+			<xs:enumeration value="process" />
+			<xs:enumeration value="handler" />
+			<xs:enumeration value="scheduler" />
+			<xs:enumeration value="persistence" />
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
 

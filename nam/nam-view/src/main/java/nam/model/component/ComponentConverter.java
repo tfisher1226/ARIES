@@ -32,7 +32,7 @@ public class ComponentConverter extends AbstractConverter implements Converter, 
 		if (value == null)
 			return null;
 		Component component = (Component) value;
-		return ComponentUtil.toString(component);
+		return ComponentUtil.getLabel(component);
 	}
 	
 }

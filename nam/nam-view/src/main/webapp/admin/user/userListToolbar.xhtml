@@ -6,10 +6,12 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<aries:toolbar
-		type="table"
+	<a4j:outputPanel
 		id="userListToolbar">
 		
+		<aries:toolbar
+			type="table">
+			
 		<aries:toolbarGroup
 			location="left">
 			
@@ -61,8 +63,9 @@
 				enabled="#{securityGuard.canOpen('user')}"
 				mode="client"
 				execute="@none"
-				onmouseup="refreshUserList(event)"
+				onmouseup="refreshUserList('#{scope}')"
 				offset="true" />
 		</aries:toolbarGroup>
 	</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

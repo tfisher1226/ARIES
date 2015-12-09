@@ -9,17 +9,12 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
-
-	<aries:tag>
-		<aries:init/>
 		
-		<rich:togglePanelItem 
-			name="#{name}" 
-			onclickXX="alert('#{sizeSettings}')"
-			stylexx="#{borderSettings}; #{backgroundSettings}"
-			style="#{sizeSettings}; #{marginSettings}; #{backgroundSettings}; #{style}">
-		
-			<ui:insert />
-		</rich:togglePanelItem>
-	</aries:tag>
+	<rich:togglePanelItem 
+		name="#{name}" 
+		onclickXX="alert('#{sizeSettings}')"
+		style="#{sizeSettings}; #{style}">
+	
+		<ui:insert />
+	</rich:togglePanelItem>
 </ui:composition>

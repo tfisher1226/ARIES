@@ -3,15 +3,16 @@ package nam.model.parameter;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Parameter;
 import nam.model.util.ParameterUtil;
@@ -27,6 +28,9 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	
 	@Inject
 	private ParameterDataManager parameterDataManager;
+	
+	@Inject
+	private ParameterInfoManager parameterInfoManager;
 	
 	@Inject
 	private ParameterListManager parameterListManager;
@@ -49,7 +53,6 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	
 	public ParameterPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -67,7 +70,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -76,7 +79,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	}
 	
 	public void refreshMembers(String scope) {
-		parameterListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getParameterListPage() {
@@ -101,6 +104,32 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	
 	public String getParameterManagementPage() {
 		return "/nam/model/parameter/parameterManagementPage.xhtml";
+	}
+	
+	public void handleParameterSelected(@Observes @Selected Parameter parameter) {
+		selectionContext.setSelection("parameter",  parameter);
+		parameterInfoManager.setRecord(parameter);
+	}
+	
+	public void handleParameterUnselected(@Observes @Unselected Parameter parameter) {
+		selectionContext.unsetSelection("parameter",  parameter);
+		parameterInfoManager.unsetRecord(parameter);
+	}
+	
+	public void handleParameterChecked() {
+		String scope = "parameterSelection";
+		ParameterListObject listObject = parameterListManager.getSelection();
+		Parameter parameter = selectionContext.getSelection("parameter");
+		boolean checked = parameterListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			parameterInfoManager.setRecord(parameter);
+			selectionContext.setSelection(scope,  parameter);
+		} else {
+			parameterInfoManager.unsetRecord(parameter);
+			selectionContext.unsetSelection(scope,  parameter);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeParameterListPage() {
@@ -150,7 +179,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	
 	public String initializeParameterRecordPage() {
 		Parameter parameter = selectionContext.getSelection("parameter");
-		String parameterName = parameter.getName();
+		String parameterName = ParameterUtil.getLabel(parameter);
 		
 		String pageLevelKey = "parameterRecord";
 		clearBreadcrumbs(pageLevelKey);
@@ -183,9 +212,6 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		addBreadcrumb(pageLevelKey, "Parameters", "showParameterManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Parameter", "showParameterWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showParameterWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showParameterWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showParameterWizardPage('Documentation')");
 		
 		parameterIdentificationSection.setOwner("parameterWizard");
 		parameterConfigurationSection.setOwner("parameterWizard");
@@ -202,7 +228,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -210,7 +236,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		setPageTitle(getParameterLabel(parameter));
 		setPageIcon("/icons/nam/Parameter16.gif");
 		setSectionTitle("Parameter Overview");
-		String parameterName = parameter.getName();
+		String parameterName = ParameterUtil.getLabel(parameter);
 		parameterWizard.setNewMode(false);
 		
 		String pageLevelKey = "parameter";
@@ -222,10 +248,6 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		addBreadcrumb(pageLevelKey, "Parameters", "showParameterManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(parameterName, "showParameterWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showParameterWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showParameterWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showParameterWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showParameterWizardPage('Documentation')");
 		
 		parameterOverviewSection.setOwner("parameterWizard");
 		parameterIdentificationSection.setOwner("parameterWizard");
@@ -244,7 +266,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -263,15 +285,23 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Parameters");
+		setPageIcon("/icons/nam/Parameter16.gif");
 		setSectionType("parameter");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Parameters");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "parameterOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Parameters", "showParameterManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeParameterSummaryView(Parameter parameter) {
@@ -294,7 +324,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 		String label = "Parameter";
 		String name = ParameterUtil.getLabel(parameter);
 		if (name == null && parameter.getName() != null)
-			name = NameUtil.capName(parameter.getName());
+			name = ParameterUtil.getLabel(parameter);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -307,7 +337,7 @@ public class ParameterPageManager extends AbstractPageManager<Parameter> impleme
 	}
 
 	protected void updateState(Parameter parameter) {
-		String parameterName = NameUtil.capName(parameter.getName());
+		String parameterName = ParameterUtil.getLabel(parameter);
 		setSectionTitle(parameterName + " Parameter");
 	}
 	

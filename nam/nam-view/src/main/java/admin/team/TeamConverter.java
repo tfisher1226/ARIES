@@ -32,7 +32,7 @@ public class TeamConverter extends AbstractConverter implements Converter, Seria
 		if (value == null)
 			return null;
 		Team team = (Team) value;
-		return TeamUtil.toString(team);
+		return TeamUtil.getLabel(team);
 	}
 	
 }

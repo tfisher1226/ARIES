@@ -5,6 +5,7 @@ import nam.model.Information;
 import nam.model.ModelLayerHelper;
 import nam.model.Module;
 import nam.model.Project;
+import nam.model.util.ElementUtil;
 import aries.codegen.util.Buf;
 import aries.generation.engine.GenerationContext;
 import aries.generation.model.ModelFile;
@@ -33,7 +34,7 @@ public class ElementListMenuXhtmlBuilder extends AbstractCompositionXHTMLBuilder
 	public String getFileContent(Element element) {
 		String elementClassName = ModelLayerHelper.getElementClassName(element);
 		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
-		
+		String prefix = getNamePrefix(element);
 		boolean dialogBased = false;
 
 		Buf buf = new Buf();
@@ -47,11 +48,11 @@ public class ElementListMenuXhtmlBuilder extends AbstractCompositionXHTMLBuilder
 		buf.putLine("	");
 		buf.putLine("	<aries:region>");
 		buf.putLine("		<aries:outputPane");
-		buf.putLine("			id=\""+elementNameUncapped+"ListContextMenuPane\">");
+		buf.putLine("			id=\""+prefix+"ListContextMenuPane\">");
 		buf.putLine("			");
 		buf.putLine("			<aries:contextMenu");
 		buf.putLine("				mode=\"client\"");
-		buf.putLine("				id=\""+elementNameUncapped+"ListContextMenu\"");
+		buf.putLine("				id=\""+prefix+"ListContextMenu\"");
 		buf.putLine("				target=\"#{tableId}\">");
 		
 		//VIEW
@@ -181,6 +182,17 @@ public class ElementListMenuXhtmlBuilder extends AbstractCompositionXHTMLBuilder
 		buf.putLine("	</aries:region>");
 		buf.putLine("</ui:composition>");
 		return buf.get();
+	}
+	
+	protected String getNamePrefix(Element element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		boolean hasSubTypes = ElementUtil.hasSubTypes(element);
+		String prefix = null;
+		if (hasSubTypes)
+			prefix = "#{type}" + elementClassName;
+		else prefix = elementNameUncapped;
+		return prefix;
 	}
 	
 }

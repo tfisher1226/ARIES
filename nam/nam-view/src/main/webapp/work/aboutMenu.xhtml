@@ -1,0 +1,39 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup 
+		id="aboutMenu" 
+		layout="block" 
+		style="margin: 0px 20px; background-color: inherit">
+
+		<ui:param name="method" value="showAboutPane" />
+		
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Introduction" />
+			<ui:param name="name" value="introduction" />
+		</ui:include>
+
+		<aries:spacer height="2" />
+		<aries:label fontSize="14" fontWeight="bold" value="What we do:" />
+		<aries:spacer height="8" />
+		
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Network Building" />
+			<ui:param name="name" value="networkBuilding" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Application Building" />
+			<ui:param name="name" value="applicationBuilding" />
+		</ui:include>
+	</h:panelGroup>
+</ui:composition>

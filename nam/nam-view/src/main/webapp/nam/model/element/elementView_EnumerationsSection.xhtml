@@ -1,0 +1,68 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- section body -->
+	<h:panelGrid class="sectionBody">
+	
+		<!-- page includes -->
+		
+		<!-- section title -->
+		<ui:insert name="sectionTitle" />
+		
+		<!-- section messages
+		<ui:insert name="sectionMessages" />
+		-->
+		
+		<aries:spacer height="10" />
+		<aries:formPane
+			columns="2"
+			width="auto"
+			height="auto"
+			style="">
+			
+			<!-- variables -->
+			<ui:param name="render" value="elementManagementViewer" />
+			
+			<aries:panel style="">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Element16.gif" />
+					<ui:param name="label" value="Elements" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:include src="/nam/model/element/elementListActions.xhtml" />
+					<ui:include src="/nam/model/element/elementNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/element/elementNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+			
+			<aries:panel style="margin-left: 20px">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Enumeration16.gif" />
+					<ui:param name="label" value="Enumerations" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:include src="/nam/model/enumeration/enumerationListActions.xhtml" />
+					<ui:include src="/nam/model/enumeration/enumerationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/enumeration/enumerationNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+		</aries:formPane>
+	</h:panelGrid>
+</ui:composition>

@@ -87,8 +87,8 @@ public abstract class AbstractManagementBeanBuilder extends AbstractBeanBuilder 
 		classesCreated = new HashSet<String>();
 		context.buildParentElementMap(persistence);
 		this.persistence = persistence;
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
-		List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 		if (units.size() > 0) {
 			List<ModelClass> modelClasses = new ArrayList<ModelClass>(buildClassesFromUnits(units));
 			Collections.sort(modelClasses);

@@ -25,6 +25,11 @@
 		</span>
 	</ui:define>
 	
+	<!-- page controls -->
+	<ui:define name="pageControls">
+		<ui:include src="/common/pageControls.xhtml" />
+	</ui:define>
+	
 	<!-- page breadcrumbs -->
 	<ui:define name="pageBreadcrumbs">
 		<span class="pageBreadcrumbs">
@@ -65,7 +70,7 @@
 		<span class="wizardMessages">
 			<ui:include src="/common/wizardMessages.xhtml">
 				<ui:param name="domain" value="providerWizard" />
-				<ui:param name="message" value="Enter Service #{providerWizard.section}" />
+				<ui:param name="message" value="Enter Provider #{providerWizard.section}" />
 			</ui:include>
 		</span>
 	</ui:define>
@@ -77,26 +82,26 @@
 			
 			<aries:formPane
 				columns="2"
-				marginTop="2px">
+				style="">
 				
+				<!-- wizard content -->
 				<aries:panel
-					width="#{helper.wizard_middleSection_width}"
+					width="#{helper.wizard_middleSection_width + 8}"
 					height="#{helper.wizard_middleSection_height}"
-					borderWidth="1px"
-					borderColor="#{userSkin.borderColor}"
-					backgroundColor="inherit">
+					style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
 					
-					<!-- panel -->
+					<!-- wizard panel -->
 					<ui:include src="providerRecord_#{providerWizard.section}Section.xhtml">
-						<ui:param name="section" value="application" />
+						<ui:param name="section" value="provider" />
 					</ui:include>
 					
-					<!-- control -->
+					<!-- wizard control -->
 					<ui:include src="providerWizardControl.xhtml" />
 				</aries:panel>
 				
 				<!-- help -->
 				<ui:include src="/common/helpSidebar.xhtml">
+					<ui:param name="layout" value="other" />
 					<ui:param name="domain" value="provider" />
 					<ui:param name="section" value="#{providerWizard.section}" />
 				</ui:include>

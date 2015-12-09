@@ -41,6 +41,16 @@ public class TimeoutListObject extends AbstractListObject<Timeout> implements Co
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Timeout16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(timeout);
 	}
@@ -56,10 +66,6 @@ public class TimeoutListObject extends AbstractListObject<Timeout> implements Co
 		Object otherKey = getKey(other.timeout);
 		String thisText = thisKey.toString();
 		String otherText = otherKey.toString();
-		if (thisText == null)
-			return -1;
-		if (otherText == null)
-			return 1;
 		return thisText.compareTo(otherText);
 	}
 	

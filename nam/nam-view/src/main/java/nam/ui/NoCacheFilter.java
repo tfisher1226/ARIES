@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 @WebFilter(urlPatterns = {"/*"})
 public class NoCacheFilter implements Filter {
 
@@ -24,20 +25,26 @@ public class NoCacheFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
         String requestURI = httpServletRequest.getRequestURI();
-//        if (requestURI.contains("css"))
-//        	System.out.println();
+
+        // Skip JSF resources (CSS/JS/Images/etc)
         boolean skip0 = requestURI.endsWith("RES_NOT_FOUND");
         boolean skip1 = requestURI.startsWith(httpServletRequest.getContextPath() + "/org.richfaces.resources");
-        //boolean skip2 = requestURI.startsWith(httpServletRequest.getContextPath() + "/javax.faces.resource");
-        // Skip JSF resources (CSS/JS/Images/etc)
-        if (!skip0 && !skip1) {
+        boolean include0 = requestURI.endsWith("Page.seam");
+        boolean include1 = requestURI.endsWith("css.seam");
+        boolean include2 = requestURI.endsWith("js.seam");
+        boolean include3 = requestURI.endsWith("home.seam");
+        if (!skip0 && !skip1 && (include0 || include1 || include2 || include3)) {
+            //System.out.println("No cache: "+requestURI);
         	httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
             httpServletResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0.
             httpServletResponse.setDateHeader("Expires", 0); // Proxies.
+        } else {
+            //System.out.println("NO FILTER>>> "+requestURI);
         }
 
+        if (include3)
+        	System.out.println();
         chain.doFilter(request, response);
     }
 

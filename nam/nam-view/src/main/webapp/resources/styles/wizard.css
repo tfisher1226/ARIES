@@ -1,0 +1,41 @@
+/*
+ * Wizard related
+ * --------------
+ */
+
+
+.wizardContent2 {
+	display: block; 
+	width: auto;
+	margin-top: 4px;
+	background-color: inherit;
+}
+
+.wizardNavigator {
+	display: block; 
+	width: #{helper.wizard_leftSection_width + 6}px; 
+	margin-top: 4px;
+	font-size: 13px;
+	border-radius: 5px; 
+	border: 1px solid #bbb; 
+	background-color: white;
+}
+
+.wizardMenuItem {
+	cursor: pointer;
+	padding: 7px 4px 7px 10px; 
+	font-size: 13px; 
+	border-radius: 0px; 
+	border-top: 1px solid #bbb; 
+	background-color: #{backgroundColor}; 
+}
+
+.wizardMenuStep {
+	cursor: pointer;
+	padding: 7px 0px 7px 16px; 
+	font-size: 13px; 
+	border-radius: 0px; 
+	border-top: 1px solid #bbb; 
+	background-color: inherit; 
+}
+

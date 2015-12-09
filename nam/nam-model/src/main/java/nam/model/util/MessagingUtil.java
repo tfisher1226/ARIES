@@ -246,20 +246,25 @@ public class MessagingUtil extends BaseUtil {
 		return false;
 	}
 	
-	public static List<Provider> getProviders(Project project) {
-		List<Provider> list = new ArrayList<Provider>();
-		List<Messaging> messagingBlocks = ProjectUtil.getMessagingBlocks(project);
+	public static Collection<Provider> getProviders(Project project) {
+		Collection<Messaging> messagingBlocks = ProjectUtil.getMessagingBlocks(project);
+		Collection<Provider> providers = getProviders(messagingBlocks);
+		return providers;
+	}
+
+	public static Collection<Provider> getProviders(Collection<Messaging> messagingBlocks) {
+		List<Provider> providers = new ArrayList<Provider>();
 		Iterator<Messaging> iterator = messagingBlocks.iterator();
 		while (iterator.hasNext()) {
 			Messaging messaging = iterator.next();
-			List<Provider> providers = getProviders(messaging);
+			Collection<Provider> list = getProviders(messaging);
 			//TODO prevent duplicates
-			list.addAll(providers);
+			providers.addAll(list);
 		}
-		return list;
+		return providers;
 	}
-
-	public static List<Provider> getProviders(Messaging messaging) {
+	
+	public static Collection<Provider> getProviders(Messaging messaging) {
 		return getObjectList(messaging, Provider.class);
 	}
 
@@ -289,7 +294,7 @@ public class MessagingUtil extends BaseUtil {
 	}
 	
 	public static Provider getProviderByName(Messaging messaging, String name) {
-		List<Provider> providers = getProviders(messaging);
+		Collection<Provider> providers = getProviders(messaging);
 		Iterator<Provider> iterator = providers.iterator();
 		while (iterator.hasNext()) {
 			Provider provider = iterator.next();

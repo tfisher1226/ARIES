@@ -1,0 +1,96 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:outputScript>
+	var source;
+	
+	function showHomePage() {
+		showPage('/work/home.seam');
+	}
+
+	function showAboutPage() {
+		showPage('/work/about.seam');
+	}
+	
+	function showHowPage() {
+		showPage('/work/how.seam');
+	}
+	
+	function showWhyPage() {
+		showPage('/work/why.seam');
+	}
+	
+	function showServicesPage() {
+		showPage('/work/services.seam');
+	}
+	
+	function showSamplesPage() {
+		showPage('/work/samples.seam');
+	}
+	
+	function showContactPage() {
+		showPage('/work/contact.seam');
+	}
+	
+	function showAskAboutApproachSection() {
+		showPane('contentPane', 'askAboutApproach');
+	}
+	
+	function showRequestEstimateSection() {
+		showPane('contentPane', 'requestEstimate');
+	}
+	
+	function showScheduleDemonstrationSection() {
+		showPane('contentPane', 'scheduleDemonstration');
+	}
+	
+	function showSeamPage(page) {
+		showPage(page + '.seam');
+	}
+
+	function showPage(file) {
+		var url = '#{facesContext.externalContext.requestContextPath}' + file;
+		window.location.href = url;
+	}
+
+	function showLayoutPane(pane) {
+		var component = null;
+		if (component != null)
+			component.switchToItem(pane);
+	}
+
+	function showPane(container, pane) {
+		var fullId = mainFormId + ':' + container;
+		var element = document.getElementById(fullId);
+		//var element = RichFaces.component(fullId);
+		//alert(RichFaces.component(fullId));
+		//alert(element.rf.component);
+		if (element.rf.component != null)
+			element.rf.component.switchToItem(pane);
+	}
+	
+	function showHelpSection() {
+		set('container', 'width', '1000');
+		showDisplay('mainHelpPane');
+		showDisplay('collapseHelpSection');
+		hideDisplay('expandHelpButton');
+		showDisplay('mainHelpPane');
+	}
+
+	function hideHelpSection() {
+		hideDisplay('mainHelpPane');
+		hideDisplay('collapseHelpButton');
+		showDisplay('expandHelpSection');
+		set('container', 'width', '720');
+	}
+	</h:outputScript>
+</ui:composition>

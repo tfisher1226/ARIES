@@ -65,18 +65,23 @@ public class NamespaceDataManager implements Serializable {
 			return getNamespaceList_ForApplicationSelection();
 		}
 		
+		if (scope.equals("informationSelection")) {
+			return getNamespaceList_ForInformationSelection();
+		}
+
 		Object owner = getOwner();
 		if (owner == null)
 			return null;
 
 		if (owner instanceof Application) {
-			return ApplicationUtil.getNamespaces((Application) owner);
+			return getNamespaceList((Application) owner);
 
 		} else if (owner instanceof Module) {
 			return ModuleUtil.getNamespaces((Module) owner);
 
 		} else if (owner instanceof Information) {
-			return InformationUtil.getNamespaces((Information) owner);
+			return getNamespaceList((Information) owner);
+			
 		} else {
 			return getDefaultList();
 		}
@@ -96,12 +101,22 @@ public class NamespaceDataManager implements Serializable {
 		return namespaces;
 	}
 	
+	protected Collection<Namespace> getNamespaceList_ForInformationSelection() {
+		Collection<Information> informationSelection = selectionContext.getSelection("informationSelection");
+		Collection<Namespace> namespaceList = InformationUtil.getNamespaces(informationSelection);
+		return namespaceList;
+	}
+	
 	protected Collection<Namespace> getNamespaceList(Information information) {
-		return InformationUtil.getNamespaces(information);
+		Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
+		NamespaceUtil.sortRecords(namespaces);
+		return namespaces;
 	}
 	
 	protected Collection<Namespace> getNamespaceList(Application application) {
-		return ApplicationUtil.getNamespaces(application);
+		List<Namespace> namespaces = ApplicationUtil.getNamespaces(application);
+		NamespaceUtil.sortRecords(namespaces);
+		return namespaces;
 	}
 	
 	public Collection<Namespace> getDefaultList() {

@@ -18,16 +18,13 @@
 			<aries:formPane
 				width="100%"
 				columns="2"
-				marginTop="0px"
+				columnClasses="formColumnAlignLeft, formColumnAlignRight"
 				backgroundColor="inherit">
 				
 				<aries:panel
-					width="100%"
+					width="#{helper.wizard_middleSection_width - 20}"
 					height="#{helper.wizard_middleSection_height}"
-					borderColor="#{userSkin.borderColor}"
-					borderWidth="1px"
-					backgroundColor="inherit"
-					style="border-radius: 5px">
+					style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
 					
 					<!-- PANEL -->
 					<ui:param name="sectionType" value="#{timeoutPageManager.sectionType}" />

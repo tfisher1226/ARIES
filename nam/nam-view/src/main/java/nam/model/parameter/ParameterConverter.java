@@ -32,7 +32,7 @@ public class ParameterConverter extends AbstractConverter implements Converter, 
 		if (value == null)
 			return null;
 		Parameter parameter = (Parameter) value;
-		return ParameterUtil.toString(parameter);
+		return ParameterUtil.getLabel(parameter);
 	}
 	
 }

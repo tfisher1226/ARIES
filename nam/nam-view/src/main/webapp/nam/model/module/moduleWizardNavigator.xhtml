@@ -12,15 +12,12 @@
 
 	<aries:panel
 		width="auto"
-		margin="0px"
-		backgroundColor="inherit">
+		style="border: 1px solid #bbb; border-radius: 5px; background-color: white">
 
 		<aries:formPane
 			width="auto"
-			borderWidth="1px"
-			borderColor="#aaa"
 			columnClass="formColumnAlignLeft"
-			backgroundColor="inherit">
+			style="width: 130px; background-color: inherit">
 			
 			<c:set var="section" value="#{moduleWizard.section}" /> 
 			<c:set var="backgroundColor" value="#cfe7f5" /> 
@@ -28,12 +25,31 @@
 			<aries:indentPane
 				width="#{helper.wizard_leftSection_width}"
 				height="auto"
-				padding="6px"
-				paddingLeft="12px"
-				fontSize="14"
-				fontWeight="bold"
-				backgroundColor="#fff">
-	  		#{moduleWizard.newMode ? 'Steps' : 'Sections'}
+				style="padding: 6px 10px; font-size: 13px; font-weight: bold; background-color: white; cursor: pointer">
+				
+	  			Context
+			</aries:indentPane>
+
+			<aries:wizardStep
+				step="Project"
+				label="Project"
+				icon="/icons/nam/Project16.gif"
+  				onclick="setCursorWait(this); showProjectWizardPage('Overview')" 
+  				styleClass="wizardMenuItem" />
+  				
+			<aries:wizardStep
+				step="Application"
+				label="Application"
+				icon="/icons/nam/Application16.gif"
+  				onclick="setCursorWait(this); showApplicationWizardPage('Overview')" 
+  				styleClass="wizardMenuItem" />
+
+			<aries:indentPane
+				width="#{helper.wizard_leftSection_width}"
+				height="auto"
+				style="padding: 6px 10px; font-size: 13px; font-weight: bold; border-radius: 0px; border-top: 1px solid #bbb; background-color: white; cursor: pointer;">
+				
+	  			#{moduleWizard.newMode ? 'Steps' : 'Sections'}
 			</aries:indentPane>
 			
 			<ui:repeat
@@ -42,10 +58,11 @@
 				
 				<aries:wizardStep
 					step="#{section}"
-					value="#{page.name}"
+					label="#{page.name}"
+					icon="#{page.icon}"
 					enabled="#{page.enabled}"
-	  				onclick="setCursorWait(this); showModuleWizardPage('#{page.name}')">
-				</aries:wizardStep>
+	  				onclick="setCursorWait(this); showModuleWizardPage('#{page.name}')" 
+	  				styleClass="wizardMenuStep" />
 			</ui:repeat>
 		</aries:formPane>
 	</aries:panel>

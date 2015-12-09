@@ -98,7 +98,7 @@ public class InvocationInfoManager extends AbstractNamRecordManager<Invocation> 
 	}
 	
 	public void handleInvocationServiceSelected(@Observes @Selected Service service) {
-		getInvocation().setService(service);
+		//getInvocation().setService(service);
 	}
 	
 	public void handleInvocationSelected(@Observes @Selected Invocation invocation) {

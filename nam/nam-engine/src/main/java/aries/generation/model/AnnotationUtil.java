@@ -676,7 +676,7 @@ public class AnnotationUtil {
 	
 	public static ModelAnnotation createXmlEnumValue(ModelLiteral modelLiteral) {
 		ModelAnnotation annotation = createAnnotation("XmlEnumValue");
-		addPartQuoted(annotation, modelLiteral.getText());
+		addPartQuoted(annotation, modelLiteral.getName().toUpperCase());
 		return annotation;
 	}
 	
@@ -716,8 +716,14 @@ public class AnnotationUtil {
 		if (qualifiedName.equals("java.lang.Boolean") || qualifiedName.equals("java.util.Date"))
 			addPart(annotation, "type", "String.class");
 		
-		if (modelField.getDefault() != null)
-			addPartQuoted(annotation, "defaultValue", modelField.getDefault().toString());
+		if (modelField.getDefault() != null) {
+			String fieldType = modelField.getType();
+			String className = modelField.getClassName();
+			String defaultValue = modelField.getDefault().toString();
+			if (context.getEnumerationByType(fieldType) != null)
+				addPartQuoted(annotation, "defaultValue", className+"."+defaultValue);
+			else addPartQuoted(annotation, "defaultValue", defaultValue);
+		}
 		
 		if (modelField.isRequired())
 			addPart(annotation, "required", "true");

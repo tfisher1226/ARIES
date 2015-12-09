@@ -15,7 +15,7 @@ public class ReferenceSetupPage extends AbstractFieldSetupPage<Reference> implem
 
 	
 	public ReferenceSetupPage(String owner) {
-		setTitle("Specify Reference details.");
+		//setTitle("Specify Reference details.");
 		//initialize(reference);
 		setOwner(owner);
 	}

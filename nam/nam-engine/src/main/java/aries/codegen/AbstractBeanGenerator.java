@@ -847,7 +847,12 @@ public abstract class AbstractBeanGenerator extends AbstractFileGenerator implem
 			buf.put("=");
 			buf.put(SP);
 			Object value = defaultValue;
-			if (value instanceof String) {
+			String type = modelField.getType();
+			if (type == null)
+				type = modelField.getClassName();
+			if (context.getEnumerationByType(type) != null) {
+				buf.put(modelField.getClassName() + "." + (String) defaultValue);
+			} else if (value instanceof String) {
 				buf.put((String) defaultValue);
 			} else if (value instanceof Long) {
 				buf.put(defaultValue.toString() + "L");

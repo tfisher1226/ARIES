@@ -61,14 +61,14 @@ public class ElementRecordViewerXhtmlBuilder extends AbstractCompositionXHTMLBui
 		buf.putLine1("		<aries:formPane");
 		buf.putLine1("			width=\"100%\"");
 		buf.putLine1("			columns=\"2\"");
-		buf.putLine1("			marginTop=\"0px\"");
+		//buf.putLine1("			marginTop=\"0px\"");
 		buf.putLine1("			backgroundColor=\"inherit\">");
 		buf.putLine1("			");
 		buf.putLine1("			<aries:panel"); 
 		buf.putLine1("				width=\"100%\"");
 		buf.putLine1("				height=\"#{helper.wizard_middleSection_height}\"");
-		buf.putLine1("				borderColor=\"#{userSkin.borderColor}\"");
-		buf.putLine1("				borderWidth=\"1px\"");
+		//buf.putLine1("				borderColor=\"#{userSkin.borderColor}\"");
+		//buf.putLine1("				borderWidth=\"1px\"");
 		buf.putLine1("				backgroundColor=\"inherit\">");
 		buf.putLine1("				");
 		buf.putLine1("				<!-- PANEL -->"); 

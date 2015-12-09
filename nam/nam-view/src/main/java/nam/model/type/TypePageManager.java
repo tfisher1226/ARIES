@@ -3,15 +3,16 @@ package nam.model.type;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Type;
 import nam.model.util.TypeUtil;
@@ -27,6 +28,9 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 	
 	@Inject
 	private TypeDataManager typeDataManager;
+	
+	@Inject
+	private TypeInfoManager typeInfoManager;
 	
 	@Inject
 	private TypeListManager typeListManager;
@@ -49,7 +53,6 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 	
 	public TypePageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -67,7 +70,7 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -101,6 +104,32 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 	
 	public String getTypeManagementPage() {
 		return "/nam/model/type/typeManagementPage.xhtml";
+	}
+	
+	public void handleTypeSelected(@Observes @Selected Type type) {
+		selectionContext.setSelection("type",  type);
+		typeInfoManager.setRecord(type);
+	}
+	
+	public void handleTypeUnselected(@Observes @Unselected Type type) {
+		selectionContext.unsetSelection("type",  type);
+		typeInfoManager.unsetRecord(type);
+	}
+	
+	public void handleTypeChecked() {
+		String scope = "typeSelection";
+		TypeListObject listObject = typeListManager.getSelection();
+		Type type = selectionContext.getSelection("type");
+		boolean checked = typeListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			typeInfoManager.setRecord(type);
+			selectionContext.setSelection(scope,  type);
+		} else {
+			typeInfoManager.unsetRecord(type);
+			selectionContext.unsetSelection(scope,  type);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeTypeListPage() {
@@ -199,7 +228,7 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -237,7 +266,7 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -256,15 +285,23 @@ public class TypePageManager extends AbstractPageManager<Type> implements Serial
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Types");
+		setPageIcon("/icons/nam/Type16.gif");
 		setSectionType("type");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Types");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "typeOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Types", "showTypeManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeTypeSummaryView(Type type) {

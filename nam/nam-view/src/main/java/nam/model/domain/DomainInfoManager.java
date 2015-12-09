@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Domain;
@@ -87,16 +85,8 @@ public class DomainInfoManager extends AbstractNamRecordManager<Domain> implemen
 	}
 	
 	protected void initialize(Domain domain) {
-		DomainUtil.initialize(domain);
 		domainWizard.initialize(domain);
 		setContext("domain", domain);
-	}
-	
-	public void handleDomainSelected(@Observes @Selected Domain domain) {
-		selectionContext.setSelection("domain",  domain);
-		domainPageManager.updateState(domain);
-		domainPageManager.refreshMembers();
-		setRecord(domain);
 	}
 	
 	@Override

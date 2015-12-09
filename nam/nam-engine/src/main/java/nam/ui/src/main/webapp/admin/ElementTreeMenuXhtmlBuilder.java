@@ -67,7 +67,7 @@ public class ElementTreeMenuXhtmlBuilder extends AbstractCompositionXHTMLBuilder
 		buf.putLine1("			mode=\"client\"");
 		buf.putLine1("			disabled=\"false\"");
 		buf.putLine1("			value=\"View "+elementClass+"...\"");
-		buf.putLine1("			icon=\"/icons/common/Edit16.gif\"");
+		buf.putLine1("			icon=\"/icons/common/View16.gif\"");
 		buf.putLine1("			tooltip=\"View selected "+elementClass+" record...\"");
 		buf.putLine1("			onclick=\"processViewElement(event, '"+elementClass+"')\" />");
 		buf.putLine1("		");

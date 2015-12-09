@@ -2,6 +2,7 @@ package nam.model.src.main.java;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class ModelHelperClassBuilder extends AbstractBeanBuilder {
 		Persistence persistence = ExtensionsUtil.getPersistenceBlock(context.getProject(), uri);
 		//Persistence persistence = ModuleUtil.getPersistenceBlock(context.getModule());
 		if (persistence != null) {
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Iterator<Unit> unitIterator = units.iterator();
 			while (unitIterator.hasNext()) {
 				Unit unit = unitIterator.next();

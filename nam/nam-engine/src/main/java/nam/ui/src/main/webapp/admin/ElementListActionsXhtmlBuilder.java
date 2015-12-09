@@ -76,6 +76,7 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.put(getExecuteSelectFromList(element));
 		buf.put(getExecuteActionFromList(element));
 		buf.put(getExecuteActionForElement(element));
+		buf.put(getExecuteHandleRowChecked(element));
 
 		buf.putLine("	");
 		buf.putLine("	");
@@ -97,6 +98,7 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		
 		buf.put(generateProcessElementListMouseDown(element));
 		buf.put(generateProcessElementListDoubleClick(element));
+		buf.put(generateProcessElementListSelectionChanged(element));
 		
 		buf.put(generateProcessViewElement(element));
 		buf.put(generateProcessNewElement(element));
@@ -133,7 +135,13 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	action=\"#{"+elementNameUncapped+"ListManager.refresh}\"");
 		buf.putLine2("	onbegin=\"setCursorWait(); showProgress('Nam', '"+elementClassName+" Records', 'Refreshing current "+elementClassName+" List...')\"");
 		buf.putLine2("	oncomplete=\"setCursorDefault(this); hideProgress()\"");
-		buf.putLine2("	render=\""+elementNameUncapped+"ListActions, "+elementNameUncapped+"ListMenu, "+elementNameUncapped+"ListToolbar, "+elementNameUncapped+"ListPane\">");
+		buf.putLine2("	render=\""+elementNameUncapped+"ListActions "+elementNameUncapped+"ListMenu "+elementNameUncapped+"ListToolbar "+elementNameUncapped+"NameListToolbar "+elementNameUncapped+"ListTable "+elementNameUncapped+"NameListTable #{render}\">");
+		buf.putLine2("	");
+		buf.putLine2("	<!-- these values are assigned here -->");
+		buf.putLine2("	<a4j:param name=\"scope\" assignTo=\"#{"+elementNameUncapped+"DataManager.scope}\" value=\"#{scope}\" />");
+		buf.putLine2("	");
+		buf.putLine2("	<!-- provide event queue settings -->");
+        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"0\" />");
 		buf.putLine2("</a4j:jsFunction>");
 		return buf.get();
 	}
@@ -148,9 +156,10 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	");
 		buf.putLine2("<!--");
 		buf.putLine2("  ** executeSelectFrom"+elementClassName+"List(recordIndex, recordKey)");
-		buf.putLine2("  ** Handles actions generated from a row or column in the Application List.");
-		buf.putLine2("  ** Selects Element on server-side.  Executes NO action on server-side.");
-		buf.putLine2("  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.");
+		buf.putLine2("  ** Handles actions generated from a row or column in the "+elementClassName+" List.");
+		buf.putLine2("  ** Selects "+elementClassName+" element on server-side.  Executes NO action on server-side.");
+		buf.putLine2("  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click");
+		buf.putLine2("  ** or checkbox-click.");
 		buf.putLine2("  -->");
 		buf.putLine2("	");
 		buf.putLine2("<a4j:jsFunction ");
@@ -161,7 +170,7 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	limitRender=\"true\"");
 		buf.putLine2("	onbegin=\"beginSelect(this)\"");
 		buf.putLine2("	oncomplete=\"completeSelect(this)\"");
-		buf.putLine2("	render=\""+elementNameUncapped+"ListActions, "+elementNameUncapped+"ListToolbar, #{render}\">");
+		buf.putLine2("	render=\""+elementNameUncapped+"ListActions "+elementNameUncapped+"ListToolbar "+elementNameUncapped+"NameListToolbar\">");
 		buf.putLine2("	");
 		buf.putLine2("	<!-- these values are passed-in -->");
 		buf.putLine2("	<a4j:param name=\"recordIndex\" assignTo=\"#{"+elementNameUncapped+"ListManager.selectedRecordIndex}\" />");
@@ -171,7 +180,7 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	<a4j:param name=\"selector\" assignTo=\"#{selectionContext.selectedAction}\" value=\""+elementClassNameUncapped+"\" />");
 		buf.putLine2("	");
 		buf.putLine2("	<!-- provide event queue settings -->");
-        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"0\" />");
+        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"600\" />");
 		buf.putLine2("</a4j:jsFunction>");
 		return buf.get();
 	}
@@ -198,7 +207,7 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	limitRender=\"true\"");
 		buf.putLine2("	action=\"#{workspaceManager.executeAction}\"");
 		buf.putLine2("	oncomplete=\"setCursorDefault(); hideProgress()\"");
-		buf.putLine2("	render=\""+elementNameUncapped+"ListActions, "+elementNameUncapped+"ListToolbar, #{render}\">");
+		buf.putLine2("	render=\""+elementNameUncapped+"ListActions "+elementNameUncapped+"ListToolbar "+elementNameUncapped+"NameListToolbar #{render}\">");
 		buf.putLine2("	");
 		buf.putLine2("	<!-- these values are passed-in -->");
 		buf.putLine2("	<a4j:param name=\"recordIndex\" assignTo=\"#{"+elementNameUncapped+"ListManager.selectedRecordIndex}\" />");
@@ -208,7 +217,7 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	<a4j:param name=\"section\" assignTo=\"#{"+elementNameUncapped+"Wizard.section}\" />");
 		buf.putLine2("	");
 		buf.putLine2("	<!-- provide event queue settings -->");
-        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"400\" />");
+        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"0\" />");
 		buf.putLine2("</a4j:jsFunction>");
 		return buf.get();
 	}
@@ -234,14 +243,52 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine2("	bypassUpdates=\"true\"");
 		buf.putLine2("	limitRender=\"true\"");
 		buf.putLine2("	action=\"#{workspaceManager.executeAction}\"");
-		buf.putLine2("	render=\""+elementNameUncapped+"ListActions, "+elementNameUncapped+"ListMenu, "+elementNameUncapped+"ListToolbar\">");
+		buf.putLine2("	render=\""+elementNameUncapped+"ListActions "+elementNameUncapped+"ListMenu "+elementNameUncapped+"ListToolbar "+elementNameUncapped+"NameListToolbar #{render}\">");
 		buf.putLine2("	");
 		buf.putLine2("	<!-- these values are passed-in -->");
 		buf.putLine2("	<a4j:param name=\"type\" assignTo=\"#{selectionContext.selectedType}\" />");
 		buf.putLine2("	<a4j:param name=\"action\" assignTo=\"#{selectionContext.selectedAction}\" />");
 		buf.putLine2("	");
 		buf.putLine2("	<!-- provide event queue settings -->");
-        buf.putLine2("	<a4j:attachQueue requestDelay=\"0\" />");
+        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"0\" />");
+		buf.putLine2("</a4j:jsFunction>");
+		return buf.get();
+	}
+	
+	protected String getExecuteHandleRowChecked(Element element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		Buf buf = new Buf();
+		buf.putLine2("	");
+		buf.putLine2("	");
+		buf.putLine2("<!--");
+		buf.putLine2("  ** executeHandle"+elementClassName+"Checked(recordIndex, recordKey, checked, target)");
+		buf.putLine2("  ** Handles setting and unsetting of checked state within selected "+elementClassName+".");
+		buf.putLine2("  -->");
+		buf.putLine2("	");
+		buf.putLine2("<a4j:jsFunction ");
+		buf.putLine2("	name=\"executeHandle"+elementClassName+"Checked\"");
+		buf.putLine2("	execute=\"@this\"");
+		buf.putLine2("	immediate=\"true\"");
+		buf.putLine2("	bypassUpdates=\"true\"");
+		buf.putLine2("	limitRender=\"true\"");
+		buf.putLine2("	action=\"#{"+elementNameUncapped+"PageManager.handle"+elementClassName+"Checked}\"");
+		buf.putLine2("	onbegin=\"setCursorWait(this); lockScreen()\"");
+		buf.putLine2("	oncomplete=\"setCursorDefault(); unlockScreen()\"");
+		buf.putLine2("	render=\""+elementNameUncapped+"ListActions "+elementNameUncapped+"ListToolbar "+elementNameUncapped+"NameListToolbar #{render}\">");
+		buf.putLine2("	");
+		buf.putLine2("	<!-- these values are passed-in -->");
+		buf.putLine2("	<a4j:param name=\"recordIndex\" assignTo=\"#{"+elementNameUncapped+"ListManager.selectedRecordIndex}\" />");
+		buf.putLine2("	<a4j:param name=\"recordKey\" assignTo=\"#{"+elementNameUncapped+"ListManager.selectedRecordKey}\" />");
+		buf.putLine2("	<a4j:param name=\"checked\" assignTo=\"#{"+elementNameUncapped+"ListManager.checkedState}\" />");
+		buf.putLine2("	<a4j:param name=\"target\" assignTo=\"#{selectionContext.currentTarget}\" />");
+		buf.putLine2("	");
+		buf.putLine2("	<!-- these values are assigned here -->");
+		buf.putLine2("	<a4j:param name=\"scope\" assignTo=\"#{"+elementNameUncapped+"DataManager.scope}\" value=\"#{scope}\" />");
+		buf.putLine2("	");
+		buf.putLine2("	<!-- provide event queue settings -->");
+        buf.putLine2("	<a4j:attachQueue requestGroupingId=\""+elementNameUncapped+"ListEvents\" requestDelay=\"0\" />");
 		buf.putLine2("</a4j:jsFunction>");
 		return buf.get();
 	}
@@ -623,6 +670,8 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine4("function process"+elementClassName+"ListMouseDown(event, rowIndex, recordKey, recordLabel) {");
 		buf.putLine4("	update"+elementClassName+"ListState(event, rowIndex, recordKey, recordLabel);");
 		buf.putLine4("	enable"+elementClassName+"ListActions('"+elementNameUncapped+"');");
+		buf.putLine4("	if (isRightMouseClick(event))");
+		buf.putLine4("		return;");
 		buf.putLine4("	try {");
 		buf.putLine4("		executeSelectFrom"+elementClassName+"List(rowIndex, recordKey);");
 		buf.putLine4("	} catch(e) {");
@@ -653,6 +702,32 @@ public class ElementListActionsXhtmlBuilder extends AbstractCompositionXHTMLBuil
 		buf.putLine4("		executeActionFrom"+elementClassName+"List(rowIndex, recordKey, '"+elementClassName+"', 'workspaceManager.editObject');");
 		buf.putLine4("	} catch(e) {");
 		buf.putLine4("		alert(e);");
+		buf.putLine4("	}");
+		buf.putLine4("}");
+		return buf.get();
+	}
+	
+	protected String generateProcessElementListSelectionChanged(Element element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		Buf buf = new Buf();
+		buf.putLine4("	");
+		buf.putLine4("	");
+		buf.putLine4("<!--");
+		buf.putLine4("  ** process"+elementClassName+"ListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)");
+		buf.putLine4("  ** Handles check-box selection state changed event for "+elementClassName+" List item.");
+		buf.putLine4("  -->");
+		buf.putLine4("	");
+		buf.putLine4("function process"+elementClassName+"ListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {");
+		buf.putLine4("	try {");
+		buf.putLine4("		beginSelect(event.target);"); 
+		buf.putLine4("		var checked = event.target.checked;"); 
+		buf.putLine4("		executeHandle"+elementClassName+"Checked(rowIndex, recordKey, checked, target);");
+		buf.putLine4("	} catch(e) {");
+		buf.putLine4("		alert(e);");
+		buf.putLine4("	} finally {");
+		buf.putLine4("		completeSelect(event.target);");
 		buf.putLine4("	}");
 		buf.putLine4("}");
 		return buf.get();

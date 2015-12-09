@@ -31,6 +31,9 @@ public class ResultListManager extends AbstractDomainListManager<Result, ResultL
 	private ResultEventManager resultEventManager;
 	
 	@Inject
+	private ResultInfoManager resultInfoManager;
+	
+	@Inject
 	private SelectionContext selectionContext;
 	
 	
@@ -51,7 +54,7 @@ public class ResultListManager extends AbstractDomainListManager<Result, ResultL
 	
 	@Override
 	public String getRecordName(Result result) {
-		return ResultUtil.toString(result);
+		return ResultUtil.getLabel(result);
 	}
 	
 	@Override
@@ -89,10 +92,17 @@ public class ResultListManager extends AbstractDomainListManager<Result, ResultL
 		return selected;
 	}
 	
+	public boolean isChecked(Result result) {
+		Collection<Result> selection = selectionContext.getSelection("resultSelection");
+		boolean checked = selection != null && selection.contains(result);
+		return checked;
+	}
+	
 	@Override
 	protected ResultListObject createRowObject(Result result) {
 		ResultListObject listObject = new ResultListObject(result);
 		listObject.setSelected(isSelected(result));
+		listObject.setChecked(isChecked(result));
 		return listObject;
 	}
 	
@@ -106,10 +116,6 @@ public class ResultListManager extends AbstractDomainListManager<Result, ResultL
 		if (recordList != null)
 			initialize(recordList);
 		else refreshModel();
-	}
-	
-	public void handleRefresh(@Observes @Refresh Object object) {
-		//refreshModel();
 	}
 	
 	@Override
@@ -140,7 +146,6 @@ public class ResultListManager extends AbstractDomainListManager<Result, ResultL
 	}
 	
 	public String viewResult(Result result) {
-		ResultInfoManager resultInfoManager = BeanContext.getFromSession("resultInfoManager");
 		String url = resultInfoManager.viewResult(result);
 		return url;
 	}
@@ -155,7 +160,6 @@ public class ResultListManager extends AbstractDomainListManager<Result, ResultL
 	}
 	
 	public String editResult(Result result) {
-		ResultInfoManager resultInfoManager = BeanContext.getFromSession("resultInfoManager");
 		String url = resultInfoManager.editResult(result);
 		return url;
 	}

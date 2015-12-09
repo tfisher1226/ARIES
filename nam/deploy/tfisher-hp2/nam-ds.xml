@@ -11,7 +11,7 @@
 
 		<connection-url>jdbc:mysql://localhost:3306/nam_db</connection-url>
 		<security>
-			<user-name>nam</user-name>
+			<user-name>admin</user-name>
 			<password>password</password>
 		</security>
 

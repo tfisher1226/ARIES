@@ -23,13 +23,12 @@
 			<h:link outcome="next?includeViewParams=true">
 			-->
 
-			<f:viewAction rendered="#{true}" action="#{adminManager.reset}" />
+			<f:viewAction action="#{adminManager.reset}" />
 		</f:metadata>
 			
 	    <h:head>
 			<!-- HEAD CONTENT --> 
 			<ui:include src="/templates/main-head-content.xhtml"/>
-			<h:outputStylesheet library="styles" name="content.css"/>
 	    </h:head>
 	    
 	    <h:body class="body">
@@ -42,76 +41,86 @@
 
 			<!-- POPUP DIALOGS -->
 	
-			<!-- PAGE FORM -->
-			<aries:form id="pageForm">
+			<div style="">
+				<!-- PAGE FORM -->
+				<aries:form id="pageForm">
+		
+					<!-- POPUP DIALOGS -->
+					<aries:popupDialog/>
+					<aries:messageDialog/>
+					<aries:progressDialog/>
+					<ui:include src="/common/popupMenu.xhtml" />
+					<ui:include src="/common/screenLock.xhtml" />
 	
-				<!-- POPUP DIALOGS -->
-				<aries:popupDialog/>
-				<aries:messageDialog/>
-				<aries:progressDialog/>
-				<aries:themeDialog/>
-				<ui:include src="/common/popupMenu.xhtml" />
-				<ui:include src="/common/popupWindow.xhtml" />
-				<ui:include src="/common/screenLock.xhtml" />
-			
-				<!-- Page Includes -->
-				<ui:insert name="pageIncludes" />
-					
-				<!-- PAGE HEADER -->
-				<aries:header 
-					titleText="Nam"
-					subTitleText="Network and Application Modeler"
-					iconImageXX="/resources/graphics/default-page-icon.jpg" />
+					<!--  
+					<aries:popupDialog/>
+					<aries:themeDialog/>
+					<ui:include src="/common/popupWindow.xhtml" />
+					-->
+				
+					<!-- Page Includes -->
+					<ui:insert name="pageIncludes" />
+						
+					<!-- PAGE HEADER -->
+					<aries:header 
+						titleText="Nam"
+						subTitleText="Network and Application Modeler"
+						iconImageXX="/resources/graphics/default-page-icon.jpg" />
+
+					<!-- MENUBAR -->
+					<div style="width: 100%; border: 0px solid #ccc">
+						<div style="width: #{helper.contentWidth}px; margin: 0 auto">
+							<ui:include src="/nam/actions.xhtml"/>
+							<ui:include src="/nam/menubar.xhtml"/>
+						</div>
+					</div>
 	
-				<!-- MENUBAR -->
-				<ui:include src="/nam/actions.xhtml"/>
-				<ui:include src="/nam/menubar.xhtml"/>
-
-				<!-- CONTAINER -->
-				<h:panelGroup id="container" 
-					styleClass="container" style="">
-
-					<!-- Page Breadcrumbs -->
-					<ui:insert name="pageBreadcrumbs" />
+					<!-- CONTAINER -->
+					<h:panelGroup id="container" 
+						styleClass="container" style="">
 	
-					<!-- section header -->
-					<ui:insert name="sectionHeader">
-					
-						<!-- section title -->
-						<ui:insert name="pageTitle" />
-							
-						<!-- section options -->
-						<ui:insert name="pageViews" />
-
-						<!-- section Breadcrumbs -->
-						<ui:insert name="sectionBreadcrumbs" />
-
-						<!-- section controls -->
-						<ui:insert name="pageControls" />
-					</ui:insert>
-					
-					<aries:spacer height="10" />
-			
-					<!-- NAVIGATOR -->
-					<ui:insert name="navigator" />
-	
-					<!-- CONTENT -->
-					<ui:insert name="content">
-						Content missing
-					</ui:insert>
-				</h:panelGroup> 
-
-				<!-- REFERENCE 
-				<ui:insert name="reference" />
-				-->
+						<!-- Page Breadcrumbs -->
+						<ui:insert name="pageBreadcrumbs" />
+		
+						<!-- section header -->
+						<ui:insert name="sectionHeader">
+						
+							<!-- section title -->
+							<ui:insert name="pageTitle" />
 								
-				<!-- PAGE FOOTER -->
-				<aries:footer backgroundColor="inherit">
-					<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
-						&copy; Copyright 2015 . All rights reserved.
-					</aries:p>
-				</aries:footer>
-			</aries:form>
+							<!-- section options -->
+							<ui:insert name="pageViews" />
+	
+							<!-- section Breadcrumbs -->
+							<ui:insert name="sectionBreadcrumbs" />
+	
+							<!-- section controls -->
+							<ui:insert name="pageControls" />
+						</ui:insert>
+						
+						<aries:spacer height="10" />
+				
+						<!-- NAVIGATOR -->
+						<ui:insert name="navigator" />
+		
+						<!-- CONTENT -->
+						<ui:insert name="content">
+							Content missing
+						</ui:insert>
+					</h:panelGroup> 
+	
+					<!-- REFERENCE 
+					<ui:insert name="reference" />
+					-->
+									
+					<!-- PAGE FOOTER -->
+					<aries:footer backgroundColor="red">
+						<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+							&copy; Copyright 2015 . All rights reserved.
+						</aries:p>
+					</aries:footer>
+				</aries:form>
+			</div>
 	
 			<a4j:outputPanel ajaxRendered="true">
 				<h:form style="display: none" prependId="false">

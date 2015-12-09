@@ -11,85 +11,118 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<c:if test="#{empty value}">
-			<c:set var="value" value="none"/> 
-		</c:if>
-		
-		<c:if test="#{empty rendered}">
-			<c:set var="rendered" value="true"/> 
-		</c:if>
-		
-		<c:if test="#{empty disabled}">
-			<c:set var="disabled" value="false"/> 
-		</c:if>
+	<c:if test="#{empty label}">
+		<c:set var="label" value="none"/> 
+	</c:if>
 	
-		<c:if test="#{empty mode}">
-			<c:set var="mode" value="ajax"/> 
-		</c:if>
+	<c:if test="#{empty rendered}">
+		<c:set var="rendered" value="true"/> 
+	</c:if>
 	
-		<c:if test="#{empty immediate}">
-			<c:set var="immediate" value="true"/> 
-		</c:if>
+	<c:if test="#{empty disabled}">
+		<c:set var="disabled" value="false"/> 
+	</c:if>
+
+	<c:if test="#{empty mode}">
+		<c:set var="mode" value="ajax"/> 
+	</c:if>
+
+	<c:if test="#{empty immediate}">
+		<c:set var="immediate" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty bypassUpdates}">
+		<c:set var="bypassUpdates" value="true"/> 
+	</c:if>
+
+	<c:if test="#{empty limitRender}">
+		<c:set var="limitRender" value="true"/> 
+	</c:if>
 	
-		<c:if test="#{empty bypassUpdates}">
-			<c:set var="bypassUpdates" value="true"/> 
-		</c:if>
+	<c:if test="#{empty execute}">
+		<c:set var="execute" value="@this"/> 
+	</c:if>
 	
-		<c:if test="#{empty limitRender}">
-			<c:set var="limitRender" value="true"/> 
-		</c:if>
-		
-		<c:if test="#{empty execute}">
-			<c:set var="execute" value="@this"/> 
-		</c:if>
-		
-		<c:if test="#{empty render}">
-			<c:set var="render" value="nothing"/> 
-		</c:if>
+	<c:if test="#{empty render}">
+		<c:set var="render" value="nothing"/> 
+	</c:if>
+
+	<c:if test="#{empty iconLibrary}">
+		<c:set var="iconLibrary" value="graphics"/> 
+	</c:if>
+
+	<!--  
+	<c:if test="#{empty icon}">
+		<c:set var="icon" value="/icons/common/Default16.gif"/> 
+	</c:if>
 	
-		<!--  
-		<c:if test="#{empty icon}">
-			<c:set var="icon" value="/icons/common/Default16.gif"/> 
-		</c:if>
+	<c:if test="#{empty iconDisabled}">
+		<c:set var="iconDisabled" value="/icons/common/Default16.gif"/> 
+	</c:if>
+	-->
+	
+	<!-- 
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="contextMenuLabel link"/> 
+	</c:if>
+	
+	icon="#{icon}"
+	iconDisabled="#{iconDisabled}"
+	-->	
+
+	<rich:menuItem 
+		rendered="#{rendered}"
+		disabled="#{disabled}"
+		mode="#{mode}" 
+		immediate="#{immediate}"
+		execute="#{execute}"
+		bypassUpdates="#{bypassUpdates}"
+		limitRender="#{limitRender}"
+		ignoreDupResponses="true"
+		action="#{manager[action]}"
+		onclick="#{onclick}"
+		oncomplete="#{oncomplete}"
+		render="#{render}"
+		styleClass="menuItem"
+		style="height: 21px; margin: 0px; padding-top: 2px; padding-bottom: 2px;">
 		
-		<c:if test="#{empty iconDisabled}">
-			<c:set var="iconDisabled" value="/icons/common/Default16.gif"/> 
-		</c:if>
-		-->
+		<f:facet name="icon">
+			<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+				<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignBottom, formColumnAlignMiddle" cellpadding="0" cellspacing="0" style="border-collapse: collapse">
+					<c:if test="#{empty icon}">
+						<h:panelGroup layout="block" style="padding: 2px 20px 2px 20px; background-color: red">
+							<aries:spacer width="16" height="16" />
+						</h:panelGroup>
+					</c:if>
+					<c:if test="#{not empty icon and label ne 'REST Web-Services'}">
+						<h:panelGroup layout="block" style="padding: 2px 4px 2px 4px; background-color: inherit">
+							<h:graphicImage library="#{iconLibrary}" name="#{icon}" />
+						</h:panelGroup>
+					</c:if>
+					<c:if test="#{not empty label}">
+						<h:panelGroup layout="block" styleClass="" style="padding: 3px 2px 1px 2px">
+							<h:outputText 
+								value="#{label}" 
+								styleClass="menuLabel" 
+								style="font-size: 13px; color: #003; background-image: none; background: transparent; white-space: nowrap"/>
+						</h:panelGroup>
+					</c:if>
+				</h:panelGrid>
+			</h:panelGroup>
+		</f:facet>
 		
-		<c:if test="#{empty labelClass}">
-			<c:set var="labelClass" value="contextMenuLabel link"/> 
+		<c:if test="#{not empty tooltip}">
+			<aries:tooltip value="#{tooltip}" />
 		</c:if>
-		
+			
 		<!-- 
-			icon="#{icon}"
-			iconDisabled="#{iconDisabled}"
-		-->	
-	
-		<rich:menuItem 
-			rendered="#{rendered}"
-			disabled="#{disabled}"
-			mode="#{mode}" 
-			immediate="#{immediate}"
-			execute="#{execute}"
-			bypassUpdates="#{bypassUpdates}"
-			limitRender="#{limitRender}"
-			ignoreDupResponses="true"
-			action="#{manager[action]}"
-			onclick="#{onclick}"
-			oncomplete="#{oncomplete}"
-			render="#{render}"
-			styleClass="menuItem"
-			style="">
-			
-			<f:facet name="icon">
-				<h:graphicImage library="graphics" name="#{icon}" style="padding-left: 1px; padding-bottom: 1px"/>
-			</f:facet>
-			
-			<h:outputText value="#{value}" styleClass="menuLabel link"/>
-			
-			<aries:tooltip value="#{tooltip}"/>
-		</rich:menuItem>
-	</aries:tag>
+		<f:facet name="icon">
+			<h:graphicImage library="graphics" name="#{icon}" style="padding-left: 1px; padding-bottom: 1px"/>
+		</f:facet>
+		
+		<h:outputText value="#{value}" styleClass="menuLabel link"/>
+		
+		<aries:tooltip value="#{tooltip}"/>
+		-->
+	</rich:menuItem>
 </ui:composition>

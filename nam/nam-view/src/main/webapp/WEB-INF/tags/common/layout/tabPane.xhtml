@@ -14,10 +14,6 @@
     <h:body>
 		<ui:composition>
 
-		<c:if test="#{empty id}">
-			<c:set var="id" value="TabPane_#{globals.nextId()}" /> 
-		</c:if>
-
 		<c:if test="#{empty switchType}">
 			<c:set var="switchType" value="client"/> 
 		</c:if>

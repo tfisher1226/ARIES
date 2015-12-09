@@ -9,15 +9,16 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.inject.Named;
 
-import org.aries.runtime.BeanContext;
-import org.aries.ui.manager.AbstractElementHelper;
-import org.aries.ui.model.ListTableModel;
-
+import nam.model.Annotation;
 import nam.model.Component;
 import nam.model.Operation;
 import nam.model.operation.OperationListManager;
 import nam.model.operation.OperationListObject;
 import nam.model.util.ComponentUtil;
+
+import org.aries.runtime.BeanContext;
+import org.aries.ui.manager.AbstractElementHelper;
+import org.aries.ui.model.ListTableModel;
 
 
 @SessionScoped
@@ -49,15 +50,15 @@ public class ComponentHelper extends AbstractElementHelper<Component> implements
 		return ComponentUtil.validate(componentList);
 	}
 	
-	public DataModel<String> getAnnotations(Component component) {
+	public DataModel<Annotation> getAnnotations(Component component) {
 		if (component == null)
 			return null;
 		return getAnnotations(component.getAnnotations());
 	}
 	
-	public DataModel<String> getAnnotations(Collection<String> annotationsList) {
-		List<String> values = new ArrayList<String>(annotationsList);
-		@SuppressWarnings("unchecked") DataModel<String> dataModel = new ListTableModel<String>(values);
+	public DataModel<Annotation> getAnnotations(Collection<Annotation> annotationsList) {
+		List<Annotation> values = new ArrayList<Annotation>(annotationsList);
+		@SuppressWarnings("unchecked") DataModel<Annotation> dataModel = new ListTableModel<Annotation>(values);
 		return dataModel;
 	}
 	
@@ -73,17 +74,17 @@ public class ComponentHelper extends AbstractElementHelper<Component> implements
 		return dataModel;
 	}
 	
-	public DataModel<String> getFields(Component component) {
-		if (component == null)
-			return null;
-		return getFields(component.getFields());
-	}
-	
-	public DataModel<String> getFields(Collection<String> fieldsList) {
-		List<String> values = new ArrayList<String>(fieldsList);
-		@SuppressWarnings("unchecked") DataModel<String> dataModel = new ListTableModel<String>(values);
-		return dataModel;
-	}
+//	public DataModel<String> getFields(Component component) {
+//		if (component == null)
+//			return null;
+//		return getFields(component.getFields());
+//	}
+//	
+//	public DataModel<String> getFields(Collection<String> fieldsList) {
+//		List<String> values = new ArrayList<String>(fieldsList);
+//		@SuppressWarnings("unchecked") DataModel<String> dataModel = new ListTableModel<String>(values);
+//		return dataModel;
+//	}
 	
 	public DataModel<OperationListObject> getOperations(Component component) {
 		if (component == null)

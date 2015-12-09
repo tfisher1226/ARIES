@@ -15,7 +15,7 @@ public class AnnotationSetupPage extends AbstractWizardPage<Annotation> {
 
 	
 	public AnnotationSetupPage(String owner) {
-		setTitle("Specify Annotation details.");
+		//setTitle("Specify Annotation details.");
 		setOwner(owner);
 	}
 

@@ -3,8 +3,16 @@ package nam.model.element;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.aries.runtime.BeanContext;
+import org.aries.ui.AbstractPageManager;
+import org.aries.ui.AbstractWizardPage;
+import org.aries.ui.Breadcrumb;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Element;
 import nam.model.enumeration.EnumerationPageManager;
@@ -12,10 +20,6 @@ import nam.model.fault.FaultPageManager;
 import nam.model.namespace.NamespacePageManager;
 import nam.model.util.ElementUtil;
 import nam.ui.design.SelectionContext;
-
-import org.aries.ui.AbstractPageManager;
-import org.aries.ui.AbstractWizardPage;
-import org.aries.ui.Breadcrumb;
 
 
 @SessionScoped
@@ -28,6 +32,9 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 	@Inject
 	private ElementDataManager elementDataManager;
 
+	@Inject
+	private ElementInfoManager elementInfoManager;
+	
 	@Inject
 	private ElementListManager elementListManager;
 	
@@ -64,7 +71,6 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 
 	public ElementPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -82,7 +88,7 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -91,10 +97,9 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 	}
 	
 	public void refreshMembers(String scope) {
-		namespacePageManager.refresh(scope);
-		enumerationPageManager.refresh(scope);
-		faultPageManager.refresh(scope);
-		elementListManager.refresh();
+		namespacePageManager.refreshLocal(scope);
+		enumerationPageManager.refreshLocal(scope);
+		faultPageManager.refreshLocal(scope);
 	}
 	
 	public String getElementListPage() {
@@ -119,6 +124,39 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 	
 	public String getElementManagementPage() {
 		return "/nam/model/element/elementManagementPage.xhtml";
+	}
+	
+	public void handleElementSelected(@Observes @Selected Element element) {
+		selectionContext.setSelection("element",  element);
+		elementInfoManager.setRecord(element);
+	}
+	
+	public void handleElementUnselected(@Observes @Unselected Element element) {
+		selectionContext.unsetSelection("element",  element);
+		elementInfoManager.unsetRecord(element);
+	}
+	
+	public void handleElementChecked() {
+		String scope = "elementSelection";
+		ElementListObject listObject = elementListManager.getSelection();
+		Element element = selectionContext.getSelection("element");
+		boolean checked = elementListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			elementInfoManager.setRecord(element);
+			selectionContext.setSelection(scope,  element);
+		} else {
+			elementInfoManager.unsetRecord(element);
+			selectionContext.unsetSelection(scope,  element);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("namespace"))
+			namespacePageManager.refreshLocal(scope);
+		if (target.equals("enumeration"))
+			enumerationPageManager.refreshLocal(scope);
+		if (target.equals("fault"))
+			faultPageManager.refreshLocal(scope);
+		refreshLocal(scope);
 	}
 	
 	public String initializeElementListPage() {
@@ -201,9 +239,6 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		addBreadcrumb(pageLevelKey, "Elements", "showElementManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Element", "showElementWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showElementWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showElementWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showElementWizardPage('Documentation')");
 		addBreadcrumb(wizardLevelKey, "Namespaces", "showElementWizardPage('Namespaces')");
 		addBreadcrumb(wizardLevelKey, "Enumerations", "showElementWizardPage('Enumerations')");
 		addBreadcrumb(wizardLevelKey, "Faults", "showElementWizardPage('Faults')");
@@ -212,12 +247,16 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		elementConfigurationSection.setOwner("elementWizard");
 		elementDocumentationSection.setOwner("elementWizard");
 		elementNamespacesSection.setOwner("elementWizard");
+//		elementEnumerationsSection.setOwner("elementWizard");
+//		elementFaultsSection.setOwner("elementWizard");
 
 		sections.clear();
 		sections.add(elementIdentificationSection);
 		sections.add(elementConfigurationSection);
 		sections.add(elementDocumentationSection);
 		sections.add(elementNamespacesSection);
+//		sections.add(elementEnumerationsSection);
+//		sections.add(elementFaultsSection);
 		
 		String url = getElementWizardPage() + "?section=Identification";
 		selectionContext.setCurrentArea("element");
@@ -225,7 +264,7 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -245,10 +284,6 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		addBreadcrumb(pageLevelKey, "Elements", "showElementManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(elementName, "showElementWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showElementWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showElementWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showElementWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showElementWizardPage('Documentation')");
 		addBreadcrumb(wizardLevelKey, "Namespaces", "showElementWizardPage('Namespaces')");
 		addBreadcrumb(wizardLevelKey, "Enumerations", "showElementWizardPage('Enumerations')");
 		addBreadcrumb(wizardLevelKey, "Faults", "showElementWizardPage('Faults')");
@@ -258,6 +293,8 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		elementConfigurationSection.setOwner("elementWizard");
 		elementDocumentationSection.setOwner("elementWizard");
 		elementNamespacesSection.setOwner("elementWizard");
+//		elementEnumerationsSection.setOwner("elementWizard");
+//		elementFaultsSection.setOwner("elementWizard");
 
 		sections.clear();
 		sections.add(elementOverviewSection);
@@ -265,6 +302,8 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		sections.add(elementConfigurationSection);
 		sections.add(elementDocumentationSection);
 		sections.add(elementNamespacesSection);
+//		sections.add(elementEnumerationsSection);
+//		sections.add(elementFaultsSection);
 		
 		String url = getElementWizardPage() + "?section=Overview";
 		selectionContext.setCurrentArea("element");
@@ -272,7 +311,7 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -291,50 +330,57 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;	
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Elements");
+		setPageIcon("/icons/nam/Element16.gif");
 		setSectionType("element");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Elements");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "elementOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Elements", "showElementManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeElementNamespacesView() {
 		setSectionType("element"); 
 		setSectionName("Namespaces"); 
-		setSectionTitle("Element Namespaces");
+		setSectionTitle("Namespaces");
 		setSectionIcon("/icons/nam/Namespace16.gif"); 
 		selectionContext.setMessageDomain("elementNamespaces");
-		namespacePageManager.refresh("element");
-		elementListManager.refresh();
+		namespacePageManager.refreshLocal("projectList");
+		refreshLocal("namespaceSelection");
 		sections.clear();
 		return null;
 	}
 	
-	public String initializeElementsView() {
+	public String initializeElementElementsView() {
 		setSectionType("element"); 
 		setSectionName("Elements"); 
 		setSectionTitle("Elements");
 		setSectionIcon("/icons/nam/Element16.gif"); 
-		String viewLevelKey = "elements";
-		selectionContext.setMessageDomain(viewLevelKey);
-		//elementPageManager.refresh("element");
-		elementListManager.refresh();
+		selectionContext.setMessageDomain("elementElements");
+		//elementPageManager.refreshLocal("elementSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
 
-	public String initializeEnumerationsView() {
+	public String initializeElementEnumerationsView() {
 		setSectionType("element"); 
 		setSectionName("Enumerations"); 
-		setSectionTitle("Element Enumerations");
+		setSectionTitle("Enumerations");
 		setSectionIcon("/icons/nam/Enumeration16.gif"); 
 		selectionContext.setMessageDomain("elementEnumerations");
-		enumerationPageManager.refresh("element");
-		elementListManager.refresh();
+		enumerationPageManager.refreshLocal("elementSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -342,11 +388,11 @@ public class ElementPageManager extends AbstractPageManager<Element> implements 
 	public String initializeElementFaultsView() {
 		setSectionType("element"); 
 		setSectionName("Faults");
-		setSectionTitle("Element Faults");
+		setSectionTitle("Faults");
 		setSectionIcon("/icons/nam/Fault16.gif");
 		selectionContext.setMessageDomain("elementFaults");
-		faultPageManager.refresh("element");
-		elementListManager.refresh();
+		faultPageManager.refreshLocal("elementSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}

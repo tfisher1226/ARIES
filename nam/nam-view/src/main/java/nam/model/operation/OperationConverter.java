@@ -32,7 +32,7 @@ public class OperationConverter extends AbstractConverter implements Converter, 
 		if (value == null)
 			return null;
 		Operation operation = (Operation) value;
-		return OperationUtil.toString(operation);
+		return OperationUtil.getLabel(operation);
 	}
 	
 }

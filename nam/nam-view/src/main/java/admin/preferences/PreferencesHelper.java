@@ -47,18 +47,6 @@ public class PreferencesHelper extends AbstractElementHelper<Preferences> implem
 		return PreferencesUtil.validate(preferencesList);
 	}
 	
-	public DataModel<String> getWorkState(Preferences preferences) {
-		if (preferences == null)
-			return null;
-		return getWorkState(preferences.getWorkState());
-	}
-	
-	public DataModel<String> getWorkState(Map<String, String> workStateMap) {
-		List<String> values = new ArrayList<String>(workStateMap.values());
-		@SuppressWarnings("unchecked") DataModel<String> dataModel = new ListTableModel<String>(values);
-		return dataModel;
-	}
-	
 	public DataModel<Boolean> getOpenNodes(Preferences preferences) {
 		if (preferences == null)
 			return null;
@@ -72,6 +60,18 @@ public class PreferencesHelper extends AbstractElementHelper<Preferences> implem
 		return dataModel;
 	}
 
+	public DataModel<String> getWorkState(Preferences preferences) {
+		if (preferences == null)
+			return null;
+		return getWorkState(preferences.getWorkState());
+	}
+	
+	public DataModel<String> getWorkState(Map<String, String> workStateMap) {
+		List<String> values = new ArrayList<String>(workStateMap.values());
+		@SuppressWarnings("unchecked") DataModel<String> dataModel = new ListTableModel<String>(values);
+		return dataModel;
+	}
+	
 	
 //	public DataModel<Boolean> getOpenNodes(Map openNodesMap) {
 //		List<MapEntry> entries = openNodesMap.getEntries();

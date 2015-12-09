@@ -27,6 +27,11 @@
 				<ui:param name="listManager" value="#{parameterListManager}" />
 			</ui:include>
 			
+			<ui:include src="../command/commandListPane.xhtml">
+				<ui:param name="itemManager" value="#{commandInfoManager}" />
+				<ui:param name="listManager" value="#{commandListManager}" />
+			</ui:include>
+			
 			<ui:include src="../result/resultListPane.xhtml">
 				<ui:param name="itemManager" value="#{resultInfoManager}" />
 				<ui:param name="listManager" value="#{resultListManager}" />
@@ -40,11 +45,6 @@
 			<ui:include src="../fault/faultListPane.xhtml">
 				<ui:param name="itemManager" value="#{faultInfoManager}" />
 				<ui:param name="listManager" value="#{faultListManager}" />
-			</ui:include>
-			
-			<ui:include src="../command/commandListPane.xhtml">
-				<ui:param name="itemManager" value="#{commandInfoManager}" />
-				<ui:param name="listManager" value="#{commandListManager}" />
 			</ui:include>
 		</aries:tab>
 	</aries:tabPane>

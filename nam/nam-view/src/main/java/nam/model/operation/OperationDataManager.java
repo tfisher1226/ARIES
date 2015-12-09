@@ -48,7 +48,6 @@ public class OperationDataManager implements Serializable {
 		return owner;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Collection<Operation> getOperationList() {
 		if (scope == null)
 			return null;

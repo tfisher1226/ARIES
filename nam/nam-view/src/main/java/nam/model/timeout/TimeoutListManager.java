@@ -8,18 +8,16 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.model.Operation;
-import nam.model.Timeout;
-import nam.model.util.TimeoutUtil;
-import nam.ui.design.SelectionContext;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractDomainListManager;
 import org.aries.ui.event.Cancelled;
 import org.aries.ui.event.Export;
 import org.aries.ui.event.Refresh;
-import org.aries.ui.event.Selected;
 import org.aries.ui.manager.ExportManager;
+
+import nam.model.Timeout;
+import nam.model.util.TimeoutUtil;
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -31,6 +29,9 @@ public class TimeoutListManager extends AbstractDomainListManager<Timeout, Timeo
 	
 	@Inject
 	private TimeoutEventManager timeoutEventManager;
+	
+	@Inject
+	private TimeoutInfoManager timeoutInfoManager;
 	
 	@Inject
 	private SelectionContext selectionContext;
@@ -53,7 +54,7 @@ public class TimeoutListManager extends AbstractDomainListManager<Timeout, Timeo
 	
 	@Override
 	public String getRecordName(Timeout timeout) {
-		return TimeoutUtil.toString(timeout);
+		return TimeoutUtil.getLabel(timeout);
 	}
 	
 	@Override
@@ -85,17 +86,24 @@ public class TimeoutListManager extends AbstractDomainListManager<Timeout, Timeo
 		timeoutEventManager.fireSelectedEvent(timeout);
 	}
 	
+	public boolean isSelected(Timeout timeout) {
+		Timeout selection = selectionContext.getSelection("timeout");
+		boolean selected = selection != null && selection.equals(timeout);
+		return selected;
+	}
+	
+	public boolean isChecked(Timeout timeout) {
+		Collection<Timeout> selection = selectionContext.getSelection("timeoutSelection");
+		boolean checked = selection != null && selection.contains(timeout);
+		return checked;
+	}
+	
 	@Override
 	protected TimeoutListObject createRowObject(Timeout timeout) {
-		return new TimeoutListObject(timeout);
-	}
-	
-	protected TimeoutHelper getTimeoutHelper() {
-		return BeanContext.getFromSession("timeoutHelper");
-	}
-	
-	protected TimeoutInfoManager getTimeoutInfoManager() {
-		return BeanContext.getFromSession("timeoutInfoManager");
+		TimeoutListObject listObject = new TimeoutListObject(timeout);
+		listObject.setSelected(isSelected(timeout));
+		listObject.setChecked(isChecked(timeout));
+		return listObject;
 	}
 	
 	@Override
@@ -110,20 +118,18 @@ public class TimeoutListManager extends AbstractDomainListManager<Timeout, Timeo
 		else refreshModel();
 	}
 	
-	public void handleRefresh(@Observes @Refresh Object object) {
-		//refreshModel();
-	}
-	
 	@Override
 	public void refreshModel() {
-		refreshModel(recordList);
+		refreshModel(createRecordList());
 	}
 	
 	@Override
 	protected Collection<Timeout> createRecordList() {
 		try {
 			Collection<Timeout> timeoutList = timeoutDataManager.getTimeoutList();
-			return timeoutList;
+			if (timeoutList != null)
+				return timeoutList;
+			return recordList;
 		} catch (Exception e) {
 			handleException(e);
 			return null;
@@ -140,7 +146,6 @@ public class TimeoutListManager extends AbstractDomainListManager<Timeout, Timeo
 	}
 	
 	public String viewTimeout(Timeout timeout) {
-		TimeoutInfoManager timeoutInfoManager = BeanContext.getFromSession("timeoutInfoManager");
 		String url = timeoutInfoManager.viewTimeout(timeout);
 		return url;
 	}
@@ -155,7 +160,6 @@ public class TimeoutListManager extends AbstractDomainListManager<Timeout, Timeo
 	}
 	
 	public String editTimeout(Timeout timeout) {
-		TimeoutInfoManager timeoutInfoManager = BeanContext.getFromSession("timeoutInfoManager");
 		String url = timeoutInfoManager.editTimeout(timeout);
 		return url;
 	}

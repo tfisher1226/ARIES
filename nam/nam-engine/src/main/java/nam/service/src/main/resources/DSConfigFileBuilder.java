@@ -1,6 +1,7 @@
 package nam.service.src.main.resources;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class DSConfigFileBuilder extends AbstractFileBuilder {
 			String uri = iterator.next();
 			Persistence persistenceBlock = ProjectUtil.getPersistenceBlockByNamespace(project, uri);
 			if (persistenceBlock != null) {
-				List<Unit> units = PersistenceUtil.getUnits(persistenceBlock);
+				Collection<Unit> units = PersistenceUtil.getUnits(persistenceBlock);
 				if (!units.isEmpty()) {
 					ModelFile modelFile = buildDSFile(isTest, persistenceBlock);
 					modelFiles.add(modelFile);

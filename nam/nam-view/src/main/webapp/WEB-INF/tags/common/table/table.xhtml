@@ -19,10 +19,6 @@
 		<c:set var="selectionMode" value="single"/> 
 	</c:if>
 
-	<c:if test="#{empty rowClass}">
-		<c:set var="rowClass" value="tableRowXXX"/> 
-	</c:if>
-
 	<c:if test="#{empty rowClasses}">
 		<c:set var="rowClasses" value="tableRowOdd, tableRowEven"/> 
 	</c:if>
@@ -56,17 +52,16 @@
  			id="#{id}TablePanel">
  		
 			<rich:panel 
+				onclick="#{onclick}"
 				styleClass="#{tablePanelStyleClass}"
 				bodyClass="#{tablePanelBodyStyleClass}"
-				onclick="#{onclick}"
-				onclickXXX="alert('#{onclick}'); #{onclick}"
-				style="width: #{helper.convert(width)}; height: #{helper.convert(height)}; max-height: #{helper.convert(height)}; padding: 0px; border-width: 0px">
+				style="width: #{helper.convert(width)}; height: #{helper.convert(height)}; max-height: #{helper.convert(height)}; padding: 0px; border-width: 0px; border-top: 0px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}">
 				
 				<a4j:outputPanel
 					layout="block"
 					rendered="#{value.rowCount == 0}"
 					style="width: auto; height: 24px; padding-top: 4px; border: 1px solid #{userSkin.borderColor}; border-top-width: 0px; border-left-width: 0px; background-color: inherit">
-					<h:outputText styleClass="formLabelSoft" style="padding-left: 4px" value="No records to display" />
+					<h:outputText styleClass="formLabelSoft" style="padding: 0px 4px" value="No records to display" />
 				</a4j:outputPanel>
 				
 				<rich:dataTable 
@@ -77,75 +72,23 @@
 					rows="#{value.rowCount}"
 					rendered="#{value.rowCount > 0}"
 					selectionMode="#{selectionMode}"
-					onrowclick="#{onrowclick}"
+					onrowclick="selectRow(this); #{onrowclick}"
 					onrowdblclick="#{onrowdblclick}"
 					onrowmouseover="highLightRow(this); #{onrowmouseover}"
 					onrowmouseout="unhighLightRow(this); #{onrowmouseout}"
-					onrowmousedown="selectRow(this); #{onrowmousedown}"
+					onrowmousedownXX="selectRow(this); #{onrowmousedown}; return true"
 					onrowmousedownXXX="#{onrowmousedown}"
 					rowClasses="#{rowClasses}"
 					headerClass="#{headerClass}" 
 					styleClass="table #{styleClass}"
-					style="width: 100%; height: auto; max-height: #{helper.convert(height)}; #{style}">
+					style="width: auto; height: auto; border-collapse: collapse; max-height: #{helper.convert(height)}; #{style}">
 					
-					<!-- INDEX COLUMN -->
+					<!-- INDEX COLUMN 
 					<c:if test="#{not empty addIndexColumn and addIndexColumn eq true}">
 						<aries:textColumn 
 							width="20"
 							header="">
 							<h:outputText value="#{index+1}" />
-						</aries:textColumn>
-					</c:if>
-					
-					<!-- SELECTOR COLUMN -->
-					<aries:textColumn 
-						width="20"
-						rendered="#{not empty addSelectorColumn and addSelectorColumn eq true}"
-						style="background-color: inherit">
-						
-						<h:panelGrid columns="1" columnClasses="formColumnAlignCenter" style="">
-							<h:selectBooleanCheckbox styleClass="formCheckbox" immediate="true" value="#{rowItem.checked}" onchange="" style="padding: 2px 8px 2px 4px">
-		
-								<a4j:ajax 
-									event="click" 
-									execute="@this"
-									immediate="true"
-									limitRender="true" 
-									listener="{globals.doNothing}"
-									render="#{render}"
-									onbegin="beginSelect(this)"
-									oncomplete="completeSelect(this)"
-									onbeginXXX="alert(0); #{onchange}; alert(1)">
-								</a4j:ajax>
-		
-		                        <!--  
-								<rich:componentControl target="applicationNameListTable" operation="filter" event="click">
-								    <f:param value="Application" />
-								    <f:param value="#{rowItem.project.name}" />
-								</rich:componentControl>
-								-->
-			
-							</h:selectBooleanCheckbox>
-						</h:panelGrid> 
-					</aries:textColumn>
-			
-					<!-- SELECTOR COLUMN 
-					<c:if test="#{not empty addSelectorColumn and addSelectorColumn eq true}">
-						<aries:textColumn 
-							width="20"
-							header=""
-							style="background-color: inherit">
-							<h:panelGrid columns="1" columnClasses="formColumnAlignCenter" style="">
-								<h:selectBooleanCheckbox styleClass="formCheckbox" immediate="true" value="#{rowItem.checked}" onchange="#{onchange}" style="padding: 2px 8px">
-									<a4j:ajax 
-										event="click" 
-										execute="@none"
-										immediate="true"
-										limitRender="false" 
-										onbeginXX="alert(0)" />
-                                    
-								</h:selectBooleanCheckbox>
-							</h:panelGrid> 
 						</aries:textColumn>
 					</c:if>
 					-->

@@ -12,15 +12,12 @@
 
 	<aries:panel
 		width="auto"
-		margin="0px"
-		backgroundColor="inherit">
+		style="background-color: inherit">
 		
 		<aries:formPane
 			width="auto"
-			borderWidth="0px"
-			borderColor="#aaa"
 			columnClass="formColumnAlignLeft"
-			backgroundColor="inherit">
+			style="background-color: white">
 			
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Overview" />
@@ -35,24 +32,24 @@
 
 			<aries:spacer height="10" />
 			<ui:include src="/common/navigationButton.xhtml">
-				<ui:param name="label" value="Imports" />
-				<ui:param name="icon" value="/icons/nam/Import16.gif" />
-				<ui:param name="id" value="messagingImportsButton" />
-				<ui:param name="manager" value="#{messagingPageManager}" />
-				<ui:param name="action" value="initializeMessagingImportsView" />
-	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Messaging Imports', 'Preparing Messaging Import information...')" />
-	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
-	   			<ui:param name="render" value="messagingManagementViewer" />
-			</ui:include>
-
-			<aries:spacer height="10" />
-			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Domains" />
 				<ui:param name="icon" value="/icons/nam/MessagingDomain16.gif" />
 				<ui:param name="id" value="messagingDomainsButton" />
 				<ui:param name="manager" value="#{messagingPageManager}" />
 				<ui:param name="action" value="initializeMessagingDomainsView" />
 	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Messaging Domains', 'Preparing Messaging Domain information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="messagingManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Imports" />
+				<ui:param name="icon" value="/icons/nam/Import16.gif" />
+				<ui:param name="id" value="messagingImportsButton" />
+				<ui:param name="manager" value="#{messagingPageManager}" />
+				<ui:param name="action" value="initializeMessagingImportsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Messaging Imports', 'Preparing Messaging Import information...')" />
 	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
 	   			<ui:param name="render" value="messagingManagementViewer" />
 			</ui:include>

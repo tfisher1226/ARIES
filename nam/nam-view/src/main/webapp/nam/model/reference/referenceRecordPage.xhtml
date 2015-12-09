@@ -25,6 +25,11 @@
 		</span>
 	</ui:define>
 	
+	<!-- page controls -->
+	<ui:define name="pageControls">
+		<ui:include src="/common/pageControls.xhtml" />
+	</ui:define>
+	
 	<!-- page breadcrumbs -->
 	<ui:define name="pageBreadcrumbs">
 		<span class="pageBreadcrumbs">
@@ -66,7 +71,7 @@
 	<ui:define name="sectionMessages">
 		<aries:spacer height="10" />
 		<aries:messages
-			id="referenceMessages"
+			id="wizardMessages"
 			module="referenceRecord"
 			message="Reference Record Summary" />
 	</ui:define>

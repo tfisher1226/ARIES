@@ -1,0 +1,391 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** containerListActions
+	  ** a4j:jsFunction methods to support the Container List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var containerListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshContainerList(event)
+		  ** Refreshes the current Container List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshContainerList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{containerListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Container Records', 'Refreshing current Container List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="containerListActions containerListMenu containerListToolbar containerNameListToolbar containerListTable containerNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{containerDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="containerListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromContainerList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Container List.
+		  ** Selects Container element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromContainerList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="containerListActions containerListToolbar containerNameListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{containerListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{containerListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="container" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="containerListEvents" requestDelay="600" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromContainerList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromContainerList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="containerListActions containerListToolbar containerNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{containerListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{containerListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{containerWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="containerListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="containerListActions containerListMenu containerListToolbar containerNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="containerListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeHandleContainerChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Container.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleContainerChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{containerPageManager.handleContainerChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="containerListActions containerListToolbar containerNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{containerListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{containerListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{containerListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{containerDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="containerListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** containerListActions
+		  ** Javascript methods to support the Container List.
+		  -->
+		
+		<a4j:outputPanel
+			id="containerListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getContainerListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getContainerListRowKey() {
+					if (containerListState != null)
+						return containerListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getContainerListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getContainerListRowLabel() {
+					if (containerListState != null)
+						return containerListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeContainerListState()
+				  ** Initializes and verifies Container List state information.
+				  -->
+					
+				function initializeContainerListState() {
+					try {
+						var rowIndex = '#{containerListManager.selectedRecordIndex}';
+						var recordKey = '#{containerListManager.selectedRecordKey}';
+						var recordLabel = '#{containerListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateContainerListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateContainerListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Container List.
+				  -->
+					
+				function updateContainerListState(event, rowIndex, recordKey, recordLabel) {
+					containerListState = new Object();
+					containerListState.rowIndex = rowIndex;
+					//containerListState.recordId = recordId;
+					containerListState.recordKey = recordKey;
+					containerListState.recordLabel = recordLabel;
+					//show(containerListState);
+				}
+					
+					
+				<!--
+				  ** enableContainerListActions(type)
+				  ** Enables (or disables) Container List actions based on current client-side state.
+				  -->
+					
+				function enableContainerListActions(type) {
+					//enableButton('containerListViewButton');
+					enableButton('containerListNewButton');
+					enableButton('containerListEditButton');
+					enableButton('containerListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processContainerListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Container List.
+				  -->
+					
+				function processContainerListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateContainerListState(event, rowIndex, recordKey, recordLabel);
+					enableContainerListActions('container');
+					if (isRightMouseClick(event))
+						return;
+					try {
+						executeSelectFromContainerList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processContainerListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Container List.
+				  -->
+					
+				function processContainerListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Container Records', 'Preparing Container ' + recordLabel + ' for editing...');
+						executeActionFromContainerList(rowIndex, recordKey, 'Container', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processContainerListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Container List item.
+				  -->
+					
+				function processContainerListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleContainerChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('containerListTable')});
+						if (containerListState != null) {
+							var label = containerListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (containerListState != null) {
+							var label = containerListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (containerListState != null) {
+							var label = containerListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (containerListState != null)
+						label = containerListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'containerListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

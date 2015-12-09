@@ -10,17 +10,14 @@
 		columns="1" 
 		width="200"
 		height="auto"
-		margin="20px"
-		marginLeft="0px"
-		marginTop="0px"
-		paddingLeft="20px"
-		backgroundColor="inherit">
+		backgroundColor="inherit"
+		style="padding: 10px 20px 20px 20px">
 	
 		<aries:spacer height="10" />
-		<aries:label fontSize="15" fontWeight="bold" value="Networks and" />
-		<aries:label fontSize="15" fontWeight="bold" value="Deployments" />
+		<aries:label fontSize="14" fontWeight="bold" value="Networks and" style="" />
+		<aries:label fontSize="14" fontWeight="bold" value="Deployments" style="" />
 
-		<aries:spacer height="16" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Networks" />
 			<ui:param name="icon" value="/icons/nam/Network16.gif" />
@@ -30,7 +27,7 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Networks', 'Preparing Network information...')" />
 		</ui:include>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Containers" />
 			<ui:param name="icon" value="/icons/nam/Container16.gif" />
@@ -40,7 +37,7 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Containers', 'Preparing Container information...')" />
 		</ui:include>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Deployments" />
 			<ui:param name="icon" value="/icons/nam/Deployment16.gif" />
@@ -51,10 +48,10 @@
 		</ui:include>
 		
 		<aries:spacer height="40" />
-		<aries:label fontSize="15" fontWeight="bold" value="External" />
-		<aries:label fontSize="15" fontWeight="bold" value="Dependencies" />
+		<aries:label fontSize="14" fontWeight="bold" value="External" style="" />
+		<aries:label fontSize="14" fontWeight="bold" value="Dependencies" style="" />
 
-		<aries:spacer height="16" />
+		<aries:spacer height="10" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Libraries" />
 			<ui:param name="icon" value="/icons/nam/Library16.gif" />
@@ -64,7 +61,7 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Libraries', 'Preparing Library information...')" />
 		</ui:include>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Adapters" />
 			<ui:param name="icon" value="/icons/nam/Adapter16.gif" />
@@ -74,7 +71,7 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Adapters', 'Preparing Adapter information...')" />
 		</ui:include>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Providers" />
 			<ui:param name="icon" value="/icons/nam/Provider16.gif" />

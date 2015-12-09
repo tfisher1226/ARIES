@@ -32,7 +32,7 @@ public class SkinConverter extends AbstractConverter implements Converter, Seria
 		if (value == null)
 			return null;
 		Skin skin = (Skin) value;
-		return SkinUtil.toString(skin);
+		return SkinUtil.getLabel(skin);
 	}
 	
 }

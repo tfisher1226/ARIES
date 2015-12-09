@@ -35,11 +35,12 @@ public class ProjectRecord_OverviewSection extends AbstractWizardPage<Project> i
 	
 	@Override
 	public void initialize(Project project) {
+		setProject(project);
 		setEnabled(true);
 		setBackEnabled(false);
 		setNextEnabled(true);
 		setFinishEnabled(false);
-		setProject(project);
+		super.initialize(project);
 	}
 	
 	@Override

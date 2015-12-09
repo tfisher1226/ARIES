@@ -1,19 +1,18 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:aries="http://aries.org/jsf">
 	
 	<c:if test="#{empty addSelectorColumn}">
 		<c:set var="addSelectorColumn" value="#{false}"/> 
 	</c:if>
 	
+	<!-- table panel -->
 	<aries:outputPane
 		id="applicationNameListTablePanel">
 
@@ -22,14 +21,15 @@
 			<ui:param name="tableId" value="applicationNameListTable" />
 		</ui:include>
 					
+		<!-- table -->
 		<aries:table
 			id="applicationNameListTable"
 			value="#{applicationListManager.dataModel}"
 			rowCount="#{applicationListManager.dataModel.rowCount}"
 			visible="#{applicationListManager.dataModel.rowCount > 0}"
-			onchange="processApplicationListSelectionChanged(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
-			onrowmousedown="processApplicationListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowclick="processApplicationListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processApplicationListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onchange="processApplicationListSelectionChanged(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}', '#{target}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
 			styleClass="noTableHeader"
 			tablePanelStyleClass="none"
@@ -49,11 +49,23 @@
 				filterExpression="#{workspaceManager.currentModel == '' or workspaceManager.currentModel.startsWith(rowItem.application.name)}">
 				-->
 
-			<!-- Application Name -->
-			<aries:textColumn id="Application" header="Application">
+			<!-- Application Name 
+			<aries:textColumn header="Application">
 				<aries:formPane columns="2">
-					<h:graphicImage library="graphics" name="/icons/nam/Application16.gif" />
-					<h:outputText value="#{rowItem.application.name}" style="margin-left: 6px; white-space: nowrap; #{labelStyle}" />
+					<h:graphicImage library="graphics" name="#{rowItem.icon}" />
+					<h:outputText value="#{rowItem.application.name}" styleClass="tableColumn" />
+				</aries:formPane>
+			</aries:textColumn>
+			-->
+
+			<!-- checkbox -->
+			<aries:checkBoxColumn />
+			
+			<!-- application name -->
+			<aries:textColumn header="Application">
+				<aries:formPane columns="2">
+					<h:graphicImage library="graphics" name="#{rowItem.icon}" />
+					<h:outputText value="#{rowItem.application.name}" styleClass="tableColumn" />
 				</aries:formPane>
 			</aries:textColumn>
 		</aries:table>

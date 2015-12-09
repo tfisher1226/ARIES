@@ -8,16 +8,17 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.ui.design.SelectionContext;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractDomainListManager;
 import org.aries.ui.event.Cancelled;
 import org.aries.ui.event.Export;
+import org.aries.ui.event.Refresh;
 import org.aries.ui.manager.ExportManager;
 
 import admin.Skin;
 import admin.util.SkinUtil;
+
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -45,6 +46,10 @@ public class SkinListManager extends AbstractDomainListManager<Skin, SkinListObj
 	@Override
 	public String getTitle() {
 		return "Skin List";
+	}
+	
+	public Object getRecordId(Skin skin) {
+		return skin.getId();
 	}
 	
 	@Override
@@ -92,10 +97,17 @@ public class SkinListManager extends AbstractDomainListManager<Skin, SkinListObj
 		return selected;
 	}
 	
+	public boolean isChecked(Skin skin) {
+		Collection<Skin> selection = selectionContext.getSelection("skinSelection");
+		boolean checked = selection != null && selection.contains(skin);
+		return checked;
+	}
+	
 	@Override
 	protected SkinListObject createRowObject(Skin skin) {
 		SkinListObject listObject = new SkinListObject(skin);
 		listObject.setSelected(isSelected(skin));
+		listObject.setChecked(isChecked(skin));
 		return listObject;
 	}
 	

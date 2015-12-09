@@ -1,0 +1,52 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup 
+		id="homeMenu" 
+		layout="block" 
+		style="text-align: left">
+
+		<ui:param name="method" value="showHomePane" />
+		
+		<br/>
+		<hr width="auto" style=""/>
+	
+		<div style="">
+			<div style="padding-left: 10px">
+				<!--  
+				<aries:spacer height="8" />
+				<aries:text fontSize="16" fontStyle="normal" value="Accomplish more work in 1 week than 20 solid engineers can do in 1 year" />
+				-->
+				
+				<div class="text16" style="padding-left: 16px">
+					<aries:spacer height="12" />
+					<aries:label fontSize="16" fontStyle="normal" value="For each application, we provide:" />
+	
+					<aries:spacer height="10" />
+					<a class="link16" onclick="showHomePane('documentation')">Documentation</a>&nbsp;&nbsp;<br/>
+
+					<aries:spacer height="10" />
+					<a class="link16" onclick="showHomePane('implementation')">Implementation</a>&nbsp;&nbsp;<br/>
+
+					<aries:spacer height="10" />
+					<a class="link16" onclick="showHomePane('testing')">Tests</a>&nbsp;&nbsp;<br/>
+	
+					<aries:spacer height="10" />
+					<a class="link16" onclick="showHomePane('deployment')">Deployment</a>&nbsp;&nbsp;<br/>
+	
+					<aries:spacer height="10" />
+					<a class="link16" onclick="showHomePane('userInterfaces')">User-Tnterface(s)</a>&nbsp;&nbsp;<br/>
+				</div>
+			</div>
+		</div>
+	</h:panelGroup>
+</ui:composition>

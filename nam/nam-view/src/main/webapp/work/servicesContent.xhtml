@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:jsFunction 
+		name="showServicesPane"
+		onbegin="setCursorWait(this); lockScreen()"
+		oncomplete="setCursorDefault(); unlockScreen()" 
+		render="servicesMenu servicesView">
+		<a4j:param name="itemName" assignTo="#{selectionContext.currentTarget}" />
+	</a4j:jsFunction>
+
+	<c:set var="fontFamily" value="Helvetica" />
+	<c:set var="fontWeight" value="normal" />
+
+	<aries:spacer height="6" />
+	<aries:formPane
+		columns="2"
+		columnClasses="widthAuto, width100pct"
+		style="background-color: inherit">
+		
+		<h:panelGroup layout="block" style="">
+			<aries:spacer height="4" />
+			<aries:label fontSize="24" value="Services we offer" />
+			<aries:spacer height="8" />
+			<ui:include src="servicesMenu.xhtml" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" style="padding-left: 50px">
+			<ui:include src="servicesViewer.xhtml" />
+		</h:panelGroup>
+	</aries:formPane>
+
+
+	<!-- 
+		<aries:formPane
+			columns="3"
+			style="margin: 10px auto; background-color: inherit">
+			
+			<h:panelGroup layout="block" style="width: 280px">
+				<div style="height: 6px; margin-bottom: 6px; background-color: inherit" />
+				<aries:label fontSize="20" fontFamily="Tahoma" textColor="#666" value="System Implementation" onclick="showAskAboutApproachSection()" />
+			</h:panelGroup>
+	
+			<h:panelGroup layout="block" style="width: 280px">
+				<div style="height: 6px; margin-bottom: 6px; background-color: inherit" />
+				<aries:label fontSize="20" fontFamily="Tahoma" textColor="#999" value="Architecture and Design" onclick="showAskAboutApproachSection()" />
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" style="width: 270px">
+				<div style="height: 6px; margin-bottom: 6px; background-color: brown" />
+				<aries:label fontSize="20" fontFamily="Tahoma" fontStyle="bold" value="Training and Consultation" onclick="showAskAboutApproachSection()" />
+			</h:panelGroup>
+		</aries:formPane>
+	-->
+
+	<!--  
+	<aries:formPane
+		width="100%"
+		height="auto"
+		columns="3"
+		columnClassesXX="width30pct, width30pct, width30pct"
+		style="background-color: inherit">
+		
+		<h:panelGroup layout="block" style="width: 250px">
+			<aries:spacer height="16" />
+			<aries:label fontSize="20" fontFamily="Tahoma" fontWeight="normal" value="Services that we offer" onclick="showAskAboutApproachSection()" />
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" style="width: 250px">
+			<aries:spacer height="16" />
+			<aries:label fontSize="20" fontFamily="Tahoma" fontWeight="normal" value="Services that we offer" onclick="showAskAboutApproachSection()" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" style="width: 250px">
+			<aries:spacer height="16" />
+			<aries:label fontSize="20" fontFamily="Tahoma" fontWeight="normal" value="Services that we offer" onclick="showAskAboutApproachSection()" />
+		</h:panelGroup>
+	</aries:formPane>
+	-->
+</ui:composition>

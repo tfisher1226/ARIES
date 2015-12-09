@@ -92,10 +92,17 @@ public class NamespaceListManager extends AbstractDomainListManager<Namespace, N
 		return selected;
 	}
 	
+	public boolean isChecked(Namespace namespace) {
+		Collection<Namespace> selection = selectionContext.getSelection("namespaceSelection");
+		boolean checked = selection != null && selection.contains(namespace);
+		return checked;
+	}
+	
 	@Override
 	protected NamespaceListObject createRowObject(Namespace namespace) {
 		NamespaceListObject listObject = new NamespaceListObject(namespace);
 		listObject.setSelected(isSelected(namespace));
+		listObject.setChecked(isChecked(namespace));
 		return listObject;
 	}
 	

@@ -17,13 +17,16 @@
 			label="Component Information">
 			
 			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Base" label="Base" value="#{component.base}" items="#{baseList}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Type" label="Type" value="#{component.type}" />
+			
+			<aries:spacer height="6" />
 			<aries:inputText id="#{section}Name" label="Name" value="#{component.name}" />
 			
 			<aries:spacer height="6" />
 			<aries:inputText id="#{section}Label" label="Label" value="#{component.label}" />
-			
-			<aries:spacer height="6" />
-			<aries:inputText id="#{section}Type" label="Type" value="#{component.type}" />
 			
 			<aries:spacer height="6" />
 			<aries:inputText id="#{section}BaseType" label="Base Type" value="#{component.baseType}" />

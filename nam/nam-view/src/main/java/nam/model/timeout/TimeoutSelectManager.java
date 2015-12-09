@@ -11,11 +11,11 @@ import javax.faces.model.DataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.model.Timeout;
-import nam.model.util.TimeoutUtil;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractSelectManager;
+
+import nam.model.Timeout;
+import nam.model.util.TimeoutUtil;
 
 
 @SessionScoped
@@ -24,6 +24,9 @@ public class TimeoutSelectManager extends AbstractSelectManager<Timeout, Timeout
 	
 	@Inject
 	private TimeoutDataManager timeoutDataManager;
+	
+	@Inject
+	private TimeoutHelper timeoutHelper;
 	
 	
 	@Override
@@ -43,12 +46,12 @@ public class TimeoutSelectManager extends AbstractSelectManager<Timeout, Timeout
 	
 	@Override
 	public boolean isEmpty(Timeout timeout) {
-		return getTimeoutHelper().isEmpty(timeout);
+		return timeoutHelper.isEmpty(timeout);
 	}
 	
 	@Override
 	public String toString(Timeout timeout) {
-		return getTimeoutHelper().toString(timeout);
+		return timeoutHelper.toString(timeout);
 	}
 	
 	protected TimeoutHelper getTimeoutHelper() {

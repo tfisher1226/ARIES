@@ -49,7 +49,7 @@ public class MessagingOutlineTreeBuilder extends AbstractTreeBuilder implements 
 	}
 
 	protected void createProviderNodes(ModelTreeNode parentNode, Messaging messaging) {
-		List<Provider> providers = MessagingUtil.getProviders(messaging);
+		Collection<Provider> providers = MessagingUtil.getProviders(messaging);
 		Iterator<Provider> iterator = providers.iterator();
 		ModelTreeNode folderNode = null;
 		while (iterator.hasNext()) {

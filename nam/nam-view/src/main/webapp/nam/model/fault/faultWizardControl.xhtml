@@ -42,6 +42,7 @@
 					onclick="showProgress('Nam', '#{faultWizard.title}', 'Re-rendering current page...');"
 					oncomplete="hideProgress();"
 					render="faultWizard"
+					padding="2px 4px"
 					offset="true" />
 				
 				<!-- populate button -->
@@ -58,7 +59,8 @@
 					action="populateDefaultValues"
 					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="faultMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- back button -->
@@ -68,15 +70,16 @@
 					mode="ajax"
 					execute="@this"
 					id="faultWizardPreviousButton"
-					icon="/icons/arrow/PreviousPage16.gif"
-					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
 					rendered="#{faultWizard.backVisible}"
 					enabled="#{faultWizard.backEnabled}"
 					manager="#{faultWizard}"
 					action="back"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Fault', 'Moving to previous section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="faultMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- next button -->
@@ -86,15 +89,16 @@
 					mode="ajax"
 					execute="@form"
 					id="faultWizardNextButton"
-					icon="/icons/arrow/NextPage16.gif"
-					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
 					rendered="#{faultWizard.nextVisible}"
 					enabled="#{faultWizard.nextEnabled}"
 					manager="#{faultWizard}"
 					action="next"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Fault', 'Moving to next section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="faultMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- finish button -->
@@ -104,15 +108,16 @@
 					mode="ajax"
 					execute="@form"
 					id="faultWizardFinishButton"
-					icon="/icons/common/Default16.gif"
-					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
 					rendered="#{faultWizard.finishVisible}"
 					enabled="#{faultWizard.finishEnabled}"
 					manager="#{faultWizard}"
 					action="finish"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Fault', 'Validating and submitting new Fault...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="faultMessages"
+					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- cancel button -->
@@ -127,6 +132,7 @@
 					action="cancel"
 					onclick="setCursorWait(this); showProgress('Nam', 'Fault Management', 'Cancelling creation of Fault...');"
 					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px"
 					offset="true" />
 			</aries:toolbarGroup>
 		</aries:controlbar>

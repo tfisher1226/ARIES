@@ -3,15 +3,16 @@ package admin.permission;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.Permission;
 import admin.util.PermissionUtil;
@@ -28,6 +29,9 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 	
 	@Inject
 	private PermissionDataManager permissionDataManager;
+	
+	@Inject
+	private PermissionInfoManager permissionInfoManager;
 	
 	@Inject
 	private PermissionListManager permissionListManager;
@@ -50,12 +54,11 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 
 	public PermissionPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("permission");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -68,7 +71,7 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -77,7 +80,7 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 	}
 	
 	public void refreshMembers(String scope) {
-		permissionListManager.refresh();
+		//nothing for now
 	}
 
 	public String getPermissionListPage() {
@@ -102,6 +105,32 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 
 	public String getPermissionManagementPage() {
 		return "/admin/permission/permissionManagementPage.xhtml";
+	}
+	
+	public void handlePermissionSelected(@Observes @Selected Permission permission) {
+		selectionContext.setSelection("permission",  permission);
+		permissionInfoManager.setRecord(permission);
+	}
+	
+	public void handlePermissionUnselected(@Observes @Unselected Permission permission) {
+		selectionContext.unsetSelection("permission",  permission);
+		permissionInfoManager.unsetRecord(permission);
+	}
+	
+	public void handlePermissionChecked() {
+		String scope = "permissionSelection";
+		PermissionListObject listObject = permissionListManager.getSelection();
+		Permission permission = selectionContext.getSelection("permission");
+		boolean checked = permissionListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			permissionInfoManager.setRecord(permission);
+			selectionContext.setSelection(scope,  permission);
+		} else {
+			permissionInfoManager.unsetRecord(permission);
+			selectionContext.unsetSelection(scope,  permission);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializePermissionListPage() {
@@ -184,9 +213,6 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 		addBreadcrumb(pageLevelKey, "Permissions", "showPermissionManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Permission", "showPermissionWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showPermissionWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showPermissionWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showPermissionWizardPage('Documentation')");
 		
 		permissionIdentificationSection.setOwner("permissionWizard");
 		permissionConfigurationSection.setOwner("permissionWizard");
@@ -203,7 +229,7 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -223,10 +249,6 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 		addBreadcrumb(pageLevelKey, "Permissions", "showPermissionManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(permissionName, "showPermissionWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showPermissionWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showPermissionWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showPermissionWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showPermissionWizardPage('Documentation')");
 		
 		permissionOverviewSection.setOwner("permissionWizard");
 		permissionIdentificationSection.setOwner("permissionWizard");
@@ -245,7 +267,7 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -264,15 +286,23 @@ public class PermissionPageManager extends AbstractPageManager<Permission> imple
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 
 	public void initializeDefaultView() {
+		setPageTitle("Permissions");
+		setPageIcon("/icons/nam/Permission16.gif");
 		setSectionType("permission");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Permissions");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "permissionOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Permissions", "showPermissionManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializePermissionSummaryView(Permission permission) {

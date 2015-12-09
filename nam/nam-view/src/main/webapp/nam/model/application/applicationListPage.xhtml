@@ -48,7 +48,7 @@
 				<ui:param name="manager" value="#{applicationPageManager}" />
 				<ui:param name="overviewPage" value="initializeApplicationManagementPage" />
 				<ui:param name="listPage" value="initializeApplicationListPage" />
-				<ui:param name="treePage" value="initializeApplicationListPage" />
+				<ui:param name="treePage" value="initializeApplicationTreePage" />
 			</ui:include>
  		</span>
 	</ui:define>
@@ -60,27 +60,22 @@
 			<aries:panel
 				width="auto"
 				height="auto"
-				backgroundColor="inherit">
+				style="background-color: inherit">
 			
 				<aries:formPane 
 					width="auto"
 					height="auto"
-					margin="20px"
-					marginTop="2px">
-
-					<!-- container -->
-					<aries:borderPane
-						width="auto"
-						height="auto">
+					style="margin: 20px; margin-top: 0px">
 						
-						<!-- application list -->
-						<aries:outputPane
-							id="applicationListPane">
-							
+					<!-- application list -->
+					<aries:panel
+						style="width: 500px; border-radius: 5px; border: 1px solid #{userSkin.borderColor};">
+						
+						<a4j:outputPanel id="applicationListPane">
 							<ui:include src="applicationListToolbar.xhtml" />
-							<ui:include src="applicationListTable.xhtml" />
-						</aries:outputPane>
-					</aries:borderPane>
+							<ui:include src="applicationListTable.xhtml" />	
+						</a4j:outputPanel>
+					</aries:panel>
 				
 					<!--  
 					<a4j:log level="ALL" popup="false" width="400" height="200"/> 

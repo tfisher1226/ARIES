@@ -24,15 +24,15 @@
 		
 		<aries:spacer height="10" />
 		<aries:formPane
-			columns="2" 
+			columns="2"
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
 			<!-- variables -->
-			<ui:param name="lockOnSelect" value="true" />
 			<ui:param name="render" value="applicationManagementViewer" />
 			
-			<aries:panel>
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Application16.gif" />
 					<ui:param name="label" value="Applications" />
@@ -40,15 +40,21 @@
 	
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../application/applicationListActions.xhtml" />
-					<ui:include src="../application/applicationNameListToolbar.xhtml" />
-					<ui:include src="../application/applicationNameListTable.xhtml">
+					
+					<!-- application refresh scope -->
+					<ui:param name="scope" value="applicationList" />
+					<ui:param name="target" value="service" />
+					
+					<!-- application table section -->
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml">
 						<ui:param name="addSelectorColumn" value="true" />
 					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Service16.gif" />
 					<ui:param name="label" value="Services" />
@@ -56,9 +62,14 @@
 
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../service/serviceListActions.xhtml" />
-					<ui:include src="../service/serviceNameListToolbar.xhtml" />
-					<ui:include src="../service/serviceNameListTable.xhtml" />	
+					
+					<!-- service refresh action -->
+					<ui:param name="scope" value="applicationSelection" />
+					
+					<!-- service table section -->
+					<ui:include src="/nam/model/service/serviceListActions.xhtml" />
+					<ui:include src="/nam/model/service/serviceNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/service/serviceNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

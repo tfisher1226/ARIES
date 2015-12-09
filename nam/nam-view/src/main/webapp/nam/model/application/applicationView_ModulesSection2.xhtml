@@ -1,0 +1,141 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- section body --> 
+	<h:panelGrid class="sectionBody">
+
+		<!-- page includes -->
+	
+		<!-- section title --> 
+		<ui:insert name="sectionTitle" />
+
+		<!-- section messages 
+		<ui:insert name="sectionMessages" />
+		--> 
+		
+		<aries:spacer height="10" />
+		<aries:formPane
+			columns="2" 
+			width="auto"
+			height="auto"
+			style="">
+			
+			<!-- variables -->
+			<ui:param name="render" value="applicationManagementViewer" />
+			
+			<aries:panel style="">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Application16.gif" />
+					<ui:param name="label" value="Applications" />
+				</ui:include>
+	
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+
+			<aries:panel style="margin-left: 20px">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Module16.gif" />
+					<ui:param name="label" value="Modules" />
+				</ui:include>
+
+				<aries:spacer height="6" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:include src="/nam/model/module/moduleListActions.xhtml" />
+					<ui:include src="/nam/model/module/moduleNameListToolbar.xhtml" />
+				</h:panelGroup>
+				
+				<!--  
+				<aries:spacer height="2" />
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="empty" />
+					<ui:param name="label" value="Empty" />
+					<ui:param name="icon" value="/icons/nam/Module16.gif" />
+					<ui:param name="manager" value="#{basicModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+				-->
+
+				<aries:spacer height="4" />
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="model" />
+					<ui:param name="label" value="Model" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeModel16.gif" />
+					<ui:param name="manager" value="#{namespaceModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="client" />
+					<ui:param name="label" value="Client" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeClient16.gif" />
+					<ui:param name="manager" value="#{clientModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="service" />
+					<ui:param name="label" value="Service" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeService16.gif" />
+					<ui:param name="manager" value="#{serviceModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="data" />
+					<ui:param name="label" value="Data" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypePersistedData16.gif" />
+					<ui:param name="manager" value="#{persistenceModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="view" />
+					<ui:param name="label" value="View" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeView16.gif" />
+					<ui:param name="manager" value="#{viewModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="test" />
+					<ui:param name="label" value="Test" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeTest16.gif" />
+					<ui:param name="manager" value="#{testModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="ear" />
+					<ui:param name="label" value="EAR" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeEAR16.gif" />
+					<ui:param name="manager" value="#{earModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="war" />
+					<ui:param name="label" value="WAR" />
+					<ui:param name="icon" value="/icons/nam/ModuleTypeWAR16.gif" />
+					<ui:param name="manager" value="#{warModuleListManager}" />
+					<ui:param name="table" value="/nam/model/module/moduleNameListTable.xhtml" />
+				</ui:include>
+			</aries:panel>
+		</aries:formPane>
+	</h:panelGrid>
+</ui:composition>

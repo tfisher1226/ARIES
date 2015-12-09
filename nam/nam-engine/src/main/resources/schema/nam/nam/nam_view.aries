@@ -54,6 +54,17 @@
 		</relation>
 
 		<relation>
+			<name>Domain</name>
+			<pattern>memberOf</pattern>
+			<container>Domain</container>
+			<type>Application</type>
+			<type>Module</type>
+			<type>Network</type>
+			<type>Provider</type>
+			<type>Service</type>
+		</relation>
+		
+		<relation>
 			<name>Element</name>
 			<pattern>containedBy</pattern>
 			<container>Namespace</container>		
@@ -102,7 +113,7 @@
 			<name>Model</name>
 			<pattern>memberOf</pattern>
 			<container>Model</container>
-			<type>Package</type>
+			<type>Domain</type>
 			<type>Import</type>
 		</relation>
 		
@@ -111,14 +122,16 @@
 			<pattern>containedBy</pattern>
 			<container>Project</container>		
 			<container>Application</container>
+			<container>Domain</container>		
 			<type>Module</type>
 		</relation>
 		
 		<relation>
 			<name>Module</name>
-			<pattern>memberOf</pattern>
+			<pattern>managedBy</pattern>
 			<container>Module</container>
 			<type>Domain</type>
+			<type>Module</type>		
 			<type>Service</type>
 			<type>Element</type>
 			<type>Component</type>
@@ -139,9 +152,18 @@
 		<relation>
 			<name>Namespace</name>
 			<pattern>containedBy</pattern>
-			<container>Information</container>		
+			<container>Project</container>
 			<container>Application</container>
+			<container>Information</container>
 			<type>Namespace</type>
+		</relation>
+		
+		<relation>
+			<name>Namespace</name>
+			<pattern>memberOf</pattern>
+			<container>Namespace</container>
+			<type>Import</type>
+			<type>Element</type>
 		</relation>
 		
 		<relation>
@@ -182,8 +204,10 @@
 			<type>Unit</type>
 			<type>Source</type>
 			<type>Adapter</type>
-			<type>Entity</type>	
+			<!--
+			<type>Entity</type>
 			<type>Query</type>	
+			-->	
 			<type>Repository</type>
 			<type>Provider</type>
 		</relation>

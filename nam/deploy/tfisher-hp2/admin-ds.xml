@@ -9,6 +9,10 @@
 
 		<driver>mysql-5-driver</driver>
 
+		<!--  
+		<connection-url>jdbc:mysql://192.168.99.101:13306/admin_db</connection-url>
+		-->
+		
 		<connection-url>jdbc:mysql://localhost:3306/admin_db</connection-url>
 		<security>
 			<user-name>admin</user-name>

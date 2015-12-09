@@ -111,7 +111,7 @@ public class RegistrationWizard extends AbstractDomainElementWizard<Registration
 		try {
 			Registration registration = selectionContext.getSelection("registration");
 			registrationDataManager.saveRegistration(registration);
-			registrationEventManager.fireSavedEvent(registration);
+			registrationEventManager.fireAddEvent(registration);
 			getSecurityManager().login(registration.getUser());
 			String url = getPageManager().getMainPage();
 			return url;

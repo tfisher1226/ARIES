@@ -959,6 +959,10 @@ public class DataLayerHelper {
 		return getPersistenceUnitPackageName(namespace, unit) + "." + getPersistenceUnitClassName(unit);
 	}
 
+	public static String getPersistenceUnitTypeName(Namespace namespace, Unit unit) {
+		return getPersistenceUnitTypeName(namespace.getUri(), unit);
+	}
+	
 	public static String getPersistenceUnitTypeName(String namespace, Unit unit) {
 		String packageName = getPersistenceUnitPackageName(namespace, unit);
 		String interfaceName = getPersistenceUnitInterfaceName(unit);

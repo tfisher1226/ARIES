@@ -267,6 +267,16 @@ public class ProjectUtil {
 		return ModuleUtil.getModules(modules);
 	}
 
+	public static Collection<Module> getProjectModules(Collection<Project> projectList) {
+		Set<Module> moduleSet = new HashSet<Module>();
+		Iterator<Project> iterator = projectList.iterator();
+		while (iterator.hasNext()) {
+			Project project = iterator.next();
+			moduleSet.addAll(getProjectModules(project));
+		}
+		return moduleSet;
+	}
+	
 	public static Set<Module> getProjectModules(Project project, ModuleType moduleType) {
 		Set<Module> list = new HashSet<Module>();
 		Set<Module> modules = getProjectModules(project);
@@ -361,7 +371,7 @@ public class ProjectUtil {
 		Iterator<Information> iterator = informationBlocks.iterator();
 		while (iterator.hasNext()) {
 			Information information = iterator.next();
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator2 = namespaces.iterator();
 			while (iterator2.hasNext()) {
 				Namespace namespace = iterator2.next();
@@ -972,18 +982,49 @@ public class ProjectUtil {
 	
 
 	public static Collection<Module> getModules(Collection<Project> projectList) {
-		Set<Module> moduleList = new HashSet<Module>();
+		Set<Module> moduleSet = new HashSet<Module>();
 		Iterator<Project> iterator = projectList.iterator();
 		while (iterator.hasNext()) {
 			Project project = iterator.next();
-			moduleList.addAll(ProjectUtil.getModules(project));
+			moduleSet.addAll(getModules(project));
 		}
-		return moduleList;
+		return moduleSet;
+	}
+
+	public static Collection<Module> getModules(Collection<Project> projectList, ModuleType moduleType) {
+		Set<Module> moduleSet = new HashSet<Module>();
+		Iterator<Project> iterator = projectList.iterator();
+		while (iterator.hasNext()) {
+			Project project = iterator.next();
+			moduleSet.addAll(getModules(project, moduleType));
+		}
+		return moduleSet;
+	}
+
+	public static Set<Module> getModules(Project project) {
+		Set<Module> moduleSet = new HashSet<Module>();
+		Modules modules = getModuleParent(project);
+		moduleSet.addAll(ModuleUtil.getModules(modules));
+		Collection<Application> applications = ProjectUtil.getApplications(project);
+		Iterator<Application> iterator = applications.iterator();
+		while (iterator.hasNext()) {
+			Application application = iterator.next();
+			moduleSet.addAll(ApplicationUtil.getModules(application));
+		}
+		return moduleSet;
 	}
 	
-	public static Set<Module> getModules(Project project) {
+	public static Set<Module> getModules(Project project, ModuleType moduleType) {
+		Set<Module> moduleSet = new HashSet<Module>();
 		Modules modules = getModuleParent(project);
-		return ModuleUtil.getModules(modules);
+		moduleSet.addAll(ModuleUtil.getModules(modules, moduleType));
+		Collection<Application> applications = ProjectUtil.getApplications(project);
+		Iterator<Application> iterator = applications.iterator();
+		while (iterator.hasNext()) {
+			Application application = iterator.next();
+			moduleSet.addAll(ApplicationUtil.getModules(application, moduleType));
+		}
+		return moduleSet;
 	}
 
 	public static Modules getModuleParent(Project project) {
@@ -1254,6 +1295,17 @@ public class ProjectUtil {
 				extensions.getInformationsAndMessagingsAndPersistences().add(newPersistence);
 			}
 		}
+	}
+	
+	public static List<Persistence> getPersistenceBlocks(Collection<Project> projects) {
+		List<Persistence> persistenceBlocks = new ArrayList<Persistence>();
+		Iterator<Project> iterator = projects.iterator();
+		while (iterator.hasNext()) {
+			Project project = iterator.next();
+			List<Persistence> persistenceBlocksForProject = getPersistenceBlocks(project);
+			persistenceBlocks.addAll(persistenceBlocksForProject);
+		}
+		return persistenceBlocks;
 	}
 	
 	public static List<Persistence> getPersistenceBlocks(Project project) {

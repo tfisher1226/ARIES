@@ -1,36 +1,54 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
 	
+	<c:if test="#{empty addSelectorColumn}">
+		<c:set var="addSelectorColumn" value="#{false}"/>
+	</c:if>
+	
+	<!-- table panel -->
 	<aries:outputPane
 		id="timeoutNameListTablePanel">
-		<ui:include src="timeoutNameListMenu.xhtml"/>
 		
+		<!-- context menu -->
+		<ui:include src="timeoutListMenu.xhtml">
+			<ui:param name="tableId" value="timeoutNameListTable" />
+		</ui:include>
+		
+		<!-- table -->
 		<aries:table
 			id="timeoutNameListTable"
 			value="#{timeoutListManager.dataModel}"
 			rowCount="#{timeoutListManager.dataModel.rowCount}"
 			visible="#{timeoutListManager.dataModel.rowCount > 0}"
-			onrowmousedown="processTimeoutListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowclick="processTimeoutListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processTimeoutListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onchange="processTimeoutListSelectionChanged(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}', '#{target}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
-			tablePanelStyleClass="none">
+			styleClass="noTableHeader"
+			tablePanelStyleClass="none"
+			rowClasses="none">
 			
-			<!-- VALUE -->
-			<aries:textColumn
-				width="100"
-				header="Value">
-				<h:outputText value="#{rowItem.timeout.value}" />
+			<!-- timeout name -->
+			<aries:textColumn header="Timeout">
+				<aries:formPane columns="2">
+					<h:graphicImage library="graphics" name="#{rowItem.icon}" />
+					<h:outputText value="#{rowItem.timeout.name}" styleClass="tableColumn" />
+				</aries:formPane>
 			</aries:textColumn>
-			
-			<!-- NAME -->
-			<aries:textColumn
-				width="100"
-				header="Name">
-				<h:outputText value="#{rowItem.timeout.name}" />
+
+			<!-- timeout value -->
+			<aries:textColumn header="Value">
+				<aries:formPane columns="2">
+					<h:graphicImage library="graphics" name="#{rowItem.icon}" />
+					<h:outputText value="#{rowItem.timeout.value}" styleClass="tableColumn" />
+				</aries:formPane>
 			</aries:textColumn>
 		</aries:table>
 	</aries:outputPane>

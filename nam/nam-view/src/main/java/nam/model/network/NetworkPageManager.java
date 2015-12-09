@@ -359,7 +359,7 @@ public class NetworkPageManager extends AbstractPageManager<Network> implements 
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
+		refreshLocal("projectList");
 		return url;
 	}
 	

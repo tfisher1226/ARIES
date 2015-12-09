@@ -3,15 +3,16 @@ package nam.model.service;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Service;
 import nam.model.component.ComponentPageManager;
@@ -32,6 +33,9 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 	@Inject
 	private ServiceDataManager serviceDataManager;
 
+	@Inject
+	private ServiceInfoManager serviceInfoManager;
+	
 	@Inject
 	private ServiceListManager serviceListManager;
 
@@ -74,7 +78,6 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 	
 	public ServicePageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 
 	
@@ -92,7 +95,7 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -101,9 +104,9 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 	}
 	
 	public void refreshMembers(String scope) {
-		listenerPageManager.refresh(scope);
-		operationPageManager.refresh(scope);
-		componentPageManager.refresh(scope);
+		listenerPageManager.refreshLocal(scope);
+		operationPageManager.refreshLocal(scope);
+		componentPageManager.refreshLocal(scope);
 	}
 	
 	public String getServiceListPage() {
@@ -128,6 +131,39 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 	
 	public String getServiceManagementPage() {
 		return "/nam/model/service/serviceManagementPage.xhtml";
+	}
+	
+	public void handleServiceSelected(@Observes @Selected Service service) {
+		selectionContext.setSelection("service",  service);
+		serviceInfoManager.setRecord(service);
+	}
+	
+	public void handleServiceUnselected(@Observes @Unselected Service service) {
+		selectionContext.unsetSelection("service",  service);
+		serviceInfoManager.unsetRecord(service);
+	}
+	
+	public void handleServiceChecked() {
+		String scope = "serviceSelection";
+		ServiceListObject listObject = serviceListManager.getSelection();
+		Service service = selectionContext.getSelection("service");
+		boolean checked = serviceListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			serviceInfoManager.setRecord(service);
+			selectionContext.setSelection(scope,  service);
+		} else {
+			serviceInfoManager.unsetRecord(service);
+			selectionContext.unsetSelection(scope,  service);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("listener"))
+			listenerPageManager.refreshLocal(scope);
+		if (target.equals("operation"))
+			operationPageManager.refreshLocal(scope);
+		if (target.equals("component"))
+			componentPageManager.refreshLocal(scope);
+		refreshLocal(scope);
 	}
 	
 	public String initializeServiceListPage() {
@@ -235,7 +271,7 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -258,16 +294,6 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		addBreadcrumb(wizardLevelKey, "Listeners", "showServiceWizardPage('Listeners')");
 		addBreadcrumb(wizardLevelKey, "Operations", "showServiceWizardPage('Operations')");
 		addBreadcrumb(wizardLevelKey, "Components", "showServiceWizardPage('Components')");
-
-//		projectOverviewSection.setOwner("serviceWizard");
-//		applicationOverviewSection.setOwner("serviceWizard");
-//		moduleOverviewSection.setOwner("serviceWizard");
-//		domainOverviewSection.setOwner("serviceWizard");
-
-//		sections.clear();
-//		sections.add(serviceOverviewSection);
-//		sections.add(serviceOverviewSection);
-//		sections.add(serviceOverviewSection);
 
 		serviceOverviewSection.setOwner("serviceWizard");
 		serviceIdentificationSection.setOwner("serviceWizard");
@@ -292,7 +318,7 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -317,15 +343,23 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Services");
+		setPageIcon("/icons/nam/Service16.gif");
 		setSectionType("service");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Services");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "serviceOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Services", "showServiceManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 
 	public String initializeServiceDomainsView() {
@@ -334,8 +368,8 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		setSectionTitle("Domains");
 		setSectionIcon("/icons/nam/Domain16.gif");
 		selectionContext.setMessageDomain("serviceDomains");
-		domainPageManager.refresh("service");
-		serviceListManager.refresh();
+		domainPageManager.refreshLocal("serviceSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -346,8 +380,8 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		setSectionTitle("Listeners");
 		setSectionIcon("/icons/nam/Listener16.gif");
 		selectionContext.setMessageDomain("serviceListeners");
-		listenerPageManager.refresh("service");
-		serviceListManager.refresh();
+		listenerPageManager.refreshLocal("serviceSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -358,8 +392,8 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		setSectionTitle("Operations");
 		setSectionIcon("/icons/nam/Operation16.gif");
 		selectionContext.setMessageDomain("serviceOperations");
-		operationPageManager.refresh("service");
-		serviceListManager.refresh();
+		operationPageManager.refreshLocal("serviceSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -370,8 +404,8 @@ public class ServicePageManager extends AbstractPageManager<Service> implements 
 		setSectionTitle("Components");
 		setSectionIcon("/icons/nam/Component16.gif");
 		selectionContext.setMessageDomain("serviceComponents");
-		componentPageManager.refresh("service");
-		serviceListManager.refresh();
+		componentPageManager.refreshLocal("serviceSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}

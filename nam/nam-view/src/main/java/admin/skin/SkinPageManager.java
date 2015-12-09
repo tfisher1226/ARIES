@@ -3,15 +3,16 @@ package admin.skin;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.Skin;
 import admin.util.SkinUtil;
@@ -28,6 +29,9 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	
 	@Inject
 	private SkinDataManager skinDataManager;
+	
+	@Inject
+	private SkinInfoManager skinInfoManager;
 	
 	@Inject
 	private SkinListManager skinListManager;
@@ -50,12 +54,11 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	
 	public SkinPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("skin");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -68,7 +71,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -77,7 +80,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	}
 	
 	public void refreshMembers(String scope) {
-		skinListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getSkinListPage() {
@@ -102,6 +105,32 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	
 	public String getSkinManagementPage() {
 		return "/admin/skin/skinManagementPage.xhtml";
+	}
+	
+	public void handleSkinSelected(@Observes @Selected Skin skin) {
+		selectionContext.setSelection("skin",  skin);
+		skinInfoManager.setRecord(skin);
+	}
+	
+	public void handleSkinUnselected(@Observes @Unselected Skin skin) {
+		selectionContext.unsetSelection("skin",  skin);
+		skinInfoManager.unsetRecord(skin);
+	}
+	
+	public void handleSkinChecked() {
+		String scope = "skinSelection";
+		SkinListObject listObject = skinListManager.getSelection();
+		Skin skin = selectionContext.getSelection("skin");
+		boolean checked = skinListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			skinInfoManager.setRecord(skin);
+			selectionContext.setSelection(scope,  skin);
+		} else {
+			skinInfoManager.unsetRecord(skin);
+			selectionContext.unsetSelection(scope,  skin);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeSkinListPage() {
@@ -151,7 +180,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	
 	public String initializeSkinRecordPage() {
 		Skin skin = selectionContext.getSelection("skin");
-		String skinName = skin.getName();
+		String skinName = SkinUtil.getLabel(skin);
 		
 		String pageLevelKey = "skinRecord";
 		clearBreadcrumbs(pageLevelKey);
@@ -184,9 +213,6 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		addBreadcrumb(pageLevelKey, "Skins", "showSkinManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Skin", "showSkinWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showSkinWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showSkinWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showSkinWizardPage('Documentation')");
 		
 		skinIdentificationSection.setOwner("skinWizard");
 		skinConfigurationSection.setOwner("skinWizard");
@@ -203,7 +229,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -211,7 +237,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		setPageTitle(getSkinLabel(skin));
 		setPageIcon("/icons/nam/Skin16.gif");
 		setSectionTitle("Skin Overview");
-		String skinName = skin.getName();
+		String skinName = SkinUtil.getLabel(skin);
 		skinWizard.setNewMode(false);
 		
 		String pageLevelKey = "skin";
@@ -223,10 +249,6 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		addBreadcrumb(pageLevelKey, "Skins", "showSkinManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(skinName, "showSkinWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showSkinWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showSkinWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showSkinWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showSkinWizardPage('Documentation')");
 		
 		skinOverviewSection.setOwner("skinWizard");
 		skinIdentificationSection.setOwner("skinWizard");
@@ -245,7 +267,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -264,15 +286,23 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Skins");
+		setPageIcon("/icons/nam/Skin16.gif");
 		setSectionType("skin");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Skins");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "skinOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Skins", "showSkinManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeSkinSummaryView(Skin skin) {
@@ -295,7 +325,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 		String label = "Skin";
 		String name = SkinUtil.getLabel(skin);
 		if (name == null && skin.getName() != null)
-			name = NameUtil.capName(skin.getName());
+			name = SkinUtil.getLabel(skin);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -308,7 +338,7 @@ public class SkinPageManager extends AbstractPageManager<Skin> implements Serial
 	}
 	
 	protected void updateState(Skin skin) {
-		String skinName = NameUtil.capName(skin.getName());
+		String skinName = SkinUtil.getLabel(skin);
 		setSectionTitle(skinName + " Skin");
 	}
 	

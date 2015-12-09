@@ -1,0 +1,91 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:toolbar
+		type="table"
+		id="interactorNameListToolbar">
+		
+		<aries:toolbarGroup
+			location="left">
+		
+			<aries:toolButton
+				id="interactorNameListNewButton"
+				label="New Interactor..."
+				icon="/icons/common/New16.gif"
+				iconDisabled="/icons/common/NewDisabled16.gif"
+				tooltip="Create new Interactor Record"
+				enabled="#{securityGuard.canCreate('interactor')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processNewElement(event, 'Interactor', 'interactorPageManager.initializeInteractorSourceSelectionPage')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px 2px 2px"
+				offset="false" />
+			
+			<!--  
+			<aries:toolButton
+				id="interactorNameListEditButton"
+				value="Edit Interactor..."
+				icon="/icons/common/Edit16.gif"
+				iconDisabled="/icons/common/EditDisabled16.gif"
+				tooltip="Open selected Interactor record for edit..."
+				enabled="#{interactorListManager.hasSelection() and securityGuard.canUpdate('interactor')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processEditElement(event, 'Interactor')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px"
+				offset="false" />
+			
+			<aries:toolButton
+				id="interactorNameListRemoveButton"
+				value="Remove Interactor..."
+				icon="/icons/common/Remove16.gif"
+				iconDisabled="/icons/common/RemoveDisabled16.gif"
+				tooltip="Remove selected Interactor record from system..."
+				enabled="#{interactorListManager.hasSelection() and securityGuard.canDelete('interactor')}"
+				mode="client"
+				execute="@none"
+				onmouseup="processRemoveElement(event, 'Interactor')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 1px"
+				offset="true" />
+				-->
+		</aries:toolbarGroup>
+		
+		<aries:toolbarGroup
+			location="right">
+			
+			<aries:toolButton
+				id="interactorNameListCollapseButton"
+				icon="/icons/common/CollapseAll16.gif"
+				iconDisabled="/icons/common/CollapseAllDisabled16.gif"
+				mode="client"
+				execute="@none"
+				manager="#{interactorPageManager}"
+				action="collapseInteractorNameLists"
+				onmouseup="(event)"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 2px 2px 1px"
+				offset="false" />
+				
+			<aries:toolButton
+				id="interactorNameListRefreshButton"
+				icon="/icons/common/Refresh16.gif"
+				iconDisabled="/icons/common/RefreshDisabled16.gif"
+				tooltip="Re-read Interactor information from server"
+				enabled="#{securityGuard.canOpen('interactor')}"
+				mode="client"
+				execute="@none"
+				onmouseup="refreshInteractorList(event)"
+				labelStyle="font-size: 11px"
+				style="margin: 2px 2px 2px 1px"
+				offset="false" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

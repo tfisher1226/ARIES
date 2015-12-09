@@ -1,4 +1,4 @@
--- use admin_db;
+use admin_db;
 
 insert into `email_address` (id, enabled, url, first_name, last_name) values (1, true, 'manager', 'Manager', 'Manager');
 insert into `email_address` (id, enabled, url, first_name, last_name) values (2, true, 'tfisher@kattare.com', 'Tom','Fisher');

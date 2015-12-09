@@ -1,17 +1,12 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="type" value="Service" />
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="manager" value="#{serviceInfoManager}" />
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
 	
 	<a4j:jsFunction
 	 	name="launchServiceDialog"
@@ -19,37 +14,32 @@
 		immediate="true"
 		bypassUpdates="true"
 		limitRender="true"
-		action="#{manager.activate}"
-		onbegin="setCursorWait(); showProgress('', 'Service Records', 'Preparing requested record...')"
+		action="#{serviceInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Service Records', 'Preparing requested record...')"
 		oncomplete="setCursorDefault(eventSource); hideProgress(); showServiceDialog()"
-		render="#{type}Module, #{type}Dialog">
+		render="serviceModule, serviceDialog">
 		
-		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
-		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
-		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
-		<a4j:param name="targetService" assignTo="#{manager.targetService}" />
-		<a4j:param name="immediate" assignTo="#{manager.immediate}" value="false" />
+		<a4j:param name="targetDomain" assignTo="#{serviceInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{serviceInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{serviceInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{serviceInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{serviceInfoManager.immediate}" value="false" />
 	</a4j:jsFunction>
 	
-	<aries:region
-		id="#{type}Module"
-		parent="#{section}"
-		domain="#{type}"
-		section="#{type}Dialog"
-		render="#{type}ListPane"
-		rendered="#{manager.visible}">
+	<a4j:outputPanel
+		id="serviceModule">
 		
-		<aries:form
-			id="#{section}Form">
+		<a4j:region
+			rendered="#{serviceInfoManager.visible}">
 			
 			<aries:dialog
-				id="#{section}"
-				action="save#{type}"
-				render="#{manager.renderList}">
+				id="serviceDialog"
+				action="saveService"
+				render="#{serviceInfoManager.renderList} serviceListPane">
 				
 				<!-- Dialog Content -->
 				<ui:include src="serviceInfoPane.xhtml" />
 			</aries:dialog>
-		</aries:form>
 	</aries:region>
+	</a4j:outputPanel>
 </ui:composition>

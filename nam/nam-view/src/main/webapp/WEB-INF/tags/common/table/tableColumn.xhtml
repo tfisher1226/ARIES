@@ -57,44 +57,21 @@
 			rendered="#{rendered}"
 			sortBy="#{sortBy}"
 			sortOrder="#{sortOrder}"
+			filterExpression="#{filterExpression}"
 			filterValue="#{filterValue}"
 			footerClass="#{footerClass}"
 			headerClass="#{headerClass}"
 			styleClass="#{styleClass}"
-			style="#{style}">
+			style="#{style}; background-color: #{rowItem.backgroundColor}">
 			
 			<f:facet name="header">
-				<h:outputText value="#{header} #{textValue}" />
+				<h:outputText value="#{header}" style="" />
 			</f:facet>
 			
-			<!-- 
-			<c:if test="#{not empty textValue}">
-				<a4j:outputPanel
-					layout="block"
-					onmousedown="#{onselect}; #{onmousedown}"
-					onclick="#{onselect}" 
-					style="width: auto; padding: 4px; background-color: inherit">
-					<h:outputText value="XX #{textValue}" /> 
-				</a4j:outputPanel>
-			</c:if>
-		
-			<c:if test="#{not empty linkValue and not empty action}">
-				<a4j:commandLink 
-					execute="@this"
-					immediate="true"
-					bypassUpdates="true"
-					limitRender="true"
-					value="#{linkValue}"
-					action="#{action}"
-					onclick="#{onclick}"
-					oncomplete="#{oncomplete}"
-					render="#{render}">
-				</a4j:commandLink>
-			</c:if>
-
-			<c:if test="#{empty textValue and empty linkValue}">
+			<span onmousedown="#{onmousedown}"
+				style="width: #{helper.convert(width)}; display: block; background-color: inherit">
+				
 				<ui:insert />
-			</c:if>
-			-->
+			</span>
 		</rich:column>
 </ui:composition>

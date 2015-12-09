@@ -3,15 +3,16 @@ package admin.team;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.Team;
 import admin.util.TeamUtil;
@@ -28,6 +29,9 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 	
 	@Inject
 	private TeamDataManager teamDataManager;
+	
+	@Inject
+	private TeamInfoManager teamInfoManager;
 	
 	@Inject
 	private TeamListManager teamListManager;
@@ -50,12 +54,11 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 	
 	public TeamPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("team");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -68,7 +71,7 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -77,7 +80,7 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 	}
 	
 	public void refreshMembers(String scope) {
-		teamListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getTeamListPage() {
@@ -102,6 +105,32 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 	
 	public String getTeamManagementPage() {
 		return "/admin/team/teamManagementPage.xhtml";
+	}
+	
+	public void handleTeamSelected(@Observes @Selected Team team) {
+		selectionContext.setSelection("team",  team);
+		teamInfoManager.setRecord(team);
+	}
+	
+	public void handleTeamUnselected(@Observes @Unselected Team team) {
+		selectionContext.unsetSelection("team",  team);
+		teamInfoManager.unsetRecord(team);
+	}
+	
+	public void handleTeamChecked() {
+		String scope = "teamSelection";
+		TeamListObject listObject = teamListManager.getSelection();
+		Team team = selectionContext.getSelection("team");
+		boolean checked = teamListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			teamInfoManager.setRecord(team);
+			selectionContext.setSelection(scope,  team);
+		} else {
+			teamInfoManager.unsetRecord(team);
+			selectionContext.unsetSelection(scope,  team);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeTeamListPage() {
@@ -200,7 +229,7 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -238,7 +267,7 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -257,15 +286,23 @@ public class TeamPageManager extends AbstractPageManager<Team> implements Serial
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Teams");
+		setPageIcon("/icons/nam/Team16.gif");
 		setSectionType("team");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Teams");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "teamOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Teams", "showTeamManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeTeamSummaryView(Team team) {

@@ -73,7 +73,9 @@ public class ElementManagementSectionXhtmlGenerator extends AbstractCompositionX
 		//generateFile(elementManagementSectionXHTMLBuilder.buildElementFile(information, element, "Documentation"));
 		View view = context.getModule().getView();
 		String elementClassName = ModelLayerHelper.getElementClassName(element);
-		Relation relation = ViewUtil.getMemberOfRelation(view, elementClassName);
+		Relation relation = ViewUtil.getManagedByRelation(view, elementClassName);
+		if (relation == null)
+			relation = ViewUtil.getMemberOfRelation(view, elementClassName);
 		if (relation != null) {
 			List<String> children = relation.getType();
 			Iterator<String> iterator = children.iterator();

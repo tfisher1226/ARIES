@@ -1,25 +1,25 @@
 package admin.permission;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.ui.design.AbstractNamRecordManager;
-import nam.ui.design.SelectionContext;
-import nam.ui.design.WorkspaceEventManager;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.util.Validator;
 
 import admin.Permission;
 import admin.util.PermissionUtil;
+
+import nam.ui.design.AbstractNamRecordManager;
+import nam.ui.design.SelectionContext;
+import nam.ui.design.WorkspaceEventManager;
 
 
 @SessionScoped
@@ -84,18 +84,10 @@ public class PermissionInfoManager extends AbstractNamRecordManager<Permission> 
 	}
 	
 	protected void initialize(Permission permission) {
-		PermissionUtil.initialize(permission);
 		permissionWizard.initialize(permission);
 		setContext("permission", permission);
 	}
 	
-	public void handlePermissionSelected(@Observes @Selected Permission permission) {
-		selectionContext.setSelection("permission",  permission);
-		permissionPageManager.updateState(permission);
-		permissionPageManager.refreshMembers();
-		setRecord(permission);
-	}
-
 	@Override
 	public String newRecord() {
 		return newPermission();

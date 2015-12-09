@@ -1,0 +1,193 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+    <a4j:jsFunction 
+    	name="requestLogout" 
+    	immediate="true"
+    	limitRender="true"
+    	bypassUpdates="true"
+    	execute="@all"
+    	action="#{securityManager.logout}"
+    	onbegin="setCursorWait(); lockScreen()"
+    	oncomplete="showHomePage(null)" />
+    	
+	<aries:toolbar type="menubar">
+		<aries:toolbarGroup location="left">
+			<aries:toolItem 
+				label="Home"
+				id="homeButton"
+				iconXX="/icons/common/Home16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showHomePage(event)" />
+			
+			<aries:toolItem 
+				label="About"
+				id="aboutButton"
+				iconXX="/icons/common/Speak16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showAboutPage(event)" />
+
+			<aries:toolItem 
+				label="Why?"
+				id="whyButton"
+				iconXX="/icons/common/Info16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showWhyPage(event)" />
+			
+			<aries:toolItem 
+				label="How?"
+				id="howButton"
+				iconXX="/icons/common/Info16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showHowPage(event)" />
+				
+			<aries:toolItem 
+				label="Services"
+				id="servicesButton"
+				icon="/icons/common/Default16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showServicesPage(event)" />
+				
+			<aries:dropDownMenu 
+				label="Technologies"
+				icon="/icons/common/Default16.gif">
+				
+				<aries:menuItem
+					id="javaEEItem" 
+					name="reset"
+					label="Enterprise Java"
+					tooltip="The capability and value of properly developed Enterprise Java is unmatched in today's industry."
+					icon="/icons/common/Default16.gif"
+					execute="@none"
+					onclick="setCursorWait(this)"
+					oncomplete="setCursorDefault(this)" 
+					render="nothing" />
+					
+				<aries:menuItem
+					id="restWebServicesItem" 
+					name="reset"
+					label="REST Web-Services"
+					tooltipXX="We specialize in Enterprise Java!"
+					icon="/icons/common/Default16.gif"
+					execute="@none"
+					onclick="setCursorWait(this)"
+					oncomplete="setCursorDefault(this)" 
+					render="nothing" />
+					
+				<aries:menuItem
+					id="mavenItem" 
+					name="reset"
+					label="Maven Enablement"
+					tooltipXX="We specialize in Enterprise Java!"
+					icon="/icons/common/Default16.gif"
+					execute="@none"
+					onclick="setCursorWait(this)"
+					oncomplete="setCursorDefault(this)" 
+					render="nothing" />
+					
+				<aries:menuItem
+					id="toolsItem" 
+					label="Enterprise Development Tools"
+					tooltipXX="We specialize in Enterprise Java!"
+					icon="/icons/common/Default16.gif"
+					execute="@none"
+					onclick="setCursorWait(this)"
+					oncomplete="setCursorDefault(this)" 
+					render="nothing" />
+			</aries:dropDownMenu>
+			
+			<aries:toolItem 
+				label="Samples"
+				id="samplesButton"
+				icon="/icons/common/Default16.gif"
+				iconX="/icons/common/Samples16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showSamplesPage(event)" />
+				
+			<aries:toolItem 
+				label="Contact"
+				id="contactButton"
+				icon="/icons/common/Default16.gif"
+				iconXX="/icons/common/ThumbsUp16.gif"
+				rendered="true" 
+				mode="client"
+				execute="@none"
+				onmousedown="setCursorWait(this)" 
+				onmouseup="showContactPage(event)" />
+		</aries:toolbarGroup>
+
+		<aries:toolbarGroup location="right">
+			<!--  
+			<aries:dropDownMenu 
+				label="Preferences"
+				iconXX="/icons/common/Configure16.gif">
+				
+				<aries:menuItem 
+					value="Change Theme..."
+					tooltip="Change User-Interface Theme"
+					iconXX="/icons/common/Table16.gif"
+					rendered="true"
+					mode="client"
+					execute="@none"
+					onclick="setCursorWait(this); launchThemeDialog(); setCursorDefault(this)" />
+			</aries:dropDownMenu>
+			-->
+
+			<aries:dropDownMenu 
+				label="Help"
+				icon="/icons/common/Help16.gif">
+				
+				<aries:menuItem
+					id="resetItem" 
+					name="reset"
+					label="Reset"
+					tooltip="Reset server-side user-state"
+					icon="/icons/common/Default16.gif"
+					execute="@this"
+					manager="#{adminManager}"
+					action="reset"
+					onclick="setCursorWait(this); showProgress('Nam', 'Server-side user-state', 'Resetting...')"
+					oncomplete="setCursorDefault(this); hideProgress()" 
+					render="nothing" />
+			</aries:dropDownMenu>
+						
+			<aries:toolItem 
+				id="refreshButton"
+				label="Refresh"
+				icon="/icons/common/Refresh16.gif"
+				tooltip="Refresh the Application display"
+				name="reload"
+				mode="client"
+				execute="@this"
+				onmouseup="setCursorWait(this)" 
+				onclick="location.reload(true)"
+				render="@all" />
+		</aries:toolbarGroup>
+	</aries:toolbar>
+</ui:composition>

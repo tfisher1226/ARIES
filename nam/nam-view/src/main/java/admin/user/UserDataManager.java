@@ -8,9 +8,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import admin.User;
-import admin.util.UserUtil;
+import org.aries.runtime.BeanContext;
 
+import admin.User;
+import admin.client.userService.UserService;
+import admin.util.UserUtil;
 import nam.ui.design.SelectionContext;
 
 
@@ -52,7 +54,9 @@ public class UserDataManager implements Serializable {
 	}
 	
 	public Collection<User> getDefaultList() {
-		return null;
+		UserService userService = BeanContext.getFromSession(UserService.ID);
+		Collection<User> userList = userService.getUserList();
+		return userList;
 	}
 	
 	public void saveUser(User user) {

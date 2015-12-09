@@ -8,16 +8,17 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.ui.design.SelectionContext;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractDomainListManager;
 import org.aries.ui.event.Cancelled;
 import org.aries.ui.event.Export;
+import org.aries.ui.event.Refresh;
 import org.aries.ui.manager.ExportManager;
 
 import admin.Role;
 import admin.util.RoleUtil;
+
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -47,6 +48,10 @@ public class RoleListManager extends AbstractDomainListManager<Role, RoleListObj
 		return "Role List";
 	}
 
+	public Object getRecordId(Role role) {
+		return role.getId();
+	}
+	
 	@Override
 	public Object getRecordKey(Role role) {
 		return RoleUtil.getKey(role);
@@ -92,10 +97,17 @@ public class RoleListManager extends AbstractDomainListManager<Role, RoleListObj
 		return selected;
 	}
 	
+	public boolean isChecked(Role role) {
+		Collection<Role> selection = selectionContext.getSelection("roleSelection");
+		boolean checked = selection != null && selection.contains(role);
+		return checked;
+	}
+	
 	@Override
 	protected RoleListObject createRowObject(Role role) {
 		RoleListObject listObject = new RoleListObject(role);
 		listObject.setSelected(isSelected(role));
+		listObject.setChecked(isChecked(role));
 		return listObject;
 	}
 	

@@ -42,6 +42,7 @@
 					onclick="showProgress('Nam', '#{listenerWizard.title}', 'Re-rendering current page...');"
 					oncomplete="hideProgress();"
 					render="listenerWizard"
+					padding="2px 4px"
 					offset="true" />
 				
 				<!-- populate button -->
@@ -59,6 +60,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- back button -->
@@ -68,8 +70,8 @@
 					mode="ajax"
 					execute="@this"
 					id="listenerWizardPreviousButton"
-					icon="/icons/arrow/PreviousPage16.gif"
-					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
 					rendered="#{listenerWizard.backVisible}"
 					enabled="#{listenerWizard.backEnabled}"
 					manager="#{listenerWizard}"
@@ -77,6 +79,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Listener', 'Moving to previous section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- next button -->
@@ -86,8 +89,8 @@
 					mode="ajax"
 					execute="@form"
 					id="listenerWizardNextButton"
-					icon="/icons/arrow/NextPage16.gif"
-					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
 					rendered="#{listenerWizard.nextVisible}"
 					enabled="#{listenerWizard.nextEnabled}"
 					manager="#{listenerWizard}"
@@ -95,6 +98,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Listener', 'Moving to next section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- finish button -->
@@ -104,8 +108,8 @@
 					mode="ajax"
 					execute="@form"
 					id="listenerWizardFinishButton"
-					icon="/icons/common/Default16.gif"
-					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
 					rendered="#{listenerWizard.finishVisible}"
 					enabled="#{listenerWizard.finishEnabled}"
 					manager="#{listenerWizard}"
@@ -113,6 +117,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Listener', 'Validating and submitting new Listener...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
+					padding="2px 8px"
 					offset="true" />
 				
 				<!-- cancel button -->
@@ -127,6 +132,7 @@
 					action="cancel"
 					onclick="setCursorWait(this); showProgress('Nam', 'Listener Management', 'Cancelling creation of Listener...');"
 					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px"
 					offset="true" />
 			</aries:toolbarGroup>
 		</aries:controlbar>

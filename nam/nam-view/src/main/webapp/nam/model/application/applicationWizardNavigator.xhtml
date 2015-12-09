@@ -10,43 +10,29 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:panel
-		width="auto"
-		margin="0px"
-		backgroundColor="inherit">
+	<div class="">
+		
+		<c:set var="section" value="#{applicationWizard.section}" /> 
+		<c:set var="backgroundColor" value="#cfe7f5" /> 
 
-		<aries:formPane
+		<aries:indentPane
 			width="auto"
-			borderWidth="1px"
-			borderColor="#aaa"
-			columnClass="formColumnAlignLeft"
-			backgroundColor="white">
+			height="auto"
+			style="padding: 6px 10px; font-size: 13px; font-weight: bold; background-color: inherit; cursor: pointer">
+  		#{applicationWizard.newMode ? 'Steps' : 'Sections'}
+		</aries:indentPane>
+		
+		<ui:repeat
+			var="page" 
+			value="#{applicationWizard.pages}">
 			
-			<c:set var="section" value="#{applicationWizard.section}" /> 
-			<c:set var="backgroundColor" value="#cfe7f5" /> 
-
-			<aries:indentPane
-				width="#{helper.wizard_leftSection_width}"
-				height="auto"
-				padding="6px"
-				paddingLeft="12px"
-				fontSize="14"
-				fontWeight="bold"
-				backgroundColor="#fff">
-	  		#{applicationWizard.newMode ? 'Steps' : 'Sections'}
-			</aries:indentPane>
-			
-			<ui:repeat
-				var="page" 
-				value="#{applicationWizard.pages}">
-				
-				<aries:wizardStep
-					step="#{section}"
-					value="#{page.name}"
-					enabled="#{page.enabled}"
-					onclick="setCursorWait(this); showApplicationWizardPage('#{page.name}')">
-				</aries:wizardStep>
-			</ui:repeat>
-		</aries:formPane>
-	</aries:panel>
+			<aries:wizardStep
+				step="#{section}"
+				label="#{page.name}"
+				icon="#{page.icon}"
+				enabled="#{page.enabled}"
+				onclick="setCursorWait(this); showApplicationWizardPage('#{page.name}')"
+				styleClass="wizardMenuStep" />
+		</ui:repeat>
+	</div>
 </ui:composition>

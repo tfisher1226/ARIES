@@ -73,10 +73,17 @@ public class RoleTypeListManager extends AbstractDomainListManager<RoleType, Rol
 		return selected;
 	}
 	
+	public boolean isChecked(RoleType roleType) {
+		Collection<RoleType> selection = selectionContext.getSelection("roleTypeSelection");
+		boolean checked = selection != null && selection.contains(roleType);
+		return checked;
+	}
+	
 	@Override
 	protected RoleTypeListObject createRowObject(RoleType roleType) {
 		RoleTypeListObject listObject = new RoleTypeListObject(roleType);
 		listObject.setSelected(isSelected(roleType));
+		listObject.setChecked(isChecked(roleType));
 		return listObject;
 	}
 	

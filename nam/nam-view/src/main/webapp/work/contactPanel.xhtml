@@ -1,0 +1,282 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!--  
+	xmlns:gmaps4jsf="http://code.google.com/p/gmaps4jsf/">
+	<ui:include src="mapDialog.xhtml" />
+	-->
+
+	<c:set var="fontFamily" value="Helvetica" />
+	<c:set var="fontWeight" value="normal" />
+
+	<aries:formPane
+		columns="3"
+		columnClasses="widthAuto, width100pct, widthAuto"
+		style="width: 100%; margin: 0px auto; padding-top: 4px; background-color: inherit">
+		
+		<h:panelGroup layout="block">
+			<aries:label fontSize="24" value="Contact Us" />
+			<ui:include src="contactMenu.xhtml" />
+		</h:panelGroup>			
+
+		<c:set var="fontFamily" value="Tahoma" />
+		<c:set var="fontWeight" value="normal" />
+				
+		<aries:layerPane 
+			id="layoutPane"
+			activeItem="#{selectionContext.currentTarget}">
+
+			<aries:layeredPane name="askAboutApproach">
+				<div style="background-color: #eef">
+					<aries:spacer height="0" />
+					<aries:label fontSize="16" value="askAboutOurApproach" />
+				</div>
+			</aries:layeredPane>
+
+			<aries:layeredPane name="requestEstimate">
+				<div style="background-color: #eef">
+					<aries:spacer height="0" />
+					<aries:label fontSize="16" value="requestEstimate" />
+				</div>
+			</aries:layeredPane>
+
+			<aries:layeredPane name="scheduleDemonstration">
+				<div style="background-color: #eef">
+					<aries:spacer height="0" />
+					<aries:label fontSize="16" value="scheduleDemonstration" />
+				</div>
+			</aries:layeredPane>
+		</aries:layerPane>
+	</aries:formPane>
+	
+	
+	<aries:formPane
+		width="100%"
+		height="auto"
+		columns="3"
+		columnClasses="widthAuto, width100pct, widthAuto"
+		backgroundColor="inherit"
+		style="">
+		
+		<h:panelGroup layout="block" style="width: 220px; display: block; margin: 0px; margin-top: 2px; background-color: inherit">
+			<div style="display: block; width: 100%; height: 10px; margin: 0px 0px 12px 0px; background-color: #ccccff"/>
+
+			<aries:spacer height="2" />
+			<aries:label fontSize="18" fontWeight="normal" value="Ask about our approach" onclick="showAskAboutApproachSection()" />
+
+			<aries:spacer height="16" />
+			<aries:label fontSize="18" fontWeight="normal" value="Request an estimate" onclick="showRequestEstimateSection()" />
+
+			<aries:spacer height="16" />
+			<aries:label fontSize="18" fontWeight="normal" value="Schedule a demonstration" onclick="showScheduleDemonstrationSection()" />
+
+			<aries:spacer height="20" />
+			<aries:spacer height="16" />
+			<aries:label fontSize="16" fontWeight="bold" value="Request an Estimate" />
+			<aries:spacer height="6" />
+			<aries:p fontSize="13">
+				To request an estimate, in terms of time and cost, you may use this form to provide us with basic information about your project. 
+	
+				<aries:spacer height="10" />
+				We will E-mail you to schedule a free phone consultation so we can learn more about 
+				your requirements and provide you with an estimate.
+				
+				<!--
+				If you would like to demo the Easy Tithe system, submit your email address in the box below 
+				and you will immediately receive login instructions, links to live examples, and current specials via email. 
+				 -->
+			</aries:p>
+			
+			<aries:spacer height="14" />
+			<aries:label fontSize="16" fontWeight="bold" textColor="#{userSkin.headerTextColor}" value="Schedule a demonstration" />
+			<aries:spacer height="6" />
+			<aries:p fontSize="14">
+				To schedule a demonstration of how fast and thorough our approach for creating different applications, 
+				you may use this form to describe. 
+				
+				<!--
+				If you would like to demo the Easy Tithe system, submit your email address in the box below 
+				and you will immediately receive login instructions, links to live examples, and current specials via email. 
+				 -->
+			</aries:p>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" style="display: block; margin-left: 20px; background-color: inherit">
+			<div style="display: block; width: 100%; height: 10px; margin: 0px 0px 12px 0px; background-color: #ccccff"/>
+
+			<aries:h2 fontWeight="normal" value="Contact us" />
+			<aries:p fontSize="15">
+				To learn more about how our automation process can contribute to your organization, 
+				or to send requests or comments, please feel free to send
+				us message(s) here. 
+			</aries:p>
+
+			<aries:spacer height="10" />
+			<aries:p fontSize="15">
+				We respect our client's desires to maintain privacy and confidentiality. 
+				We do not share your information with anyone. 
+				<!--will exercise nondisclosure agreements when appropriate-->
+
+				<aries:spacer height="6" />
+				We respond within 24 hours.
+			</aries:p>
+			
+			<a4j:region id="messageRegion">
+			<a4j:outputPanel id="messagePane">
+				<ui:param name="width" value="100%" />
+				<ui:param name="labelWidth" value="110" />
+
+				<aries:messages id="#{section}Messages" module="contact" />
+								
+				<aries:spacer height="14" />
+				<aries:h3 fontWeight="normal" textColor="#007abb" value="Contact information" />
+			
+				<aries:inputText id="#{section}FirstName" label="First name" value="#{notificationManager.firstName}" />
+				
+				<aries:spacer height="8" />
+				<aries:inputText id="#{section}LastName" label="Last name" value="#{notificationManager.lastName}" />
+			
+				<aries:spacer height="8" />
+				<aries:inputText id="#{section}Organization" label="Organization" value="#{notificationManager.organization}" />
+
+				<aries:spacer height="8" />
+				<aries:inputText id="#{section}EmailAddress" label="E-mail address" value="#{notificationManager.emailAddress}" />
+			
+				<aries:spacer height="10" />
+				<aries:h3 fontWeight="normal" textColor="#007abb" value="Message text" />
+			
+				<h:inputTextarea id="#{section}MessageText" value="#{notificationManager.messageText}" styleClass="formInput2" style="width: 100%; height: 120px; padding: 2px; border-radius: 5px; ">
+				</h:inputTextarea>
+
+				<aries:spacer height="14"/>
+				<aries:toolbar type="plain">
+					<aries:toolbarGroup location="left">
+						<aries:button
+							mode="ajax"
+							label="Send Message"
+							id="#{section}SendMessageButton"
+							icon="/icons/message/SendMessage24.gif"
+							execute="messageRegion"
+							render="messagePane"
+							immediate="false"
+							bypassUpdates="false"
+							limitRender="true"
+							manager="#{notificationManager}"
+							action="sendMessage"
+							onclick="setCursorWait(this); showProgress('Messaging Operations', 'E-mail Messenger', 'Sending message...');"
+							oncomplete="setCursorDefault(event.source); if (#{!messages.isMessagesExist('contact')}) {popupAlert('Messaging Operations', 'E-mail Messenger', 'Your message has been sent.')}; hideProgress(); #{oncomplete}"
+							offset="true" />
+
+						<aries:spacer width="6" />
+						<aries:button
+							mode="ajax"
+							label="Clear"
+							id="#{section}ClearButton"
+							execute="messageRegion"
+							render="messagePane"
+							immediate="false"
+							bypassUpdates="false"
+							limitRender="true"
+							manager="#{notificationManager}"
+							action="clear"
+							onmousedown="setCursorWait(this)"
+							oncomplete="setCursorDefault(event.source)"
+							offset="true" />
+						
+						<!--  
+						<a4j:commandLink 
+							value="Refresh"
+							execute="messageRegion"
+							manager="#{globals.doNothing}"
+							bypassUpdates="true"
+							onmousedown="setCursorWait(this)"
+							onbegin=""
+							oncomplete="setCursorDefault(this); alert('#{notificationManager.messageText}')">
+							<f:ajax render="ECOSMessageCompositionPane" />
+						</a4j:commandLink>
+						-->			
+					</aries:toolbarGroup>
+				</aries:toolbar>
+				</a4j:outputPanel>
+			</a4j:region>
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" 
+			style="width: 226px; margin-left: 20px; background-color: inherit">
+			
+			<div style="display: block; width: 100%; height: 10px; margin: 0px 0px 10px 0px; background-color: #ccccff"/>
+			
+			<aries:spacer height="10" />
+			<h:panelGroup layout="block" style="width: auto; height: auto; padding: 12px 12px; border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: #fafaff">
+				<div class="text16" style="font-weight: normal; text-decoration: none; color: #000099">
+				Our Address
+				</div>
+	
+				<div class="vspace3"/>
+				<div class="text13" style="display: block; font-weight: normal; color: #000">
+				<br/>Evergreen Computational Sciences
+				<br/>1455 San Marino Ave, suite B
+				<br/>San Marino, CA 91108
+				</div>
+
+				<div class="text13" style="display: block; font-weight: normal; color: #000">
+				<br/><b size="-1">Phone:</b> (213) 379-3806
+				<br/><b size="-1">Email:</b> <a href="mailto:info@ecos-net.com?subject=ECOS-NET Information Request">info@ecos-net.com</a>
+				</div>
+
+				<aries:spacer height="20"/>
+				
+				<h:panelGroup
+					id="mapPanel"
+					layout="block"
+					style="width: 200px; height: 200px; border: 1px solid #ccc">
+					
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" style="width: auto; background-color: inherit">
+					<div class="vspace6"/>
+					
+					<aries:link 
+						fontSize="13" 
+						value="[click to expand]" 
+						onclick="showMap()">
+						<aries:tooltip value="Show expanded map in new window" />
+					</aries:link>
+
+					<!--  
+					<h:panelGrid layout="block" columns="2" style="">
+						<rich:inputNumberSlider
+							id="mapZoomSlider" 
+							showInput="false" 
+							minValue="1" 
+							maxValue="18" 
+							value="10" 
+							onchange="show(#{rich.element('mapZoomSlider')}); map.setZoom(this.value)" 
+							style="width: auto">
+							<aries:tooltip value="Drag to Zoom" />
+						</rich:inputNumberSlider>
+					</h:panelGrid>
+
+					<a4j:commandLink 
+						execute="@this"
+						onbegin=""
+						oncomplete="var element = #{rich:element('gMap')}; element.style.display = 'block'; forceRedraw(element);" 
+						render="mapPanel">
+						<div class="text12 link">[click to expand]</div>
+						<aries:tooltip value="Show expanded map in new window" />
+					</a4j:commandLink>
+					-->
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+	</aries:formPane>
+</ui:composition>

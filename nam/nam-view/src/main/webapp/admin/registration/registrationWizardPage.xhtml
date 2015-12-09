@@ -48,7 +48,7 @@
 	
 	<!-- navigator -->
 	<ui:define name="navigator">
-		<span class="navigator">
+		<span class="navigator wizardNavigator">
 			<ui:include src="registrationWizardNavigator.xhtml" />
 		</span>
 	</ui:define>
@@ -67,7 +67,9 @@
 		<span class="wizardTitle">
 			<ui:include src="/common/wizardTitle.xhtml">
 				<ui:param name="manager" value="#{registrationPageManager}" />
+				<!--  
 				<ui:param name="menu" value="/admin/registration/registrationWizardMenu.xhtml" />
+				-->
 			</ui:include>
 		</span>
 	</ui:define>
@@ -77,32 +79,35 @@
 		<span class="wizardMessages">
 			<ui:include src="/common/wizardMessages.xhtml">
 				<ui:param name="domain" value="registrationWizard" />
-				<ui:param name="message" value="Enter Service #{registrationWizard.section}" />
+				<ui:param name="message" value="Enter Registration #{registrationWizard.section}" />
 			</ui:include>
 		</span>
 	</ui:define>
 	
 	<!-- content -->
 	<ui:define name="content">
-		<div class="content"
-			id="registrationWizard">
+		<div class="content">
+	
+			<div id="applicationWizard"
+				class="wizardContent2">
 			
 			<aries:formPane
-				columns="2">
+				columns="2"
+				columnClass="formColumnAlignTop"
+				style="margin: 0px; background-color: inherit">
 				
+				<!-- wizard content -->
 				<aries:panel
-					width="#{helper.wizard_middleSection_width - 16}"
+					width="#{helper.wizard_middleSection_width + 8}"
 					height="#{helper.wizard_middleSection_height}"
-					borderWidth="1px"
-					borderColor="#{userSkin.borderColor}"
-					backgroundColor="white">
+					style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
 					
-					<!-- panel -->
+					<!-- wizard panel -->
 					<ui:include src="registrationRecord_#{registrationWizard.section}Section.xhtml">
 						<ui:param name="section" value="registration" />
 					</ui:include>
 					
-					<!-- control -->
+					<!-- wizard control -->
 					<ui:include src="registrationWizardControl.xhtml" />
 				</aries:panel>
 				
@@ -113,6 +118,7 @@
 					<ui:param name="section" value="#{registrationWizard.section}" />
 				</ui:include>
 			</aries:formPane>
+		</div>
 		</div>
 	</ui:define>
 </ui:composition>

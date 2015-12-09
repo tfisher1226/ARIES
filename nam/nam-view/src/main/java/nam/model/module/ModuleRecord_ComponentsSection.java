@@ -34,6 +34,11 @@ public class ModuleRecord_ComponentsSection extends AbstractWizardPage<Module> i
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Component16.gif";
+	}
+	
+	@Override
 	public void initialize(Module module) {
 		setEnabled(true);
 		setBackEnabled(true);

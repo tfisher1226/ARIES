@@ -221,6 +221,7 @@ public class ElementRecordSectionBuilder extends AbstractBeanBuilder {
 		modelOperation.addParameter(createParameter(elementClassName, elementNameUncapped));
 		
 		Buf buf = new Buf();
+		buf.putLine2("set"+elementClassName+"("+elementNameUncapped+");");
 		buf.putLine2("setEnabled(true);");
 		buf.putLine2("setBackEnabled("+backEnabled+");");
 		buf.putLine2("setNextEnabled(true);");
@@ -229,7 +230,7 @@ public class ElementRecordSectionBuilder extends AbstractBeanBuilder {
 			buf.putLine2("setPopulateVisible(true);");
 		if (populateEnabled)
 			buf.putLine2("setPopulateEnabled(true);");
-		buf.putLine2("set"+elementClassName+"("+elementNameUncapped+");");
+		buf.putLine2("super.initialize("+elementNameUncapped+");");
 
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;

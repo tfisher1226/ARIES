@@ -3,15 +3,16 @@ package admin.role;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.Role;
 import admin.util.RoleUtil;
@@ -28,6 +29,9 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 	
 	@Inject
 	private RoleDataManager roleDataManager;
+	
+	@Inject
+	private RoleInfoManager roleInfoManager;
 	
 	@Inject
 	private RoleListManager roleListManager;
@@ -50,12 +54,11 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 	
 	public RolePageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("role");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -68,7 +71,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -77,7 +80,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 	}
 	
 	public void refreshMembers(String scope) {
-		roleListManager.refresh();
+		//nothing for now
 	}
 
 	public String getRoleListPage() {
@@ -102,6 +105,32 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 
 	public String getRoleManagementPage() {
 		return "/admin/role/roleManagementPage.xhtml";
+	}
+	
+	public void handleRoleSelected(@Observes @Selected Role role) {
+		selectionContext.setSelection("role",  role);
+		roleInfoManager.setRecord(role);
+	}
+	
+	public void handleRoleUnselected(@Observes @Unselected Role role) {
+		selectionContext.unsetSelection("role",  role);
+		roleInfoManager.unsetRecord(role);
+	}
+	
+	public void handleRoleChecked() {
+		String scope = "roleSelection";
+		RoleListObject listObject = roleListManager.getSelection();
+		Role role = selectionContext.getSelection("role");
+		boolean checked = roleListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			roleInfoManager.setRecord(role);
+			selectionContext.setSelection(scope,  role);
+		} else {
+			roleInfoManager.unsetRecord(role);
+			selectionContext.unsetSelection(scope,  role);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeRoleListPage() {
@@ -151,7 +180,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 	
 	public String initializeRoleRecordPage() {
 		Role role = selectionContext.getSelection("role");
-		String roleName = role.getName();
+		String roleName = RoleUtil.getLabel(role);
 		
 		String pageLevelKey = "roleRecord";
 		clearBreadcrumbs(pageLevelKey);
@@ -184,9 +213,6 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		addBreadcrumb(pageLevelKey, "Roles", "showRoleManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Role", "showRoleWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showRoleWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showRoleWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showRoleWizardPage('Documentation')");
 		
 		roleIdentificationSection.setOwner("roleWizard");
 		roleConfigurationSection.setOwner("roleWizard");
@@ -203,7 +229,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -211,7 +237,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		setPageTitle(getRoleLabel(role));
 		setPageIcon("/icons/nam/Role16.gif");
 		setSectionTitle("Role Overview");
-		String roleName = role.getName();
+		String roleName = RoleUtil.getLabel(role);
 		roleWizard.setNewMode(false);
 		
 		String pageLevelKey = "role";
@@ -223,10 +249,6 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		addBreadcrumb(pageLevelKey, "Roles", "showRoleManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(roleName, "showRoleWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showRoleWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showRoleWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showRoleWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showRoleWizardPage('Documentation')");
 
 		roleOverviewSection.setOwner("roleWizard");
 		roleIdentificationSection.setOwner("roleWizard");
@@ -245,7 +267,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -264,15 +286,23 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 
 	public void initializeDefaultView() {
+		setPageTitle("Roles");
+		setPageIcon("/icons/nam/Role16.gif");
 		setSectionType("role");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Roles");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "roleOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Roles", "showRoleManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeRoleSummaryView(Role role) {
@@ -295,7 +325,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 		String label = "Role";
 		String name = RoleUtil.getLabel(role);
 		if (name == null && role.getName() != null)
-			name = NameUtil.capName(role.getName());
+			name = RoleUtil.getLabel(role);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -308,7 +338,7 @@ public class RolePageManager extends AbstractPageManager<Role> implements Serial
 	}
 	
 	protected void updateState(Role role) {
-		String roleName = NameUtil.capName(role.getName());
+		String roleName = RoleUtil.getLabel(role);
 		setSectionTitle(roleName + " Role");
 	}
 	

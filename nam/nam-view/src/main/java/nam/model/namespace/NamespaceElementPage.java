@@ -21,7 +21,7 @@ public class NamespaceElementPage extends AbstractWizardPage<Namespace> implemen
 
 
 	public NamespaceElementPage(String owner) {
-		setTitle("Select Elements.");
+		//setTitle("Select Elements.");
 		//initialize(namespace);
 		setOwner(owner);
 	}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Persistence section
+	*******************
+ -->
+	
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+	
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/nam/nam-common-1.0.aries" />
+	<import file="/nam/nam-operation-1.0.aries" />
+	<import file="/nam/nam-information-1.0.aries" />
+
+	<domain>org.aries</domain>
+	<name>nam</name>
+
+	<namespace 
+        prefix="nam" 
+        name="nam-model" 
+        uri="http://nam/model">
+
+		<!--
+			Persistence element
+			*******************
+		 -->
+
+		<element name="Persistence" root="true" hierarchical="true">
+			<listItem name="imports" type="nam:Import" />
+			<item name="domain" type="xs:string" useForEquals="true" />
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Resource</itemType>
+				<itemType>Provider</itemType>
+				<itemType>Adapter</itemType>
+				<itemType>Source</itemType>
+				<itemType>Unit</itemType>
+				<itemType>Cache</itemType>
+				<itemType>Repository</itemType>
+			</listItem>
+			<item name="imported" type="xs:boolean" default="false" />
+			<item name="included" type="xs:boolean" />
+			<item name="exposed" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+
+
+		<!--
+			Repository element
+			******************
+		 -->
+
+		<element name="Repository" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="domain" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<listItem name="properties" type="Property" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Unit</itemType>
+			</listItem>
+		</element>
+
+
+		<!--
+			Unit element
+			************
+		 -->
+
+		<element name="Unit" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="namespace" type="Namespace" useForEquals="true" />
+			<item name="source" type="Source" />
+			<item name="adapter" type="Adapter" />
+			<item name="transacted" type="xs:boolean" default="true" />
+			<item name="elements" type="Elements" />
+			<listItem name="queries" type="Query" />
+			<listItem name="properties" type="Property" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Include</itemType>
+				<itemType>Import</itemType>
+			</listItem>
+		</element>
+		
+		
+		<!--
+			Source element
+			**************
+		 -->
+
+		<element name="Source" extends="Provider" root="true">
+			<item name="driverClass" type="xs:string" />
+			<item name="maxActive" type="xs:integer" />
+			<item name="maxIdle" type="xs:integer" />
+			<item name="maxWait" type="xs:integer" />
+			<item name="adapter" type="Adapter" />
+		</element>
+
+
+		<!--
+			Entity element
+			**************
+		 -->
+
+		<element name="Entity" extends="Provider" root="true">
+			<item name="driverClass" type="xs:string" />
+			<item name="maxActive" type="xs:integer" />
+			<item name="maxIdle" type="xs:integer" />
+			<item name="maxWait" type="xs:integer" />
+			<item name="adapter" type="Adapter" />
+		</element>
+		
+	</namespace>
+</information>
+

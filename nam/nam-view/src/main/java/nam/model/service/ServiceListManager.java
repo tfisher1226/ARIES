@@ -92,10 +92,17 @@ public class ServiceListManager extends AbstractDomainListManager<Service, Servi
 		return selected;
 	}
 	
+	public boolean isChecked(Service service) {
+		Collection<Service> selection = selectionContext.getSelection("serviceSelection");
+		boolean checked = selection != null && selection.contains(service);
+		return checked;
+	}
+	
 	@Override
 	protected ServiceListObject createRowObject(Service service) {
 		ServiceListObject listObject = new ServiceListObject(service);
 		listObject.setSelected(isSelected(service));
+		listObject.setChecked(isChecked(service));
 		return listObject;
 	}
 	

@@ -32,7 +32,7 @@ public class ProviderConverter extends AbstractConverter implements Converter, S
 		if (value == null)
 			return null;
 		Provider provider = (Provider) value;
-		return ProviderUtil.toString(provider);
+		return ProviderUtil.getLabel(provider);
 	}
 	
 }

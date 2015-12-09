@@ -6,10 +6,12 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<aries:toolbar
-		type="table"
+	<a4j:outputPanel
 		id="networkNameListToolbar">
 		
+		<aries:toolbar
+			type="table">
+			
 		<aries:toolbarGroup
 			location="left">
 		
@@ -18,44 +20,13 @@
 				label="New Network..."
 				icon="/icons/common/New16.gif"
 				iconDisabled="/icons/common/NewDisabled16.gif"
-				tooltip="Create new Network Record"
 				enabled="#{securityGuard.canCreate('network')}"
 				mode="client"
 				execute="@none"
 				onmouseup="processNewElement(event, 'Network')"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 1px 2px 2px"
+					style="margin: 2px"
 				offset="false" />
-			
-			<!--  
-			<aries:toolButton
-				id="networkNameListEditButton"
-				value="Edit Network..."
-				icon="/icons/common/Edit16.gif"
-				iconDisabled="/icons/common/EditDisabled16.gif"
-				tooltip="Open selected Network record for edit..."
-				enabled="#{networkListManager.hasSelection() and securityGuard.canUpdate('network')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processEditElement(event, 'Network')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="false" />
-			
-			<aries:toolButton
-				id="networkNameListRemoveButton"
-				value="Remove Network..."
-				icon="/icons/common/Remove16.gif"
-				iconDisabled="/icons/common/RemoveDisabled16.gif"
-				tooltip="Remove selected Network record from system..."
-				enabled="#{networkListManager.hasSelection() and securityGuard.canDelete('network')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processRemoveElement(event, 'Network')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="true" />
-				-->
 		</aries:toolbarGroup>
 		
 		<aries:toolbarGroup
@@ -71,8 +42,9 @@
 				execute="@none"
 				onmouseup="refreshNetworkList(event)"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 2px 2px 1px"
+					style="margin: 2px"
 				offset="false" />
 		</aries:toolbarGroup>
 	</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

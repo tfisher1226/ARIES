@@ -20,6 +20,8 @@
 			value="#{timeoutListManager.dataModel}"
 			rowCount="#{timeoutListManager.dataModel.rowCount}"
 			visible="#{timeoutListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
 			onrowmousedown="processTimeoutListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processTimeoutListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"

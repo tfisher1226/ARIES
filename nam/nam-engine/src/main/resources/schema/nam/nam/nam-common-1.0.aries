@@ -14,25 +14,6 @@
         name="nam-model" 
         uri="http://nam/model">
 
-		<enumeration name="HashType">
-			<literal name="MD5" label="none" />
-			<literal name="SHA" label="none" />
-		</enumeration>
-
-		<enumeration name="CascadeType">
-			<literal name="ALL" label="none" />
-			<literal name="MERGE" label="none" />
-			<literal name="DETACH" label="none" />
-			<literal name="REFRESH" label="none" />
-			<literal name="PERSIST" label="none" />
-			<literal name="REMOVE" label="none" />
-		</enumeration>
-
-		<enumeration name="FetchType">
-			<literal name="LAZY" label="lazy" />
-			<literal name="EAGER" label="eager" />
-		</enumeration>
-
 
 		<element name="Annotation">
 			<item name="source" type="xs:string" />
@@ -257,6 +238,51 @@
 			<item name="name" type="xs:string" useForEquals="true" />
 			<item name="package" type="xs:string" useForEquals="true" />
 		</element>
+
+
+		<element name="Transacted">
+			<item name="local" type="xs:boolean" />
+			<item name="use" type="TransactionUsage" />
+			<item name="scope" type="TransactionScope" />
+		</element>
+		
+		<enumeration name="TransactionUsage">
+			<literal name="MANDATORY" label="mandatory" />
+			<literal name="SUPPORTED" label="supported" />
+			<literal name="REQUIRED" label="required" />
+			<literal name="REQUIRES_NEW" label="requiresNew" />
+		</enumeration>
+		
+		<enumeration name="TransactionScope">
+			<literal name="EVENT" label="event" />
+			<literal name="METHOD" label="method" />
+			<literal name="THREAD" label="thread" />
+			<literal name="PROCESS" label="process" />
+			<literal name="CONVERSATION" label="conversation" />
+		</enumeration>
+		
+
+
+		<enumeration name="HashType">
+			<literal name="MD5" label="none" />
+			<literal name="SHA" label="none" />
+		</enumeration>
+
+
+		<enumeration name="CascadeType">
+			<literal name="ALL" label="none" />
+			<literal name="MERGE" label="none" />
+			<literal name="DETACH" label="none" />
+			<literal name="REFRESH" label="none" />
+			<literal name="PERSIST" label="none" />
+			<literal name="REMOVE" label="none" />
+		</enumeration>
+
+
+		<enumeration name="FetchType">
+			<literal name="LAZY" label="lazy" />
+			<literal name="EAGER" label="eager" />
+		</enumeration>
 	</namespace>
 </information>
 

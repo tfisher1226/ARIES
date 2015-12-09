@@ -1,0 +1,110 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel
+		id="contactView">
+		
+		<aries:layerPane 
+			id="contactViewer"
+			activeItem="#{selectionContext.currentTarget}">
+	
+			<aries:layeredPane name="askAboutProcess">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Ask About Our Process" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Construction" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Architecture and Implementation" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Big-Data Management" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Responsive User-Interfaces" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="E-Commerce" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Maintenance" />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="requestEstimate">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Request an Estimate" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+	
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="requestTraining">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Request On-site Training" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+	
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="scheduleDemonstration">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Schedule Demonstration" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+	
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+		</aries:layerPane>
+	</a4j:outputPanel>
+</ui:composition>

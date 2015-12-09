@@ -1,5 +1,7 @@
 package admin.user;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -11,20 +13,17 @@ import admin.util.PermissionUtil;
 
 @SessionScoped
 @Named("userPermissionsSection")
-public class UserRecord_PermissionsSection extends AbstractWizardPage<User> {
-
-	//private static Log log = LogFactory.getLog(UserSetupPage.class);
+public class UserRecord_PermissionsSection extends AbstractWizardPage<User> implements Serializable {
 	
 	private User user;
 
 	
 	public UserRecord_PermissionsSection() {
-		//setTitle("Specify user information.");
 		setName("Permissions");
 		setUrl("permissions");
-		//setOwner(owner);
 	}
 
+	
 	public User getUser() {
 		return user;
 	}
@@ -33,13 +32,17 @@ public class UserRecord_PermissionsSection extends AbstractWizardPage<User> {
 		this.user = user;
 	}
 
+	@Override
 	public void initialize(User user) {
-		setBackEnabled(false);
+		setUser(user);
+		setEnabled(true);
+		setBackEnabled(true);
 		setNextEnabled(true);
 		setFinishEnabled(false);
-		setUser(user);
+		super.initialize(user);
 	}
 	
+	@Override
 	public void validate() {
 		if (user == null) {
 			validator.missing("User");

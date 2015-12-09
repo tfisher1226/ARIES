@@ -41,6 +41,16 @@ public class UserListObject extends AbstractListObject<User> implements Comparab
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/User16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(user);
 	}

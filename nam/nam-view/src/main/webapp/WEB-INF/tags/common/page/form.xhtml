@@ -7,15 +7,9 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<c:if test="#{empty id}">
-			<c:set var="id" value="#{section}Form_#{globals.nextId()}" /> 
-		</c:if>
-
-		<h:form 
-			id="#{id}" 
-			style="">
-			<ui:insert />
-		</h:form>
-	</aries:tag>
+	<h:form 
+		id="#{id}" 
+		style="">
+		<ui:insert />
+	</h:form>
 </ui:composition>

@@ -34,7 +34,6 @@
 			id="collapseHelpButton"
 			icon="/icons/common/UnSelect16.gif"
 			tooltip="Hide Help Section"
-			padding="6"
 			mode="ajax"
 			execute="@this"
 			immediate="true"
@@ -44,7 +43,7 @@
 			action="hideHelpSection"
 			onclick="setCursorWait(source); lockScreen()"
 			oncomplete="location.reload(true)"
-			style="margin-top: #{marginTop}; margin-left: 10px; margin-right: #{marginRight};"
+			style="margin-top: #{marginTop}; margin-left: 10px; margin-right: #{marginRight}; padding: 4px; background-color: inherit"
 			offset="false">
 			<a4j:attachQueue requestDelay="0" />
 		</aries:dialogButton>
@@ -60,7 +59,6 @@
 			id="expandHelpButton"
 			icon="/icons/common/Select16.gif"
 			tooltip="Display Help Section"
-			padding="6"
 			mode="ajax"
 			execute="@this"
 			immediate="true"
@@ -70,7 +68,7 @@
 			action="showHelpSection"
 			onclick="setCursorWait(source); lockScreen()"
 			oncomplete="location.reload(true)"
-			style="margin-top: #{marginTop}; margin-left: 10px; margin-right: #{marginRight};"
+			style="margin-top: #{marginTop}; margin-left: 10px; margin-right: #{marginRight}; padding: 4px"
 			offset="false">
 			<a4j:attachQueue requestDelay="0" />
 		</aries:dialogButton>

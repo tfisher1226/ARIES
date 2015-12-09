@@ -52,6 +52,7 @@
 .dialogButtonDisabled,
 .smallDialogButton,
 .smallDialogButtonDisabled {
+	border: 1px solid #bbb !important;
 	background-color: #{richSkin.generalBackgroundColor};
 	background-image: url('/aries/images/button-background.gif');
 	background-color: red;

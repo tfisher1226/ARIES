@@ -11,7 +11,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
 		<!-- BORDER-WIDTH 
 		<c:if test="#{empty borderWidth}">
 			<ui:param name="borderWidth" value="1px" /> 
@@ -30,13 +29,10 @@
 		</c:if>
 		-->
 
-		<aries:init/>
 		<h:panelGroup 
 			layout="block"
-			onclickXX="alert('#{borderSettings}')"
 			style="border: 1px solid #{userSkin.borderColor}; background-color: inherit">
 			
 			<ui:insert/>
 		</h:panelGroup>
-	</aries:tag>
 </ui:composition>

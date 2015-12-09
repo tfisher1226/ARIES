@@ -354,8 +354,6 @@ public class ModelBeanClassBuilder extends AbstractBeanBuilder {
 	protected void initializeAttributeAnnotations(ModelClass modelClass, ModelAttribute modelAttribute, Element element, Attribute attribute) throws Exception {
 		List<ModelAnnotation> annotations = modelAttribute.getAnnotations();
 		if (attribute.getName().equals("ref")) {
-//			if (element.getName().equalsIgnoreCase("EJBTransport"))
-//				System.out.println();
 			//if (!CodeUtil.hasField(element, "ref", true)) {
 			if (element.getExtends() == null) {
 				//only add this for base level superTypes
@@ -379,6 +377,11 @@ public class ModelBeanClassBuilder extends AbstractBeanBuilder {
 //		if (reference.getName().equalsIgnoreCase("informationsAndPersistencesAndServices"))
 //			System.out.println();
 		
+//		if (element.getName().equalsIgnoreCase("User"))
+//			System.out.println();
+//		if (reference.getName().equalsIgnoreCase("permissions"))
+//			System.out.println();
+
 		List<String> acceptedTypes = modelReference.getAcceptedTypes();
 		if (acceptedTypes != null && !acceptedTypes.isEmpty()) {
 			annotations.add(AnnotationUtil.createXmlElements(modelClass, modelReference));

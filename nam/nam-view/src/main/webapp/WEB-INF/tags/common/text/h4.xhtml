@@ -8,7 +8,6 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag param="fontSize, fontWeight, fontStyle, fontFamily, textColor">
 		<c:set var="paddingBottom" value="6px"/> 
 		
 		<c:if test="#{empty fontSize}">
@@ -47,5 +46,4 @@
 
 			<span style="#{textSettings}">#{value}</span>
 		</h:panelGroup>
-	</aries:tag>
 </ui:composition>

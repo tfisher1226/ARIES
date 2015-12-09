@@ -31,8 +31,7 @@ import org.aries.adapter.BooleanAdapter;
     "includesAndImports"
 })
 @XmlRootElement(name = "unit", namespace = "http://nam/model")
-public class Unit implements Serializable
-{
+public class Unit implements Comparable<Object>, Serializable {
 
     private final static long serialVersionUID = 1L;
     
@@ -319,4 +318,54 @@ public class Unit implements Serializable
         this.name = value;
     }
 
+    
+	@Override
+	public int compareTo(Object object) {
+		if (object.getClass().isAssignableFrom(this.getClass())) {
+			Unit other = (Unit) object;
+			int status = compare(name, other.name);
+			if (status != 0)
+				return status;
+		} else {
+			String name1 = this.getClass().getName();
+			String name2 = object.getClass().getName();
+			int status = compare(name1, name2);
+			if (status != 0)
+				return status;
+		}
+		return 0;
+	}
+	
+	protected <T extends Comparable<T>> int compare(T value1, T value2) {
+		if (value1 == null && value2 == null) return 0;
+		if (value1 != null && value2 == null) return 1;
+		if (value1 == null && value2 != null) return -1;
+		int status = value1.compareTo(value2);
+		return status;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == null)
+			return false;
+		if (!object.getClass().isAssignableFrom(this.getClass()))
+			return false;
+		Unit other = (Unit) object;
+		int status = compareTo(other);
+		return status == 0;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hashCode = 0;
+		if (hashCode == 0)
+			return super.hashCode();
+		return hashCode;
+	}
+	
+	@Override
+	public String toString() {
+		return "Unit: name="+name;
+	}
+	
 }

@@ -89,14 +89,20 @@ public class ProjectListManager extends AbstractDomainListManager<Project, Proje
 	public boolean isSelected(Project project) {
 		Project selection = selectionContext.getSelection("project");
 		boolean selected = selection != null && selection.equals(project);
-		//return projectDataManager.isSelected(project);
 		return selected;
+	}
+	
+	public boolean isChecked(Project project) {
+		Collection<Project> selection = selectionContext.getSelection("projectSelection");
+		boolean checked = selection != null && selection.contains(project);
+		return checked;
 	}
 	
 	@Override
 	protected ProjectListObject createRowObject(Project project) {
 		ProjectListObject listObject = new ProjectListObject(project);
 		listObject.setSelected(isSelected(project));
+		listObject.setChecked(isChecked(project));
 		return listObject;
 	}
 	
@@ -110,10 +116,6 @@ public class ProjectListManager extends AbstractDomainListManager<Project, Proje
 		if (recordList != null)
 			initialize(recordList);
 		else refreshModel();
-	}
-	
-	public void handleRefresh(@Observes @Refresh Object object) {
-		//refreshModel();
 	}
 	
 	@Override

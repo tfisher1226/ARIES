@@ -1,0 +1,349 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main2.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="welcomeContent.xhtml" />
+	</ui:define>
+
+	<!-- section header -->
+	<ui:define name="pageHeader">
+	
+		<!-- page title -->
+		<div style="background-color: #f5f5f5; border-bottom: 1px solid #ccc; ">
+			<div style="width: 840px; margin: auto; padding: 8px">
+				<aries:text fontSize="12" fontWeight="bold" value="Issues" href="" />
+			</div>
+		</div>
+		
+		<div style="background-color: #fff9ea; border-bottom: 1px solid #ccc; ">
+			<div style="width: 840px; margin: auto; padding: 16px">
+				<aries:text fontSize="14" fontWeight="bold" textColor="#333" value="Please verify your email address to access Nam's workbench." />
+	
+				<aries:spacer height="1" />
+				<aries:text fontSize="13" textColor="#666" value="An email containing verification instructions was sent to: thfisher@kattare.com" />
+			</div>
+		</div>
+		
+	</ui:define>
+
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content" style="display: block; background-color: inherit">
+
+			<ui:param name="styleClass" value="noneyet" />
+			
+			<div style="max-width: 700px; margin: auto; padding: 20px; background-color: white">
+			
+				<aries:label fontSize="36" value="Welcome to Nam" />
+
+				<aries:spacer height="4" />
+				<div style="text-align: left; background-color: inherit">
+					<aries:text fontSize="16" fontFamily="Verdana" textColor="#555" value="You\'ve taken your first step into a larger world, " style="" />		
+					<aries:text fontSize="16" fontFamily="Tahoma" fontWeight="bold" textColor="#555" value="lillyanne" style="" />
+				</div>
+				
+				<aries:spacer height="30" />
+
+				<h:panelGrid
+					columns="3" 
+					cellpadding="0"
+					cellspacing="0"
+					columnClasses="formColumnAlignTop, formColumnAlignTop, formColumnAlignTop"
+					style="margin: auto; border-radius: 5px; border: 1px solid #ccc; background-color: inherit">
+				
+					<h:panelGroup>
+						<div style="width: 211px; margin: auto; padding: 10px; border-right: 1px solid #ddd; background-color: #f1f1f1">
+							<ui:include src="iconText.xhtml">
+								<ui:param name="topLabel" value="Completed" />
+								<ui:param name="subLabel" value="Started your account" />
+								<ui:param name="icon" value="/icons/common/Check30.gif" />
+								<ui:param name="iconSize" value="30" />
+							</ui:include> 
+						</div>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<div style="width: 211px; margin: auto; padding: 10px; border-right: 1px solid #bbb; background-color: white">
+							<ui:include src="iconText.xhtml">
+								<ui:param name="topLabel" value="Step 2:" />
+								<ui:param name="subLabel" value="Choose your plan" />
+								<ui:param name="icon" value="/icons/common/Edit16.gif" />
+								<ui:param name="iconSize" value="26" />
+							</ui:include> 
+						</div>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<div style="width: 211px; margin: auto; padding: 10px; background-color: #f1f1f1">
+							<ui:include src="iconText.xhtml">
+								<ui:param name="topLabel" value="Step 3:" />
+								<ui:param name="subLabel" value="Go to your wokspace" />
+								<ui:param name="icon" value="/icons/common/EditDisabled16.gif" />
+								<ui:param name="iconSize" value="26" />
+							</ui:include> 
+						</div>
+					</h:panelGroup>
+				</h:panelGrid>
+
+				<h:panelGrid
+					columns="2" 
+					cellpadding="0"
+					cellspacing="0"
+					columnClasses="formColumnAlignTop, formColumnAlignTop"
+					style="width: 100%; background-color: inherit">
+				
+					<h:panelGroup style="background-color: inherit">
+					
+						<aries:spacer height="24" />
+						<aries:label fontSize="14" fontWeight="bold" textColor="black" value="Choose your personal plan" style="" />		
+
+						<aries:spacer height="12" />
+						<aries:formPane
+							columns="1" 
+							style="border-radius: 5px; border: 1px solid #ccc; background-color: inherit">
+						
+							<aries:formPane columns="5" style="padding: 7px 7px">
+								<h:panelGroup layout="block" style="width: 80px">
+									<aries:label fontSize="12" fontWeight="bold" textColor="black" value="Plan" style="" />
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="width: 100px">
+									<aries:label fontSize="12" fontWeight="bold" textColor="black" value="Cost" style="" />
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="width: 100px">
+									<ui:include src="/common/popupLink.xhtml">
+										<ui:param name="label" value="Project size" />
+										<ui:param name="content" value="projectSizeCalculation" />
+									</ui:include>
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="width: 100px">
+									<ui:include src="/common/popupLink.xhtml">
+										<ui:param name="label" value="Support level" />
+										<ui:param name="content" value="projectSizeCalculation" />
+									</ui:include>
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="width: 50px">
+									<aries:label fontSize="12" fontWeight="bold" textColor="black" value=" " style="" />		
+								</h:panelGroup>
+							</aries:formPane>
+
+							<!-- level-1 plan -->
+							<aries:formPane columns="5" styleClass="" style="padding: 5px 5px 5px 7px; border-top: 1px solid #ccc; background-color: inherit">
+								<h:panelGroup layout="block" style="width: 80px; background-color: inherit">
+									<aries:text fontSize="12" fontWeight="bold" textColor="black" value="Level 1" style="" />		
+								</h:panelGroup>
+			
+								<h:panelGroup layout="block" style="width: 100px; background-color: inherit">
+									<aries:text fontSize="12" textColor="black" value="$50 / month" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 100px">
+									<aries:text fontSize="12" textColor="black" value="more than 500" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 106px">
+									<aries:text fontSize="12" textColor="black" value="3" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 50px; padding: 2px; background-color: inherit">
+									<aries:button id="level1PlanButton" label="Choose" mode="client" execute="@none" style="width: auto; padding: 2px 4px"></aries:button>		
+								</h:panelGroup>
+							</aries:formPane>
+
+							<!-- level-2 plan -->
+							<aries:formPane columns="5" styleClass="" style="padding: 5px 5px 5px 7px; border-top: 1px solid #ccc; background-color: inherit">
+								<h:panelGroup layout="block" style="width: 80px; background-color: inherit">
+									<aries:text fontSize="12" fontWeight="bold" textColor="black" value="Level 2" style="" />		
+								</h:panelGroup>
+			
+								<h:panelGroup layout="block" style="width: 100px; background-color: inherit">
+									<aries:text fontSize="12" textColor="black" value="$50 / month" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 100px">
+									<aries:text fontSize="12" textColor="black" value="200 to 500" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 106px">
+									<!--  
+									<aries:selectOneMenu id="level2SupportMenu" label="Type" value="#{application.type}" items="#{typeList}" />
+									-->
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 50px; padding: 2px; background-color: inherit">
+									<aries:button id="level2PlanButton" label="Choose" mode="client" execute="@none" style="width: auto; padding: 2px 4px"></aries:button>		
+								</h:panelGroup>
+							</aries:formPane>
+							
+							<!-- level-3 plan -->
+							<aries:formPane columns="5" styleClass="" style="padding: 5px 5px 5px 7px; border-top: 1px solid #ccc; background-color: inherit">
+								<h:panelGroup layout="block" style="width: 80px; background-color: inherit">
+									<aries:text fontSize="12" fontWeight="bold" textColor="black" value="Level 3" style="" />		
+								</h:panelGroup>
+			
+								<h:panelGroup layout="block" style="width: 100px; background-color: inherit">
+									<aries:text fontSize="12" textColor="black" value="$50 / month" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 100px">
+									<aries:text fontSize="12" textColor="black" value="100 to 200" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 106px">
+									<aries:text fontSize="12" textColor="black" value="3" style="" />
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 50px; padding: 2px; background-color: inherit">
+									<aries:button id="level3PlanButton" label="Choose" mode="client" execute="@none" style="width: auto; padding: 2px 4px"></aries:button>		
+								</h:panelGroup>
+							</aries:formPane>
+
+							<!-- free plan -->
+							<aries:formPane columns="5" styleClass="" style="padding: 5px 5px 5px 7px; border-top: 1px solid #ccc; background-color: inherit">
+								<h:panelGroup layout="block" style="width: 80px; background-color: inherit">
+									<aries:text fontSize="12" fontWeight="bold" textColor="black" value="Free" style="" />		
+								</h:panelGroup>
+			
+								<h:panelGroup layout="block" style="width: 100px; background-color: inherit">
+									<aries:text fontSize="12" textColor="black" value="$50 / month" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 100px">
+									<aries:text fontSize="12" textColor="black" value="100 to 200" style="" />		
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 106px">
+									<aries:text fontSize="12" textColor="black" value="3" style="" />
+								</h:panelGroup>
+	
+								<h:panelGroup layout="block" style="width: 50px; padding: 2px; background-color: inherit">
+									<aries:button id="freePlanButton" label="Choose" mode="client" execute="@none" style="width: auto; padding: 2px 4px"></aries:button>		
+								</h:panelGroup>
+							</aries:formPane>
+						</aries:formPane>
+
+
+						<h:panelGroup style="">
+							<aries:p fontSize="12" fontWeight="normal" textColor="#666" style="margin-top: 20px">
+							Charges to your account will be made in <b>US Dollars</b>.  Converted prices are<br/> 
+							provided as a convenience and are only an <i>estimate</i> based on <i>current</i> exchange<br/> 
+							rates. Local prices will change as the exchange rate fluctuates.
+							</aries:p>
+			
+							<aries:p fontSize="12" fontWeight="normal" textColor="#777" style="margin-top: 4px">
+							Don’t worry, you can cancel or upgrade at any time.
+							</aries:p>
+						</h:panelGroup>
+
+						<h:panelGroup layout="block" style="margin-top: 20px; margin-right: 20px; text-align: left; border-top: 1px solid #ddd; background-color: inherit">
+							<aries:formPane	columns="2"	style="margin-top: 10px">
+								<h:selectBooleanCheckbox
+									id="teamSetupCheckbox" 
+									value="#{false}" 
+									styleClass="formCheckbox" 
+									style="background-color: inherit" />
+	
+								<h:outputLabel 
+									for="teamSetupCheckbox" 
+									value="Help me setup a Team next" 
+									style="margin-left: 8px; font-size: 12px; font-weight: bold; color: #333" />
+							</aries:formPane>
+							     
+							<aries:p fontSize="12" fontWeight="normal" textColor="#666" style="margin-top: 10px">
+								<b>Teams</b> are separate from personal accounts and are best suited for businesses 
+								who need to manage permissions for multiple different employees.
+							</aries:p>
+							
+							<h:panelGroup style="margin-top: 10px">
+								<aries:link value="Learn more about Teams" fontSize="12" fontWeight="normal" style="" />
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+
+					<h:panelGroup style="">
+						<aries:spacer height="28" />
+						<aries:formPane
+							columns="1" 
+							columnClass="formColumnAlignLeft"
+							style="margin-left: 16px; border-radius: 5px; border: 1px solid #ccc; background-color: inherit">
+						
+							<aries:formPane columns="1" style="width: 210px; padding: 12px">
+								<h:panelGroup layout="block" style="margin-top: 0px; background-color: inherit">
+								<aries:label fontSize="14" fontWeight="bold" textColor="black" value="Each plan includes:" style="" />
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #ccc; background-color: inherit">
+								<aries:text fontSize="12" fontWeight="bold" textColor="black" value="Unlimited" style="" />
+								<aries:text fontSize="12" fontWeight="normal" textColor="black" value="models" style="" />
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="margin-top: 8px; background-color: inherit">
+								<aries:text fontSize="12" fontWeight="bold" textColor="black" value="Unlimited" style="" />
+								<aries:text fontSize="12" fontWeight="normal" textColor="black" value="collaborators" style="" />
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="margin-top: 10px; padding-top: 8px; border-top: 1px solid #ccc; background-color: inherit">
+									<ui:include src="iconText.xhtml">
+										<ui:param name="topLabel" value="Free setup" />
+										<ui:param name="icon" value="/icons/common/Check16.gif" />
+										<ui:param name="iconSize" value="14" />
+									</ui:include>
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="margin-top: 8px; background-color: inherit">
+									<ui:include src="iconText.xhtml">
+										<ui:param name="topLabel" value="HTTPS Protection" />
+										<ui:param name="icon" value="/icons/common/Check16.gif" />
+										<ui:param name="iconSize" value="14" />
+									</ui:include>
+								</h:panelGroup>
+
+								<h:panelGroup layout="block" style="margin-top: 8px; background-color: inherit">
+									<ui:include src="iconText.xhtml">
+										<ui:param name="topLabel" value="E-mail support" />
+										<ui:param name="icon" value="/icons/common/Check16.gif" />
+										<ui:param name="iconSize" value="14" />
+									</ui:include>
+								</h:panelGroup>
+							</aries:formPane>
+						</aries:formPane>
+					</h:panelGroup>
+				</h:panelGrid>
+				
+				<aries:formPane
+					columns="1" 
+					styleClass="none"
+					style="width: 450px; margin-top: 20px; border-top: 1px solid #ddd; background-color: red">
+
+					<aries:controlbar>
+						<aries:toolbarGroup 
+							location="right">
+							
+							<aries:button 
+								id="finishSignupButton" 
+								label="Finish sign-up" 
+								icon="/icons/common/Go.gif"
+								mode="client" 
+								execute="@none"
+								onclick="alert(0);"
+								styleClass="none"
+								style="width: 100px; margin-top: 20px; padding: 8px; background-color: inherit" />	
+						</aries:toolbarGroup>
+					</aries:controlbar> 
+				</aries:formPane>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

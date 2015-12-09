@@ -28,7 +28,7 @@ public class TimeoutDataManager implements Serializable {
 	@Inject
 	private SelectionContext selectionContext;
 
-private String scope;
+	private String scope;
 	
 	
 	public String getScope() {

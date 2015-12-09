@@ -1,0 +1,57 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<h:panelGroup id="projectSizeCalculation" style="display: none">
+		<aries:h4 value="How is project size determined ?" />
+		<aries:p fontSize="13">
+			Constructs that are counted and totaled:
+			<br/>
+			Service
+			Data cache
+			Persistence unit
+			Message queues
+			Processes
+			<br/>
+			Networks
+		</aries:p>
+	</h:panelGroup>
+	
+	<h:panelGroup id="microservicesArchitecture" style="display: none">
+		<aries:h4 value="How is project size determined ?" />
+		<aries:p fontSize="13">
+Both microservices architecture and SOA are considered servicebased
+architectures, meaning that they are architecture patterns that
+place a heavy emphasis on services as the primary architecture component
+used to implement and perform business and nonbusiness
+functionality. Although microservices and SOA are very different
+architecture styles, they share many characteristics.
+One thing all service-based architectures have in common is that
+they are generally distributed architectures, meaning that service
+components are accessed remotely through some sort of remoteaccess
+protocol - for example, Representational State Transfer
+(REST), Simple Object Access Protocol (SOAP), Advanced Message
+Queuing Protocol (AMQP), Java Message Service (JMS), Microsoft
+Message Queuing (MSMQ), Remote Method Invocation (RMI),
+or .NET Remoting
+			<br/>
+Distributed architectures offer significant
+advantages over monolithic and layered-based architectures, including
+better scalability, better decoupling, and better control over
+development, testing, and deployment.
+			<br/>
+Components within a distributed
+architecture tend to be more self-contained, allowing for
+better change control and easier maintenance, which in turn leads to
+applications that are more robust and more responsive.
+			<br/>
+Distributed
+architectures also lend themselves to more loosely coupled and
+modular applications.
+		</aries:p>
+	</h:panelGroup>
+</ui:composition>

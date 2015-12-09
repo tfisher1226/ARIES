@@ -16,10 +16,7 @@
 	<aries:button
 		id="#{id}"
 		icon="#{icon}"
-		width="52"
 		height="auto"
-		padding="6"
-		fontSize="13"
 		label="#{label}"
 		backgroundColor="inherit"
     	immediate="true"
@@ -30,7 +27,8 @@
 		onmouseup="#{onmouseup}"
 		oncomplete="#{oncomplete}"
 		render="#{render}"
-		style="border: 1px solid #ccc; #{style}"
+		labelStyle="font-size: 13px; "
+		style="padding: 4px 5px 2px 4px; border: 1px solid #ccc"
 		offset="false">
 
 		<rich:componentControl event="click" operation="show" target="PopupMenu">

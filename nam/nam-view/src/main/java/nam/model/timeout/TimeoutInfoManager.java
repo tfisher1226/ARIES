@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Project;
@@ -45,6 +43,9 @@ public class TimeoutInfoManager extends AbstractNamRecordManager<Timeout> implem
 	private WorkspaceEventManager workspaceEventManager;
 	
 	@Inject
+	private TimeoutHelper timeoutHelper;
+	
+	@Inject
 	private SelectionContext selectionContext;
 	
 	
@@ -68,16 +69,12 @@ public class TimeoutInfoManager extends AbstractNamRecordManager<Timeout> implem
 	
 	@Override
 	public boolean isEmpty(Timeout timeout) {
-		return getTimeoutHelper().isEmpty(timeout);
+		return timeoutHelper.isEmpty(timeout);
 	}
 	
 	@Override
 	public String toString(Timeout timeout) {
-		return getTimeoutHelper().toString(timeout);
-	}
-	
-	protected TimeoutHelper getTimeoutHelper() {
-		return BeanContext.getFromSession("timeoutHelper");
+		return timeoutHelper.toString(timeout);
 	}
 	
 	@Override
@@ -88,20 +85,8 @@ public class TimeoutInfoManager extends AbstractNamRecordManager<Timeout> implem
 	}
 	
 	protected void initialize(Timeout timeout) {
-		TimeoutUtil.initialize(timeout);
 		timeoutWizard.initialize(timeout);
-		initializeOutjectedState(timeout);
 		setContext("timeout", timeout);
-	}
-	
-	protected void initializeOutjectedState(Timeout timeout) {
-		outject("timeout", timeout);
-	}
-	
-	public void handleTimeoutSelected(@Observes @Selected Timeout timeout) {
-		selectionContext.setSelection("timeout",  timeout);
-		timeoutPageManager.updateState(timeout);
-		setRecord(timeout);
 	}
 	
 	@Override

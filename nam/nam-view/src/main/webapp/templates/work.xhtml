@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<f:view>
+		<f:metadata>
+			<f:viewAction action="#{adminManager.reset}" />
+		</f:metadata>
+			
+	    <h:head>
+			<!-- HEAD CONTENT --> 
+			<ui:include src="/templates/main-head-content.xhtml"/>
+	    </h:head>
+	    
+	    <h:body class="body">
+
+			<!-- PAGE SETUP --> 
+			<ui:include src="/templates/main-body-setup.xhtml"/>
+
+			<!-- GLOBAL QUEUES -->
+			<a4j:queue requestDelay="0" ignoreDupResponses="true"/>
+
+			<!-- POPUP DIALOGS -->
+	
+			<div style="">
+				<!-- PAGE FORM -->
+				<aries:form id="pageForm">
+		
+					<!-- POPUP DIALOGS -->
+					<aries:popupDialog/>
+					<aries:messageDialog/>
+					<aries:progressDialog/>
+					<ui:include src="/common/popupMenu.xhtml" />
+					<ui:include src="/common/screenLock.xhtml" />
+	
+					<!--  
+					<aries:popupDialog/>
+					<aries:themeDialog/>
+					<ui:include src="/common/popupWindow.xhtml" />
+					-->
+				
+					<!-- page includes -->
+					<ui:insert name="pageIncludes" />
+						
+					<!-- page header -->
+					<ui:insert name="pageHeader">
+						<aries:header 
+							titleText="Nam"
+							subTitleText="Network and Application Modeler" />
+					</ui:insert>
+
+					<!-- CONTAINER -->
+					<h:panelGroup id="container" 
+						styleClass="container" style="background-color: white">
+	
+						<!-- Page Breadcrumbs -->
+						<ui:insert name="pageBreadcrumbs" />
+		
+						<!-- section header -->
+						<ui:insert name="sectionHeader">
+						
+							<!-- section title -->
+							<ui:insert name="pageTitle" />
+								
+							<!-- section options -->
+							<ui:insert name="pageViews" />
+	
+							<!-- section Breadcrumbs -->
+							<ui:insert name="sectionBreadcrumbs" />
+	
+							<!-- section controls -->
+							<ui:insert name="pageControls" />
+						</ui:insert>
+						
+						<aries:spacer height="10" />
+				
+						<!-- NAVIGATOR -->
+						<ui:insert name="navigator" />
+		
+						<!-- CONTENT -->
+						<ui:insert name="content">
+							Content missing
+						</ui:insert>
+
+						<!-- page footer -->
+						<ui:insert name="pageFooter">
+							<aries:footer backgroundColor="red">
+								<aries:p width="auto" margin="4px" fontSize="10" textColor="darkBlue" backgroundColor="inherit">
+									&copy; Copyright 2015 . All rights reserved.
+								</aries:p>
+							</aries:footer>
+						</ui:insert>
+					</h:panelGroup> 
+				</aries:form>
+			</div>
+	
+			<a4j:outputPanel ajaxRendered="true">
+				<h:form style="display: none" prependId="false">
+					<h:inputHidden id="maximumSeverity" value="#{facesContext.maximumSeverity.ordinal}" />
+				</h:form>
+			</a4j:outputPanel>
+	
+			<!-- PAGE BODY FOLLOWUP --> 
+			<ui:include src="/templates/main-body-followup.xhtml"/>
+	    </h:body>
+	</f:view>
+</html>

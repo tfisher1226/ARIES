@@ -8,10 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<aries:init/>
-	<c:if test="#{empty id}">
-		<c:set var="id" value="outputPane_#{globals.nextId()}" /> 
-	</c:if>
-	
+
 	<a4j:outputPanel
 		id="#{id}"
 		layout="block">

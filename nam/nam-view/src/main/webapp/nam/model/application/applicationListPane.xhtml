@@ -4,10 +4,13 @@
 	xmlns:aries="http://aries.org/jsf"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<aries:outputPane
-		id="applicationListPane">
-		
-		<ui:include src="applicationListToolbar.xhtml" />
-		<ui:include src="applicationListTable.xhtml" />	
-	</aries:outputPane>
+	
+	<aries:panel
+		style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; border-top-width: 0px; ">
+	
+		<a4j:outputPanel id="applicationListPane">
+			<ui:include src="applicationListToolbar.xhtml" />
+			<ui:include src="applicationListTable.xhtml" />	
+		</a4j:outputPanel>
+	</aries:panel>
 </ui:composition>

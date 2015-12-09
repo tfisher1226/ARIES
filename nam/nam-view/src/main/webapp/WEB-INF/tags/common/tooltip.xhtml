@@ -10,11 +10,24 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<rich:tooltip rendered="#{not empty value}" followMouse="true" direction="auto" verticalOffset="26" jointPoint="topAuto" showDelay="200" styleClass="tooltipXX">
-			<span style="white-space: nowrap; display: block; text-align: left">
-				<h:outputText value="#{value}"/>
-			</span>
-		</rich:tooltip>
-	</aries:tag>
+	<rich:tooltip 
+		layout="block" 
+		rendered="#{not empty value}" 
+		followMouse="true" 
+		direction="auto" 
+		verticalOffset="26" 
+		horizontalOffset="5" 
+		jointPoint="topAuto" 
+		showDelay="200" 
+		styleClass="tooltip"
+		style="">
+
+		<f:facet name="loading">
+			<f:verbatim>Loading...</f:verbatim>
+		</f:facet>
+		
+		<span style="display: block; white-space: nowrap; text-align: left; background-color: inherit">
+			<h:outputText value="#{value}"/>
+		</span>
+	</rich:tooltip>
 </ui:composition>

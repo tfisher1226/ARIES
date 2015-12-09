@@ -46,7 +46,7 @@
 	display: block;
 	width: auto; 
 	height: auto; 
-	margin-top: 2px;
+	margin-top: 0px;
 	margin-left: #{helper.wizard_leftSection_marginLeft}px; 
 	margin-right: #{helper.wizard_leftSection_marginRight}px; 
 	background-color: #dde;
@@ -57,7 +57,7 @@
 .content2 {
 	width: auto;
 	display: block; 
-	margin-top: 2px;
+	margin-top: 0px;
 	text-align: center;
 	background-color: orange;
 	background-color: inherit;
@@ -90,6 +90,11 @@
 	text-align: left;
 	background-color: white;
 	background-color: inherit;
+}
+
+.pageHeader {
+	padding: 4px 18px 0px 20px;
+	background-color: #fef;
 }
 
 .pageTitle {

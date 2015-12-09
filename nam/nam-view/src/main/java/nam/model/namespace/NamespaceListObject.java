@@ -41,6 +41,16 @@ public class NamespaceListObject extends AbstractListObject<Namespace> implement
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Namespace16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(namespace);
 	}

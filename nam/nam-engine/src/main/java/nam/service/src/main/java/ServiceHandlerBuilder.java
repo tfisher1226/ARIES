@@ -333,7 +333,7 @@ public class ServiceHandlerBuilder extends AbstractBeanBuilder {
 			while (iterator.hasNext()) {
 				Module module = iterator.next();
 				Persistence persistence = module.getPersistence();
-				List<Unit> units = PersistenceUtil.getUnits(persistence);
+				Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 				Iterator<Unit> iterator2 = units.iterator();
 				while (iterator2.hasNext()) {
 					Unit unit = iterator2.next();
@@ -408,7 +408,7 @@ public class ServiceHandlerBuilder extends AbstractBeanBuilder {
 		while (iterator.hasNext()) {
 			Module module = iterator.next();
 			Persistence persistence = module.getPersistence();
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Iterator<Unit> iterator2 = units.iterator();
 			while (iterator2.hasNext()) {
 				Unit unit = iterator2.next();
@@ -1188,7 +1188,7 @@ public class ServiceHandlerBuilder extends AbstractBeanBuilder {
 			Persistence persistence = module.getPersistence();
 			if (!persistence.getNamespace().equals(service.getNamespace()))
 				continue;
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Iterator<Unit> iterator2 = units.iterator();
 			while (iterator2.hasNext()) {
 				Unit unit = iterator2.next();

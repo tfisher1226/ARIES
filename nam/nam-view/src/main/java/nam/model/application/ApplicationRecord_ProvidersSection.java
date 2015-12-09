@@ -34,6 +34,11 @@ public class ApplicationRecord_ProvidersSection extends AbstractWizardPage<Appli
 	}
 	
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Provider16.gif";
+	}
+	
+	@Override
 	public void initialize(Application application) {
 		setEnabled(true);
 		setBackEnabled(true);

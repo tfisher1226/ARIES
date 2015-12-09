@@ -269,6 +269,7 @@ public class NamespaceUtil extends BaseUtil {
 		Iterator<Namespace> iterator = imports.iterator();
 		while (iterator.hasNext()) {
 			Namespace importedNamespace = iterator.next();
+			System.out.println(">>>"+importedNamespace.getUri());
 			map.putAll(getImportedNamespaces(importedNamespace));
 		}
 		return map;
@@ -379,7 +380,7 @@ public class NamespaceUtil extends BaseUtil {
 		return typesMap;
 	}
 	
-	public static Map<String, Type> getTypeMap(List<Namespace> namespaces) {
+	public static Map<String, Type> getTypeMap(Collection<Namespace> namespaces) {
 		Map<String, Type> typesMap = new HashMap<String, Type>();
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {

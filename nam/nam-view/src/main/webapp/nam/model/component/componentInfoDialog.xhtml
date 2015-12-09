@@ -1,17 +1,12 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="type" value="Component" />
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="manager" value="#{componentInfoManager}" />
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
 	
 	<a4j:jsFunction
 	 	name="launchComponentDialog"
@@ -19,37 +14,32 @@
 		immediate="true"
 		bypassUpdates="true"
 		limitRender="true"
-		action="#{manager.activate}"
-		onbegin="setCursorWait(); showProgress('', 'Component Records', 'Preparing requested record...')"
+		action="#{componentInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Component Records', 'Preparing requested record...')"
 		oncomplete="setCursorDefault(eventSource); hideProgress(); showComponentDialog()"
-		render="#{type}Module, #{type}Dialog">
+		render="componentModule, componentDialog">
 		
-		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
-		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
-		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
-		<a4j:param name="targetService" assignTo="#{manager.targetService}" />
-		<a4j:param name="immediate" assignTo="#{manager.immediate}" value="false" />
+		<a4j:param name="targetDomain" assignTo="#{componentInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{componentInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{componentInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{componentInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{componentInfoManager.immediate}" value="false" />
 	</a4j:jsFunction>
 	
-	<aries:region
-		id="#{type}Module"
-		parent="#{section}"
-		domain="#{type}"
-		section="#{type}Dialog"
-		render="#{type}ListPane"
-		rendered="#{manager.visible}">
+	<a4j:outputPanel
+		id="componentModule">
 		
-		<aries:form
-			id="#{section}Form">
+		<a4j:region
+			rendered="#{componentInfoManager.visible}">
 			
 			<aries:dialog
-				id="#{section}"
-				action="save#{type}"
-				render="#{manager.renderList}">
+				id="componentDialog"
+				action="saveComponent"
+				render="#{componentInfoManager.renderList} componentListPane">
 				
 				<!-- Dialog Content -->
 				<ui:include src="componentInfoPane.xhtml" />
 			</aries:dialog>
-		</aries:form>
 	</aries:region>
+	</a4j:outputPanel>
 </ui:composition>

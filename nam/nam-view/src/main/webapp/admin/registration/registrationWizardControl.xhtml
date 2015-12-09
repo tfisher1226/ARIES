@@ -13,8 +13,7 @@
 	<aries:controlPane>
 		<aries:controlbar>
 			<aries:toolbarGroup 
-				location="left"
-				backgroundColor="inherit">
+				location="left">
 				
 				<!-- help button -->
 				<aries:toolButton
@@ -42,7 +41,7 @@
 					onclick="showProgress('Nam', '#{registrationWizard.title}', 'Re-rendering current page...');"
 					oncomplete="hideProgress();"
 					render="registrationWizard"
-					padding="2px 4px" 
+					style="padding: 2px 4px"
 					offset="true" />
 					
 				<!-- populate button -->
@@ -60,7 +59,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- back button -->
@@ -79,7 +78,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Registration', 'Moving to previous section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px" 
+					style="padding: 2px 8px"
 					offset="true" />
 					
 				<!-- next button -->
@@ -98,7 +97,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Registration', 'Moving to next section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px" 
+					style="padding: 2px 8px"
 					offset="true" />
 
 				<!-- finish button -->
@@ -117,7 +116,26 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Registration', 'Validating and submitting new Registration...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px" 
+					style="padding: 2px 8px"
+					offset="true" />
+				
+				<!-- save button -->
+				<aries:dialogButton
+					label="Save"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="registrationWizardSaveButton"
+					icon="/icons/common/Save16.gif"
+					iconDisabled="/icons/common/SaveDisabled16.gif"
+					rendered="#{registrationWizard.saveVisible}"
+					enabled="#{registrationWizard.saveEnabled}"
+					manager="#{registrationWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'Registration', 'Validating and submitting Registration changes...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					style="padding: 2px 8px"
 					offset="true" />
 
 				<!-- cancel button -->
@@ -132,7 +150,7 @@
 					action="cancel"
 					onclick="setCursorWait(this); showProgress('Nam', 'Registration Management', 'Cancelling creation of Registration...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					padding="2px 8px" 
+					style="padding: 2px 8px"
 					offset="true" />
 			</aries:toolbarGroup>
 		</aries:controlbar> 

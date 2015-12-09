@@ -23,6 +23,7 @@ public class RegistrationRecord_IdentificationSection extends AbstractWizardPage
 	
 	
 	public RegistrationRecord_IdentificationSection() {
+		setTitle("Setup personal account");
 		setName("Identification");
 		setUrl("identification");
 	}
@@ -38,11 +39,14 @@ public class RegistrationRecord_IdentificationSection extends AbstractWizardPage
 	
 	@Override
 	public void initialize(Registration registration) {
+		setRegistration(registration);
 		setEnabled(true);
 		setBackEnabled(false);
 		setNextEnabled(true);
 		setFinishEnabled(true);
-		setRegistration(registration);
+		//setPopulateVisible(true);
+		//setPopulateEnabled(true);
+		super.initialize(registration);
 	}
 	
 	@Override

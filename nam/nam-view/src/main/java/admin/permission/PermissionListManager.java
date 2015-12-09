@@ -8,16 +8,17 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.ui.design.SelectionContext;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractDomainListManager;
 import org.aries.ui.event.Cancelled;
 import org.aries.ui.event.Export;
+import org.aries.ui.event.Refresh;
 import org.aries.ui.manager.ExportManager;
 
 import admin.Permission;
 import admin.util.PermissionUtil;
+
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -47,6 +48,10 @@ public class PermissionListManager extends AbstractDomainListManager<Permission,
 		return "Permission List";
 	}
 
+	public Object getRecordId(Permission permission) {
+		return permission.getId();
+	}
+	
 	@Override
 	public Object getRecordKey(Permission permission) {
 		return PermissionUtil.getKey(permission);
@@ -92,10 +97,17 @@ public class PermissionListManager extends AbstractDomainListManager<Permission,
 		return selected;
 	}
 	
+	public boolean isChecked(Permission permission) {
+		Collection<Permission> selection = selectionContext.getSelection("permissionSelection");
+		boolean checked = selection != null && selection.contains(permission);
+		return checked;
+	}
+	
 	@Override
 	protected PermissionListObject createRowObject(Permission permission) {
 		PermissionListObject listObject = new PermissionListObject(permission);
 		listObject.setSelected(isSelected(permission));
+		listObject.setChecked(isChecked(permission));
 		return listObject;
 	}
 	

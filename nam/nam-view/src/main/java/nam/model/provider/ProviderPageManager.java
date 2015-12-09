@@ -3,8 +3,16 @@ package nam.model.provider;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.aries.runtime.BeanContext;
+import org.aries.ui.AbstractPageManager;
+import org.aries.ui.AbstractWizardPage;
+import org.aries.ui.Breadcrumb;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Provider;
 import nam.model.cacheProvider.CacheProviderPageManager;
@@ -12,11 +20,6 @@ import nam.model.messagingProvider.MessagingProviderPageManager;
 import nam.model.persistenceProvider.PersistenceProviderPageManager;
 import nam.model.util.ProviderUtil;
 import nam.ui.design.SelectionContext;
-
-import org.aries.ui.AbstractPageManager;
-import org.aries.ui.AbstractWizardPage;
-import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
 
 
 @SessionScoped
@@ -28,6 +31,9 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	
 	@Inject
 	private ProviderDataManager providerDataManager;
+	
+	@Inject
+	private ProviderInfoManager providerInfoManager;
 	
 	@Inject
 	private ProviderListManager providerListManager;
@@ -68,7 +74,6 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	
 	public ProviderPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -86,7 +91,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -95,10 +100,9 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	}
 	
 	public void refreshMembers(String scope) {
-		cacheProviderPageManager.refresh(scope);
-		messagingProviderPageManager.refresh(scope);
-		persistenceProviderPageManager.refresh(scope);
-		providerListManager.refresh();
+		cacheProviderPageManager.refreshLocal(scope);
+		messagingProviderPageManager.refreshLocal(scope);
+		persistenceProviderPageManager.refreshLocal(scope);
 	}
 	
 	public String getProviderListPage() {
@@ -123,6 +127,39 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	
 	public String getProviderManagementPage() {
 		return "/nam/model/provider/providerManagementPage.xhtml";
+	}
+	
+	public void handleProviderSelected(@Observes @Selected Provider provider) {
+		selectionContext.setSelection("provider",  provider);
+		providerInfoManager.setRecord(provider);
+	}
+	
+	public void handleProviderUnselected(@Observes @Unselected Provider provider) {
+		selectionContext.unsetSelection("provider",  provider);
+		providerInfoManager.unsetRecord(provider);
+	}
+	
+	public void handleProviderChecked() {
+		String scope = "providerSelection";
+		ProviderListObject listObject = providerListManager.getSelection();
+		Provider provider = selectionContext.getSelection("provider");
+		boolean checked = providerListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			providerInfoManager.setRecord(provider);
+			selectionContext.setSelection(scope,  provider);
+		} else {
+			providerInfoManager.unsetRecord(provider);
+			selectionContext.unsetSelection(scope,  provider);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("cacheProvider"))
+			cacheProviderPageManager.refreshLocal(scope);
+		if (target.equals("messagingProvider"))
+			messagingProviderPageManager.refreshLocal(scope);
+		if (target.equals("persistenceProvider"))
+			persistenceProviderPageManager.refreshLocal(scope);
+		refreshLocal(scope);
 	}
 	
 	public String initializeProviderListPage() {
@@ -172,7 +209,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	
 	public String initializeProviderRecordPage() {
 		Provider provider = selectionContext.getSelection("provider");
-		String providerName = provider.getName();
+		String providerName = ProviderUtil.getLabel(provider);
 		
 		String pageLevelKey = "providerRecord";
 		clearBreadcrumbs(pageLevelKey);
@@ -205,9 +242,6 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		addBreadcrumb(pageLevelKey, "Providers", "showProviderManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Provider", "showProviderWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showProviderWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showProviderWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showProviderWizardPage('Documentation')");
 		addBreadcrumb(wizardLevelKey, "CacheProviders", "showProviderWizardPage('CacheProviders')");
 		addBreadcrumb(wizardLevelKey, "MessagingProviders", "showProviderWizardPage('MessagingProviders')");
 		addBreadcrumb(wizardLevelKey, "PersistenceProviders", "showProviderWizardPage('PersistenceProviders')");
@@ -233,7 +267,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -241,7 +275,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		setPageTitle(getProviderLabel(provider));
 		setPageIcon("/icons/nam/Provider16.gif");
 		setSectionTitle("Provider Overview");
-		String providerName = provider.getName();
+		String providerName = ProviderUtil.getLabel(provider);
 		providerWizard.setNewMode(false);
 		
 		String pageLevelKey = "provider";
@@ -253,10 +287,6 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		addBreadcrumb(pageLevelKey, "Providers", "showProviderManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(providerName, "showProviderWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showProviderWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showProviderWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showProviderWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showProviderWizardPage('Documentation')");
 		addBreadcrumb(wizardLevelKey, "CacheProviders", "showProviderWizardPage('CacheProviders')");
 		addBreadcrumb(wizardLevelKey, "MessagingProviders", "showProviderWizardPage('MessagingProviders')");
 		addBreadcrumb(wizardLevelKey, "PersistenceProviders", "showProviderWizardPage('PersistenceProviders')");
@@ -284,7 +314,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -303,26 +333,33 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Providers");
+		setPageIcon("/icons/nam/Provider16.gif");
 		setSectionType("provider");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Providers");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "providerOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Providers", "showProviderManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeProviderCacheProvidersView() {
 		setSectionType("provider");
 		setSectionName("CacheProviders");
-		setSectionTitle("Provider CacheProviders");
+		setSectionTitle("CacheProviders");
 		setSectionIcon("/icons/nam/CacheProvider16.gif");
-		String viewLevelKey = "providerCacheProviders";
-		selectionContext.setMessageDomain(viewLevelKey);
-		cacheProviderPageManager.refresh("provider");
-		providerListManager.refresh();
+		selectionContext.setMessageDomain("providerCacheProviders");
+		cacheProviderPageManager.refreshLocal("providerSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -330,12 +367,11 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	public String initializeProviderMessagingProvidersView() {
 		setSectionType("provider");
 		setSectionName("MessagingProviders");
-		setSectionTitle("Provider MessagingProviders");
+		setSectionTitle("MessagingProviders");
 		setSectionIcon("/icons/nam/MessagingProvider16.gif");
-		String viewLevelKey = "providerMessagingProviders";
-		selectionContext.setMessageDomain(viewLevelKey);
-		messagingProviderPageManager.refresh("provider");
-		providerListManager.refresh();
+		selectionContext.setMessageDomain("providerMessagingProviders");
+		messagingProviderPageManager.refreshLocal("providerSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -343,12 +379,11 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	public String initializeProviderPersistenceProvidersView() {
 		setSectionType("provider");
 		setSectionName("PersistenceProviders");
-		setSectionTitle("Provider PersistenceProviders");
+		setSectionTitle("PersistenceProviders");
 		setSectionIcon("/icons/nam/PersistenceProvider16.gif");
-		String viewLevelKey = "providerPersistenceProviders";
-		selectionContext.setMessageDomain(viewLevelKey);
-		persistenceProviderPageManager.refresh("provider");
-		providerListManager.refresh();
+		selectionContext.setMessageDomain("providerPersistenceProviders");
+		persistenceProviderPageManager.refreshLocal("providerSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -373,7 +408,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 		String label = "Provider";
 		String name = ProviderUtil.getLabel(provider);
 		if (name == null && provider.getName() != null)
-			name = NameUtil.capName(provider.getName());
+			name = ProviderUtil.getLabel(provider);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -386,7 +421,7 @@ public class ProviderPageManager extends AbstractPageManager<Provider> implement
 	}
 	
 	protected void updateState(Provider provider) {
-		String providerName = NameUtil.capName(provider.getName());
+		String providerName = ProviderUtil.getLabel(provider);
 		setSectionTitle(providerName + " Provider");
 	}
 	

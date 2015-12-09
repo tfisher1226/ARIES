@@ -54,7 +54,7 @@ public class ParameterListManager extends AbstractDomainListManager<Parameter, P
 	
 	@Override
 	public String getRecordName(Parameter parameter) {
-		return ParameterUtil.toString(parameter);
+		return ParameterUtil.getLabel(parameter);
 	}
 	
 	@Override
@@ -92,10 +92,17 @@ public class ParameterListManager extends AbstractDomainListManager<Parameter, P
 		return selected;
 	}
 	
+	public boolean isChecked(Parameter parameter) {
+		Collection<Parameter> selection = selectionContext.getSelection("parameterSelection");
+		boolean checked = selection != null && selection.contains(parameter);
+		return checked;
+	}
+	
 	@Override
 	protected ParameterListObject createRowObject(Parameter parameter) {
 		ParameterListObject listObject = new ParameterListObject(parameter);
 		listObject.setSelected(isSelected(parameter));
+		listObject.setChecked(isChecked(parameter));
 		return listObject;
 	}
 	
@@ -109,10 +116,6 @@ public class ParameterListManager extends AbstractDomainListManager<Parameter, P
 		if (recordList != null)
 			initialize(recordList);
 		else refreshModel();
-	}
-	
-	public void handleRefresh(@Observes @Refresh Object object) {
-		//refreshModel();
 	}
 	
 	@Override
@@ -143,7 +146,6 @@ public class ParameterListManager extends AbstractDomainListManager<Parameter, P
 	}
 	
 	public String viewParameter(Parameter parameter) {
-		ParameterInfoManager parameterInfoManager = BeanContext.getFromSession("parameterInfoManager");
 		String url = parameterInfoManager.viewParameter(parameter);
 		return url;
 	}
@@ -158,7 +160,6 @@ public class ParameterListManager extends AbstractDomainListManager<Parameter, P
 	}
 	
 	public String editParameter(Parameter parameter) {
-		ParameterInfoManager parameterInfoManager = BeanContext.getFromSession("parameterInfoManager");
 		String url = parameterInfoManager.editParameter(parameter);
 		return url;
 	}

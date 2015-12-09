@@ -121,7 +121,7 @@ public class ProjectWizard extends AbstractDomainElementWizard<Project> implemen
 
 	public String populateDefaultValues() {
 		Project project = selectionContext.getSelection("project");
-		String name = project.getName();
+		String name = ProjectUtil.getLabel(project);
 		if (StringUtils.isEmpty(name)) {
 			display = getFromSession("display");
 			display.setModule("projectWizard");

@@ -8,19 +8,16 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.model.Operation;
-import nam.model.Service;
-import nam.model.Timeout;
-import nam.model.util.OperationUtil;
-import nam.ui.design.SelectionContext;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractDomainListManager;
 import org.aries.ui.event.Cancelled;
 import org.aries.ui.event.Export;
 import org.aries.ui.event.Refresh;
-import org.aries.ui.event.Selected;
 import org.aries.ui.manager.ExportManager;
+
+import nam.model.Operation;
+import nam.model.util.OperationUtil;
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -32,6 +29,9 @@ public class OperationListManager extends AbstractDomainListManager<Operation, O
 	
 	@Inject
 	private OperationEventManager operationEventManager;
+	
+	@Inject
+	private OperationInfoManager operationInfoManager;
 	
 	@Inject
 	private SelectionContext selectionContext;
@@ -54,7 +54,7 @@ public class OperationListManager extends AbstractDomainListManager<Operation, O
 	
 	@Override
 	public String getRecordName(Operation operation) {
-		return OperationUtil.toString(operation);
+		return OperationUtil.getLabel(operation);
 	}
 	
 	@Override
@@ -92,10 +92,17 @@ public class OperationListManager extends AbstractDomainListManager<Operation, O
 		return selected;
 	}
 	
+	public boolean isChecked(Operation operation) {
+		Collection<Operation> selection = selectionContext.getSelection("operationSelection");
+		boolean checked = selection != null && selection.contains(operation);
+		return checked;
+	}
+	
 	@Override
 	protected OperationListObject createRowObject(Operation operation) {
 		OperationListObject listObject = new OperationListObject(operation);
 		listObject.setSelected(isSelected(operation));
+		listObject.setChecked(isChecked(operation));
 		return listObject;
 	}
 	
@@ -109,10 +116,6 @@ public class OperationListManager extends AbstractDomainListManager<Operation, O
 		if (recordList != null)
 			initialize(recordList);
 		else refreshModel();
-	}
-	
-	public void handleRefresh(@Observes @Refresh Object object) {
-		//refreshModel();
 	}
 	
 	@Override
@@ -143,7 +146,6 @@ public class OperationListManager extends AbstractDomainListManager<Operation, O
 	}
 	
 	public String viewOperation(Operation operation) {
-		OperationInfoManager operationInfoManager = BeanContext.getFromSession("operationInfoManager");
 		String url = operationInfoManager.viewOperation(operation);
 		return url;
 	}
@@ -158,7 +160,6 @@ public class OperationListManager extends AbstractDomainListManager<Operation, O
 	}
 	
 	public String editOperation(Operation operation) {
-		OperationInfoManager operationInfoManager = BeanContext.getFromSession("operationInfoManager");
 		String url = operationInfoManager.editOperation(operation);
 		return url;
 	}

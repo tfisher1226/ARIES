@@ -6,50 +6,27 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<aries:toolbar
-		type="table"
+	<a4j:outputPanel
 		id="faultNameListToolbar">
 		
+		<aries:toolbar
+			type="table">
+			
 		<aries:toolbarGroup
 			location="left">
 		
-			<!--  
 			<aries:toolButton
 				id="faultNameListNewButton"
-				value="New Fault..."
+					label="New Fault..."
 				icon="/icons/common/New16.gif"
 				iconDisabled="/icons/common/NewDisabled16.gif"
-				tooltip="Create new Fault Record"
 				enabled="#{securityGuard.canCreate('fault')}"
 				mode="client"
 				execute="@none"
 				onmouseup="processNewElement(event, 'Fault')"
-				offset="true" />
-			
-			<aries:toolButton
-				id="faultNameListEditButton"
-				value="Edit Fault..."
-				icon="/icons/common/Edit16.gif"
-				iconDisabled="/icons/common/EditDisabled16.gif"
-				tooltip="Open selected Fault record for edit..."
-				enabled="#{faultListManager.hasSelection() and securityGuard.canEdit('fault')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processEditElement(event, 'Fault')"
-				offset="true" />
-			
-			<aries:toolButton
-				id="faultNameListRemoveButton"
-				value="Remove Fault..."
-				icon="/icons/common/Remove16.gif"
-				iconDisabled="/icons/common/RemoveDisabled16.gif"
-				tooltip="Remove selected Fault record from system..."
-				enabled="#{faultListManager.hasSelection() and securityGuard.canRemove('fault')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processRemoveElement(event, 'Fault')"
-				offset="true" />
-				-->
+					labelStyle="font-size: 11px"
+					style="margin: 2px"
+					offset="false" />
 		</aries:toolbarGroup>
 		
 		<aries:toolbarGroup
@@ -64,7 +41,10 @@
 				mode="client"
 				execute="@none"
 				onmouseup="refreshFaultList(event)"
-				offset="true" />
+					labelStyle="font-size: 11px"
+					style="margin: 2px"
+					offset="false" />
 		</aries:toolbarGroup>
 	</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

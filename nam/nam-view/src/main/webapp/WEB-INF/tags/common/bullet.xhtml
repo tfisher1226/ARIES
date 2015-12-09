@@ -8,9 +8,6 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:aries="http://aries.org/jsf">
 
-<aries:tag>
-	<aries:init/>
-	
 	<c:if test="#{empty href}">
 		<c:set var="href" value="#" /> 
 	</c:if>
@@ -39,8 +36,6 @@
 		<c:set var="linkColor" value="#{userSkin.linkColor}" /> 
 	</c:if>
 	
-	<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}" /> 
-	
 	<c:if test="#{href eq '#' and empty onclick}">
 		<c:set var="textSettings" value="#{textSettings}; color: #{textColor}; text-decoration: none;"/> 
 	</c:if>
@@ -54,7 +49,7 @@
 	</c:if>
 
 	<c:if test="#{empty icon}">
-		<c:set var="icon" value="/bullets/RoundBulletEmpty16.gif"/> 
+		<c:set var="icon" value="/icons/bullets/RoundBulletEmpty16.gif"/> 
 	</c:if>
 	
 	<c:if test="#{empty iconWidth}">
@@ -64,6 +59,7 @@
 		</c:if>
 	</c:if>
 	
+	<c:set var="textSettings" value="font-size: #{helper.convert(fontSize)}; font-weight: #{fontWeight}; font-style: #{fontStyle}; font-family: #{fontFamily}" /> 
 
 	<a4j:outputPanel
 		layout="block"
@@ -89,13 +85,13 @@
 						onmousedown="setCursorWait(this); #{onmousedown}"
 						onmouseup="#{onmouseup}"
 						onmouseout="#{onmouseout}"
-						style="#{textSettings}">#{value}</aries:link>
+						style="white-space: nowrap; #{textSettings}">#{value}</aries:link>
 
 					<aries:text 
 						href="#{href}"
 						onclick="#{onclick}"
 						rendered="#{href eq '#' and empty onclick}"
-						style="#{textSettings}">#{value}</aries:text>
+						style="white-space: nowrap; #{textSettings}">#{value}</aries:text>
 						
 						<div style="padding-top: 2px">
 							<ui:insert />
@@ -126,5 +122,4 @@
 			</h:panelGrid>
 		</h:panelGroup>
 	</a4j:outputPanel>
-</aries:tag>
 </ui:composition>

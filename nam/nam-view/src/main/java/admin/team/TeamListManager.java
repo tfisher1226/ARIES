@@ -48,6 +48,10 @@ public class TeamListManager extends AbstractDomainListManager<Team, TeamListObj
 		return "Team List";
 	}
 	
+	public Object getRecordId(Team team) {
+		return team.getId();
+	}
+	
 	@Override
 	public Object getRecordKey(Team team) {
 		return TeamUtil.getKey(team);
@@ -93,10 +97,17 @@ public class TeamListManager extends AbstractDomainListManager<Team, TeamListObj
 		return selected;
 	}
 	
+	public boolean isChecked(Team team) {
+		Collection<Team> selection = selectionContext.getSelection("teamSelection");
+		boolean checked = selection != null && selection.contains(team);
+		return checked;
+	}
+	
 	@Override
 	protected TeamListObject createRowObject(Team team) {
 		TeamListObject listObject = new TeamListObject(team);
 		listObject.setSelected(isSelected(team));
+		listObject.setChecked(isChecked(team));
 		return listObject;
 	}
 	

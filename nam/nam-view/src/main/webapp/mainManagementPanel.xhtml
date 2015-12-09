@@ -8,40 +8,16 @@
 
 	<aries:formPane
 		columns="1" 
-		width="170"
+		width="180"
 		height="auto"
-		margin="0px"
-		marginTop="0px"
-		marginLeft="20px"
-		backgroundColor="inherit">
+		backgroundColor="inherit"
+		style="padding: 10px 20px 20px 20px">
 	
 		<aries:spacer height="10" />
-		<aries:label fontSize="15" fontWeight="bold" value="Monitoring and" />
-		<aries:label fontSize="15" fontWeight="bold" value="Management" />
+		<aries:label fontSize="14" fontWeight="bold" value="User" style="" />
+		<aries:label fontSize="14" fontWeight="bold" value="Interfaces" style="" />
 		
-		<aries:spacer height="16" />
-		<aries:button
-			width="140"
-			padding="6"
-			fontSize="14"
-			label="Dashboards"
-			backgroundColor="inherit"
-			icon="/icons/nam/UserInterface16.gif"
-			id="#{section}DashboardsButton"
-	    	immediate="false"
-	    	bypassUpdates="false"
-	    	limitRender="true"
-			execute="@this"
-			manager="#{applicationPageManager}"
-			action="initializeApplicationManagementPage"
-   			onmouseup="setCursorWait(event.source); showProgress('Nam', 'Applications by Project', 'Preparing Applications display...')"
-			offset="false" />
-
-		<aries:spacer height="40" />
-		<aries:label fontSize="15" fontWeight="bold" value="User" />
-		<aries:label fontSize="15" fontWeight="bold" value="Interfaces" />
-
-		<aries:spacer height="16" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="User-Interfaces" />
 			<ui:param name="icon" value="/icons/nam/UserInterface16.gif" />
@@ -51,5 +27,20 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'User-Interface Management', 'Preparing User-Interface information...')" />
 		</ui:include>
 		
+		<aries:spacer height="40" />
+		<aries:label fontSize="14" fontWeight="bold" value="Monitoring and" style="" />
+		<aries:label fontSize="14" fontWeight="bold" value="Management" style="" />
+
+		<aries:spacer height="10" />
+		<a4j:outputPanel rendered="true">
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Dashboards" />
+				<ui:param name="icon" value="/icons/nam/Dashboard16.gif" />
+				<ui:param name="id" value="#{section}DashboardsButton" />
+				<ui:param name="manager" value="#{userInterfacePageManager}" />
+				<ui:param name="action" value="initializeUserInterfaceManagementPage" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Dashboards', 'Preparing Dashboard information...')" />
+			</ui:include>
+		</a4j:outputPanel>
 	</aries:formPane>
 </ui:composition>

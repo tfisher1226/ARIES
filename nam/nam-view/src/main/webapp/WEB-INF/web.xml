@@ -285,6 +285,9 @@
 	</context-param>
 	
 	<!-- 
+		When a page is requested, what interval in seconds should the 
+		compiler check for changes. If you don't want the compiler to check 
+		for changes once the page is compiled, then use a value of -1.
 		You should also turn off the facelets refresh trigger in 
 		production environments.
 	-->
@@ -483,13 +486,15 @@
 
 	<context-param>
 		<param-name>org.ajax4jsf.xmlparser.ORDER</param-name>
-		<param-value>NEKO,NONE,TIDY</param-value>
+		<param-value>NONE,NEKO,TIDY</param-value>
 	</context-param>
 
+	<!--  
 	<context-param>
 		<param-name>org.ajax4jsf.xmlparser.NEKO</param-name>
 		<param-value>.*\..*</param-value>
 	</context-param>
+	-->
 
 	<!--
 	<context-param>

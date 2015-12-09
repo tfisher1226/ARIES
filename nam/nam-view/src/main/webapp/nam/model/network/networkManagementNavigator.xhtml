@@ -12,13 +12,10 @@
 
 	<aries:panel
 		width="auto"
-		margin="0px"
 		backgroundColor="inherit">
 		
 		<aries:formPane
 			width="auto"
-			borderWidth="0px"
-			borderColor="#aaa"
 			columnClass="formColumnAlignLeft"
 			backgroundColor="inherit">
 			
@@ -45,18 +42,6 @@
 	   			<ui:param name="render" value="networkManagementViewer" />
 			</ui:include>
 
-			<aries:spacer height="10" />
-			<ui:include src="/common/navigationButton.xhtml">
-				<ui:param name="label" value="Services" />
-				<ui:param name="icon" value="/icons/nam/Service16.gif" />
-				<ui:param name="id" value="networkServicesButton" />
-				<ui:param name="manager" value="#{networkPageManager}" />
-				<ui:param name="action" value="initializeNetworkServicesView" />
-	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Network Services', 'Preparing Network Service information...')" />
-	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
-	   			<ui:param name="render" value="networkManagementViewer" />
-			</ui:include>
-			
 			<aries:spacer height="10" />
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Containers" />
@@ -93,6 +78,18 @@
 	   			<ui:param name="render" value="networkManagementViewer" />
 			</ui:include>
 
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Services" />
+				<ui:param name="icon" value="/icons/nam/Service16.gif" />
+				<ui:param name="id" value="networkServicesButton" />
+				<ui:param name="manager" value="#{networkPageManager}" />
+				<ui:param name="action" value="initializeNetworkServicesView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Network Services', 'Preparing Network Service information...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="networkManagementViewer" />
+			</ui:include>
+			
 			<aries:spacer height="10" />
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Volumes" />

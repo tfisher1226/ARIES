@@ -37,7 +37,7 @@ public abstract class AbstractTreeBuilder {
 		treeNodeFactory = BeanContext.getFromSession("treeNodeFactory");
 	}
 	
-	public ModelTreeNode createTree(List<Project> projects) {
+	public ModelTreeNode createTree(Collection<Project> projects) {
 		initializeTreeBuilder();
 		ModelTreeNode rootNode = treeNodeFactory.createROOTNode();
 		Iterator<Project> iterator = projects.iterator();

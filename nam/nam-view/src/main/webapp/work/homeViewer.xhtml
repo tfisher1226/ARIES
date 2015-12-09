@@ -1,0 +1,104 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel
+		id="homeView">
+		
+		<br/>
+		<hr width="auto" style="margin-right: 12%"/>
+		
+		<aries:layerPane 
+			id="homeViewer"
+			activeItem="#{selectionContext.currentTarget}">
+	
+			<aries:layeredPane name="overview">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="" />
+
+					<aries:spacer height="16" />
+					<aries:text fontSize="16" value="" />
+				</div>
+			</aries:layeredPane>
+	
+
+			<aries:layeredPane name="implementation">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="8" />
+					<aries:label fontSize="26" value="Rapid and thorough implementation" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE " />
+				
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="JBoss" />
+
+					using <a class="link16">Java EE standards</a> and <a>best-practices</a><br/>
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="testing">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="8" />
+					<aries:label fontSize="26" value="Multiple-levels and types of tests" />
+
+					<aries:spacer height="16" />
+					<aries:text fontSize="16" value="" />
+					using <a class="link16">Arquillian</a> and <a class="link16">Byteman</a><br/>
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="deployment">
+				<div style="background-color: inherit">
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="8" />
+					<aries:label fontSize="26" value="Elastic and scalable deployment system" />
+
+					<aries:spacer height="16" />
+					<aries:text fontSize="16" value="" />
+					using <a class="link16">Docker</a> and <a class="link16">Kubernetes</a><br/>
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="userInterfaces">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="8" />
+					<aries:label fontSize="26" value="User-interfaces for web, phone and tablet" />
+
+					<aries:spacer height="16" />
+					<aries:text fontSize="16" value="" />
+				</div>
+			</aries:layeredPane>
+		</aries:layerPane>
+	</a4j:outputPanel>
+</ui:composition>

@@ -32,7 +32,7 @@ public class RoleConverter extends AbstractConverter implements Converter, Seria
 		if (value == null)
 			return null;
 		Role role = (Role) value;
-		return RoleUtil.toString(role);
+		return RoleUtil.getLabel(role);
 	}
 
 }

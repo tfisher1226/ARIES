@@ -1,6 +1,7 @@
 package nam.model.util;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -92,7 +93,7 @@ public class PlaceholderUtil {
 		Iterator<Information> iterator = informationPlaceholders.iterator();
 		while (iterator.hasNext()) {
 			Information information = iterator.next();
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			//set.addAll(namespaces);
 			Iterator<Namespace> iterator2 = namespaces.iterator();
 			while (iterator2.hasNext()) {

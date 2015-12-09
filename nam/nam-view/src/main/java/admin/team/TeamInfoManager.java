@@ -15,7 +15,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.util.Validator;
 
 import admin.Team;
@@ -84,16 +83,8 @@ public class TeamInfoManager extends AbstractNamRecordManager<Team> implements S
 	}
 	
 	protected void initialize(Team team) {
-		TeamUtil.initialize(team);
 		teamWizard.initialize(team);
 		setContext("team", team);
-	}
-	
-	public void handleTeamSelected(@Observes @Selected Team team) {
-		selectionContext.setSelection("team",  team);
-		teamPageManager.updateState(team);
-		teamPageManager.refreshMembers();
-		setRecord(team);
 	}
 	
 	@Override

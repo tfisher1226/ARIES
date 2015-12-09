@@ -1,5 +1,6 @@
 package nam.data;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -154,7 +155,7 @@ public class DataModuleGenerator extends AbstractModuleGenerator {
 	}
 
 	protected void generateMainSources(Module module, Persistence persistence) throws Exception {
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
 			Unit unit = iterator.next();
@@ -188,7 +189,7 @@ public class DataModuleGenerator extends AbstractModuleGenerator {
 	}
 	
 	protected void generateTestSources(Module module, Persistence persistence) throws Exception {
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
 			Unit unit = iterator.next();

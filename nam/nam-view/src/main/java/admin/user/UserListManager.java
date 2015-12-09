@@ -48,6 +48,10 @@ public class UserListManager extends AbstractDomainListManager<User, UserListObj
 		return "User List";
 	}
 
+	public Object getRecordId(User user) {
+		return user.getId();
+	}
+	
 	@Override
 	public Object getRecordKey(User user) {
 		return UserUtil.getKey(user);
@@ -93,10 +97,17 @@ public class UserListManager extends AbstractDomainListManager<User, UserListObj
 		return selected;
 	}
 	
+	public boolean isChecked(User user) {
+		Collection<User> selection = selectionContext.getSelection("userSelection");
+		boolean checked = selection != null && selection.contains(user);
+		return checked;
+	}
+	
 	@Override
 	protected UserListObject createRowObject(User user) {
 		UserListObject listObject = new UserListObject(user);
 		listObject.setSelected(isSelected(user));
+		listObject.setChecked(isChecked(user));
 		return listObject;
 	}
 	

@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchUnitDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{unitListManager.show}"
+		onbegin="setCursorWait(); showProgress('', 'Unit Records', 'Retrieving current records...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showUnitDialog()"
+		render="UnitModule, UnitDialog">
+		
+		<a4j:param name="targetInstance" assignTo="#{unitListManager.targetInstance}" />
+		<a4j:param name="targetDomain" assignTo="#{unitListManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{unitListManager.targetField}" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="unitModule">
+		
+		<a4j:region
+			rendered="#{unitInfoManager.visible}">
+			
+			<aries:dialog
+				id="unitDialog">
+				
+				<!-- Container -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- Content -->
+					<ui:include src="unitListPane.xhtml">
+						<ui:param name="itemManager" value="#{unitInfoManager}" />
+						<ui:param name="listManager" value="#{unitListManager}" />
+					</ui:include>
+				</aries:borderPane>
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

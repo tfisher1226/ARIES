@@ -19,7 +19,7 @@ public class AriesToJPAGenerator {
 		Iterator<Information> iterator = informationBlocks.iterator();
 		while (iterator.hasNext()) {
 			Information information = iterator.next();
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator2 = namespaces.iterator();
 			while (iterator2.hasNext()) {
 				Namespace namespace = iterator2.next();

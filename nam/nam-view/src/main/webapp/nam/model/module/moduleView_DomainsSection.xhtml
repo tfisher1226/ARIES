@@ -26,9 +26,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
-			<aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="moduleManagementViewer" />
+			
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/ModuleDomain16.gif" />
 					<ui:param name="label" value="Module Domains" />
@@ -36,33 +40,39 @@
 	
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../domain/domainListActions.xhtml">
-						<ui:param name="render" value="moduleManagementViewer" />
-						<ui:param name="lockOnSelect" value="true" />
-					</ui:include>
 					
-					<ui:include src="../domain/domainNameListToolbar.xhtml" />
-					<ui:include src="../domain/domainNameListTable.xhtml">
+					<!-- domain refresh scope -->
+					<ui:param name="scope" value="domainList" />
+					<ui:param name="target" value="module" />
+					
+					<!-- domain table section -->
+					<ui:include src="/nam/model/domain/domainListActions.xhtml" />
+					<ui:include src="/nam/model/domain/domainNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/domain/domainNameListTable.xhtml">
 						<ui:param name="domainType" value="Module" />
+						<ui:param name="addSelectorColumn" value="true" />
 					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Module16.gif" />
-					<ui:param name="label" value="Modules for Domain #{domainInfoManager.domain.name.toUpperCase()}" />
+					<ui:param name="label" value="Modules" />
 				</ui:include>
 
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../module/moduleListActions.xhtml">
-						<ui:param name="render" value="moduleManagementViewer" />
-						<ui:param name="lockOnSelect" value="true" />
-					</ui:include>
 					
-					<ui:include src="../module/moduleNameListToolbar.xhtml" />
-					<ui:include src="../module/moduleNameListTable.xhtml" />	
+					<!-- module refresh action -->
+					<ui:param name="scope" value="domainSelection" />
+					
+					<!-- module table section -->
+					<ui:include src="/nam/model/module/moduleListActions.xhtml" />
+					<ui:include src="/nam/model/module/moduleNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/module/moduleNameListTable.xhtml">
+						<ui:param name="manager" value="#{moduleListManager}" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

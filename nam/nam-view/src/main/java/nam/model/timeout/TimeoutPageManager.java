@@ -3,19 +3,20 @@ package nam.model.timeout;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import nam.model.Timeout;
-import nam.model.util.TimeoutUtil;
-import nam.ui.design.SelectionContext;
 
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.ui.PageManager;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
+
+import nam.model.Timeout;
+import nam.model.util.TimeoutUtil;
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -24,6 +25,15 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	
 	@Inject
 	private TimeoutWizard timeoutWizard;
+	
+	@Inject
+	private TimeoutDataManager timeoutDataManager;
+	
+	@Inject
+	private TimeoutInfoManager timeoutInfoManager;
+	
+	@Inject
+	private TimeoutListManager timeoutListManager;
 	
 //	@Inject
 //	private TimeoutRecord_IdentificationSection timeoutIdentificationSection;
@@ -40,9 +50,34 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	
 	public TimeoutPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
+	
+	public void refresh() {
+		refresh("timeout");
+	}
+	
+	public void refreshLocal() {
+		refreshLocal("timeout");
+	}
+	
+	public void refreshMembers() {
+		refreshMembers("timeout");
+	}
+	
+	public void refresh(String scope) {
+		refreshLocal(scope);
+		//refreshMembers(scope);
+	}
+	
+	public void refreshLocal(String scope) {
+		timeoutDataManager.setScope(scope);
+		timeoutListManager.refresh();
+	}
+	
+	public void refreshMembers(String scope) {
+		//nothing for now
+	}
 	
 	public String getTimeoutListPage() {
 		return "/nam/model/timeout/timeoutListPage.xhtml";
@@ -66,6 +101,32 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	
 	public String getTimeoutManagementPage() {
 		return "/nam/model/timeout/timeoutManagementPage.xhtml";
+	}
+	
+	public void handleTimeoutSelected(@Observes @Selected Timeout timeout) {
+		selectionContext.setSelection("timeout",  timeout);
+		timeoutInfoManager.setRecord(timeout);
+	}
+	
+	public void handleTimeoutUnselected(@Observes @Unselected Timeout timeout) {
+		selectionContext.unsetSelection("timeout",  timeout);
+		timeoutInfoManager.unsetRecord(timeout);
+	}
+	
+	public void handleTimeoutChecked() {
+		String scope = "timeoutSelection";
+		TimeoutListObject listObject = timeoutListManager.getSelection();
+		Timeout timeout = selectionContext.getSelection("timeout");
+		boolean checked = timeoutListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			timeoutInfoManager.setRecord(timeout);
+			selectionContext.setSelection(scope,  timeout);
+		} else {
+			timeoutInfoManager.unsetRecord(timeout);
+			selectionContext.unsetSelection(scope,  timeout);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeTimeoutListPage() {
@@ -115,7 +176,7 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	
 	public String initializeTimeoutRecordPage() {
 		Timeout timeout = selectionContext.getSelection("timeout");
-		String timeoutName = timeout.getName();
+		String timeoutName = TimeoutUtil.getLabel(timeout);
 		
 		String pageLevelKey = "timeoutRecord";
 		clearBreadcrumbs(pageLevelKey);
@@ -135,6 +196,7 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	
 	public String initializeTimeoutCreationPage(Timeout timeout) {
 		setPageTitle("New "+getTimeoutLabel(timeout));
+		setPageIcon("/icons/nam/NewTimeout16.gif");
 		setSectionTitle("Timeout Identification");
 		timeoutWizard.setNewMode(true);
 		
@@ -146,11 +208,7 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 		addBreadcrumb(pageLevelKey, "Top", "showMainPage()");
 		addBreadcrumb(pageLevelKey, "Timeouts", "showTimeoutManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Timeout", "showTimeoutWizardPage()"));
-		
-		addBreadcrumb(wizardLevelKey, "Identification", "showTimeoutWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showTimeoutWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showTimeoutWizardPage('Documentation')");
-		
+			
 //		timeoutIdentificationSection.setOwner("timeoutWizard");
 //		timeoutConfigurationSection.setOwner("timeoutWizard");
 //		timeoutDocumentationSection.setOwner("timeoutWizard");
@@ -166,13 +224,15 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
+		refreshLocal();
 		return url;
 	}
 	
 	public String initializeTimeoutUpdatePage(Timeout timeout) {
 		setPageTitle(getTimeoutLabel(timeout));
-		setSectionTitle("Timeout Identification");
-		String timeoutName = timeout.getName();
+		setPageIcon("/icons/nam/Timeout16.gif");
+		setSectionTitle("Timeout Overview");
+		String timeoutName = TimeoutUtil.getLabel(timeout);
 		timeoutWizard.setNewMode(false);
 		
 		String pageLevelKey = "timeout";
@@ -183,10 +243,6 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 		addBreadcrumb(pageLevelKey, "Top", "showMainPage()");
 		addBreadcrumb(pageLevelKey, "Timeouts", "showTimeoutManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(timeoutName, "showTimeoutWizardPage()"));
-		
-		addBreadcrumb(wizardLevelKey, "Identification", "showTimeoutWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showTimeoutWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showTimeoutWizardPage('Documentation')");
 		
 //		timeoutIdentificationSection.setOwner("timeoutWizard");
 //		timeoutConfigurationSection.setOwner("timeoutWizard");
@@ -203,10 +259,13 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
+		refreshLocal();
 		return url;
 	}
 	
 	public String initializeTimeoutManagementPage() {
+		setPageTitle("Timeouts");
+		setPageIcon("/icons/nam/Timeout16.gif");
 		String pageLevelKey = "timeoutManagement";
 		clearBreadcrumbs(pageLevelKey);
 		addBreadcrumb(pageLevelKey, "Top", "showMainPage()");
@@ -223,30 +282,32 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	}
 	
 	public void initializeDefaultView() {
-		initializeView(this, "Timeouts", "Overview") ;
-	}
-	
-	public void initializeView(String elementType, String viewTitle, String sectionName) {
-		String pageManagerName = NameUtil.uncapName(elementType) + "PageManager";
-		PageManager<?> pageManager = BeanContext.getFromSession(pageManagerName);
-		initializeView(pageManager, viewTitle, sectionName);
-	}
-	
-	public void initializeView(PageManager<?> pageManager, String viewTitle, String sectionName) {
-		pageManager.setSectionName(sectionName);
-		pageManager.setSectionTitle(viewTitle);
-		pageManager.setSectionType("timeout");
-		pageManager.setSectionIcon("/icons/nam/Timeout16.gif");
+		setPageTitle("Timeouts");
+		setPageIcon("/icons/nam/Timeout16.gif");
+		setSectionType("timeout");
+		setSectionName("Overview");
+		setSectionTitle("Overview of Timeouts");
+		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "timeoutOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Timeouts", "showTimeoutManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeTimeoutSummaryView(Timeout timeout) {
-		String viewTitle = getTimeoutLabel(timeout);
-		String currentArea = selectionContext.getCurrentArea();
-		initializeView(currentArea, viewTitle, "Summary");
+		//String viewTitle = getTimeoutLabel(timeout);
+		//String currentArea = selectionContext.getCurrentArea();
+		setSectionType("timeout");
+		setSectionName("Summary");
+		setSectionTitle("Summary of Timeout Records");
+		setSectionIcon("/icons/nam/Timeout16.gif");
 		String viewLevelKey = "timeoutSummary";
 		clearBreadcrumbs(viewLevelKey);
 		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
-		addBreadcrumb(viewLevelKey, "Timeouts", "showTimeoutSummaryPage()");
+		addBreadcrumb(viewLevelKey, "Timeouts", "showTimeoutManagementPage()");
 		selectionContext.setMessageDomain(viewLevelKey);
 		sections.clear();
 		return null;
@@ -256,7 +317,7 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 		String label = "Timeout";
 		String name = TimeoutUtil.getLabel(timeout);
 		if (name == null && timeout.getName() != null)
-			name = NameUtil.capName(timeout.getName());
+			name = TimeoutUtil.getLabel(timeout);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -269,7 +330,7 @@ public class TimeoutPageManager extends AbstractPageManager<Timeout> implements 
 	}
 
 	protected void updateState(Timeout timeout) {
-		String timeoutName = NameUtil.capName(timeout.getName());
+		String timeoutName = TimeoutUtil.getLabel(timeout);
 		setSectionTitle(timeoutName + " Timeout");
 	}
 	

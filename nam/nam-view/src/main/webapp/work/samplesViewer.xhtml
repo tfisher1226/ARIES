@@ -1,0 +1,193 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel
+		id="samplesView">
+		
+		<aries:layerPane 
+			id="samplesViewer"
+			activeItem="#{selectionContext.currentTarget}">
+	
+			<aries:layeredPane name="overview">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Sample Types of Applications" />
+
+					<aries:spacer height="16" />
+					<p>
+					These are just some example types of systems and sub-systems that can be added
+					into your application system.
+					</p>
+					<aries:label fontSize="14" fontWeight="bold" value="Types of Information Management" />
+					<aries:spacer height="6" />
+							
+					<aries:spacer height="16" />
+				</div>
+			</aries:layeredPane>
+	
+
+			<aries:layeredPane name="warehouseInventoryAndShipment">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Warehouse Inventory and Shipment Application" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Features" />
+					<p>
+					Manage warehouse inventory
+					Ensure availability of goods
+					Calculate warehouse space and capacity
+					Check warehouse storage conditions
+					Store all the data on your device
+					Works online/offline
+					Push Notification feature
+					</p>				
+				</div>
+			</aries:layeredPane>
+			
+			
+			<aries:layeredPane name="scienceAndResearch">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Science and Research" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Features" />
+					<p>
+					We can develop applications for automating your scientific research
+					</p>
+					<p>
+Statistical analysis,
+data processing and visualization
+Information gathering, storage
+and systematization
+Modeling and forecasting
+					</p>				
+					<p>
+					Scientific research often requires handling complex mathematical calculations and processing large volumes of data. We develop specialized software that can manage your scientific experiments and accelerate your research processes.
+
+Our programmers have scientific backgrounds, which means they can understand your subject matter and produce the algorithms that fit your needs. Our experience in creating complex computational systems will help us develop the technical solution that is best for you. Researchers we have worked with in the past have cited our programmers as co-authors in their papers many times.
+
+Thanks to our contacts with research institutes in Akademgorodok, Novosibirsk, we can develop software for companies that focus on highly-specialized fields and require complex calculations. Among our customers are Russian and foreign businesses that specialize in physics, geology, bioinformatics, medicine and pharmaceutics.
+					</p>
+				</div>
+			</aries:layeredPane>
+			
+			
+	
+	
+			<aries:layeredPane name="constructionManagement">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Construction Management Application" />
+
+					<p>
+				    Make estimates of construction projects
+				    Track necessary information
+				    Keep daily reports and maintenance log
+				    Calculate measurements
+				    Export to PDF report
+				    Works online/offline
+					</p>
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="taskTrackingAndManagement">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Task Tracking and Management Application" />
+
+					<p>
+					Create a database of employees
+					Add new tasks
+					Assign tasks to employees
+					Track and update tasks’ statuses
+					Search the database of tasks by its status
+					Delete tasks
+					</p>
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+	
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="taskAndEventScheduling">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Task and Event Scheduling Application" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+	
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+			
+			
+			<aries:layeredPane name="incomeAndExpenseManagement">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Income and Expense Management Application" />
+
+					<p>
+					Create weekly timesheets and track your schedule
+					Track your availability and working hours
+					Specify hourly rate
+					Calculate wages on a daily basis
+					Save timesheets on your device and access them from multiple devices
+					Export collected work timesheets as PDF files via email
+					</p>
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Java EE System Design" />
+	
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Upgrades" />
+				</div>
+			</aries:layeredPane>
+		</aries:layerPane>
+	</a4j:outputPanel>
+</ui:composition>

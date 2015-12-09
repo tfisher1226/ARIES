@@ -41,7 +41,7 @@
 
 	<!-- navigator -->
 	<ui:define name="navigator">
-		<span class="navigator">
+		<span class="navigator wizardNavigator">
 			<ui:include src="applicationWizardNavigator.xhtml" />
 		</span>
 	</ui:define>
@@ -70,42 +70,46 @@
 		<span class="wizardMessages">
 			<ui:include src="/common/wizardMessages.xhtml">
 				<ui:param name="domain" value="applicationWizard" />
-				<ui:param name="message" value="Enter Service #{applicationWizard.section}" />
+				<ui:param name="message" value="Enter Application #{applicationWizard.section}" />
 			</ui:include>
 		</span>
 	</ui:define>
 
 	<!-- content -->
 	<ui:define name="content">
-		<div class="content"
-			id="applicationWizard">
-		
-			<aries:formPane
-				columns="2">
-		
-				<aries:panel 
-					width="#{helper.wizard_middleSection_width - 32}"
-					height="#{helper.wizard_middleSection_height}"
-					borderColor="#{userSkin.borderColor}"
-					borderWidth="1px"
-					backgroundColor="white">
-
-					<!-- panel -->
-					<ui:include src="applicationRecord_#{applicationWizard.section}Section.xhtml">
-						<ui:param name="section" value="application" />
+		<div class="content">
+	
+			<div id="applicationWizard"
+				class="wizardContent2">
+	
+				<aries:formPane
+					columns="2"
+					columnClass="formColumnAlignTop"
+					style="margin: 0px; background-color: inherit">
+			
+					<!-- wizard content -->
+					<aries:panel 
+						width="#{helper.wizard_middleSection_width + 8}"
+						height="#{helper.wizard_middleSection_height}"
+						style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
+	
+						<!-- wizard panel -->
+						<ui:include src="applicationRecord_#{applicationWizard.section}Section.xhtml">
+							<ui:param name="section" value="application" />
+						</ui:include>
+			
+						<!-- wizard control -->
+						<ui:include src="applicationWizardControl.xhtml" />
+					</aries:panel>
+					
+					<!-- help -->
+					<ui:include src="/common/helpSidebar.xhtml">
+						<ui:param name="layout" value="other" />
+						<ui:param name="domain" value="application" />
+						<ui:param name="section" value="#{applicationWizard.section}" />
 					</ui:include>
-		
-					<!-- control -->
-					<ui:include src="applicationWizardControl.xhtml" />
-				</aries:panel>
-				
-				<!-- help -->
-				<ui:include src="/common/helpSidebar.xhtml">
-					<ui:param name="layout" value="other" />
-					<ui:param name="domain" value="application" />
-					<ui:param name="section" value="#{applicationWizard.section}" />
-				</ui:include>
-			</aries:formPane>
+				</aries:formPane>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

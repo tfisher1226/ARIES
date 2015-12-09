@@ -1,27 +1,24 @@
 package nam.model.project;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.aries.runtime.BeanContext;
+import org.aries.ui.Display;
+import org.aries.ui.event.Add;
+import org.aries.ui.event.Remove;
+import org.aries.util.Validator;
+
 import nam.model.Project;
 import nam.model.util.ProjectUtil;
 import nam.ui.design.AbstractNamRecordManager;
 import nam.ui.design.SelectionContext;
 import nam.ui.design.WorkspaceEventManager;
-
-import org.aries.runtime.BeanContext;
-import org.aries.ui.Display;
-import org.aries.ui.event.Add;
-import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Unselected;
-import org.aries.util.Validator;
 
 
 @SessionScoped
@@ -86,22 +83,8 @@ public class ProjectInfoManager extends AbstractNamRecordManager<Project> implem
 	}
 	
 	protected void initialize(Project project) {
-		ProjectUtil.initialize(project);
 		projectWizard.initialize(project);
 		setContext("project", project);
-	}
-	
-	public void handleProjectSelected(@Observes @Selected Project project) {
-		selectionContext.setSelection("project",  project);
-		projectPageManager.refreshMembers("projectSelection");
-		projectPageManager.updateState(project);
-		setRecord(project);
-	}
-	
-	public void handleProjectUnselected(@Observes @Unselected Project project) {
-		selectionContext.unsetSelection("project",  project);
-		projectPageManager.refreshMembers("projectSelection");
-		unsetRecord(project);
 	}
 	
 	@Override

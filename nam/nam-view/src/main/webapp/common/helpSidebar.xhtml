@@ -14,10 +14,12 @@
 
 	<c:if test="#{layout == 'main'}">
 		<c:set var="extraWidth" value="35" />
+		<c:set var="extraWidth" value="0" />
 	</c:if>
 
 	<c:if test="#{layout == 'other'}">
 		<c:set var="extraWidth" value="5" />
+		<c:set var="extraWidth" value="0" />
 	</c:if>
 
 	<a4j:outputPanel 
@@ -27,17 +29,13 @@
 		<aries:formPane
 			columns="1"
 			columnClass="formColumnAlignLeft"
-			width="#{helper.wizard_rightSection_width + extraWidth}"
-			height="400"
-			margin="0px"
-			marginLeft="#{helper.wizard_rightSection_marginLeft}px"
-			marginRight="20px"
-			borderWidth="1px"
-			borderColor="#bbb"
-			backgroundColor="white">
+			style="width: #{helper.wizard_rightSection_width + extraWidth}px; height: 400px; margin-left: #{helper.wizard_rightSection_marginLeft}px; margin-right: 20px; padding: 20px; padding-top: 16px; border: 1px solid #bbb; background-color: white">
 		
-			<c:set var="backgroundColor" value="#cfe7f5" />
+			<aries:label 
+				value="Help" 
+				style="font-size: 14px; font-weight: bold" />
 			
+			<!--  
 			<aries:indentPane
 				width="auto"
 				height="auto"
@@ -45,9 +43,11 @@
 				paddingLeft="12px"
 				fontSize="14"	
 				fontWeight="bold"
-				backgroundColor="inherit">
+				backgroundColor="inherit"
+				styleXXX="">
 				Help
 			</aries:indentPane>
+			-->
 	
 			<ui:include src="#{fileName}" /> 
 		</aries:formPane>

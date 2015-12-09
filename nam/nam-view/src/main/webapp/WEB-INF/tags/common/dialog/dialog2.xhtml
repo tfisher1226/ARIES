@@ -23,21 +23,17 @@
 		<c:if test="#{empty resizeable}">
 			<c:set var="resizeable" value="false"/> 
 		</c:if>
-
-		<c:if test="#{empty id}">
-			<c:set var="id" value="#{name}"/> 
-		</c:if>
-
+		
 		<c:if test="#{empty domain}">
-			<c:set var="domain" value="#{id}"/> 
+			<c:set var="domain" value="#{name}"/> 
 		</c:if>
 
 		<c:if test="#{empty section}">
-			<c:set var="section" value="#{id}"/> 
+			<c:set var="section" value="#{name}"/> 
 		</c:if>
 		
 		<c:if test="#{empty dialog}">
-			<c:set var="dialog" value="#{id}"/> 
+			<c:set var="dialog" value="#{name}"/> 
 		</c:if>
 
 		<c:if test="#{empty action}">
@@ -95,8 +91,8 @@
 		
 		<rich:popupPanel 
 			id="#{dialog}" 
-			width="#{width}"
-			height="#{height}"
+			width="#{helper.convert(width)}"
+			height="#{helper.convert(height)}"
 			autosized="#{autosized}" 
 			moveable="#{moveable}"
 			resizeable="#{resizeable}"

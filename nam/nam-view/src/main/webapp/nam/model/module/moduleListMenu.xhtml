@@ -8,11 +8,11 @@
 
 	<aries:region>
 		<aries:outputPane 
-			id="moduleListContextMenuPane">
+			id="#{type}ModuleListContextMenuPane">
 			
 			<aries:contextMenu 
 				mode="client"
-				id="moduleListContextMenu"
+				id="#{type}ModuleListContextMenu"
 				target="#{tableId}">
 	
 				<aries:contextMenuItem 
@@ -33,22 +33,22 @@
 				
 				<c:if test="#{securityGuard.checkManager}">
 				<aries:contextMenuItem 
-						mode="client"
-						disabled="false"
+					mode="client"
+					disabled="false"
 					value="New Module..."
 					icon="/icons/common/New16.gif"
-						tooltip="Create new Module for selected Project..."
-						onclick="processNewElement(event, 'Module')" />
+					tooltip="Create new Module for selected Project..."
+					onclick="processNewElement(event, 'Module')" />
 				</c:if>
 		
 				<c:if test="#{securityGuard.checkManager}">
 				<aries:contextMenuItem 
-						mode="client"
+					mode="client"
 					disabled="false"
-						value="Remove Module"
+					value="Remove Module"
 					icon="/icons/common/Remove16.gif"
-						tooltip="Remove Module record from the system"
-						onclick="processRemoveElement(event, 'Module')">
+					tooltip="Remove Module record from the system"
+					onclick="processRemoveElement(event, 'Module')">
 				</aries:contextMenuItem>
 				</c:if>
 			</aries:contextMenu>

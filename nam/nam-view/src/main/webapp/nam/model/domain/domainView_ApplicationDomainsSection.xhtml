@@ -37,7 +37,7 @@
 				<h:panelGroup layout="block" styleClass="tableBorder">
 					<ui:include src="../domain/domainListActions.xhtml">
 						<ui:param name="label" value="Application Domains" />
-						<ui:param name="lockOnSelect" value="true" />
+						<ui:param name="lockOnSelect" value="false" />
 					</ui:include>
 					
 					<ui:include src="../domain/domainNameListToolbar.xhtml" />
@@ -59,7 +59,7 @@
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
 					<ui:include src="../application/applicationNameListActions.xhtml">
-						<ui:param name="lockOnSelect" value="true" />
+						<ui:param name="lockOnSelect" value="false" />
 					</ui:include>
 					
 					<ui:include src="../application/applicationNameListToolbar.xhtml" />

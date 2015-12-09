@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Namespace;
@@ -87,16 +85,8 @@ public class NamespaceInfoManager extends AbstractNamRecordManager<Namespace> im
 	}
 	
 	protected void initialize(Namespace namespace) {
-		NamespaceUtil.initialize(namespace);
 		namespaceWizard.initialize(namespace);
 		setContext("namespace", namespace);
-	}
-	
-	public void handleNamespaceSelected(@Observes @Selected Namespace namespace) {
-		selectionContext.setSelection("namespace",  namespace);
-		namespacePageManager.updateState(namespace);
-		namespacePageManager.refreshMembers();
-		setRecord(namespace);
 	}
 	
 	@Override

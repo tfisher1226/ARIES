@@ -1,25 +1,26 @@
 package nam.model.module;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.model.Module;
-import nam.model.util.ModuleUtil;
-import nam.ui.design.AbstractNamRecordManager;
-import nam.ui.design.SelectionContext;
-import nam.ui.design.WorkspaceEventManager;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Unselected;
 import org.aries.util.Validator;
+
+import nam.model.Module;
+import nam.model.Project;
+import nam.model.util.ModuleUtil;
+import nam.model.util.ProjectUtil;
+import nam.ui.design.AbstractNamRecordManager;
+import nam.ui.design.SelectionContext;
+import nam.ui.design.WorkspaceEventManager;
 
 
 @SessionScoped
@@ -84,22 +85,8 @@ public class ModuleInfoManager extends AbstractNamRecordManager<Module> implemen
 	}
 	
 	protected void initialize(Module module) {
-		ModuleUtil.initialize(module);
 		moduleWizard.initialize(module);
 		setContext("module", module);
-	}
-	
-	public void handleModuleSelected(@Observes @Selected Module module) {
-		selectionContext.setSelection("module",  module);
-		modulePageManager.refreshMembers("moduleSelection");
-		modulePageManager.updateState(module);
-		setRecord(module);
-	}
-	
-	public void handleModuleUnselected(@Observes @Unselected Module module) {
-		selectionContext.unsetSelection("module",  module);
-		modulePageManager.refreshMembers("moduleSelection");
-		unsetRecord(module);
 	}
 	
 	@Override

@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Parameter;
@@ -87,16 +85,8 @@ public class ParameterInfoManager extends AbstractNamRecordManager<Parameter> im
 	}
 	
 	protected void initialize(Parameter parameter) {
-		ParameterUtil.initialize(parameter);
 		parameterWizard.initialize(parameter);
 		setContext("parameter", parameter);
-	}
-	
-	public void handleParameterSelected(@Observes @Selected Parameter parameter) {
-		selectionContext.setSelection("parameter",  parameter);
-		parameterPageManager.updateState(parameter);
-		parameterPageManager.refreshMembers();
-		setRecord(parameter);
 	}
 	
 	@Override

@@ -373,7 +373,7 @@
 				  ** Removes Element 'type' record from system.
 				  -->
 					
-				function processRemoveElement(event, type, action) {
+				function processRemoveElement(event, type, action, render) {
 					var typeUncapped = uncapitalize(type);
 					var label = type;
 					if (applicationTreeState != null)
@@ -381,7 +381,7 @@
 					var warningTitle = 'Remove \"'+label+'\" from system';
 					if (action == null)
 						action = typeUncapped + 'EventManager.remove' + type;
-					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'applicationTree, applicationTreeViewer');
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, render);
 					setCursorDefault();
 				}
 				

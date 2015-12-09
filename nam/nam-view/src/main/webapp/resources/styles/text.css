@@ -16,12 +16,13 @@
 }
 
 .tooltip {
-	padding: 6px 10px;
+	padding: 10px;
 	font-size: 14px;
 	font-weight: normal;
 	text-decoration: none;
-	background-color: #f6f6ff;
-	border: 1px solid darkBlue;
+	background-color: white;
+	border: 1px solid #{userSkin.borderColor};
+	border-radius: 7px; 
 	color: rgb(0,0,128);
 }
 

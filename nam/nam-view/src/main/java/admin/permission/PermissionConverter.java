@@ -32,7 +32,7 @@ public class PermissionConverter extends AbstractConverter implements Converter,
 		if (value == null)
 			return null;
 		Permission permission = (Permission) value;
-		return PermissionUtil.toString(permission);
+		return PermissionUtil.getLabel(permission);
 	}
 	
 }

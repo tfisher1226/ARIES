@@ -8,6 +8,7 @@ import org.aries.ui.event.Add;
 import org.aries.ui.event.Added;
 import org.aries.ui.event.Cancel;
 import org.aries.ui.event.Cancelled;
+import org.aries.ui.event.Checked;
 import org.aries.ui.event.Clear;
 import org.aries.ui.event.Refresh;
 import org.aries.ui.event.Refreshed;
@@ -18,6 +19,7 @@ import org.aries.ui.event.Saved;
 import org.aries.ui.event.Select;
 import org.aries.ui.event.Selected;
 import org.aries.ui.event.Selection;
+import org.aries.ui.event.Unchecked;
 import org.aries.ui.event.Unselect;
 import org.aries.ui.event.Unselected;
 
@@ -26,7 +28,6 @@ import org.aries.ui.event.Unselected;
 public abstract class AbstractEventManager<T> implements EventManager<T> {
 
 	protected abstract T getInstance();
-
 
 	@Inject
 	@Add
@@ -83,6 +84,14 @@ public abstract class AbstractEventManager<T> implements EventManager<T> {
 	@Inject
 	@Unselected
 	private Event<T> unselectedEvent;
+	
+	@Inject
+	@Checked
+	private Event<T> checkedEvent;
+	
+	@Inject
+	@Unchecked
+	private Event<T> uncheckedEvent;
 	
 	@Inject
 	@Clear
@@ -169,7 +178,7 @@ public abstract class AbstractEventManager<T> implements EventManager<T> {
 	public void fireCancelledEvent(Object object) {
 		cancelledEvent.fire((T) object);
 	}
-	
+
 	public void fireSelectEvent() {
 		fireSelectEvent(getInstance());
 	}
@@ -210,4 +219,20 @@ public abstract class AbstractEventManager<T> implements EventManager<T> {
 		clearSelectionEvent.fire(source);
 	}
 
+	public void fireCheckedEvent() {
+		fireCheckedEvent(getInstance());
+	}
+
+	public void fireCheckedEvent(Object object) {
+		checkedEvent.fire((T) object);
+	}
+	
+	public void fireUncheckedEvent() {
+		fireUncheckedEvent(getInstance());
+	}
+
+	public void fireUncheckedEvent(Object object) {
+		uncheckedEvent.fire((T) object);
+	}
+	
 }

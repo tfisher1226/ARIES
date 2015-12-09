@@ -1,0 +1,59 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<aries:tabPane
+		width="500"
+		height="300"
+		id="#{domain}UnitInfoPane">
+		
+		<ui:param name="width" value="#{width-2}" />
+		<ui:param name="height" value="#{height-48}" />
+		
+		<aries:tab
+			label="Unit Information">
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Name" label="Name" value="#{unit.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{unit.label}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Description" label="Description" value="#{unit.description}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Namespace" label="Namespace" value="#{unit.namespace}" items="#{namespaceList}" defaultLabel="select Namespace" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Source" label="Source" value="#{unit.source}" items="#{sourceList}" defaultLabel="select Source" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Adapter" label="Adapter" value="#{unit.adapter}" items="#{adapterList}" defaultLabel="select Adapter" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Transacted" label="Transacted" value="#{unit.transacted}" />
+			
+			<aries:spacer height="6" />
+			<aries:selectOneMenu id="#{section}Elements" label="Elements" value="#{unit.elements}" items="#{elementsList}" defaultLabel="select Elements" />
+			
+			<ui:include src="../query/queryListPane.xhtml">
+				<ui:param name="itemManager" value="#{queryInfoManager}" />
+				<ui:param name="listManager" value="#{queryListManager}" />
+			</ui:include>
+			
+			<ui:include src="../property/propertyListPane.xhtml">
+				<ui:param name="itemManager" value="#{propertyInfoManager}" />
+				<ui:param name="listManager" value="#{propertyListManager}" />
+			</ui:include>
+			
+			<ui:include src="../serializable/serializableListPane.xhtml">
+				<ui:param name="itemManager" value="#{serializableInfoManager}" />
+				<ui:param name="listManager" value="#{serializableListManager}" />
+			</ui:include>
+		</aries:tab>
+	</aries:tabPane>
+</ui:composition>

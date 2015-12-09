@@ -11,7 +11,9 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
+<!--  
 	<aries:tag param="dialog, title, heading, message">
+-->
 		<c:if test="#{empty logo}">
 			<c:set var="logo" value="/icons/wizard/default.gif"/> 
 			<c:set var="logo" value="/dialog/default-dialog-logo.gif"/> 
@@ -88,5 +90,4 @@
 	
 		<div style="display: block; width: 100%; height: 1px; background-color: #bbb"/>
 		<div style="display: block; width: 100%; height: 1px; background-color: #fff"/>
-	</aries:tag>
 </ui:composition>

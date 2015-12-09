@@ -11,7 +11,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
 		<c:if test="#{empty value}">
 			<c:set var="value" value="none"/> 
 		</c:if>
@@ -60,10 +59,6 @@
 			<c:set var="labelClass" value="contextMenuLabel link"/> 
 		</c:if>
 
-		<c:if test="#{empty id}">
-			<c:set var="id" value="contextMenuItem_#{globals.nextId()}" /> 
-		</c:if>
-
 		<rich:menuItem 
 			mode="#{mode}" 
 			rendered="#{rendered}"
@@ -94,5 +89,4 @@
 				<aries:tooltip value="#{tooltip}"/> 
 			</c:if>
 		</rich:menuItem>
-	</aries:tag>
 </ui:composition>

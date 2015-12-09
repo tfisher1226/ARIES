@@ -48,6 +48,10 @@ public class PreferencesListManager extends AbstractDomainListManager<Preference
 		return "Preferences List";
 	}
 
+	public Object getRecordId(Preferences preferences) {
+		return preferences.getId();
+	}
+	
 	@Override
 	public Object getRecordKey(Preferences preferences) {
 		return PreferencesUtil.getKey(preferences);
@@ -93,10 +97,17 @@ public class PreferencesListManager extends AbstractDomainListManager<Preference
 		return selected;
 	}
 	
+	public boolean isChecked(Preferences preferences) {
+		Collection<Preferences> selection = selectionContext.getSelection("preferencesSelection");
+		boolean checked = selection != null && selection.contains(preferences);
+		return checked;
+	}
+	
 	@Override
 	protected PreferencesListObject createRowObject(Preferences preferences) {
 		PreferencesListObject listObject = new PreferencesListObject(preferences);
 		listObject.setSelected(isSelected(preferences));
+		listObject.setChecked(isChecked(preferences));
 		return listObject;
 	}
 	

@@ -44,16 +44,11 @@ public class ServiceListObject extends AbstractListObject<Service> implements Co
 	@Override
 	public void setChecked(boolean checked) {
 		super.setChecked(checked);
-		fireChangeEvent(service, checked);
 	}
 	
-	protected static void fireChangeEvent(Service service, boolean checked) {
-		ServiceEventManager eventManager = BeanContext.getFromSession("serviceEventManager");
-		if (checked) {
-			eventManager.fireSelectedEvent(service);
-		} else {
-			eventManager.fireUnselectedEvent(service);
-		}
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Service16.gif";
 	}
 	
 	@Override

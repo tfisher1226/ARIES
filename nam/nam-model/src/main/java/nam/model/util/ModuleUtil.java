@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Set;
 import nam.model.Application;
 import nam.model.Cache;
 import nam.model.Callback;
+import nam.model.Component;
 import nam.model.Domain;
 import nam.model.Element;
 import nam.model.Import;
@@ -28,6 +30,7 @@ import nam.model.Persistence;
 import nam.model.Process;
 import nam.model.Processes;
 import nam.model.Project;
+import nam.model.Provider;
 import nam.model.Repository;
 import nam.model.Resource;
 import nam.model.Resources;
@@ -198,6 +201,19 @@ public class ModuleUtil extends BaseUtil {
 
 	public static Set<Module> getModules(Modules modules) {
 		return getObjectSet(modules, Module.class);
+	}
+	
+	public static Set<Module> getModules(Modules modules, ModuleType moduleType) {
+		Set<Module> modulesByType = new HashSet<Module>();
+		Set<Module> moduleSet = getObjectSet(modules, Module.class);
+		Iterator<Module> iterator = moduleSet.iterator();
+		while (iterator.hasNext()) {
+			Module module = iterator.next();
+			if (module.getType().equals(moduleType)) {
+				modulesByType.add(module);
+			}
+		}
+		return modulesByType;
 	}
 
 	public static void clearModules(Modules modules) {
@@ -641,7 +657,7 @@ public class ModuleUtil extends BaseUtil {
 		return null;
 	}
 
-	public static List<Unit> getUnits(Module module) {
+	public static Collection<Unit> getUnits(Module module) {
 		Persistence persistence = getPersistenceBlock(module);
 		return PersistenceUtil.getUnits(persistence);
 	}
@@ -685,7 +701,7 @@ public class ModuleUtil extends BaseUtil {
 		List<Namespace> namespaces = new ArrayList<Namespace>(); 
 		Information information = module.getInformation();
 		if (information != null) {
-			List<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = localNamespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = iterator.next();
@@ -710,6 +726,45 @@ public class ModuleUtil extends BaseUtil {
 			elements.addAll(getElements(module));
 		}
 		return elements;
+	}
+	
+	public static Collection<Component> getComponents(Collection<Module> modules) {
+		return getComponents(modules, null);
+	}
+	
+	public static Collection<Component> getComponents(Collection<Module> modules, String componentType) {
+		Collection<Component> components = new ArrayList<Component>();
+		Iterator<Module> iterator = modules.iterator();
+		while (iterator.hasNext()) {
+			Module module = (Module) iterator.next();
+			components.addAll(getComponents(module, componentType));
+		}
+		return components;
+	}
+
+	public static Collection<Component> getComponents(Module application) {
+		return getComponents(application, null);
+	}
+	
+	public static Collection<Component> getComponents(Module module, String componentType) {
+		List<Component> components = new ArrayList<Component>();
+
+		if (componentType != null) {
+			if (componentType.equals("cache") && module.getType() == ModuleType.SERVICE) {
+				module.getComponents();
+			}
+		}
+		
+		Information information = module.getInformation();
+		if (information != null) {
+			Collection<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
+			Iterator<Namespace> iterator = localNamespaces.iterator();
+//			while (iterator.hasNext()) {
+//				Namespace namespace = iterator.next();
+//			}
+		}
+			
+		return components;
 	}
 	
 	public static List<Link> getSendLinks(Module module) {
@@ -809,4 +864,38 @@ public class ModuleUtil extends BaseUtil {
 		}
 	}
 
+	
+	public static Collection<Provider> getProviders(Collection<Project> projectList, Collection<Module> modules) {
+		List<Provider> providers = new ArrayList<Provider>();
+		Iterator<Module> iterator = modules.iterator();
+		while (iterator.hasNext()) {
+			Module module = iterator.next();
+			Collection<Provider> list = getProviders(projectList, module);
+			//TODO prevent duplicates
+			providers.addAll(list);
+		}
+		return providers;
+	}
+	
+	public static Collection<Provider> getProviders(Collection<Project> projectList, Module module) {
+		Project project = getProject(projectList, module);
+		Assert.notNull(project, "Project not found for module: "+module.getName());
+		Collection<Provider> providerList = new ArrayList<Provider>();
+		providerList.addAll(MessagingUtil.getProviders(ProjectUtil.getMessagingBlocks(project)));
+		providerList.addAll(PersistenceUtil.getProviders(ProjectUtil.getPersistenceBlocks(project)));
+		return providerList;
+	}
+
+	public static Project getProject(Collection<Project> projectList, Module module) {
+		Iterator<Project> iterator = projectList.iterator();
+		while (iterator.hasNext()) {
+			Project project = iterator.next();
+			Collection<Module> moduleList = ProjectUtil.getModules(projectList);
+			if (moduleList.contains(module)) {
+				return project;
+			}
+		}
+		return null;
+	}
+	
 }

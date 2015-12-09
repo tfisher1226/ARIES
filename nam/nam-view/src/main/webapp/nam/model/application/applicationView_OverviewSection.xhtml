@@ -35,13 +35,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 
 			<!-- variables -->
-			<ui:param name="lockOnSelect" value="true" />
 			<ui:param name="render" value="applicationManagementViewer" />
 			
-			<aries:panel>
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Project16.gif" />
 					<ui:param name="label" value="Projects" />
@@ -49,6 +49,12 @@
 	
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
+					
+					<!-- project refresh scope -->
+					<ui:param name="scope" value="projectList" />
+					<ui:param name="target" value="application" />
+					
+					<!-- project table section -->
 					<ui:include src="/nam/model/project/projectListActions.xhtml" />
 					<ui:include src="/nam/model/project/projectNameListToolbar.xhtml" />
 					<ui:include src="/nam/model/project/projectNameListTable.xhtml">
@@ -57,7 +63,7 @@
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Application16.gif" />
 					<ui:param name="label" value="Applications" />
@@ -65,9 +71,14 @@
 
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="applicationListActions.xhtml" />
-					<ui:include src="applicationNameListToolbar.xhtml" />
-					<ui:include src="applicationNameListTable.xhtml" />
+					
+					<!-- application refresh action -->
+					<ui:param name="scope" value="projectSelection" />
+					
+					<!-- application table section -->
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

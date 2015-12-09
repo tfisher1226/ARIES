@@ -39,15 +39,22 @@
 			action="#{roleListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Role Records', 'Refreshing current Role List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="roleListActions, roleListMenu, roleListToolbar, roleListPane">
+			render="roleListActions roleListMenu roleListToolbar roleNameListToolbar roleListTable roleNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{roleDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromRoleList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Role List.
+		  ** Selects Role element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="roleListActions, roleListToolbar, #{render}">
+			render="roleListActions roleListToolbar roleNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{roleListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="role" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="roleListActions, roleListToolbar, #{render}">
+			render="roleListActions roleListToolbar roleNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{roleListManager.selectedRecordIndex}" />
@@ -97,7 +104,7 @@
 			<a4j:param name="section" assignTo="#{roleWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -115,14 +122,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="roleListActions, roleListMenu, roleListToolbar">
+			render="roleListActions roleListMenu roleListToolbar roleNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeHandleRoleChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Role.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleRoleChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{rolePageManager.handleRoleChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="roleListActions roleListToolbar roleNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{roleListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{roleListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{roleListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{roleDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="roleListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +253,8 @@
 				function processRoleListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateRoleListState(event, rowIndex, recordKey, recordLabel);
 					enableRoleListActions('role');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromRoleList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +276,24 @@
 						executeActionFromRoleList(rowIndex, recordKey, 'Role', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRoleListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Role List item.
+				  -->
+					
+				function processRoleListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleRoleChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

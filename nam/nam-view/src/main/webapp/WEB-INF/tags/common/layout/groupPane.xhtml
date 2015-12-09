@@ -11,46 +11,37 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<aries:init/>
+	<c:if test="#{empty label}">
+		<c:set var="label" value="unspecified" /> 
+	</c:if>
+
+	<h:panelGrid
+		layout="block"
+		cellpadding="0"
+		cellspacing="0"
+		columns="1"
+		columnClasses="formColumn" 
+		styleClass="formPanel"
+		style="#{style}">
 		
-		<c:if test="#{empty label}">
-			<c:set var="label" value="unspecified" /> 
-		</c:if>
-
-		<h:panelGrid
-			layout="block"
-			cellpadding="0"
-			cellspacing="0"
-			columns="1"
-			columnClasses="formColumn" 
-			styleClass="formPanel"
-			onclickXXX="alert('#{width}')"
-			style="#{paddingSettings}; #{backgroundSettings}">
+		<aries:label 
+			value="#{label}" 
+			height="20"
+			fontSize="#{fontSize}"
+			backgroundColor="inherit" />
 			
-			<aries:label 
-				value="#{label}" 
-				height="20"
-				fontSize="#{fontSize}"
-				backgroundColor="inherit" />
-				
-			<!--  
-				width="#{width-20}" 
-				height="#{height-20}" 
-			-->
+		<!--  
+			width="#{width-20}" 
+			height="#{height-20}" 
+		-->
 
-			<aries:panel 
-				width="#{width}" 
-				height="#{height}" 
-				borderWidth="1px" 
-				borderColor="#ddd" 
-				marginTop="6px" 
-				padding="10px" 
-				paddingTop="6px" 
-				backgroundColor="inherit">
-	
-				<ui:insert/>
-			</aries:panel>
-		</h:panelGrid>
-	</aries:tag>
+		<aries:panel 
+			width="#{width}" 
+			height="#{height}"  
+			backgroundColor="inherit"
+			style="marginTop: 6px; padding: 10px; padding-top: 6px; border: 1px solid #ddd">
+
+			<ui:insert/>
+		</aries:panel>
+	</h:panelGrid>
 </ui:composition>

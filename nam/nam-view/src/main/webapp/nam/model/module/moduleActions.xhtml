@@ -12,7 +12,6 @@
 	
 	<a4j:region>
 
-
 		<a4j:jsFunction 
 			name="newModule0" 
 			immediate="true"
@@ -92,6 +91,48 @@
 			bypassUpdates="true"
 			action="#{modulePageManager.initializeModuleManagementPage}"
 			onbegin="setCursorWait(event.source); showProgress('Nam', 'Module Records', 'Preparing Module related information...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showApplicationWizardPage()
+		  ** Goes to the Application Wizard Page.
+		  -->
+		
+		<a4j:jsFunction
+			name="showApplicationWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{applicationPageManager.initializeApplicationManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Application Records', 'Preparing Application information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{applicationWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{applicationWizard.origin}" />
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showProjectWizardPage()
+		  ** Goes to the Project Wizard Page.
+		  -->
+		
+		<a4j:jsFunction
+			name="showProjectWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{projectPageManager.initializeProjectManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Project Records', 'Preparing Project information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{projectWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{projectWizard.origin}" />
 		</a4j:jsFunction>
 		
 		

@@ -41,6 +41,16 @@ public class TeamListObject extends AbstractListObject<Team> implements Comparab
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Team16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(team);
 	}

@@ -81,21 +81,14 @@
 			id="moduleWizard">
 			
 			<aries:formPane
-				columns="2">
+				columns="2"
+				style="">
 				
 				<!-- wizard content -->
 				<aries:panel
-					width="#{helper.wizard_middleSection_width - 16}"
+					width="#{helper.wizard_middleSection_width + 10}"
 					height="#{helper.wizard_middleSection_height}"
-					borderWidth="1px"
-					borderColor="#{userSkin.borderColor}"
-					backgroundColor="white">
-					
-					<!-- variables -->
-					<ui:param name="fontSize" value="13" />
-					<ui:param name="fontWeight" value="normal" />
-					<ui:param name="width" value="#{helper.wizard_middleSection_width - 4}" />
-					<ui:param name="height" value="#{helper.wizard_middleSection_height}" />
+					style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
 					
 					<!-- wizard panel -->
 					<ui:include src="moduleRecord_#{moduleWizard.section}Section.xhtml">

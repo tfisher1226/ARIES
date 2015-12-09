@@ -32,6 +32,16 @@ public class RoleTypeListObject extends AbstractListObject<RoleType> implements 
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/RoleType16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(roleType);
 	}

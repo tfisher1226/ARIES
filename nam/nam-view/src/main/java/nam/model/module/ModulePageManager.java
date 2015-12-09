@@ -3,6 +3,7 @@ package nam.model.module;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,6 +12,7 @@ import nam.model.ModuleType;
 import nam.model.component.ComponentPageManager;
 import nam.model.domain.DomainPageManager;
 import nam.model.element.ElementPageManager;
+import nam.model.project.ProjectPageManager;
 import nam.model.provider.ProviderPageManager;
 import nam.model.service.ServicePageManager;
 import nam.model.util.ModuleUtil;
@@ -22,6 +24,8 @@ import org.aries.ui.AbstractWizard;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
 import org.aries.ui.PageManager;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 import org.aries.util.NameUtil;
 
 
@@ -34,9 +38,45 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 
 	@Inject
 	private ModuleDataManager moduleDataManager;
-
+	
+	@Inject
+	private ModuleInfoManager moduleInfoManager;
+	
 	@Inject
 	private ModuleListManager moduleListManager;
+	
+	@Inject
+	private ModuleListManager_Basic basicModuleListManager;
+	
+	@Inject
+	private ModuleListManager_Client clientModuleListManager;
+	
+	@Inject
+	private ModuleListManager_Namespace namespaceModuleListManager;
+	
+	@Inject
+	private ModuleListManager_Persistence persistenceModuleListManager;
+	
+	@Inject
+	private ModuleListManager_Project projectModuleListManager;
+	
+	@Inject
+	private ModuleListManager_Service serviceModuleListManager;
+	
+	@Inject
+	private ModuleListManager_View viewModuleListManager;
+	
+	@Inject
+	private ModuleListManager_Test testModuleListManager;
+	
+	@Inject
+	private ModuleListManager_EAR earModuleListManager;
+	
+	@Inject
+	private ModuleListManager_EAR warModuleListManager;
+	
+	@Inject
+	private ProjectPageManager projectPageManager;
 	
 	@Inject
 	private DomainPageManager domainPageManager;
@@ -92,12 +132,11 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 	
 	public ModulePageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 
 	
 	public void refresh() {
-		refresh("module");
+		refresh("projectList");
 	}
 
 	public void refreshLocal() {
@@ -110,12 +149,22 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
 		moduleDataManager.setScope(scope);
 		moduleListManager.refresh();
+		basicModuleListManager.refresh();
+		clientModuleListManager.refresh();
+		namespaceModuleListManager.refresh();
+		persistenceModuleListManager.refresh();
+		projectModuleListManager.refresh();
+		serviceModuleListManager.refresh();
+		viewModuleListManager.refresh();
+		testModuleListManager.refresh();
+		earModuleListManager.refresh();
+		warModuleListManager.refresh();
 	}
 	
 	public void refreshMembers(String scope) {
@@ -124,6 +173,43 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		elementPageManager.refresh(scope);
 		componentPageManager.refresh(scope);
 		providerPageManager.refresh(scope);
+	}
+
+	private boolean subListsVisible = true;
+	
+	public boolean isSubListsVisible() {
+		return subListsVisible;
+	}
+
+	public void setSubListsVisible(boolean subListsVisible) {
+		this.subListsVisible = subListsVisible;
+	}
+
+	public void expandCollapseModuleList() {
+		subListsVisible = !subListsVisible;
+		boolean visible = subListsVisible;
+		
+//		basicModuleListManager.isVisible();
+//		clientModuleListManager.isVisible();
+//		namespaceModuleListManager.isVisible();
+//		persistenceModuleListManager.isVisible();
+//		projectModuleListManager.isVisible();
+//		serviceModuleListManager.isVisible();
+//		viewModuleListManager.isVisible();
+//		testModuleListManager.isVisible();
+//		earModuleListManager.isVisible();
+//		warModuleListManager.isVisible();
+		
+		basicModuleListManager.setVisible(visible);
+		clientModuleListManager.setVisible(visible);
+		namespaceModuleListManager.setVisible(visible);
+		persistenceModuleListManager.setVisible(visible);
+		projectModuleListManager.setVisible(visible);
+		serviceModuleListManager.setVisible(visible);
+		viewModuleListManager.setVisible(visible);
+		testModuleListManager.setVisible(visible);
+		earModuleListManager.setVisible(visible);
+		warModuleListManager.setVisible(visible);
 	}
 	
 	public String getModuleListPage() {
@@ -157,7 +243,44 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 	public String getModuleTypeSelectionPage() {
 		return getModuleWizardPage() + "?section=typeSelection";
 	}
-
+	
+	public void handleModuleSelected(@Observes @Selected Module module) {
+		selectionContext.setSelection("module",  module);
+		moduleInfoManager.setRecord(module);
+	}
+	
+	public void handleModuleUnselected(@Observes @Unselected Module module) {
+		selectionContext.unsetSelection("module",  module);
+		moduleInfoManager.unsetRecord(module);
+	}
+	
+	public void handleModuleChecked() {
+		String scope = "moduleSelection";
+		ModuleListObject listObject = moduleListManager.getSelection();
+		Module module = selectionContext.getSelection("module");
+		boolean checked = moduleListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			moduleInfoManager.setRecord(module);
+			selectionContext.setSelection(scope,  module);
+		} else {
+			moduleInfoManager.unsetRecord(module);
+			selectionContext.unsetSelection(scope,  module);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("domain"))
+			domainPageManager.refreshLocal(scope);
+		if (target.equals("service"))
+			servicePageManager.refreshLocal(scope);
+		if (target.equals("element"))
+			elementPageManager.refreshLocal(scope);
+		if (target.equals("component"))
+			componentPageManager.refreshLocal(scope);
+		if (target.equals("provider"))
+			providerPageManager.refreshLocal(scope);
+		refreshLocal(scope);
+	}
+	
 	public String initializeModuleListPage() {
 		String pageLevelKey = "moduleList";
 		clearBreadcrumbs(pageLevelKey);
@@ -252,11 +375,11 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		addBreadcrumb(pageLevelKey, "Modules", "showModuleManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Module", "showModuleWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Domains", "showModuleWizardPage('Domains')");
-		addBreadcrumb(wizardLevelKey, "Services", "showModuleWizardPage('Services')");
-		addBreadcrumb(wizardLevelKey, "Elements", "showModuleWizardPage('Elements')");
-		addBreadcrumb(wizardLevelKey, "Components", "showModuleWizardPage('Components')");
-		addBreadcrumb(wizardLevelKey, "Providers", "showModuleWizardPage('Providers')");
+//		addBreadcrumb(wizardLevelKey, "Domains", "showModuleWizardPage('Domains')");
+//		addBreadcrumb(wizardLevelKey, "Services", "showModuleWizardPage('Services')");
+//		addBreadcrumb(wizardLevelKey, "Elements", "showModuleWizardPage('Elements')");
+//		addBreadcrumb(wizardLevelKey, "Components", "showModuleWizardPage('Components')");
+//		addBreadcrumb(wizardLevelKey, "Providers", "showModuleWizardPage('Providers')");
 		
 		moduleSourceSelectionSection.setOwner("moduleWizard");
 		moduleTypeSelectionSection.setOwner("moduleWizard");
@@ -316,7 +439,7 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -332,15 +455,16 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		clearBreadcrumbs(pageLevelKey);
 		clearBreadcrumbs(wizardLevelKey);
 
+		addBreadcrumb(pageLevelKey, "Bookshop", "showMainPage()");
 		addBreadcrumb(pageLevelKey, "Top", "showMainPage()");
 		addBreadcrumb(pageLevelKey, "Modules", "showModuleManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(moduleName, "showModuleWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Domains", "showModuleWizardPage('Domains')");
-		addBreadcrumb(wizardLevelKey, "Services", "showModuleWizardPage('Services')");
-		addBreadcrumb(wizardLevelKey, "Elements", "showModuleWizardPage('Elements')");
-		addBreadcrumb(wizardLevelKey, "Components", "showModuleWizardPage('Components')");
-		addBreadcrumb(wizardLevelKey, "Providers", "showModuleWizardPage('Providers')");
+//		addBreadcrumb(wizardLevelKey, "Domains", "showModuleWizardPage('Domains')");
+//		addBreadcrumb(wizardLevelKey, "Services", "showModuleWizardPage('Services')");
+//		addBreadcrumb(wizardLevelKey, "Elements", "showModuleWizardPage('Elements')");
+//		addBreadcrumb(wizardLevelKey, "Components", "showModuleWizardPage('Components')");
+//		addBreadcrumb(wizardLevelKey, "Providers", "showModuleWizardPage('Providers')");
 
 		moduleOverviewSection.setOwner("moduleWizard");
 		moduleIdentificationSection.setOwner("moduleWizard");
@@ -369,17 +493,18 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
 	public String initializeModuleManagementPage() {
-		AbstractWizard<?> peek = null;
-		if (!activeContexts.isEmpty())
-			peek = activeContexts.peek();
-		String currentContext2 = currentContext;
-		String currentArea = selectionContext.getCurrentArea();
-		refresh(currentArea);
+//		AbstractWizard<?> peek = null;
+//		if (!activeContexts.isEmpty())
+//			peek = activeContexts.peek();
+//		String currentContext2 = currentContext;
+//		String currentArea = selectionContext.getCurrentArea();
+//		refresh(currentArea);
+		
 		setPageTitle("Modules");
 		setPageIcon("/icons/nam/Module16.gif");
 		String pageLevelKey = "moduleManagement";
@@ -395,7 +520,6 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;	
 	}
 	
@@ -444,20 +568,30 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Modules");
+		setPageIcon("/icons/nam/Module16.gif");
 		setSectionType("module");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Modules");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "moduleOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Modules", "showModuleManagementPage()");
+		String scope = "projectList";
+		projectPageManager.refreshLocal(scope);
+		refreshLocal(scope);
+		sections.clear();
 	}
 
 	public String initializeModuleDomainsView() {
 		setSectionType("module");
 		setSectionName("Domains");
 		setSectionTitle("Domains");
-		setSectionIcon("/icons/nam/Domain16.gif");
+		setSectionIcon("/icons/nam/ModuleDomain16.gif");
 		selectionContext.setMessageDomain("moduleDomains");
-		domainPageManager.refresh("module");
-		moduleListManager.refresh();
+		domainPageManager.refreshLocal("projectList");
+		refreshLocal("domainSelection");
 		sections.clear();
 		return null;
 	}
@@ -468,8 +602,8 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		setSectionTitle("Services");
 		setSectionIcon("/icons/nam/Service16.gif");
 		selectionContext.setMessageDomain("moduleServices");
-		servicePageManager.refresh("module");
-		moduleListManager.refresh();
+		servicePageManager.refreshLocal("moduleSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -480,8 +614,8 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		setSectionTitle("Elements");
 		setSectionIcon("/icons/nam/Element16.gif");
 		selectionContext.setMessageDomain("moduleElements");
-		elementPageManager.refresh("module");
-		moduleListManager.refresh();
+		elementPageManager.refreshLocal("moduleSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -492,8 +626,8 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		setSectionTitle("Components");
 		setSectionIcon("/icons/nam/Component16.gif");
 		selectionContext.setMessageDomain("moduleComponents");
-		componentPageManager.refresh("module");
-		moduleListManager.refresh();
+		componentPageManager.refreshLocal("moduleSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -504,8 +638,8 @@ public class ModulePageManager extends AbstractPageManager<Module> implements Se
 		setSectionTitle("Providers");
 		setSectionIcon("/icons/nam/Provider16.gif");
 		selectionContext.setMessageDomain("moduleProviders");
-		providerPageManager.refresh("module");
-		moduleListManager.refresh();
+		providerPageManager.refreshLocal("moduleSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}

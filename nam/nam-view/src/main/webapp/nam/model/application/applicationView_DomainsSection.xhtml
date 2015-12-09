@@ -26,12 +26,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 	
+			<!-- variables -->
 			<ui:param name="render" value="applicationManagementViewer" />
-			<ui:param name="lockOnSelect" value="true" />
 
-			<aries:panel>
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/ApplicationDomain16.gif" />
 					<ui:param name="label" value="Application Domains" />
@@ -39,26 +40,37 @@
 	
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../domain/domainListActions.xhtml" />
-					<ui:include src="../domain/domainNameListToolbar.xhtml" />
-					<ui:include src="../domain/domainNameListTable.xhtml">
+					
+					<!-- domain refresh scope -->
+					<ui:param name="scope" value="domainList" />
+					<ui:param name="target" value="application" />
+					
+					<!-- domain table section -->
+					<ui:include src="/nam/model/domain/domainListActions.xhtml" />
+					<ui:include src="/nam/model/domain/domainNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/domain/domainNameListTable.xhtml">
 						<ui:param name="domainType" value="Application" />
 						<ui:param name="addSelectorColumn" value="true" />
 					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Application16.gif" />
-					<ui:param name="label" value="#{domainInfoManager.domain.name.toUpperCase()} Applications" />
+					<ui:param name="label" value="Applications" />
 				</ui:include>
 
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../application/applicationListActions.xhtml" />
-					<ui:include src="../application/applicationNameListToolbar.xhtml" />
-					<ui:include src="../application/applicationNameListTable.xhtml" />	
+					
+					<!-- application refresh action -->
+					<ui:param name="scope" value="domainSelection" />
+					
+					<!-- application table section -->
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

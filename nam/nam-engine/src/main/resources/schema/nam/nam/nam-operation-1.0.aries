@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Operation section
+	*****************
+ -->
+	
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+	
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/nam/nam-common-1.0.aries" />
+	<import file="/nam/nam-information-1.0.aries" />
+
+	<domain>org.aries</domain>
+	<name>nam</name>
+
+	<namespace 
+        prefix="nam" 
+        name="nam-model" 
+        uri="http://nam/model">
+
+
+		<!--
+			Interface element
+			*****************
+		 -->
+
+		<element name="Interface">
+			<item name="name" type="xs:string" required="true" />
+			<item name="type" type="xs:string" required="true" useForEquals="true" />
+			<listItem name="operations" type="Operation" />
+		</element>
+
+
+		<!--
+			Operation element
+			***************
+		 -->
+
+		<element name="Operation">
+			<item name="name" type="xs:string" required="true" />
+			<item name="role" type="xs:string" />
+			<listItem name="parameters" type="Parameter" />
+			<listItem name="commands" type="Command" />
+			<listItem name="results" type="Result" />
+			<listItem name="timeouts" type="Timeout" />
+			<listItem name="faults" type="Fault" />
+		</element>
+		
+		
+		<!--
+			Parameter element
+			***************
+		 -->
+
+		<element name="Parameter">
+			<item name="name" type="xs:string" required="true" />
+			<item name="type" type="xs:string" required="true" />
+			<item name="key" type="xs:string" />
+			<item name="construct" type="xs:string" />
+			<item name="required" type="xs:boolean" />
+		</element>
+   		
+   		
+		<!--
+			Command element
+			***************
+		 -->
+
+		<element name="Command">
+			<item name="name" type="CommandName" required="true" />
+			<item name="type" type="xs:string" required="true" />
+			<item name="node" type="xs:anyType" />
+			<item name="actor" type="xs:anyType" />
+			<listItem name="tokens" type="xs:string" />
+			<listItem name="attributes" type="Attribute" />
+			<listItem name="references" type="Reference" />
+			<listItem name="parameters" type="Parameter" />
+			<listItem name="results" type="Result" />
+			<listItem name="commands" type="Command" />
+			<item name="text" type="xs:string" />
+			<item name="indent" type="xs:int" />
+		</element>
+		
+		
+		<!--
+			CommandName type
+			****************
+		 -->
+
+		<enumeration name="CommandName">
+			<literal name="NEW" label="New" />
+			<literal name="CALL" label="Call" />
+			<literal name="SEND" label="Send" />
+			<literal name="INVOKE" label="Invoke" />
+			<literal name="LISTEN" label="Listen" />
+			<literal name="RECEIVE" label="Receive" />
+			<literal name="REPLY" label="Reply" />
+			<literal name="POST" label="Post" />
+			<literal name="THROW" label="Throw" />
+			<literal name="EXECUTE" label="Execute" />
+			<literal name="EXPRESSION" label="Expression" />
+			<literal name="OPTION" label="Option" />
+			<literal name="BRANCH" label="Branch" />
+			<literal name="DONE" label="Call" />
+		</enumeration>
+		
+		
+		<!--
+			Result element
+			**************
+		 -->
+
+		<element name="Result">
+			<item name="type" type="xs:string" required="true" useForEquals="true" />
+			<item name="name" type="xs:string" />
+			<item name="key" type="xs:string" />
+			<item name="construct" type="xs:string" />
+			<item name="required" type="xs:boolean" />
+		</element>
+
+
+		<!--
+			Timeout element
+			***************
+		 -->
+
+   		<element name="Timeout">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="value" type="xs:long" required="true" />
+		</element>
+
+
+		<!--
+			Fault element
+			*************
+		 -->
+
+		<element name="Fault" extends="Element">
+			<item name="code" type="xs:string" required="true" useForEquals="true" />
+			<item name="message" type="xs:string" useForEquals="true" />
+			<item name="cause" type="Fault" />
+			<listItem name="attributes" type="Attribute" />
+		</element>
+	</namespace>
+</information>
+

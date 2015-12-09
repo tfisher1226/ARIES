@@ -21,7 +21,6 @@ import nam.model.Command;
 import nam.model.Component;
 import nam.model.Dependency;
 import nam.model.Direction;
-import nam.model.Domain;
 import nam.model.Execution;
 import nam.model.Fault;
 import nam.model.Group;
@@ -61,7 +60,7 @@ import org.aries.util.Validator;
 public class ServiceUtil {
 
 	public static String getKey(Service service) {
-		return service.getNamespace() + "/" + service.getName();
+		return service.getDomain() + "." + service.getName();
 	}
 	
 	public static String getLabel(Service service) {
@@ -155,10 +154,11 @@ public class ServiceUtil {
 		return new Comparator<Service>() {
 			public int compare(Service service1, Service service2) {
 				Object key1 = getKey(service1);
-				Object key2 = getKey(service1);
+				Object key2 = getKey(service2);
 				String text1 = key1.toString();
 				String text2 = key2.toString();
 				int status = text1.compareTo(text2);
+				System.out.println(">>> "+status+". "+key2+", "+key2);
 				return status;
 			}
 		};
@@ -740,6 +740,17 @@ public class ServiceUtil {
 		}
 		return null;
 	}
+
+	public static Set<Cache> getCacheUnitReferences(Collection<Service> services) {
+		Set<Cache> cacheUnits = new TreeSet<Cache>();
+		Iterator<Service> iterator = services.iterator();
+		while (iterator.hasNext()) {
+			Service service = iterator.next();
+			Set<Cache> references = getCacheUnitReferences(service);
+			cacheUnits.addAll(references);
+		}
+		return cacheUnits;
+	}
 	
 	public static Set<Cache> getCacheUnitReferences(Service service) {
 		Set<Cache> cacheUnits = new TreeSet<Cache>();
@@ -795,7 +806,7 @@ public class ServiceUtil {
 	 */
 	
 	public static boolean hasDataUnitReference(Service service) {
-		Set<String> references = getDataUnitReferences(service);
+		Set<Unit> references = getDataUnitReferences(service);
 		return !references.isEmpty();
 	}
 	
@@ -804,7 +815,7 @@ public class ServiceUtil {
 		return dataUnit != null;
 	}
 	
-	public static Unit getDataUnitReference(Service service, String cacheName) {
+	public static Unit getDataUnitReference(Service service, String unitName) {
 		Process process = service.getProcess();
 		Operation serviceOperation = ServiceUtil.getDefaultOperation(service);
 		Operation processOperation = ProcessUtil.getOperation(process, serviceOperation.getName());
@@ -816,7 +827,7 @@ public class ServiceUtil {
 			ExpressionStatement expressionStatement = iterator.next();
 			String targetName = expressionStatement.getTargetName();
 			Unit dataUnit = ProcessUtil.getDataUnit(process, targetName);
-			if (dataUnit != null && dataUnit.getName().equalsIgnoreCase(cacheName))
+			if (dataUnit != null && dataUnit.getName().equalsIgnoreCase(unitName))
 				return dataUnit;
 		}
 		
@@ -824,18 +835,47 @@ public class ServiceUtil {
 		Iterator<Callback> iterator3 = callbacks.iterator();
 		while (iterator3.hasNext()) {
 			Callback callback = iterator3.next();
-			Unit dataUnit = getDataUnitReference(callback, cacheName);	
+			Unit dataUnit = getDataUnitReference(callback, unitName);	
 			if (dataUnit != null)
 				return dataUnit;
 		}
 		return null;
 	}
 	
-	public static Set<String> getDataUnitReferences(Service service) {
-		Set<String> unitNames = new TreeSet<String>();
+	public static Set<Unit> getDataUnitReferences(Collection<Service> services) {
+		Set<Unit> unitNames = new TreeSet<Unit>();
+		Iterator<Service> iterator = services.iterator();
+		while (iterator.hasNext()) {
+			Service service = iterator.next();
+			Set<Unit> references = getDataUnitReferences(service);
+			unitNames.addAll(references);
+		}
+		return unitNames;
+	}
+	
+	public static Set<Unit> getDataUnitReferences(Service service) {
+		Set<Unit> units = new TreeSet<Unit>();
+		Operation operation = ServiceUtil.getDefaultOperation(service);
+		if (operation != null) {
+			units.addAll(getDataUnitReferences(service, operation));
+		} else {
+			List<Operation> operations = ServiceUtil.getOperations(service);
+			Iterator<Operation> iterator = operations.iterator();
+			while (iterator.hasNext()) {
+				operation = iterator.next();
+				units.addAll(getDataUnitReferences(service, operation));
+			}
+		}
+		return units;
+	}
+	
+	public static Set<Unit> getDataUnitReferences(Service service, Operation operation) {
+		Set<Unit> units = new TreeSet<Unit>();
 		Process process = service.getProcess();
-		Operation serviceOperation = ServiceUtil.getDefaultOperation(service);
-		Operation processOperation = ProcessUtil.getOperation(process, serviceOperation.getName());
+		if (process == null)
+			return units;
+		
+		Operation processOperation = ProcessUtil.getOperation(process, operation.getName());
 		List<Command> commands = processOperation.getCommands();
 
 		Collection<DefinitionCommand> definitionCommands = CommandUtil.getCommands(commands, DefinitionCommand.class);
@@ -847,7 +887,7 @@ public class ServiceUtil {
 				targetName = targetName.substring(0, targetName.length()-7);
 			Unit dataUnit = ProcessUtil.getDataUnit(process, targetName);
 			if (dataUnit != null)
-				unitNames.add(targetName);
+				units.add(dataUnit);
 		}
 		
 		Collection<ExpressionStatement> expressionStatements = CommandUtil.getCommands(commands, ExpressionStatement.class);
@@ -859,16 +899,16 @@ public class ServiceUtil {
 				targetName = targetName.substring(0, targetName.length()-7);
 			Unit dataUnit = ProcessUtil.getDataUnit(process, targetName);
 			if (dataUnit != null)
-				unitNames.add(targetName);
+				units.add(dataUnit);
 		}
 		
 		List<Callback> callbacks = ServiceUtil.getIncomingCallbacks(service);
 		Iterator<Callback> iterator3 = callbacks.iterator();
 		while (iterator3.hasNext()) {
 			Callback callback = iterator3.next();
-			unitNames.addAll(getDataUnitReferences(callback));			
+			units.addAll(getDataUnitReferences(callback));			
 		}
-		return unitNames;
+		return units;
 	}
 	
 	

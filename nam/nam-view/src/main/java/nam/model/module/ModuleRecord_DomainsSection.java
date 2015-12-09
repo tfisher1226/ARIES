@@ -34,6 +34,11 @@ public class ModuleRecord_DomainsSection extends AbstractWizardPage<Module> impl
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/ModuleDomain16.gif";
+	}
+	
+	@Override
 	public void initialize(Module module) {
 		setEnabled(true);
 		setBackEnabled(true);

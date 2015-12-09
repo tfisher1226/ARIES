@@ -34,6 +34,11 @@ public class ApplicationRecord_DomainsSection extends AbstractWizardPage<Applica
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/ApplicationDomain16.gif";
+	}
+	
+	@Override
 	public void initialize(Application application) {
 		setEnabled(true);
 		setBackEnabled(true);

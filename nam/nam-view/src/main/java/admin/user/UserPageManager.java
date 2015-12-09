@@ -3,15 +3,16 @@ package admin.user;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.User;
 import admin.permission.PermissionPageManager;
@@ -35,6 +36,9 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	private UserDataManager userDataManager;
 	
 	@Inject
+	private UserInfoManager userInfoManager;
+	
+	@Inject
 	private UserListManager userListManager;
 	
 	@Inject
@@ -42,6 +46,9 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	
 	@Inject
 	private RolePageManager rolePageManager;
+	
+	//@Inject
+	//private ActionPageManager actionPageManager;
 	
 	@Inject
 	private PermissionPageManager permissionPageManager;
@@ -84,12 +91,11 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	
 	public UserPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("user");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -102,7 +108,7 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -111,13 +117,12 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	}
 	
 	public void refreshMembers(String scope) {
-		teamPageManager.refresh(scope);
-		rolePageManager.refresh(scope);
-		//actionPageManager.refresh(scope);
-		permissionPageManager.refresh(scope);
-		preferencesPageManager.refresh(scope);
-		registrationPageManager.refresh(scope);
-		userListManager.refresh();
+		teamPageManager.refreshLocal(scope);
+		rolePageManager.refreshLocal(scope);
+		//actionPageManager.refreshLocal(scope);
+		permissionPageManager.refreshLocal(scope);
+		preferencesPageManager.refreshLocal(scope);
+		registrationPageManager.refreshLocal(scope);
 	}
 
 	public String getUserListPage() {
@@ -142,6 +147,45 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 
 	public String getUserManagementPage() {
 		return "/admin/user/userManagementPage.xhtml";
+	}
+	
+	public void handleUserSelected(@Observes @Selected User user) {
+		selectionContext.setSelection("user",  user);
+		userInfoManager.setRecord(user);
+	}
+	
+	public void handleUserUnselected(@Observes @Unselected User user) {
+		selectionContext.unsetSelection("user",  user);
+		userInfoManager.unsetRecord(user);
+	}
+	
+	public void handleUserChecked() {
+		String scope = "userSelection";
+		UserListObject listObject = userListManager.getSelection();
+		User user = selectionContext.getSelection("user");
+		boolean checked = userListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			userInfoManager.setRecord(user);
+			selectionContext.setSelection(scope,  user);
+		} else {
+			userInfoManager.unsetRecord(user);
+			selectionContext.unsetSelection(scope,  user);
+		}
+		String target = selectionContext.getCurrentTarget();
+		if (target.equals("team"))
+			teamPageManager.refreshLocal(scope);
+		if (target.equals("role"))
+			rolePageManager.refreshLocal(scope);
+		//if (target.equals("action"))
+		//	actionPageManager.refreshLocal(scope);
+		if (target.equals("permission"))
+			permissionPageManager.refreshLocal(scope);
+		if (target.equals("preferences"))
+			preferencesPageManager.refreshLocal(scope);
+		if (target.equals("registration"))
+			registrationPageManager.refreshLocal(scope);
+		refreshLocal(scope);
 	}
 	
 	public String initializeUserListPage() {
@@ -228,8 +272,8 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 		addBreadcrumb(wizardLevelKey, "Roles", "showUserWizardPage('Roles')");
 		addBreadcrumb(wizardLevelKey, "Actions", "showUserWizardPage('Actions')");
 		addBreadcrumb(wizardLevelKey, "Permissions", "showUserWizardPage('Permissions')");
-		addBreadcrumb(wizardLevelKey, "Preferences", "showUserWizardPage('Preferenceses')");
-		addBreadcrumb(wizardLevelKey, "Registration", "showUserWizardPage('Registration')");
+		addBreadcrumb(wizardLevelKey, "Preferences", "showUserWizardPage('Preferences')");
+		addBreadcrumb(wizardLevelKey, "Registrations", "showUserWizardPage('Registrations')");
 
 		userIdentitySection.setOwner("userWizard");
 		userContactSection.setOwner("userWizard");
@@ -256,7 +300,7 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -281,7 +325,7 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 		addBreadcrumb(wizardLevelKey, "Actions", "showUserWizardPage('Actions')");
 		addBreadcrumb(wizardLevelKey, "Permissions", "showUserWizardPage('Permissions')");
 		addBreadcrumb(wizardLevelKey, "Preferences", "showUserWizardPage('Preferences')");
-		addBreadcrumb(wizardLevelKey, "Registration", "showUserWizardPage('Registration')");
+		addBreadcrumb(wizardLevelKey, "Registrations", "showUserWizardPage('Registrations')");
 
 		userOverviewSection.setOwner("userWizard");
 		userIdentitySection.setOwner("userWizard");
@@ -310,7 +354,7 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -329,25 +373,33 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 
 	public void initializeDefaultView() {
+		setPageTitle("Users");
+		setPageIcon("/icons/nam/Users16.gif");
 		setSectionType("user");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Users");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "userOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Users", "showUserManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeUserTeamsView() {
 		setSectionType("user");
 		setSectionName("Teams");
-		setSectionTitle("User Teams");
+		setSectionTitle("Teams");
 		setSectionIcon("/icons/nam/Team16.gif");
 		selectionContext.setMessageDomain("userTeams");
-		teamPageManager.refresh("user");
-		userListManager.refresh();
+		teamPageManager.refreshLocal("userSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -355,11 +407,11 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	public String initializeUserRolesView() {
 		setSectionType("user");
 		setSectionName("Roles");
-		setSectionTitle("User Roles");
+		setSectionTitle("Roles");
 		setSectionIcon("/icons/nam/Role16.gif");
 		selectionContext.setMessageDomain("userRoles");
-		rolePageManager.refresh("user");
-		userListManager.refresh();
+		rolePageManager.refreshLocal("userSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -367,11 +419,11 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	public String initializeUserActionsView() {
 		setSectionType("user");
 		setSectionName("Actions");
-		setSectionTitle("User Actions");
+		setSectionTitle("Actions");
 		setSectionIcon("/icons/nam/Action16.gif");
 		selectionContext.setMessageDomain("userActions");
-		//actionPageManager.refresh("user");
-		userListManager.refresh();
+		//actionPageManager.refreshLocal("userSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -379,11 +431,11 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	public String initializeUserPermissionsView() {
 		setSectionType("user");
 		setSectionName("Permissions");
-		setSectionTitle("User Permissions");
+		setSectionTitle("Permissions");
 		setSectionIcon("/icons/nam/Permission16.gif");
 		selectionContext.setMessageDomain("userPermissions");
-		permissionPageManager.refresh("user");
-		userListManager.refresh();
+		permissionPageManager.refreshLocal("userSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -391,11 +443,11 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	public String initializeUserPreferencesesView() {
 		setSectionType("user");
 		setSectionName("Preferenceses");
-		setSectionTitle("User Preferenceses");
+		setSectionTitle("Preferenceses");
 		setSectionIcon("/icons/nam/Preferences16.gif");
 		selectionContext.setMessageDomain("userPreferenceses");
-		preferencesPageManager.refresh("user");
-		userListManager.refresh();
+		preferencesPageManager.refreshLocal("userSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}
@@ -403,11 +455,11 @@ public class UserPageManager extends AbstractPageManager<User> implements Serial
 	public String initializeUserRegistrationsView() {
 		setSectionType("user");
 		setSectionName("Registrations");
-		setSectionTitle("User Registrations");
+		setSectionTitle("Registrations");
 		setSectionIcon("/icons/nam/Registration16.gif");
 		selectionContext.setMessageDomain("userRegistrations");
-		registrationPageManager.refresh("user");
-		userListManager.refresh();
+		registrationPageManager.refreshLocal("userSelection");
+		refreshLocal("projectList");
 		sections.clear();
 		return null;
 	}

@@ -2,18 +2,16 @@ package admin.registration;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.ui.design.SelectionContext;
-
-import org.aries.runtime.BeanContext;
-
 import admin.Registration;
-import admin.User;
-import admin.client.userService.UserService;
+import admin.util.RegistrationUtil;
+
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -58,13 +56,8 @@ public class RegistrationDataManager implements Serializable {
 	}
 	
 	public void saveRegistration(Registration registration) {
-		User user = registration.getUser();
-		BeanContext.set("org.aries.user", user);
 		if (scope != null) {
 			Object owner = getOwner();
-			//save in database table
-			UserService userService = BeanContext.getFromSession(UserService.ID); 
-			userService.saveUser(user);
 		}
 	}
 	

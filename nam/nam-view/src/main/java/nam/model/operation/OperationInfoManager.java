@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Operation;
@@ -87,16 +85,8 @@ public class OperationInfoManager extends AbstractNamRecordManager<Operation> im
 	}
 	
 	protected void initialize(Operation operation) {
-		OperationUtil.initialize(operation);
 		operationWizard.initialize(operation);
 		setContext("operation", operation);
-	}
-	
-	public void handleOperationSelected(@Observes @Selected Operation operation) {
-		selectionContext.setSelection("operation",  operation);
-		operationPageManager.updateState(operation);
-		operationPageManager.refreshMembers();
-		setRecord(operation);
 	}
 	
 	@Override

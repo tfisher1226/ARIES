@@ -101,14 +101,11 @@
 	//]]>
 	</script>
 	
-	<aries:tag>
-		<aries:init/>
-		
 	    <a4j:jsFunction 
 	    	name="_executeTarget" 
 	    	action="#{messageDialog.execute}" 
 	    	oncomplete="setCursorDefault(); hideProgress(); _hidePopup()"
-	    	render="#{messageDialog.renderList}">
+	    	render="">
 	    	<a4j:param name="actionEvent" assignTo="#{messageDialog.actionEvent}" />
 	    	<a4j:param name="renderList" assignTo="#{messageDialog.renderList}" />
 		</a4j:jsFunction>
@@ -239,6 +236,5 @@
 			<h:inputHidden id="popupDialog_progressEnabled" value=" " />
 			<h:inputHidden id="popupDialog_renderList" value=" " />
 		</rich:popupPanel>	
-	</aries:tag>
 </ui:composition>
 

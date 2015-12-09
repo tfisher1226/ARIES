@@ -10,9 +10,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<aries:init/>
-		
 		<c:if test="#{empty indent}">
 			<c:set var="indent" value="20px" /> 
 		</c:if>
@@ -22,11 +19,9 @@
 			onmouseover="#{onmouseover}"
 			onmouseout="#{onmouseout}"
 			onclick="#{onclick}"
-			onclickXX="alert('#{sizeSettings}')"
 			styleClass="formPanel"  
-			style="#{sizeSettings}; #{marginSettings}; #{paddingSettings}; #{textSettings}; #{borderSettings}; #{backgroundSettings}; #{style}">
+			style="#{sizeSettings}; #{style}">
 			
 			<ui:insert/>
 		</h:panelGroup>
-	</aries:tag>
 </ui:composition>

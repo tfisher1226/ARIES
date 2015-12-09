@@ -17,10 +17,6 @@
 	<c:if test="#{empty maxlength}">
 		<c:set var="maxlength" value="32" /> 
 	</c:if>
-	
-	<c:if test="#{empty id}">
-		<c:set var="id" value="ReadOnlyField_#{globals.nextId()}" /> 
-	</c:if>
 
 	<aries:fieldWrapper>
 		<h:inputText

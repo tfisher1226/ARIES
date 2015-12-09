@@ -2,9 +2,9 @@
 
 USER=root
 
-PASSWORD=
+PASSWORD=supersecret
 
-HOST=localhost
+HOST=192.168.99.105
 
 DATABASE=admin_db
 

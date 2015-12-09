@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/work.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="homeContent.xhtml" />
+	</ui:define>
+
+	<!-- section header -->
+	<ui:define name="pageHeader">
+	
+		<!-- page title -->
+		<aries:header 
+			titleText="Nam"
+			subTitleText="Network and Application Modeler" />
+		
+		<!-- page menubar -->
+		<div style="width: 100%; border: 0px solid #ccc">
+			<div style="width: #{helper.contentWidth}px; margin: 0 auto">
+				<ui:include src="actions.xhtml"/>
+				<ui:include src="menubar.xhtml"/>
+			</div>
+		</div>
+	</ui:define>
+
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content">
+
+			<div style="width: auto; max-width: auto; margin: 20px 0px; padding: 0px; padding-top: 0px; text-align: left; background-color: inherit">
+				<aries:text fontSize="32" value="We help you build Java EE systems in minutes" />
+			</div>
+						
+Why use us ?
+		</div>
+	</ui:define>
+</ui:composition>

@@ -77,7 +77,7 @@ public class ElementListObjectBuilder extends AbstractBeanBuilder {
 			modelClass.addImportedClass(elementPackageName + ".util." + elementClassName + "Util");
 		}
 
-		modelClass.addImportedClass("org.aries.runtime.BeanContext");
+		//modelClass.addImportedClass("org.aries.runtime.BeanContext");
 		modelClass.addImportedClass("org.aries.ui.AbstractListObject");
 		modelClass.addImportedClass("java.io.Serializable");
 	}
@@ -151,7 +151,9 @@ public class ElementListObjectBuilder extends AbstractBeanBuilder {
 		if (!ElementUtil.isEnumeration(element))
 			modelClass.addInstanceOperation(createOperation_getLabel2(element));
 		modelClass.addInstanceOperation(createOperation_setChecked(element));
-		modelClass.addInstanceOperation(createOperation_fireChangeEvent(element));
+		//modelClass.addInstanceOperation(createOperation_setChecked2(element));
+		//modelClass.addInstanceOperation(createOperation_fireChangeEvent(element));
+		modelClass.addInstanceOperation(createOperation_getIcon(element));
 		modelClass.addInstanceOperation(createOperation_toString(element));
 		modelClass.addInstanceOperation(createOperation_toString2(element));
 		modelClass.addInstanceOperation(createOperation_compareTo(element));
@@ -259,7 +261,23 @@ public class ElementListObjectBuilder extends AbstractBeanBuilder {
 		
 		Buf buf = new Buf();
 		buf.putLine2("super.setChecked(checked);");
-		buf.putLine2("fireChangeEvent("+elementNameUncapped+", checked);");
+		//buf.putLine2("fireChangeEvent("+elementNameUncapped+", checked);");
+
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+	
+	protected ModelOperation createOperation_setChecked2(Type element) throws Exception {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("setChecked2");
+		modelOperation.addParameter(createParameter("boolean", "checked"));
+		
+		Buf buf = new Buf();
+		buf.putLine2("super.setChecked(checked);");
 
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
@@ -277,16 +295,30 @@ public class ElementListObjectBuilder extends AbstractBeanBuilder {
 
 		Buf buf = new Buf();
 		buf.putLine2(elementClassName+"EventManager eventManager = BeanContext.getFromSession(\""+elementNameUncapped+"EventManager\");");
-		buf.putLine2("if (checked) {");
-		buf.putLine2("	eventManager.fireSelectedEvent("+elementNameUncapped+");");
-		buf.putLine2("} else {");
-		buf.putLine2("	eventManager.fireUnselectedEvent("+elementNameUncapped+");");
-		buf.putLine2("}");
+		buf.putLine2("if (checked)");
+		buf.putLine2("	eventManager.fireCheckedEvent("+elementNameUncapped+");");
+		buf.putLine2("else eventManager.fireUncheckedEvent("+elementNameUncapped+");");
 
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
 	}
 	
+	protected ModelOperation createOperation_getIcon(Type element) throws Exception {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.addAnnotation(AnnotationUtil.createOverrideAnnotation());
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("getIcon");
+		modelOperation.setResultType("String");
+		
+		Buf buf = new Buf();
+		buf.putLine2("return \"/icons/nam/"+elementClassName+"16.gif\";");
+
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
 	
 	protected ModelOperation createOperation_toString2(Type type) throws Exception {
 		String elementClassName = ModelLayerHelper.getElementClassName(type);

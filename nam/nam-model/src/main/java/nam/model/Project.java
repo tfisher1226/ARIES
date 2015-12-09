@@ -20,7 +20,7 @@ import org.aries.adapter.DateAdapter;
 
 })
 @XmlRootElement(name = "project", namespace = "http://nam/model")
-public class Project implements Comparable<Object>, Serializable {
+public class Project implements Comparable<Project>, Serializable {
 
     private final static long serialVersionUID = 1L;
     
@@ -654,24 +654,35 @@ public class Project implements Comparable<Object>, Serializable {
 
 
 	@Override
-	public int compareTo(Object object) {
-		if (object.getClass().isAssignableFrom(this.getClass())) {
-			Project other = (Project) object;
-			int status = compare(name, other.name);
-			if (status != 0)
-				return status;
-			status = compare(domain, other.domain);
-			if (status != 0)
-				return status;
-		} else {
-			String name1 = this.getClass().getName();
-			String name2 = object.getClass().getName();
-			int status = compare(name1, name2);
-			if (status != 0)
-				return status;
-		}
+	public int compareTo(Project other) {
+		int status = compare(name, other.name);
+		if (status != 0)
+			return status;
+		status = compare(domain, other.domain);
+		if (status != 0)
+			return status;
 		return 0;
 	}
+	
+//	@Override
+//	public int compareTo(Object object) {
+//		if (object.getClass().isAssignableFrom(this.getClass())) {
+//			Project other = (Project) object;
+//			int status = compare(name, other.name);
+//			if (status != 0)
+//				return status;
+//			status = compare(domain, other.domain);
+//			if (status != 0)
+//				return status;
+//		} else {
+//			String name1 = this.getClass().getName();
+//			String name2 = object.getClass().getName();
+//			int status = compare(name1, name2);
+//			if (status != 0)
+//				return status;
+//		}
+//		return 0;
+//	}
 	
 	protected <T extends Comparable<T>> int compare(T value1, T value2) {
 		if (value1 == null && value2 == null) return 0;
@@ -680,7 +691,7 @@ public class Project implements Comparable<Object>, Serializable {
 		int status = value1.compareTo(value2);
 		return status;
 	}
-	
+
 	@Override
 	public boolean equals(Object object) {
 		if (object == null)

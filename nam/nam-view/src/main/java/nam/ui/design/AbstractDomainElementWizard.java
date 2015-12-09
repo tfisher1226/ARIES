@@ -121,6 +121,11 @@ public abstract class AbstractDomainElementWizard<T> extends AbstractWizard<T> {
 	}
 
 	@Override
+	public boolean isSaveEnabled() {
+		return super.isSaveEnabled();
+	}
+	
+	@Override
 	public String refresh() {
 		return super.refresh();
 	}

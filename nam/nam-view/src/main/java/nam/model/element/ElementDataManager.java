@@ -60,12 +60,16 @@ public class ElementDataManager implements Serializable {
 			return getElementList_ForModuleSelection();
 		}
 
+		if (scope.equals("namespaceSelection")) {
+			return getElementList_ForNamespaceSelection();
+		}
+
 		Object owner = getOwner();
 		if (owner == null)
 			return null;
 		
 		if (scope.equals("namespace")) {
-			return getElementList((Namespace) getOwner());
+			return getElementList_ForNamespace((Namespace) getOwner());
 		} else if (scope.equals("application")) {
 			return getElementList((Application) getOwner());
 		} else if (scope.equals("project")) {
@@ -89,7 +93,13 @@ public class ElementDataManager implements Serializable {
 		return elementList;
 	}
 	
-	public Collection<Element> getElementList(Namespace namespace) {
+	protected Collection<Element> getElementList_ForNamespaceSelection() {
+		Collection<Namespace> namespaceSelection = selectionContext.getSelection("namespaceSelection");
+		Collection<Element> elementList = NamespaceUtil.getElements(namespaceSelection);
+		return elementList;
+	}
+	
+	protected Collection<Element> getElementList_ForNamespace(Namespace namespace) {
 		Collection<Element> elementList = NamespaceUtil.getElements(namespace);
 		return elementList;
 	}
@@ -119,6 +129,7 @@ public class ElementDataManager implements Serializable {
 	public void saveElement(Element element) {
 		if (scope != null) {
 			Object owner = getOwner();
+		
 			if (scope.equals("namespace")) {
 				NamespaceUtil.addElement((Namespace) owner, element);
 			}
@@ -128,6 +139,7 @@ public class ElementDataManager implements Serializable {
 	public boolean removeElement(Element element) {
 		if (scope != null) {
 			Object owner = getOwner();
+		
 			if (scope.equals("namespace")) {
 				return NamespaceUtil.removeElement((Namespace) owner, element);
 			}

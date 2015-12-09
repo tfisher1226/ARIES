@@ -1,17 +1,12 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="type" value="ProviderList" />
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="manager" value="#{providerListManager}" />
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
 	
 	<a4j:jsFunction
 	 	name="launchProviderDialog"
@@ -19,28 +14,24 @@
 		immediate="true"
 		bypassUpdates="true"
 		limitRender="true"
-		action="#{manager.show}"
+		action="#{providerListManager.show}"
 		onbegin="setCursorWait(); showProgress('', 'Provider Records', 'Retrieving current records...')"
 		oncomplete="setCursorDefault(eventSource); hideProgress(); showProviderDialog()"
-		render="#{type}Module, #{type}Dialog">
+		render="ProviderModule, ProviderDialog">
 		
-		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
-		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
-		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{providerListManager.targetInstance}" />
+		<a4j:param name="targetDomain" assignTo="#{providerListManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{providerListManager.targetField}" />
 	</a4j:jsFunction>
 	
-	<aries:region
-		id="#{type}Module"
-		parent="#{section}"
-		domain="#{type}"
-		section="#{type}Dialog"
-		rendered="#{manager.visible}">
+	<a4j:outputPanel
+		id="providerModule">
 		
-		<aries:form
-			id="#{section}Form">
+		<a4j:region
+			rendered="#{providerInfoManager.visible}">
 			
 			<aries:dialog
-				id="#{section}">
+				id="providerDialog">
 				
 				<!-- Container -->
 				<aries:borderPane
@@ -50,10 +41,10 @@
 					<!-- Content -->
 					<ui:include src="providerListPane.xhtml">
 						<ui:param name="itemManager" value="#{providerInfoManager}" />
-						<ui:param name="listManager" value="#{mainProviderListManager}" />
+						<ui:param name="listManager" value="#{providerListManager}" />
 					</ui:include>
 				</aries:borderPane>
 			</aries:dialog>
-		</aries:form>
-	</aries:region>
+		</aries:region>
+	</a4j:outputPanel>
 </ui:composition>

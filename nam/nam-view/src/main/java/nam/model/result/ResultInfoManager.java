@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Project;
@@ -87,16 +85,8 @@ public class ResultInfoManager extends AbstractNamRecordManager<Result> implemen
 	}
 	
 	protected void initialize(Result result) {
-		ResultUtil.initialize(result);
 		resultWizard.initialize(result);
 		setContext("result", result);
-	}
-	
-	public void handleResultSelected(@Observes @Selected Result result) {
-		selectionContext.setSelection("result",  result);
-		resultPageManager.updateState(result);
-		resultPageManager.refreshMembers();
-		setRecord(result);
 	}
 	
 	@Override

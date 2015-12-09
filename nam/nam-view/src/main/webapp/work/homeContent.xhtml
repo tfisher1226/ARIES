@@ -1,0 +1,241 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+
+	<style>
+	.padding {padding: 20px;}
+	.indent10 {padding-left: 10px;}
+	.indent20 {padding-left: 20px;}
+	.column1 {display: block; width: 33%; float: left; text-align: left; vertical-align: top;}
+	.column2 {display: block; width: 34%; float: left; text-align: left; vertical-align: top;}
+	.column3 {display: block; width: 33%; float: left; text-align: left; vertical-align: top;}
+	.column25pct {display: block; width: 25%; float: left; text-align: left; vertical-align: top;}
+	.label15 {font-size: 15px; font-weight: bold;}
+	.label16 {font-size: 16px; font-weight: bold;}
+	.label20 {font-size: 20px; font-weight: bold;}
+	.label24 {font-size: 24px; font-weight: bold;}
+	.text14 {font-size: 14px; font-weight: normal;}
+	.text16 {font-size: 16px; font-weight: normal;}
+	.link16 {font-size: 16px; font-weight: normal;}
+	</style>
+
+	<a4j:jsFunction 
+		name="showHomePane"
+		onbegin="setCursorWait(this); lockScreen()"
+		oncomplete="setCursorDefault(); unlockScreen()" 
+		render="homeMenu homeView">
+		<a4j:param name="itemName" assignTo="#{selectionContext.currentTarget}" />
+	</a4j:jsFunction>
+	
+	<aries:spacer height="4" />
+	<aries:label fontSize="26" value="We build custom Java Applications for you - in minutes" />
+
+	<aries:spacer height="8" />
+	<aries:label fontSize="20" fontStyle="normal" fontFamily="Calibri" value="In a week, we deliver more to you, than 20 excellent engineers can do in an entire year" />
+
+	<aries:spacer height="8" />
+	<aries:formPane
+		columns="2"
+		columnClasses="widthAuto, width100pct"
+		style="background-color: inherit">
+		
+		<h:panelGroup layout="block" style="">
+			<ui:include src="homeMenu.xhtml" />
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" style="padding-left: 50px">
+			<ui:include src="homeViewer.xhtml" />
+		</h:panelGroup>
+	</aries:formPane>
+	
+
+	<!--  
+	<div class="vspace30" />
+	<div class="width100pct" style="display: block; background-color: inherit">
+		<div class="column1" style="background-color: inherit">
+			<div style="padding: 0px">
+				<span class="label15">We build systems you can control</span>
+				<div class="vspace10" />
+				<p class="text14">
+				It's easy to manage, maintain, and extend systems that we build for you.
+				With one of our modern, flexible sites, anyone in your organization can 
+				update content from any online computer. No web design experience or 
+				additional software is required.
+				</p>
+			</div>
+		</div>
+
+		<div class="column2" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<h3>We design for today's Clouds</h3>
+				<br/>
+				<p>
+				Bridging the gap to the Cloud is challenging.  We
+				develop your system to be independent of environment.
+				Using Docker, we deploy to Amazon AWS, Oracle, or HP Cloud systems.
+				Google Cloud Platform.
+				</p>
+				<br/>
+				<a>Read more...</a>
+			</div>
+		</div>
+
+		<div class="column3" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<h3>We are easy to work with</h3>
+				<br/>
+				<p>
+				We're a small shop by choice, so we don't have the overhead of a large staff. 
+				This allows us to offer our expertise at an affordable price. 
+				When you work with us, you'll be in direct contact with the people who 
+				are designing and building your site. We don't outsource, and we can 
+				address any question about your site's design.
+				</p>
+			</div>
+		</div>
+	</div>
+	-->
+
+	<!--  
+	<div class="vspace30" />
+	<div class="width100pct" style="display: block; text-align: left">
+		<div style="padding">
+			<span class="label20">We specialize in providing the following</span>
+		</div>
+	</div>
+
+
+	<div class="width100pct" style="display: block">
+		<div class="column25pct" style="background-color: inherit">
+			<div style="padding: 0px">
+				<h4>Massively Scalable Data-Caching</h4>
+			</div>
+		</div>
+
+		<div class="column25pct" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<h4>High-Performance Load Balancing</h4>
+			</div>
+		</div>
+
+		<div class="column25pct" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<h4>Application-Aware Health Checks</h4>
+			</div>
+		</div>
+
+		<div class="column25pct" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<h4>Advanced Activity Monitoring</h4>
+
+			</div>
+		</div>
+	</div>
+	-->
+	
+	
+
+	<!--  
+	<c:set var="fontFamily" value="arial, helvetica, sans-serif" />
+	<c:set var="fontWeight" value="normal" />
+
+	<div class="vspace20" />
+	<div class="width100pct" style="display: block">
+		<div class="column1" style="background-color: inherit">
+			<div style="padding: 0px">
+				<span class="label15">We build sites you can control</span>
+				
+				
+			</div>
+		</div>
+
+		<div class="column2" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<aries:label fontSize="15" value="We design for today's Clouds" />
+			</div>
+		</div>
+
+		<div class="column3" style="background-color: inherit">
+			<div style="padding-left: 20px">
+				<h3>We are easy to work with</h3>
+				<br/>
+				<p>
+				We're a small shop by choice, so we don't have the overhead of a large staff. 
+				This allows us to offer our expertise at an affordable price. 
+				When you work with us, you'll be in direct contact with the people who 
+				are designing and building your site. We don't outsource, and we can 
+				address any question about your site's design.
+				</p>
+			</div>
+		</div>
+	</div>
+	-->
+	
+	
+</ui:composition>
+
+	<!--  
+	<h:panelGroup layout="block" style="">
+		<aries:text fontSize="26" fontStyle="normal" value="Build Java Apps in minutes" />
+		<aries:spacer height="6" />
+		<aries:text fontSize="16" fontStyle="normal" value="Accomplish more work in 1 week than 20 solid engineers can do in 1 year" />
+		<aries:spacer height="6" />
+		<aries:text fontSize="16" fontStyle="normal" value="Java EE, Web-services, Business Processing, Distributed Caching, Enterprise Messaging, User-Interfaces.." />
+		<aries:spacer height="6" />
+	</h:panelGroup>
+	-->
+	
+	<!--  
+	<h:panelGroup layout="block" style="margin-left: 40px">
+		<aries:label fontSize="26" value="Deploy on-premise or most any Cloud" />
+		<aries:label fontSize="17" value="JBoss, Wildfly, Docker and Kubernetes" />
+		<aries:label fontSize="17" value="No limit to scalable network design" />
+	</h:panelGroup>
+	
+	We build systems you can handle
+	We build systems you can customize
+	We build systems you can control
+	We design for today's and tomorrow's Cloud providers
+	Our approach yields tangible results
+	We're easy to work with
+	-->
+	
+	<!--  
+	<div style="width: 800px; max-width: 800px; margin: auto; background-color: white">
+
+		<aries:formPane
+			columns="2">
+		
+			<h:panelGroup>
+				<div style="width: 530px; max-width: 530px; margin: auto; padding: 0px; padding-top: 30px; background-color: inherit">
+					<aries:label fontSize="32" value="Build Java EE systems in minutes" />
+					<aries:label fontSize="24" value="No Coding Required" />
+					<aries:label fontSize="24" value="Accomplish more in 1 week than" />
+					<aries:label fontSize="24" value="20 solid engineers can do in 1 year" />
+					<aries:label fontSize="16" value="design your data, services, caching, messaging, and persistence" />
+					<aries:label fontSize="16" value="design and auto-generate user-interfaces for web, tablet, and phone" />
+				</div>
+
+				<div style="width: 530px; max-width: 530px; margin: auto; padding: 0px; padding-top: 30px; background-color: inherit">
+				</div>
+
+				<div style="width: 530px; max-width: 530px; margin: auto; padding: 0px; padding-top: 30px; background-color: inherit">
+				</div>
+			</h:panelGroup>
+			
+			<h:panelGroup>
+				<div style="width: 270px; max-width: 270px; margin: auto; padding: 0px; padding-top: 30px; background-color: inherit">
+					<aries:label fontSize="32" value="" />
+				</div>
+			</h:panelGroup>
+		</aries:formPane>
+	</div>
+	-->
+			
+					

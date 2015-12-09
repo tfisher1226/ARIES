@@ -1,6 +1,7 @@
 package nam.model.application;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -8,22 +9,19 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import nam.model.Application;
+import nam.model.Project;
+import nam.ui.design.AbstractDomainTreeManager;
+import nam.ui.design.SelectionContext;
+import nam.ui.tree.ModelTreeNode;
+
 import org.aries.runtime.BeanContext;
 import org.aries.ui.EventManager;
 import org.aries.ui.event.Added;
 import org.aries.ui.event.Refresh;
-import org.aries.ui.event.Remove;
 import org.aries.ui.event.Removed;
-import org.aries.ui.event.Selected;
 import org.aries.util.NameUtil;
 import org.richfaces.model.TreeNode;
-
-import nam.model.Application;
-import nam.model.Project;
-import nam.model.util.ApplicationUtil;
-import nam.ui.design.AbstractDomainTreeManager;
-import nam.ui.design.SelectionContext;
-import nam.ui.tree.ModelTreeNode;
 
 
 @SessionScoped
@@ -135,11 +133,11 @@ public class ApplicationTreeManager extends AbstractDomainTreeManager implements
 	
 	@Override
 	public void refreshModel() {
-		List<Project> projectList = selectionContext.getSelection("projectList");
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		refreshModel(projectList);
 	}
 
-	public void refreshModel(List<Project> projectList) {
+	public void refreshModel(Collection<Project> projectList) {
 		rootNode = applicationTreeBuilder.createTree(projectList);
 	}
 

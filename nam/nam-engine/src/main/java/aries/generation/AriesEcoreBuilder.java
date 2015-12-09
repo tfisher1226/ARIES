@@ -163,7 +163,7 @@ public class AriesEcoreBuilder {
 		return decodedResult;
 	}
 	
-	public List<EPackage> buildEPackages(String fileName) throws Exception {
+	public Collection<EPackage> buildEPackages(String fileName) throws Exception {
 		Serializable object = ariesModelParser.unmarshalFromFileSystem(fileName);
 		String directory = NameUtil.getParentDirectoryName(fileName);
 		
@@ -190,7 +190,7 @@ public class AriesEcoreBuilder {
 		List<EPackage> ePackages = new ArrayList<EPackage>();
 		ariesModelHelper.validateAndAssure(model);
 		//Map<String, Namespace> namespacesByUri = context.getNamespacesByUri();
-		List<Namespace> namespaces = InformationUtil.getNamespaces(model);
+		Collection<Namespace> namespaces = InformationUtil.getNamespaces(model);
 		NamespaceUtil.setFilePath(namespaces, filePath);
 		ePackages.addAll(generateEPackages(namespaces));
 		assureEPackages(ePackages);
@@ -198,7 +198,7 @@ public class AriesEcoreBuilder {
 		return ePackages;
 	}
 
-	protected List<EPackage> generateEcoreFromPersistenceModel(String directory, String filePath, Persistence model) throws Exception {
+	protected Collection<EPackage> generateEcoreFromPersistenceModel(String directory, String filePath, Persistence model) throws Exception {
 		List<Import> importedFiles = PersistenceUtil.getImports(model);
 		Iterator<Import> iterator = importedFiles.iterator();
 		while (iterator.hasNext()) {
@@ -214,7 +214,7 @@ public class AriesEcoreBuilder {
 			//TODO nothing more for now
 		}
 		List<EPackage> ePackages = new ArrayList<EPackage>();
-		List<Unit> units = PersistenceUtil.getUnits(model);
+		Collection<Unit> units = PersistenceUtil.getUnits(model);
 		Iterator<Unit> iterator2 = units.iterator();
 		while (iterator2.hasNext()) {
 			Unit unit = iterator2.next();
@@ -225,27 +225,27 @@ public class AriesEcoreBuilder {
 		return ePackages;
 	}
 
-	protected List<EPackage> generateEcoreFromApplicationsModel(String directory, String fileName, Applications model) throws Exception {
+	protected Collection<EPackage> generateEcoreFromApplicationsModel(String directory, String fileName, Applications model) throws Exception {
 		List<Import> importedFiles = ApplicationUtil.getImports(model);
 		return generateEcoreFromImportedFiles(directory, importedFiles);
 	}
 	
-	protected List<EPackage> generateEcoreFromModulesModel(String directory, String fileName, Modules model) throws Exception {
+	protected Collection<EPackage> generateEcoreFromModulesModel(String directory, String fileName, Modules model) throws Exception {
 		Set<Import> importedFiles = ModuleUtil.getImports(model);
 		return generateEcoreFromImportedFiles(directory, importedFiles);
 	}
 	
-	protected List<EPackage> generateEcoreFromServicesModel(String directory, String fileName, Services model) throws Exception {
+	protected Collection<EPackage> generateEcoreFromServicesModel(String directory, String fileName, Services model) throws Exception {
 		List<Import> importedFiles = ServicesUtil.getImports(model);
 		return generateEcoreFromImportedFiles(directory, importedFiles);
 	}
 	
-	protected List<EPackage> generateEcoreFromViewModel(String directory, String fileName, View model) throws Exception {
+	protected Collection<EPackage> generateEcoreFromViewModel(String directory, String fileName, View model) throws Exception {
 		List<Import> importedFiles = ViewUtil.getImports(model);
 		return generateEcoreFromImportedFiles(directory, importedFiles);
 	}
 
-	protected List<EPackage> generateEcoreFromImportedFiles(String directory, Collection<Import> importedFiles) throws Exception {
+	protected Collection<EPackage> generateEcoreFromImportedFiles(String directory, Collection<Import> importedFiles) throws Exception {
 		List<Namespace> importedNamespaces = new ArrayList<Namespace>();
 		Iterator<Import> iterator = importedFiles.iterator();
 		while (iterator.hasNext()) {
@@ -265,11 +265,11 @@ public class AriesEcoreBuilder {
 			importedNamespaces.addAll(namespaces);
 			//TODO nothing more for now
 		}
-		List<EPackage> ePackages = generateEPackages(importedNamespaces);
+		Collection<EPackage> ePackages = generateEPackages(importedNamespaces);
 		return ePackages;
 	}
 	
-	public List<EPackage> generateEPackages(List<Namespace> namespaces) throws Exception {
+	public Collection<EPackage> generateEPackages(Collection<Namespace> namespaces) throws Exception {
 		List<EPackage> ePackages = new ArrayList<EPackage>();
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {

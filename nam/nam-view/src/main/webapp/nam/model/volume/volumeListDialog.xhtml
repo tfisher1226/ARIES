@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchVolumeDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{volumeListManager.show}"
+		onbegin="setCursorWait(); showProgress('', 'Volume Records', 'Retrieving current records...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showVolumeDialog()"
+		render="VolumeModule, VolumeDialog">
+		
+		<a4j:param name="targetInstance" assignTo="#{volumeListManager.targetInstance}" />
+		<a4j:param name="targetDomain" assignTo="#{volumeListManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{volumeListManager.targetField}" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="volumeModule">
+		
+		<a4j:region
+			rendered="#{volumeInfoManager.visible}">
+			
+			<aries:dialog
+				id="volumeDialog">
+				
+				<!-- Container -->
+				<aries:borderPane
+					width="560"
+					height="240">
+					
+					<!-- Content -->
+					<ui:include src="volumeListPane.xhtml">
+						<ui:param name="itemManager" value="#{volumeInfoManager}" />
+						<ui:param name="listManager" value="#{volumeListManager}" />
+					</ui:include>
+				</aries:borderPane>
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

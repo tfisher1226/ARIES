@@ -1,6 +1,7 @@
 package nam.ui.src.main.webapp.admin.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public abstract class AbstractDataElementXHTMLGenerator extends AbstractComposit
 
 	public void generate(Project project, Information information) throws Exception {
 		if (information != null) {
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = iterator.next();
@@ -57,7 +58,7 @@ public abstract class AbstractDataElementXHTMLGenerator extends AbstractComposit
 	}
 	
 	public void generateElements(Namespace namespace) throws Exception {
-		List<Element> elements = NamespaceUtil.getElements(namespace);
+		Collection<Element> elements = NamespaceUtil.getElements(namespace);
 		Iterator<Element> iterator = elements.iterator();
 		while (iterator.hasNext()) {
 			Element element = iterator.next();

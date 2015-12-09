@@ -34,6 +34,11 @@ public class ServiceRecord_ComponentsSection extends AbstractWizardPage<Service>
 	}
 	
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Component16.gif";
+	}
+	
+	@Override
 	public void initialize(Service service) {
 		setEnabled(true);
 		setBackEnabled(true);

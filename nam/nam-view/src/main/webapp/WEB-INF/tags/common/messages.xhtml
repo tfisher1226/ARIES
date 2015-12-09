@@ -11,11 +11,10 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
+<!--  
 	<aries:tag param="message">
-		<c:if test="#{empty id}">
-			<c:set var="id" value="messages#{globals.nextId()}" /> 
-		</c:if>
-	
+-->
+
 		<c:if test="#{empty rendered}">
 			<c:set var="rendered" value="true" /> 
 		</c:if>
@@ -115,5 +114,4 @@
 			</h:panelGroup>
 			 -->
 		</a4j:outputPanel>
-	</aries:tag>
 </ui:composition>

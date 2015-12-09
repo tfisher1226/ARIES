@@ -13,8 +13,7 @@
 	<aries:controlPane>
 		<aries:controlbar>
 			<aries:toolbarGroup
-				location="left"
-				backgroundColor="inherit">
+				location="left">
 				
 				<!-- help button -->
 				<aries:toolButton
@@ -42,7 +41,7 @@
 					onclick="showProgress('Nam', '#{permissionWizard.title}', 'Re-rendering current page...');"
 					oncomplete="hideProgress();"
 					render="permissionWizard"
-					padding="2px 4px"
+					style="padding: 2px 4px"
 					offset="true" />
 				
 				<!-- populate button -->
@@ -60,7 +59,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- back button -->
@@ -79,7 +78,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Permission', 'Moving to previous section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- next button -->
@@ -98,7 +97,7 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Permission', 'Moving to next section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- finish button -->
@@ -117,7 +116,26 @@
 					onclick="setCursorWait(this); showProgress('Nam', 'New Permission', 'Validating and submitting new Permission...');"
 					oncomplete="setCursorDefault(); hideProgress()"
 					render="wizardMessages"
-					padding="2px 8px"
+					style="padding: 2px 8px"
+					offset="true" />
+				
+				<!-- save button -->
+				<aries:dialogButton
+					label="Save"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="permissionWizardSaveButton"
+					icon="/icons/common/Save16.gif"
+					iconDisabled="/icons/common/SaveDisabled16.gif"
+					rendered="#{permissionWizard.saveVisible}"
+					enabled="#{permissionWizard.saveEnabled}"
+					manager="#{permissionWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'Permission', 'Validating and submitting Permission changes...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- cancel button -->
@@ -132,7 +150,7 @@
 					action="cancel"
 					onclick="setCursorWait(this); showProgress('Nam', 'Permission Management', 'Cancelling creation of Permission...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					padding="2px 8px"
+					style="padding: 2px 8px"
 					offset="true" />
 			</aries:toolbarGroup>
 		</aries:controlbar>

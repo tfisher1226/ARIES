@@ -42,6 +42,7 @@
 		<aries:toolbar type="menubar">
 			<aries:toolbarGroup location="left">
 				<aries:toolItem 
+					id="homeToolItem"
 					mode="client"
 					name="home"
 					label="Home"
@@ -54,6 +55,7 @@
 
 			<aries:toolbarGroup location="right">
 				<aries:toolItem 
+					id="helpToolItem"
 					name="help"
 					label="Help"
 					mode="ajax"
@@ -65,7 +67,7 @@
 
 				<f:subview rendered="#{identity.loggedIn}">
 					<aries:toolItem
-						id="logoutItem"
+						id="logoutToolItem"
 						name="logout"
 						label="Logout"
 						icon="/icons/common/Remove16.gif"

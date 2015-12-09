@@ -39,15 +39,22 @@
 			action="#{permissionListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Permission Records', 'Refreshing current Permission List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="permissionListActions, permissionListMenu, permissionListToolbar, permissionListPane">
+			render="permissionListActions permissionListMenu permissionListToolbar permissionNameListToolbar permissionListTable permissionNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{permissionDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromPermissionList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Permission List.
+		  ** Selects Permission element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="permissionListActions, permissionListToolbar, #{render}">
+			render="permissionListActions permissionListToolbar permissionNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{permissionListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="permission" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="permissionListActions, permissionListToolbar, #{render}">
+			render="permissionListActions permissionListToolbar permissionNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{permissionListManager.selectedRecordIndex}" />
@@ -97,7 +104,7 @@
 			<a4j:param name="section" assignTo="#{permissionWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -115,14 +122,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="permissionListActions, permissionListMenu, permissionListToolbar">
+			render="permissionListActions permissionListMenu permissionListToolbar permissionNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeHandlePermissionChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Permission.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandlePermissionChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{permissionPageManager.handlePermissionChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="permissionListActions permissionListToolbar permissionNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{permissionListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{permissionListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{permissionListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{permissionDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="permissionListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +253,8 @@
 				function processPermissionListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updatePermissionListState(event, rowIndex, recordKey, recordLabel);
 					enablePermissionListActions('permission');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromPermissionList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +276,24 @@
 						executeActionFromPermissionList(rowIndex, recordKey, 'Permission', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processPermissionListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Permission List item.
+				  -->
+					
+				function processPermissionListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandlePermissionChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

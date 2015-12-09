@@ -2,11 +2,11 @@ package nam.model.project;
 
 import java.io.Serializable;
 
-import nam.model.Project;
-import nam.model.util.ProjectUtil;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractListObject;
+
+import nam.model.Project;
+import nam.model.util.ProjectUtil;
 
 
 public class ProjectListObject extends AbstractListObject<Project> implements Comparable<ProjectListObject>, Serializable {
@@ -44,16 +44,11 @@ public class ProjectListObject extends AbstractListObject<Project> implements Co
 	@Override
 	public void setChecked(boolean checked) {
 		super.setChecked(checked);
-		fireChangeEvent(project, checked);
 	}
-	
-	protected static void fireChangeEvent(Project project, boolean checked) {
-		ProjectEventManager eventManager = BeanContext.getFromSession("projectEventManager");
-		if (checked) {
-			eventManager.fireSelectedEvent(project);
-		} else {
-			eventManager.fireUnselectedEvent(project);
-		}
+
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Project16.gif";
 	}
 	
 	@Override

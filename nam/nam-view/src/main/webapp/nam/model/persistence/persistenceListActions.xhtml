@@ -39,15 +39,22 @@
 			action="#{persistenceListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Persistence Records', 'Refreshing current Persistence List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="persistenceListActions, persistenceListMenu, persistenceListToolbar, persistenceListPane">
+			render="persistenceListActions persistenceListMenu persistenceListToolbar persistenceNameListToolbar persistenceListTable persistenceNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{persistenceDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromPersistenceList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Persistence List.
+		  ** Selects Persistence element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="persistenceListActions, persistenceListToolbar, #{render}">
+			render="persistenceListActions persistenceListToolbar persistenceNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{persistenceListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="persistence" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="persistenceListActions, persistenceListToolbar, #{render}">
+			render="persistenceListActions persistenceListToolbar persistenceNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{persistenceListManager.selectedRecordIndex}" />
@@ -97,7 +104,7 @@
 			<a4j:param name="section" assignTo="#{persistenceWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -115,14 +122,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="persistenceListActions, persistenceListMenu, persistenceListToolbar">
+			render="persistenceListActions persistenceListMenu persistenceListToolbar persistenceNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** executeHandlePersistenceChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Persistence.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandlePersistenceChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{persistencePageManager.handlePersistenceChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="persistenceListActions persistenceListToolbar persistenceNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{persistenceListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{persistenceListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{persistenceListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{persistenceDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="persistenceListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +253,8 @@
 				function processPersistenceListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updatePersistenceListState(event, rowIndex, recordKey, recordLabel);
 					enablePersistenceListActions('persistence');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromPersistenceList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +276,24 @@
 						executeActionFromPersistenceList(rowIndex, recordKey, 'Persistence', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processPersistenceListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Persistence List item.
+				  -->
+					
+				function processPersistenceListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandlePersistenceChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

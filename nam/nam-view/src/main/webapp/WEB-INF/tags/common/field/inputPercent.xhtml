@@ -11,10 +11,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<c:if test="#{empty id}">
-		<c:set var="id" value="InputCurrency_#{globals.nextId()}" /> 
-	</c:if>
-
 	<c:if test="#{empty currencyCode}">
 		<c:set var="currencyCode" value="USD" /> 
 	</c:if>

@@ -175,10 +175,10 @@ public class EntityBeanBuilder extends AbstractBeanBuilder {
 
 	protected Collection<ModelClass> buildClassesForElements(Persistence persistence) throws Exception {
 		List<ModelClass> modelClasses = new ArrayList<ModelClass>();
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		
 		if (units.size() == 0) {
-			List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+			Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = (Namespace) iterator.next();

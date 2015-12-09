@@ -16,7 +16,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.util.Validator;
 
 import admin.Role;
@@ -90,16 +89,8 @@ public class RoleInfoManager extends AbstractNamRecordManager<Role> implements S
 	}
 	
 	protected void initialize(Role role) {
-		RoleUtil.initialize(role);
 		roleWizard.initialize(role);
 		setContext("role", role);
-	}
-	
-	public void handleRoleSelected(@Observes @Selected Role role) {
-		selectionContext.setSelection("role",  role);
-		rolePageManager.updateState(role);
-		rolePageManager.refreshMembers();
-		setRecord(role);
 	}
 	
 	@Override

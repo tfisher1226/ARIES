@@ -2,7 +2,6 @@ package nam.model.module;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
@@ -16,15 +15,9 @@ import org.aries.ui.event.Export;
 import org.aries.ui.event.Refresh;
 import org.aries.ui.manager.ExportManager;
 
-import nam.model.Application;
 import nam.model.Module;
-import nam.model.Project;
-import nam.model.Service;
-import nam.model.service.ServiceListObject;
 import nam.model.util.ModuleUtil;
-import nam.model.util.ProjectUtil;
 import nam.ui.design.SelectionContext;
-import nam.ui.design.WorkspaceManager;
 
 
 @SessionScoped
@@ -99,10 +92,17 @@ public class ModuleListManager extends AbstractDomainListManager<Module, ModuleL
 		return selected;
 	}
 	
+	public boolean isChecked(Module module) {
+		Collection<Module> selection = selectionContext.getSelection("moduleSelection");
+		boolean checked = selection != null && selection.contains(module);
+		return checked;
+	}
+	
 	@Override
 	protected ModuleListObject createRowObject(Module module) {
 		ModuleListObject listObject = new ModuleListObject(module);
 		listObject.setSelected(isSelected(module));
+		listObject.setChecked(isChecked(module));
 		return listObject;
 	}
 	

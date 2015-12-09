@@ -61,8 +61,8 @@ public class ElementRecordNavigatorXhtmlBuilder extends AbstractCompositionXHTML
 		buf.putLine1("	");
 		buf.putLine1("	<aries:formPane");
 		buf.putLine1("		width=\"auto\"");
-		buf.putLine1("		borderWidth=\"0px\"");
-		buf.putLine1("		borderColor=\"#aaa\"");
+		//buf.putLine1("		borderWidth=\"0px\"");
+		//buf.putLine1("		borderColor=\"#aaa\"");
 		buf.putLine1("		columnClass=\"formColumnAlignLeft\"");
 		buf.putLine1("		backgroundColor=\"inherit\">");
 		

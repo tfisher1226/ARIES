@@ -444,10 +444,10 @@ public class Service implements Comparable<Service>, Serializable {
 	
 	@Override
 	public int compareTo(Service other) {
-		int status = compare(name, other.name);
+		int status = compare(domain, other.domain);
 		if (status != 0)
 			return status;
-		status = compare(domain, other.domain);
+		status = compare(name, other.name);
 		return status;
 	}
 	

@@ -39,15 +39,22 @@
 			action="#{teamListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Team Records', 'Refreshing current Team List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="teamListActions, teamListMenu, teamListToolbar, teamListPane">
+			render="teamListActions teamListMenu teamListToolbar teamNameListToolbar teamListTable teamNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{teamDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromTeamList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Team List.
+		  ** Selects Team element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="teamListActions, teamListToolbar, #{render}">
+			render="teamListActions teamListToolbar teamNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{teamListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="team" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="teamListActions, teamListToolbar, #{render}">
+			render="teamListActions teamListToolbar teamNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{teamListManager.selectedRecordIndex}" />
@@ -97,7 +104,7 @@
 			<a4j:param name="section" assignTo="#{teamWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -115,14 +122,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="teamListActions, teamListMenu, teamListToolbar">
+			render="teamListActions teamListMenu teamListToolbar teamNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeHandleTeamChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Team.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleTeamChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{teamPageManager.handleTeamChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="teamListActions teamListToolbar teamNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{teamListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{teamListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{teamListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{teamDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="teamListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +253,8 @@
 				function processTeamListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateTeamListState(event, rowIndex, recordKey, recordLabel);
 					enableTeamListActions('team');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromTeamList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +276,24 @@
 						executeActionFromTeamList(rowIndex, recordKey, 'Team', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processTeamListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Team List item.
+				  -->
+					
+				function processTeamListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleTeamChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

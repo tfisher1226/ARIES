@@ -22,7 +22,7 @@ public class ConfigurationProfilePage extends AbstractWizardPage<Configuration> 
 	
 
 	public ConfigurationProfilePage() {
-		setTitle("Select desired functionlity.");
+		//setTitle("Select desired functionlity.");
 		selectedProfiles = new ArrayList<SelectItem>();
 		//setOwner(owner);
 		reset();

@@ -3,6 +3,7 @@ package nam.model.operation;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,12 +12,11 @@ import nam.model.Service;
 import nam.model.util.OperationUtil;
 import nam.ui.design.SelectionContext;
 
-import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.ui.PageManager;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 
 @SessionScoped
@@ -29,6 +29,9 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 	@Inject
 	private OperationDataManager operationDataManager;
 
+	@Inject
+	private OperationInfoManager operationInfoManager;
+	
 	@Inject
 	private OperationListManager operationListManager;
 	
@@ -65,7 +68,6 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 	
 	public OperationPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -83,7 +85,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -92,7 +94,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 	}
 	
 	public void refreshMembers(String scope) {
-		operationListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getOperationListPage() {
@@ -117,6 +119,32 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 	
 	public String getOperationManagementPage() {
 		return "/nam/model/operation/operationManagementPage.xhtml";
+	}
+	
+	public void handleOperationSelected(@Observes @Selected Operation operation) {
+		selectionContext.setSelection("operation",  operation);
+		operationInfoManager.setRecord(operation);
+	}
+	
+	public void handleOperationUnselected(@Observes @Unselected Operation operation) {
+		selectionContext.unsetSelection("operation",  operation);
+		operationInfoManager.unsetRecord(operation);
+	}
+	
+	public void handleOperationChecked() {
+		String scope = "operationSelection";
+		OperationListObject listObject = operationListManager.getSelection();
+		Operation operation = selectionContext.getSelection("operation");
+		boolean checked = operationListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			operationInfoManager.setRecord(operation);
+			selectionContext.setSelection(scope,  operation);
+		} else {
+			operationInfoManager.unsetRecord(operation);
+			selectionContext.unsetSelection(scope,  operation);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeOperationListPage() {
@@ -202,9 +230,6 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		addBreadcrumb(pageLevelKey, "Operations", "showOperationManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Operation", "showOperationWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showOperationWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showOperationWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showOperationWizardPage('Documentation')");
 		
 		operationIdentificationSection.setOwner("operationWizard");
 		operationConfigurationSection.setOwner("operationWizard");
@@ -231,7 +256,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -239,7 +264,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		setPageTitle(getOperationLabel(operation));
 		setPageIcon("/icons/nam/Operation16.gif");
 		setSectionTitle("Operation Overview");
-		String operationName = operation.getName();
+		String operationName = OperationUtil.getLabel(operation);
 		operationWizard.setNewMode(false);
 		
 		String pageLevelKey = "operation";
@@ -251,10 +276,6 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		addBreadcrumb(pageLevelKey, "Operations", "showOperationManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(operationName, "showOperationWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showOperationWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showOperationWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showOperationWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showOperationWizardPage('Documentation')");
 		
 		operationOverviewSection.setOwner("operationWizard");
 		operationIdentificationSection.setOwner("operationWizard");
@@ -283,7 +304,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -302,15 +323,23 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Operations");
+		setPageIcon("/icons/nam/Operation16.gif");
 		setSectionType("operation");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Operations");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "operationOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Operations", "showOperationManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeOperationSummaryView(Operation operation) {
@@ -333,7 +362,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 		String label = "Operation";
 		String name = OperationUtil.getLabel(operation);
 		if (name == null && operation.getName() != null)
-			name = NameUtil.capName(operation.getName());
+			name = OperationUtil.getLabel(operation);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -346,7 +375,7 @@ public class OperationPageManager extends AbstractPageManager<Operation> impleme
 	}
 
 	protected void updateState(Operation operation) {
-		String operationName = NameUtil.capName(operation.getName());
+		String operationName = OperationUtil.getLabel(operation);
 		setSectionTitle(operationName + " Operation");
 	}
 	

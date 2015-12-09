@@ -2,6 +2,7 @@ package nam.model.component;
 
 import java.io.Serializable;
 
+import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractListObject;
 
 import nam.model.Component;
@@ -39,7 +40,24 @@ public class ComponentListObject extends AbstractListObject<Component> implement
 	public String getLabel(Component component) {
 		return ComponentUtil.getLabel(component);
 	}
+
+	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
 	
+	@Override
+	public String getIcon() {
+		String type = component.getType();
+		if (type == null)
+			return "/icons/common/Default16.gif";
+		if (type.equals("cache"))
+			return "/icons/nam/Cache16.gif";
+		else if (type.equals("persistenceUnit"))
+			return "/icons/nam/PersistenceUnit16.gif";
+		else return "/icons/nam/Component16.gif";
+	}
+
 	@Override
 	public String toString() {
 		return toString(component);

@@ -339,11 +339,12 @@ public abstract class AbstractServiceJMSListenerCITBuilder extends AbstractListe
 		
 		Module module = context.getModule();
 		Process process = service.getProcess();
-		Set<String> dataUnitReferences = ServiceUtil.getDataUnitReferences(service);
-		Iterator<String> iterator = dataUnitReferences.iterator();
+		Set<Unit> dataUnitReferences = ServiceUtil.getDataUnitReferences(service);
+		Iterator<Unit> iterator = dataUnitReferences.iterator();
 		while (iterator.hasNext()) {
-			String dataName = iterator.next();
-			Unit dataUnit = ProcessUtil.getDataUnit(process, dataName);
+			Unit dataUnit = iterator.next();
+			String dataName = dataUnit.getName();
+			//Unit dataUnit = ProcessUtil.getDataUnit(process, dataName);
 			Assert.notNull(dataUnit, "DataUnit not found: "+dataName);
 			String dataUnitQualifiedName = DataLayerHelper.getPersistenceUnitQualifiedName(module.getNamespace(), dataUnit);
 			//modelClass.addInstanceAttribute(createReference_CacheTestControl(cacheUnit));
@@ -764,12 +765,13 @@ public abstract class AbstractServiceJMSListenerCITBuilder extends AbstractListe
 	
 	public void createMethods_DataUnitRelated(ModelClass modelClass, Service service) {
 		Process process = service.getProcess();
-		Set<String> cacheReferences = ServiceUtil.getDataUnitReferences(service);
-		Iterator<String> iterator = cacheReferences.iterator();
+		Set<Unit> cacheReferences = ServiceUtil.getDataUnitReferences(service);
+		Iterator<Unit> iterator = cacheReferences.iterator();
 		while (iterator.hasNext()) {
-			String cacheName = iterator.next();
-			Unit dataUnit = ProcessUtil.getDataUnit(process, cacheName);
-			Assert.notNull(dataUnit, "DataUnit not found: "+cacheName);
+			Unit dataUnit = iterator.next();
+			String unitName = dataUnit.getName();
+			//Unit dataUnit = ProcessUtil.getDataUnit(process, cacheName);
+			Assert.notNull(dataUnit, "DataUnit not found: "+unitName);
 			createMethod_CreateDataUnitHelper(modelClass, dataUnit);
 			//createMethod_CreateDataUnitProxy(modelClass, dataUnit);
 			createMethod_CreateDataUnitControl(modelClass, dataUnit);
@@ -1084,12 +1086,13 @@ public abstract class AbstractServiceJMSListenerCITBuilder extends AbstractListe
 			buf.putLine2("create"+cacheUnitNameCapped+"Helper();");
 		}
 		
-		Set<String> dataUnitReferences = ServiceUtil.getDataUnitReferences(service);
-		Iterator<String> iterator2 = dataUnitReferences.iterator();
+		Set<Unit> dataUnitReferences = ServiceUtil.getDataUnitReferences(service);
+		Iterator<Unit> iterator2 = dataUnitReferences.iterator();
 		while (iterator2.hasNext()) {
-			String cacheName = iterator2.next();
-			Unit dataUnit = ProcessUtil.getDataUnit(process, cacheName);
-			Assert.notNull(dataUnit, "CacheUnit not found: "+cacheName);
+			Unit dataUnit = iterator2.next();
+			String unitName = dataUnit.getName();
+			//Unit dataUnit = ProcessUtil.getDataUnit(process, cacheName);
+			Assert.notNull(dataUnit, "CacheUnit not found: "+unitName);
 			String dataUnitNameCapped = DataLayerHelper.getPersistenceUnitNameCapped(dataUnit);
 			//buf.putLine2("create"+dataUnitNameCapped+"Control();");
 			buf.putLine2("create"+dataUnitNameCapped+"Helper();");
@@ -3797,10 +3800,11 @@ public abstract class AbstractServiceJMSListenerCITBuilder extends AbstractListe
 	
 	protected String createSource_dataUnits_RemoveAll(Service service) {
 		Buf buf = new Buf();
-		Set<String> dataUnitReferences = ServiceUtil.getDataUnitReferences(service);
-		Iterator<String> iterator = dataUnitReferences.iterator();
+		Set<Unit> dataUnitReferences = ServiceUtil.getDataUnitReferences(service);
+		Iterator<Unit> iterator = dataUnitReferences.iterator();
 		while (iterator.hasNext()) {
-			String unitName = iterator.next();
+			Unit unit = iterator.next();
+			String unitName = unit.getName();
 			buf.putLine2(unitName+"Helper.assureRemoveAll();");
 		}
 		return buf.get();

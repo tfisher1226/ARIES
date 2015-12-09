@@ -32,7 +32,7 @@ public class ResultConverter extends AbstractConverter implements Converter, Ser
 		if (value == null)
 			return null;
 		Result result = (Result) value;
-		return ResultUtil.toString(result);
+		return ResultUtil.getLabel(result);
 	}
 	
 }

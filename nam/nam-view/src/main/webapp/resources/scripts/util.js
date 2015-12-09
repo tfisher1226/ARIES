@@ -200,14 +200,14 @@ function errorsExist() {
 }
 
 function isRightMouseClick(event) {
-    var isRightMB = false;
+    var status = false;
     event = event || window.event;
-    if ("which" in e)  { // Gecko (Firefox), WebKit (Safari/Chrome) and Opera
-		isRightMB = e.which == 3; 
-	} else if ("button" in e)  { // IE, Opera 
-		isRightMB = e.button == 2;
-	} 
-    return isRightMB;
+    if ("which" in event)  { // Gecko (Firefox), WebKit (Safari/Chrome) and Opera
+    	status = event.which == 3; 
+	} else if ("button" in event)  { // IE, Opera 
+		status = event.button == 2;
+	}
+    return status;
 }
 
 function filter(table, tableId, columnId, value) {

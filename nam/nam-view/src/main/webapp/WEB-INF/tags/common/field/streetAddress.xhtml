@@ -11,10 +11,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-		<c:if test="#{empty id}">
-			<c:set var="id" value="#{section}#{type}_#{globals.nextId()}" /> 
-		</c:if>
-		
 		<c:if test="#{empty label}">
 			<c:set var="label" value="Street Address" /> 
 		</c:if>

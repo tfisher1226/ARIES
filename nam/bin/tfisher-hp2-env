@@ -3,7 +3,7 @@
 ## NAM settings for tfisher-hp2
 #
 
-export HOST=localhost
+export HOST=tfisher-hp2
 
 export BINDING_HOST=localhost
 

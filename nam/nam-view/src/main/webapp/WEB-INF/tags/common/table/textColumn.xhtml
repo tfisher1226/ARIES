@@ -17,13 +17,8 @@
 
 	<c:if test="#{empty textValue}">
 		<c:set var="textValue" value="unspecified"/> 
-		<c:set var="marginRightPadding" value="0px"/> 
 	</c:if>
 	
-	<c:if test="#{empty marginRightPadding}">
-		<c:set var="marginRightPadding" value="20px"/> 
-	</c:if>
-
 	<c:if test="#{empty sortBy}">
 		<c:set var="sortBy" value="#{labelValue}"/> 
 	</c:if>
@@ -53,19 +48,19 @@
 		rendered="#{rendered}"
 		sortBy="#{sortBy}"
 		sortOrder="#{sortOrder}"
-		filterExpression="#{filterExpression}"
+		filterExpression=""
 		filterValue="#{filterValue}"
 		footerClass="#{footerClass}"
 		headerClass="#{headerClass}"
 		styleClass="#{styleClass}"
-		style="#{style}; background-color: #{rowItem.selected ? '#cfe7f5' : 'inherit'}">
+		style="border-width: 1px; background-color: #{rowItem.backgroundColor}">
 		
 		<f:facet name="header">
 			<h:outputText value="#{header}" style="" />
 		</f:facet>
 		
-		<span onmousedownXX="alert('#{filterValue}'); #{onmousedown}"
-			style="width: #{helper.convert(width)}; height: auto; padding: 4px; margin-right: #{marginRightPadding}; display: block; background-color: inherit">
+		<span onmousedown="#{onmousedown}"
+			style="width: #{helper.convert(width)}; height: auto; padding: 4px; padding-right: 6px; display: block; background-color: inherit">
 			
 			<ui:insert />
 		</span>

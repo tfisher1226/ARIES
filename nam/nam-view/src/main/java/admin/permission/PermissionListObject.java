@@ -41,6 +41,16 @@ public class PermissionListObject extends AbstractListObject<Permission> impleme
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Permission16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(permission);
 	}

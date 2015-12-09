@@ -1,0 +1,120 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- section body --> 
+	<h:panelGrid class="sectionBody">
+
+		<!-- page includes -->
+	
+		<!-- section title --> 
+		<ui:insert name="sectionTitle" />
+
+		<!-- section messages 
+		<ui:insert name="sectionMessages" />
+		--> 
+		
+		<aries:spacer height="10" />
+		<aries:formPane
+			columns="2" 
+			width="auto"
+			height="auto"
+			style="">
+
+			<!-- variables -->
+			<ui:param name="render" value="applicationManagementViewer" />
+			
+			<aries:panel style="">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Application16.gif" />
+					<ui:param name="label" value="Applications" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					
+					<!-- application refresh scope -->
+					<ui:param name="scope" value="applicationList" />
+					<ui:param name="target" value="component" />
+					
+					<!-- application table section -->
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+
+			<aries:panel style="margin-left: 20px">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Component16.gif" />
+					<ui:param name="label" value="Components" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					
+					<!-- component refresh action -->
+					<ui:param name="scope" value="applicationSelection" />
+					
+					<!-- component table section -->
+					<ui:include src="/nam/model/component/componentListActions.xhtml" />
+					<ui:include src="/nam/model/component/componentNameListToolbar.xhtml" />
+				</h:panelGroup>
+
+				<aries:spacer height="4" />
+				
+				<!--  
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="handler" />
+					<ui:param name="label" value="Handler" />
+					<ui:param name="icon" value="/icons/nam/Handler16.gif" />
+					<ui:param name="manager" value="#{handlerComponentListManager}" />
+					<ui:param name="table" value="/nam/model/component/componentNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="scheduler" />
+					<ui:param name="label" value="Scheduler" />
+					<ui:param name="icon" value="/icons/nam/Scheduler16.gif" />
+					<ui:param name="manager" value="#{schedulerComponentListManager}" />
+					<ui:param name="table" value="/nam/model/component/componentNameListTable.xhtml" />
+				</ui:include>
+				-->
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="process" />
+					<ui:param name="label" value="Process" />
+					<ui:param name="icon" value="/icons/nam/Process16.gif" />
+					<ui:param name="manager" value="#{processComponentListManager}" />
+					<ui:param name="table" value="/nam/model/component/componentNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="cache" />
+					<ui:param name="label" value="Cache" />
+					<ui:param name="icon" value="/icons/nam/Cache16.gif" />
+					<ui:param name="manager" value="#{cacheComponentListManager}" />
+					<ui:param name="table" value="/nam/model/component/componentNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="persistence" />
+					<ui:param name="label" value="Persistence" />
+					<ui:param name="icon" value="/icons/nam/Persistence16.gif" />
+					<ui:param name="manager" value="#{persistenceComponentListManager}" />
+					<ui:param name="table" value="/nam/model/component/componentNameListTable.xhtml" />
+				</ui:include>
+			</aries:panel>
+		</aries:formPane>
+	</h:panelGrid>
+</ui:composition>

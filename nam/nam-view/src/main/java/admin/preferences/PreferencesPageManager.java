@@ -3,15 +3,16 @@ package admin.preferences;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.Preferences;
 import admin.util.PreferencesUtil;
@@ -28,6 +29,9 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 	
 	@Inject
 	private PreferencesDataManager preferencesDataManager;
+	
+	@Inject
+	private PreferencesInfoManager preferencesInfoManager;
 	
 	@Inject
 	private PreferencesListManager preferencesListManager;
@@ -50,12 +54,11 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 
 	public PreferencesPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 
 	public void refresh() {
-		refresh("preferences");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -68,7 +71,7 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -77,7 +80,7 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 	}
 	
 	public void refreshMembers(String scope) {
-		preferencesListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getPreferencesListPage() {
@@ -102,6 +105,32 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 
 	public String getPreferencesManagementPage() {
 		return "/admin/preferences/preferencesManagementPage.xhtml";
+	}
+	
+	public void handlePreferencesSelected(@Observes @Selected Preferences preferences) {
+		selectionContext.setSelection("preferences",  preferences);
+		preferencesInfoManager.setRecord(preferences);
+	}
+	
+	public void handlePreferencesUnselected(@Observes @Unselected Preferences preferences) {
+		selectionContext.unsetSelection("preferences",  preferences);
+		preferencesInfoManager.unsetRecord(preferences);
+	}
+	
+	public void handlePreferencesChecked() {
+		String scope = "preferencesSelection";
+		PreferencesListObject listObject = preferencesListManager.getSelection();
+		Preferences preferences = selectionContext.getSelection("preferences");
+		boolean checked = preferencesListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			preferencesInfoManager.setRecord(preferences);
+			selectionContext.setSelection(scope,  preferences);
+		} else {
+			preferencesInfoManager.unsetRecord(preferences);
+			selectionContext.unsetSelection(scope,  preferences);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializePreferencesListPage() {
@@ -184,9 +213,6 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 		addBreadcrumb(pageLevelKey, "Preferencess", "showPreferencesManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Preferences", "showPreferencesWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showPreferencesWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showPreferencesWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showPreferencesWizardPage('Documentation')");
 
 		preferencesIdentificationSection.setOwner("preferencesWizard");
 		preferencesConfigurationSection.setOwner("preferencesWizard");
@@ -203,7 +229,7 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -223,10 +249,6 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 		addBreadcrumb(pageLevelKey, "Preferencess", "showPreferencesManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(preferencesName, "showPreferencesWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showPreferencesWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showPreferencesWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showPreferencesWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showPreferencesWizardPage('Documentation')");
 		
 		preferencesOverviewSection.setOwner("preferencesWizard");
 		preferencesIdentificationSection.setOwner("preferencesWizard");
@@ -245,7 +267,7 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -264,15 +286,23 @@ public class PreferencesPageManager extends AbstractPageManager<Preferences> imp
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 
 	public void initializeDefaultView() {
+		setPageTitle("Preferenceses");
+		setPageIcon("/icons/nam/Preferences16.gif");
 		setSectionType("preferences");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Preferenceses");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "preferencesOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Preferenceses", "showPreferencesManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializePreferencesSummaryView(Preferences preferences) {

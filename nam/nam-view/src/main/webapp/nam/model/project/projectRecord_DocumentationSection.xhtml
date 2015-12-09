@@ -11,7 +11,7 @@
 	xmlns:aries="http://aries.org/jsf">
 
 	<!-- wizard body -->
-	<aries:panel class="wizardBody">
+	<aries:panel class="wizardBody" style="" >
 
 		<!-- wizard title -->
 		<ui:insert name="wizardTitle" />
@@ -20,13 +20,12 @@
 		<ui:insert name="wizardMessages" />
 
 		<!-- wizard section -->
-		<aries:panel class="wizardSection">
+		<aries:panel class="wizardSection" style="" >
 		
 			<!-- variables -->
 			<ui:param name="labelWidth" value="110" />
 			
 			<!-- structures -->
-			<ui:param name="user" value="#{adminManager.user}" /> 
 			<ui:param name="manager" value="#{projectInfoManager}" />
 			
 			<aries:spacer height="6" />

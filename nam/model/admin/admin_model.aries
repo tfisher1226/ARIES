@@ -8,6 +8,7 @@
 	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
 
 	<import file="/common/aries-common-1.0.aries" />
+	<import file="/nam/nam_model.aries" />
 
 	<domain>admin</domain>
 	<name>admin</name>
@@ -21,9 +22,24 @@
 			<property name="generate-schema" value="true" />
 		</properties>
 		
+		
 		<!--
-			User related structures
-			***********************
+			Account
+			*******
+		 -->
+		 
+		<element name="Account" root="true">
+			<id name="id" type="xs:long" />
+			<item name="user" type="User" relation="oneToOne" required="true" unique="true" useForLabel="true" />
+			<mapItem name="models" key="xs:string" type="xs:string" />
+			<item name="creditCard" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" />
+			<item name="enabled" type="xs:boolean" default="true" />
+		</element>
+		
+		
+		<!--
+			User
+			****
 		 -->
 
 		<element name="Users" transient="true">
@@ -37,7 +53,7 @@
 				<item name="name" type="common:PersonName" relation="oneToOne" contained="true" cascade="all" required="true" indexed="true" />
 				-->
 				<item name="personName" type="common:PersonName" relation="oneToOne" contained="true" cascade="all" required="true" indexed="true" useForLabel="true" />
-				<item name="userName" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" />
+				<item name="userName" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" useForEquals="true" />
 				<secret name="password" type="xs:string" enact="userPassword" hash="MD5" required="true" />
 				<item name="password2" type="xs:string" enact="passwordSalt" />
 				<item name="enabled" type="xs:boolean" enact="userEnabled" default="true" />
@@ -58,11 +74,11 @@
 			</grouping>
 			
 			<grouping name="Permissions">
-				<listItem name="permissions" type="Permission" relation="oneToMany" contained="true" cascade="all" nillable="true" />
+				<listItem name="permissions" type="Permission" relation="oneToMany" contained="true" cascade="all" nullable="true" />
 			</grouping>
 
 			<grouping name="Settings">
-				<item name="preferences" type="Preferences" relation="oneToOne" contained="true" cascade="all" nillable="true" />
+				<item name="preferences" type="Preferences" relation="oneToOne" contained="true" cascade="all" nullable="true" />
 			</grouping>
 			
 			<item name="creationDate" type="xs:dateTime" />
@@ -76,10 +92,10 @@
 			<item name="lastName" type="xs:string" />
             -->
 			<item name="userName" type="xs:string" />
-			<item name="personName" type="common:PersonName" nillable="true" />
-			<item name="emailAddress" type="common:EmailAddress" nillable="true" />
-			<item name="streetAddress" type="common:StreetAddress" nillable="true" />
-			<item name="roles" type="Role" nillable="true" />
+			<item name="personName" type="common:PersonName" nullable="true" />
+			<item name="emailAddress" type="common:EmailAddress" nullable="true" />
+			<item name="streetAddress" type="common:StreetAddress" nullable="true" />
+			<item name="roles" type="Role" nullable="true" />
             <!--
 			<item name="creationDateStart" type="xs:dateTime" />
 			<item name="creationDateEnd" type="xs:dateTime" />
@@ -90,10 +106,10 @@
 		
 		<element name="Role" root="true">
 			<id name="id" type="xs:long" />
-			<item name="name" type="xs:string" enact="roleName" required="true" unique="true" indexed="true" useForLabel="true" />
+			<item name="name" type="xs:string" enact="roleName" required="true" unique="true" indexed="true" useForEquals="true" useForLabel="true" />
             <item name="roleType" type="RoleType" required="true" indexed="true" default="USER" />
             <setItem name="groups" type="Role" enact="roleGroups" relation="manyToMany" />
-			<listItem name="permissions" type="Permission" relation="oneToMany" contained="true" cascade="all" required="true" nillable="true" />
+			<listItem name="permissions" type="Permission" relation="oneToMany" contained="true" cascade="all" required="true" nullable="true" />
 			<item name="conditional" type="xs:boolean" enact="roleConditional" default="true" />
 			<item name="enabled" type="xs:boolean" default="true" />
 		</element>
@@ -106,8 +122,8 @@
 
         <!--
 		<element name="RoleCriteria" transient="true">
-			<item name="name" type="xs:string" nillable="true" />
-			<item name="roleType" type="RoleType" nillable="true" />
+			<item name="name" type="xs:string" nullable="true" />
+			<item name="roleType" type="RoleType" nullable="true" />
 			<item name="conditional" type="xs:boolean" default="true" />
 		</element>
         -->
@@ -134,9 +150,9 @@
 		
         <!--
 		<element name="PermissionCriteria" transient="true">
-			<item name="role" type="xs:string" nillable="true" />
-			<item name="action" type="Action" nillable="true" />
-			<item name="enabled" type="xs:boolean" nillable="true" default="true" />
+			<item name="role" type="xs:string" nullable="true" />
+			<item name="action" type="Action" nullable="true" />
+			<item name="enabled" type="xs:boolean" nullable="true" default="true" />
 		</element>
         -->
 		
@@ -152,8 +168,8 @@
 		
         <!--
 		<element name="PreferencesCriteria" transient="true">
-			<item name="userName" type="xs:string" nillable="true" />
-			<item name="themeId" type="xs:string" nillable="true" />
+			<item name="userName" type="xs:string" nullable="true" />
+			<item name="themeId" type="xs:string" nullable="true" />
 		</element>
         -->
 
@@ -161,6 +177,7 @@
 			<id name="id" type="xs:long" />
 			<item name="enabled" type="xs:boolean" default="true" />
 			<item name="user" type="User" relation="oneToOne" required="true" unique="true" cascade="refresh" useForLabel="true" />
+			<item name="account" type="Account" relation="oneToOne" required="true" cascade="refresh" />
 			<item name="loginCount" type="xs:long" />
 		</element>
 		
@@ -398,7 +415,7 @@
         
         <!--
 		<element name="SkinCriteria" transient="true">
-			<item name="name" type="xs:string" nillable="true" />
+			<item name="name" type="xs:string" nullable="true" />
 		</element>
         -->
         

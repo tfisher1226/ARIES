@@ -24,7 +24,7 @@
 			var projectListState = null;
 		</h:outputScript>
 			
-			
+
 		<!--
 		  ** refreshProjectList(event)
 		  ** Refreshes the current Project List.
@@ -39,15 +39,22 @@
 			action="#{projectListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Project Records', 'Refreshing current Project List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="projectListActions, projectListMenu, projectListToolbar, projectListPane">
+			render="projectListActions projectListMenu projectListToolbar projectNameListToolbar projectListTable projectNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{projectDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromProjectList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Project List.
+		  ** Selects Project element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="projectListActions, projectListToolbar, #{render}">
+			render="projectListActions projectListToolbar projectNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="project" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="projectListActions, projectListToolbar, #{render}">
+			render="projectListActions projectListToolbar projectNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
@@ -115,17 +122,47 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="projectListActions, projectListMenu, projectListToolbar">
+			render="projectListActions projectListMenu projectListToolbar projectNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
+		<!--
+		  ** executeHandleProjectChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Project.
+		  -->
+		  
+		<a4j:jsFunction 
+			name="executeHandleProjectChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true" 
+			action="#{projectPageManager.handleProjectChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="projectListActions projectListToolbar projectNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{projectListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{projectListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{projectListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{projectDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="projectListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+
 		<!--
 		  ** projectListActions
 		  ** Javascript methods to support the Project List.
@@ -244,27 +281,19 @@
 					
 				
 				<!--
-				  ** processProjectListSelectionChanged(event, rowIndex, recordKey, recordLabel)
-				  ** Handles check-box selection changed event on the Project List.
+				  ** processProjectListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Project List item.
 				  -->
 					
-				function processProjectListSelectionChanged(event, rowIndex, recordKey, recordLabel, source) {
+				function processProjectListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
 					try {
-						beginSelect(source);
-						//show(event);
-						//alert(event.target.checked);
-						//alert(event.currentTarget.checked);
-						//alert(recordLabel);
-						//executeSelectFromProjectList(rowIndex, recordKey);
-						//executeActionFromProjectList(rowIndex, recordKey, 'Project', 'workspaceManager.selectObject');
-						executeSelectFromProjectList(rowIndex, recordKey);
-						completeSelect(source);
-						
-						//var table = #{rich:component('applicationNameListTable')}; 
-						//filter(table, 'applicationNameListTable', 'Application', 'shipper');
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleProjectChecked(rowIndex, recordKey, checked, target);
 					} catch(e) {
-						//completeSelect(source);
 						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 				

@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Project;
@@ -87,16 +85,8 @@ public class ProviderInfoManager extends AbstractNamRecordManager<Provider> impl
 	}
 	
 	protected void initialize(Provider provider) {
-		ProviderUtil.initialize(provider);
 		providerWizard.initialize(provider);
 		setContext("provider", provider);
-	}
-	
-	public void handleProviderSelected(@Observes @Selected Provider provider) {
-		selectionContext.setSelection("provider",  provider);
-		providerPageManager.updateState(provider);
-		providerPageManager.refreshMembers();
-		setRecord(provider);
 	}
 	
 	@Override

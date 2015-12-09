@@ -560,7 +560,7 @@ public class ProcessClassBuilder extends AbstractBeanBuilder {
 		Persistence persistence = ExtensionsUtil.getPersistenceBlock(context.getProject(), namespace);
 		//Persistence persistence = ModuleUtil.getPersistenceBlock(context.getModule());
 		if (persistence != null) {
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Iterator<Unit> unitIterator = units.iterator();
 			while (unitIterator.hasNext()) {
 				Unit unit = unitIterator.next();

@@ -11,64 +11,56 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<aries:init/>
-		
-		<c:if test="#{empty id}">
-			<c:set var="id" value="toolbar_#{globals.nextId()}" /> 
-		</c:if>
-		
-		<c:if test="#{empty itemSeparator}">
-			<c:set var="itemSeparator" value="none" /> 
-		</c:if>
-	
-		<!--  
-		<c:if test="#{empty styleClass}">
-			<c:set var="styleClass" value="toolbar" /> 
-		</c:if>
-	
-		<c:if test="#{empty contentClass}">
-			<c:set var="contentClass" value="toolbarContent" /> 
-		</c:if>
-	
-		<c:if test="#{empty separatorClass}">
-			<c:set var="separatorClass" value="toolbarSeparator" /> 
-		</c:if>
-		-->
-	
-		<c:if test="#{empty type}">
-			<c:set var="type" value="plain" /> 
-		</c:if>
-	 
-		<c:if test="#{type == 'plain'}">
-			<c:set var="borderSettings" value="border-width: 0px" /> 
-		</c:if>
-	
-		<c:if test="#{type == 'menubar'}">
-			<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
-			<c:set var="borderSettings" value="border: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-left-width: 1px; border-right-width: 1px" /> 
-		</c:if>
-	
-		<c:if test="#{type == 'table'}">
-			<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
-			<c:set var="borderSettings" value="border: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-top-width: 0px; border-left-width: 0px; border-right-width: 1px" /> 
-		</c:if>
+	<c:if test="#{empty itemSeparator}">
+		<c:set var="itemSeparator" value="none" /> 
+	</c:if>
 
-		<c:if test="#{type == 'tab'}">
-			<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
-			<c:set var="borderSettings" value="border-bottom: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}" /> 
-		</c:if>
+	<!--  
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolbar" /> 
+	</c:if>
 
-		<rich:toolbar 
-			id="#{id}"
-			itemSeparatorXX="#{itemSeparator}"
-			styleClassXX="toolbar #{styleClass}"
-			contentClassXX="toolbarContent" 
-			separatorClassXX="toolbarSeparator"
-			onclickXX="alert('#{backgroundSettings}')"
-			style="#{paddingSettings}; #{borderSettings};">
-			
-			<ui:insert />
-		</rich:toolbar>
-	</aries:tag>
+	<c:if test="#{empty contentClass}">
+		<c:set var="contentClass" value="toolbarContent" /> 
+	</c:if>
+
+	<c:if test="#{empty separatorClass}">
+		<c:set var="separatorClass" value="toolbarSeparator" /> 
+	</c:if>
+	-->
+
+	<c:if test="#{empty type}">
+		<c:set var="type" value="plain" /> 
+	</c:if>
+ 
+	<c:if test="#{type == 'plain'}">
+		<c:set var="borderSettings" value="border-width: 0px" /> 
+	</c:if>
+
+	<c:if test="#{type == 'menubar'}">
+		<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
+		<c:set var="borderSettings" value="border: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-left-width: 1px; border-right-width: 1px" /> 
+	</c:if>
+
+	<c:if test="#{type == 'table'}">
+		<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
+		<c:set var="borderSettings" value="border-bottom: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-top-width: 0px; border-left-width: 0px; border-right-width: 1px" /> 
+		<c:set var="borderSettings" value="border-bottom: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}; border-top-width: 0px; border-left-width: 0px; border-right-width: 1px" /> 
+	</c:if>
+
+	<c:if test="#{type == 'tab'}">
+		<c:set var="sizeSettings" value="width: #{width}; height: #{height}" />
+		<c:set var="borderSettings" value="border-bottom: 1px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor}" /> 
+	</c:if>
+
+	<rich:toolbar 
+		itemSeparatorXX="#{itemSeparator}"
+		styleClassXX="toolbar #{styleClass}"
+		contentClassXX="toolbarContent" 
+		separatorClassXX="toolbarSeparator"
+		onclickXX="alert('#{backgroundSettings}')"
+		style="#{borderSettings}; background-color: inherit">
+		
+		<ui:insert />
+	</rich:toolbar>
 </ui:composition>

@@ -24,7 +24,8 @@
 					tooltip="Create new Project..."
 					icon="/icons/common/New16.gif"
 					iconDisabled="/icons/common/NewDisabled16.gif"
-					onclick="processNewProject(this)" />
+					onclick="processNewProject(this)" 
+					style="margin: 2px 0px 2px 2px" />
 
 				<aries:toolButton 
 					mode="client"
@@ -33,7 +34,8 @@
 					tooltip="Create new Application"
 					icon="/icons/nam/Application16.gif"
 					iconDisabled="/icons/common/NewDisabled16.gif"
-					onclick="processNewApplication(event)" />
+					onclick="processNewApplication(event)" 
+					style="margin: 2px 0px 2px 0px" />
 
 				<aries:toolButton 
 					id="applicationTreeViewApplicationButton"
@@ -46,7 +48,8 @@
 					action="editApplication"
 					onclick="setCursorWait(this); if (#{empty selectedApplication}) {setCursorDefault(this); popupAlert('Application Lookup', '', 'An application must be selected'); return false} else {showProgress('{applicationName}', 'Retrieving application record...')}"
 					oncomplete="setCursorDefault(this); hideProgress(); processViewApplication('#{selectedApplication.name}', '#{selectedApplication.level}')"
-					render="ApplicationInfoDialog" />
+					render="ApplicationInfoDialog" 
+					style="margin: 2px 0px 2px 0px" />
 
 				<aries:toolButton 
 					id="applicationTreeEditApplicationButton"
@@ -55,7 +58,8 @@
 					icon="/icons/common/Edit16.gif"
 					iconDisabled="/icons/common/EditDisabled16.gif"
 					enabled="#{not empty selectedApplication}"
-					onclick="processEditApplication(event)" />
+					onclick="processEditApplication(event)" 
+					style="margin: 2px 0px 2px 0px" />
 
 				<!--  
 				<aries:toolButton 
@@ -93,7 +97,8 @@
 					icon="/icons/common/Remove16.gif"
 					iconDisabled="/icons/common/RemoveDisabled16.gif"
 					enabled="#{not empty selectedApplication}"
-					onclick="processCheckRemoveApplication(event)" />
+					onclick="processCheckRemoveApplication(event)" 
+					style="margin: 2px 0px 2px 0px" />
 
 				<!--  
 				<aries:toolButton 
@@ -149,7 +154,8 @@
 					mode="client"
 					execute="@none"
 					onclick="popupAlert('', 'Collapse Selected Application', 'Not ready at this time')"
-					linkClass="link" />
+					linkClass="link" 
+					style="margin: 2px 0px 2px 0px" />
 					
 				<aries:toolButton
 					id="applicationTreeRefreshButton"
@@ -162,7 +168,8 @@
 					onclick="setCursorWait(this); showProgress('', 'Application Service', 'Refreshing Applicational Structure...')"
 					oncomplete="setCursorDefault(); hideProgress()"
 			   		render="applicationTreePanel"
-					linkClass="link" />
+					linkClass="link" 
+					style="margin: 2px 2px 2px 0px" />
 			</aries:toolbarGroup>
 		</aries:toolbar>
 	</a4j:outputPanel>

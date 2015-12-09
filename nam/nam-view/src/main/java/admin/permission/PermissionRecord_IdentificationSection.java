@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.aries.ui.AbstractWizardPage;
 
 import admin.Permission;
+import admin.util.PermissionUtil;
 
 
 @SessionScoped

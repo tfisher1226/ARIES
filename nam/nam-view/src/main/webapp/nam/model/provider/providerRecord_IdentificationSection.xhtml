@@ -2,34 +2,30 @@
 
 <ui:composition 
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:panel
-		padding="20px"
-		paddingTop="10px"
-		backgroundColor="inherit">
+	<!-- wizard body -->
+	<aries:panel class="wizardBody" style="" >
 
-		<!-- WIZARD TITLE -->
+		<!-- wizard title -->
 		<ui:insert name="wizardTitle" />
 		 
-		<!-- WIZARD MESSAGES -->
+		<!-- wizard messages -->
 		<ui:insert name="wizardMessages" />
 
-		<aries:spacer height="6" />
-		<div style="background-color: inherit">
+		<!-- wizard section -->
+		<aries:panel class="wizardSection" style="" >
 
-			<!-- VARIABLES --> 
-			<ui:param name="fontSize" value="13" />
-			<ui:param name="fontWeight" value="normal" />
+			<!-- variables -->
 			<ui:param name="labelWidth" value="120" />
 
-			<!-- STRUCTURES --> 
-			<ui:param name="user" value="#{adminManager.user}" /> 
+			<!-- structures -->
 			<ui:param name="manager" value="#{providerInfoManager}" /> 
 			
 			<aries:spacer height="6" />

@@ -12,13 +12,11 @@ import nam.model.ModelLayerHelper;
 import nam.model.Reference;
 import nam.model.Type;
 import nam.model.util.ElementUtil;
-import nam.model.util.FieldUtil;
 import nam.model.util.TypeUtil;
 import nam.model.util.ViewUtil;
 import nam.ui.Relation;
 import nam.ui.View;
 
-import org.aries.Assert;
 import org.aries.util.NameUtil;
 
 import aries.codegen.util.Buf;
@@ -27,6 +25,7 @@ import aries.generation.model.AnnotationUtil;
 import aries.generation.model.ModelClass;
 import aries.generation.model.ModelConstructor;
 import aries.generation.model.ModelOperation;
+import aries.generation.model.ModelParameter;
 import aries.generation.model.ModelReference;
 
 
@@ -90,10 +89,10 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		modelClass.addImportedClass(elementPackageName + "." + elementClassName);
 		modelClass.addImportedClass(elementPackageName + ".util." + elementClassName + "Util");
 		modelClass.addImportedClass("nam.ui.design.SelectionContext");
-		modelClass.addImportedClass("org.apache.commons.lang.StringUtils");
+		//modelClass.addImportedClass("org.apache.commons.lang.StringUtils");
 		modelClass.addImportedClass("org.aries.ui.Breadcrumb");
 		modelClass.addImportedClass("org.aries.ui.AbstractWizardPage");
-		modelClass.addImportedClass("org.aries.util.NameUtil");
+		//modelClass.addImportedClass("org.aries.util.NameUtil");
 		
 		List<Field> fields = ElementUtil.getFields(type);
 		Iterator<Field> iterator = fields.iterator();
@@ -117,14 +116,16 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 
 		modelClass.addImportedClass("javax.enterprise.context.SessionScoped");
 		//modelClass.addImportedClass("javax.enterprise.event.Event");
-		//modelClass.addImportedClass("javax.enterprise.event.Observes");
+		modelClass.addImportedClass("javax.enterprise.event.Observes");
 		modelClass.addImportedClass("javax.inject.Inject");
 		modelClass.addImportedClass("javax.inject.Named");
 
+		modelClass.addImportedClass("org.aries.runtime.BeanContext");
 		modelClass.addImportedClass("org.aries.ui.AbstractPageManager");
 		modelClass.addImportedClass("org.aries.ui.AbstractWizardPage");
-		modelClass.addImportedClass("org.aries.runtime.BeanContext");
-
+		modelClass.addImportedClass("org.aries.ui.event.Selected");
+		modelClass.addImportedClass("org.aries.ui.event.Unselected");
+		
 		//modelClass.addImportedClass("org.aries.ui.Display");
 		//modelClass.addImportedClass("org.aries.util.Validator");
 		//modelClass.addImportedClass("org.aries.util.CollectionUtil");
@@ -169,11 +170,11 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 	
 	protected ModelConstructor createConstructor(Type element) {
 		ModelConstructor modelConstructor = new ModelConstructor();
-		modelConstructor.setModifiers(Modifier.PUBLIC);
+		modelConstructor.setModifiers(Modifier.PUBLIC);		
 		
 		Buf buf = new Buf();
 		buf.putLine2("initializeSections();");
-		buf.putLine2("initializeDefaultView();");
+		//buf.putLine2("initializeDefaultView();");
 		modelConstructor.addInitialSource(buf.get());
 		return modelConstructor;
 	}
@@ -186,6 +187,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 	protected void initializeInstanceFields(ModelClass modelClass, Element element) throws Exception {
 		modelClass.addInstanceReference(createReference_Manager(element, "Wizard", ""));
 		modelClass.addInstanceReference(createReference_Manager(element, "Data", "Manager"));
+		modelClass.addInstanceReference(createReference_Manager(element, "Info", "Manager"));
 		modelClass.addInstanceReference(createReference_Manager(element, "List", "Manager"));
 		modelClass.addInstanceReferences(createReferences_ChildManagers(element));
 		modelClass.addInstanceReference(createReference_Section(element, "OverviewSection"));
@@ -381,12 +383,20 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		modelClass.addInstanceOperation(createOperation_refreshAll2(element));
 		modelClass.addInstanceOperation(createOperation_refreshLocal2(element));
 		modelClass.addInstanceOperation(createOperation_refreshMembers2(element));
+		
 		modelClass.addInstanceOperation(createOperation_getPage(element, "List"));
 		modelClass.addInstanceOperation(createOperation_getPage(element, "Tree"));
 		modelClass.addInstanceOperation(createOperation_getPage(element, "Summary"));
 		modelClass.addInstanceOperation(createOperation_getPage(element, "Record"));
 		modelClass.addInstanceOperation(createOperation_getPage(element, "Wizard"));
 		modelClass.addInstanceOperation(createOperation_getPage(element, "Management"));
+
+		modelClass.addInstanceOperations(createOperations_handleSelected(element));
+		modelClass.addInstanceOperation(createOperation_handleUnselected(element));
+		//modelClass.addInstanceOperations(createOperations_handleChecked(element));
+		//modelClass.addInstanceOperation(createOperation_handleUnchecked(element));
+		modelClass.addInstanceOperation(createOperation_handleChecked(element));
+
 		modelClass.addInstanceOperation(createOperation_initializeListPage(element));
 		modelClass.addInstanceOperation(createOperation_initializeTreePage(element));
 		modelClass.addInstanceOperation(createOperation_initializeSummaryPage(element));
@@ -413,7 +423,8 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		modelOperation.setName("refresh");
 		
 		Buf buf = new Buf();
-		buf.putLine2("refresh(\""+elementNameUncapped+"\");");
+		buf.putLine2("refresh(\"projectList\");");
+		//buf.putLine2("refresh(\""+elementNameUncapped+"\");");
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
 	}
@@ -426,7 +437,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		
 		Buf buf = new Buf();
 		buf.putLine2("refreshLocal(scope);");
-		buf.putLine2("refreshMembers(scope);");
+		buf.putLine2("//refreshMembers(scope);");
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
 	}
@@ -491,7 +502,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 			while (iterator.hasNext()) {
 				String child = iterator.next();
 				String childNameUncapped = NameUtil.uncapName(child);
-				buf.putLine2(childNameUncapped+"PageManager.refresh(scope);");
+				buf.putLine2(childNameUncapped+"PageManager.refreshLocal(scope);");
 			}
 		}
 		//buf.putLine2(elementNameUncapped+"ListManager.refresh();");
@@ -499,6 +510,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		return modelOperation;
 	}
 
+	
 	protected ModelOperation createOperation_getPage(Element element, String pageTypeId) throws Exception {
 		String elementPackageName = ModelLayerHelper.getElementPackageName(element);
 		String elementClassName = ModelLayerHelper.getElementClassName(element);
@@ -515,6 +527,169 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
 	}
+	
+	protected List<ModelOperation> createOperations_handleSelected(Element element) {
+		List<ModelOperation> modelOperations = new ArrayList<ModelOperation>();
+		modelOperations.add(createOperation_handleSelected(element, element));
+//		List<ContainedBy> containedByList = element.getContainedBy();
+//		Iterator<ContainedBy> iterator = containedByList.iterator();
+//		while (iterator.hasNext()) {
+//			ContainedBy containedBy = (ContainedBy) iterator.next();
+//			Element parentElement = context.getElementByType(containedBy.getType());
+//			Assert.notNull(parentElement, "ContainedBy element not found: "+containedBy.getType());
+//			modelOperations.add(createOperation_handleSelected(parentElement, element));
+//		}
+		return modelOperations;
+	}
+	
+	protected ModelOperation createOperation_handleSelected(Element parent, Element element) {
+		String parentClassName = ModelLayerHelper.getElementClassName(parent);
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String parentNameUncapped = ModelLayerHelper.getElementNameUncapped(parent);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("handle"+parentClassName+"Selected");
+		ModelParameter modelParameter = createParameter(parentClassName, parentNameUncapped);
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Observes"));
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Selected"));
+		modelOperation.addParameter(modelParameter);
+		
+		Buf buf = new Buf();
+		if (parent == element) {
+			buf.putLine2("selectionContext.setSelection(\""+elementNameUncapped+"\",  "+elementNameUncapped+");");
+			//buf.putLine2(elementNameUncapped+"PageManager.refreshMembers(\""+elementNameUncapped+"Selection\");");
+			//buf.putLine2(elementNameUncapped+"PageManager.updateState("+elementNameUncapped+");");
+			buf.putLine2(elementNameUncapped+"InfoManager.setRecord("+elementNameUncapped+");");
+		} else {
+			buf.putLine2(elementNameUncapped+"PageManager.updateState("+parentNameUncapped+");");
+		}
+		
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+	
+	protected ModelOperation createOperation_handleUnselected(Element element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("handle"+elementClassName+"Unselected");
+		ModelParameter modelParameter = createParameter(elementClassName, elementNameUncapped);
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Observes"));
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Unselected"));
+		modelOperation.addParameter(modelParameter);
+		
+		Buf buf = new Buf();
+		buf.putLine2("selectionContext.unsetSelection(\""+elementNameUncapped+"\",  "+elementNameUncapped+");");
+		//buf.putLine2(elementNameUncapped+"PageManager.refreshMembers(\""+elementNameUncapped+"Selection\");");
+		buf.putLine2(elementNameUncapped+"InfoManager.unsetRecord("+elementNameUncapped+");");
+		
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+	
+	//NOTUSED
+	protected List<ModelOperation> createOperations_handleCheckedOLD(Element element) {
+		List<ModelOperation> modelOperations = new ArrayList<ModelOperation>();
+		modelOperations.add(createOperation_handleChecked(element));
+		return modelOperations;
+	}
+	
+	//NOTUSED
+	protected ModelOperation createOperation_handleCheckedOLD(Element parent, Element element) {
+		String parentClassName = ModelLayerHelper.getElementClassName(parent);
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String parentNameUncapped = ModelLayerHelper.getElementNameUncapped(parent);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("handle"+parentClassName+"Checked");
+		ModelParameter modelParameter = createParameter(parentClassName, parentNameUncapped);
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Observes"));
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Checked"));
+		modelOperation.addParameter(modelParameter);
+		
+		Buf buf = new Buf();
+		if (parent == element) {
+			buf.putLine2("selectionContext.setSelection(\""+elementNameUncapped+"Selection\",  "+elementNameUncapped+");");
+			buf.putLine2(elementNameUncapped+"PageManager.refreshLocal(\""+elementNameUncapped+"Selection\");");
+			//buf.putLine2(elementNameUncapped+"PageManager.updateState("+elementNameUncapped+");");
+			buf.putLine2("setRecord("+elementNameUncapped+");");
+		} else {
+			//buf.putLine2(elementNameUncapped+"PageManager.updateState("+parentNameUncapped+");");
+		}
+		
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+
+	protected ModelOperation createOperation_handleChecked(Element element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("handle"+elementClassName+"Checked");
+		
+		Buf buf = new Buf();
+		buf.putLine2("String scope = \""+elementNameUncapped+"Selection\";");
+		buf.putLine2(elementClassName+"ListObject listObject = "+elementNameUncapped+"ListManager.getSelection();");
+		buf.putLine2(elementClassName+" "+elementNameUncapped+" = selectionContext.getSelection(\""+elementNameUncapped+"\");");
+		buf.putLine2("boolean checked = "+elementNameUncapped+"ListManager.getCheckedState();");
+		buf.putLine2("listObject.setChecked(checked);");
+		buf.putLine2("if (checked) {");
+		buf.putLine2("	"+elementNameUncapped+"InfoManager.setRecord("+elementNameUncapped+");");
+		buf.putLine2("	selectionContext.setSelection(scope,  "+elementNameUncapped+");");
+		buf.putLine2("} else {");
+		buf.putLine2("	"+elementNameUncapped+"InfoManager.unsetRecord("+elementNameUncapped+");");
+		buf.putLine2("	selectionContext.unsetSelection(scope,  "+elementNameUncapped+");");
+		buf.putLine2("}");
+		
+		View view = context.getModule().getView();
+		Relation relation = ViewUtil.getMemberOfRelation(view, elementClassName);
+		if (relation != null) {
+			List<String> children = relation.getType();
+			buf.putLine2("String target = selectionContext.getCurrentTarget();");
+			Iterator<String> iterator = children.iterator();
+			while (iterator.hasNext()) {
+				String child = iterator.next();
+				String childNameUncapped = NameUtil.uncapName(child);
+				buf.putLine2("if (target.equals(\""+childNameUncapped+"\"))");
+				buf.putLine2("	"+childNameUncapped+"PageManager.refreshLocal(scope);");
+			}
+		}
+		
+		buf.putLine2("refreshLocal(scope);");
+
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+
+	protected ModelOperation createOperation_handleUnchecked(Element element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("handle"+elementClassName+"Unchecked");
+		ModelParameter modelParameter = createParameter(elementClassName, elementNameUncapped);
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Observes"));
+		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Unchecked"));
+		modelOperation.addParameter(modelParameter);
+		
+		Buf buf = new Buf();
+		buf.putLine2("selectionContext.unsetSelection(\""+elementNameUncapped+"Selection\",  "+elementNameUncapped+");");
+		buf.putLine2(elementNameUncapped+"PageManager.refreshLocal(\""+elementNameUncapped+"Selection\");");
+		buf.putLine2("unsetRecord("+elementNameUncapped+");");
+		
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+
 	
 	protected ModelOperation createOperation_initializeListPage(Element element) throws Exception {
 		String elementClassName = ModelLayerHelper.getElementClassName(element);
@@ -717,7 +892,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		buf.putLine2("//selectionContext.resetOrigin();");
 		buf.putLine2("selectionContext.setUrl(url);");
 		//buf.putLine2("sections.clear();");
-		buf.putLine2("refresh();");
+		buf.putLine2("refreshLocal();");
 		buf.putLine2("return url;");
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
@@ -812,7 +987,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		buf.putLine2("//selectionContext.resetOrigin();");
 		buf.putLine2("selectionContext.setUrl(url);");
 		//buf.putLine2("sections.clear();");
-		buf.putLine2("refresh();");
+		buf.putLine2("refreshLocal();");
 		buf.putLine2("return url;");
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
@@ -844,7 +1019,7 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		buf.putLine2("selectionContext.setUrl(url);");
 		buf.putLine2("initializeDefaultView();");
 		buf.putLine2("sections.clear();");
-		buf.putLine2("refresh();");
+		//buf.putLine2("refreshLocal();");
 		buf.putLine2("return url;");
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;
@@ -860,10 +1035,23 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		modelOperation.setName("initializeDefaultView");
 		
 		Buf buf = new Buf();
+		buf.putLine2("setPageTitle(\""+elementNamePluralCapped+"\");");
+		buf.putLine2("setPageIcon(\"/icons/nam/"+elementClassName+"16.gif\");");
 		buf.putLine2("setSectionType(\""+elementNameUncapped+"\");"); 
 		buf.putLine2("setSectionName(\"Overview\");"); 
 		buf.putLine2("setSectionTitle(\"Overview of "+elementNamePluralCapped+"\");");
 		buf.putLine2("setSectionIcon(\"/icons/nam/Overview16.gif\");"); 
+		buf.putLine2("String viewLevelKey = \""+elementNameUncapped+"Overview\";");
+		buf.putLine2("clearBreadcrumbs(viewLevelKey);");
+		buf.putLine2("addBreadcrumb(viewLevelKey, \"Top\", \"showMainPage()\");");
+		buf.putLine2("addBreadcrumb(viewLevelKey, \""+elementNamePluralCapped+"\", \"show"+elementClassName+"ManagementPage()\");");
+		buf.putLine2("String scope = \"projectList\";");
+		//buf.putLine2("projectPageManager.refreshLocal(scope);");
+		//buf.putLine2(elementNameUncapped+"DataManager.setScope(scope);");
+		//buf.putLine2(elementNameUncapped+"ListManager.refresh();");
+		buf.putLine2("refreshLocal(scope);");
+		buf.putLine2("sections.clear();");
+		
 		//buf.putLine2("setSectionIcon(\"/icons/nam/"+elementClassName+"16.gif\");"); 
 		//buf.putLine2("initializeView(this, \"Overview of "+elementNamePluralCapped+"\", \"Overview\") ;");
 		modelOperation.addInitialSource(buf.get());
@@ -953,8 +1141,9 @@ public class ElementPageManagerBuilder extends AbstractElementManagerBuilder {
 		//buf.putLine2("initializeView(this, sectionTitle, \""+childNameCappedPlural+"\");");
 		//buf.putLine2("String viewLevelKey = \""+elementNameUncapped+""+childNameCappedPlural+"\";");
 		buf.putLine2("selectionContext.setMessageDomain(\""+elementNameUncapped+""+childNameCappedPlural+"\");");
-		buf.putLine2(childNameUncapped+"PageManager.refresh(\""+elementNameUncapped+"\");");
-		buf.putLine2(elementNameUncapped+"ListManager.refresh();");
+		buf.putLine2(childNameUncapped+"PageManager.refreshLocal(\""+elementNameUncapped+"Selection\");");
+		//buf.putLine2(elementNameUncapped+"ListManager.refreshLocal();");
+		buf.putLine2("refreshLocal(\"projectList\");");
 		buf.putLine2("sections.clear();");
 		buf.putLine2("return null;");
 		modelOperation.addInitialSource(buf.get());

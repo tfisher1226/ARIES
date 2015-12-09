@@ -39,15 +39,22 @@
 			action="#{componentListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Component Records', 'Refreshing current Component List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="componentListActions, componentListMenu, componentListToolbar, componentListPane">
+			render="componentListActions componentListMenu componentListToolbar componentNameListToolbar componentListTable componentNameListTable #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="scope" assignTo="#{componentDataManager.scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromComponentList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Component List.
+		  ** Selects Component element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="componentListActions, componentListToolbar, #{render}">
+			render="componentListActions componentListToolbar componentNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{componentListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="component" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="componentListActions, componentListToolbar, #{render}">
+			render="componentListActions componentListToolbar componentNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{componentListManager.selectedRecordIndex}" />
@@ -97,7 +104,7 @@
 			<a4j:param name="section" assignTo="#{componentWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -115,14 +122,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="componentListActions, componentListMenu, componentListToolbar">
+			render="componentListActions componentListMenu componentListToolbar componentNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** executeHandleComponentChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Component.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleComponentChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{componentPageManager.handleComponentChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="componentListActions componentListToolbar componentNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{componentListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{componentListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{componentListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{componentDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="componentListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +253,8 @@
 				function processComponentListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateComponentListState(event, rowIndex, recordKey, recordLabel);
 					enableComponentListActions('component');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromComponentList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +276,24 @@
 						executeActionFromComponentList(rowIndex, recordKey, 'Component', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processComponentListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Component List item.
+				  -->
+					
+				function processComponentListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleComponentChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

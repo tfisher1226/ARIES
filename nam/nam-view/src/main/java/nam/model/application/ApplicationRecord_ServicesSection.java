@@ -34,6 +34,11 @@ public class ApplicationRecord_ServicesSection extends AbstractWizardPage<Applic
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Service16.gif";
+	}
+	
+	@Override
 	public void initialize(Application application) {
 		setEnabled(true);
 		setBackEnabled(true);

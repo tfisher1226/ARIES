@@ -1,0 +1,107 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:s="http://jboss.com/schema/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<c:if test="#{empty sortMode}">
+		<c:set var="sortMode" value="single"/> 
+	</c:if>
+
+	<c:if test="#{empty selectionMode}">
+		<c:set var="selectionMode" value="single"/> 
+	</c:if>
+
+	<c:if test="#{empty rowClasses}">
+		<c:set var="rowClasses" value="tableRowOdd, tableRowEven"/> 
+	</c:if>
+
+	<c:if test="#{empty headerClass}">
+		<c:set var="headerClass" value="tableHeader"/> 
+	</c:if>
+
+	<c:if test="#{empty activeClass}">
+		<c:set var="activeClass" value="tableRowActive"/> 
+	</c:if>
+
+	<c:if test="#{empty selectedClass}">
+		<c:set var="selectedClass" value="tableRowSelected"/> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="table"/> 
+	</c:if>
+
+	<c:if test="#{empty tablePanelStyleClass}">
+		<c:set var="tablePanelStyleClass" value="tablePanel"/> 
+	</c:if>
+
+	<c:if test="#{empty tablePanelBodyStyleClass}">
+		<c:set var="tablePanelBodyStyleClass" value="tablePanelBody"/> 
+	</c:if>
+
+	<a4j:region>
+ 		<a4j:outputPanel 
+ 			id="#{id}TablePanel">
+ 		
+			<rich:panel 
+				onclick="#{onclick}"
+				styleClass="#{tablePanelStyleClass}"
+				bodyClass="#{tablePanelBodyStyleClass}"
+				style="width: #{helper.convert(width)}; height: #{helper.convert(height)}; max-height: #{helper.convert(height)}; padding: 0px; border-width: 0px">
+				
+				<a4j:outputPanel
+					layout="block"
+					rendered="#{value.rowCount == 0}"
+					style="width: auto; height: 24px; padding-top: 4px; border: 1px solid #{userSkin.borderColor}; border-top-width: 0px; border-left-width: 0px; background-color: inherit">
+					<h:outputText styleClass="formLabelSoft" style="padding: 0px 4px" value="No records to display" />
+				</a4j:outputPanel>
+				
+					<!--  
+					var="rowItem"
+					value="#{value}" 
+					rowKeyVar="index"
+					rows="#{value.rowCount}"
+					rendered="#{value.rowCount > 0}"
+					selectionMode="#{selectionMode}"
+					-->
+
+				<h:dataTable 
+					id="#{id}"
+					var="rowItem" 
+					value="#{value}"
+					cellpadding="0"
+					cellspacing="0"
+					rows="#{value.rowCount}"
+					rendered="#{value.rowCount > 0}"
+					onclick="selectRow(this); #{onrowclick}"
+					ondblclick="#{onrowdblclick}"
+					onmouseover="highLightRow(this); #{onrowmouseover}"
+					onmouseout="unhighLightRow(this); #{onrowmouseout}"
+					onmousedownXX="selectRow(this); #{onrowmousedown}; return true"
+					style="width: 100%; height: auto; max-height: #{helper.convert(height)}; #{style}"
+					styleClass="table #{styleClass}"
+					headerClass="#{headerClass}" 
+					rowClasses="#{rowClasses}">
+					
+					<!-- INDEX COLUMN -->
+					<c:if test="#{not empty addIndexColumn and addIndexColumn eq true}">
+						<h:column>
+							<h:outputText value="#{index+1}" />
+						</h:column>
+					</c:if>
+
+					<!-- OTHER COLUMNS -->
+					<ui:insert />
+				</h:dataTable>
+			</rich:panel>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

@@ -11,58 +11,56 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<c:if test="#{empty execute}">
-			<c:set var="execute" value="@none"/> 
-		</c:if>
-	
-		<c:if test="#{empty toggleType}">
-			<c:set var="toggleType" value="client"/> 
-		</c:if>
-	
-		<c:if test="#{empty selectionType}">
-			<c:set var="selectionType" value="client"/> 
-		</c:if>
-	
-		<c:if test="#{empty styleClass}">
-			<c:set var="styleClass" value="tree"/> 
-		</c:if>
-	
-		<a4j:region>
-		 	<a4j:outputPanel 
-		 		id="#{id}Panel">
-						
-		 		<rich:panel 
-					styleClass="treePanel"
-					bodyClass="treePanelBody"
-					style="width: #{width}; height: #{height}; max-height: #{height}; padding: 0px; border: 0px; background-color: inherit">
-	 
-					<rich:tree 
-						id="#{id}"
-						var="item"
-						rowKeyVar="rowKey"
-						nodeType="#{item.data.type}"
-						value="#{manager.rootNode}"
-						execute="#{execute}"
-						toggleType="#{toggleType}"
-						selectionType="#{selectionType}"
-						keepSaved="#{true}"
-						styleClass="#{styleClass}"
-						onclickXX="alert('#{facesContext.externalContext.requestContextPath}');"
-						style="width: #{width}; height: #{height}; padding: 0px; background-color: inherit">
+	<c:if test="#{empty execute}">
+		<c:set var="execute" value="@none"/> 
+	</c:if>
 
-						<ui:insert/>
-	
-						<!--  
-						<rich:treeSelectionChangeListener listener="{organizationTreeManager.processTreeSelectionChange}"/>
-						<rich:treeNode
-							type="#{item.data.type}">
-							<h:outputText value="#{item.data.label}" style="" />
-						</rich:treeNode>
-						-->
-					</rich:tree>
-				</rich:panel>
-			</a4j:outputPanel>
-		</a4j:region>
-	</aries:tag>
+	<c:if test="#{empty toggleType}">
+		<c:set var="toggleType" value="client"/> 
+	</c:if>
+
+	<c:if test="#{empty selectionType}">
+		<c:set var="selectionType" value="client"/> 
+	</c:if>
+
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="tree"/> 
+	</c:if>
+
+	<a4j:region>
+	 	<a4j:outputPanel 
+	 		id="#{id}Panel">
+					
+	 		<rich:panel 
+				styleClass="treePanel"
+				bodyClass="treePanelBody"
+				style="width: #{width}; height: #{height}; max-height: #{height}; padding: 0px; border: 0px; background-color: inherit">
+ 
+				<rich:tree 
+					id="#{id}"
+					var="item"
+					rowKeyVar="rowKey"
+					nodeType="#{item.data.type}"
+					value="#{manager.rootNode}"
+					execute="#{execute}"
+					toggleType="#{toggleType}"
+					selectionType="#{selectionType}"
+					keepSaved="#{true}"
+					styleClass="#{styleClass}"
+					onclickXX="alert('#{facesContext.externalContext.requestContextPath}');"
+					style="width: #{width}; height: #{height}; padding: 0px; background-color: inherit">
+
+					<ui:insert/>
+
+					<!--  
+					<rich:treeSelectionChangeListener listener="{organizationTreeManager.processTreeSelectionChange}"/>
+					<rich:treeNode
+						type="#{item.data.type}">
+						<h:outputText value="#{item.data.label}" style="" />
+					</rich:treeNode>
+					-->
+				</rich:tree>
+			</rich:panel>
+		</a4j:outputPanel>
+	</a4j:region>
 </ui:composition>

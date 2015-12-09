@@ -1,10 +1,18 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
 	
+	<c:if test="#{empty addSelectorColumn}">
+		<c:set var="addSelectorColumn" value="#{false}"/>
+	</c:if>
+	
+	<!-- table panel -->
 	<aries:outputPane
 		id="permissionNameListTablePanel">
 		
@@ -19,26 +27,23 @@
 			value="#{permissionListManager.dataModel}"
 			rowCount="#{permissionListManager.dataModel.rowCount}"
 			visible="#{permissionListManager.dataModel.rowCount > 0}"
-			onrowmousedown="processPermissionListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowclick="processPermissionListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processPermissionListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onchange="processPermissionListSelectionChanged(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}', '#{target}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
 			styleClass="noTableHeader"
 			tablePanelStyleClass="none"
 			rowClasses="none">
 			
-			<!-- Application Name 
-			<aries:textColumn
-				width="100"
-				header="Application">
-				<h:outputText value="#{rowItem.permission.name}" />
-			</aries:textColumn>
-			-->
+			<!-- checkbox -->
+			<aries:checkBoxColumn
+				rendered="#{addSelectorColumnn}" />
 			
-			<!-- Permission Name -->
+			<!-- permission name -->
 			<aries:textColumn header="Permission">
 				<aries:formPane columns="2">
-					<h:graphicImage library="graphics" name="/icons/nam/Permission16.gif" />
-					<h:outputText value="#{rowItem.permission.name}" styleClassXX="toolLabel" style="margin-left: 3px; white-space: nowrap; #{labelStyle}" />
+					<h:graphicImage library="graphics" name="#{rowItem.icon}" />
+					<h:outputText value="#{rowItem.permission.name}" styleClass="tableColumn" />
 				</aries:formPane>
 			</aries:textColumn>
 		</aries:table>

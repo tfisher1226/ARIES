@@ -13,8 +13,7 @@
 	<aries:controlPane>
 		<aries:controlbar>
 			<aries:toolbarGroup
-				location="left"
-				backgroundColor="inherit">
+				location="left">
 				
 				<!-- help button -->
 				<aries:toolButton
@@ -42,6 +41,7 @@
 					onclick="showProgress('Nam', '#{providerWizard.title}', 'Re-rendering current page...');"
 					oncomplete="hideProgress();"
 					render="providerWizard"
+					style="padding: 2px 4px"
 					offset="true" />
 				
 				<!-- populate button -->
@@ -58,7 +58,8 @@
 					action="populateDefaultValues"
 					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="providerMessages"
+					render="wizardMessages"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- back button -->
@@ -68,15 +69,16 @@
 					mode="ajax"
 					execute="@this"
 					id="providerWizardPreviousButton"
-					icon="/icons/arrow/PreviousPage16.gif"
-					iconDisabled="/icons/arrow/PreviousPageDisabled16.gif"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
 					rendered="#{providerWizard.backVisible}"
 					enabled="#{providerWizard.backEnabled}"
 					manager="#{providerWizard}"
 					action="back"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Provider', 'Moving to previous section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="providerMessages"
+					render="wizardMessages"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- next button -->
@@ -86,15 +88,16 @@
 					mode="ajax"
 					execute="@form"
 					id="providerWizardNextButton"
-					icon="/icons/arrow/NextPage16.gif"
-					iconDisabled="/icons/arrow/NextPageDisabled16.gif"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
 					rendered="#{providerWizard.nextVisible}"
 					enabled="#{providerWizard.nextEnabled}"
 					manager="#{providerWizard}"
 					action="next"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Provider', 'Moving to next section...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="providerMessages"
+					render="wizardMessages"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- finish button -->
@@ -104,15 +107,35 @@
 					mode="ajax"
 					execute="@form"
 					id="providerWizardFinishButton"
-					icon="/icons/common/Default16.gif"
-					iconDisabled="/icons/common/DefaultDisabled16.gif"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
 					rendered="#{providerWizard.finishVisible}"
 					enabled="#{providerWizard.finishEnabled}"
 					manager="#{providerWizard}"
 					action="finish"
 					onclick="setCursorWait(this); showProgress('Nam', 'New Provider', 'Validating and submitting new Provider...');"
 					oncomplete="setCursorDefault(); hideProgress()"
-					render="providerMessages"
+					render="wizardMessages"
+					style="padding: 2px 8px"
+					offset="true" />
+				
+				<!-- save button -->
+				<aries:dialogButton
+					label="Save"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="providerWizardSaveButton"
+					icon="/icons/common/Save16.gif"
+					iconDisabled="/icons/common/SaveDisabled16.gif"
+					rendered="#{providerWizard.saveVisible}"
+					enabled="#{providerWizard.saveEnabled}"
+					manager="#{providerWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'Provider', 'Validating and submitting Provider changes...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					style="padding: 2px 8px"
 					offset="true" />
 				
 				<!-- cancel button -->
@@ -127,6 +150,7 @@
 					action="cancel"
 					onclick="setCursorWait(this); showProgress('Nam', 'Provider Management', 'Cancelling creation of Provider...');"
 					oncomplete="setCursorDefault(); hideProgress()"
+					style="padding: 2px 8px"
 					offset="true" />
 			</aries:toolbarGroup>
 		</aries:controlbar>

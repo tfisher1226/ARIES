@@ -12,15 +12,14 @@
 
 	<aries:panel
 	  width="auto"
-	  margin="0px"
-	  backgroundColor="inherit">
+		style="background-color: inherit">
 	      
 	  <aries:formPane
 	  	width="auto"
 	  	borderWidth="1px"
 	  	borderColor="#aaa"
 	  	columnClass="formColumnAlignLeft"
-	  	backgroundColor="inherit">
+			style="background-color: white">
 	      
 	  	<c:set var="section" value="#{referenceWizard.section}" /> 
 	  	<c:set var="backgroundColor" value="#cfe7f5" /> 
@@ -32,7 +31,7 @@
 	  		paddingLeft="12px"
 	  		fontSize="14"
 	  		fontWeight="bold"
-	  		backgroundColor="#fff">
+				style="background-color: white">
 	  		#{referenceWizard.newMode ? 'Steps' : 'Sections'}
 	  	</aries:indentPane>
 	      

@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showContainerListPage()
+		  ** Goes to the Container Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showContainerListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{containerPageManager.initializeContainerListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Container Records', 'Preparing Container List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showContainerTreePage()
+		  ** Goes to the Container Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showContainerTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{containerPageManager.initializeContainerTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Container Records', 'Preparing Container Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showContainerManagementPage()
+		  ** Goes to the Container Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showContainerManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{containerPageManager.initializeContainerManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Container Records', 'Preparing Container related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showContainerWizardPage()
+		  ** Goes to the Container Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showContainerWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{containerWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Container Records', 'Preparing Container information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{containerWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{containerWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewContainerDialog()
+		  ** Launches the Container Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewContainerDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{containerInfoManager.newContainer}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Container Records', 'Creating new Container...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showContainerDialog()"
+			render="containerModule, containerDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{containerInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="containerListPane" assignTo="#{containerInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{containerInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditContainerDialog()
+		  ** Launches the Container Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditContainerDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{containerInfoManager.editContainer}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Container Records', 'Preparing Container information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showContainerDialog()"
+			render="containerModule, containerDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{containerInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="containerListPane" assignTo="#{containerInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{containerInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

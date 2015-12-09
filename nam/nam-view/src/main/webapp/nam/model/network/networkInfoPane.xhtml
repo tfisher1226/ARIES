@@ -16,8 +16,28 @@
 		<aries:tab
 			label="Network Information">
 			
+			<ui:include src="../import/importListPane.xhtml">
+				<ui:param name="itemManager" value="#{importInfoManager}" />
+				<ui:param name="listManager" value="#{importListManager}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Domain" label="Domain" value="#{network.domain}" />
+			
 			<aries:spacer height="6" />
 			<aries:inputText id="#{section}Name" label="Name" value="#{network.name}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Label" label="Label" value="#{network.label}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Version" label="Version" value="#{network.version}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Description" label="Description" value="#{network.description}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputText id="#{section}Namespace" label="Namespace" value="#{network.namespace}" />
 			
 			<aries:spacer height="6" />
 			<aries:inputInteger id="#{section}InitialSize" label="Initial Size" value="#{network.initialSize}" />
@@ -27,6 +47,22 @@
 			
 			<aries:spacer height="6" />
 			<aries:inputInteger id="#{section}MaxSize" label="Max Size" value="#{network.maxSize}" />
+			
+			<ui:include src="../serializable/serializableListPane.xhtml">
+				<ui:param name="itemManager" value="#{serializableInfoManager}" />
+				<ui:param name="listManager" value="#{serializableListManager}" />
+			</ui:include>
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Imported" label="Imported" value="#{network.imported}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Included" label="Included" value="#{network.included}" />
+			
+			<aries:spacer height="6" />
+			<aries:inputBoolean id="#{section}Exposed" label="Exposed" value="#{network.exposed}" />
+			
+			
 		</aries:tab>
 	</aries:tabPane>
 </ui:composition>

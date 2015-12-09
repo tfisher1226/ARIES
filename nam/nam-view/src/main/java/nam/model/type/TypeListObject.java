@@ -53,6 +53,12 @@ public class TypeListObject extends AbstractListObject<Type> implements Comparab
 		return TypeUtil.getPackageName(type.getType()) + "." + type.getName();
 	}
 	
+	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
 	public String getIcon() {
 		if (type instanceof Fault)
 			return "/icons/nam/Fault16.gif";
@@ -63,21 +69,6 @@ public class TypeListObject extends AbstractListObject<Type> implements Comparab
 		if (type instanceof Element)
 			return "/icons/nam/Element16.gif";
 		return "";
-	}
-	
-	@Override
-	public void setChecked(boolean checked) {
-		super.setChecked(checked);
-		fireChangeEvent(type, checked);
-	}
-	
-	protected static void fireChangeEvent(Type type, boolean checked) {
-		TypeEventManager eventManager = BeanContext.getFromSession("typeEventManager");
-		if (checked) {
-			eventManager.fireSelectedEvent(type);
-		} else {
-			eventManager.fireUnselectedEvent(type);
-		}
 	}
 	
 	@Override

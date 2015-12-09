@@ -73,10 +73,17 @@ public class ActionListManager extends AbstractDomainListManager<Action, ActionL
 		return selected;
 	}
 	
+	public boolean isChecked(Action action) {
+		Collection<Action> selection = selectionContext.getSelection("actionSelection");
+		boolean checked = selection != null && selection.contains(action);
+		return checked;
+	}
+	
 	@Override
 	protected ActionListObject createRowObject(Action action) {
 		ActionListObject listObject = new ActionListObject(action);
 		listObject.setSelected(isSelected(action));
+		listObject.setChecked(isChecked(action));
 		return listObject;
 	}
 	

@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showUnitListPage()
+		  ** Goes to the Unit Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showUnitListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{unitPageManager.initializeUnitListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Unit Records', 'Preparing Unit List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showUnitTreePage()
+		  ** Goes to the Unit Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showUnitTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{unitPageManager.initializeUnitTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Unit Records', 'Preparing Unit Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showUnitManagementPage()
+		  ** Goes to the Unit Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showUnitManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{unitPageManager.initializeUnitManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Unit Records', 'Preparing Unit related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showUnitWizardPage()
+		  ** Goes to the Unit Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showUnitWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{unitWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Unit Records', 'Preparing Unit information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{unitWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{unitWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewUnitDialog()
+		  ** Launches the Unit Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewUnitDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{unitInfoManager.newUnit}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Unit Records', 'Creating new Unit...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showUnitDialog()"
+			render="unitModule, unitDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{unitInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="unitListPane" assignTo="#{unitInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{unitInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditUnitDialog()
+		  ** Launches the Unit Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditUnitDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{unitInfoManager.editUnit}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Unit Records', 'Preparing Unit information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showUnitDialog()"
+			render="unitModule, unitDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{unitInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="unitListPane" assignTo="#{unitInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{unitInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

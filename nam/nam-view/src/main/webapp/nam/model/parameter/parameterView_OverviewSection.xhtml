@@ -26,9 +26,13 @@
 		<aries:formPane
 			columns="2"
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
-			<aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="parameterManagementViewer" />
+			
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Project16.gif" />
 					<ui:param name="label" value="Projects" />
@@ -36,17 +40,21 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../project/projectListActions.xhtml">
-						<ui:param name="render" value="networkManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="../project/projectNameListToolbar.xhtml" />
-					<ui:include src="../project/projectNameListTable.xhtml" />
+					<!-- project refresh scope -->
+					<ui:param name="scope" value="projectList" />
+					<ui:param name="target" value="parameter" />
+					
+					<!-- project table section -->
+					<ui:include src="/nam/model/project/projectListActions.xhtml" />
+					<ui:include src="/nam/model/project/projectNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/project/projectNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 			
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Parameter16.gif" />
 					<ui:param name="label" value="Parameters" />
@@ -54,13 +62,14 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../parameter/parameterListActions.xhtml">
-						<ui:param name="render" value="parameterManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="parameterNameListToolbar.xhtml" />
-					<ui:include src="parameterNameListTable.xhtml" />
+					<!-- parameter refresh action -->
+					<ui:param name="scope" value="projectSelection" />
+					
+					<!-- parameter table section -->
+					<ui:include src="/nam/model/parameter/parameterListActions.xhtml" />
+					<ui:include src="/nam/model/parameter/parameterNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/parameter/parameterNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

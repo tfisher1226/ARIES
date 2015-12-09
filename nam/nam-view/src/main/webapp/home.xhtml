@@ -1,0 +1,170 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf"
+	template="/templates/main.xhtml">
+
+	<!-- page includes -->
+	<ui:define name="pageIncludes">
+		<ui:include src="welcomeContent.xhtml" />
+	</ui:define>
+
+	<!-- section header -->
+	<ui:define name="pageHeader">
+	
+		<!-- page title -->
+		<div style="background-color: #f5f5f5; border-bottom: 1px solid #ccc; ">
+
+			<div style="width: 840px; margin: auto; padding: 8px">
+				<ui:include src="/nam/actions.xhtml"/>
+			</div>
+		</div>
+		
+		<!-- page title 
+		<div style="background-color: #fff9ea; border-bottom: 1px solid #ccc; ">
+			<div style="width: 840px; margin: auto; padding: 16px">
+				<aries:text fontSize="14" fontWeight="bold" textColor="#333" value="Please verify your email address to access Nam's workbench." />
+				<aries:spacer height="1" />
+				<aries:text fontSize="13" textColor="#666" value="An email containing verification instructions was sent to: thfisher@kattare.com" />
+			</div>
+		</div>
+		-->
+	</ui:define>
+
+	<!-- content -->
+	<ui:define name="content">
+		<div class="content" style="display: block; background-color: white">
+
+			<div style="width: 770px; max-width: 770px; margin: auto; background-color: white">
+			
+				<h:panelGrid
+					columns="2" 
+					cellpadding="0"
+					cellspacing="0"
+					columnClasses="formColumnAlignTop, formColumnAlignTop"
+					style="margin: auto; background-color: inherit">
+				
+					<h:panelGroup>
+						<div style="width: 500px; max-width: 500px; margin: auto; padding: 0px; padding-top: 40px; background-color: white">
+							<aries:label fontSize="32" value="Build Java EE systems in minutes" />
+			
+							<aries:spacer height="4" />
+							<aries:label fontSize="16" fontFamily="Verdana" textColor="#555" value="Design, build, test, and run enterprise applications" style="" />
+							<aries:label fontSize="16" fontFamily="Verdana" textColor="#555" value="deploy to on premise network, or cloud of choice" style="" />
+			
+							<aries:spacer height="10" />
+							<aries:label fontSize="16" fontFamily="Verdana" textColor="#555" value="Easily build and incorporate" style="" />		
+
+							<h:panelGroup layout="block" style="padding-top: 8px; padding-left: 12px">
+								<aries:bullet fontSize="16" fontFamily="Verdana" textColor="#555" value="Web-services" />
+								<aries:bullet fontSize="16" fontFamily="Verdana" textColor="#555" value="REST services" />
+								<aries:bullet fontSize="16" fontFamily="Verdana" textColor="#555" value="Enterprise messaging" />		
+								<aries:bullet fontSize="16" fontFamily="Verdana" textColor="#555" value="Distributed caching" />		
+								<aries:bullet fontSize="16" fontFamily="Verdana" textColor="#555" value="Transaction management" />
+							</h:panelGroup>
+							
+							<aries:spacer height="30" />
+						</div>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<div style="width: 230px; max-width: 230px; margin: auto; margin-top: 30px; padding: 20px; border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
+
+							<h:inputText
+								id="userName"
+								required="true"
+								maxlength="24"
+								a:placeholder="Pick a username"
+								value="#{credentials.username}" 
+								validatorMessage="User-name is required"
+								onkeydown="return process#{dialog}KeyDown(event)"
+								styleClass="" 
+								style="width: 100%; height: 40px; padding: 10px; font-size: 14px; border-radius: 5px; background-color: white">
+								<f:validateRequired />
+								<f:validateLength minimum="2" maximum="24" />
+							</h:inputText>
+		
+							<aries:spacer height="10" />
+							<h:inputText
+								id="emailAddress"
+								required="true"
+								maxlength="24"
+								a:placeholder="Enter your e-mail"
+								value="#{credentials.password}" 
+								validatorMessage="E-mail is required"
+								styleClass="formInput" 
+								style="width: 100%; height: 40px; padding: 10px; font-size: 14px; border-radius: 5px; background-color: white">
+							</h:inputText>
+								
+							<aries:spacer height="10" />
+							<h:inputText
+								id="passCode"
+								required="true"
+								maxlength="24"
+								a:placeholder="Create a password"
+								value="#{credentials.password}" 
+								validatorMessage="Password is required"
+								onkeydown="return process#{dialog}KeyDown(event)"
+								styleClass="formInput" 
+								style="width: 100%; height: 40px; padding: 10px; font-size: 14px; border-radius: 5px; background-color: white">
+								<f:validateRequired />
+								<f:validateLength minimum="7" maximum="24" />
+							</h:inputText>
+								
+							<aries:spacer height="10" />
+							<aries:text 
+								fontSize="12" 
+								textColor="#777" 
+								value="Use at least one lowercase letter, one numeral, and seven characters." 
+								style="" />
+							
+							<aries:spacer height="6" />
+							<aries:formPane columns="2" 
+								style="background-color: inherit">
+							
+								<h:selectBooleanCheckbox
+									id="rememberMe" 
+									value="#{identity.rememberMe}" 
+									styleClass="formCheckbox" 
+									style="width: 20px; height: 20px" />
+									
+								<aries:text 
+									fontSize="16" 
+									fontFamily="Verdana" 
+									textColor="white" 
+									value="Remember me" 
+									style="cursor: pointer" />
+							</aries:formPane>
+							
+							<h:commandButton 
+								value="Sign up to preview Nam"
+								styleClass="formButton" 
+								style="width: 100%; height: 40px; padding: 10px; margin-top: 10px; border-radius: 5px; font-size: 14px; font-weight: bold; color: #333; background-color: #eef" />
+
+							<aries:spacer height="10" />
+							<aries:text 
+								fontSize="12" 
+								textColor="#bbb" 
+								value="By clicking Sign up for Nam, you agree to our terms of service and privacy policy. We will send you account related emails occasionally." 
+								style="" />
+							
+						</div>
+					</h:panelGroup>
+				</h:panelGrid>
+			</div>
+		</div>
+	</ui:define>
+
+			<!-- page title -->
+			<div style="width: 100%; background-color: blue">
+				<div style="width: 770px; margin: auto; padding: 16px">
+					<aries:text fontSize="32" fontWeight="bold" textColor="#333" value="Deploy using Docker and Kubernetes." />
+				</div>
+			</div>
+</ui:composition>

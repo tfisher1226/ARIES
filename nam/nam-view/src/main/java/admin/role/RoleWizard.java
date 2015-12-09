@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.aries.util.NameUtil;
 
 import admin.Role;
+import admin.util.RoleUtil;
 
 
 @SessionScoped
@@ -122,7 +123,7 @@ public class RoleWizard extends AbstractDomainElementWizard<Role> implements Ser
 	
 	public String populateDefaultValues() {
 		Role role = selectionContext.getSelection("role");
-		String name = role.getName();
+		String name = RoleUtil.getLabel(role);
 		if (StringUtils.isEmpty(name)) {
 			display = getFromSession("display");
 			display.setModule("roleWizard");

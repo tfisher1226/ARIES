@@ -7,7 +7,8 @@
 	
 	<!-- table panel -->
 	<aries:outputPane
-		id="applicationListTablePanel">
+		id="applicationListTablePanel"
+		style="">
 		
 		<!-- context menu -->
 		<ui:include src="applicationListMenu.xhtml">
@@ -16,15 +17,14 @@
 		
 		<!-- table -->
 		<aries:table
+			width="698"
 			id="applicationListTable"
 			value="#{applicationListManager.dataModel}"
 			rowCount="#{applicationListManager.dataModel.rowCount}"
 			visible="#{applicationListManager.dataModel.rowCount > 0}"
-			addIndexColumn="true"
-			addSelectorColumn="true"
-			onrowmousedown="processApplicationListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowclick="processApplicationListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processApplicationListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
-			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">			
+			style="width: auto; border-top-width: 0px; border-left-width: 0px; ">			
 			
 			<!-- PROJECT -->
 			<aries:textColumn
@@ -33,13 +33,6 @@
 				<h:outputText value="#{rowItem.project.name}" />
 			</aries:textColumn>
 			
-			<!-- TYPE -->
-			<aries:textColumn
-				width="100"
-				header="Type">
-				<h:outputText value="#{rowItem.application.type}" />
-			</aries:textColumn>
-
 			<!-- NAME -->
 			<aries:textColumn
 				width="100"
@@ -49,12 +42,22 @@
 					onmouseup="processApplicationListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')" />
 			</aries:textColumn>
 			
-			<!-- LABEL -->
+			<!-- TYPE -->
 			<aries:textColumn
 				width="100"
-				header="Label">
+				header="Type"
+				sortBy="#{rowItem.application.type}">
+				<h:outputText value="#{rowItem.application.type}" />
+			</aries:textColumn>
+
+			<!-- LABEL 
+			<aries:textColumn
+				width="100"
+				header="Label"
+				sortBy="#{rowItem.application.label}">
 				<h:outputText value="#{rowItem.application.label}" />
 			</aries:textColumn>
+			-->
 			
 			<!-- CONTEXT ROOT -->
 			<aries:textColumn

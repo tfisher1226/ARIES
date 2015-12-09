@@ -727,7 +727,7 @@ public class ModelOperationFactory {
 		}
 		Persistence persistence = context.getModule().getPersistence();
 		if (persistence != null) {
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Iterator<Unit> iterator = units.iterator();
 			while (iterator.hasNext()) {
 				Unit unit = iterator.next();

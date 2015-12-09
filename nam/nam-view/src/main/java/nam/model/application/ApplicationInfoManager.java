@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,14 +12,11 @@ import nam.model.Application;
 import nam.model.util.ApplicationUtil;
 import nam.ui.design.AbstractNamRecordManager;
 import nam.ui.design.SelectionContext;
-import nam.ui.design.WorkspaceEventManager;
 
 import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Unselected;
 import org.aries.util.Validator;
 
 
@@ -38,8 +36,8 @@ public class ApplicationInfoManager extends AbstractNamRecordManager<Application
 	@Inject
 	private ApplicationEventManager applicationEventManager;
 
-	@Inject
-	private WorkspaceEventManager workspaceEventManager;
+	//@Inject
+	//private WorkspaceEventManager workspaceEventManager;
 	
 	@Inject
 	private ApplicationHelper applicationHelper;
@@ -84,22 +82,8 @@ public class ApplicationInfoManager extends AbstractNamRecordManager<Application
 	}
 	
 	protected void initialize(Application application) {
-		ApplicationUtil.initialize(application);
 		applicationWizard.initialize(application);
 		setContext("application", application);
-	}
-
-	public void handleApplicationSelected(@Observes @Selected Application application) {
-		selectionContext.setSelection("application",  application);
-		applicationPageManager.refreshMembers("applicationSelection");
-		applicationPageManager.updateState(application);
-		setRecord(application);
-	}
-
-	public void handleApplicationUnselected(@Observes @Unselected Application application) {
-		selectionContext.unsetSelection("application",  application);
-		applicationPageManager.refreshMembers("applicationSelection");
-		unsetRecord(application);
 	}
 	
 	@Override
@@ -259,7 +243,10 @@ public class ApplicationInfoManager extends AbstractNamRecordManager<Application
 			selectionContext.clearSelection("application");
 			applicationEventManager.fireClearSelectionEvent();
 			applicationEventManager.fireRemovedEvent(application);
-			workspaceEventManager.fireRefreshEvent();
+			applicationPageManager.refreshLocal("projectList");
+			FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("pageForm:applicationListPane");
+			//workspaceEventManager.fireRefreshEvent();
+			//return url;
 			return null;
 		} catch (Exception e) {
 			handleException(e);

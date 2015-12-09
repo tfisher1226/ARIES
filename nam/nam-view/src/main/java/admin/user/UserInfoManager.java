@@ -16,7 +16,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.util.Validator;
 
 import admin.User;
@@ -90,16 +89,8 @@ public class UserInfoManager extends AbstractNamRecordManager<User> implements S
 	}
 	
 	protected void initialize(User user) {
-		UserUtil.initialize(user);
 		userWizard.initialize(user);
 		setContext("user", user);
-	}
-
-	public void handleUserSelected(@Observes @Selected User user) {
-		selectionContext.setSelection("user",  user);
-		userPageManager.updateState(user);
-		userPageManager.refreshMembers();
-		setRecord(user);
 	}
 
 	@Override

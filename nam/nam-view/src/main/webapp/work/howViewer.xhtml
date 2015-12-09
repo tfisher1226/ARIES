@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<a4j:outputPanel
+		id="howView">
+		
+		<aries:layerPane 
+			id="howViewer"
+			activeItem="#{selectionContext.currentTarget}">
+	
+			<aries:layeredPane name="mathematicalApproach">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="A mathematical representation" />
+					<aries:spacer height="16" />
+
+					<p>
+					We use a mathematical approach to representing your system.  A protocol representing the structure and behavior of your system.
+					
+					Once we have understood the structure and behavior of your desired system, we produce the implementation.
+					</p>
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="developmentIsSlow">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Normal Development is Slow" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="" />
+				</div>
+			</aries:layeredPane>
+	
+	
+			<aries:layeredPane name="experiementationAndComparison">
+				<div style="background-color: inherit">
+				
+					<c:set var="fontFamily" value="Tahoma" />
+					<c:set var="fontWeight" value="normal" />
+				
+					<aries:spacer height="0" />
+					<aries:label fontSize="26" value="Experiementation and Comparison" />
+
+					<aries:spacer height="16" />
+					<aries:label fontSize="16" value="Easy to expidite the change of various parts..." />
+				</div>
+			</aries:layeredPane>
+		</aries:layerPane>
+	</a4j:outputPanel>
+</ui:composition>

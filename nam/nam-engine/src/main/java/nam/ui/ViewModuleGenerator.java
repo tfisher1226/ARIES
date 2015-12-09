@@ -54,6 +54,8 @@ import nam.ui.src.main.webapp.admin.ElementManagementNavigatorXhtmlGenerator;
 import nam.ui.src.main.webapp.admin.ElementManagementPageXhtmlGenerator;
 import nam.ui.src.main.webapp.admin.ElementManagementSectionXhtmlGenerator;
 import nam.ui.src.main.webapp.admin.ElementManagementViewerXhtmlGenerator;
+import nam.ui.src.main.webapp.admin.ElementNameListTableXhtmlGenerator;
+import nam.ui.src.main.webapp.admin.ElementNameListToolbarXhtmlGenerator;
 import nam.ui.src.main.webapp.admin.ElementRecordMenuXhtmlGenerator;
 import nam.ui.src.main.webapp.admin.ElementRecordNavigatorXhtmlGenerator;
 import nam.ui.src.main.webapp.admin.ElementRecordPageXhtmlGenerator;
@@ -139,6 +141,8 @@ public class ViewModuleGenerator extends AbstractModuleGenerator {
 	private ElementManagementNavigatorXhtmlGenerator elementManagementNavigatorXhtmlGenerator; 
 	private ElementManagementSectionXhtmlGenerator elementManagementSectionXhtmlGenerator; 
 	private ElementManagementViewerXhtmlGenerator elementManagementViewerXhtmlGenerator; 
+	private ElementNameListTableXhtmlGenerator elementNameListTableXhtmlGenerator; 
+	private ElementNameListToolbarXhtmlGenerator elementNameListToolbarXhtmlGenerator; 
 	private ElementRecordPageXhtmlGenerator elementRecordPageXhtmlGenerator; 
 	private ElementRecordMenuXhtmlGenerator elementRecordMenuXhtmlGenerator; 
 	private ElementRecordNavigatorXhtmlGenerator elementRecordNavigatorXhtmlGenerator; 
@@ -227,6 +231,8 @@ public class ViewModuleGenerator extends AbstractModuleGenerator {
 		elementManagementNavigatorXhtmlGenerator = new ElementManagementNavigatorXhtmlGenerator(context);
 		elementManagementSectionXhtmlGenerator = new ElementManagementSectionXhtmlGenerator(context);
 		elementManagementViewerXhtmlGenerator = new ElementManagementViewerXhtmlGenerator(context);
+		elementNameListTableXhtmlGenerator = new ElementNameListTableXhtmlGenerator(context);
+		elementNameListToolbarXhtmlGenerator = new ElementNameListToolbarXhtmlGenerator(context);
 		elementRecordPageXhtmlGenerator = new ElementRecordPageXhtmlGenerator(context);
 		elementRecordMenuXhtmlGenerator = new ElementRecordMenuXhtmlGenerator(context);
 		elementRecordNavigatorXhtmlGenerator = new ElementRecordNavigatorXhtmlGenerator(context);
@@ -298,6 +304,8 @@ public class ViewModuleGenerator extends AbstractModuleGenerator {
 		elementManagementNavigatorXhtmlGenerator.initialize(project, module);
 		elementManagementSectionXhtmlGenerator.initialize(project, module);
 		elementManagementViewerXhtmlGenerator.initialize(project, module);
+		elementNameListTableXhtmlGenerator.initialize(project, module);
+		elementNameListToolbarXhtmlGenerator.initialize(project, module);
 		elementRecordPageXhtmlGenerator.initialize(project, module);
 		elementRecordMenuXhtmlGenerator.initialize(project, module);
 		elementRecordNavigatorXhtmlGenerator.initialize(project, module);
@@ -394,6 +402,8 @@ public class ViewModuleGenerator extends AbstractModuleGenerator {
 		elementManagementNavigatorXhtmlGenerator.generate(project, module);
 		elementManagementSectionXhtmlGenerator.generate(project, module);
 		elementManagementViewerXhtmlGenerator.generate(project, module);
+		elementNameListTableXhtmlGenerator.generate(project, module);
+		elementNameListToolbarXhtmlGenerator.generate(project, module);
 		elementRecordPageXhtmlGenerator.generate(project, module);
 		elementRecordMenuXhtmlGenerator.generate(project, module);
 		elementRecordNavigatorXhtmlGenerator.generate(project, module);

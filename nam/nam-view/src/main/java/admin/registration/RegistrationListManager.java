@@ -48,6 +48,10 @@ public class RegistrationListManager extends AbstractDomainListManager<Registrat
 		return "Registration List";
 	}
 	
+	public Object getRecordId(Registration registration) {
+		return registration.getId();
+	}
+	
 	@Override
 	public Object getRecordKey(Registration registration) {
 		return RegistrationUtil.getKey(registration);
@@ -93,10 +97,17 @@ public class RegistrationListManager extends AbstractDomainListManager<Registrat
 		return selected;
 	}
 	
+	public boolean isChecked(Registration registration) {
+		Collection<Registration> selection = selectionContext.getSelection("registrationSelection");
+		boolean checked = selection != null && selection.contains(registration);
+		return checked;
+	}
+	
 	@Override
 	protected RegistrationListObject createRowObject(Registration registration) {
 		RegistrationListObject listObject = new RegistrationListObject(registration);
 		listObject.setSelected(isSelected(registration));
+		listObject.setChecked(isChecked(registration));
 		return listObject;
 	}
 	

@@ -9,17 +9,12 @@
 	background-image: url(#{resource['org.richfaces.images:dsDigGrad.png']});
 	background-image: url(#{resource['org.richfaces.images:colHdrGrad.png']});
 	*/
+	border-left-width: 0px;
+	border-right-width: 0px;
 	background-image: none;
 	background-color: #{richSkin.toolbarBackgroundColor};
 	background-color: #{userSkin.toolbarBackgroundColor};
 	border: 0px #{userSkin.borderStyle} #{userSkin.toolbarBorderColor};
-	/*
-	background-color: blue;
-	background-color: #{richSkin.generalBackgroundColor};
-	border: 0px #{userSkin.borderStyle} #{userSkin.borderColor};
-	*/
-	border-left-width: 0px;
-	border-right-width: 0px;
 }
 
 /*
@@ -77,6 +72,7 @@
 	*/ 
 }
 
+/*
 .menuItem,
 .toolItem,
 .toolItemDisabled,
@@ -85,3 +81,4 @@
 	background-image: none;
 	background: inherit;
 }
+*/

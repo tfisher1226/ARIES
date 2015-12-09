@@ -52,23 +52,14 @@ public class ElementListObject extends AbstractListObject<Element> implements Co
 		return TypeUtil.getPackageName(element.getType()) + "." + element.getName();
 	}
 	
-	public String getIcon() {
-		return "/icons/nam/Element16.gif";
-	}
-	
 	@Override
 	public void setChecked(boolean checked) {
 		super.setChecked(checked);
-		fireChangeEvent(element, checked);
 	}
 	
-	protected static void fireChangeEvent(Element element, boolean checked) {
-		ElementEventManager eventManager = BeanContext.getFromSession("elementEventManager");
-		if (checked) {
-			eventManager.fireSelectedEvent(element);
-		} else {
-			eventManager.fireUnselectedEvent(element);
-		}
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Element16.gif";
 	}
 	
 	@Override

@@ -26,9 +26,13 @@
 		<aries:formPane
 			columns="2"
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
-			<aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="preferencesManagementViewer" />
+			
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Project16.gif" />
 					<ui:param name="label" value="Projects" />
@@ -36,17 +40,21 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../project/projectListActions.xhtml">
-						<ui:param name="render" value="preferencesManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="../project/projectNameListToolbar.xhtml" />
-					<ui:include src="../project/projectNameListTable.xhtml" />
+					<!-- project refresh scope -->
+					<ui:param name="scope" value="projectList" />
+					<ui:param name="target" value="preferences" />
+					
+					<!-- project table section -->
+					<ui:include src="/nam/model/project/projectListActions.xhtml" />
+					<ui:include src="/nam/model/project/projectNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/project/projectNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 			
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Preferences16.gif" />
 					<ui:param name="label" value="Preferenceses" />
@@ -54,13 +62,14 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="preferencesListActions.xhtml">
-						<ui:param name="render" value="preferencesManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="preferencesNameListToolbar.xhtml" />
-					<ui:include src="preferencesNameListTable.xhtml" />
+					<!-- preferences refresh action -->
+					<ui:param name="scope" value="projectSelection" />
+					
+					<!-- preferences table section -->
+					<ui:include src="/admin/preferences/preferencesListActions.xhtml" />
+					<ui:include src="/admin/preferences/preferencesNameListToolbar.xhtml" />
+					<ui:include src="/admin/preferences/preferencesNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

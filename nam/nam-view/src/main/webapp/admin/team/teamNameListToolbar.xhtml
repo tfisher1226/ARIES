@@ -6,73 +6,45 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<aries:toolbar
-		type="table"
+	<a4j:outputPanel
 		id="teamNameListToolbar">
 		
-		<aries:toolbarGroup
-			location="left">
-		
-			<aries:toolButton
-				id="teamNameListNewButton"
-				label="New Team..."
-				icon="/icons/common/New16.gif"
-				iconDisabled="/icons/common/NewDisabled16.gif"
-				tooltip="Create new Team Record"
-				enabled="#{securityGuard.canCreate('team')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processNewElement(event, 'Team')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px 2px 2px"
-				offset="false" />
+		<aries:toolbar
+			type="table">
 			
-			<!--  
-			<aries:toolButton
-				id="teamNameListEditButton"
-				value="Edit Team..."
-				icon="/icons/common/Edit16.gif"
-				iconDisabled="/icons/common/EditDisabled16.gif"
-				tooltip="Open selected Team record for edit..."
-				enabled="#{teamListManager.hasSelection() and securityGuard.canUpdate('team')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processEditElement(event, 'Team')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="false" />
+			<aries:toolbarGroup
+				location="left">
 			
-			<aries:toolButton
-				id="teamNameListRemoveButton"
-				value="Remove Team..."
-				icon="/icons/common/Remove16.gif"
-				iconDisabled="/icons/common/RemoveDisabled16.gif"
-				tooltip="Remove selected Team record from system..."
-				enabled="#{teamListManager.hasSelection() and securityGuard.canDelete('team')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processRemoveElement(event, 'Team')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="true" />
-				-->
-		</aries:toolbarGroup>
-		
-		<aries:toolbarGroup
-			location="right">
+				<aries:toolButton
+					id="teamNameListNewButton"
+					label="New Team..."
+					icon="/icons/common/New16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					enabled="#{securityGuard.canCreate('team')}"
+					mode="client"
+					execute="@none"
+					onmouseup="processNewElement(event, 'Team')"
+					labelStyle="font-size: 11px"
+					style="margin: 2px"
+					offset="false" />
+			</aries:toolbarGroup>
 			
-			<aries:toolButton
-				id="teamNameListRefreshButton"
-				icon="/icons/common/Refresh16.gif"
-				iconDisabled="/icons/common/RefreshDisabled16.gif"
-				tooltip="Re-read Team information from server"
-				enabled="#{securityGuard.canOpen('team')}"
-				mode="client"
-				execute="@none"
-				onmouseup="refreshTeamList(event)"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 2px 2px 1px"
-				offset="false" />
-		</aries:toolbarGroup>
-	</aries:toolbar>
+			<aries:toolbarGroup
+				location="right">
+				
+				<aries:toolButton
+					id="teamNameListRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					tooltip="Re-read Team information from server"
+					enabled="#{securityGuard.canOpen('team')}"
+					mode="client"
+					execute="@none"
+					onmouseup="refreshTeamList('#{scope}')"
+					labelStyle="font-size: 11px"
+					style="margin: 2px"
+					offset="false" />
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

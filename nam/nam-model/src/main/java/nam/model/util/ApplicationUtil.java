@@ -15,16 +15,19 @@ import java.util.Set;
 
 import nam.model.Application;
 import nam.model.Applications;
+import nam.model.Cache;
 import nam.model.Callback;
 import nam.model.Channel;
 import nam.model.Channels;
 import nam.model.Component;
+import nam.model.Components;
 import nam.model.Dependencies;
 import nam.model.Dependency;
 import nam.model.Direction;
 import nam.model.Element;
 import nam.model.Import;
 import nam.model.Information;
+import nam.model.Messaging;
 import nam.model.Module;
 import nam.model.ModuleType;
 import nam.model.Modules;
@@ -35,6 +38,7 @@ import nam.model.Project;
 import nam.model.ProjectNames;
 import nam.model.Properties;
 import nam.model.Property;
+import nam.model.Provider;
 import nam.model.Service;
 import nam.model.Services;
 import nam.ui.UserInterface;
@@ -335,7 +339,7 @@ public class ApplicationUtil extends BaseUtil {
 		List<Namespace> namespaces = new ArrayList<Namespace>(); 
 		Information information = application.getInformation();
 		if (information != null) {
-			List<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = localNamespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = iterator.next();
@@ -361,29 +365,74 @@ public class ApplicationUtil extends BaseUtil {
 		Collection<Element> elements = NamespaceUtil.getElements(namespaces);
 		return elements;
 	}
-	
+
 	public static Collection<Component> getComponents(Collection<Application> applications) {
+		return getComponents(applications, null);
+	}
+	
+	public static Collection<Component> getComponents(Collection<Application> applications, String componentType) {
 		Collection<Component> components = new ArrayList<Component>();
 		Iterator<Application> iterator = applications.iterator();
 		while (iterator.hasNext()) {
 			Application application = (Application) iterator.next();
-			components.addAll(getComponents(application));
+			components.addAll(getComponents(application, componentType));
 		}
 		return components;
 	}
 
-	public static List<Component> getComponents(Application application) {
-		List<Component> components = new ArrayList<Component>(); 
+	public static Collection<Component> getComponents(Application application) {
+		return getComponents(application, null);
+	}
+	
+	public static Collection<Component> getComponents(Application application, String componentType) {
+		Set<Component> components = new HashSet<Component>();
+
+		if (componentType != null) {
+			if (componentType.equals("cache")) {
+				Collection<Module> serviceModules = getServiceModules(application);
+				Iterator<Module> iterator = serviceModules.iterator();
+				while (iterator.hasNext()) {
+					Module module = iterator.next();
+					module.getComponents();
+				}
+			}
+		}
+		
 		Information information = application.getInformation();
 		if (information != null) {
-			List<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> localNamespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = localNamespaces.iterator();
 //			while (iterator.hasNext()) {
-//				Component component = iterator.next();
-//				NamespaceUtil.addNamespace(components, component);
-//				NamespaceUtil.addImportedNamespaces(components, component);
+//				Namespace namespace = iterator.next();
 //			}
 		}
+			
+		if (componentType == null) {
+			Collection<Module> serviceModules = getServiceModules(application);
+			Iterator<Module> iterator = serviceModules.iterator();
+			while (iterator.hasNext()) {
+				Module module = iterator.next();
+				//ComponentUtil.getComponents();
+				Components componentParent = module.getComponents();
+				if (componentParent != null) {
+					components.addAll(componentParent.getComponents());
+				}
+				Collection<Cache> cacheComponents = ModuleUtil.getCaches(module);
+				//TODO components.addAll(cacheComponents);
+			}
+			
+			Collection<Service> services = getServices(application);
+			Iterator<Service> iterator2 = services.iterator();
+			while (iterator2.hasNext()) {
+				Service service = iterator2.next();
+				Process process = service.getProcess();
+				if (process != null) {
+					components.add(process);
+				}
+			}
+			
+		}
+		
 		return components;
 	}
 	
@@ -664,6 +713,8 @@ public class ApplicationUtil extends BaseUtil {
 		Iterator<Module> iterator = modules.iterator();
 		while (iterator.hasNext()) {
 			Module module = iterator.next();
+//			if (moduleType == ModuleType.CLIENT)
+//				System.out.println();
 			if (module.getType() == moduleType) {
 				list.add(module);
 			}
@@ -765,4 +816,37 @@ public class ApplicationUtil extends BaseUtil {
 		return false;
 	}
 
+	public static Collection<Provider> getProviders(Collection<Project> projectList, Collection<Application> applications) {
+		Set<Provider> providers = new HashSet<Provider>();
+		Iterator<Application> iterator = applications.iterator();
+		while (iterator.hasNext()) {
+			Application application = iterator.next();
+			Collection<Provider> list = getProviders(projectList, application);
+			//TODO prevent duplicates
+			providers.addAll(list);
+		}
+		return providers;
+	}
+	
+	public static Collection<Provider> getProviders(Collection<Project> projectList, Application application) {
+		Project project = getProject(projectList, application);
+		Assert.notNull(project, "Project not found for application: "+application.getName());
+		Collection<Provider> providerList = new ArrayList<Provider>();
+		providerList.addAll(MessagingUtil.getProviders(ProjectUtil.getMessagingBlocks(project)));
+		providerList.addAll(PersistenceUtil.getProviders(ProjectUtil.getPersistenceBlocks(project)));
+		return providerList;
+	}
+
+	public static Project getProject(Collection<Project> projectList, Application application) {
+		Iterator<Project> iterator = projectList.iterator();
+		while (iterator.hasNext()) {
+			Project project = iterator.next();
+			Collection<Application> applicationList = ProjectUtil.getApplications(projectList);
+			if (applicationList.contains(application)) {
+				return project;
+			}
+		}
+		return null;
+	}
+	
 }

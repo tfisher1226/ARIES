@@ -92,10 +92,17 @@ public class TypeListManager extends AbstractDomainListManager<Type, TypeListObj
 		return selected;
 	}
 	
+	public boolean isChecked(Type type) {
+		Collection<Type> selection = selectionContext.getSelection("typeSelection");
+		boolean checked = selection != null && selection.contains(type);
+		return checked;
+	}
+	
 	@Override
 	protected TypeListObject createRowObject(Type type) {
 		TypeListObject listObject = new TypeListObject(type);
 		listObject.setSelected(isSelected(type));
+		listObject.setChecked(isChecked(type));
 		return listObject;
 	}
 	

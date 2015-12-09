@@ -2,12 +2,12 @@ package nam.model.application;
 
 import java.io.Serializable;
 
+import org.aries.runtime.BeanContext;
+import org.aries.ui.AbstractListObject;
+
 import nam.model.Application;
 import nam.model.Project;
 import nam.model.util.ApplicationUtil;
-
-import org.aries.runtime.BeanContext;
-import org.aries.ui.AbstractListObject;
 
 
 public class ApplicationListObject extends AbstractListObject<Application> implements Comparable<ApplicationListObject>, Serializable {
@@ -51,16 +51,11 @@ public class ApplicationListObject extends AbstractListObject<Application> imple
 	@Override
 	public void setChecked(boolean checked) {
 		super.setChecked(checked);
-		fireChangeEvent(application, checked);
 	}
 	
-	protected static void fireChangeEvent(Application application, boolean checked) {
-		ApplicationEventManager eventManager = BeanContext.getFromSession("applicationEventManager");
-		if (checked) {
-			eventManager.fireSelectedEvent(application);
-		} else {
-			eventManager.fireUnselectedEvent(application);
-		}
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Application16.gif";
 	}
 	
 	@Override

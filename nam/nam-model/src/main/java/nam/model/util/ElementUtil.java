@@ -364,7 +364,7 @@ public class ElementUtil extends BaseUtil {
 	public static Collection<Element> getElements(Project project) {
 		Set<Element> set = new HashSet<Element>();
 		Collection<Information> informationBlocks = ProjectUtil.getInformationBlocks(project);
-		Collection<Namespace> namespaces = InformationUtil.getAllNamespaces(informationBlocks);
+		Collection<Namespace> namespaces = InformationUtil.getNamespaces(informationBlocks);
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {
 			Namespace namespace = iterator.next();
@@ -1013,6 +1013,12 @@ public class ElementUtil extends BaseUtil {
 	}
 	
 
+	//TODO make these configurable externally
+	public static boolean hasSubTypes(Type element) {
+		String elementName = element.getName();
+		boolean hasSubTypes = elementName.equalsIgnoreCase("module") || elementName.equalsIgnoreCase("component");
+		return hasSubTypes;
+	}
 	
 	
 	public static List<Annotation> getAnnotations(Element element) {

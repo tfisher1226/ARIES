@@ -70,7 +70,7 @@
 		<span class="wizardMessages">
 			<ui:include src="/common/wizardMessages.xhtml">
 				<ui:param name="domain" value="permissionWizard" />
-				<ui:param name="message" value="Enter Service #{permissionWizard.section}" />
+				<ui:param name="message" value="Enter Permission #{permissionWizard.section}" />
 			</ui:include>
 		</span>
 	</ui:define>
@@ -81,21 +81,21 @@
 			id="permissionWizard">
 			
 			<aries:formPane
-				columns="2">
+				columns="2"
+				style="">
 				
+				<!-- wizard content -->
 				<aries:panel
-					width="#{helper.wizard_middleSection_width - 16}"
+					width="#{helper.wizard_middleSection_width + 10}"
 					height="#{helper.wizard_middleSection_height}"
-					borderWidth="1px"
-					borderColor="#{userSkin.borderColor}"
-					backgroundColor="white">
+					style="border-radius: 5px; border: 1px solid #{userSkin.borderColor}; background-color: white">
 					
-					<!-- panel -->
+					<!-- wizard panel -->
 					<ui:include src="permissionRecord_#{permissionWizard.section}Section.xhtml">
 						<ui:param name="section" value="permission" />
 					</ui:include>
 					
-					<!-- control -->
+					<!-- wizard control -->
 					<ui:include src="permissionWizardControl.xhtml" />
 				</aries:panel>
 				

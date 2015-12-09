@@ -32,7 +32,7 @@ public class PreferencesConverter extends AbstractConverter implements Converter
 		if (value == null)
 			return null;
 		Preferences preferences = (Preferences) value;
-		return PreferencesUtil.toString(preferences);
+		return PreferencesUtil.getLabel(preferences);
 	}
 	
 }

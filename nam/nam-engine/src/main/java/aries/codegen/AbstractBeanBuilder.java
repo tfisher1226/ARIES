@@ -455,7 +455,8 @@ public abstract class AbstractBeanBuilder implements BeanBuilder {
 		modelAttribute.setRequired(attribute.getRequired());
 		modelAttribute.setNullable(attribute.getNullable());
 		modelAttribute.setStructure(attribute.getStructure());
-		modelAttribute.setDefault(attribute.getDefault());
+		if (structure.equals("item"))
+			modelAttribute.setDefault(attribute.getDefault());
 		modelAttribute.setMultiplicity(attribute.getMaxOccurs());
 		//we currently using this flag for additional boolean field generation
 		modelAttribute.setSynchronizationEnabled(!structure.equals("item") || modelAttribute.getClassName().equalsIgnoreCase("boolean"));

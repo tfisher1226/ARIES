@@ -26,9 +26,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
-			<aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="moduleManagementViewer" />
+			
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Module16.gif" />
 					<ui:param name="label" value="Modules" />
@@ -36,17 +40,22 @@
 	
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../module/moduleListActions.xhtml">
-						<ui:param name="render" value="moduleManagementViewer" />
-						<ui:param name="lockOnSelect" value="true" />
-					</ui:include>
 					
-					<ui:include src="../module/moduleNameListToolbar.xhtml" />
-					<ui:include src="../module/moduleNameListTable.xhtml" />	
+					<!-- module refresh scope -->
+					<ui:param name="scope" value="moduleList" />
+					<ui:param name="target" value="element" />
+					
+					<!-- module table section -->
+					<ui:include src="/nam/model/module/moduleListActions.xhtml" />
+					<ui:include src="/nam/model/module/moduleNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/module/moduleNameListTable.xhtml">
+						<ui:param name="manager" value="#{moduleListManager}" />
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Element16.gif" />
 					<ui:param name="label" value="Elements" />
@@ -54,13 +63,14 @@
 
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../element/elementListActions.xhtml">
-						<ui:param name="render" value="moduleManagementViewer" />
-						<ui:param name="lockOnSelect" value="true" />
-					</ui:include>
 					
-					<ui:include src="../element/elementNameListToolbar.xhtml" />
-					<ui:include src="../element/elementNameListTable.xhtml" />	
+					<!-- element refresh action -->
+					<ui:param name="scope" value="moduleSelection" />
+					
+					<!-- element table section -->
+					<ui:include src="/nam/model/element/elementListActions.xhtml" />
+					<ui:include src="/nam/model/element/elementNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/element/elementNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

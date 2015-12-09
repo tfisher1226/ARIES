@@ -31,6 +31,9 @@ public class ProviderListManager extends AbstractDomainListManager<Provider, Pro
 	private ProviderEventManager providerEventManager;
 	
 	@Inject
+	private ProviderInfoManager providerInfoManager;
+	
+	@Inject
 	private SelectionContext selectionContext;
 	
 	
@@ -51,7 +54,7 @@ public class ProviderListManager extends AbstractDomainListManager<Provider, Pro
 	
 	@Override
 	public String getRecordName(Provider provider) {
-		return ProviderUtil.toString(provider);
+		return ProviderUtil.getLabel(provider);
 	}
 	
 	@Override
@@ -89,10 +92,17 @@ public class ProviderListManager extends AbstractDomainListManager<Provider, Pro
 		return selected;
 	}
 	
+	public boolean isChecked(Provider provider) {
+		Collection<Provider> selection = selectionContext.getSelection("providerSelection");
+		boolean checked = selection != null && selection.contains(provider);
+		return checked;
+	}
+	
 	@Override
 	protected ProviderListObject createRowObject(Provider provider) {
 		ProviderListObject listObject = new ProviderListObject(provider);
 		listObject.setSelected(isSelected(provider));
+		listObject.setChecked(isChecked(provider));
 		return listObject;
 	}
 	
@@ -106,10 +116,6 @@ public class ProviderListManager extends AbstractDomainListManager<Provider, Pro
 		if (recordList != null)
 			initialize(recordList);
 		else refreshModel();
-	}
-	
-	public void handleRefresh(@Observes @Refresh Object object) {
-		//refreshModel();
 	}
 	
 	@Override
@@ -140,7 +146,6 @@ public class ProviderListManager extends AbstractDomainListManager<Provider, Pro
 	}
 	
 	public String viewProvider(Provider provider) {
-		ProviderInfoManager providerInfoManager = BeanContext.getFromSession("providerInfoManager");
 		String url = providerInfoManager.viewProvider(provider);
 		return url;
 	}
@@ -155,7 +160,6 @@ public class ProviderListManager extends AbstractDomainListManager<Provider, Pro
 	}
 	
 	public String editProvider(Provider provider) {
-		ProviderInfoManager providerInfoManager = BeanContext.getFromSession("providerInfoManager");
 		String url = providerInfoManager.editProvider(provider);
 		return url;
 	}

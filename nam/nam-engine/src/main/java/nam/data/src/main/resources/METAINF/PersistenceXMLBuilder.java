@@ -1,6 +1,7 @@
 package nam.data.src.main.resources.METAINF;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -62,7 +63,7 @@ public class PersistenceXMLBuilder extends AbstractDataLayerFileBuilder {
 		context.buildParentElementMap(persistence);
 		Buf buf = new Buf();
 		buf.put(generatePersistenceXmlOpen());
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		for (int i=0; iterator.hasNext(); i++) {
 			Unit unit = iterator.next();

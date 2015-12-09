@@ -20,6 +20,8 @@
 			value="#{resultListManager.dataModel}"
 			rowCount="#{resultListManager.dataModel.rowCount}"
 			visible="#{resultListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
 			onrowmousedown="processResultListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processResultListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"

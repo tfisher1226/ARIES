@@ -145,9 +145,11 @@ public class ElementInfoManagerBuilder extends AbstractElementManagerBuilder {
 		//modelClass.addImportedClass("org.aries.util.CollectionUtil");
 		modelClass.addImportedClass("org.aries.ui.event.Add");
 		modelClass.addImportedClass("org.aries.ui.event.Remove");
-		modelClass.addImportedClass("org.aries.ui.event.Selected");
-		modelClass.addImportedClass("org.aries.ui.event.Unselected");
-		modelClass.addImportedClass("org.aries.ui.event.Updated");
+		//modelClass.addImportedClass("org.aries.ui.event.Checked");
+		//modelClass.addImportedClass("org.aries.ui.event.Selected");
+		//modelClass.addImportedClass("org.aries.ui.event.Unselected");
+		//modelClass.addImportedClass("org.aries.ui.event.Unchecked");
+		//modelClass.addImportedClass("org.aries.ui.event.Updated");
 		
 		//modelClass.addImportedClass("org.aries.ui.AbstractRecordManager");
 		modelClass.addImportedClass("nam.ui.design.AbstractNamRecordManager");
@@ -425,8 +427,10 @@ public class ElementInfoManagerBuilder extends AbstractElementManagerBuilder {
 		//modelClass.addInstanceOperations(createOperations_initializeManagers(element));
 		//modelClass.addInstanceOperations(createOperations_initializeHandlers(element));
 		//modelClass.addInstanceOperation(createOperation_activate(element));
-		modelClass.addInstanceOperations(createOperations_handleSelected(element));
-		modelClass.addInstanceOperation(createOperation_handleUnselected(element));
+		//modelClass.addInstanceOperations(createOperations_handleSelected(element));
+		//modelClass.addInstanceOperation(createOperation_handleUnselected(element));
+		//modelClass.addInstanceOperations(createOperations_handleChecked(element));
+		//modelClass.addInstanceOperation(createOperation_handleUnchecked(element));
 		modelClass.addInstanceOperation(createOperation_newRecord(element));
 		modelClass.addInstanceOperation(createOperation_newRecord2(element));
 		modelClass.addInstanceOperation(createOperation_create(element));
@@ -600,7 +604,7 @@ public class ElementInfoManagerBuilder extends AbstractElementManagerBuilder {
 		Set<String> fieldsAlreadyProcessed = new HashSet<String>();
 		
 		Buf buf = new Buf();
-		buf.putLine2(elementClassName+"Util.initialize("+elementNameUncapped+");");
+		//buf.putLine2(elementClassName+"Util.initialize("+elementNameUncapped+");");
 		buf.putLine2(elementNameUncapped+"Wizard.initialize("+elementNameUncapped+");");
 
 //		List<Field> fields = ElementUtil.getFields(element);
@@ -984,69 +988,6 @@ public class ElementInfoManagerBuilder extends AbstractElementManagerBuilder {
 		return modelOperation;
 	}
 
-	protected List<ModelOperation> createOperations_handleSelected(Element element) {
-		List<ModelOperation> modelOperations = new ArrayList<ModelOperation>();
-		modelOperations.add(createOperation_handleSelected(element, element));
-//		List<ContainedBy> containedByList = element.getContainedBy();
-//		Iterator<ContainedBy> iterator = containedByList.iterator();
-//		while (iterator.hasNext()) {
-//			ContainedBy containedBy = (ContainedBy) iterator.next();
-//			Element parentElement = context.getElementByType(containedBy.getType());
-//			Assert.notNull(parentElement, "ContainedBy element not found: "+containedBy.getType());
-//			modelOperations.add(createOperation_handleSelected(parentElement, element));
-//		}
-		return modelOperations;
-	}
-	
-	protected ModelOperation createOperation_handleSelected(Element parent, Element element) {
-		String parentClassName = ModelLayerHelper.getElementClassName(parent);
-		String elementClassName = ModelLayerHelper.getElementClassName(element);
-		String parentNameUncapped = ModelLayerHelper.getElementNameUncapped(parent);
-		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
-		
-		ModelOperation modelOperation = new ModelOperation();
-		modelOperation.setModifiers(Modifier.PUBLIC);
-		modelOperation.setName("handle"+parentClassName+"Selected");
-		ModelParameter modelParameter = createParameter(parentClassName, parentNameUncapped);
-		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Observes"));
-		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Selected"));
-		modelOperation.addParameter(modelParameter);
-		
-		Buf buf = new Buf();
-		if (parent == element) {
-			buf.putLine2("selectionContext.setSelection(\""+elementNameUncapped+"\",  "+elementNameUncapped+");");
-			buf.putLine2(elementNameUncapped+"PageManager.refreshMembers(\""+elementNameUncapped+"Selection\");");
-			buf.putLine2(elementNameUncapped+"PageManager.updateState("+elementNameUncapped+");");
-			buf.putLine2("setRecord("+elementNameUncapped+");");
-		} else {
-			buf.putLine2(elementNameUncapped+"PageManager.updateState("+parentNameUncapped+");");
-		}
-		
-		modelOperation.addInitialSource(buf.get());
-		return modelOperation;
-	}
-	
-	protected ModelOperation createOperation_handleUnselected(Element element) {
-		String elementClassName = ModelLayerHelper.getElementClassName(element);
-		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
-		
-		ModelOperation modelOperation = new ModelOperation();
-		modelOperation.setModifiers(Modifier.PUBLIC);
-		modelOperation.setName("handle"+elementClassName+"Unselected");
-		ModelParameter modelParameter = createParameter(elementClassName, elementNameUncapped);
-		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Observes"));
-		modelParameter.addAnnotation(AnnotationUtil.createAnnotation("Unselected"));
-		modelOperation.addParameter(modelParameter);
-		
-		Buf buf = new Buf();
-		buf.putLine2("selectionContext.unsetSelection(\""+elementNameUncapped+"\",  "+elementNameUncapped+");");
-		buf.putLine2(elementNameUncapped+"PageManager.refreshMembers(\""+elementNameUncapped+"Selection\");");
-		buf.putLine2("unsetRecord("+elementNameUncapped+");");
-		
-		modelOperation.addInitialSource(buf.get());
-		return modelOperation;
-	}
-	
 	protected ModelOperation createOperation_newRecord(Element element) {
 		String elementClassName = ModelLayerHelper.getElementClassName(element);
 

@@ -1,10 +1,18 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:aries="http://aries.org/jsf">
 	
+	<c:if test="#{empty addSelectorColumn}">
+		<c:set var="addSelectorColumn" value="#{false}"/> 
+	</c:if>
+	
+	<!-- table panel -->
 	<aries:outputPane
 		id="domainNameListTablePanel">
 
@@ -13,29 +21,50 @@
 			<ui:param name="tableId" value="domainNameListTable" />
 		</ui:include>
 		
+		<!-- table -->
 		<aries:table
 			id="domainNameListTable"
 			value="#{domainListManager.dataModel}"
 			rowCount="#{domainListManager.dataModel.rowCount}"
 			visible="#{domainListManager.dataModel.rowCount > 0}"
-			onrowmousedown="processDomainNameTableMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
-			onrowdblclick="processDomainNameTableDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowclick="processDomainListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processDomainListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onchange="processDomainListSelectionChanged(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}', '#{target}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
 			styleClass="noTableHeader"
 			tablePanelStyleClass="none"
 			rowClasses="none">
-						
-			<!-- Project Name 
-			<aries:textColumn>
-				<h:outputText value="#{rowItem.domain.name}" />
-			</aries:textColumn>
-			-->
+
+			<!-- CHECK BOX -->
+			<aries:tableColumn 
+				header=" "
+				rendered="#{not empty addSelectorColumn and addSelectorColumn eq true}"
+				style="background-color: inherit">
+				
+				<h:panelGrid columns="1" columnClasses="formColumnAlignCenter" style="">
+					<h:selectBooleanCheckbox styleClass="formCheckbox" immediate="true" value="#{rowItem.checked}" onchange="#{onchange}" style="margin: 2px 3px 1px 4px">
+
+						<!--  
+						<a4j:ajax 
+							event="click" 
+							execute="@this"
+							immediate="false"
+							limitRender="true" 
+							render="#{render}"
+							onbegin="setCursorWait(this); lockScreen()"
+							oncomplete="setCursorDefault(); unlockScreen()">
+						</a4j:ajax>
+						-->
+
+					</h:selectBooleanCheckbox>
+				</h:panelGrid> 
+			</aries:tableColumn>
 			
-			<!-- Domain Name -->
-			<aries:textColumn>
+			<!-- domain name -->
+			<aries:textColumn header="Domain">
 				<aries:formPane columns="2">
 					<h:graphicImage library="graphics" name="/icons/nam/#{domainType}Domain16.gif" />
-					<h:outputText value="#{rowItem.domain.name}" styleClassXX="toolLabel" style="margin-left: 3px; white-space: nowrap; #{labelStyle}" />
+					<h:outputText value="#{rowItem.domain.name}" styleClass="tableColumn" />
 				</aries:formPane>
 			</aries:textColumn>
 		</aries:table>

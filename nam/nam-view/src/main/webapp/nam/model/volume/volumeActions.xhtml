@@ -1,0 +1,127 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:region>
+		
+		
+		<!--
+		  ** showVolumeListPage()
+		  ** Goes to the Volume Management List Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showVolumeListPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{volumePageManager.initializeVolumeListPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Volume Records', 'Preparing Volume List...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showVolumeTreePage()
+		  ** Goes to the Volume Management Tree Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showVolumeTreePage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{volumePageManager.initializeVolumeTreePage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Volume Records', 'Preparing Volume Tree...')">
+		</a4j:jsFunction>
+		
+		
+		<!--
+		  ** showVolumeManagementPage()
+		  ** Goes to the Volume Management Overview Page.
+		  -->
+		
+		<a4j:jsFunction 
+			name="showVolumeManagementPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{volumePageManager.initializeVolumeManagementPage}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Volume Records', 'Preparing Volume related information...')">
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showVolumeWizardPage()
+		  ** Goes to the Volume Wizard Page.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showVolumeWizardPage" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			action="#{volumeWizard.refresh}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Volume Records', 'Preparing Volume information...')">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="section" assignTo="#{volumeWizard.section}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="origin" value="#{selectionContext.origin}" assignTo="#{volumeWizard.origin}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showNewVolumeDialog()
+		  ** Launches the Volume Dialog in "new" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showNewVolumeDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{volumeInfoManager.newVolume}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Volume Records', 'Creating new Volume...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showVolumeDialog()"
+			render="volumeModule, volumeDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{volumeInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="volumeListPane" assignTo="#{volumeInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{volumeInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** showEditVolumeDialog()
+		  ** Launches the Volume Dialog in "edit" mode.
+		  -->
+			
+		<a4j:jsFunction 
+			name="showEditVolumeDialog" 
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{volumeInfoManager.editVolume}"
+			onbegin="setCursorWait(event.source); showProgress('Nam', 'Volume Records', 'Preparing Volume information...')"
+			oncomplete="setCursorDefault(this); hideProgress(); showVolumeDialog()"
+			render="volumeModule, volumeDialog">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="targetDomain" value="#{section}" assignTo="#{volumeInfoManager.targetDomain}" />
+			<a4j:param name="targetField" value="volumeListPane" assignTo="#{volumeInfoManager.targetField}" />
+			<a4j:param name="targetInstance" value="#{instanceName}" assignTo="#{volumeInfoManager.targetInstance}" />
+		</a4j:jsFunction>
+	</a4j:region>
+</ui:composition>

@@ -3,17 +3,21 @@ package admin.registration;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.ui.design.SelectionContext;
-
+import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import admin.Registration;
 import admin.util.RegistrationUtil;
+
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -25,6 +29,9 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 	
 	@Inject
 	private RegistrationDataManager registrationDataManager;
+	
+	@Inject
+	private RegistrationInfoManager registrationInfoManager;
 	
 	@Inject
 	private RegistrationListManager registrationListManager;
@@ -47,12 +54,11 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 
 	public RegistrationPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
 	public void refresh() {
-		refresh("registration");
+		refresh("projectList");
 	}
 	
 	public void refreshLocal() {
@@ -65,7 +71,7 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -74,7 +80,7 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 	}
 	
 	public void refreshMembers(String scope) {
-		registrationListManager.refresh();
+		//nothing for now
 	}
 
 	public String getRegistrationListPage() {
@@ -99,6 +105,32 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 
 	public String getRegistrationManagementPage() {
 		return "/admin/registration/registrationManagementPage.xhtml";
+	}
+	
+	public void handleRegistrationSelected(@Observes @Selected Registration registration) {
+		selectionContext.setSelection("registration",  registration);
+		registrationInfoManager.setRecord(registration);
+	}
+	
+	public void handleRegistrationUnselected(@Observes @Unselected Registration registration) {
+		selectionContext.unsetSelection("registration",  registration);
+		registrationInfoManager.unsetRecord(registration);
+	}
+	
+	public void handleRegistrationChecked() {
+		String scope = "registrationSelection";
+		RegistrationListObject listObject = registrationListManager.getSelection();
+		Registration registration = selectionContext.getSelection("registration");
+		boolean checked = registrationListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			registrationInfoManager.setRecord(registration);
+			selectionContext.setSelection(scope,  registration);
+		} else {
+			registrationInfoManager.unsetRecord(registration);
+			selectionContext.unsetSelection(scope,  registration);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeRegistrationListPage() {
@@ -169,7 +201,8 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 	public String initializeRegistrationCreationPage(Registration registration) {
 		setPageTitle("New "+getRegistrationLabel(registration));
 		setPageIcon("/icons/nam/NewRegistration16.gif");
-		setSectionTitle("Registration Identification");
+		setSectionIcon("/icons/nam/Registration16.gif");
+		setSectionTitle("Identification");
 		registrationWizard.setNewMode(true);
 		
 		String pageLevelKey = "registration";
@@ -178,6 +211,7 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 		clearBreadcrumbs(wizardLevelKey);
 
 		addBreadcrumb(pageLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(pageLevelKey, "Registrations", "showRegistrationManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Registration", "showRegistrationWizardPage()"));
 		
 		addBreadcrumb(wizardLevelKey, "Identification", "showRegistrationWizardPage('Identification')");
@@ -198,7 +232,7 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -239,7 +273,7 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 
@@ -258,15 +292,23 @@ public class RegistrationPageManager extends AbstractPageManager<Registration> i
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 
 	public void initializeDefaultView() {
+		setPageTitle("Registrations");
+		setPageIcon("/icons/nam/Registration16.gif");
 		setSectionType("registration");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Registrations");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "registrationOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Registrations", "showRegistrationManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeRegistrationSummaryView(Registration registration) {

@@ -11,10 +11,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<c:if test="#{empty id}">
-		<c:set var="id" value="#{section}InputObject_#{globals.nextId()}" /> 
-	</c:if>
-
 	<c:if test="#{empty labelWidth}">
 		<c:set var="labelWidth" value="100" /> 
 	</c:if>

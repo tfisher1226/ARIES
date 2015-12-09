@@ -20,10 +20,11 @@
 			value="#{faultListManager.dataModel}"
 			rowCount="#{faultListManager.dataModel.rowCount}"
 			visible="#{faultListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
 			onrowmousedown="processFaultListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processFaultListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
-			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"
-			tablePanelStyleClass="none">
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
 			
 			<!-- CODE -->
 			<aries:textColumn

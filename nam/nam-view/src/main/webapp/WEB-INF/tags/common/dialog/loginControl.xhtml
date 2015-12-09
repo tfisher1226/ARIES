@@ -10,91 +10,91 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-		<aries:controlPane>
-			<aries:controlbar>
-				<aries:toolbarGroup 
-					location="left">
-					
-					<aries:toolButton
-						tooltip="Show Help for Login Dialog"
-						icon="/icons/help/Help24.gif"
-						mode="client"
-						onclick="popupAlert('BOOKSHOP2 HELP', 'Placeholder for Help Window', 'Simple help documentation will be generated here')" />
-				</aries:toolbarGroup>
-	
-				<aries:toolbarGroup 
-					location="right" 
-					padded="false">
-	
-					<aries:dialogButton
-						label=""
-						id="loginRefreshButton"
-						icon="/icons/common/Refresh16.gif"
-						iconDisabled="/icons/common/RefreshDisabled16.gif"
-				    	immediate="false"
-				    	bypassUpdates="false"
-				    	limitRender="true"
-	    				execute="@region"
-						manager="#{globals}"
-						action="doNothing"
-						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Refreshing information...');"
-						oncomplete="setCursorDefault(this); hideProgress()"
-						render="#{section}Header, #{section}Content"
-						padding="2px 4px"
-						offset="true" />
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup 
+				location="left">
+				
+				<aries:toolButton
+					tooltipXX="Show Help for Login Dialog"
+					icon="/icons/help/Help24.gif"
+					mode="client"
+					onclick="popupAlert('NAM HELP', 'Placeholder for Help Window', 'Simple help documentation will be generated here')" />
+			</aries:toolbarGroup>
 
-					<!--  	
-					<aries:dialogButton
-						id="loginLoginButton"
-						label="Login"
-						default="false"
-						mode="client"
-						icon="/icons/common/Export16.gif"
-						iconDisabled="/icons/common/ExportDisabled16.gif"
-						onmouseup="setCursorWait(this); executeLogin()"
-						offset="true" />
-						
-					<a4j:commandButton
-						value="Login"
-				    	immediate="true"
-				    	limitRender="false"
-				    	bypassUpdates="false"
-				    	execute="#{section}Region"
-				    	action="#{securityManager.login}"
-						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...');"
-						oncomplete="setCursorDefault(eventSource); hideProgress(); if (#{!messages.isFlagsExist(domain)}) {hideLoginDialog()}"
-						render="#{section}Content" />
-						-->
+			<aries:toolbarGroup 
+				location="right" 
+				padded="false">
+
+				<aries:dialogButton
+					label=""
+					id="loginRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+			    	immediate="false"
+			    	bypassUpdates="false"
+			    	limitRender="true"
+    				execute="@region"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="setCursorWait(this); showProgress('', '#{heading}', 'Refreshing information...');"
+					oncomplete="setCursorDefault(this); hideProgress()"
+					render="#{section}Header, #{section}Content"
+					style="padding: 2px 4px" 
+					offset="true" />
+
+				<!--  	
+				<aries:dialogButton
+					id="loginLoginButton"
+					label="Login"
+					default="false"
+					mode="client"
+					icon="/icons/common/Export16.gif"
+					iconDisabled="/icons/common/ExportDisabled16.gif"
+					onmouseup="setCursorWait(this); executeLogin()"
+					offset="true" />
+					
+				<a4j:commandButton
+					value="Login"
+			    	immediate="true"
+			    	limitRender="false"
+			    	bypassUpdates="false"
+			    	execute="#{section}Region"
+			    	action="#{securityManager.login}"
+					onclick="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...');"
+					oncomplete="setCursorDefault(eventSource); hideProgress(); if (#{!messages.isFlagsExist(domain)}) {hideLoginDialog()}"
+					render="#{section}Content" />
+					-->
 
 <!-- 
 						iconDisabled="/icons/common/ExportDisabled16.gif"
  -->
- 
-					<aries:dialogButton
-						label="Login"
-						id="loginLoginButton"
-						icon="/icons/common/Login16.gif"
-						iconDisabled="/icons/common/LoginDisabled16.gif"
-						immediate="false"
-						bypassUpdates="false"
-						limitRender="false"
-	    				execute="@region"
-						manager="#{securityManager}"
-						action="login"
-						onclick="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...')"
-						oncomplete="if (errorsExist()) {setCursorDefault(); hideProgress()} else {showHomePage(null)}"
-						render="#{section}Header, #{section}Content"
-						padding="2px 6px"
-						offset="true" />
-						
-					<aries:dialogButton
-						id="loginCancelButton"
-						label="Cancel"
-						mode="client"
-						onclick="hideLoginDialog()"
-						padding="2px 6px"
-						offset="true" />
-				</aries:toolbarGroup>
-			</aries:controlbar> 
-		</aries:controlPane>
+
+				<aries:dialogButton
+					label="Login"
+					id="loginLoginButton"
+					icon="/icons/common/Login16.gif"
+					iconDisabled="/icons/common/LoginDisabled16.gif"
+					immediate="false"
+					bypassUpdates="false"
+					limitRender="false"
+    				execute="@region"
+					manager="#{securityManager}"
+					action="login"
+					onclick="setCursorWait(this); showProgress('', '#{heading}', 'Authenticating user...')"
+					oncomplete="if (errorsExist()) {setCursorDefault(); hideProgress()} else {showHomePage(null)}"
+					render="#{section}Header, #{section}Content"
+					style="padding: 2px 8px" 
+					offset="true" />
+					
+				<aries:dialogButton
+					id="loginCancelButton"
+					label="Cancel"
+					mode="client"
+					onclick="hideLoginDialog()"
+					style="padding: 2px 8px" 
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar> 
+	</aries:controlPane>
 </ui:composition>

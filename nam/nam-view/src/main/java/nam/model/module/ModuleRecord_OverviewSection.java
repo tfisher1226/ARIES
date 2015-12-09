@@ -35,11 +35,12 @@ public class ModuleRecord_OverviewSection extends AbstractWizardPage<Module> imp
 	
 	@Override
 	public void initialize(Module module) {
+		setModule(module);
 		setEnabled(true);
 		setBackEnabled(false);
 		setNextEnabled(true);
 		setFinishEnabled(false);
-		setModule(module);
+		super.initialize(module);
 	}
 	
 	@Override

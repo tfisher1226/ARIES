@@ -32,7 +32,7 @@ public class NamespaceSetupPage extends AbstractWizardPage<Namespace> implements
 
 	
 	public NamespaceSetupPage(String owner) {
-		setTitle("Specify Namespace information.");
+		//setTitle("Specify Namespace information.");
 		//initialize(namespace);
 		setOwner(owner);
 	}

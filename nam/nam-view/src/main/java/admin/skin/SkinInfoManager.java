@@ -16,7 +16,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.util.Validator;
 
 import admin.Skin;
@@ -90,16 +89,8 @@ public class SkinInfoManager extends AbstractNamRecordManager<Skin> implements S
 	}
 	
 	protected void initialize(Skin skin) {
-		SkinUtil.initialize(skin);
 		skinWizard.initialize(skin);
 		setContext("skin", skin);
-	}
-	
-	public void handleSkinSelected(@Observes @Selected Skin skin) {
-		selectionContext.setSelection("skin",  skin);
-		skinPageManager.updateState(skin);
-		skinPageManager.refreshMembers();
-		setRecord(skin);
 	}
 	
 	@Override

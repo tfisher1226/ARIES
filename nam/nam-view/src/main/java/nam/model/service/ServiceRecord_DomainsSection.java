@@ -31,6 +31,11 @@ public class ServiceRecord_DomainsSection extends AbstractWizardPage<Service> {
 		this.service = service;
 	}
 	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/ServiceDomain16.gif";
+	}
+	
 	public void initialize(Service service) {
 		setEnabled(true);
 		setBackEnabled(false);

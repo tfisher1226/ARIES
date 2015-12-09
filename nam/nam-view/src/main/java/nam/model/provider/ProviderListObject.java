@@ -41,6 +41,16 @@ public class ProviderListObject extends AbstractListObject<Provider> implements 
 	}
 	
 	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Provider16.gif";
+	}
+	
+	@Override
 	public String toString() {
 		return toString(provider);
 	}
@@ -56,10 +66,6 @@ public class ProviderListObject extends AbstractListObject<Provider> implements 
 		Object otherKey = getKey(other.provider);
 		String thisText = thisKey.toString();
 		String otherText = otherKey.toString();
-		if (thisText == null)
-			return -1;
-		if (otherText == null)
-			return 1;
 		return thisText.compareTo(otherText);
 	}
 	

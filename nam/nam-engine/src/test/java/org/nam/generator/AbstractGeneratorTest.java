@@ -65,7 +65,7 @@ public class AbstractGeneratorTest {
 
 	public void setUp(GenerationContext context) throws Exception {
 		this.context = context;
-		context.setTemplateWorkspace("../../aries");
+		context.setTemplateWorkspace("../../aries/templates");
 
 		ProjectLevelHelper.context = context;
 		DataLayerFactory.context = context;

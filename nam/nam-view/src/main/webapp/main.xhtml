@@ -12,39 +12,6 @@
 	<ui:define name="pageIncludes">
 		<ui:include src="mainContent.xhtml" />
 	</ui:define>
-	
-	<!-- page title -->
-	<ui:define name="pageTitle">
-		<span class="pageTitle2">
-			<ui:include src="/common/pageTitle.xhtml">
-				<ui:param name="manager" value="#{pageManager}" />
-			</ui:include>
-		</span>
-	</ui:define>
-	
-	<!-- page breadcrumbs 
-	<ui:define name="pageBreadcrumbs">
-		<span class="pageBreadcrumbs">
-			<ui:include src="/common/breadcrumbs.xhtml">
-				<ui:param name="breadcrumbs" value="#{applicationPageManager.getBreadcrumbs('application')}" />
-			</ui:include>
-		</span>
-	</ui:define>
-	-->
-	
-	<!-- page views 
-	<ui:define name="pageViews">
-		<span class="pageViews">
-			<ui:include src="/common/pageViews.xhtml">
-				<ui:param name="label" value="Application" />
-				<ui:param name="manager" value="#{applicationPageManager}" />
-				<ui:param name="overviewPage" value="initializeApplicationManagementPage" />
-				<ui:param name="listPage" value="initializeApplicationListPage" />
-				<ui:param name="treePage" value="initializeApplicationTreePage" />
-			</ui:include>
- 		</span>
-	</ui:define>
-	-->
 
 	<!-- section header -->
 	<ui:define name="sectionHeader">
@@ -55,46 +22,6 @@
 				<ui:param name="manager" value="#{pageManager}" />
 			</ui:include>
 		</span>
-
-		<!--  
-		<span class="pageControls">
-			<aries:button
-				id="generateButton"
-				label="Generate"
-				icon="/icons/common/Go16.gif"
-				tooltip="Generate Code"
-				padding="6"
-				fontSize="12"
-				mode="client"
-				execute="@none"
-				rendered="#{true}"
-				onclick=""
-				style="margin-left: 10px; margin-right: 60px"
-				offset="false">
-				<a4j:attachQueue requestDelay="0" />
-			</aries:button>
-		</span>
-		-->
-
-		<!-- page controls 
-		<span class="pageControls">
-			<aries:button
-				id="modelButton"
-				label="#{workspaceManager.currentModel}"
-				icon="/icons/nam/Router16.gif"
-				tooltip="Load Model"
-				padding="6"
-				fontSize="13"
-				mode="client"
-				execute="@none"
-				rendered="#{true}"
-				onclick=""
-				style=""
-				offset="false">
-				<a4j:attachQueue requestDelay="0" />
-			</aries:button>
-		</span>
-		-->
 
 		<!-- page controls -->
 		<ui:include src="/common/pageControls.xhtml">
@@ -117,31 +44,22 @@
 		<div class="content" style="">
 
 			<aries:formPane
-				columns="2" 
 				width="100%"
 				height="auto"
-				margin="0px"
-				marginTop="0px"
-				backgroundColor="inherit">
+				columns="2" 
+				style="background-color: inherit">
 
 				<aries:panel
 					width="700"
 					height="auto"
-					marginLeft="20px"
-					marginRight="0px"
-					borderWidth="1px"
-					borderColor="#bbb"
-					backgroundColor="white">
+					style="margin-left: 20px; border-radius: 5px; border: 1px solid #bbb; background-color: white">
 				
 					<aries:formPane
-						columns="3" 
-						columnClass="formColumnAlignTop"
 						width="auto"
 						height="auto"
-						margin="0px"
-						marginTop="10px"
-						paddingBottom="40px"
-						backgroundColor="inherit">
+						columns="3" 
+						columnClasses="formColumnAlignTop, formColumnAlignTop, formColumnAlignTop"
+						style="margin-top: 0px; background-color: inherit">
 					
 						<!--
 						
@@ -166,23 +84,17 @@
 				</aries:panel>
 				
 				<aries:panel
-					id="mainHelpPane"
 					width="240"
 					height="300"
-					marginLeft="0px"
-					marginRight="14px"
-					padding="20px"
-					borderWidth="1px"
-					borderColor="#bbb"
-					backgroundColor="inherit"
-					rendered="#{workspaceManager.helpSectionVisible}">
+					rendered="#{workspaceManager.helpSectionVisible}"
+					style="margin-right: 14px; padding: 20px; border: 1px solid #bbb; background-color: white">
 				
 					<aries:label fontSize="15" fontWeight="bold" value="About Nam" />
 					
 					<aries:spacer width="10" height="10" />
 					<aries:link value="Enterprise Architecture"
 						onmousedown="setCursorWait(this)"
-						onmouseup="setCursorDefault(event.source); replaceContent('popupWindowHandle', 'enterpriseArchitectureView'); _showTestPopup('ECOS Terminology', 'Generation Engine', 'What on earth is it?')" />
+						onmouseup="setCursorDefault(event.source); replaceContent('popupWindowHandle', 'enterpriseArchitectureView'); _showPopupWindow('ECOS Terminology', 'Generation Engine', 'What on earth is it?')" />
 	
 				</aries:panel>
 			</aries:formPane>

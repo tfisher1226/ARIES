@@ -6,63 +6,34 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
+	<a4j:outputPanel
+		id="serviceListToolbar">
+		
 	<aries:toolbar
-		type="table"
-		id="serviceNameListToolbar">
+			type="table">
 		
 		<aries:toolbarGroup
 			location="left">
 		
 			<aries:toolButton
-				id="serviceNameListNewButton"
+					id="serviceListNewButton"
 				label="New Service..."
 				icon="/icons/common/New16.gif"
 				iconDisabled="/icons/common/NewDisabled16.gif"
-				tooltip="Create new Service Record"
 				enabled="#{securityGuard.canCreate('service')}"
 				mode="client"
 				execute="@none"
 				onmouseup="processNewElement(event, 'Service')"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 1px 2px 2px"
+					style="margin: 2px"
 				offset="false" />
-			
-			<!--  
-			<aries:toolButton
-				id="serviceNameListEditButton"
-				value="Edit Service..."
-				icon="/icons/common/Edit16.gif"
-				iconDisabled="/icons/common/EditDisabled16.gif"
-				tooltip="Open selected Service record for edit..."
-				enabled="#{serviceListManager.hasSelection() and securityGuard.canUpdate('service')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processEditElement(event, 'Service')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="false" />
-			
-			<aries:toolButton
-				id="serviceNameListRemoveButton"
-				value="Remove Service..."
-				icon="/icons/common/Remove16.gif"
-				iconDisabled="/icons/common/RemoveDisabled16.gif"
-				tooltip="Remove selected Service record from system..."
-				enabled="#{serviceListManager.hasSelection() and securityGuard.canDelete('service')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processRemoveElement(event, 'Service')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="true" />
-				-->
 		</aries:toolbarGroup>
 		
 		<aries:toolbarGroup
 			location="right">
 			
 			<aries:toolButton
-				id="serviceNameListRefreshButton"
+				id="serviceListRefreshButton"
 				icon="/icons/common/Refresh16.gif"
 				iconDisabled="/icons/common/RefreshDisabled16.gif"
 				tooltip="Re-read Service information from server"
@@ -71,8 +42,9 @@
 				execute="@none"
 				onmouseup="refreshServiceList(event)"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 2px 2px 1px"
+				style="margin: 2px"
 				offset="false" />
 		</aries:toolbarGroup>
 	</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

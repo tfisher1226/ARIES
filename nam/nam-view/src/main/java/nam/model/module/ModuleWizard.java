@@ -125,16 +125,16 @@ public class ModuleWizard extends AbstractDomainElementWizard<Module> implements
 	public String cancel() {
 		Module module = getInstance();
 		//TODO take this out soon
-		if (module == null)
-			module = new Module();
-		moduleEventManager.fireCancelledEvent(module);
+		//if (module == null)
+		//	module = new Module();
+		//moduleEventManager.fireCancelledEvent(module);
 		String url = selectionContext.popOrigin();
 		return url;
 	}
 
 	public String populateDefaultValues() {
 		Module module = selectionContext.getSelection("module");
-		String name = module.getName();
+		String name = ModuleUtil.getLabel(module);
 		if (StringUtils.isEmpty(name)) {
 			display = getFromSession("display");
 			display.setModule("moduleWizard");

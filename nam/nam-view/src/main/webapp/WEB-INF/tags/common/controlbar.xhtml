@@ -9,49 +9,30 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<!--  
-	<aries:tag param="title, heading, render">
-		<aries:init/>
-		-->
-	
-		<c:if test="#{empty margin}">
-			<c:set var="margin" value="0px" /> 
-		</c:if>
-		
-		<c:if test="#{empty itemSeparator}">
-			<c:set var="itemSeparator" value="none" /> 
-		</c:if>
-	
-		<c:if test="#{empty styleClass}">
-			<c:set var="styleClass" value="controlbar" /> 
-		</c:if>
-	
-		<c:if test="#{empty contentClass}">
-			<c:set var="contentClass" value="controlbarContent" /> 
-		</c:if>
-	
-		<c:if test="#{empty separatorClass}">
-			<c:set var="separatorClass" value="controlbarSeparator" /> 
-		</c:if>
-	
-		<rich:toolbar 
-			width="auto"
-			styleClass="controlbar"
-			itemClass="controlbarItem"
-			contentClass="controlbarContent" 
-			separatorClass="controlbarSeparator"
-			itemSeparator="#{itemSeparator}"
-			onclickXX="#{onclick}; alert('#{borderSettings}')"
-			onclickXXX="#{onclick}; alert('#{sizeSettings}')"
-			style="margin: #{margin}">
+	<c:if test="#{empty itemSeparator}">
+		<c:set var="itemSeparator" value="none" /> 
+	</c:if>
 
-<!-- 
-			style="#{sizeSettings}; #{backgroundSettings}; #{borderSettings}">
- -->	
-			<ui:insert />
-		</rich:toolbar>
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="controlbar" /> 
+	</c:if>
 
-	<!--  
-	</aries:tag>
-	-->
+	<c:if test="#{empty contentClass}">
+		<c:set var="contentClass" value="controlbarContent" /> 
+	</c:if>
+
+	<c:if test="#{empty separatorClass}">
+		<c:set var="separatorClass" value="controlbarSeparator" /> 
+	</c:if>
+	
+	<rich:toolbar 
+		styleClassXX="controlbar"
+		itemClassXX="controlbarItem"
+		contentClassXX="controlbarContent" 
+		separatorClassXX="controlbarSeparator"
+		itemSeparatorXX="#{itemSeparator}"
+		style="width: auto; background-color: yellow">
+
+		<ui:insert />
+	</rich:toolbar>
 </ui:composition>

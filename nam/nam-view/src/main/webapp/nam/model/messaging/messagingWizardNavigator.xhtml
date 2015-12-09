@@ -11,16 +11,13 @@
 	xmlns:aries="http://aries.org/jsf">
 
 	<aries:panel
-	  width="auto"
-	  margin="0px"
-	  backgroundColor="inherit">
+		width="auto"
+		style="background-color: inherit">
 	      
-	  <aries:formPane
-	  	width="auto"
-	  	borderWidth="1px"
-	  	borderColor="#aaa"
-	  	columnClass="formColumnAlignLeft"
-	  	backgroundColor="inherit">
+		<aries:formPane
+			width="auto"
+			columnClass="formColumnAlignLeft"
+			style="background-color: white">
 	      
 	  	<c:set var="section" value="#{messagingWizard.section}" /> 
 	  	<c:set var="backgroundColor" value="#cfe7f5" /> 
@@ -32,7 +29,7 @@
 	  		paddingLeft="12px"
 	  		fontSize="14"
 	  		fontWeight="bold"
-	  		backgroundColor="#fff">
+				style="background-color: white">
 	  		#{messagingWizard.newMode ? 'Steps' : 'Sections'}
 	  	</aries:indentPane>
 	      

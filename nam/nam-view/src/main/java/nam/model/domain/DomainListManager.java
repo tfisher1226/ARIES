@@ -15,12 +15,8 @@ import org.aries.ui.event.Export;
 import org.aries.ui.event.Refresh;
 import org.aries.ui.manager.ExportManager;
 
-import nam.model.Application;
 import nam.model.Domain;
-import nam.model.Project;
-import nam.model.application.ApplicationListObject;
 import nam.model.util.DomainUtil;
-import nam.model.util.ProjectUtil;
 import nam.ui.design.SelectionContext;
 
 
@@ -96,10 +92,17 @@ public class DomainListManager extends AbstractDomainListManager<Domain, DomainL
 		return selected;
 	}
 	
+	public boolean isChecked(Domain domain) {
+		Collection<Domain> selection = selectionContext.getSelection("domainSelection");
+		boolean checked = selection != null && selection.contains(domain);
+		return checked;
+	}
+	
 	@Override
 	protected DomainListObject createRowObject(Domain domain) {
 		DomainListObject listObject = new DomainListObject(domain);
 		listObject.setSelected(isSelected(domain));
+		listObject.setChecked(isChecked(domain));
 		return listObject;
 	}
 	

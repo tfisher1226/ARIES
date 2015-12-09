@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import nam.model.Annotation;
 import nam.model.Application;
 import nam.model.Component;
 import nam.model.Operation;
@@ -16,11 +17,11 @@ import nam.model.Project;
 import nam.model.Transacted;
 import nam.model.TransactionScope;
 import nam.model.TransactionUsage;
+import nam.model.util.ComponentUtil;
 import nam.ui.design.AbstractDomainElementWizard;
 import nam.ui.design.SelectionContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.aries.runtime.BeanContext;
 import org.aries.util.NameUtil;
 
 
@@ -119,18 +120,18 @@ public class ComponentWizard extends AbstractDomainElementWizard<Component> impl
 	
 	@Override
 	public String cancel() {
-		Component component = getInstance();
+		//Component component = getInstance();
 		//TODO take this out soon
-		if (component == null)
-			component = new Component();
-		componentEventManager.fireCancelledEvent(component);
+		//if (component == null)
+		//	component = new Component();
+		//componentEventManager.fireCancelledEvent(component);
 		String url = selectionContext.popOrigin();
 		return url;
 	}
 	
 	public String populateDefaultValues() {
 		Component component = selectionContext.getSelection("component");
-		String name = component.getName();
+		String name = ComponentUtil.getLabel(component);
 		if (StringUtils.isEmpty(name)) {
 			display = getFromSession("display");
 			display.setModule("componentWizard");
@@ -162,7 +163,7 @@ public class ComponentWizard extends AbstractDomainElementWizard<Component> impl
 		String element = "Object";
 		Collection<String> fields = new ArrayList<String>();
 		Collection<Operation> operations = new ArrayList<Operation>();
-		Collection<String> annotations = new ArrayList<String>();
+		Collection<Annotation> annotations = new ArrayList<Annotation>();
 		
 		component.setLabel(nameCapped);
 		component.setBaseType(baseType);
@@ -175,7 +176,7 @@ public class ComponentWizard extends AbstractDomainElementWizard<Component> impl
 		component.setTransacted(transacted);
 		component.setVersion(version);
 		component.setElement(element);
-		component.setFields(fields);
+		//TODO component.setFields(fields);
 		component.setOperations(operations);
 		component.setAnnotations(annotations);
 		component.setDescription(description);

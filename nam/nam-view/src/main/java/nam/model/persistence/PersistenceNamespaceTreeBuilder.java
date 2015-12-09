@@ -52,7 +52,7 @@ public class PersistenceNamespaceTreeBuilder extends AbstractTreeBuilder impleme
 	}
 
 	protected void createProviderNodes(ModelTreeNode parentNode, Persistence persistence) {
-		List<Provider> providers = PersistenceUtil.getProviders(persistence);
+		Collection<Provider> providers = PersistenceUtil.getProviders(persistence);
 		Iterator<Provider> iterator = providers.iterator();
 		ModelTreeNode folderNode = null;
 		while (iterator.hasNext()) {
@@ -115,7 +115,7 @@ public class PersistenceNamespaceTreeBuilder extends AbstractTreeBuilder impleme
 	}
 	
 	protected void createUnitNodes(ModelTreeNode parentNode, Persistence persistence) {
-		List<Unit> persistenceUnits = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> persistenceUnits = PersistenceUtil.getUnits(persistence);
 		Iterator<Unit> iterator = persistenceUnits.iterator();
 		ModelTreeNode folderNode = null;
 		while (iterator.hasNext()) {

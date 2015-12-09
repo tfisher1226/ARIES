@@ -18,7 +18,7 @@ public class FieldAnnotationPage extends AbstractWizardPage<Field> implements Se
 	
 
 	public FieldAnnotationPage(String owner) {
-		setTitle("Select Annotation.");
+		//setTitle("Select Annotation.");
 		//initialize(field);
 		setOwner(owner);
 	}

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nam.model.Application;
 import nam.model.Element;
 import nam.model.Enumeration;
 import nam.model.Import;
@@ -110,21 +111,31 @@ public class InformationUtil {
 		}
 	}
 	
-	public static List<Namespace> getNamespaces(Information information) {
+	public static Collection<Namespace> getNamespaces(Information information) {
 		//return getObjectList(information, Namespace.class);
 		return information.getNamespaces();
 	}
 
-	public static Collection<Namespace> getAllNamespaces(Collection<Information> informationBlocks) {
-		Set<Namespace> set = new LinkedHashSet<Namespace>();
+	public static Collection<Namespace> getNamespaces(Collection<Information> informationBlocks) {
+		Collection<Namespace> namespaces = new LinkedHashSet<Namespace>();
 		Iterator<Information> iterator = informationBlocks.iterator();
 		while (iterator.hasNext()) {
-			Information information = iterator.next();
-			Collection<Namespace> namespaces = getAllNamespaces(information);
-			set.addAll(namespaces);
+			Information informationBlock = (Information) iterator.next();
+			namespaces.addAll(getNamespaces(informationBlock));
 		}
-		return set;
+		return namespaces;
 	}
+	
+//	public static Collection<Namespace> getAllNamespaces(Collection<Information> informationBlocks) {
+//		Set<Namespace> set = new LinkedHashSet<Namespace>();
+//		Iterator<Information> iterator = informationBlocks.iterator();
+//		while (iterator.hasNext()) {
+//			Information information = iterator.next();
+//			Collection<Namespace> namespaces = getAllNamespaces(information);
+//			set.addAll(namespaces);
+//		}
+//		return set;
+//	}
 	
 	public static Collection<Namespace> getAllNamespaces(Information information) {
 		Set<Namespace> set = new LinkedHashSet<Namespace>();
@@ -140,7 +151,7 @@ public class InformationUtil {
 			List<Namespace> namespaces = importedInformation.getNamespaces();
 			set.addAll(namespaces);
 		}
-		List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+		Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 		set.addAll(namespaces);
 		set.addAll(getNamespacesToDependUpon(namespaces));
 		return set;
@@ -179,7 +190,7 @@ public class InformationUtil {
 	public static List<Type> getTypes(Information information) {
 		List<Type> types = new ArrayList<Type>();
 		if (information != null) {
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = iterator.next();
@@ -191,14 +202,14 @@ public class InformationUtil {
 	}
 
 	public static Map<String, Type> getTypeMap(Information information) {
-		List<Namespace> namespaces = getNamespaces(information);
+		Collection<Namespace> namespaces = getNamespaces(information);
 		return NamespaceUtil.getTypeMap(namespaces);
 	}
 	
 	public static List<Element> getElements(Information information) {
 		List<Element> elements = new ArrayList<Element>();
 		if (information != null) {
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = iterator.next();
@@ -227,7 +238,7 @@ public class InformationUtil {
 	public static List<Enumeration> getEnumerations(Information information) {
 		List<Enumeration> enumerations = new ArrayList<Enumeration>();
 		if (information != null) {
-			List<Namespace> namespaces = InformationUtil.getNamespaces(information);
+			Collection<Namespace> namespaces = InformationUtil.getNamespaces(information);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = iterator.next();

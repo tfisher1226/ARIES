@@ -87,16 +87,8 @@ public class ComponentInfoManager extends AbstractNamRecordManager<Component> im
 	}
 	
 	protected void initialize(Component component) {
-		ComponentUtil.initialize(component);
 		componentWizard.initialize(component);
 		setContext("component", component);
-	}
-	
-	public void handleComponentSelected(@Observes @Selected Component component) {
-		selectionContext.setSelection("component",  component);
-		componentPageManager.updateState(component);
-		componentPageManager.refreshMembers();
-		setRecord(component);
 	}
 	
 	@Override

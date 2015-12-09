@@ -10,54 +10,45 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:tag>
-		<aries:init/>
-		
-		<c:if test="#{empty id}">
-			<c:set var="id" value="FormPane_#{globals.nextId()}" /> 
+	<c:if test="#{empty columns}">
+		<c:set var="columns" value="1" /> 
+	</c:if>
+	
+	<c:if test="#{not empty align}">
+		<c:if test="#{align eq 'top'}">
+			<c:set var="columnClass" value="formColumnAlignTop" /> 
 		</c:if>
+		<c:if test="#{align eq 'middle'}">
+			<c:set var="columnClass" value="formColumnAlignMiddle" /> 
+		</c:if>
+		<c:if test="#{align eq 'bottom'}">
+			<c:set var="columnClass" value="formColumnAlignBottom" /> 
+		</c:if>
+	</c:if>
 
-		<c:if test="#{empty columns}">
-			<c:set var="columns" value="1" /> 
-		</c:if>
-		
-		<c:if test="#{not empty align}">
-			<c:if test="#{align eq 'top'}">
-				<c:set var="columnClass" value="formColumnAlignTop" /> 
-			</c:if>
-			<c:if test="#{align eq 'middle'}">
-				<c:set var="columnClass" value="formColumnAlignMiddle" /> 
-			</c:if>
-			<c:if test="#{align eq 'bottom'}">
-				<c:set var="columnClass" value="formColumnAlignBottom" /> 
-			</c:if>
-		</c:if>
+	<c:if test="#{empty columnClass}">
+		<c:set var="columnClass" value="formColumnAlignTop" /> 
+	</c:if>
+	
+	<c:if test="#{empty columnClasses}">
+		<c:set var="columnClasses" value="#{columnClass}" /> 
+		<c:forEach begin="2" end="#{columns}">
+			<c:set var="columnClasses" value="#{columnClasses}, #{columnClass}" /> 
+		</c:forEach>
+	</c:if>
 
-		<c:if test="#{empty columnClass}">
-			<c:set var="columnClass" value="formColumnFillVertical" /> 
-		</c:if>
-		
-		<c:if test="#{empty columnClasses}">
-			<c:set var="columnClasses" value="#{columnClass}" /> 
-			<c:forEach begin="2" end="#{columns}">
-				<c:set var="columnClasses" value="#{columnClasses}, #{columnClass}" /> 
-			</c:forEach>
-		</c:if>
+	<h:panelGrid
+		layout="block"
+		cellpadding="0"
+		cellspacing="0"
+		columns="#{columns}"
+		columnClasses="#{columnClasses}" 
+		onclick="#{onclick}"
+		onmouseover="#{onmouseover}"
+		onmouseout="#{onmouseout}"
+		styleClass="formPanel" 
+		style="#{sizeSettings}; #{style}">
 
-		<h:panelGrid
-			id="#{id}"
-			layout="block"
-			cellpadding="0"
-			cellspacing="0"
-			columns="#{columns}"
-			columnClasses="#{columnClasses}" 
-			onclick="#{onclick}"
-			onmouseover="#{onmouseover}"
-			onmouseout="#{onmouseout}"
-			styleClass="formPanel" 
-			style="#{sizeSettings}; #{borderSettings}; #{backgroundSettings}; #{textSettings}; #{style}">
-
-			<ui:insert />
-		</h:panelGrid>
-	</aries:tag>
+		<ui:insert />
+	</h:panelGrid>
 </ui:composition>

@@ -3,15 +3,16 @@ package nam.model.namespace;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Namespace;
 import nam.model.util.NamespaceUtil;
@@ -27,6 +28,9 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 	
 	@Inject
 	private NamespaceDataManager namespaceDataManager;
+	
+	@Inject
+	private NamespaceInfoManager namespaceInfoManager;
 	
 	@Inject
 	private NamespaceListManager namespaceListManager;
@@ -49,7 +53,6 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 	
 	public NamespacePageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -67,7 +70,7 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -76,7 +79,7 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 	}
 	
 	public void refreshMembers(String scope) {
-		namespaceListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getNamespaceListPage() {
@@ -101,6 +104,32 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 	
 	public String getNamespaceManagementPage() {
 		return "/nam/model/namespace/namespaceManagementPage.xhtml";
+	}
+	
+	public void handleNamespaceSelected(@Observes @Selected Namespace namespace) {
+		selectionContext.setSelection("namespace",  namespace);
+		namespaceInfoManager.setRecord(namespace);
+	}
+	
+	public void handleNamespaceUnselected(@Observes @Unselected Namespace namespace) {
+		selectionContext.unsetSelection("namespace",  namespace);
+		namespaceInfoManager.unsetRecord(namespace);
+	}
+	
+	public void handleNamespaceChecked() {
+		String scope = "namespaceSelection";
+		NamespaceListObject listObject = namespaceListManager.getSelection();
+		Namespace namespace = selectionContext.getSelection("namespace");
+		boolean checked = namespaceListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			namespaceInfoManager.setRecord(namespace);
+			selectionContext.setSelection(scope,  namespace);
+		} else {
+			namespaceInfoManager.unsetRecord(namespace);
+			selectionContext.unsetSelection(scope,  namespace);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeNamespaceListPage() {
@@ -183,9 +212,6 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 		addBreadcrumb(pageLevelKey, "Namespaces", "showNamespaceManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Namespace", "showNamespaceWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showNamespaceWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showNamespaceWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showNamespaceWizardPage('Documentation')");
 		
 		namespaceIdentificationSection.setOwner("namespaceWizard");
 		namespaceConfigurationSection.setOwner("namespaceWizard");
@@ -202,7 +228,7 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -222,10 +248,6 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 		addBreadcrumb(pageLevelKey, "Namespaces", "showNamespaceManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(namespaceName, "showNamespaceWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showNamespaceWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showNamespaceWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showNamespaceWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showNamespaceWizardPage('Documentation')");
 		
 		namespaceOverviewSection.setOwner("namespaceWizard");
 		namespaceIdentificationSection.setOwner("namespaceWizard");
@@ -244,7 +266,7 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -263,15 +285,23 @@ public class NamespacePageManager extends AbstractPageManager<Namespace> impleme
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Namespaces");
+		setPageIcon("/icons/nam/Namespace16.gif");
 		setSectionType("namespace");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Namespaces");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "namespaceOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Namespaces", "showNamespaceManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeNamespaceSummaryView(Namespace namespace) {

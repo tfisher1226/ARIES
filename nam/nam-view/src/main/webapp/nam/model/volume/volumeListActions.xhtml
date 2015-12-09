@@ -1,0 +1,390 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<!-- action support -->
+	<ui:include src="/common/actionSupport.xhtml" />
+	
+	
+	<!--
+	  ** volumeListActions
+	  ** a4j:jsFunction methods to support the Volume List.
+	  -->
+	
+	<a4j:region>
+		<h:outputScript>
+			var volumeListState = null;
+		</h:outputScript>
+			
+			
+		<!--
+		  ** refreshVolumeList(event)
+		  ** Refreshes the current Volume List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="refreshVolumeList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{volumeListManager.refresh}"
+			onbegin="setCursorWait(); showProgress('Nam', 'Volume Records', 'Refreshing current Volume List...')"
+			oncomplete="setCursorDefault(this); hideProgress()"
+			render="volumeListActions volumeListMenu volumeListToolbar volumeNameListToolbar volumeListTable volumeNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{volumeDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="volumeListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeSelectFromVolumeList(recordIndex, recordKey)
+		  ** Handles actions generated from a row or column in the Application List.
+		  ** Selects Element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeSelectFromVolumeList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			onbegin="beginSelect(this)"
+			oncomplete="completeSelect(this)"
+			render="volumeListActions volumeListToolbar volumeNameListToolbar">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{volumeListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{volumeListManager.selectedRecordKey}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="volume" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="volumeListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionFromVolumeList(recordIndex, recordKey, type, action, section)
+		  ** Selects Element on server-side.  Executes action on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is typically used by double-click and other submit actions.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionFromVolumeList"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			oncomplete="setCursorDefault(); hideProgress()"
+			render="volumeListActions volumeListToolbar volumeNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{volumeListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{volumeListManager.selectedRecordKey}" />
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			<a4j:param name="section" assignTo="#{volumeWizard.section}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="volumeListEvents" requestDelay="400" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeActionForElement(type, action)
+		  ** Executes 'action' associated with Element 'type' on server-side.
+		  ** Uses a queing delay of 0ms - no waiting for any future actions.
+		  ** This is used by actions triggered from menus and toolbars.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeActionForElement"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{workspaceManager.executeAction}"
+			render="volumeListActions volumeListMenu volumeListToolbar volumeNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
+			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+			
+			
+		<!--
+		  ** executeHandleVolumeChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Volume.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleVolumeChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{volumePageManager.handleVolumeChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="volumeListActions volumeListToolbar volumeNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{volumeListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{volumeListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{volumeListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{volumeDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="volumeListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** volumeListActions
+		  ** Javascript methods to support the Volume List.
+		  -->
+		
+		<a4j:outputPanel
+			id="volumeListActions">
+			
+			<h:outputScript>
+				
+				
+				<!--
+				  ** getVolumeListRowKey()
+				  ** Returns the unique record key of the selected row.
+				  -->
+					
+				function getVolumeListRowKey() {
+					if (volumeListState != null)
+						return volumeListState.recordKey;
+					return null;
+				}
+					
+					
+				<!--
+				  ** getVolumeListRowLabel()
+				  ** Returns the record label of the selected row.
+				  -->
+					
+				function getVolumeListRowLabel() {
+					if (volumeListState != null)
+						return volumeListState.recordLabel;
+					return null;
+				}
+					
+					
+				<!--
+				  ** initializeVolumeListState()
+				  ** Initializes and verifies Volume List state information.
+				  -->
+					
+				function initializeVolumeListState() {
+					try {
+						var rowIndex = '#{volumeListManager.selectedRecordIndex}';
+						var recordKey = '#{volumeListManager.selectedRecordKey}';
+						var recordLabel = '#{volumeListManager.selectedRecordLabel}';
+						if (recordKey != '') {
+							updateVolumeListState(null, rowIndex, recordKey, recordLabel);
+						}
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** updateVolumeListState(event, rowIndex, recordKey, recordLabel)
+				  ** Updates client-side state information for Volume List.
+				  -->
+					
+				function updateVolumeListState(event, rowIndex, recordKey, recordLabel) {
+					volumeListState = new Object();
+					volumeListState.rowIndex = rowIndex;
+					//volumeListState.recordId = recordId;
+					volumeListState.recordKey = recordKey;
+					volumeListState.recordLabel = recordLabel;
+					//show(volumeListState);
+				}
+					
+					
+				<!--
+				  ** enableVolumeListActions(type)
+				  ** Enables (or disables) Volume List actions based on current client-side state.
+				  -->
+					
+				function enableVolumeListActions(type) {
+					//enableButton('volumeListViewButton');
+					enableButton('volumeListNewButton');
+					enableButton('volumeListEditButton');
+					enableButton('volumeListRemoveButton');
+				}
+					
+					
+				<!--
+				  ** processVolumeListMouseDown(event, rowIndex, recordKey, recordLabel)
+				  ** Handles mouseDown event on the Volume List.
+				  -->
+					
+				function processVolumeListMouseDown(event, rowIndex, recordKey, recordLabel) {
+					updateVolumeListState(event, rowIndex, recordKey, recordLabel);
+					enableVolumeListActions('volume');
+					if (isRightMouseClick(event))
+						return;
+					try {
+						executeSelectFromVolumeList(rowIndex, recordKey);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processVolumeListDoubleClick(event, rowIndex, recordKey, recordLabel)
+				  ** Handles double-click action on the Volume List.
+				  -->
+					
+				function processVolumeListDoubleClick(event, rowIndex, recordKey, recordLabel) {
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						showProgress('Nam', 'Volume Records', 'Preparing Volume ' + recordLabel + ' for editing...');
+						executeActionFromVolumeList(rowIndex, recordKey, 'Volume', 'workspaceManager.editObject');
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processVolumeListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Volume List item.
+				  -->
+					
+				function processVolumeListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleVolumeListItemChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
+					}
+				}
+					
+					
+				<!--
+				  ** processViewElement(event, type, action)
+				  ** Opens selected Element 'type' record.
+				  ** Goes to the Element 'type' summary page.
+				  -->
+					
+				function processViewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.viewObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						setCursorWait(#{rich:element('volumeListTable')});
+						if (volumeListState != null) {
+							var label = volumeListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Opening \"'+label+'\" '+type+' for viewing...');
+						} else showProgress('Nam', type+' Records', 'Opening '+type+' for viewing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processNewElement(event, type, action)
+				  ** Creates new Element 'type' record.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processNewElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.newObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (volumeListState != null) {
+							var label = volumeListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Creating new '+type+' for \"'+label+'\"...');
+						} else showProgress('Nam', type+' Records', 'Creating new '+type+'...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processEditElement(event, type, action)
+				  ** Opens Element 'type' record for editing.
+				  ** Goes to Element 'type' Wizard page.
+				  -->
+					
+				function processEditElement(event, type, action) {
+					if (action == null)
+						action = 'workspaceManager.editObject';
+					try {
+						setCursorWait(event.target);
+						setCursorWait(event.currentTarget);
+						if (volumeListState != null) {
+							var label = volumeListState.recordLabel;
+							showProgress('Nam', type+' Records', 'Preparing \"'+label+'\" '+type+' for editing...');
+						} else showProgress('Nam', type+' Records', 'Preparing '+type+' for editing...');
+						executeActionForElement(type, action);
+					} catch(e) {
+						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processRemoveElement(event, type, action)
+				  ** Prompts user to remove selected Element 'type' record.
+				  ** Removes Element 'type' record from system.
+				  -->
+					
+				function processRemoveElement(event, type, action) {
+					var typeUncapped = uncapitalize(type);
+					var label = type;
+					if (volumeListState != null)
+						label = volumeListState.recordLabel + ' ' + type;
+					var warningTitle = 'Remove \"'+label+'\" from system';
+					if (action == null)
+						action = typeUncapped + 'EventManager.remove' + type;
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'volumeListPane');
+					setCursorDefault();
+				}
+			</h:outputScript>
+		</a4j:outputPanel>
+	</a4j:region>
+</ui:composition>

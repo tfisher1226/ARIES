@@ -15,7 +15,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.util.Validator;
 
 import admin.Preferences;
@@ -84,18 +83,10 @@ public class PreferencesInfoManager extends AbstractNamRecordManager<Preferences
 	}
 	
 	protected void initialize(Preferences preferences) {
-		PreferencesUtil.initialize(preferences);
 		preferencesWizard.initialize(preferences);
 		setContext("preferences", preferences);
 	}
 
-	public void handlePreferencesSelected(@Observes @Selected Preferences preferences) {
-		selectionContext.setSelection("preferences",  preferences);
-		preferencesPageManager.updateState(preferences);
-		preferencesPageManager.refreshMembers();
-		setRecord(preferences);
-	}
-	
 	@Override
 	public String newRecord() {
 		return newPreferences();

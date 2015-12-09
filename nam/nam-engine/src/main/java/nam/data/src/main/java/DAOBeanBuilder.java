@@ -114,8 +114,8 @@ public class DAOBeanBuilder extends AbstractBeanBuilder {
 		classesCreated = new HashSet<String>();
 		context.buildParentElementMap(persistence);
 		this.persistence = persistence;
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
-		List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 		if (units.size() > 0) {
 			List<ModelInterface> modelInterfaces = buildInterfacesFromUnits(units);
 			Collections.sort(modelInterfaces);
@@ -127,7 +127,7 @@ public class DAOBeanBuilder extends AbstractBeanBuilder {
 		}
 	}
 	
-	public List<ModelInterface> buildInterfacesFromUnits(List<Unit> units) throws Exception {
+	public List<ModelInterface> buildInterfacesFromUnits(Collection<Unit> units) throws Exception {
 		List<ModelInterface> modelInterfaces = new ArrayList<ModelInterface>();
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
@@ -144,7 +144,7 @@ public class DAOBeanBuilder extends AbstractBeanBuilder {
 		return modelInterfaces;
 	}
 	
-	public List<ModelInterface> buildInterfacesFromNamespaces(List<Namespace> namespaces) throws Exception {
+	public List<ModelInterface> buildInterfacesFromNamespaces(Collection<Namespace> namespaces) throws Exception {
 		List<ModelInterface> modelInterfaces = new ArrayList<ModelInterface>();
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {
@@ -280,8 +280,8 @@ public class DAOBeanBuilder extends AbstractBeanBuilder {
 		classesCreated = new HashSet<String>();
 		context.buildParentElementMap(persistence);
 		this.persistence = persistence;
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
-		List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 		if (units.size() > 0) {
 			List<ModelClass> modelClasses = buildClassesFromUnits(units);
 			Collections.sort(modelClasses);
@@ -293,7 +293,7 @@ public class DAOBeanBuilder extends AbstractBeanBuilder {
 		}
 	}
 	
-	public List<ModelClass> buildClassesFromUnits(List<Unit> units) throws Exception {
+	public List<ModelClass> buildClassesFromUnits(Collection<Unit> units) throws Exception {
 		List<ModelClass> modelClasses = new ArrayList<ModelClass>();
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
@@ -310,7 +310,7 @@ public class DAOBeanBuilder extends AbstractBeanBuilder {
 		return modelClasses;
 	}
 
-	public List<ModelClass> buildClassesFromNamespaces(List<Namespace> namespaces) throws Exception {
+	public List<ModelClass> buildClassesFromNamespaces(Collection<Namespace> namespaces) throws Exception {
 		List<ModelClass> modelClasses = new ArrayList<ModelClass>();
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {

@@ -39,15 +39,22 @@
 			action="#{applicationListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Application Records', 'Refreshing current Application List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="applicationListActions, applicationListMenu, applicationListToolbar, applicationListPane">
+			render="applicationListActions applicationListMenu applicationListToolbar applicationNameListToolbar applicationListTable applicationNameListTable #{render}">
+
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{applicationDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 
 
 		<!--
 		  ** executeSelectFromApplicationList(recordIndex, recordKey)
 		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Selects Application element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 
 	    <a4j:jsFunction 
@@ -58,17 +65,18 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="applicationListActions, applicationListToolbar, #{render}">
+			render="applicationListActions applicationListToolbar applicationNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{applicationListManager.selectedRecordIndex}" />
 			<a4j:param name="recordKey" assignTo="#{applicationListManager.selectedRecordKey}" />
 
 			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{applicationDataManager.scope}" value="projectList" />
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="application" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 		
 	    
@@ -87,7 +95,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="applicationListActions, applicationListToolbar, #{render}">
+			render="applicationListActions applicationListToolbar applicationNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{applicationListManager.selectedRecordIndex}" />
@@ -97,7 +105,7 @@
 			<a4j:param name="section" assignTo="#{applicationWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 		
 		
@@ -115,17 +123,47 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-	    	render="applicationListActions, applicationListMenu, applicationListToolbar">
+			render="applicationListActions applicationListMenu applicationListToolbar applicationNameListToolbar #{render}">
 	    	
 			<!-- these values are passed-in -->
 	    	<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="0" />
 	    </a4j:jsFunction>
 	    
 	    
+		<!--
+		  ** executeHandleApplicationChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Application.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleApplicationChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{applicationPageManager.handleApplicationChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="applicationListActions applicationListToolbar applicationNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{applicationListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{applicationListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{applicationListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{applicationDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="applicationListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
 		<!--
 		  ** applicationListActions
 		  ** Javascript methods to support the Application List.
@@ -244,18 +282,19 @@
 			
 			
 				<!--
-				  ** processApplicationListSelectionChanged(event, rowIndex, recordKey, recordLabel)
-				  ** Handles check-box selection changed event on the Application List.
+				  ** processApplicationListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Application List item.
 				  -->
 					
-				function processApplicationListSelectionChanged(event, rowIndex, recordKey, recordLabel, source) {
+				function processApplicationListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
 					try {
-						beginSelect(source);
-						executeSelectFromApplicationList(rowIndex, recordKey);
-						completeSelect(source);
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleApplicationChecked(rowIndex, recordKey, checked, target);
 					} catch(e) {
-						//completeSelect(source);
 						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 				
@@ -336,7 +375,7 @@
 				  ** Removes Element 'type' record from system.
 				  -->
 
-				function processRemoveElement(event, type, action) {
+				function processRemoveElement(event, type, action, render) {
 					var typeUncapped = uncapitalize(type);
 					var label = type;
 					if (applicationListState != null)
@@ -344,7 +383,7 @@
 					var warningTitle = 'Remove \"'+label+'\" from system';
 					if (action == null)
 						action = typeUncapped + 'EventManager.remove' + type;
-					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, 'applicationListPane');
+					popupWarningPrompt('Nam', warningTitle, 'Do you wish to continue?', action, render);
 					setCursorDefault();
 				}
 			</h:outputScript>

@@ -15,7 +15,7 @@ public class ConfigurationSetupPage extends AbstractWizardPage<Configuration> {
 
 	
 	public ConfigurationSetupPage() {
-		setTitle("Specify configuration information.");
+		//setTitle("Specify configuration information.");
 		setNextEnabled(true);
 		setFinishEnabled(false);
 		//setOwner(owner);

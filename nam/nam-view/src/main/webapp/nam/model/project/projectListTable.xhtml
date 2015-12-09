@@ -20,6 +20,8 @@
 			value="#{projectListManager.dataModel}"
 			rowCount="#{projectListManager.dataModel.rowCount}"
 			visible="#{projectListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
 			onrowmousedown="processProjectListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processProjectListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">

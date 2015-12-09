@@ -10,11 +10,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
-	
-	<c:if test="#{empty id}">
-		<c:set var="id" value="#{section}#{type}Field_#{globals.nextId()}" /> 
-	</c:if>
-	
+
 	<c:if test="#{empty enabled}">
 		<c:set var="enabled" value="true" /> 
 	</c:if>

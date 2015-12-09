@@ -3,19 +3,20 @@ package nam.model.component;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import nam.model.Component;
-import nam.model.util.ComponentUtil;
-import nam.ui.design.SelectionContext;
 
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.ui.PageManager;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
+
+import nam.model.Component;
+import nam.model.util.ComponentUtil;
+import nam.ui.design.SelectionContext;
 
 
 @SessionScoped
@@ -27,9 +28,18 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 	
 	@Inject
 	private ComponentDataManager componentDataManager;
-
+	
+	@Inject
+	private ComponentInfoManager componentInfoManager;
+	
 	@Inject
 	private ComponentListManager componentListManager;
+	
+	@Inject
+	private ComponentListManager_Cache cacheComponentListManager;
+	
+	@Inject
+	private ComponentListManager_Persistence persistenceComponentListManager;
 	
 	@Inject
 	private ComponentRecord_OverviewSection componentOverviewSection;
@@ -49,7 +59,6 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 	
 	public ComponentPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -67,16 +76,18 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
 		componentDataManager.setScope(scope);
 		componentListManager.refresh();
+		cacheComponentListManager.refresh();
+		persistenceComponentListManager.refresh();
 	}
 	
 	public void refreshMembers(String scope) {
-		componentListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getComponentListPage() {
@@ -101,6 +112,32 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 	
 	public String getComponentManagementPage() {
 		return "/nam/model/component/componentManagementPage.xhtml";
+	}
+	
+	public void handleComponentSelected(@Observes @Selected Component component) {
+		selectionContext.setSelection("component",  component);
+		componentInfoManager.setRecord(component);
+	}
+	
+	public void handleComponentUnselected(@Observes @Unselected Component component) {
+		selectionContext.unsetSelection("component",  component);
+		componentInfoManager.unsetRecord(component);
+	}
+	
+	public void handleComponentChecked() {
+		String scope = "componentSelection";
+		ComponentListObject listObject = componentListManager.getSelection();
+		Component component = selectionContext.getSelection("component");
+		boolean checked = componentListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			componentInfoManager.setRecord(component);
+			selectionContext.setSelection(scope,  component);
+		} else {
+			componentInfoManager.unsetRecord(component);
+			selectionContext.unsetSelection(scope,  component);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeComponentListPage() {
@@ -187,9 +224,6 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 		addBreadcrumb(pageLevelKey, "Components", "showComponentManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Component", "showComponentWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showComponentWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showComponentWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showComponentWizardPage('Documentation')");
 		
 		componentIdentificationSection.setOwner("componentWizard");
 		componentConfigurationSection.setOwner("componentWizard");
@@ -206,7 +240,7 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -226,10 +260,6 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 		addBreadcrumb(pageLevelKey, "Components", "showComponentManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(componentName, "showComponentWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showComponentWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showComponentWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showComponentWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showComponentWizardPage('Documentation')");
 		
 		componentOverviewSection.setOwner("componentWizard");
 		componentIdentificationSection.setOwner("componentWizard");
@@ -248,7 +278,7 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -267,15 +297,23 @@ public class ComponentPageManager extends AbstractPageManager<Component> impleme
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Components");
+		setPageIcon("/icons/nam/Component16.gif");
 		setSectionType("component");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Components");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "componentOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Components", "showComponentManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeComponentSummaryView(Component component) {

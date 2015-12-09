@@ -13,6 +13,7 @@ import org.aries.util.ObjectUtil;
 import org.aries.util.Validator;
 
 import nam.model.Component;
+import nam.model.ComponentType;
 import nam.model.Operation;
 
 
@@ -38,6 +39,7 @@ public class ComponentUtil extends BaseUtil {
 		return true;
 	}
 	
+	//TODO this needs combination with super class
 	public static boolean isEmpty(Component component) {
 		if (component == null)
 			return true;
@@ -97,6 +99,10 @@ public class ComponentUtil extends BaseUtil {
 		if (component == null)
 			return false;
 		Validator validator = Validator.getValidator();
+		validator.notNull(component.getComponentType(), "\"ComponentType\" must be specified");
+		ComponentUtil.validate(component.getComponents());
+		OperationUtil.validate(component.getOperations());
+		TransactedUtil.validate(component.getTransacted());
 		boolean isValid = validator.isValid();
 		return isValid;
 	}
@@ -136,17 +142,27 @@ public class ComponentUtil extends BaseUtil {
 		};
 	}
 	
+	//TODO this needs work
 	public static Component clone(Component component) {
 		if (component == null)
 			return null;
 		Component clone = create();
 		clone.setName(ObjectUtil.clone(component.getName()));
 		clone.setType(ObjectUtil.clone(component.getType()));
+		clone.setComponentType(component.getComponentType());
 		clone.setBaseType(ObjectUtil.clone(component.getBaseType()));
+		clone.setVersion(ObjectUtil.clone(component.getVersion()));
+		clone.setElement(ObjectUtil.clone(component.getElement()));
+		clone.setPackageName(ObjectUtil.clone(component.getPackageName()));
+		clone.setInterfaceName(ObjectUtil.clone(component.getInterfaceName()));
+		clone.setClassName(ObjectUtil.clone(component.getClassName()));
 		clone.setPublished(ObjectUtil.clone(component.getPublished()));
 		clone.setCached(ObjectUtil.clone(component.getCached()));
-		clone.setAnnotations(ObjectUtil.clone(component.getAnnotations(), String.class));
-		clone.setFields(ObjectUtil.clone(component.getFields(), String.class));
+		//clone.setAnnotations(ObjectUtil.clone(component.getAnnotations(), String.class));
+		//clone.setFields(ObjectUtil.clone(component.getFields(), String.class));
+		clone.setTransacted(TransactedUtil.clone(component.getTransacted()));
+		clone.setComponents(ComponentUtil.clone(component.getComponents()));
+		clone.setOperations(OperationUtil.clone(component.getOperations()));
 		return clone;
 	}
 	

@@ -161,7 +161,7 @@ public class ElementActionsXhtmlBuilder extends AbstractCompositionXHTMLBuilder 
         buf.putLine2("	immediate=\"true\"");
         buf.putLine2("	bypassUpdates=\"true\"");
         buf.putLine2("	action=\"#{"+elementNameUncapped+"PageManager.initialize"+elementClassName+"ManagementPage}\"");
-        buf.putLine2("	onbegin=\"setCursorWait(event.source); showProgress('Nam', '"+elementClassName+" Records', 'Preparing "+elementClassName+" related information...')\">");
+        buf.putLine2("	onbegin=\"setCursorWait(event.source); showProgress('Nam', '"+elementClassName+" Records', 'Preparing "+elementClassName+" information...')\">");
         buf.putLine2("</a4j:jsFunction>");
 		return buf.get();
 	}

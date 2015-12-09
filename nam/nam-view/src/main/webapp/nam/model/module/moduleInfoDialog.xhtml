@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchModuleDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{moduleInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Module Records', 'Preparing requested record...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showModuleDialog()"
+		render="moduleModule, moduleDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{moduleInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{moduleInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{moduleInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{moduleInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{moduleInfoManager.immediate}" value="false" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="moduleModule">
+		
+		<a4j:region
+			rendered="#{moduleInfoManager.visible}">
+			
+			<aries:dialog
+				id="moduleDialog"
+				action="saveModule"
+				render="#{moduleInfoManager.renderList} moduleListPane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="moduleInfoPane.xhtml" />
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

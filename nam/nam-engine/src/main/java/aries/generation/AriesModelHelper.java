@@ -1797,12 +1797,12 @@ public class AriesModelHelper {
 	}
 
 	public void assureNamespaces(Information model) throws Exception {
-		List<Namespace> namespaces = InformationUtil.getNamespaces(model);
+		Collection<Namespace> namespaces = InformationUtil.getNamespaces(model);
 		assureNamespaces(model, namespaces);
 		assureNamespaces(namespaces);
 	}
 
-	public void assureNamespaces(Information model, List<Namespace> namespaces) throws Exception {
+	public void assureNamespaces(Information model, Collection<Namespace> namespaces) throws Exception {
 		Collection<Namespace> importedNamespaces = NamespaceUtil.getImportedNamespaces(model);
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {
@@ -1810,13 +1810,14 @@ public class AriesModelHelper {
 //			if (importedNamespaces.size() >= 3)
 //				System.out.println();
 //			if (model.get)
-			NamespaceUtil.addImportedNamespaces(namespace, importedNamespaces);
+			
+			//NamespaceUtil.addImportedNamespaces(namespace, importedNamespaces);
 			assureNamespace(namespace);
 		}
 	}
 
 	public void assureNamespaces(Persistence model) throws Exception {
-		List<Namespace> namespaces = PersistenceUtil.getNamespaces(model);
+		Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(model);
 		Namespace namespace = null;
 		if (namespace == null && model.getNamespace() != null) {
 			namespace = context.getNamespaceByUri(model.getNamespace());
@@ -1841,7 +1842,7 @@ public class AriesModelHelper {
 		assureNamespaces(namespaces);
 	}
 	
-	public void assureNamespaces(Persistence model, List<Namespace> namespaces) throws Exception {
+	public void assureNamespaces(Persistence model, Collection<Namespace> namespaces) throws Exception {
 		Collection<Namespace> importedNamespaces = NamespaceUtil.getImportedNamespaces(model);
 		Iterator<Namespace> iterator = namespaces.iterator();
 		while (iterator.hasNext()) {
@@ -2262,6 +2263,9 @@ public class AriesModelHelper {
 	}
 
 	protected Reference convertItemToReference(Field field) {
+//		if (field.getName().equalsIgnoreCase("permissions"))
+//			System.out.println();
+		
 		Reference reference = new Reference();
 		reference.setName(field.getName());
 		reference.setType(field.getType());
@@ -2625,10 +2629,10 @@ public class AriesModelHelper {
 			 * that does not have a name yet - just adopt the name from the
 			 * first Unit (in ARIEL "persist" blocks will have only one Unit).
 			 */
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Assert.notNull(units, "Persistence units null");
 			Assert.notEmpty(units, "At least one Persistence-unit must be specified");
-			Unit unit = units.get(0);
+			Unit unit = units.iterator().next();
 			persistence.setName(unit.getName());
 		}
 		
@@ -2650,7 +2654,7 @@ public class AriesModelHelper {
 	}
 
 	public void assureUnits(Persistence persistence) throws Exception {
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
 			Unit unit = iterator.next();
@@ -2674,7 +2678,7 @@ public class AriesModelHelper {
 		}		
 		Assert.notNull(unit.getSource(), "Data source must be specified");
 		
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		if (unit.getNamespace() == null && units.size() == 1) {
 			String uri = context.getModule().getNamespace();
 			Namespace namespace = context.getNamespaceByUri(uri);

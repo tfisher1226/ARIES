@@ -460,7 +460,7 @@ public class UnitUtil extends BaseUtil {
 		return createUnitMap(persistenceUnits.getUnits());
 	}
 
-	public static Map<String, Unit> createUnitMap(List<Unit> persistenceUnits) {
+	public static Map<String, Unit> createUnitMap(Collection<Unit> persistenceUnits) {
 		Map<String, Unit> map = new HashMap<String, Unit>();
 		Iterator<Unit> iterator = persistenceUnits.iterator();
 		while (iterator.hasNext()) {

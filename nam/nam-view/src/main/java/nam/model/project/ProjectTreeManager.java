@@ -1,12 +1,18 @@
 package nam.model.project;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import nam.model.Project;
+import nam.ui.design.AbstractDomainTreeManager;
+import nam.ui.design.SelectionContext;
+import nam.ui.tree.ModelTreeNode;
 
 import org.aries.runtime.BeanContext;
 import org.aries.ui.EventManager;
@@ -15,12 +21,6 @@ import org.aries.ui.event.Refresh;
 import org.aries.ui.event.Removed;
 import org.aries.util.NameUtil;
 import org.richfaces.model.TreeNode;
-
-import nam.model.Project;
-import nam.model.util.ProjectUtil;
-import nam.ui.design.AbstractDomainTreeManager;
-import nam.ui.design.SelectionContext;
-import nam.ui.tree.ModelTreeNode;
 
 
 @SessionScoped
@@ -104,24 +104,30 @@ public class ProjectTreeManager extends AbstractDomainTreeManager implements Ser
 		}
 	}
 	
-	public void handleRefresh(@Observes @Refresh List<Project> projectList) {
+	public void handleRefresh(@Observes @Refresh Object object) {
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
+		refreshModel(projectList);
+		clearSelection();
+	}
+	
+	public void handleRefresh(@Observes @Refresh Collection<Project> projectList) {
 		refreshModel(projectList);
 		clearSelection();
 	}
 	
 	public void handleRefresh(@Observes @Refresh Project project) {
-		List<Project> projectList = selectionContext.getSelection("projectList");
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		refreshModel(projectList);
 		clearSelection();
 	}
 	
 	@Override
 	public void refreshModel() {
-		List<Project> projectList = selectionContext.getSelection("projectList");
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		refreshModel(projectList);
 	}
 	
-	public void refreshModel(List<Project> projectList) {
+	public void refreshModel(Collection<Project> projectList) {
 		rootNode = projectTreeBuilder.createTree(projectList);
 	}
 	

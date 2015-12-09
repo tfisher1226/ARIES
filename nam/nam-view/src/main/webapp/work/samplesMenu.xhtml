@@ -1,0 +1,92 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<h:panelGroup 
+		id="samplesMenu" 
+		layout="block" 
+		style="margin: 0px 20px; background-color: inherit">
+
+		<ui:param name="method" value="showSamplesPane" />
+		
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Overview" />
+			<ui:param name="name" value="overview" />
+		</ui:include>
+
+		<aries:spacer height="2" />
+		<aries:label fontSize="14" fontWeight="bold" value="Categories:" />
+		<aries:spacer height="6" />
+							
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Personal Tools" />
+			<ui:param name="name" value="personalAssistance" />
+		</ui:include>
+
+		<!--  
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Income and Expenses" />
+			<ui:param name="name" value="incomeAndExpenses" />
+		</ui:include>
+		-->
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Science and Research" />
+			<ui:param name="name" value="scienceAndResearch" />
+		</ui:include>
+		
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Payment Processing" />
+			<ui:param name="name" value="paymentProcessing" />
+		</ui:include>
+		
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Transaction Management" />
+			<ui:param name="name" value="transactionManagement" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Customer Relationship" />
+			<ui:param name="name" value="customerRelationship" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Resources and Inventory" />
+			<ui:param name="name" value="resourcesAndInventory" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Shipping and Receiving" />
+			<ui:param name="name" value="shippingAndReceiving" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Inspection and Reporting" />
+			<ui:param name="name" value="inspectionAndReporting" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Task and Event Scheduling" />
+			<ui:param name="name" value="taskAndEventScheduling" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Organization and Membership" />
+			<ui:param name="name" value="organizationAndMembership" />
+		</ui:include>
+
+		<ui:include src="/common/navigationLink.xhtml">
+			<ui:param name="label" value="Multi-party Workflow Coordination" />
+			<ui:param name="name" value="multiPartyWorkflowCoordination" />
+		</ui:include>
+
+	</h:panelGroup>
+</ui:composition>

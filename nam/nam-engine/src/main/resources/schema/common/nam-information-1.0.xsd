@@ -251,7 +251,7 @@
 				<xs:attribute name="simple" type="xs:boolean" default="false" />
 				<xs:attribute name="unique" type="xs:boolean" default="false" />
 				<xs:attribute name="required" type="xs:boolean" default="false" />
-				<xs:attribute name="nillable" type="xs:boolean" default="false" />
+				<xs:attribute name="nullable" type="xs:boolean" default="false" />
 				<xs:attribute name="transient" type="xs:boolean" default="false" />
 				<xs:attribute name="volatile" type="xs:boolean" default="false" />
 				<xs:attribute name="indexed" type="xs:boolean" default="false" />

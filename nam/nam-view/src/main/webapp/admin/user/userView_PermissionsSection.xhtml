@@ -26,9 +26,13 @@
 		<aries:formPane
 			columns="2"
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
-			<aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="userManagementViewer" />
+			
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/User16.gif" />
 					<ui:param name="label" value="Users" />
@@ -36,17 +40,21 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="userListActions.xhtml">
-						<ui:param name="render" value="userManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="userNameListToolbar.xhtml" />
-					<ui:include src="userNameListTable.xhtml" />
+					<!-- user refresh scope -->
+					<ui:param name="scope" value="userList" />
+					<ui:param name="target" value="permission" />
+					
+					<!-- user table section -->
+					<ui:include src="/admin/user/userListActions.xhtml" />
+					<ui:include src="/admin/user/userNameListToolbar.xhtml" />
+					<ui:include src="/admin/user/userNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 			
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Permission16.gif" />
 					<ui:param name="label" value="Permissions" />
@@ -54,13 +62,14 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="/common/permission/permissionListActions.xhtml">
-						<ui:param name="render" value="userManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="/common/permission/permissionNameListToolbar.xhtml" />
-					<ui:include src="/common/permission/permissionNameListTable.xhtml" />
+					<!-- permission refresh action -->
+					<ui:param name="scope" value="userSelection" />
+					
+					<!-- permission table section -->
+					<ui:include src="/admin/permission/permissionListActions.xhtml" />
+					<ui:include src="/admin/permission/permissionNameListToolbar.xhtml" />
+					<ui:include src="/admin/permission/permissionNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

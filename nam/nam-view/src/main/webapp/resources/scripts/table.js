@@ -28,11 +28,6 @@ function selectRow(row) {
     //alert(row);
 }
 
-function focusField(tableRow, borderColor) {
-	setFieldBorder(tableRow, borderColor);
-	selectRow(tableRow);
-}
-
 function unselectRow(row) {
 	if (!row)
 		row = currentRow;
@@ -41,6 +36,18 @@ function unselectRow(row) {
 	    jQuery(row).removeClass('tableRowSelected'); 
 	    jQuery(row).removeClass('tableRowActive'); 
 	}
+}
+
+function checkCurrentRow() {
+    var row = currentRow;
+    jQuery(row).removeClass('tableRowActive'); 
+    jQuery(row).removeClass('tableRowSelected'); 
+    jQuery(row).addClass('tableRowChecked');
+}
+
+function focusField(tableRow, borderColor) {
+	setFieldBorder(tableRow, borderColor);
+	selectRow(tableRow);
 }
 
 function enableToolbar(toolbar) {

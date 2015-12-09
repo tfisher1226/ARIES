@@ -26,13 +26,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
 			<!-- variables -->
-			<ui:param name="lockOnSelect" value="true" />
 			<ui:param name="render" value="applicationManagementViewer" />
 			
-			<aries:panel>
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Application16.gif" />
 					<ui:param name="label" value="Applications" />
@@ -40,9 +40,15 @@
 	
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="applicationListActions.xhtml" />
-					<ui:include src="applicationNameListToolbar.xhtml" />
-					<ui:include src="applicationNameListTable.xhtml">
+					
+					<!-- application refresh scope -->
+					<ui:param name="scope" value="applicationList" />
+					<ui:param name="target" value="element" />
+					
+					<!-- application table section -->
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml">
 						<ui:param name="addSelectorColumn" value="true" />
 					</ui:include>	
 				</h:panelGroup>
@@ -63,7 +69,7 @@
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Element16.gif" />
 					<ui:param name="label" value="Elements" />
@@ -73,7 +79,9 @@
 				<h:panelGroup layout="block" styleClass="tableBorder">
 					<ui:include src="/nam/model/type/typeListActions.xhtml" />
 					<ui:include src="/nam/model/type/typeNameListToolbar.xhtml" />
-					<ui:include src="/nam/model/type/typeNameListTable.xhtml" />	
+					<ui:include src="/nam/model/type/typeNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>	
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<!-- table panel -->
+	<aries:outputPane
+		id="containerListTablePanel">
+		
+		<!-- context menu -->
+		<ui:include src="containerListMenu.xhtml">
+			<ui:param name="tableId" value="containerListTable" />
+		</ui:include>
+		
+		<!-- table -->
+		<aries:table
+			id="containerListTable"
+			value="#{containerListManager.dataModel}"
+			rowCount="#{containerListManager.dataModel.rowCount}"
+			visible="#{containerListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
+			onrowmousedown="processContainerListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			onrowdblclick="processContainerListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
+			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px">
+			
+			<!-- TYPE -->
+			<aries:textColumn
+				width="100"
+				header="Type">
+				<h:outputText value="#{rowItem.container.type}" />
+			</aries:textColumn>
+			
+			<!-- NAME -->
+			<aries:textColumn
+				width="100"
+				header="Name">
+				<h:outputText value="#{rowItem.container.name}" />
+			</aries:textColumn>
+			
+			<!-- IMAGE -->
+			<aries:textColumn
+				width="100"
+				header="Image">
+				<h:outputText value="#{rowItem.container.image}" />
+			</aries:textColumn>
+		</aries:table>
+	</aries:outputPane>
+</ui:composition>

@@ -20,6 +20,8 @@
 			value="#{parameterListManager.dataModel}"
 			rowCount="#{parameterListManager.dataModel.rowCount}"
 			visible="#{parameterListManager.dataModel.rowCount > 0}"
+			addIndexColumn="true"
+			addSelectorColumn="true"
 			onrowmousedown="processParameterListMouseDown(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			onrowdblclick="processParameterListDoubleClick(event, '#{index}', '#{rowItem.key}', '#{rowItem.label}')"
 			style="width: auto; max-width: auto; border-top-width: 0px; border-left-width: 0px"

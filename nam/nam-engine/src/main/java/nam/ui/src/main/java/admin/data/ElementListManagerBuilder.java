@@ -252,6 +252,7 @@ public class ElementListManagerBuilder extends AbstractElementManagerBuilder {
 		if (!ElementUtil.isEnumeration(type))
 			modelClass.addInstanceOperation(createOperation_fireSelectedEvent(type));
 		modelClass.addInstanceOperation(createOperation_isSelected(type));
+		modelClass.addInstanceOperation(createOperation_isChecked(type));
 		modelClass.addInstanceOperation(createOperation_createRowItem(type));
 		//modelClass.addInstanceOperation(createOperation_getHelper(type));
 		//if (ElementUtil.isRoot(type))
@@ -318,7 +319,7 @@ public class ElementListManagerBuilder extends AbstractElementManagerBuilder {
 		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(type);
 		
 		ModelOperation modelOperation = new ModelOperation();
-		modelOperation.addAnnotation(AnnotationUtil.createOverrideAnnotation());
+		//modelOperation.addAnnotation(AnnotationUtil.createOverrideAnnotation());
 		modelOperation.setModifiers(Modifier.PUBLIC);
 		modelOperation.setName("getRecordId");
 		modelOperation.setResultType("Object");
@@ -492,6 +493,24 @@ public class ElementListManagerBuilder extends AbstractElementManagerBuilder {
 		return modelOperation;
 	}
 	
+	protected ModelOperation createOperation_isChecked(Type element) {
+		String elementClassName = ModelLayerHelper.getElementClassName(element);
+		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
+		
+		ModelOperation modelOperation = new ModelOperation();
+		modelOperation.setModifiers(Modifier.PUBLIC);
+		modelOperation.setName("isChecked");
+		modelOperation.addParameter(createParameter(elementClassName, elementNameUncapped));
+		modelOperation.setResultType("boolean");
+		
+		Buf buf = new Buf();
+		buf.putLine2("Collection<"+elementClassName+"> selection = selectionContext.getSelection(\""+elementNameUncapped+"Selection\");");
+		buf.putLine2("boolean checked = selection != null && selection.contains("+elementNameUncapped+");");
+		buf.putLine2("return checked;");
+		modelOperation.addInitialSource(buf.get());
+		return modelOperation;
+	}
+	
 	protected ModelOperation createOperation_createRowItem(Type element) throws Exception {
 		String elementClassName = ModelLayerHelper.getElementClassName(element);
 		String elementNameUncapped = ModelLayerHelper.getElementNameUncapped(element);
@@ -506,6 +525,7 @@ public class ElementListManagerBuilder extends AbstractElementManagerBuilder {
 		Buf buf = new Buf();
 		buf.putLine2(""+elementClassName+"ListObject listObject = new "+elementClassName+"ListObject("+elementNameUncapped+");");
 		buf.putLine2("listObject.setSelected(isSelected("+elementNameUncapped+"));");
+		buf.putLine2("listObject.setChecked(isChecked("+elementNameUncapped+"));");
 		buf.putLine2("return listObject;");
 		modelOperation.addInitialSource(buf.get());
 		return modelOperation;

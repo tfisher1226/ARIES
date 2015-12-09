@@ -32,7 +32,7 @@ public class RegistrationConverter extends AbstractConverter implements Converte
 		if (value == null)
 			return null;
 		Registration registration = (Registration) value;
-		return RegistrationUtil.toString(registration);
+		return RegistrationUtil.getLabel(registration);
 	}
 	
 }

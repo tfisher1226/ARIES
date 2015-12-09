@@ -39,15 +39,22 @@
 			action="#{namespaceListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Namespace Records', 'Refreshing current Namespace List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="namespaceListActions, namespaceListMenu, namespaceListToolbar, namespaceListPane">
+			render="namespaceListActions namespaceListMenu namespaceListToolbar namespaceNameListToolbar namespaceListTable namespaceNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{namespaceDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
 		<!--
 		  ** executeSelectFromNamespaceList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Namespace List.
+		  ** Selects Namespace element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +65,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="namespaceListActions, namespaceListToolbar, #{render}">
+			render="namespaceListActions namespaceListToolbar namespaceNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{namespaceListManager.selectedRecordIndex}" />
@@ -68,7 +75,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="namespace" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +94,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="namespaceListActions, namespaceListToolbar, #{render}">
+			render="namespaceListActions namespaceListToolbar namespaceNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{namespaceListManager.selectedRecordIndex}" />
@@ -97,7 +104,7 @@
 			<a4j:param name="section" assignTo="#{namespaceWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -115,14 +122,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="namespaceListActions, namespaceListMenu, namespaceListToolbar">
+			render="namespaceListActions namespaceListMenu namespaceListToolbar namespaceNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** executeHandleNamespaceChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Namespace.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleNamespaceChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{namespacePageManager.handleNamespaceChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="namespaceListActions namespaceListToolbar namespaceNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{namespaceListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{namespaceListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{namespaceListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{namespaceDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="namespaceListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +253,8 @@
 				function processNamespaceListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateNamespaceListState(event, rowIndex, recordKey, recordLabel);
 					enableNamespaceListActions('namespace');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromNamespaceList(rowIndex, recordKey);
 					} catch(e) {
@@ -241,6 +280,24 @@
 				}
 					
 					
+				<!--
+				  ** processNamespaceListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Namespace List item.
+				  -->
+					
+				function processNamespaceListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleNamespaceChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
+					}
+				}
+				
+				
 				<!--
 				  ** processViewElement(event, type, action)
 				  ** Opens selected Element 'type' record.

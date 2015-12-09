@@ -15,7 +15,7 @@ public class AttributeSetupPage extends AbstractFieldSetupPage<Attribute> implem
 
 	
 	public AttributeSetupPage(String owner) {
-		setTitle("Specify Attribute details.");
+		//setTitle("Specify Attribute details.");
 		//initialize(attribute);
 		setOwner(owner);
 	}

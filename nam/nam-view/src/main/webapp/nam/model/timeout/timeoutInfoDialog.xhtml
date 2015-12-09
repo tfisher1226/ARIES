@@ -1,17 +1,12 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="type" value="Timeout" />
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="manager" value="#{timeoutInfoManager}" />
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
 	
 	<a4j:jsFunction
 	 	name="launchTimeoutDialog"
@@ -19,37 +14,32 @@
 		immediate="true"
 		bypassUpdates="true"
 		limitRender="true"
-		action="#{manager.activate}"
-		onbegin="setCursorWait(); showProgress('', 'Timeout Records', 'Preparing requested record...')"
+		action="#{timeoutInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Timeout Records', 'Preparing requested record...')"
 		oncomplete="setCursorDefault(eventSource); hideProgress(); showTimeoutDialog()"
-		render="#{type}Module, #{type}Dialog">
+		render="timeoutModule, timeoutDialog">
 		
-		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
-		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
-		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
-		<a4j:param name="targetService" assignTo="#{manager.targetService}" />
-		<a4j:param name="immediate" assignTo="#{manager.immediate}" value="false" />
+		<a4j:param name="targetDomain" assignTo="#{timeoutInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{timeoutInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{timeoutInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{timeoutInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{timeoutInfoManager.immediate}" value="false" />
 	</a4j:jsFunction>
 	
-	<aries:region
-		id="#{type}Module"
-		parent="#{section}"
-		domain="#{type}"
-		section="#{type}Dialog"
-		render="#{type}ListPane"
-		rendered="#{manager.visible}">
+	<a4j:outputPanel
+		id="timeoutModule">
 		
-		<aries:form
-			id="#{section}Form">
+		<a4j:region
+			rendered="#{timeoutInfoManager.visible}">
 			
 			<aries:dialog
-				id="#{section}"
-				action="save#{type}"
-				render="#{manager.renderList}">
+				id="timeoutDialog"
+				action="saveTimeout"
+				render="#{timeoutInfoManager.renderList} timeoutListPane">
 				
 				<!-- Dialog Content -->
 				<ui:include src="timeoutInfoPane.xhtml" />
 			</aries:dialog>
-		</aries:form>
 	</aries:region>
+	</a4j:outputPanel>
 </ui:composition>

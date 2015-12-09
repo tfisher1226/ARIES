@@ -1,0 +1,112 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<!-- section body --> 
+	<h:panelGrid class="sectionBody">
+
+		<!-- page includes -->
+	
+		<!-- section title --> 
+		<ui:insert name="sectionTitle" />
+
+		<!-- section messages 
+		<ui:insert name="sectionMessages" />
+		--> 
+		
+		<aries:spacer height="10" />
+		<aries:formPane
+			columns="3" 
+			width="auto"
+			height="auto"
+			columnClasses="formColumnAlignTop, formColumnAlignTop, formColumnAlignTop"
+			style="">
+			
+			<!-- variables -->
+			<ui:param name="render" value="applicationManagementViewer" />
+			
+			<aries:panel style="max-width: 120px; background-color: inherit">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Application16.gif" />
+					<ui:param name="label" value="Applications" />
+				</ui:include>
+	
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:param name="scope" value="projectList" />
+					<ui:param name="target" value="service" />
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+
+			<aries:panel style="max-width: 120px; margin-left: 20px; background-color: inherit">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Service16.gif" />
+					<ui:param name="label" value="Services" />
+				</ui:include>
+
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:param name="scope" value="applicationSelection" />
+					<ui:include src="/nam/model/service/serviceListActions.xhtml" />
+					<ui:include src="/nam/model/service/serviceNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/service/serviceNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+
+			<!--  
+			<aries:panel style="max-width: 100px; margin-left: 20px; background-color: inherit">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Component16.gif" />
+					<ui:param name="label" value="Components" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					<ui:include src="/nam/model/component/componentListActions.xhtml" />
+					<ui:include src="/nam/model/component/componentNameListToolbar.xhtml" />
+				</h:panelGroup>
+
+				<aries:spacer height="4" />
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="channels" />
+					<ui:param name="label" value="Channels" />
+					<ui:param name="icon" value="/icons/nam/Channel16.gif" />
+					<ui:param name="manager" value="#{channelListManager}" />
+					<ui:param name="table" value="/nam/model/channel/channelNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="listeners" />
+					<ui:param name="label" value="Listeners" />
+					<ui:param name="icon" value="/icons/nam/Listener16.gif" />
+					<ui:param name="manager" value="#{listenerListManager}" />
+					<ui:param name="table" value="/nam/model/listener/listenerNameListTable.xhtml" />
+				</ui:include>
+
+				<ui:include src="/common/nameListView.xhtml">
+					<ui:param name="type" value="interactors" />
+					<ui:param name="label" value="Interactors" />
+					<ui:param name="icon" value="/icons/nam/Interactor16.gif" />
+					<ui:param name="manager" value="#{interactorListManager}" />
+					<ui:param name="table" value="/nam/model/interactor/interactorNameListTable.xhtml" />
+				</ui:include>
+			</aries:panel>
+			-->
+		</aries:formPane>
+	</h:panelGrid>
+</ui:composition>

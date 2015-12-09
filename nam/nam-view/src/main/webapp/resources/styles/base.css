@@ -29,29 +29,44 @@ body {
 
 H1, H2, H3, H4, H5, H6 {
 	font-family: arial, helvetica, sans-serif;
+	/*
 	font-size: 16px;
 	font-weight: 500;
 	margin-top: 10px;
 	padding-top: 5px;
 	color: #003399;
+	*/
 }
 
+H1 { font-size: 140%; color: #27465e; font-weight: bold; }
+H2 { font-size: 130%; color: #3d5e27; font-weight: bold; }
+H3 { font-size: 120%; color: #000; font-weight: bold; }
+H4 { font-size: 110%; color: #000; font-weight: normal; }
+H5 { font-size: 100%; color: #003399; font-weight: normal; font-style: italic; }
+H6 { font-size: 90%; color: #003399; font-weight: normal; font-style: italic; }
+
+/*
 H1 { font-size: 140%; color: #27465e; }
 H2 { font-size: 130%; color: #3d5e27; }
 H3 { font-size: 120%; color: #45555d; }
 H4 { font-size: 110%; color: #45555d; font-weight: normal; }
 H5 { font-size: 100%; color: #003399; font-weight: normal; font-style: italic; }
 H6 { font-size: 90%; color: #003399; font-weight: normal; font-style: italic; }
+*/
 
 /* unvisited link */
 a:link {
+	font-size: 20px;
 	color: #{userSkin.linkColor};
 	text-decoration: none;
+	color: red;
 }
 
 /* visited link */
 a:visited {
-    color: #{userSkin.linkVisitedColor};
+	font-size: 20px;
+	color: #{userSkin.linkVisitedColor};
+	color: red;
 }
 
 /* mouse over link */
@@ -66,6 +81,7 @@ a:active {
 }
 
 p {
+	font-size: 14px;
 	word-wrap: break-word;
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
@@ -276,6 +292,7 @@ fieldset {
 .vspace20 { clear: both; padding-top: 20px; }
 .vspace22 { clear: both; padding-top: 22px; }
 .vspace24 { clear: both; padding-top: 24px; }
+.vspace30 { clear: both; padding-top: 30px; }
 .vspace32 { clear: both; padding-top: 32px; }
 .vspace48 { clear: both; padding-top: 48px; }
 

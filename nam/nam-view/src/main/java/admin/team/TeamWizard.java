@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.aries.util.NameUtil;
 
 import admin.Team;
+import admin.util.TeamUtil;
 
 
 @SessionScoped
@@ -122,7 +123,7 @@ public class TeamWizard extends AbstractDomainElementWizard<Team> implements Ser
 	
 	public String populateDefaultValues() {
 		Team team = selectionContext.getSelection("team");
-		String name = team.getName();
+		String name = TeamUtil.getLabel(team);
 		if (StringUtils.isEmpty(name)) {
 			display = getFromSession("display");
 			display.setModule("teamWizard");

@@ -19,6 +19,7 @@ public class RegistrationRecord_SubmitSection extends AbstractWizardPage<Registr
 	
 	
 	public RegistrationRecord_SubmitSection() {
+		setTitle("Choose your plan");
 		setName("Submit");
 		setUrl("submit");
 	}

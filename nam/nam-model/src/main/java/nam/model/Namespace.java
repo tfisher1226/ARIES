@@ -3,6 +3,7 @@ package nam.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -12,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.aries.adapter.BooleanAdapter;
 
 
@@ -26,8 +28,7 @@ import org.aries.adapter.BooleanAdapter;
     "typesAndEnumerationsAndElements"
 })
 @XmlRootElement(name = "namespace", namespace = "http://nam/model")
-public class Namespace implements Serializable
-{
+public class Namespace implements Comparable<Object>, Serializable {
 
     private final static long serialVersionUID = 1L;
     
@@ -527,9 +528,55 @@ public class Namespace implements Serializable
     }
 
     
+    
+	@Override
+	public int compareTo(Object object) {
+		if (object.getClass().isAssignableFrom(this.getClass())) {
+			Namespace other = (Namespace) object;
+			int status = compare(uri, other.uri);
+			if (status != 0)
+				return status;
+		} else {
+			String name1 = this.getClass().getName();
+			String name2 = object.getClass().getName();
+			int status = compare(name1, name2);
+			if (status != 0)
+				return status;
+		}
+		return 0;
+	}
+	
+	protected <T extends Comparable<T>> int compare(T value1, T value2) {
+		if (value1 == null && value2 == null) return 0;
+		if (value1 != null && value2 == null) return 1;
+		if (value1 == null && value2 != null) return -1;
+		int status = value1.compareTo(value2);
+		return status;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == null)
+			return false;
+		if (!object.getClass().isAssignableFrom(this.getClass()))
+			return false;
+		Namespace other = (Namespace) object;
+		int status = compareTo(other);
+		return status == 0;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hashCode = 0;
+		if (hashCode == 0)
+			return super.hashCode();
+		return hashCode;
+	}
+    
+	@Override
     public String toString() {
-    	return uri;
+		return "Namespace: uri="+uri;
     }
-
+	
 }
 

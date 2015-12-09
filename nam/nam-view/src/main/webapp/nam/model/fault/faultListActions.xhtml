@@ -39,7 +39,13 @@
 			action="#{faultListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Fault Records', 'Refreshing current Fault List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="faultListActions, faultListMenu, faultListToolbar, faultListPane">
+			render="faultListActions faultListMenu faultListToolbar faultNameListToolbar faultListTable faultNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{faultDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="faultListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -58,7 +64,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="faultListActions, faultListToolbar, #{render}">
+			render="faultListActions faultListToolbar faultNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{faultListManager.selectedRecordIndex}" />
@@ -68,7 +74,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="fault" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="faultListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="faultListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +93,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="faultListActions, faultListToolbar, #{render}">
+			render="faultListActions faultListToolbar faultNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{faultListManager.selectedRecordIndex}" />
@@ -115,7 +121,7 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
-			render="faultListActions, faultListMenu, faultListToolbar">
+			render="faultListActions faultListMenu faultListToolbar faultNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
@@ -123,6 +129,36 @@
 			
 			<!-- provide event queue settings -->
 			<a4j:attachQueue requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** executeHandleFaultChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Fault.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleFaultChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{faultPageManager.handleFaultChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="faultListActions faultListToolbar faultNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{faultListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{faultListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{faultListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{faultDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="faultListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +252,8 @@
 				function processFaultListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateFaultListState(event, rowIndex, recordKey, recordLabel);
 					enableFaultListActions('fault');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromFaultList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +275,24 @@
 						executeActionFromFaultList(rowIndex, recordKey, 'Fault', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processFaultListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Fault List item.
+				  -->
+					
+				function processFaultListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleFaultListItemChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

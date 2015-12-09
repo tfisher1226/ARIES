@@ -26,27 +26,13 @@
 		<aries:formPane
 			columns="2"
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 			
-			<aries:panel>
-				<ui:include src="/common/sectionLabel.xhtml">
-					<ui:param name="icon" value="/icons/nam/Project16.gif" />
-					<ui:param name="label" value="Projects" />
-				</ui:include>
-				
-				<aries:spacer height="8" />
-				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../project/projectListActions.xhtml">
-						<ui:param name="render" value="networkManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
-					
-					<ui:include src="../project/projectNameListToolbar.xhtml" />
-					<ui:include src="../project/projectNameListTable.xhtml" />
-				</h:panelGroup>
-			</aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="networkManagementViewer" />
 			
-			<aries:panel marginLeft="20px">
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Network16.gif" />
 					<ui:param name="label" value="Networks" />
@@ -54,13 +40,36 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="networkListActions.xhtml">
-						<ui:param name="render" value="networkManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="networkNameListToolbar.xhtml" />
-					<ui:include src="networkNameListTable.xhtml" />
+					<!-- network refresh scope -->
+					<ui:param name="scope" value="networkList" />
+					<ui:param name="target" value="volume" />
+					
+					<!-- network table section -->
+					<ui:include src="/nam/model/network/networkListActions.xhtml" />
+					<ui:include src="/nam/model/network/networkNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/network/networkNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
+				</h:panelGroup>
+			</aries:panel>
+			
+			<aries:panel style="margin-left: 20px">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/Volume16.gif" />
+					<ui:param name="label" value="Volumes" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					
+					<!-- volume refresh action -->
+					<ui:param name="scope" value="networkSelection" />
+					
+					<!-- volume table section -->
+					<ui:include src="/nam/model/volume/volumeListActions.xhtml" />
+					<ui:include src="/nam/model/volume/volumeNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/volume/volumeNameListTable.xhtml" />
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

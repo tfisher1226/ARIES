@@ -33,10 +33,6 @@
 	<c:if test="#{empty autocomplete}">
 		<c:set var="autocomplete" value="false" /> 
 	</c:if>
-	
-	<c:if test="#{empty id}">
-		<c:set var="id" value="InputText_#{globals.nextId()}" /> 
-	</c:if>
 
 	<aries:fieldWrapper 
 		backgroundColor="inherit">

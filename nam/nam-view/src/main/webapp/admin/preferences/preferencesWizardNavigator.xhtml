@@ -12,15 +12,12 @@
 
 	<aries:panel
 	  width="auto"
-	  margin="0px"
-	  backgroundColor="inherit">
+		style="border: 1px solid #bbb; border-radius: 5px; background-color: white">
 	      
 	  <aries:formPane
 	  	width="auto"
-	  	borderWidth="1px"
-	  	borderColor="#aaa"
 	  	columnClass="formColumnAlignLeft"
-	  	backgroundColor="inherit">
+			style="width: 130px; background-color: inherit">
 	      
 	  	<c:set var="section" value="#{preferencesWizard.section}" /> 
 	  	<c:set var="backgroundColor" value="#cfe7f5" /> 
@@ -28,11 +25,7 @@
 	  	<aries:indentPane
 	  		width="#{helper.wizard_leftSection_width}"
 	  		height="auto"
-	  		padding="6px"
-	  		paddingLeft="12px"
-	  		fontSize="14"
-	  		fontWeight="bold"
-	  		backgroundColor="#fff">
+				style="padding: 6px 10px; font-size: 13px; font-weight: bold; background-color: white; cursor: pointer">
 	  		#{preferencesWizard.newMode ? 'Steps' : 'Sections'}
 	  	</aries:indentPane>
 	      
@@ -42,10 +35,11 @@
 	  		
 	  		<aries:wizardStep
 	  			step="#{section}"
-	  			value="#{page.name}"
+					label="#{page.name}"
+					icon="#{page.icon}"
 	  			enabled="#{page.enabled}"
-	  			onclick="setCursorWait(this); showPreferencesWizardPage('#{page.name}')">
-	  		</aries:wizardStep>
+					onclick="setCursorWait(this); showPreferencesWizardPage('#{page.name}')"
+					styleClass="wizardMenuStep" />
 	  	</ui:repeat>
 	  </aries:formPane>
 	</aries:panel>

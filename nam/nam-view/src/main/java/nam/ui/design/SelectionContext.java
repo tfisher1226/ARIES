@@ -4,17 +4,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Named;
 
-import nam.model.Project;
-
-import org.aries.runtime.BeanContext;
 import org.aries.ui.event.Selected;
+import org.richfaces.event.ItemChangeEvent;
 
 
 @SessionScoped
@@ -24,6 +21,10 @@ public class SelectionContext extends AbstractSelectionContext implements Serial
 
 	private Map<String, Object> values = new HashMap<String, Object>();
 	
+	private String currentArea;
+
+	private String currentTarget;
+	
 	private String selectedArea;
 	
 	private String selectedType;
@@ -31,8 +32,6 @@ public class SelectionContext extends AbstractSelectionContext implements Serial
 	private String selectedName;
 
 	private String selectedAction;
-
-	private String currentArea;
 
 	private String messageDomain;
 	
@@ -51,33 +50,68 @@ public class SelectionContext extends AbstractSelectionContext implements Serial
 //			System.out.println();
 		synchronized (values) {
 			String key = keyBase.toLowerCase();
-			String key2 = key + "selection";
-			Collection<T> selection = getSelection(key2);
-			if (selection == null) {
-				selection = new HashSet<T>();
-				values.put(key2, selection);
+			if (key.endsWith("selection")) {
+				Collection<T> selection = getSelection(key);
+				if (selection == null) {
+					selection = new HashSet<T>();
+					values.put(key, selection);
+				}
+				selection.add(value);
+			} else {
+				values.put(key, value);
 			}
-			selection.add(value);
-			values.put(key, value);
+//			String key2 = key + "selection";
+//			Collection<T> selection = getSelection(key2);
+//			if (selection == null) {
+//				selection = new HashSet<T>();
+//				values.put(key2, selection);
+//			}
+//			selection.add(value);
+//			values.put(key, value);
 		}
 	}
 	
 	public <T> void unsetSelection(String keyBase, T value) {
 		synchronized (values) {
 			String key = keyBase.toLowerCase();
-			String key2 = key + "Selection";
-			Collection<T> selection = getSelection(key2);
-			if (selection == null) {
-				selection = new HashSet<T>();
-				values.put(key2, selection);
+			if (key.endsWith("selection")) {
+				Collection<T> selection = getSelection(key);
+				if (selection != null) {
+					selection.remove(value);
+				}
+			} else {
+				Object object = getSelection(key);
+				if (object != null) {
+					values.put(key, null);
+				}
 			}
-			selection.remove(value);
-			Object object = values.get(key);
-			if (object == null) {
-				values.put(key, null);
-			}
+			
+//			String key2 = key + "Selection";
+//			Collection<T> selection = getSelection(key2);
+//			if (selection == null) {
+//				selection = new HashSet<T>();
+//				values.put(key2, selection);
+//			}
+//			selection.remove(value);
+//			Object object = values.get(key);
+//			if (object != null) {
+//				values.put(key, null);
+//			}
 		}
 	}
+	
+	public <T> void setSelection(String keyBase, Collection<T> value) {
+		synchronized (values) {
+			String key = keyBase.toLowerCase();
+			Collection<T> selection = getSelection(key);
+			if (selection == null) {
+				selection = new HashSet<T>();
+				values.put(key, selection);
+			}
+			selection.addAll(value);
+		}
+	}
+
 	
 	public void refreshSelection(@Observes @Selected Object object) {
 		String key = object.getClass().getSimpleName();
@@ -85,13 +119,32 @@ public class SelectionContext extends AbstractSelectionContext implements Serial
 	}
 
 	public void clearSelection(String key) {
-		setSelection(key, null);
+		synchronized (values) {
+			values.put(key, null);
+		}
 	}
 
 	public void clearSelection() {
 		synchronized (values) {
 			values.clear();
 		}
+	}
+
+
+	public void clearCurrentArea() {
+		selectedArea = null;
+	}
+
+	public void restoreCurrentArea() {
+		//this.currentArea = getOrigin();
+	}
+
+	public String getCurrentArea() {
+		return currentArea;
+	}
+
+	public void setCurrentArea(String currentArea) {
+		this.currentArea = currentArea;
 	}
 
 	public void clearSelectedArea() {
@@ -142,20 +195,16 @@ public class SelectionContext extends AbstractSelectionContext implements Serial
 		this.selectedAction = selectedAction;
 	}
 
-	public void clearCurrentArea() {
-		selectedArea = null;
+	public void clearCurrentTarget() {
+		currentTarget = null;
 	}
 
-	public void restoreCurrentArea() {
-		//this.currentArea = getOrigin();
+	public String getCurrentTarget() {
+		return currentTarget;
 	}
 
-	public String getCurrentArea() {
-		return currentArea;
-	}
-
-	public void setCurrentArea(String currentArea) {
-		this.currentArea = currentArea;
+	public void setCurrentTarget(String selectedTarget) {
+		this.currentTarget = selectedTarget;
 	}
 	
 	public void clearMessageDomain() {
@@ -171,5 +220,8 @@ public class SelectionContext extends AbstractSelectionContext implements Serial
 	}
 
 	
-
+	public void updateCurrent(ItemChangeEvent event) {
+		currentTarget = event.getNewItemName();
+	}
+	
 }

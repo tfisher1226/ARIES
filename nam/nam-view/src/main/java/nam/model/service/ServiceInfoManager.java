@@ -1,25 +1,26 @@
 package nam.model.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import nam.model.Service;
-import nam.model.util.ServiceUtil;
-import nam.ui.design.AbstractNamRecordManager;
-import nam.ui.design.SelectionContext;
-import nam.ui.design.WorkspaceEventManager;
-
 import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Unselected;
 import org.aries.util.Validator;
+
+import nam.model.Project;
+import nam.model.Service;
+import nam.model.util.ProjectUtil;
+import nam.model.util.ServiceUtil;
+import nam.ui.design.AbstractNamRecordManager;
+import nam.ui.design.SelectionContext;
+import nam.ui.design.WorkspaceEventManager;
 
 
 @SessionScoped
@@ -84,22 +85,8 @@ public class ServiceInfoManager extends AbstractNamRecordManager<Service> implem
 	}
 	
 	protected void initialize(Service service) {
-		ServiceUtil.initialize(service);
 		serviceWizard.initialize(service);
 		setContext("service", service);
-	}
-	
-	public void handleServiceSelected(@Observes @Selected Service service) {
-		selectionContext.setSelection("service",  service);
-		servicePageManager.refreshMembers("serviceSelection");
-		servicePageManager.updateState(service);
-		setRecord(service);
-	}
-	
-	public void handleServiceUnselected(@Observes @Unselected Service service) {
-		selectionContext.unsetSelection("service",  service);
-		servicePageManager.refreshMembers("serviceSelection");
-		unsetRecord(service);
 	}
 	
 	@Override

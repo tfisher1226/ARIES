@@ -44,15 +44,25 @@ public class ModuleListObject extends AbstractListObject<Module> implements Comp
 	@Override
 	public void setChecked(boolean checked) {
 		super.setChecked(checked);
-		fireChangeEvent(module, checked);
 	}
 	
-	protected static void fireChangeEvent(Module module, boolean checked) {
-		ModuleEventManager eventManager = BeanContext.getFromSession("moduleEventManager");
-		if (checked) {
-			eventManager.fireSelectedEvent(module);
-		} else {
-			eventManager.fireUnselectedEvent(module);
+	@Override
+	public String getIcon() {
+		switch (module.getType()) {
+		case BASIC: return "/icons/nam/Module16.gif";
+		case POM: return "/icons/nam/Module16.gif";
+		case MODEL: return "/icons/nam/ModuleTypeModel16.gif";
+		case CLIENT: return "/icons/nam/ModuleTypeClient16.gif";
+		case SERVICE: return "/icons/nam/ModuleTypeService16.gif";
+		case DATA: return "/icons/nam/ModuleTypePersistedData16.gif";
+		case PERSISTENCE: return "/icons/nam/ModuleTypePersistedData16.gif";
+		case COMPONENT: return "/icons/nam/ModuleTypeEJB16.gif";
+		case ELEMENT: return "/icons/nam/ModuleTypeModel16.gif";
+		case VIEW: return "/icons/nam/ModuleTypeView16.gif";
+		case TEST: return "/icons/nam/ModuleTypeTest16.gif";
+		case WAR: return "/icons/nam/ModuleTypeWAR16.gif";
+		case EAR: return "/icons/nam/ModuleTypeEAR16.gif";
+		default: return "";
 		}
 	}
 	

@@ -68,7 +68,7 @@ public class ElementRecordSectionXhtmlBuilder extends AbstractCompositionXHTMLBu
 		
 		Buf buf = new Buf();
 		buf.putLine1("<!-- wizard body -->");
-		buf.putLine1("<aries:panel class=\"wizardBody\">");
+		buf.putLine1("<aries:panel class=\"wizardBody\" style=\"\">");
 		buf.putLine1("");
 		//buf.putLine1("	<!-- section includes -->");
 		//buf.putLine1("	");
@@ -79,7 +79,7 @@ public class ElementRecordSectionXhtmlBuilder extends AbstractCompositionXHTMLBu
 		buf.putLine1("	<ui:insert name=\"wizardMessages\" />");
 		buf.putLine1("	");
 		buf.putLine1("	<!-- wizard section -->");
-		buf.putLine1("	<aries:panel class=\"wizardSection\">");
+		buf.putLine1("	<aries:panel class=\"wizardSection\" style=\"\">");
 		buf.putLine1("		");	
 		buf.putLine1("		<!-- variables -->"); 
 		buf.putLine1("		<ui:param name=\"labelWidth\" value=\"100\" />");

@@ -7,3 +7,36 @@
 .rf-tab-cnt {
 	padding: 0px; 
 }
+
+
+/*
+ * collapsiblePanel related
+ */
+  
+.collapsiblePanelHeader {
+	text-align: left;
+	background-color: inherit;
+}
+.rf-cp {
+    border-width: 0px;
+    padding: 1px;
+}
+.rf-cp-hdr {
+	border-width: 0px;
+	background: none;
+}
+.rf-cp-b {
+    font-size: 16px;
+    color: red;
+    font-family: '#{a4jSkin.generalFamilyFont}';
+    padding: 0px;
+}
+.rf-cp-ico {
+    width: 0px;
+    height: 0px;
+}
+.rf-cp-exp-ico {
+    width: 0px;
+    height: 0px;
+}
+	

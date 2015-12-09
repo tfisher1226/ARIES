@@ -95,12 +95,19 @@ public class ApplicationListManager extends AbstractDomainListManager<Applicatio
 		boolean selected = selection != null && selection.equals(application);
 		return selected;
 	}
-		
+
+	public boolean isChecked(Application application) {
+		Collection<Application> selection = selectionContext.getSelection("applicationSelection");
+		boolean checked = selection != null && selection.contains(application);
+		return checked;
+	}
+
 	@Override
 	protected ApplicationListObject createRowObject(Application application) {
 		Project project = selectionContext.getSelection("project");
 		ApplicationListObject listObject = new ApplicationListObject(project, application);
 		listObject.setSelected(isSelected(application));
+		listObject.setChecked(isChecked(application));
 		return listObject;
 	}
 	
@@ -115,17 +122,6 @@ public class ApplicationListManager extends AbstractDomainListManager<Applicatio
 			initialize(recordList);
 		else refreshModel();
 	}
-	
-	//public void handleRefresh(@Observes @Refresh Object object) {
-	//	Collection<Project> projectList = selectionContext.getSelection("projectList");
-	//	Collection<Application> applicationList = ProjectUtil.getApplications(projectList);
-	//	refreshModel(applicationList);
-	//}
-	
-	//public void handleDomainSelected(@Observes @Selected Domain domain) {
-	//	Collection<Application> applicationList = applicationDataManager.getApplicationList(domain);
-	//	refreshModel(applicationList);
-	//}
 	
 	@Override
 	public void refreshModel() {

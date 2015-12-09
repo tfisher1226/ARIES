@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns:aries="http://aries.org/jsf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<a4j:outputPanel
+		id="referenceNameListToolbar">
+		
+		<aries:toolbar
+			type="table">
+			
+			<aries:toolbarGroup
+				location="left">
+			
+				<aries:toolButton
+					id="referenceNameListNewButton"
+					label="New Reference..."
+					icon="/icons/common/New16.gif"
+					iconDisabled="/icons/common/NewDisabled16.gif"
+					enabled="#{securityGuard.canCreate('reference')}"
+					mode="client"
+					execute="@none"
+					onmouseup="processNewElement(event, 'Reference')"
+					labelStyle="font-size: 11px"
+					style="margin: 2px"
+					offset="false" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<aries:toolButton
+					id="referenceNameListRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					tooltip="Re-read Reference information from server"
+					enabled="#{securityGuard.canOpen('reference')}"
+					mode="client"
+					execute="@none"
+					onmouseup="refreshReferenceList(event)"
+					labelStyle="font-size: 11px"
+					style="margin: 2px"
+					offset="false" />
+			</aries:toolbarGroup>
+		</aries:toolbar>
+	</a4j:outputPanel>
+</ui:composition>

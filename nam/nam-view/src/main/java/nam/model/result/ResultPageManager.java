@@ -3,15 +3,16 @@ package nam.model.result;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang.StringUtils;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractPageManager;
 import org.aries.ui.AbstractWizardPage;
 import org.aries.ui.Breadcrumb;
-import org.aries.util.NameUtil;
+import org.aries.ui.event.Selected;
+import org.aries.ui.event.Unselected;
 
 import nam.model.Result;
 import nam.model.util.ResultUtil;
@@ -27,6 +28,9 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	
 	@Inject
 	private ResultDataManager resultDataManager;
+	
+	@Inject
+	private ResultInfoManager resultInfoManager;
 	
 	@Inject
 	private ResultListManager resultListManager;
@@ -49,7 +53,6 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	
 	public ResultPageManager() {
 		initializeSections();
-		initializeDefaultView();
 	}
 	
 	
@@ -67,7 +70,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	
 	public void refresh(String scope) {
 		refreshLocal(scope);
-		refreshMembers(scope);
+		//refreshMembers(scope);
 	}
 	
 	public void refreshLocal(String scope) {
@@ -76,7 +79,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	}
 	
 	public void refreshMembers(String scope) {
-		resultListManager.refresh();
+		//nothing for now
 	}
 	
 	public String getResultListPage() {
@@ -101,6 +104,32 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	
 	public String getResultManagementPage() {
 		return "/nam/model/result/resultManagementPage.xhtml";
+	}
+	
+	public void handleResultSelected(@Observes @Selected Result result) {
+		selectionContext.setSelection("result",  result);
+		resultInfoManager.setRecord(result);
+	}
+	
+	public void handleResultUnselected(@Observes @Unselected Result result) {
+		selectionContext.unsetSelection("result",  result);
+		resultInfoManager.unsetRecord(result);
+	}
+	
+	public void handleResultChecked() {
+		String scope = "resultSelection";
+		ResultListObject listObject = resultListManager.getSelection();
+		Result result = selectionContext.getSelection("result");
+		boolean checked = resultListManager.getCheckedState();
+		listObject.setChecked(checked);
+		if (checked) {
+			resultInfoManager.setRecord(result);
+			selectionContext.setSelection(scope,  result);
+		} else {
+			resultInfoManager.unsetRecord(result);
+			selectionContext.unsetSelection(scope,  result);
+		}
+		refreshLocal(scope);
 	}
 	
 	public String initializeResultListPage() {
@@ -150,7 +179,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	
 	public String initializeResultRecordPage() {
 		Result result = selectionContext.getSelection("result");
-		String resultName = result.getName();
+		String resultName = ResultUtil.getLabel(result);
 		
 		String pageLevelKey = "resultRecord";
 		clearBreadcrumbs(pageLevelKey);
@@ -183,9 +212,6 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		addBreadcrumb(pageLevelKey, "Results", "showResultManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb("New Result", "showResultWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Identification", "showResultWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showResultWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showResultWizardPage('Documentation')");
 		
 		resultIdentificationSection.setOwner("resultWizard");
 		resultConfigurationSection.setOwner("resultWizard");
@@ -202,7 +228,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -210,7 +236,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		setPageTitle(getResultLabel(result));
 		setPageIcon("/icons/nam/Result16.gif");
 		setSectionTitle("Result Overview");
-		String resultName = result.getName();
+		String resultName = ResultUtil.getLabel(result);
 		resultWizard.setNewMode(false);
 		
 		String pageLevelKey = "result";
@@ -222,10 +248,6 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		addBreadcrumb(pageLevelKey, "Results", "showResultManagementPage()");
 		addBreadcrumb(pageLevelKey, new Breadcrumb(resultName, "showResultWizardPage()"));
 		
-		addBreadcrumb(wizardLevelKey, "Overview", "showResultWizardPage('Overview')");
-		addBreadcrumb(wizardLevelKey, "Identification", "showResultWizardPage('Identification')");
-		addBreadcrumb(wizardLevelKey, "Configuration", "showResultWizardPage('Configuration')");
-		addBreadcrumb(wizardLevelKey, "Documentation", "showResultWizardPage('Documentation')");
 		
 		resultOverviewSection.setOwner("resultWizard");
 		resultIdentificationSection.setOwner("resultWizard");
@@ -244,7 +266,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		selectionContext.setMessageDomain(pageLevelKey);
 		//selectionContext.resetOrigin();
 		selectionContext.setUrl(url);
-		refresh();
+		refreshLocal();
 		return url;
 	}
 	
@@ -263,15 +285,23 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		selectionContext.setUrl(url);
 		initializeDefaultView();
 		sections.clear();
-		refresh();
 		return url;
 	}
 	
 	public void initializeDefaultView() {
+		setPageTitle("Results");
+		setPageIcon("/icons/nam/Result16.gif");
 		setSectionType("result");
 		setSectionName("Overview");
 		setSectionTitle("Overview of Results");
 		setSectionIcon("/icons/nam/Overview16.gif");
+		String viewLevelKey = "resultOverview";
+		clearBreadcrumbs(viewLevelKey);
+		addBreadcrumb(viewLevelKey, "Top", "showMainPage()");
+		addBreadcrumb(viewLevelKey, "Results", "showResultManagementPage()");
+		String scope = "projectList";
+		refreshLocal(scope);
+		sections.clear();
 	}
 	
 	public String initializeResultSummaryView(Result result) {
@@ -294,7 +324,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 		String label = "Result";
 		String name = ResultUtil.getLabel(result);
 		if (name == null && result.getName() != null)
-			name = NameUtil.capName(result.getName());
+			name = ResultUtil.getLabel(result);
 		if (name != null && !name.isEmpty())
 			label = name + " " + label;
 		return label;
@@ -307,7 +337,7 @@ public class ResultPageManager extends AbstractPageManager<Result> implements Se
 	}
 
 	protected void updateState(Result result) {
-		String resultName = NameUtil.capName(result.getName());
+		String resultName = ResultUtil.getLabel(result);
 		setSectionTitle(resultName + " Result");
 	}
 	

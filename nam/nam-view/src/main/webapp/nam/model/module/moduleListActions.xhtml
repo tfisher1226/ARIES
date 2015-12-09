@@ -26,6 +26,24 @@
 			
 			
 		<!--
+		  ** toggleModuleList(event)
+		  ** Refreshes the current Module List.
+		  -->
+			
+		<a4j:jsFunction 
+			name="toggleModuleList" 
+			execute="@this" 
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{modulePageManager.expandCollapseModuleList}"
+			onbegin="setCursorWait(); lockScreen();"
+			oncomplete="setCursorDefault(this); unlockScreen()"
+			render="moduleListActions moduleListMenu moduleListToolbar moduleListPane #{render}">
+		</a4j:jsFunction>
+			
+			
+		<!--
 		  ** refreshModuleList(event)
 		  ** Refreshes the current Module List.
 		  -->
@@ -39,15 +57,22 @@
 			action="#{moduleListManager.refresh}"
 			onbegin="setCursorWait(); showProgress('Nam', 'Module Records', 'Refreshing current Module List...')"
 			oncomplete="setCursorDefault(this); hideProgress()"
-			render="moduleListActions, moduleListMenu, moduleListToolbar, moduleListPane">
+			render="moduleListActions moduleListMenu moduleListToolbar moduleNameListToolbar moduleListTable moduleNameListTable #{render}">
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{moduleDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="0" />
 		</a4j:jsFunction>
-			
-			
+
+
 		<!--
 		  ** executeSelectFromModuleList(recordIndex, recordKey)
-		  ** Handles actions generated from a row or column in the Application List.
-		  ** Selects Element on server-side.  Executes NO action on server-side.
-		  ** Uses a queing delay of 0ms - no waiting to combine with other actions like double-click.
+		  ** Handles actions generated from a row or column in the Module List.
+		  ** Selects Module element on server-side.  Executes NO action on server-side.
+		  ** Uses a queing delay of 400ms - we pause to combine with other actions like double-click
+		  ** or checkbox-click.
 		  -->
 			
 		<a4j:jsFunction 
@@ -58,7 +83,7 @@
 			limitRender="true"
 			onbegin="beginSelect(this)"
 			oncomplete="completeSelect(this)"
-			render="moduleListActions, moduleListToolbar, #{render}">
+			render="moduleListActions moduleListToolbar moduleNameListToolbar">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{moduleListManager.selectedRecordIndex}" />
@@ -68,7 +93,7 @@
 			<a4j:param name="selector" assignTo="#{selectionContext.selectedAction}" value="module" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="600" />
 		</a4j:jsFunction>
 			
 			
@@ -87,7 +112,7 @@
 			limitRender="true"
 			action="#{workspaceManager.executeAction}"
 			oncomplete="setCursorDefault(); hideProgress()"
-			render="moduleListActions, moduleListToolbar, #{render}">
+			render="moduleListActions moduleListToolbar moduleNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="recordIndex" assignTo="#{moduleListManager.selectedRecordIndex}" />
@@ -97,10 +122,10 @@
 			<a4j:param name="section" assignTo="#{moduleWizard.section}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="400" />
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 			
-			
+		
 		<!--
 		  ** executeActionForElement(type, action)
 		  ** Executes 'action' associated with Element 'type' on server-side.
@@ -115,14 +140,44 @@
 			bypassUpdates="true"
 			limitRender="true"
 			action="#{workspaceManager.executeAction}" 
-			render="moduleListActions, moduleListMenu, moduleListToolbar">
+			render="moduleListActions moduleListMenu moduleListToolbar moduleNameListToolbar #{render}">
 			
 			<!-- these values are passed-in -->
 			<a4j:param name="type" assignTo="#{selectionContext.selectedType}" />
 			<a4j:param name="action" assignTo="#{selectionContext.selectedAction}" />
 			
 			<!-- provide event queue settings -->
-			<a4j:attachQueue requestDelay="0" />
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="0" />
+		</a4j:jsFunction>
+	
+	
+		<!--
+		  ** executeHandleModuleChecked(recordIndex, recordKey, checked, target)
+		  ** Handles setting and unsetting of checked state within selected Module.
+		  -->
+			
+		<a4j:jsFunction 
+			name="executeHandleModuleChecked"
+			execute="@this"
+			immediate="true"
+			bypassUpdates="true"
+			limitRender="true"
+			action="#{modulePageManager.handleModuleChecked}"
+			onbegin="setCursorWait(this); lockScreen()"
+			oncomplete="setCursorDefault(); unlockScreen()"
+			render="moduleListActions moduleListToolbar moduleNameListToolbar #{render}">
+			
+			<!-- these values are passed-in -->
+			<a4j:param name="recordIndex" assignTo="#{moduleListManager.selectedRecordIndex}" />
+			<a4j:param name="recordKey" assignTo="#{moduleListManager.selectedRecordKey}" />
+			<a4j:param name="checked" assignTo="#{moduleListManager.checkedState}" />
+			<a4j:param name="target" assignTo="#{selectionContext.currentTarget}" />
+			
+			<!-- these values are assigned here -->
+			<a4j:param name="scope" assignTo="#{moduleDataManager.scope}" value="#{scope}" />
+			
+			<!-- provide event queue settings -->
+			<a4j:attachQueue requestGroupingId="moduleListEvents" requestDelay="0" />
 		</a4j:jsFunction>
 	
 	
@@ -216,6 +271,8 @@
 				function processModuleListMouseDown(event, rowIndex, recordKey, recordLabel) {
 					updateModuleListState(event, rowIndex, recordKey, recordLabel);
 					enableModuleListActions('module');
+					if (isRightMouseClick(event))
+						return;
 					try {
 						executeSelectFromModuleList(rowIndex, recordKey);
 					} catch(e) {
@@ -237,6 +294,24 @@
 						executeActionFromModuleList(rowIndex, recordKey, 'Module', 'workspaceManager.editObject');
 					} catch(e) {
 						alert(e);
+					}
+				}
+					
+					
+				<!--
+				  ** processModuleListSelectionChanged(event, rowIndex, recordKey, recordLabel, target)
+				  ** Handles check-box selection state changed event for Module List item.
+				  -->
+					
+				function processModuleListSelectionChanged(event, rowIndex, recordKey, recordLabel, target) {
+					try {
+						beginSelect(event.target);
+						var checked = event.target.checked;
+						executeHandleModuleChecked(rowIndex, recordKey, checked, target);
+					} catch(e) {
+						alert(e);
+					} finally {
+						completeSelect(event.target);
 					}
 				}
 					

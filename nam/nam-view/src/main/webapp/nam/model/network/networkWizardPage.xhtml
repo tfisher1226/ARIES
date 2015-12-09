@@ -70,7 +70,7 @@
 		<span class="wizardMessages">
 			<ui:include src="/common/wizardMessages.xhtml">
 				<ui:param name="domain" value="networkWizard" />
-				<ui:param name="message" value="Enter Service #{networkWizard.section}" />
+				<ui:param name="message" value="Enter Network #{networkWizard.section}" />
 			</ui:include>
 		</span>
 	</ui:define>
@@ -83,19 +83,18 @@
 			<aries:formPane
 				columns="2">
 				
+				<!-- wizard content -->
 				<aries:panel
 					width="#{helper.wizard_middleSection_width - 16}"
 					height="#{helper.wizard_middleSection_height}"
-					borderWidth="1px"
-					borderColor="#{userSkin.borderColor}"
-					backgroundColor="white">
+					style="border: 0px solid #{userSkin.borderColor}; background-color: white">
 					
-					<!-- panel -->
+					<!-- wizard panel -->
 					<ui:include src="networkRecord_#{networkWizard.section}Section.xhtml">
 						<ui:param name="section" value="network" />
 					</ui:include>
 					
-					<!-- control -->
+					<!-- wizard control -->
 					<ui:include src="networkWizardControl.xhtml" />
 				</aries:panel>
 				

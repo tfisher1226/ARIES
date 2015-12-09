@@ -10,29 +10,15 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:aries="http://aries.org/jsf">
 
-	<aries:panel
-		width="auto"
-		margin="0px"
-		backgroundColor="inherit">
-
-		<aries:formPane
-			width="auto"
-			borderWidth="1px"
-			borderColor="#aaa"
-			columnClass="formColumnAlignLeft"
-			backgroundColor="inherit">
+	<div class="">
 			
 			<c:set var="section" value="#{registrationWizard.section}" /> 
 			<c:set var="backgroundColor" value="#cfe7f5" /> 
 
 			<aries:indentPane
-				width="#{helper.wizard_leftSection_width}"
+				width="auto"
 				height="auto"
-				padding="6px"
-				paddingLeft="12px"
-				fontSize="14"
-				fontWeight="bold"
-				backgroundColor="#fff">
+				style="padding: 6px 10px; font-size: 13px; font-weight: bold; background-color: inherit; cursor: pointer">
 	  			#{registrationWizard.newMode ? 'Steps' : 'Sections'}
 			</aries:indentPane>
 			
@@ -42,11 +28,11 @@
 				
 				<aries:wizardStep
 					step="#{section}"
-					value="#{page.name}"
+					label="#{page.title}"
+					icon="#{page.icon}"
 					enabled="#{page.enabled}"
-	  				onclick="setCursorWait(this); showRegistrationWizardPage('#{page.name}')">
-				</aries:wizardStep>
+					onclick="setCursorWait(this); showRegistrationWizardPage('#{page.name}')"
+					styleClass="wizardMenuStep" />
 			</ui:repeat>
-		</aries:formPane>
-	</aries:panel>
+	</div>
 </ui:composition>

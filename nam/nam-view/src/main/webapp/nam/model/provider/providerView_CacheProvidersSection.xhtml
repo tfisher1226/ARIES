@@ -2,8 +2,9 @@
 
 <ui:composition 
 	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
@@ -25,9 +26,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 					
-			<aries:panel>
+			<!-- variables -->
+			<ui:param name="render" value="providerManagementViewer" />
+			
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Provider16.gif" />
 					<ui:param name="label" value="Providers" />
@@ -35,17 +40,37 @@
 
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="providerListActions.xhtml">
-						<ui:param name="render" value="providerManagementViewer" />
-						<ui:param name="lockOnSelect" value="false" />
-					</ui:include>
 					
-					<ui:include src="providerNameListToolbar.xhtml" />
-					<ui:include src="providerNameListTable.xhtml" />	
+					<!-- provider refresh scope -->
+					<ui:param name="scope" value="providerList" />
+					<ui:param name="target" value="cacheProvider" />
+					
+					<!-- provider table section -->
+					<ui:include src="/nam/model/provider/providerListActions.xhtml" />
+					<ui:include src="/nam/model/provider/providerNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/provider/providerNameListTable.xhtml">
+						<ui:param name="addSelectorColumn" value="true" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
+				<ui:include src="/common/sectionLabel.xhtml">
+					<ui:param name="icon" value="/icons/nam/CacheProvider16.gif" />
+					<ui:param name="label" value="CacheProviders" />
+				</ui:include>
+				
+				<aries:spacer height="8" />
+				<h:panelGroup layout="block" styleClass="tableBorder">
+					
+					<!-- cacheProvider refresh action -->
+					<ui:param name="scope" value="providerSelection" />
+					
+					<!-- cacheProvider table section -->
+					<ui:include src="/nam/model/cacheProvider/cacheProviderListActions.xhtml" />
+					<ui:include src="/nam/model/cacheProvider/cacheProviderNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/cacheProvider/cacheProviderNameListTable.xhtml" />
+				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>
 	</h:panelGrid>

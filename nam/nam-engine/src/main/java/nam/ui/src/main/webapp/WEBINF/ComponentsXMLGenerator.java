@@ -1,5 +1,6 @@
 package nam.ui.src.main.webapp.WEBINF;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -70,14 +71,14 @@ public class ComponentsXMLGenerator extends AbstractFileGenerator {
 		while (iterator.hasNext()) {
 			Module dataModule = iterator.next();
 			Persistence persistence = ModuleUtil.getPersistenceBlock(dataModule);
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			buf.put(getPersistenceDeclarations(units));
 		}
 		
 		return buf.get();
 	}
 	
-	protected String getPersistenceDeclarations(List<Unit> units) {
+	protected String getPersistenceDeclarations(Collection<Unit> units) {
 		Buf buf = new Buf();
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {

@@ -34,6 +34,11 @@ public class ModuleRecord_ServicesSection extends AbstractWizardPage<Module> imp
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Service16.gif";
+	}
+	
+	@Override
 	public void initialize(Module module) {
 		setEnabled(true);
 		setBackEnabled(true);

@@ -26,12 +26,13 @@
 		<aries:formPane
 			columns="2" 
 			width="auto"
-			height="auto">
+			height="auto"
+			style="">
 
+			<!-- variables -->
 			<ui:param name="render" value="applicationManagementViewer" />
-			<ui:param name="lockOnSelect" value="true" />
 			
-			<aries:panel>
+			<aries:panel style="">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Application16.gif" />
 					<ui:param name="label" value="Applications" />
@@ -39,15 +40,21 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../application/applicationListActions.xhtml" />
-					<ui:include src="../application/applicationNameListToolbar.xhtml" />
-					<ui:include src="../application/applicationNameListTable.xhtml">
+					
+					<!-- application refresh scope -->
+					<ui:param name="scope" value="applicationList" />
+					<ui:param name="target" value="component" />
+					
+					<!-- application table section -->
+					<ui:include src="/nam/model/application/applicationListActions.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/application/applicationNameListTable.xhtml">
 						<ui:param name="addSelectorColumn" value="true" />
 					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 
-			<aries:panel marginLeft="20px">
+			<aries:panel style="margin-left: 20px">
 				<ui:include src="/common/sectionLabel.xhtml">
 					<ui:param name="icon" value="/icons/nam/Component16.gif" />
 					<ui:param name="label" value="Components" />
@@ -55,9 +62,17 @@
 				
 				<aries:spacer height="8" />
 				<h:panelGroup layout="block" styleClass="tableBorder">
-					<ui:include src="../component/componentListActions.xhtml" />
-					<ui:include src="../component/componentNameListToolbar.xhtml" />
-					<ui:include src="../component/componentNameListTable.xhtml" />	
+					
+					<!-- component refresh action -->
+					<ui:param name="scope" value="applicationSelection" />
+					
+					<!-- component table section -->
+					<ui:include src="/nam/model/component/componentListActions.xhtml" />
+					<ui:include src="/nam/model/component/componentNameListToolbar.xhtml" />
+					<ui:include src="/nam/model/component/componentNameListTable.xhtml">
+						<ui:param name="manager" value="#{componentListManager}" />
+						<ui:param name="type" value="all" />
+					</ui:include>
 				</h:panelGroup>
 			</aries:panel>
 		</aries:formPane>

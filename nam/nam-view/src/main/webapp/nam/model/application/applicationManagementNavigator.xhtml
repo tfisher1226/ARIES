@@ -12,13 +12,10 @@
 
 	<aries:panel
 		width="auto"
-		margin="0px"
 		backgroundColor="inherit">
 
 		<aries:formPane
 			width="auto"
-			borderWidth="0px"
-			borderColor="#aaa"
 			columnClass="formColumnAlignLeft"
 			backgroundColor="inherit">
 			
@@ -29,6 +26,18 @@
 				<ui:param name="manager" value="#{applicationPageManager}" />
 				<ui:param name="action" value="initializeDefaultView" />
 	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Applications', 'Preparing Application overview...')" />
+	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
+	   			<ui:param name="render" value="applicationManagementViewer" />
+			</ui:include>
+
+			<aries:spacer height="10" />
+			<ui:include src="/common/navigationButton.xhtml">
+				<ui:param name="label" value="Elements" />
+				<ui:param name="icon" value="/icons/nam/Element16.gif" />
+				<ui:param name="id" value="applicationElementsButton" />
+				<ui:param name="manager" value="#{applicationPageManager}" />
+				<ui:param name="action" value="initializeApplicationElementsView" />
+	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Elements', 'Preparing Element information...')" />
 	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
 	   			<ui:param name="render" value="applicationManagementViewer" />
 			</ui:include>
@@ -48,6 +57,7 @@
 			<aries:spacer height="10" />
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Modules" />
+				<ui:param name="tooltip" value="Modules" />
 				<ui:param name="icon" value="/icons/nam/Module16.gif" />
 				<ui:param name="id" value="applicationModulesButton" />
 				<ui:param name="manager" value="#{applicationPageManager}" />
@@ -71,18 +81,6 @@
 
 			<aries:spacer height="10" />
 			<ui:include src="/common/navigationButton.xhtml">
-				<ui:param name="label" value="Elements" />
-				<ui:param name="icon" value="/icons/nam/Element16.gif" />
-				<ui:param name="id" value="applicationElementsButton" />
-				<ui:param name="manager" value="#{applicationPageManager}" />
-				<ui:param name="action" value="initializeApplicationElementsView" />
-	   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Elements', 'Preparing Element information...')" />
-	   			<ui:param name="oncomplete" value="setCursorDefault(this); hideProgress()" />
-	   			<ui:param name="render" value="applicationManagementViewer" />
-			</ui:include>
-
-			<aries:spacer height="10" />
-			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Components" />
 				<ui:param name="icon" value="/icons/nam/Component16.gif" />
 				<ui:param name="id" value="applicationComponentsButton" />
@@ -95,9 +93,37 @@
 
 <!-- 
 
-Process
+Caching
+  SupplierOrderCache
 
-SupplierProcess
+Persistence
+  BookOrderLog
+  InventoryLog
+
+Handler
+  ShipmentConfirmedExecutor
+  ShipmentScheduledExecutor
+
+Scheduler
+
+Process
+  SupplierProcess
+
+
+
+
+  Repository
+    BookOrderLogRepository
+    BookInventoryRepository
+
+  Manager
+    BookOrdersManager
+    ReservedBooksManager
+
+  bookshop2-supplier-data BookOrderLog
+  bookshop2-supplier-data InventoryLog
+
+
 
 Services
 
@@ -115,22 +141,6 @@ ShipBooks
     ShipmentFailed
     ShipmentScheduled
 
-ShipmentConfirmedExecutor
-ShipmentScheduledExecutor
-
-Persistence
-
-BookOrderLog
-BookOrderLogRepository
-BookOrdersManager
-
-BookInventory
-BookInventoryRepository
-ReservedBooksManager
-
-Caching
-
-SupplierOrderCache
 
 
  -->

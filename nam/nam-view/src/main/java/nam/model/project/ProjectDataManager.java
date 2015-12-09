@@ -66,15 +66,15 @@ public class ProjectDataManager implements Serializable {
 		if (scope == null)
 			return null;
 		
-		Object owner = getOwner();
-		if (owner == null)
-			return null;
+		//Object owner = getOwner();
+		//if (owner == null)
+		//	return null;
 		
 		return getDefaultList();
 	}
 	
 	public Collection<Project> getDefaultList() {
-		List<Project> projectList = selectionContext.getSelection("projectList");
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		return projectList;
 	}
 	

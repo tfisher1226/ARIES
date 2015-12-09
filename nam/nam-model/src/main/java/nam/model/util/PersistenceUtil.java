@@ -14,6 +14,7 @@ import nam.model.Adapter;
 import nam.model.Cache;
 import nam.model.Element;
 import nam.model.Import;
+import nam.model.Messaging;
 import nam.model.Namespace;
 import nam.model.Persistence;
 import nam.model.Project;
@@ -290,32 +291,38 @@ public class PersistenceUtil extends BaseUtil {
 		}
 	}
 
-	public static List<Namespace> getNamespaces(Persistence persistence) {
+	public static Collection<Namespace> getNamespaces(Persistence persistence) {
 		return getObjectList(persistence, Namespace.class);
 	}
 
 	
-	public static List<Provider> getProviders(Project project) {
-		List<Provider> list = new ArrayList<Provider>();
-		List<Persistence> persistenceBlocks = ProjectUtil.getPersistenceBlocks(project);
-		Iterator<Persistence> iterator = persistenceBlocks.iterator();
-		while (iterator.hasNext()) {
-			Persistence persistence = iterator.next();
-			List<Provider> providers = getProviders(persistence);
-			//TODO prevent duplicates
-			list.addAll(providers);
-		}
-		return list;
+	public static Collection<Provider> getProviders(Project project) {
+		Collection<Persistence> persistenceBlocks = ProjectUtil.getPersistenceBlocks(project);
+		Collection<Provider> providers = getProviders(persistenceBlocks);
+		return providers;
 	}
 
-	public static List<Provider> getProviders(Persistence persistence) {
+	public static Collection<Provider> getProviders(Collection<Persistence> persistenceBlocks) {
+		List<Provider> providers = new ArrayList<Provider>();
+		Iterator<Persistence> iterator = persistenceBlocks.iterator();
+		while (iterator.hasNext()) {
+			Persistence persistenceBlock = iterator.next();
+			Collection<Provider> list = getProviders(persistenceBlock);
+			//TODO prevent duplicates
+			providers.addAll(list);
+		}
+		return providers;
+	}
+	
+	public static Collection<Provider> getProviders(Persistence persistence) {
 		List<Provider> list = new ArrayList<Provider>();
 		List<Serializable> children = persistence.getMembers();
 		Iterator<Serializable> iterator = children.iterator();
 		while (iterator.hasNext()) {
 			Serializable child = iterator.next();
-			if (child instanceof Provider)
+			if (child.getClass().equals(Provider.class)) {
 				list.add((Provider) child);
+			}
 		}
 		return list;
 	}
@@ -504,7 +511,7 @@ public class PersistenceUtil extends BaseUtil {
 	 */
 	
 	public static boolean isUnitExists(Persistence persistence, Unit unit) {
-		List<Unit> units = getUnits(persistence);
+		Collection<Unit> units = getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
 			Unit unit1 = iterator.next();
@@ -515,7 +522,7 @@ public class PersistenceUtil extends BaseUtil {
 		return false;
 	}
 	
-	public static List<Unit> getUnits(Persistence persistence) {
+	public static Collection<Unit> getUnits(Persistence persistence) {
 		List<Unit> list = new ArrayList<Unit>();
 		List<Serializable> children = persistence.getMembers();
 		Iterator<Serializable> iterator = children.iterator();
@@ -528,7 +535,7 @@ public class PersistenceUtil extends BaseUtil {
 	}
 	
 	public static Unit getUnitByName(Persistence persistence, String name) {
-		List<Unit> units = getUnits(persistence);
+		Collection<Unit> units = getUnits(persistence);
 		Iterator<Unit> iterator = units.iterator();
 		while (iterator.hasNext()) {
 			Unit unit = iterator.next();
@@ -541,7 +548,7 @@ public class PersistenceUtil extends BaseUtil {
 	}
 	
 	public static void addUnit(Persistence persistence, Unit unit) {
-		List<Unit> units = getUnits(persistence);
+		Collection<Unit> units = getUnits(persistence);
 		if (!containsUnit(units, unit))
 			persistence.getMembers().add(unit);
 	}
@@ -559,14 +566,14 @@ public class PersistenceUtil extends BaseUtil {
 	}
 	
 	public static boolean removeUnit(Persistence persistence, Unit unit) {
-		List<Unit> units = getUnits(persistence);
+		Collection<Unit> units = getUnits(persistence);
 		if (containsUnit(units, unit)) {
 			return persistence.getMembers().remove(unit);
 		}
 		return false;
 	}
 	
-	public static boolean containsUnit(List<Unit> units, Unit unit) {
+	public static boolean containsUnit(Collection<Unit> units, Unit unit) {
 		if (units.contains(unit))
 			return true;
 		Iterator<Unit> iterator = units.iterator();
@@ -584,7 +591,7 @@ public class PersistenceUtil extends BaseUtil {
 	 * Merges into block1 all Units from block2.
 	 */
 	public static void mergeUnits(Persistence block1, Persistence block2) {
-		List<Unit> block2Units = PersistenceUtil.getUnits(block2);
+		Collection<Unit> block2Units = PersistenceUtil.getUnits(block2);
 		Iterator<Unit> iterator = block2Units.iterator();
 		while (iterator.hasNext()) {
 			Unit block2Unit = iterator.next();
@@ -682,16 +689,16 @@ public class PersistenceUtil extends BaseUtil {
 	 */
 	
 	public static Map<String, Type> getTypeMap(Persistence persistence) {
-		List<Namespace> namespaces = getNamespaces(persistence);
+		Collection<Namespace> namespaces = getNamespaces(persistence);
 		return NamespaceUtil.getTypeMap(namespaces);
 	}
 	
 	public static List<Element> getElements(Persistence persistence) {
 		List<Element> elements = new ArrayList<Element>();
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		
 		if (units.size() == 0) {
-			List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+			Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = (Namespace) iterator.next();
@@ -712,10 +719,10 @@ public class PersistenceUtil extends BaseUtil {
 	
 	public static List<Element> getFunctionalElements(Persistence persistence) {
 		List<Element> elements = new ArrayList<Element>();
-		List<Unit> units = PersistenceUtil.getUnits(persistence);
+		Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 		
 		if (units.size() == 0) {
-			List<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
+			Collection<Namespace> namespaces = PersistenceUtil.getNamespaces(persistence);
 			Iterator<Namespace> iterator = namespaces.iterator();
 			while (iterator.hasNext()) {
 				Namespace namespace = (Namespace) iterator.next();

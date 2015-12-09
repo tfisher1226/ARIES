@@ -92,10 +92,17 @@ public class ComponentListManager extends AbstractDomainListManager<Component, C
 		return selected;
 	}
 	
+	public boolean isChecked(Component component) {
+		Collection<Component> selection = selectionContext.getSelection("componentSelection");
+		boolean checked = selection != null && selection.contains(component);
+		return checked;
+	}
+	
 	@Override
 	protected ComponentListObject createRowObject(Component component) {
 		ComponentListObject listObject = new ComponentListObject(component);
 		listObject.setSelected(isSelected(component));
+		listObject.setChecked(isChecked(component));
 		return listObject;
 	}
 	

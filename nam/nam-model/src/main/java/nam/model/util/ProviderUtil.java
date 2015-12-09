@@ -176,7 +176,7 @@ public class ProviderUtil extends BaseUtil {
 		return createProviderMap(providers.getProviders());
 	}
 
-	public static Map<String, Provider> createProviderMap(List<Provider> providers) {
+	public static Map<String, Provider> createProviderMap(Collection<Provider> providers) {
 		Map<String, Provider> map = new HashMap<String, Provider>();
 		Iterator<Provider> iterator = providers.iterator();
 		while (iterator.hasNext()) {

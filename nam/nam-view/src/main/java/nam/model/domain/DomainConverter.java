@@ -32,7 +32,7 @@ public class DomainConverter extends AbstractConverter implements Converter, Ser
 		if (value == null)
 			return null;
 		Domain domain = (Domain) value;
-		return DomainUtil.toString(domain);
+		return DomainUtil.getLabel(domain);
 	}
 	
 }

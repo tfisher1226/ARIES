@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:ui="http://nam/ui"
+	targetNamespace="http://nam/ui">
+	
+	<!--
+		Control element
+		***************
+	-->
+	
+	<xs:element name="control" type="ui:Control" />
+	<xs:complexType name="Control">
+		<xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Controls element
+		****************
+	-->
+	
+	<xs:element name="controls" type="ui:Controls" />
+	<xs:complexType name="Controls">
+		<xs:sequence>
+				<xs:element name="tables" type="ui:Table" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="trees" type="ui:Tree" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Conversation element
+		********************
+	-->
+	
+	<xs:element name="conversation" type="ui:Conversation" />
+	<xs:complexType name="Conversation">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+				<xs:element name="process" type="nam:Process" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Conversations element
+		*********************
+	-->
+	
+	<xs:element name="conversations" type="ui:Conversations" />
+	<xs:complexType name="Conversations">
+		<xs:sequence>
+				<xs:element name="conversation" type="ui:Conversation" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Graphics element
+		****************
+	-->
+	
+	<xs:element name="graphics" type="ui:Graphics" />
+	<xs:complexType name="Graphics">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="0" />
+				<xs:element name="value" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Invocation element
+		******************
+	-->
+	
+	<xs:element name="invocation" type="ui:Invocation" />
+	<xs:complexType name="Invocation">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+				<xs:element name="service" type="nam:Service" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Invocations element
+		*******************
+	-->
+	
+	<xs:element name="invocations" type="ui:Invocations" />
+	<xs:complexType name="Invocations">
+		<xs:sequence>
+				<xs:element name="invocations" type="ui:Invocation" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Layout element
+		**************
+	-->
+	
+	<xs:element name="layout" type="ui:Layout" />
+	<xs:complexType name="Layout">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		LayoutType enumeration
+		**********************
+	-->
+	
+	<xs:simpleType name="LayoutType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TYPE01" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		LayoutTypeName enumeration
+		**************************
+	-->
+	
+	<xs:simpleType name="LayoutTypeName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Type01" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		Layouts element
+		***************
+	-->
+	
+	<xs:element name="layouts" type="ui:Layouts" />
+	<xs:complexType name="Layouts">
+		<xs:sequence>
+				<xs:element name="layouts" type="ui:Layout" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Relation element
+		****************
+	-->
+	
+	<xs:element name="relation" type="ui:Relation" />
+	<xs:complexType name="Relation">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="0" />
+				<xs:element name="pattern" type="xs:string" minOccurs="0" />
+				<xs:element name="container" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Relations element
+		*****************
+	-->
+	
+	<xs:element name="relations" type="ui:Relations" />
+	<xs:complexType name="Relations">
+		<xs:sequence>
+				<xs:element name="relations" type="ui:Relation" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Section element
+		***************
+	-->
+	
+	<xs:element name="section" type="ui:Section" />
+	<xs:complexType name="Section">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Sections element
+		****************
+	-->
+	
+	<xs:element name="sections" type="ui:Sections" />
+	<xs:complexType name="Sections">
+		<xs:sequence>
+				<xs:element name="sections" type="ui:Section" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Table element
+		*************
+	-->
+	
+	<xs:element name="table" type="ui:Table" />
+	<xs:complexType name="Table">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Table element
+		*************
+	-->
+	
+	<xs:element name="table" type="ui:Table" />
+	<xs:complexType name="Table">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Tree element
+		************
+	-->
+	
+	<xs:element name="tree" type="ui:Tree" />
+	<xs:complexType name="Tree">
+		<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+				<xs:element name="treeNodes" type="ui:TreeNodes" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		TreeNode element
+		****************
+	-->
+	
+	<xs:element name="treeNode" type="ui:TreeNode" />
+	<xs:complexType name="TreeNode">
+		<xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		TreeNodes element
+		*****************
+	-->
+	
+	<xs:element name="treeNodes" type="ui:TreeNodes" />
+	<xs:complexType name="TreeNodes">
+		<xs:sequence>
+				<xs:element name="treeNodes" type="ui:TreeNode" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		UserInterface element
+		*********************
+	-->
+	
+	<xs:element name="userInterface" type="ui:UserInterface" />
+	<xs:complexType name="UserInterface">
+		<xs:sequence>
+				<xs:element name="type" type="ui:UserInterfaceType" minOccurs="0" />
+				<xs:element name="name" type="xs:string" minOccurs="0" />
+				<xs:element name="label" type="xs:string" minOccurs="0" />
+				<xs:element name="groupId" type="xs:string" minOccurs="0" />
+				<xs:element name="artifactId" type="xs:string" minOccurs="0" />
+				<xs:element name="version" type="xs:string" minOccurs="0" />
+				<xs:element name="namespace" type="xs:string" minOccurs="0" />
+				<xs:element name="description" type="xs:string" minOccurs="0" />
+				<xs:element name="languages" type="nam:Languages" minOccurs="0" />
+				<xs:element name="graphics" type="ui:Graphics" minOccurs="0" />
+				<xs:element name="sections" type="ui:Sections" minOccurs="0" />
+				<xs:element name="layouts" type="ui:Layouts" minOccurs="0" />
+				<xs:element name="controls" type="ui:Controls" minOccurs="0" />
+				<xs:element name="invocations" type="ui:Invocations" minOccurs="0" />
+				<xs:element name="conversations" type="ui:Conversations" minOccurs="0" />
+				<xs:element name="creator" type="xs:string" minOccurs="0" />
+				<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
+				<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		UserInterfaceType enumeration
+		*****************************
+	-->
+	
+	<xs:simpleType name="UserInterfaceType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="WEB" />
+			<xs:enumeration value="MOBILE" />
+			<xs:enumeration value="TABLET" />
+			<xs:enumeration value="DESKTOP" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		UserInterfaceTypeName enumeration
+		*********************************
+	-->
+	
+	<xs:simpleType name="UserInterfaceTypeName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="web" />
+			<xs:enumeration value="mobile" />
+			<xs:enumeration value="tablet" />
+			<xs:enumeration value="desktop" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--
+		UserInterfaces element
+		**********************
+	-->
+	
+	<xs:element name="userInterfaces" type="ui:UserInterfaces" />
+	<xs:complexType name="UserInterfaces">
+		<xs:sequence>
+				<xs:element name="userInterfaces" type="ui:UserInterface" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		View element
+		************
+	-->
+	
+	<xs:element name="view" type="ui:View" />
+	<xs:complexType name="View">
+		<xs:sequence>
+				<xs:element name="imports" type="nam:Import" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+				<xs:element name="domain" type="xs:string" minOccurs="1" />
+				<xs:element name="controls" type="ui:Controls" minOccurs="0" />
+				<xs:element name="relations" type="ui:Relations" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

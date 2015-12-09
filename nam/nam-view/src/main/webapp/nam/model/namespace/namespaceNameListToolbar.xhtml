@@ -6,10 +6,12 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
-	<aries:toolbar
-		type="table"
+	<a4j:outputPanel
 		id="namespaceNameListToolbar">
 		
+		<aries:toolbar
+			type="table">
+			
 		<aries:toolbarGroup
 			location="left">
 		
@@ -18,44 +20,13 @@
 				label="New Namespace..."
 				icon="/icons/common/New16.gif"
 				iconDisabled="/icons/common/NewDisabled16.gif"
-				tooltip="Create new Namespace Record"
 				enabled="#{securityGuard.canCreate('namespace')}"
 				mode="client"
 				execute="@none"
 				onmouseup="processNewElement(event, 'Namespace')"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 1px 2px 2px"
+					style="margin: 2px"
 				offset="false" />
-			
-			<!--  
-			<aries:toolButton
-				id="namespaceNameListEditButton"
-				value="Edit Namespace..."
-				icon="/icons/common/Edit16.gif"
-				iconDisabled="/icons/common/EditDisabled16.gif"
-				tooltip="Open selected Namespace record for edit..."
-				enabled="#{namespaceListManager.hasSelection() and securityGuard.canUpdate('namespace')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processEditElement(event, 'Namespace')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="false" />
-			
-			<aries:toolButton
-				id="namespaceNameListRemoveButton"
-				value="Remove Namespace..."
-				icon="/icons/common/Remove16.gif"
-				iconDisabled="/icons/common/RemoveDisabled16.gif"
-				tooltip="Remove selected Namespace record from system..."
-				enabled="#{namespaceListManager.hasSelection() and securityGuard.canDelete('namespace')}"
-				mode="client"
-				execute="@none"
-				onmouseup="processRemoveElement(event, 'Namespace')"
-				labelStyle="font-size: 11px"
-				style="margin: 2px 1px"
-				offset="true" />
-				-->
 		</aries:toolbarGroup>
 		
 		<aries:toolbarGroup
@@ -71,8 +42,9 @@
 				execute="@none"
 				onmouseup="refreshNamespaceList(event)"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 2px 2px 1px"
+					style="margin: 2px"
 				offset="false" />
 		</aries:toolbarGroup>
 	</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

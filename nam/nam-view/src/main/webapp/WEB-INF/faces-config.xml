@@ -58,6 +58,7 @@
 		<phase-listener>org.jboss.seam.document.DocumentStorePhaseListener</phase-listener> 
 		-->
 		<phase-listener>nam.ui.TracingListener</phase-listener>
+		<phase-listener>nam.ui.TreePrinter</phase-listener>
 	</lifecycle>
 	
 	<!--  

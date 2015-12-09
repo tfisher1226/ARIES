@@ -2,9 +2,9 @@ package nam.model.application;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -47,6 +47,14 @@ public class ApplicationDataManager implements Serializable {
 		if (scope == null)
 			return null;
 
+		if (scope.equals("projectList")) {
+			//return getApplicationList_ForProjectList();
+			Collection<Project> projectList = selectionContext.getSelection("projectList");
+			Collection<Application> applicationList = ProjectUtil.getApplications(projectList);
+			applicationList = ApplicationUtil.sortRecords(applicationList);
+			return applicationList;
+		}
+		
 		if (scope.equals("projectSelection")) {
 			return getApplicationList_ForProjectSelection();
 		}
@@ -74,15 +82,24 @@ public class ApplicationDataManager implements Serializable {
 		return ProjectUtil.getApplications(project);
 	}
 	
+	public Collection<Application> getApplicationList_ForProjectList() {
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
+		Collection<Application> applicationList = ProjectUtil.getApplications(projectList);
+		applicationList = ApplicationUtil.sortRecords(applicationList);
+		return applicationList;
+	}
+	
 	protected Collection<Application> getApplicationList_ForProjectSelection() {
 		Collection<Project> projectSelection = selectionContext.getSelection("projectSelection");
 		Collection<Application> applicationList = ProjectUtil.getApplications(projectSelection);
+		applicationList = ApplicationUtil.sortRecords(applicationList);
 		return applicationList;
 	}
 
 	public Collection<Application> getApplicationList_ForDomain(Domain domain) {
 		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		Collection<Application> applicationList = DomainUtil.getApplications(projectList, domain);
+		applicationList = ApplicationUtil.sortRecords(applicationList);
 		return applicationList;
 	}
 	
@@ -90,18 +107,21 @@ public class ApplicationDataManager implements Serializable {
 		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		Collection<Domain> domainSelection = selectionContext.getSelection("domainSelection");
 		Collection<Application> applicationList = DomainUtil.getApplications(projectList, domainSelection);
+		applicationList = ApplicationUtil.sortRecords(applicationList);
 		return applicationList;
 	}
 	
 	public Collection<Application> getApplicationList(String selector) {
 		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		Collection<Application> applicationList = ProjectUtil.getApplications(projectList);
+		applicationList = ApplicationUtil.sortRecords(applicationList);
 		return applicationList;
 	}
 
 	public Collection<Application> getDefaultList() {
 		Collection<Project> projectList = selectionContext.getSelection("projectList");
 		Collection<Application> applicationList = ProjectUtil.getApplications(projectList);
+		applicationList = ApplicationUtil.sortRecords(applicationList);
 		return applicationList;
 	}
 	
@@ -118,6 +138,7 @@ public class ApplicationDataManager implements Serializable {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public boolean removeApplication(Application application) {
 		if (scope != null) {
 			Object owner = getOwner();
@@ -125,6 +146,9 @@ public class ApplicationDataManager implements Serializable {
 			if (scope.equals("project")) {
 				return ProjectUtil.removeApplication((Project) owner, application);
 		
+			} else if (scope.equals("projectList")) {
+				return ProjectUtil.removeApplication((Collection<Project>) owner, application);
+				
 			} else if (scope.equals("domain")) {
 				return DomainUtil.removeApplication((Domain) owner, application);
 			}

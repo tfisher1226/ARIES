@@ -186,7 +186,9 @@ public class WorkspaceManager implements Serializable {
 		String contextId = getContextId();
 		//GenerationContext context = BeanContext.getFromSession(contextId + ".context");
 		projects = BeanContext.getFromSession(contextId + ".projects");
-		getSelectionContext().setSelection("projectList", projects);
+		SelectionContext selectionContext = getSelectionContext();
+		selectionContext.setSelection("projectList", projects);
+		selectionContext.setSelection("projectSelection", projects);
 
 		//models = getModels();
 		workspace = initializeWorkspace();
@@ -261,10 +263,16 @@ public class WorkspaceManager implements Serializable {
 		String helpSectionVisibleText = workState.get("helpSectionVisible");
 		if (helpSectionVisibleText != null)
 			helpSectionVisible = Boolean.parseBoolean(helpSectionVisibleText);
-		else helpSectionVisible = true;
+		else helpSectionVisible = false;
 		if (helpSectionVisible)
 			helper.setContentWidth("1000");
-		else helper.setContentWidth("740");
+		else helper.setContentWidth("770");
+		
+		//ProjectPageManager projectPageManager = BeanContext.getFromSession("projectPageManager");
+		//SelectionContext selectionContext = BeanContext.getFromSession("selectionContext");
+		//List<Project> projectList = selectionContext.getSelection("projectList");
+		//selectionContext.setSelection("projectSelection", projectList);
+		//projectPageManager.refresh();
 	}
 
 //	public void handleUserAuthenticated(@Observes UserAuthenticatedEvent event) {
@@ -356,24 +364,28 @@ public class WorkspaceManager implements Serializable {
 		helpSectionVisible = true;
 		Helper helper = BeanContext.getFromSession("helper");
 		helper.setContentWidth("1000");
-		Preferences preferences = user.getPreferences();
-		Map<String, String> workState = preferences.getWorkState();
-		workState.put("helpSectionVisible", "true");
-		UserService userService = BeanContext.getFromSession(UserService.ID);
-		userService.saveUser(user);
+		if (user != null) {
+			Preferences preferences = user.getPreferences();
+			Map<String, String> workState = preferences.getWorkState();
+			workState.put("helpSectionVisible", "true");
+			UserService userService = BeanContext.getFromSession(UserService.ID);
+			//TODO userService.saveUser(user);
+		}
 	}
 
 	public void hideHelpSection() {
 		helpSectionVisible = false;
 		Helper helper = BeanContext.getFromSession("helper");
-		helper.setContentWidth("740");
-		Preferences preferences = user.getPreferences();
-		Map<String, String> workState = preferences.getWorkState();
-		workState.put("helpSectionVisible", "false");
-		UserService userService = BeanContext.getFromSession(UserService.ID);
-		userService.saveUser(user);
+		helper.setContentWidth("770");
+		if (user != null) {
+			Preferences preferences = user.getPreferences();
+			Map<String, String> workState = preferences.getWorkState();
+			workState.put("helpSectionVisible", "false");
+			UserService userService = BeanContext.getFromSession(UserService.ID);
+			//TODO userService.saveUser(user);
+		}
 	}
-
+	
 	public void saveProject() {
 		try {
 			//TODO modelService.saveModel(project);

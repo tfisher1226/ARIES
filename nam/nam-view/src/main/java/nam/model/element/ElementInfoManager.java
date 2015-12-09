@@ -12,8 +12,6 @@ import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
-import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
 import nam.model.Element;
@@ -87,16 +85,8 @@ public class ElementInfoManager extends AbstractNamRecordManager<Element> implem
 	}
 	
 	protected void initialize(Element element) {
-		ElementUtil.initialize(element);
 		elementWizard.initialize(element);
 		setContext("element", element);
-	}
-	
-	public void handleElementSelected(@Observes @Selected Element element) {
-		selectionContext.setSelection("element",  element);
-		elementPageManager.updateState(element);
-		elementPageManager.refreshMembers();
-		setRecord(element);
 	}
 	
 	@Override

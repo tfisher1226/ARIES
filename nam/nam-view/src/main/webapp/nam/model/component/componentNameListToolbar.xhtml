@@ -6,10 +6,11 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
+	<a4j:outputPanel
+		id="componentNameListToolbar">
+		
 	<aries:toolbar
-		type="table"
-		id="componentNameListToolbar"
-		backgroundColor="#F8F8FF">
+			type="table">
 		
 		<aries:toolbarGroup
 			location="left">
@@ -19,13 +20,12 @@
 				label="New Component..."
 				icon="/icons/common/New16.gif"
 				iconDisabled="/icons/common/NewDisabled16.gif"
-				tooltip="Create new Component..."
 				enabled="#{securityGuard.canCreate('component')}"
 				mode="client"
 				execute="@none"
 				onmouseup="processNewElement(event, 'Component')"
 				labelStyle="font-size: 11px"
-				style="margin: 2px 1px 2px 2px"
+					style="margin: 2px"
 				offset="false" />
 		</aries:toolbarGroup>
 		
@@ -33,15 +33,18 @@
 			location="right">
 			
 			<aries:toolButton
-				id="componentListRefreshButton"
+				id="componentNameListRefreshButton"
 				icon="/icons/common/Refresh16.gif"
 				iconDisabled="/icons/common/RefreshDisabled16.gif"
 				tooltip="Re-read Component information from server"
 				enabled="#{securityGuard.canOpen('component')}"
 				mode="client"
 				execute="@none"
-				onmouseup="refreshComponentList(event)"
-				offset="true" />
+				onmouseup="refreshComponentList('applicationSelection')"
+				labelStyle="font-size: 11px"
+				style="margin: 2px"
+				offset="false" />
 		</aries:toolbarGroup>
 	</aries:toolbar>
+	</a4j:outputPanel>
 </ui:composition>

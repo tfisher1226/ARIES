@@ -34,6 +34,11 @@ public class ApplicationRecord_ComponentsSection extends AbstractWizardPage<Appl
 	}
 
 	@Override
+	public String getIcon() {
+		return "/icons/nam/Component16.gif";
+	}
+	
+	@Override
 	public void initialize(Application application) {
 		setEnabled(true);
 		setBackEnabled(true);

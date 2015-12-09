@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.aries.util.NameUtil;
 
 import admin.Skin;
+import admin.util.SkinUtil;
 
 
 @SessionScoped
@@ -122,7 +123,7 @@ public class SkinWizard extends AbstractDomainElementWizard<Skin> implements Ser
 	
 	public String populateDefaultValues() {
 		Skin skin = selectionContext.getSelection("skin");
-		String name = skin.getName();
+		String name = SkinUtil.getLabel(skin);
 		if (StringUtils.isEmpty(name)) {
 			display = getFromSession("display");
 			display.setModule("skinWizard");

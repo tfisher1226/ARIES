@@ -2,7 +2,7 @@
 
 USER=root
 
-PASSWORD=
+PASSWORD=secret
 
 HOST=localhost
 

@@ -1,17 +1,12 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition
-	xmlns:aries="http://aries.org/jsf"
-	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="type" value="NetworkList" />
-	
-	<!-- TODO set only if not provided by parent -->
-	<ui:param name="manager" value="#{networkListManager}" />
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
 	
 	<a4j:jsFunction
 	 	name="launchNetworkDialog"
@@ -19,28 +14,24 @@
 		immediate="true"
 		bypassUpdates="true"
 		limitRender="true"
-		action="#{manager.show}"
+		action="#{networkListManager.show}"
 		onbegin="setCursorWait(); showProgress('', 'Network Records', 'Retrieving current records...')"
 		oncomplete="setCursorDefault(eventSource); hideProgress(); showNetworkDialog()"
-		render="#{type}Module, #{type}Dialog">
+		render="NetworkModule, NetworkDialog">
 		
-		<a4j:param name="targetInstance" assignTo="#{manager.targetInstance}" />
-		<a4j:param name="targetDomain" assignTo="#{manager.targetDomain}" />
-		<a4j:param name="targetField" assignTo="#{manager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{networkListManager.targetInstance}" />
+		<a4j:param name="targetDomain" assignTo="#{networkListManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{networkListManager.targetField}" />
 	</a4j:jsFunction>
 	
-	<aries:region
-		id="#{type}Module"
-		parent="#{section}"
-		domain="#{type}"
-		section="#{type}Dialog"
-		rendered="#{manager.visible}">
+	<a4j:outputPanel
+		id="networkModule">
 		
-		<aries:form
-			id="#{section}Form">
+		<a4j:region
+			rendered="#{networkInfoManager.visible}">
 			
 			<aries:dialog
-				id="#{section}">
+				id="networkDialog">
 				
 				<!-- Container -->
 				<aries:borderPane
@@ -50,10 +41,10 @@
 					<!-- Content -->
 					<ui:include src="networkListPane.xhtml">
 						<ui:param name="itemManager" value="#{networkInfoManager}" />
-						<ui:param name="listManager" value="#{mainNetworkListManager}" />
+						<ui:param name="listManager" value="#{networkListManager}" />
 					</ui:include>
 				</aries:borderPane>
 			</aries:dialog>
-		</aries:form>
 	</aries:region>
+	</a4j:outputPanel>
 </ui:composition>

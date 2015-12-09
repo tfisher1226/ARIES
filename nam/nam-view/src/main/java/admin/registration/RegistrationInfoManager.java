@@ -1,7 +1,6 @@
 package admin.registration;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
@@ -15,20 +14,14 @@ import nam.ui.design.WorkspaceEventManager;
 import org.aries.Assert;
 import org.aries.common.EmailAddress;
 import org.aries.common.PersonName;
-import org.aries.common.PhoneLocation;
-import org.aries.common.PhoneNumber;
-import org.aries.common.StreetAddress;
 import org.aries.runtime.BeanContext;
 import org.aries.ui.Display;
 import org.aries.ui.event.Add;
 import org.aries.ui.event.Remove;
-import org.aries.ui.event.Selected;
 import org.aries.ui.event.Updated;
 import org.aries.util.Validator;
 
-import admin.Preferences;
 import admin.Registration;
-import admin.User;
 import admin.client.registrationService.RegistrationService;
 import admin.util.RegistrationUtil;
 
@@ -99,16 +92,8 @@ public class RegistrationInfoManager extends AbstractNamRecordManager<Registrati
 	}
 	
 	protected void initialize(Registration registration) {
-		RegistrationUtil.initialize(registration);
 		registrationWizard.initialize(registration);
 		setContext("registration", registration);
-	}
-	
-	public void handleRegistrationSelected(@Observes @Selected Registration registration) {
-		selectionContext.setSelection("registration",  registration);
-		registrationPageManager.updateState(registration);
-		registrationPageManager.refreshMembers();
-		setRecord(registration);
 	}
 	
 	public void handleUserEmailAddressUpdated(@Observes @Updated EmailAddress emailAddress) {
@@ -119,20 +104,6 @@ public class RegistrationInfoManager extends AbstractNamRecordManager<Registrati
 		getRegistration().getUser().setPersonName(personName);
 	}
 	
-	public void handleUserPhoneNumbersUpdated(@Observes @Updated PhoneNumber[] phoneNumbers) {
-		User user = getRegistration().getUser();
-		//user.setCellPhone(phoneNumbers.get(PhoneLocation.CELL));
-		//user.setHomePhone(phoneNumbers.get(PhoneLocation.HOME));
-	}
-	
-	public void handleUserPreferencesUpdated(@Observes @Updated Preferences preferences) {
-		getRegistration().getUser().setPreferences(preferences);
-	}
-	
-	public void handleUserStreetAddressUpdated(@Observes @Updated StreetAddress streetAddress) {
-		getRegistration().getUser().setStreetAddress(streetAddress);
-	}
-
 	@Override
 	public String newRecord() {
 		return newRegistration();

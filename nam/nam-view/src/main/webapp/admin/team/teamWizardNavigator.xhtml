@@ -11,42 +11,36 @@
 	xmlns:aries="http://aries.org/jsf">
 
 	<aries:panel
-	  width="auto"
-	  margin="0px"
-	  backgroundColor="inherit">
-	      
-	  <aries:formPane
-	  	width="auto"
-	  	borderWidth="1px"
-	  	borderColor="#aaa"
-	  	columnClass="formColumnAlignLeft"
-	  	backgroundColor="inherit">
-	      
-	  	<c:set var="section" value="#{teamWizard.section}" /> 
-	  	<c:set var="backgroundColor" value="#cfe7f5" /> 
-	      
-	  	<aries:indentPane
-	  		width="#{helper.wizard_leftSection_width}"
-	  		height="auto"
-	  		padding="6px"
-	  		paddingLeft="12px"
-	  		fontSize="14"
-	  		fontWeight="bold"
-	  		backgroundColor="#fff">
-	  		#{teamWizard.newMode ? 'Steps' : 'Sections'}
-	  	</aries:indentPane>
-	      
-	  	<ui:repeat
-	  		var="page" 
-	  		value="#{teamWizard.pages}">
-	  		
-	  		<aries:wizardStep
-	  			step="#{section}"
-	  			value="#{page.name}"
-	  			enabled="#{page.enabled}"
-	  			onclick="setCursorWait(this); showTeamWizardPage('#{page.name}')">
-	  		</aries:wizardStep>
-	  	</ui:repeat>
-	  </aries:formPane>
+		width="auto"
+		style="border: 1px solid #bbb; border-radius: 5px; background-color: white">
+		
+		<aries:formPane
+			width="auto"
+			columnClass="formColumnAlignLeft"
+			style="width: 130px; background-color: inherit">
+			
+			<c:set var="section" value="#{teamWizard.section}" /> 
+			<c:set var="backgroundColor" value="#cfe7f5" /> 
+			
+			<aries:indentPane
+				width="#{helper.wizard_leftSection_width}"
+				height="auto"
+				style="padding: 6px 10px; font-size: 13px; font-weight: bold; background-color: white; cursor: pointer">
+				#{teamWizard.newMode ? 'Steps' : 'Sections'}
+			</aries:indentPane>
+			
+			<ui:repeat
+				var="page" 
+				value="#{teamWizard.pages}">
+				
+				<aries:wizardStep
+					step="#{section}"
+					label="#{page.name}"
+					icon="#{page.icon}"
+					enabled="#{page.enabled}"
+					onclick="setCursorWait(this); showTeamWizardPage('#{page.name}')"
+					styleClass="wizardMenuStep" />
+			</ui:repeat>
+		</aries:formPane>
 	</aries:panel>
 </ui:composition>

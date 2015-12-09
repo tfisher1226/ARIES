@@ -1,0 +1,140 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:aries="http://aries.org/jsf">
+
+	<aries:controlPane>
+		<aries:controlbar>
+			<aries:toolbarGroup
+				location="left"
+				backgroundColor="inherit">
+				
+				<!-- help button -->
+				<aries:toolButton
+					id="volumeWizardHelpButton"
+					icon="/icons/help/Help24.gif"
+					tooltip="Show Help for Volume Wizard"
+					manager="#{globals}"
+					action="doNothing"
+					onclick="showAlert('Development in progress', 'Placeholder for Help Window', 'Simple and brief help documentation will be provided here');"
+					oncomplete="setCursorDefault();" />
+			</aries:toolbarGroup>
+			
+			<aries:toolbarGroup
+				location="right">
+				
+				<!-- refresh button -->
+				<aries:dialogButton
+					default="false"
+					rendered="true"
+					id="volumeWizardRefreshButton"
+					icon="/icons/common/Refresh16.gif"
+					iconDisabled="/icons/common/RefreshDisabled16.gif"
+					manager="#{volumeWizard}"
+					action="refresh"
+					onclick="showProgress('Nam', '#{volumeWizard.title}', 'Re-rendering current page...');"
+					oncomplete="hideProgress();"
+					render="volumeWizard"
+					padding="2px 4px"
+					offset="true" />
+				
+				<!-- populate button -->
+				<aries:dialogButton
+					label="Populate"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="volumeWizardPopulateButton"
+					icon="/icons/common/Import16.gif"
+					iconDisabled="/icons/common/ImportDisabled16.gif"
+					rendered="#{volumeWizard.populateEnabled}"
+					manager="#{volumeWizard}"
+					action="populateDefaultValues"
+					onclick="setCursorWait(this); showProgress('Nam', '#{title}', 'Processing the request...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- back button -->
+				<aries:dialogButton
+					label="Back"
+					default="false"
+					mode="ajax"
+					execute="@this"
+					id="volumeWizardPreviousButton"
+					icon="/icons/common/Back16.gif"
+					iconDisabled="/icons/common/BackDisabled16.gif"
+					rendered="#{volumeWizard.backVisible}"
+					enabled="#{volumeWizard.backEnabled}"
+					manager="#{volumeWizard}"
+					action="back"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Volume', 'Moving to previous section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- next button -->
+				<aries:dialogButton
+					label="Next"
+					default="true"
+					mode="ajax"
+					execute="@form"
+					id="volumeWizardNextButton"
+					icon="/icons/common/Forward16.gif"
+					iconDisabled="/icons/common/ForwardDisabled16.gif"
+					rendered="#{volumeWizard.nextVisible}"
+					enabled="#{volumeWizard.nextEnabled}"
+					manager="#{volumeWizard}"
+					action="next"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Volume', 'Moving to next section...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- finish button -->
+				<aries:dialogButton
+					label="Finish"
+					default="false"
+					mode="ajax"
+					execute="@form"
+					id="volumeWizardFinishButton"
+					icon="/icons/common/ThumbsUp16.gif"
+					iconDisabled="/icons/common/ThumbsUpDisabled16.gif"
+					rendered="#{volumeWizard.finishVisible}"
+					enabled="#{volumeWizard.finishEnabled}"
+					manager="#{volumeWizard}"
+					action="finish"
+					onclick="setCursorWait(this); showProgress('Nam', 'New Volume', 'Validating and submitting new Volume...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					render="wizardMessages"
+					padding="2px 8px"
+					offset="true" />
+				
+				<!-- cancel button -->
+				<aries:dialogButton
+					label="Cancel"
+					mode="ajax"
+					execute="@all"
+					id="volumeWizardCancelButton"
+					tooltip="Cancel creation of new Volume"
+					rendered="#{securityGuard.checkManager}"
+					manager="#{volumeWizard}"
+					action="cancel"
+					onclick="setCursorWait(this); showProgress('Nam', 'Volume Management', 'Cancelling creation of Volume...');"
+					oncomplete="setCursorDefault(); hideProgress()"
+					padding="2px 8px"
+					offset="true" />
+			</aries:toolbarGroup>
+		</aries:controlbar>
+	</aries:controlPane>
+</ui:composition>

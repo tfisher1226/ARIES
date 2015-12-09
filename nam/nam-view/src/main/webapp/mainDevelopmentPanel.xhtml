@@ -13,19 +13,15 @@
 	<aries:formPane
 		columns="1" 
 		width="200"
-		height="280"
-		margin="0px"
-		marginLeft="auto"
-		marginRight="auto"
-		marginTop="0px"
-		backgroundColor="inherit">	
+		height="auto"
+		backgroundColor="inherit"
+		style="padding: 10px 20px 20px 20px">
 	
 		<aries:spacer height="10" />
-		<aries:label fontSize="15" fontWeight="bold" value="Application" />
-		<aries:label fontSize="15" fontWeight="bold" value="Development" />
+		<aries:label fontSize="14" fontWeight="bold" value="Applications" style="" />
+		<aries:label fontSize="14" fontWeight="bold" value="and Modules" style="" />
 
 		<a4j:outputPanel rendered="false">
-			<aries:spacer height="16" />
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Projects" />
 				<ui:param name="icon" value="/icons/nam/Project16.gif" />
@@ -36,7 +32,7 @@
 			</ui:include>
 		</a4j:outputPanel>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Applications" />
 			<ui:param name="icon" value="/icons/nam/Application16.gif" />
@@ -47,7 +43,7 @@
 		</ui:include>
 
 		<a4j:outputPanel rendered="true">
-			<aries:spacer height="10" />
+			<aries:spacer height="8" />
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Modules" />
 				<ui:param name="icon" value="/icons/nam/Module16.gif" />
@@ -59,7 +55,7 @@
 		</a4j:outputPanel>
 
 		<a4j:outputPanel rendered="false">
-			<aries:spacer height="10" />
+			<aries:spacer height="8" />
 			<ui:include src="/common/navigationButton.xhtml">
 				<ui:param name="label" value="Services" />
 				<ui:param name="icon" value="/icons/nam/Service16.gif" />
@@ -70,7 +66,7 @@
 			</ui:include>
 		</a4j:outputPanel>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Elements" />
 			<ui:param name="icon" value="/icons/nam/Element16.gif" />
@@ -80,17 +76,7 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Elements', 'Preparing Element information...')" />
 		</ui:include>
 
-		<aries:spacer height="10" />
-		<ui:include src="/common/navigationButton.xhtml">
-			<ui:param name="label" value="Messaging" />
-			<ui:param name="icon" value="/icons/nam/Messaging16.gif" />
-			<ui:param name="id" value="mainMessagingButton" />
-			<ui:param name="manager" value="#{messagingPageManager}" />
-			<ui:param name="action" value="initializeMessagingManagementPage" />
-   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Messaging', 'Preparing Service information...')" />
-		</ui:include>
-
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Caching" />
 			<ui:param name="icon" value="/icons/nam/Cache16.gif" />
@@ -100,7 +86,17 @@
    			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Caching', 'Preparing Caching information...')" />
 		</ui:include>
 
-		<aries:spacer height="10" />
+		<aries:spacer height="8" />
+		<ui:include src="/common/navigationButton.xhtml">
+			<ui:param name="label" value="Messaging" />
+			<ui:param name="icon" value="/icons/nam/Messaging16.gif" />
+			<ui:param name="id" value="mainMessagingButton" />
+			<ui:param name="manager" value="#{messagingPageManager}" />
+			<ui:param name="action" value="initializeMessagingManagementPage" />
+   			<ui:param name="onmouseup" value="setCursorWait(event.source); showProgress('Nam', 'Messaging', 'Preparing Service information...')" />
+		</ui:include>
+
+		<aries:spacer height="8" />
 		<ui:include src="/common/navigationButton.xhtml">
 			<ui:param name="label" value="Persistence" />
 			<ui:param name="icon" value="/icons/nam/PersistenceUnit16.gif" />

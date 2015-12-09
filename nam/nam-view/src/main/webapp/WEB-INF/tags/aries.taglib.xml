@@ -29,8 +29,10 @@
 	</tag>
 		
 	<tag>
+		<!--  
 		<tag-name>tag</tag-name>
 		<handler-class>org.aries.ui.tag.IsolatedTagHandler</handler-class>
+		-->
 
 		<!--  
 		<attribute>
@@ -87,7 +89,17 @@
 	<!-- layout related -->
 	<tag><tag-name>borderPane</tag-name><source>common/layout/borderPane.xhtml</source></tag>
 	<tag><tag-name>borderedTab</tag-name><source>common/layout/borderedTab.xhtml</source></tag>
-	<tag><tag-name>formPane</tag-name><source>common/layout/formPane.xhtml</source></tag>
+	
+	<tag><tag-name>formPane2</tag-name><source>common/layout/formPane.xhtml</source></tag>
+	
+	<tag>
+		<tag-name>formPane</tag-name>
+		<source>common/layout/formPane.xhtml</source>
+		<attribute>
+			<name>style</name>
+		</attribute>
+	</tag>
+	
 	<tag><tag-name>groupPane</tag-name><source>common/layout/groupPane.xhtml</source></tag>
 	<tag><tag-name>indentPane</tag-name><source>common/layout/indentPane.xhtml</source></tag>
 	<tag><tag-name>insetPane</tag-name><source>common/layout/insetPane.xhtml</source></tag>
@@ -204,9 +216,12 @@
 
     <!-- table related -->
 	<tag><tag-name>table</tag-name><source>common/table/table.xhtml</source></tag>
+	<tag><tag-name>table2</tag-name><source>common/table/table2.xhtml</source></tag>
 	<tag><tag-name>tableColumn</tag-name><source>common/table/tableColumn.xhtml</source></tag>
 	<tag><tag-name>textColumn</tag-name><source>common/table/textColumn.xhtml</source></tag>
 	<tag><tag-name>linkColumn</tag-name><source>common/table/linkColumn.xhtml</source></tag>
+	<tag><tag-name>checkBoxColumn</tag-name><source>common/table/checkBoxColumn.xhtml</source></tag>
+	<tag><tag-name>radioButtonColumn</tag-name><source>common/table/radioButtonColumn.xhtml</source></tag>
 
     <!-- toolbar related -->
 	<tag><tag-name>toolbar</tag-name><source>common/toolbar/toolbar.xhtml</source></tag>

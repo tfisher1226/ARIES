@@ -50,8 +50,10 @@ public class Entity
 {
 
     private final static long serialVersionUID = 1L;
+    
     @XmlElement(name = "key", namespace = "http://nam/model", required = true)
     protected List<String> keies;
+    
     @XmlAttribute(name = "type", required = true)
     @XmlSchemaType(name = "anySimpleType")
     protected String type;

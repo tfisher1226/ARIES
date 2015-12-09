@@ -2,6 +2,7 @@ package nam.model.domain;
 
 import java.io.Serializable;
 
+import org.aries.runtime.BeanContext;
 import org.aries.ui.AbstractListObject;
 
 import nam.model.Domain;
@@ -38,6 +39,16 @@ public class DomainListObject extends AbstractListObject<Domain> implements Comp
 	
 	public String getLabel(Domain domain) {
 		return DomainUtil.getLabel(domain);
+	}
+	
+	@Override
+	public void setChecked(boolean checked) {
+		super.setChecked(checked);
+	}
+	
+	@Override
+	public String getIcon() {
+		return "/icons/nam/Domain16.gif";
 	}
 	
 	@Override

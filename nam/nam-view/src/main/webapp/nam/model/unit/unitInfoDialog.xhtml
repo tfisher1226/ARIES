@@ -1,0 +1,45 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:aries="http://aries.org/jsf">
+	
+	<a4j:jsFunction
+	 	name="launchUnitDialog"
+		execute="@this"
+		immediate="true"
+		bypassUpdates="true"
+		limitRender="true"
+		action="#{unitInfoManager.activate}"
+		onbegin="setCursorWait(); showProgress('Nam', 'Unit Records', 'Preparing requested record...')"
+		oncomplete="setCursorDefault(eventSource); hideProgress(); showUnitDialog()"
+		render="unitModule, unitDialog">
+		
+		<a4j:param name="targetDomain" assignTo="#{unitInfoManager.targetDomain}" />
+		<a4j:param name="targetField" assignTo="#{unitInfoManager.targetField}" />
+		<a4j:param name="targetInstance" assignTo="#{unitInfoManager.targetInstance}" />
+		<a4j:param name="targetService" assignTo="#{unitInfoManager.targetService}" />
+		<a4j:param name="immediate" assignTo="#{unitInfoManager.immediate}" value="false" />
+	</a4j:jsFunction>
+	
+	<a4j:outputPanel
+		id="unitModule">
+		
+		<a4j:region
+			rendered="#{unitInfoManager.visible}">
+			
+			<aries:dialog
+				id="unitDialog"
+				action="saveUnit"
+				render="#{unitInfoManager.renderList} unitListPane">
+				
+				<!-- Dialog Content -->
+				<ui:include src="unitInfoPane.xhtml" />
+			</aries:dialog>
+		</aries:region>
+	</a4j:outputPanel>
+</ui:composition>

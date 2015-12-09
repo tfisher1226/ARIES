@@ -492,7 +492,7 @@ public class ElementWizardManagerBuilder extends AbstractElementManagerBuilder {
 		Buf buf = new Buf();
 		//buf.putLine2(elementClassName+" "+elementNameUncapped+" = getInstance();");
 		buf.putLine2(elementClassName+" "+elementNameUncapped+" = selectionContext.getSelection(\""+elementNameUncapped+"\");");
-		buf.putLine2("String name = "+elementNameUncapped+".getName();");
+		buf.putLine2("String name = "+elementClassName+"Util.getLabel("+elementNameUncapped+");");
 		buf.putLine2("if (StringUtils.isEmpty(name)) {");
 		buf.putLine2("	display = getFromSession(\"display\");");
 		buf.putLine2("	display.setModule(\""+elementNameUncapped+"Wizard\");");

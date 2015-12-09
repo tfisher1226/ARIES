@@ -17,6 +17,7 @@ import nam.model.util.ApplicationUtil;
 import nam.model.util.DomainUtil;
 import nam.model.util.ModuleUtil;
 import nam.model.util.ProjectUtil;
+import nam.model.util.ServiceUtil;
 import nam.ui.design.SelectionContext;
 
 
@@ -98,67 +99,90 @@ public class ServiceDataManager implements Serializable {
 	}
 
 	protected Collection<Service> getServiceList_ForProject(Project project) {
-		return ProjectUtil.getServices(project);
+		Collection<Service> serviceList = ProjectUtil.getServices(project);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForProjectList(Collection<Project> projectList) {
-		return ProjectUtil.getServices(projectList);
+		Collection<Service> serviceList = ProjectUtil.getServices(projectList);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForProjectSelection() {
 		Collection<Project> projectSelection = selectionContext.getSelection("projectSelection");
 		Collection<Service> serviceList = ProjectUtil.getServices(projectSelection);
+		serviceList = ServiceUtil.sortRecords(serviceList);
 		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForApplication(Application application) {
-		return ApplicationUtil.getServices(application);
+		Collection<Service> serviceList = ApplicationUtil.getServices(application);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForApplicationList(Collection<Application> applicationList) {
-		return ApplicationUtil.getServices(applicationList);
+		Collection<Service> serviceList = ApplicationUtil.getServices(applicationList);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 
 	protected Collection<Service> getServiceList_ForApplicationSelection() {
 		Collection<Application> applicationSelection = selectionContext.getSelection("applicationSelection");
 		Collection<Service> serviceList = ApplicationUtil.getServices(applicationSelection);
+		serviceList = ServiceUtil.sortRecords(serviceList);
 		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForModule(Module module) {
-		return ModuleUtil.getServices(module);
+		Collection<Service> serviceList = ModuleUtil.getServices(module);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForModuleList(Collection<Module> moduleList) {
-		return ModuleUtil.getServices(moduleList);
+		Collection<Service> serviceList = ModuleUtil.getServices(moduleList);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 
 	protected Collection<Service> getServiceList_ForModuleSelection() {
 		Collection<Module> moduleSelection = selectionContext.getSelection("moduleSelection");
 		Collection<Service> serviceList = ModuleUtil.getServices(moduleSelection);
+		serviceList = ServiceUtil.sortRecords(serviceList);
 		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForDomain(Domain domain) {
-		return DomainUtil.getServices(domain);
+		Collection<Service> serviceList = DomainUtil.getServices(domain);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 	
 	protected Collection<Service> getServiceList_ForDomainSelection() {
 		Collection<Domain> domainSelection = selectionContext.getSelection("domainSelection");
 		Collection<Service> serviceList = DomainUtil.getServices(domainSelection);
+		serviceList = ServiceUtil.sortRecords(serviceList);
 		return serviceList;
 	}
 	
 	public Collection<Service> getDefaultList() {
-		List<Project> projectList = selectionContext.getSelection("projectList");
-		return ProjectUtil.getServices(projectList);
+		Collection<Project> projectList = selectionContext.getSelection("projectList");
+		Collection<Service> serviceList = ProjectUtil.getServices(projectList);
+		serviceList = ServiceUtil.sortRecords(serviceList);
+		return serviceList;
 	}
 
 	public void saveService(Service service) {
 		if (scope != null) {
 			Object owner = getOwner();
 		
-			if (scope.equals("application")) {
+			if (scope.equals("project")) {
+				//ProjectUtil.addService((Project) owner, service);
+		
+			} else if (scope.equals("application")) {
 				ApplicationUtil.addService((Application) owner, service);
 		
 			} else if (scope.equals("module")) {
@@ -174,7 +198,10 @@ public class ServiceDataManager implements Serializable {
 		if (scope != null) {
 			Object owner = getOwner();
 		
-			if (scope.equals("application")) {
+			if (scope.equals("project")) {
+				//return ProjectUtil.removeService((Project) owner, service);
+		
+			} else if (scope.equals("application")) {
 				return ApplicationUtil.removeService((Application) owner, service);
 		
 			} else if (scope.equals("module")) {

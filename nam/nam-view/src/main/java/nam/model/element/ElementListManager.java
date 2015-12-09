@@ -92,10 +92,17 @@ public class ElementListManager extends AbstractDomainListManager<Element, Eleme
 		return selected;
 	}
 	
+	public boolean isChecked(Element element) {
+		Collection<Element> selection = selectionContext.getSelection("elementSelection");
+		boolean checked = selection != null && selection.contains(element);
+		return checked;
+	}
+	
 	@Override
 	protected ElementListObject createRowObject(Element element) {
 		ElementListObject listObject = new ElementListObject(element);
 		listObject.setSelected(isSelected(element));
+		listObject.setChecked(isChecked(element));
 		return listObject;
 	}
 	

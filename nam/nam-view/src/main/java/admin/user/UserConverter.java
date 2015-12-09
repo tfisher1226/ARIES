@@ -32,7 +32,7 @@ public class UserConverter extends AbstractConverter implements Converter, Seria
 		if (value == null)
 			return null;
 		User user = (User) value;
-		return UserUtil.toString(user);
+		return UserUtil.getLabel(user);
 	}
 	
 }
