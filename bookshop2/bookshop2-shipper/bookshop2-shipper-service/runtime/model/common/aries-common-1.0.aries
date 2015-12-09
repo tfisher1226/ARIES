@@ -4,7 +4,7 @@
 	xmlns="http://nam/model" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/source/main/resources/schema/nam-1.0.xsd">
 
 	<domain>org.aries</domain>
 	<name>common</name>
@@ -41,8 +41,8 @@
 		</element>
 		
 		<element name="MapEntry" transient="true">
-			<item name="key" type="xs:anyType" useForEquals="true" />
-			<item name="value" type="xs:anyType" useForEquals="true" />
+			<item name="key" type="xs:anyType" />
+			<item name="value" type="xs:anyType" />
 		</element>
 		
 	
@@ -56,8 +56,8 @@
 		
 		<element name="Property">
 			<id name="id" type="xs:long" />
-			<item name="name" type="xs:string" required="true" useForEquals="true" />
-			<item name="value" type="xs:string" useForEquals="true" />
+			<item name="name" type="xs:string" required="true" />
+			<item name="value" type="xs:string" />
 		</element>
 
 	
@@ -67,9 +67,6 @@
 		
 		<element name="AbstractEvent" abstract="true">
 			<id name="id" type="xs:long" />
-			<item name="dateTime" type="xs:dateTime" required="true" useForEquals="true" />
-			<item name="correlationId" type="xs:string" required="true" useForEquals="true" />
-			<item name="transactionId" type="xs:string" />
 			<item name="user" type="AbstractUser" />
 		</element>
 	
@@ -78,13 +75,10 @@
 			AbstractMessage type
 		-->
 
-		<element name="AbstractMessage" abstract="true" transient="true">
-			<item name="dateTime" type="xs:dateTime" required="true" useForEquals="true" />
-			<item name="correlationId" type="xs:string" required="true" useForEquals="true" />
+		<element name="AbstractMessage" abstract="true">
+			<item name="correlationId" type="xs:string" required="true" />
 			<item name="transactionId" type="xs:string" />
-			<mapItem name="replyToDestinations" type="xs:string" key="xs:string" />
-			<item name="cancelRequest" type="xs:boolean" />
-			<item name="undoRequest" type="xs:boolean" />
+			<item name="replyToDestination" type="xs:string" />
 		</element>
 		
 		
@@ -94,9 +88,9 @@
 	
 		<element name="Attachment">
 			<id name="id" type="xs:long" />
-			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="name" type="xs:string" />
 			<item name="size" type="xs:long" />
-			<item name="fileName" type="xs:string" useForEquals="true" />
+			<item name="fileName" type="xs:string" />
 			<item name="fileData" type="xs:base64Binary" />
 			<item name="contentType" type="xs:string" />
 		</element>
@@ -109,18 +103,19 @@
 		<element name="AbstractNote" abstract="true">
 			<id name="id" type="xs:long" />
 			<item name="text" type="xs:string" />
-			<item name="author" type="AbstractUser" relation="manyToOne" required="true" useForEquals="true" />
-			<item name="creationDate" type="xs:dateTime" useForEquals="true" />
+			<item name="author" type="AbstractUser" relation="manyToOne" required="true" />
+			<item name="creationDate" type="xs:dateTime" />
 			<item name="lastUpdate" type="xs:dateTime" />
 		</element>
 		
 	
 		<!-- 
 			Exception type
+		-->
+
 		<element name="Exception">
 			<item name="message" type="xs:string" />
 		</element>
-		-->
 		
 		
 		<!-- 
@@ -193,7 +188,7 @@
 			<literal name="WI" />
 			<literal name="WY" />
 		</enumeration>
-
+	
 		<enumeration name="Language">
 			<literal name="ENGLISH" />
 			<literal name="SPANISH" />
@@ -216,7 +211,7 @@
 		
 		<element name="AbstractUser" abstract="true">
 			<id name="id" type="xs:long" />
-			<item name="userId" type="xs:string" enact="userPrincipal" required="true" unique="true" useForEquals="true" />
+			<item name="userId" type="xs:string" enact="userPrincipal" required="true" unique="true" />
 			<secret name="passwordHash" type="xs:string" enact="userPassword" required="true" />
 			<item name="passwordSalt" type="xs:string" enact="passwordSalt" required="false" />
 			<item name="firstName" type="xs:string" enact="userFirstName" required="true" />
@@ -253,8 +248,8 @@
 		
 		<element name="Person">
 			<id name="id" type="xs:long" />
-			<item name="userId" type="xs:string" required="true" useForEquals="true" />
-			<item name="name" type="PersonName" relation="oneToOne" cascade="all" required="true" useForEquals="true" />
+			<item name="userId" type="xs:string" />
+			<item name="name" type="PersonName" relation="oneToOne" cascade="all" required="true" />
 			<item name="phoneNumber" type="PhoneNumber" relation="oneToOne" cascade="all" />
 			<item name="emailAddress" type="EmailAddress" relation="oneToOne" cascade="all" />
 			<item name="streetAddress" type="StreetAddress" relation="oneToOne" cascade="all" />
@@ -267,9 +262,9 @@
 		
 		<element name="PersonName">
 			<id name="id" type="xs:long" />
-			<item name="lastName" type="xs:string" required="true" useForEquals="true" />
-			<item name="firstName" type="xs:string" required="true" useForEquals="true" />
-			<item name="middleInitial" type="xs:string" useForEquals="true" />
+			<item name="lastName" type="xs:string" required="true" />
+			<item name="firstName" type="xs:string" required="true" />
+			<item name="middleInitial" type="xs:string" />
 		</element>
 		
 	
@@ -279,13 +274,13 @@
 		
 		<element name="StreetAddress">
 			<id name="id" type="xs:long" />
-			<item name="street" type="xs:string" required="true" useForEquals="true" />
-			<item name="city" type="xs:string" required="true" useForEquals="true" />
-			<item name="state" type="State" default="CA" required="true" useForEquals="true" />
-			<item name="zipCode" type="ZipCode" relation="oneToOne" cascade="all" required="true" useForEquals="true" />
-			<item name="country" type="Country" default="USA" required="true" useForEquals="true" />
+			<item name="city" type="xs:string" />
+			<item name="country" type="Country" />
 			<item name="latitude" type="xs:double" />
 			<item name="longitude" type="xs:double" />
+			<item name="state" type="State" />
+			<item name="street" type="xs:string" />
+			<item name="zipCode" type="ZipCode" relation="oneToOne" cascade="all" />
 		</element>
 	
 	
@@ -295,9 +290,9 @@
 		
 		<element name="ZipCode">
 			<id name="id" type="xs:long" />
-			<item name="number" type="xs:string" required="true" useForEquals="true" />
+			<item name="country" type="Country" />
 			<item name="extension" type="xs:string" />
-			<item name="country" type="Country" default="USA" required="true" useForEquals="true" />
+			<item name="number" type="xs:string" required="true" />
 		</element>
 	
 	
@@ -307,11 +302,11 @@
 		
 		<element name="PhoneNumber">
 			<id name="id" type="xs:long" />
-			<item name="area" type="xs:string" required="true" useForEquals="true" />
-			<item name="number" type="xs:string" required="true" useForEquals="true" />
-			<item name="extension" type="xs:string" />
-			<item name="country" type="Country" required="true" default="USA" useForEquals="true" />
 			<item name="type" type="PhoneLocation" required="true" default="HOME" />
+			<item name="country" type="Country" />
+			<item name="area" type="xs:string" required="true" />
+			<item name="number" type="xs:string" required="true" />
+			<item name="extension" type="xs:string" />
 			<item name="value" type="xs:string" />
 		</element>
 	
@@ -330,7 +325,7 @@
 		
 		<element name="EmailAddress">
 			<id name="id" type="xs:long" />
-			<item name="url" type="xs:string" required="true" useForEquals="true" unique="true" />
+			<item name="url" type="xs:string" required="true" />
 			<item name="userId" type="xs:string" />
 			<item name="firstName" type="xs:string" />
 			<item name="lastName" type="xs:string" />
@@ -338,7 +333,7 @@
 			<item name="organization" type="xs:string" />
 			<item name="creationDate" type="xs:dateTime" />
 			<item name="lastUpdate" type="xs:dateTime" />
-			<item name="enabled" type="xs:boolean" default="true" />
+			<item name="enabled" type="xs:boolean" />
 		</element>
 	
 		<element name="EmailAddressList">
@@ -356,17 +351,17 @@
 			<id name="id" type="xs:long" />
 			<item name="content" type="xs:string" />
 			<item name="subject" type="xs:string" />
-			<item name="timestamp" type="xs:dateTime" useForEquals="true" />
-			<item name="sourceId" type="xs:string" useForEquals="true" />
+			<item name="timestamp" type="xs:dateTime" />
+			<item name="sourceId" type="xs:string" />
 			<item name="smtpHost" type="xs:string" />
 			<item name="smtpPort" type="xs:string" />
-			<item name="fromAddress" type="EmailAddress" relation="oneToOne" cascade="all" nullable="true" required="true" />
-			<listItem name="toAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
-			<listItem name="bccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
-			<listItem name="ccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
-			<listItem name="replytoAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
-			<listItem name="adminAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
-			<listItem name="attachments" type="Attachment" relation="oneToMany" cascade="all" nullable="true" />
+			<item name="fromAddress" type="EmailAddress" relation="oneToOne" cascade="all" nillable="true" required="true" />
+			<listItem name="toAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="bccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="ccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="replytoAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="adminAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="attachments" type="Attachment" relation="oneToMany" cascade="all" nillable="true" />
 			<item name="sendAsHtml" type="xs:boolean" />
 		</element>
 	
@@ -377,22 +372,22 @@
 		
 		<element name="EmailAccount">
 			<id name="id" type="xs:long" />
-			<item name="userId" type="xs:string" required="true" unique="true" useForEquals="true" />
+			<item name="userId" type="xs:string" required="true" unique="true" />
 			<secret name="passwordHash" type="xs:string" hash="MD5" required="true" />
 			<item name="passwordSalt" type="xs:string" />
 			<item name="firstName" type="xs:string" />
 			<item name="lastName" type="xs:string" />
-			<listItem name="emailBoxes" type="EmailBox" relation="oneToMany" cascade="all" contained="false" nullable="true" />
+			<listItem name="emailBoxes" type="EmailBox" relation="oneToMany" cascade="all" nillable="true" />
 			<item name="enabled" type="xs:boolean" />
 		</element>
 	
 		<element name="EmailBox">
 			<id name="id" type="xs:long" />
-			<item name="type" type="xs:string" useForEquals="true" />
-			<item name="name" type="xs:string" useForEquals="true" />
-			<item name="emailAccount" type="EmailAccount" relation="manyToOne" cascade="all" inverse="true" mappedBy="emailBoxes" />
+			<item name="type" type="xs:string" />
+			<item name="name" type="xs:string" />
+			<item name="emailAccount" type="EmailAccount" relation="manyToOne" cascade="all" inverse="true" />
 			<item name="parentBox" type="EmailBox" relation="oneToOne" cascade="refresh, merge" />
-			<listItem name="messages" type="EmailMessage" relation="oneToMany" cascade="all" nullable="true" />
+			<listItem name="messages" type="EmailMessage" relation="oneToMany" cascade="all" nillable="true" />
 			<item name="creationDate" type="xs:dateTime" />
 			<item name="lastUpdate" type="xs:dateTime" />
 		</element>

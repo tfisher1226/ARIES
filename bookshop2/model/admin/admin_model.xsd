@@ -112,7 +112,7 @@
 				<xs:element name="name" type="xs:string" minOccurs="1" />
 				<xs:element name="roleType" type="admin:RoleType" minOccurs="1" />
 				<xs:element name="groups" type="admin:Role" minOccurs="0" maxOccurs="unbounded" />
-				<xs:element name="permissions" type="admin:Permission" minOccurs="0" maxOccurs="unbounded" nillable="true" />
+				<xs:element name="permissions" type="admin:Permission" minOccurs="0" maxOccurs="unbounded" nullable="true" />
 				<xs:element name="conditional" type="xs:boolean" minOccurs="0" default="true" />
 				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
 		</xs:sequence>
@@ -381,8 +381,8 @@
 				<xs:element name="homePhone" type="common:PhoneNumber" minOccurs="0" />
 				<xs:element name="cellPhone" type="common:PhoneNumber" minOccurs="0" />
 				<xs:element name="roles" type="admin:Role" minOccurs="0" maxOccurs="unbounded" />
-				<xs:element name="permissions" type="admin:Permission" minOccurs="0" maxOccurs="unbounded" nillable="true" />
-				<xs:element name="preferences" type="admin:Preferences" minOccurs="0" nillable="true" />
+				<xs:element name="permissions" type="admin:Permission" minOccurs="0" maxOccurs="unbounded" nullable="true" />
+				<xs:element name="preferences" type="admin:Preferences" minOccurs="0" nullable="true" />
 				<xs:element name="creationDate" type="xs:dateTime" minOccurs="0" />
 				<xs:element name="lastUpdate" type="xs:dateTime" minOccurs="0" />
 		</xs:sequence>
@@ -398,10 +398,10 @@
 		<xs:sequence>
 				<xs:element name="enabled" type="xs:boolean" minOccurs="0" default="true" />
 				<xs:element name="userName" type="xs:string" minOccurs="0" />
-				<xs:element name="personName" type="common:PersonName" minOccurs="0" nillable="true" />
-				<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" nillable="true" />
-				<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" nillable="true" />
-				<xs:element name="roles" type="admin:Role" minOccurs="0" nillable="true" />
+				<xs:element name="personName" type="common:PersonName" minOccurs="0" nullable="true" />
+				<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" nullable="true" />
+				<xs:element name="streetAddress" type="common:StreetAddress" minOccurs="0" nullable="true" />
+				<xs:element name="roles" type="admin:Role" minOccurs="0" nullable="true" />
 		</xs:sequence>
 	</xs:complexType>
 	

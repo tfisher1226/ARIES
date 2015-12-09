@@ -8,7 +8,6 @@ import nam.model.Endpoint;
 import nam.model.TransactionContext;
 import nam.model.TransactionIsolationLevel;
 
-import org.aries.ApplicationFailure;
 import org.aries.Assert;
 import org.aries.transport.TransportType;
 import org.aries.tx.AbstractArquillianTest;
@@ -32,6 +31,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.aries.ApplicationFailure;
+
 import tx.manager.registry.ServiceRegistry;
 import bookshop2.Book;
 import bookshop2.ReservationRequestMessage;
@@ -45,7 +46,6 @@ import bookshop2.supplier.data.bookInventory.BookInventoryProxy;
 import bookshop2.supplier.data.supplierOrderCache.SupplierOrderCacheHelper;
 import bookshop2.supplier.data.supplierOrderCache.SupplierOrderCacheProxy;
 import bookshop2.util.Bookshop2Fixture;
-
 import common.tx.CoordinationConstants;
 
 

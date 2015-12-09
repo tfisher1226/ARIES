@@ -4,42 +4,25 @@
 	xmlns="http://nam/model" 
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:common="http://www.aries.org/common"
 	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
 
 	<import file="/common/aries-common-1.0.aries" />
-	<import file="/nam/nam_model.aries" />
 
-	<domain>admin</domain>
+	<domain>org.aries</domain>
 	<name>admin</name>
 	
 	<namespace 
         prefix="admin" 
         name="admin" 
-        uri="http://admin">
+        uri="http://www.aries.org/admin">
 
 		<properties>
 			<property name="generate-schema" value="true" />
 		</properties>
 		
-		
 		<!--
-			Account
-			*******
-		 -->
-		 
-		<element name="Account" root="true">
-			<id name="id" type="xs:long" />
-			<item name="user" type="User" relation="oneToOne" required="true" unique="true" useForLabel="true" />
-			<mapItem name="models" key="xs:string" type="xs:string" />
-			<item name="creditCard" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" />
-			<item name="enabled" type="xs:boolean" default="true" />
-		</element>
-		
-		
-		<!--
-			User
-			****
+			User related structures
+			***********************
 		 -->
 
 		<element name="Users" transient="true">
@@ -47,71 +30,41 @@
 		</element>
 		
 		<element name="User" root="true">
-			<grouping name="Identity">
+			<grouping name="User Identity">
 				<id name="id" type="xs:long" />
-				<!--
-				<item name="name" type="common:PersonName" relation="oneToOne" contained="true" cascade="all" required="true" indexed="true" />
-				-->
-				<item name="personName" type="common:PersonName" relation="oneToOne" contained="true" cascade="all" required="true" indexed="true" useForLabel="true" />
-				<item name="userName" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" useForEquals="true" />
-				<secret name="password" type="xs:string" enact="userPassword" hash="MD5" required="true" />
-				<item name="password2" type="xs:string" enact="passwordSalt" />
 				<item name="enabled" type="xs:boolean" enact="userEnabled" default="true" />
+				<item name="firstName" type="xs:string" enact="userFirstName" required="true" />
+				<item name="lastName" type="xs:string" enact="userLastName" required="true" />
+				<item name="userName" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" />
+				<secret name="passwordHash" type="xs:string" enact="userPassword" hash="MD5" required="true" />
+				<item name="passwordSalt" type="xs:string" enact="passwordSalt" />
 			</grouping>
 			
-			<grouping name="Contact">
-				<item name="emailAddress" type="common:EmailAddress" relation="manyToOne" contained="true" cascade="all" required="true" />
-				<item name="streetAddress" type="common:StreetAddress" relation="manyToOne" contained="true" cascade="all" />
-				<item name="homePhone" type="common:PhoneNumber" relation="oneToOne" contained="true" cascade="all" />
-				<item name="cellPhone" type="common:PhoneNumber" relation="oneToOne" contained="true" cascade="all" />
-                <!--
-				<item name="emailAccount" type="common:EmailAccount" relation="oneToOne" contained="true" cascade="all" />
-                -->
+			<grouping name="Contact information">
+				<item name="emailAccount" type="common:EmailAccount" relation="oneToOne" cascade="all" />
+				<item name="emailAddress" type="common:EmailAddress" relation="manyToOne" cascade="all" required="true" />
+				<item name="streetAddress" type="common:StreetAddress" relation="manyToOne" cascade="all" />
+				<item name="homePhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+				<item name="cellPhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
 			</grouping>
 			
-			<grouping name="Roles">
-				<setItem name="roles" type="Role" enact="userRoles" relation="manyToMany" required="true" />
+			<grouping name="Access Control">
+				<setItem name="roles" type="Role" enact="userRoles" relation="manyToMany" cascade="all" required="true" />
+				<listItem name="permissions" type="Permission" relation="oneToMany" cascade="all" nillable="true" />
 			</grouping>
 			
-			<grouping name="Permissions">
-				<listItem name="permissions" type="Permission" relation="oneToMany" contained="true" cascade="all" nullable="true" />
-			</grouping>
-
 			<grouping name="Settings">
-				<item name="preferences" type="Preferences" relation="oneToOne" contained="true" cascade="all" nullable="true" />
+				<item name="preferences" type="Preferences" relation="oneToOne" cascade="all" nillable="true" />
 			</grouping>
-			
 			<item name="creationDate" type="xs:dateTime" />
 			<item name="lastUpdate" type="xs:dateTime" />
 		</element>
-		
-		<element name="UserCriteria" transient="true">
-			<item name="enabled" type="xs:boolean" default="true" />
-            <!--
-			<item name="firstName" type="xs:string" />
-			<item name="lastName" type="xs:string" />
-            -->
-			<item name="userName" type="xs:string" />
-			<item name="personName" type="common:PersonName" nullable="true" />
-			<item name="emailAddress" type="common:EmailAddress" nullable="true" />
-			<item name="streetAddress" type="common:StreetAddress" nullable="true" />
-			<item name="roles" type="Role" nullable="true" />
-            <!--
-			<item name="creationDateStart" type="xs:dateTime" />
-			<item name="creationDateEnd" type="xs:dateTime" />
-			<item name="lastUpdateStart" type="xs:dateTime" />
-			<item name="lastUpdateEnd" type="xs:dateTime" />
-            -->
-		</element>
-		
-		<element name="Role" root="true">
+
+		<element name="Role">
 			<id name="id" type="xs:long" />
-			<item name="name" type="xs:string" enact="roleName" required="true" unique="true" indexed="true" useForEquals="true" useForLabel="true" />
-            <item name="roleType" type="RoleType" required="true" indexed="true" default="USER" />
-            <setItem name="groups" type="Role" enact="roleGroups" relation="manyToMany" />
-			<listItem name="permissions" type="Permission" relation="oneToMany" contained="true" cascade="all" required="true" nullable="true" />
+            <item name="roleType" type="RoleType" enact="roleName" required="true" unique="true" />
 			<item name="conditional" type="xs:boolean" enact="roleConditional" default="true" />
-			<item name="enabled" type="xs:boolean" default="true" />
+            <setItem name="groups" type="Role" enact="roleGroups" relation="manyToMany" />
 		</element>
 
 		<enumeration name="RoleType">
@@ -120,15 +73,7 @@
 			<literal name="HOST" label="Host" />
 		</enumeration>
 
-        <!--
-		<element name="RoleCriteria" transient="true">
-			<item name="name" type="xs:string" nullable="true" />
-			<item name="roleType" type="RoleType" nullable="true" />
-			<item name="conditional" type="xs:boolean" default="true" />
-		</element>
-        -->
-		
-		<enumeration name="Action">
+		<enumeration name="Capability">
 			<literal name="ALL" />
 			<literal name="NONE" />
 			<literal name="READ" />
@@ -142,48 +87,31 @@
 	
 		<element name="Permission">
 			<id name="id" type="xs:long" />
-			<item name="target" type="xs:string" />
-			<item name="organization" type="xs:string" />
-			<listItem name="actions" type="Action" required="true" default="ALL" />
+			<item name="user" type="User" relation="manyToOne" required="true" inverse="true" />
 			<item name="enabled" type="xs:boolean" default="true" />
+			<item name="organizationId" type="xs:long" required="true" />
+			<listItem name="capabilities" type="Capability" nillable="true" />
 		</element>
-		
-        <!--
-		<element name="PermissionCriteria" transient="true">
-			<item name="role" type="xs:string" nullable="true" />
-			<item name="action" type="Action" nullable="true" />
-			<item name="enabled" type="xs:boolean" nullable="true" default="true" />
-		</element>
-        -->
 		
 		<element name="Preferences">
 			<id name="id" type="xs:long" />
-			<item name="user" type="User" relation="oneToOne" required="true" unique="true" inverse="true" mappedBy="preferences" useForLabel="true" />
+			<item name="user" type="User" relation="oneToOne" required="true" unique="true" inverse="true" mappedBy="preferences" />
 			<item name="themeId" type="xs:string" />
-			<mapItem name="workState" key="xs:string" type="xs:string" />
 			<mapItem name="openNodes" key="xs:string" type="xs:boolean" />
 			<item name="selectedNode" type="xs:long" />
 			<item name="enableTooltips" type="xs:boolean" />
 		</element>
-		
-        <!--
-		<element name="PreferencesCriteria" transient="true">
-			<item name="userName" type="xs:string" nullable="true" />
-			<item name="themeId" type="xs:string" nullable="true" />
-		</element>
-        -->
 
-		<element name="Registration" root="true">
+
+		<element name="Event">
 			<id name="id" type="xs:long" />
-			<item name="enabled" type="xs:boolean" default="true" />
-			<item name="user" type="User" relation="oneToOne" required="true" unique="true" cascade="refresh" useForLabel="true" />
-			<item name="account" type="Account" relation="oneToOne" required="true" cascade="refresh" />
-			<item name="loginCount" type="xs:long" />
+			<item name="user" type="User" relation="oneToOne" required="true" contained="false" />
 		</element>
 		
-		<element name="Skin" root="true">
+
+		<element name="Skin">
 			<id name="id" type="xs:long" />
-			<item name="name" type="xs:string" unique="true" required="true" useForLabel="true" />
+			<item name="name" type="xs:string" unique="true" required="true" />
 
 	        <item name="width" type="xs:string" />
 	        <item name="height" type="xs:string" />
@@ -412,22 +340,6 @@
 	        <item name="themeBorderColor" type="xs:string" />
 	        <item name="themeBackgroundColor" type="xs:string" />
         </element>
-        
-        <!--
-		<element name="SkinCriteria" transient="true">
-			<item name="name" type="xs:string" nullable="true" />
-		</element>
-        -->
-        
-		<element name="Team">
-			<id name="id" type="xs:long" />
-			<item name="name" type="xs:string" useForEquals="true" required="true" />
-			<item name="organization" type="xs:string" useForEquals="true" />
-			<item name="description" type="xs:string" />
-			<listItem name="members" type="User" />
-			<item name="creationDate" type="xs:dateTime" />
-			<item name="lastUpdate" type="xs:dateTime" />
-		</element>
 	</namespace>
 </information>
 

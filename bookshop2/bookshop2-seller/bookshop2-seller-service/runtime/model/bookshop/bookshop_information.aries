@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+
+	<domain>bookshop2</domain>
+	<name>bookshop2</name>
+
+	<namespace 
+		prefix="bookshop" 
+		name="bookshop2" 
+		uri="http://bookshop2">
+		
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+
+		<!-- ****** -->	
+		<!--  Data  -->	
+		<!-- ****** -->	
+		
+		<element name="Book">
+			<item name="title" type="xs:string" required="true" />
+			<item name="author" type="xs:string" required="true" />
+			<item name="price" type="xs:double" required="true" />
+			<item name="quantity" type="xs:int" />
+		</element>
+
+		<element name="BookKey">
+			<item name="title" type="xs:string" required="true" />
+			<item name="author" type="xs:string" required="true" />
+		</element>
+		
+		<element name="Order">
+			<item name="count" type="xs:int" required="true" />
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+	
+		<element name="Orders" transient="true">
+			<listItem name="orders" type="Order" relation="oneToMany" />
+		</element>
+	
+		<element name="Payment">
+			<item name="amount" type="xs:double" required="true" />
+			<item name="currency" type="xs:string" required="true" />
+			<item name="salesTax" type="xs:double" required="true" />
+			<item name="total" type="xs:double" required="true" />
+		</element>
+		
+		<element name="Invoice">
+			<item name="order" type="Order" required="true" />
+			<item name="payment" type="Payment" required="true" />
+			<item name="time" type="xs:date" required="true" />
+		</element>
+	
+		<element name="Receipt">
+			<item name="order" type="Order" required="true" />
+			<item name="payment" type="Payment" required="true" />
+			<item name="total" type="xs:double" required="true" />
+			<item name="time" type="xs:date" required="true" />
+		</element>
+
+		<element name="Shipment">
+			<item name="order" type="Order" required="true" />
+			<item name="date" type="xs:date" required="true" />
+			<item name="time" type="xs:time" required="true" />
+			<item name="name" type="common:PersonName" required="true" />
+			<item name="address" type="common:StreetAddress" required="true" />
+		</element>
+		
+		<element name="BookInventory">
+			<listItem name="books" type="Book" relation="oneToMany" />
+		</element>
+	
+		<element name="BookShipment">
+			<listItem name="books" type="Book" relation="oneToMany" />
+		</element>
+	
+	
+		<!-- ******** -->	
+		<!--  Events  -->	
+		<!-- ******** -->	
+	
+		<element name="ShipmentCompleteEvent" extends="common:AbstractEvent">
+			<item name="shipment" type="Shipment" required="true" />
+			<item name="invoice" type="Invoice" required="true" />
+		</element>
+	
+	
+		<!-- ********** -->	
+		<!--  Messages  -->	
+		<!-- ********** -->	
+
+		<element name="ReplyTo">
+			<item name="id" type="xs:string" required="true" />
+			<mapItem name="destinations" key="xs:string" type="xs:string" relation="oneToMany" required="true" />
+		</element>
+		
+		<element name="OrderRequestMessage" extends="common:AbstractMessage" >
+			<item name="order" type="Order" required="true" />
+			<item name="name" type="common:PersonName" />
+			<item name="address" type="common:StreetAddress" />
+			<item name="payment" type="Payment" />
+		</element>
+	
+		<element name="OrderResponseMessage" extends="common:AbstractMessage" >
+			<item name="order" type="Order" required="true" />
+			<listItem name="availableBooks" type="Book" relation="oneToMany" />
+			<listItem name="unavailableBooks" type="Book" relation="oneToMany" />
+		</element>
+	
+		<element name="OrderAcceptedMessage" extends="common:AbstractMessage" >
+			<item name="order" type="Order" required="true" />
+		</element>
+	
+		<element name="OrderRejectedMessage" extends="common:AbstractMessage" >
+			<item name="order" type="Order" required="true" />
+			<item name="reason" type="xs:string" required="true" />
+		</element>
+	
+		<element name="PurchaseRequestMessage" extends="common:AbstractMessage" >
+			<item name="name" type="common:PersonName" required="true" />
+			<item name="address" type="common:StreetAddress" required="true" />
+			<item name="order" type="Order" required="true" />
+			<item name="payment" type="Payment" required="true" />
+		</element>
+	
+		<element name="PurchaseAcceptedMessage" extends="common:AbstractMessage" >
+			<item name="order" type="Order" required="true" />
+			<item name="payment" type="Payment" required="true" />
+			<item name="invoice" type="Invoice" required="true" />
+		</element>
+	
+		<element name="PurchaseRejectedMessage" extends="common:AbstractMessage" >
+			<item name="order" type="Order" required="true" />
+			<item name="payment" type="Payment" required="true" />
+			<item name="reason" type="xs:string" required="true" />
+		</element>
+	
+		<element name="QueryRequestMessage" extends="common:AbstractMessage" >
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+		
+		<element name="ReservationRequestMessage" extends="common:AbstractMessage" >
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+	
+		<element name="ReservationAbortedException" extends="common:Exception" >
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+			<item name="reason" type="xs:string" />
+		</element>
+		
+		<element name="BooksAvailableMessage" extends="common:AbstractMessage" >
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+
+		<element name="BooksUnavailableMessage" extends="common:AbstractMessage" >
+			<listItem name="books" type="Book" relation="oneToMany" required="true" />
+		</element>
+
+		<element name="ShipmentRequestMessage" extends="common:AbstractMessage" >
+			<item name="shipment" type="Shipment" required="true" />
+			<item name="payment" type="Payment" required="true" />
+		</element>
+
+		<element name="ShipmentScheduledMessage" extends="common:AbstractMessage" >
+			<item name="shipment" type="Shipment" required="true" />
+		</element>
+	
+		<element name="ShipmentCompleteMessage" extends="common:AbstractMessage" >
+			<item name="shipment" type="Shipment" required="true" />
+			<item name="invoice" type="Invoice" required="true" />
+		</element>
+
+		<element name="ShipmentFailedMessage" extends="common:AbstractMessage" >
+			<item name="shipment" type="Shipment" required="true" />
+			<item name="reason" type="xs:string" required="true" />
+		</element>
+	</namespace>
+</information>
