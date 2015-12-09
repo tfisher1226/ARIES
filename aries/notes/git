@@ -53,7 +53,7 @@ This sends your commits in your “master” branch to GitHub
 Use "-u" for every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less git-pull(1) and other commands.
 git push -u origin master
 
-all push operations after this use:
+# all push operations after this use:
 git push origin master
 
 # If git push hangs, run this:
@@ -64,4 +64,17 @@ git checkout -- file...
 
 # Use this to know what to do:
 git status -uno .
+
+# use this to download changes from github repo
+git pull origin master
+
+# Use this to diff a local (changed) file against github repo
+git diff origin/master:./ --  admin/model/admin/admin_model.aries
+
+# this will throw away any local changes
+git fetch --all
+git reset --hard origin/master
+
+# OR If you are on some other branch
+git reset --hard origin/your_branch
 
