@@ -970,7 +970,7 @@ public class AriesModelBuilder {
 			 * that does not have a name yet - just adopt the name from the
 			 * first Unit (in ARIEL "persist" blocks will have only one Unit).
 			 */
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			Assert.notNull(units, "Persistence units null");
 			Assert.notEmpty(units, "At least one Persistence-unit must be specified");
 			persistence.setName(application.getArtifactId());
@@ -1320,7 +1320,7 @@ public class AriesModelBuilder {
 		Persistence persistence = module.getPersistence();
 		List<Unit> list = new ArrayList<Unit>();
 		if (persistence != null) {
-			List<Unit> units = PersistenceUtil.getUnits(persistence);
+			Collection<Unit> units = PersistenceUtil.getUnits(persistence);
 			list.addAll(units);
 		}
 

@@ -5,8 +5,8 @@ git init
 
 
 git config --list
-git config user.name "Bob"
-git config user.email "bob@example.com"
+git config user.name "Tom Fisher"
+git config user.email "tfisher@kattare.com"
 
 git config --global user.name "Bob"
 git config --global user.email "bob@example.com"
@@ -55,3 +55,13 @@ git push -u origin master
 
 all push operations after this use:
 git push origin master
+
+# If git push hangs, run this:
+git config --global core.askpass "git-gui--askpass"
+
+# Unmodifying a Modified File
+git checkout -- file...
+
+# Use this to know what to do:
+git status -uno .
+
