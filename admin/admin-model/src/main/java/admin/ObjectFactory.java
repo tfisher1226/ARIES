@@ -31,6 +31,10 @@ public class ObjectFactory {
 		return new Skin();
 	}
 	
+	public Team createTeam() {
+		return new Team();
+	}
+	
 	public User createUser() {
 		return new User();
 	}

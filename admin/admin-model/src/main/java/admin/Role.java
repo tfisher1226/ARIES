@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -47,7 +46,7 @@ public class Role implements Comparable<Object>, Serializable {
 	@XmlElement(name = "groups", namespace = "http://admin")
 	private Set<Role> groups;
 	
-	@XmlElement(name = "permissions", namespace = "http://admin", required = true)
+	@XmlElement(name = "permissions", namespace = "http://admin", required = true, nillable = true)
 	private List<Permission> permissions;
 	
 	@XmlElement(name = "conditional", namespace = "http://admin", type = String.class, defaultValue = "true")
@@ -236,25 +235,6 @@ public class Role implements Comparable<Object>, Serializable {
 		this.ref = ref;
 	}
 	
-	protected <T extends Comparable<T>> int compare(Collection<T> collecton1, Collection<T> collecton2) {
-		if (collecton1 == null && collecton2 == null) return 0;
-		if (collecton1 != null && collecton2 == null) return 1;
-		if (collecton1 == null && collecton2 != null) return -1;
-		int status = compare(collecton1.size(), collecton2.size());
-		if (status != 0)
-			return status;
-		Iterator<T> iterator1 = collecton1.iterator();
-		Iterator<T> iterator2 = collecton2.iterator();
-		while (iterator2.hasNext() && iterator2.hasNext()) {
-			T value1 = iterator1.next();
-			T value2 = iterator2.next();
-			status = value1.compareTo(value2);
-			if (status != 0)
-				return status;
-		}
-		return 0;
-	}
-	
 	@Override
 	public int compareTo(Object object) {
 		if (object.getClass().isAssignableFrom(this.getClass())) {
@@ -262,22 +242,11 @@ public class Role implements Comparable<Object>, Serializable {
 		int status = compare(name, other.name);
 		if (status != 0)
 			return status;
-		status = compare(roleType, other.roleType);
-		if (status != 0)
-			return status;
 		}
 		return 0;
 	}
 	
 	protected <T extends Comparable<T>> int compare(T value1, T value2) {
-		if (value1 == null && value2 == null) return 0;
-		if (value1 != null && value2 == null) return 1;
-		if (value1 == null && value2 != null) return -1;
-		int status = value1.compareTo(value2);
-		return status;
-	}
-	
-	protected <T extends Comparable<Object>> int compareObject(T value1, T value2) {
 		if (value1 == null && value2 == null) return 0;
 		if (value1 != null && value2 == null) return 1;
 		if (value1 == null && value2 != null) return -1;
@@ -312,7 +281,7 @@ public class Role implements Comparable<Object>, Serializable {
 	
 	@Override
 	public String toString() {
-		return "Role: name="+name+", roleType="+roleType+", permissions="+permissions;
+		return "Role: name="+name;
 	}
 	
 }

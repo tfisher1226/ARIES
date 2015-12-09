@@ -32,6 +32,7 @@ public class RegistrationUtil extends BaseUtil {
 			return true;
 		boolean status = false;
 		status |= UserUtil.isEmpty(registration.getUser());
+		status |= AccountUtil.isEmpty(registration.getAccount());
 		return status;
 	}
 	
@@ -51,7 +52,8 @@ public class RegistrationUtil extends BaseUtil {
 		if (isEmpty(registration))
 			return "Registration: [uninitialized] "+registration.toString();
 		String text = "";
-		text += UserUtil.toString(registration.getUser());
+		text += AccountUtil.toString(registration.getAccount());
+		text += UserUtil.toString(registration.getUser())+ ", ";
 		return text;
 	}
 	
@@ -88,7 +90,9 @@ public class RegistrationUtil extends BaseUtil {
 		if (registration == null)
 			return false;
 		Validator validator = Validator.getValidator();
+		validator.isFalse(AccountUtil.isEmpty(registration.getAccount()), "\"Account\" must be specified");
 		validator.isFalse(UserUtil.isEmpty(registration.getUser()), "\"User\" must be specified");
+		AccountUtil.validate(registration.getAccount());
 		UserUtil.validate(registration.getUser());
 		boolean isValid = validator.isValid();
 		return isValid;
@@ -114,6 +118,15 @@ public class RegistrationUtil extends BaseUtil {
 		List<Registration> list = new ArrayList<Registration>(registrationCollection);
 		Collections.sort(list, createRegistrationComparator());
 		return list;
+	}
+	
+	public static void sortRecordsByAccount(List<Registration> registrationList) {
+		Collections.sort(registrationList, new Comparator<Registration>() {
+			public int compare(Registration registration1, Registration registration2) {
+				int status = registration1.compareTo(registration2);
+				return status;
+			}
+		});
 	}
 	
 	public static void sortRecordsByUser(List<Registration> registrationList) {
@@ -145,6 +158,7 @@ public class RegistrationUtil extends BaseUtil {
 		clone.setId(ObjectUtil.clone(registration.getId()));
 		clone.setEnabled(ObjectUtil.clone(registration.getEnabled()));
 		clone.setUser(UserUtil.clone(registration.getUser()));
+		clone.setAccount(AccountUtil.clone(registration.getAccount()));
 		clone.setLoginCount(ObjectUtil.clone(registration.getLoginCount()));
 		return clone;
 	}

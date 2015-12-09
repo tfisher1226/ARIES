@@ -360,13 +360,13 @@
 			<item name="sourceId" type="xs:string" useForEquals="true" />
 			<item name="smtpHost" type="xs:string" />
 			<item name="smtpPort" type="xs:string" />
-			<item name="fromAddress" type="EmailAddress" relation="oneToOne" cascade="all" nillable="true" required="true" />
-			<listItem name="toAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
-			<listItem name="bccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
-			<listItem name="ccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
-			<listItem name="replytoAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
-			<listItem name="adminAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nillable="true" />
-			<listItem name="attachments" type="Attachment" relation="oneToMany" cascade="all" nillable="true" />
+			<item name="fromAddress" type="EmailAddress" relation="oneToOne" cascade="all" nullable="true" required="true" />
+			<listItem name="toAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
+			<listItem name="bccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
+			<listItem name="ccAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
+			<listItem name="replytoAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
+			<listItem name="adminAddresses" type="EmailAddressList" relation="oneToMany" cascade="all" nullable="true" />
+			<listItem name="attachments" type="Attachment" relation="oneToMany" cascade="all" nullable="true" />
 			<item name="sendAsHtml" type="xs:boolean" />
 		</element>
 	
@@ -382,7 +382,7 @@
 			<item name="passwordSalt" type="xs:string" />
 			<item name="firstName" type="xs:string" />
 			<item name="lastName" type="xs:string" />
-			<listItem name="emailBoxes" type="EmailBox" relation="oneToMany" cascade="all" contained="false" nillable="true" />
+			<listItem name="emailBoxes" type="EmailBox" relation="oneToMany" cascade="all" contained="false" nullable="true" />
 			<item name="enabled" type="xs:boolean" />
 		</element>
 	
@@ -392,7 +392,7 @@
 			<item name="name" type="xs:string" useForEquals="true" />
 			<item name="emailAccount" type="EmailAccount" relation="manyToOne" cascade="all" inverse="true" mappedBy="emailBoxes" />
 			<item name="parentBox" type="EmailBox" relation="oneToOne" cascade="refresh, merge" />
-			<listItem name="messages" type="EmailMessage" relation="oneToMany" cascade="all" nillable="true" />
+			<listItem name="messages" type="EmailMessage" relation="oneToMany" cascade="all" nullable="true" />
 			<item name="creationDate" type="xs:dateTime" />
 			<item name="lastUpdate" type="xs:dateTime" />
 		</element>

@@ -19,6 +19,7 @@ import org.aries.adapter.BooleanAdapter;
 	"id",
 	"enabled",
 	"user",
+	"account",
 	"loginCount"
 })
 @XmlRootElement(name = "registration", namespace = "http://admin")
@@ -36,6 +37,9 @@ public class Registration implements Comparable<Object>, Serializable {
 	
 	@XmlElement(name = "user", namespace = "http://admin", required = true)
 	private User user;
+	
+	@XmlElement(name = "account", namespace = "http://admin", required = true)
+	private Account account;
 	
 	@XmlElement(name = "loginCount", namespace = "http://admin")
 	private Long loginCount;
@@ -75,6 +79,14 @@ public class Registration implements Comparable<Object>, Serializable {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public Account getAccount() {
+		return account;
+	}
+	
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 	
 	public Long getLoginCount() {

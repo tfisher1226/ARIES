@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -336,39 +335,11 @@ public class User implements Comparable<Object>, Serializable {
 		this.ref = ref;
 	}
 	
-	protected <T extends Comparable<T>> int compare(Collection<T> collecton1, Collection<T> collecton2) {
-		if (collecton1 == null && collecton2 == null) return 0;
-		if (collecton1 != null && collecton2 == null) return 1;
-		if (collecton1 == null && collecton2 != null) return -1;
-		int status = compare(collecton1.size(), collecton2.size());
-		if (status != 0)
-			return status;
-		Iterator<T> iterator1 = collecton1.iterator();
-		Iterator<T> iterator2 = collecton2.iterator();
-		while (iterator2.hasNext() && iterator2.hasNext()) {
-			T value1 = iterator1.next();
-			T value2 = iterator2.next();
-			status = value1.compareTo(value2);
-			if (status != 0)
-				return status;
-		}
-		return 0;
-	}
-	
 	@Override
 	public int compareTo(Object object) {
 		if (object.getClass().isAssignableFrom(this.getClass())) {
 			User other = (User) object;
-			int status = compare(personName, other.personName);
-			if (status != 0)
-				return status;
-			status = compare(userName, other.userName);
-			if (status != 0)
-				return status;
-			status = compare(password, other.password);
-			if (status != 0)
-				return status;
-			status = compare(emailAddress, other.emailAddress);
+			int status = compare(userName, other.userName);
 			if (status != 0)
 				return status;
 		}
@@ -376,14 +347,6 @@ public class User implements Comparable<Object>, Serializable {
 	}
 	
 	protected <T extends Comparable<T>> int compare(T value1, T value2) {
-		if (value1 == null && value2 == null) return 0;
-		if (value1 != null && value2 == null) return 1;
-		if (value1 == null && value2 != null) return -1;
-		int status = value1.compareTo(value2);
-		return status;
-	}
-	
-	protected <T extends Comparable<Object>> int compareObject(T value1, T value2) {
 		if (value1 == null && value2 == null) return 0;
 		if (value1 != null && value2 == null) return 1;
 		if (value1 == null && value2 != null) return -1;
