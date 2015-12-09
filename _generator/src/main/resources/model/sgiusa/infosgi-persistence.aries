@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence
+	xmlns="http://nam/model" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/sgiusa/infosgi-information.aries" />
+
+	<domain>org.sgiusa</domain>
+	<name>infosgi-data</name>
+	
+	<unit name="sgiusa">
+		<source ref="SgiusaDS" />
+		<adapter ref="hibernate" />
+		<transacted use="required" scope="workflow" />
+		<elements>
+			<include namespace="http://www.aries.org/common" />
+			<include namespace="http://www.sgiusa.org/model" />
+		</elements>
+	</unit>
+
+	<source name="SgiusaDS">
+		<alias>java:/SgiusaDS</alias>
+		<type>mysql</type>
+		<userName>%userName%</userName>
+		<password>%password%</password>
+		<connectionUrl>jdbc:mysql://dc1-mysql-01.kattare.com:3306/sgiusadb</connectionUrl>
+		<driverClass>com.mysql.jdbc.Driver</driverClass>
+		<maxActive>30</maxActive>
+		<maxIdle>30</maxIdle>
+		<maxWait>10</maxWait>
+	</source>
+
+	<adapter name="hibernate">
+		<className>org.hibernate.ejb.HibernatePersistence</className>
+		<properties>
+			<property name="hibernate.show_sql" value="false"/>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+
+			<!-- Transaction related -->
+			<property name="hibernate.connection.release_mode" value="after_transaction"/>
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<property name="hibernate.transaction.flush_before_completion" value="true"/>
+			<property name="hibernate.transaction.auto_close_session" value="false"/>
+
+			<!-- Cache related -->
+			<property name="hibernate.cache.use_query_cache" value="true" />
+    		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+
+			<!-- JBoss related -->
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/sgiusaEntityManagerFactory"/>
+		</properties>
+	</adapter>
+
+
+	<unit name="sgiusaOrig">
+		<source ref="SgiusaOrigDS" />
+		<adapter ref="hibernate2" />
+		<transacted use="required" scope="workflow" />
+		<elements>
+			<class name="org.sgiusa.old.entity.AreaTableEntity" />
+			<class name="org.sgiusa.old.entity.ChapterTableEntity" />
+			<class name="org.sgiusa.old.entity.DistrictTableEntity" />
+			<class name="org.sgiusa.old.entity.OrganizationTableEntity" />
+			<class name="org.sgiusa.old.entity.LeadershipInfoTableEntity" />
+			<class name="org.sgiusa.old.entity.LeadershipPositionTableEntity" />
+			<class name="org.sgiusa.old.entity.PersonTableEntity" />
+			<class name="org.sgiusa.old.entity.RegionTableEntity" />
+			<class name="org.sgiusa.old.entity.StudyDeptInfoTableEntity" />
+			<class name="org.sgiusa.old.entity.ZoneTableEntity" />
+		</elements>
+		<properties>
+			<property name="generate-mappings" value="false" />
+		</properties>
+	</unit>
+
+	<source name="SgiusaOrigDS">
+		<alias>java:/SgiusaOrigDS</alias>
+		<type>mysql</type>
+		<userName>%userName%</userName>
+		<password>%password%</password>
+		<connectionUrl>jdbc:mysql://dc1-mysql-01.kattare.com:3306/infosjidb</connectionUrl>
+		<driverClass>com.mysql.jdbc.Driver</driverClass>
+		<maxActive>30</maxActive>
+		<maxIdle>30</maxIdle>
+		<maxWait>10</maxWait>
+	</source>
+	
+	<adapter name="hibernate2">
+		<className>org.hibernate.ejb.HibernatePersistence</className>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+			<property name="hibernate.show_sql" value="false"/>
+			
+			<!-- Transaction related -->
+			<property name="hibernate.transaction.flush_before_completion" value="true"/>
+			<property name="hibernate.transaction.auto_close_session" value="false"/>
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
+			<property name="transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
+
+			<!-- Cache related -->
+			<property name="hibernate.cache.use_query_cache" value="true" />
+    		<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+
+			<!-- JBoss related -->
+			<property name="jboss.entity.manager.factory.jndi.name" value="java:/sgiusaOrigEntityManagerFactory"/>
+		</properties>
+	</adapter>
+
+	
+	<cache name="eventLog">
+		<transacted use="required" scope="workflow" />
+		<scope>local</scope>
+		<level>application</level>
+		<items>
+			<listItem name="events" type="sgiusa:Event" />
+			<mapItem name="eventsByUserId" type="sgiusa:Event" key="xs:string" />
+		</items>
+	</cache>
+</persistence>

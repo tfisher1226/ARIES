@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+
+	<domain>backoffice</domain>
+	<name>backoffice</name>
+
+	<namespace 
+		name="backoffice" 
+		prefix="backoffice" 
+		uri="http://backoffice">
+		
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+
+		<!-- ****** -->	
+		<!--  Data  -->	
+		<!-- ****** -->	
+		
+		<element name="Trade">
+			<item name="tradeId" type="xs:string" required="true" />
+			<item name="brokerId" type="xs:string" required="true" />
+			<item name="sellerId" type="xs:string" required="true" />
+			<listItem name="transactions" type="Transaction" />
+		</element>
+		
+		<element name="Transaction">
+			<item name="transactionId" type="xs:string" required="true" />
+			<item name="assetId" type="xs:string" required="true" />
+			<item name="price" type="xs:double" required="true" />
+			<item name="quantity" type="xs:int" />
+		</element>
+		
+
+		<!-- ******** -->	
+		<!--  Events  -->	
+		<!-- ******** -->	
+	
+		<element name="SystemEvent" extends="common:AbstractEvent">
+			<item name="sourceId" type="xs:string" required="true" />
+			<item name="eventType" type="xs:string" required="true" />
+		</element>
+	
+		<!-- ********** -->	
+		<!--  Messages  -->	
+		<!-- ********** -->	
+
+		<element name="TradeMessage" extends="common:AbstractMessage" >
+			<listItem name="trades" type="Trade" />
+		</element>
+	</namespace>
+</information>

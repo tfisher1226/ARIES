@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<name>donation</name>
+	<domain>donation.org</domain>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<imports>
+		<import file="donation_data.aries" />
+		<import file="donation_persistence.aries" />
+		<import file="donation_messaging.aries" />
+		<import file="donation_service.aries" />
+	</imports>
+</project>

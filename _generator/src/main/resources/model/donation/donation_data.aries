@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:admin="http://admin"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+
+	<namespace 
+		name="donation" 
+		uri="http://donation.org">
+
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+		
+		<element name="Donation">
+			<id name="id" type="xs:long" />
+			<item name="donator" type="Donator" relation="oneToOne" required="true" unique="true" inverse="true" />
+
+			<item name="amount" type="xs:double" required="true" />
+			<item name="currency" type="xs:string" required="true" default="USD" eq="true" />
+			<item name="tax" type="xs:double" required="true" />
+			<item name="total" type="xs:double" required="true" eq="true" />
+
+			<item name="comments" type="xs:string" />
+			<item name="anonymous" type="xs:boolean" default="false" />
+			<item name="reoccuring" type="xs:boolean" default="false" />
+			<item name="dateTime" type="xs:dateTime" />
+		</element>
+
+		<element name="Donator" extends="admin:User">
+			<item name="name" type="common:PersonName" />
+			<item name="email" type="common:EmailAddress" />
+			<item name="address" type="common:StreetAddress" />
+		</element>
+		
+		<element name="CreditCard">
+			<item name="cardNumber" type="xs:string" />
+			<item name="securityCode" type="xs:string" />
+			<item name="expirationDate" type="xs:date" />
+		</element>
+		
+		<enumeration name="DonationFrequency">
+			<literal name="ONCE" label="One-time" />
+			<literal name="WEEKLY" label="Weekly" />
+			<literal name="MONTHLY" label="Monthly" />
+			<literal name="ANNUALLY" label="Annually" />
+		</enumeration>
+	</namespace>
+</information>
+

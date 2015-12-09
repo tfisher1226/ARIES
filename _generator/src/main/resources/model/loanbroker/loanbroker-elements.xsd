@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:redhat="http://www.redhat.com/jee-migration-example"
+	targetNamespace="http://www.redhat.com/jee-migration-example">
+	
+	<!--
+		Event element
+		*************
+	-->
+	
+	<xs:element name="event" type="redhat:Event" />
+	<xs:complexType name="Event">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="date" type="xs:date" minOccurs="1" />
+				<xs:element name="message" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!--
+		Item element
+		************
+	-->
+	
+	<xs:element name="item" type="redhat:Item" />
+	<xs:complexType name="Item">
+		<xs:sequence>
+				<xs:element name="id" type="xs:long" minOccurs="0" />
+				<xs:element name="name" type="xs:string" minOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

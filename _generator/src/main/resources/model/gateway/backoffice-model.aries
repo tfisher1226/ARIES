@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:common="http://www.aries.org/common"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/admin/admin_model.aries" />
+
+	<domain>bookshop2</domain>
+	<name>bookshop2</name>
+
+	<namespace 
+		prefix="bookshop" 
+		name="bookshop2" 
+		uri="http://bookshop2">
+		
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+
+		<!-- ****** -->	
+		<!--  Data  -->	
+		<!-- ****** -->	
+		
+		<element name="Book" root="true">
+			<item name="title" type="xs:string" required="true" />
+			<item name="author" type="xs:string" required="true" />
+			<item name="price" type="xs:double" required="true" />
+			<item name="quantity" type="xs:int" />
+		</element>
+
+		<element name="ShipmentFailedMessage" extends="common:AbstractMessage" >
+			<item name="shipment" type="Shipment" required="true" />
+			<item name="reason" type="xs:string" required="true" />
+		</element>
+	</namespace>
+</information>

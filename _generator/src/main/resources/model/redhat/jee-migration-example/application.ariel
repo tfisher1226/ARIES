@@ -1,0 +1,49 @@
+import redhat.jee_migration_example.elements.aries;
+import redhat.jee_migration_example.messaging.aries;
+import redhat.jee_migration_example.persistence.aries;
+
+network Redhat {
+	set domain("redhat");
+	set name("jee-migration-example");
+	set namespace("http://www.redhat.com/jee-migration-example");
+
+    participant EventLogger {
+        add channel("public");
+		//set stateful(true);
+
+        receive populateCatalog() {
+        }
+
+        receive lookupItem(Long id) {
+        	set synchronous(true);
+        	Item item = itemDatabase.getItemById(id);
+
+        	Date date = new Date();
+        	String text = "Returning Item: " + id;
+
+        	Event event = new Event();
+        	event.setDate(date);
+        	event.setMessage(text);
+        	send EventLogger.logEvent(event);
+        	reply item;
+        	done;
+        }
+
+        receive logEvent(Event event) {
+        	Item item = event.getItem();
+        	ItemInventory.addToItemStore(item);
+        }
+
+		persist ItemInventory {
+		    set source("redhat_jee_migration_example");
+		    set adapter("hibernate");
+			add role("anvil_user");
+			items {
+				Map<String, Item> itemStore {
+					index(type);
+				}
+			}
+		}
+    }
+
+}

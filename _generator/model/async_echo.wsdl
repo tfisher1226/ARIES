@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions 
+	name="async_echo"
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+	xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soapjms="http://www.w3.org/2010/soapjms/"
+	xmlns:ns2="http://sample/async_echo_service"
+	xmlns:ns1="http://sample/async_echo"
+	targetNamespace="http://sample/async_echo">
+	
+	<import
+		location="async_echo_service.wsdl"
+		namespace="http://sample/async_echo_service"/>
+		
+	<types>
+		<schema 
+			attributeFormDefault="qualified" 
+			elementFormDefault="qualified"
+			xmlns="http://www.w3.org/2001/XMLSchema"
+			targetNamespace="http://sample/async_echo">
+
+			<element name="asynctestRequest">
+				<complexType>
+					<sequence>
+						<element name="input" type="xsd:string" />
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="asynctestResponse">
+				<complexType>
+					<sequence>
+						<element name="result" type="xsd:string" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+
+	<message name="asynctestResponseMessage">
+		<part name="payload" element="ns1:asynctestResponse" />
+	</message>
+
+	<message name="asynctestRequestMessage">
+		<part name="payload" element="ns1:asynctestRequest" />
+	</message>
+
+	<portType name="asynctestCallbackPT">
+		<operation name="onResult">
+			<input message="ns1:asynctestResponseMessage" />
+		</operation>
+	</portType>
+
+	<portType name="AsyncEchoCallerPT">
+		<operation name="echo">
+			<input message="ns1:asynctestRequestMessage" name="asynctestRequestMessage"/>
+			<output message="ns1:asynctestResponseMessage" name="asynctestResponseMessage"/>
+		</operation>
+	</portType>
+
+	<binding name="AsyncEchoCallerPTSoapBinding" type="ns1:AsyncEchoCallerPT">
+		<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="echo">
+			<soap:operation soapAction="" />
+			<input name="asynctestRequestMessage">
+				<soap:body
+					namespace="http://sample/async_echo"
+					use="literal" />
+			</input>
+			<output name="asynctestResponseMessage">
+				<soap:body 
+					namespace="http://sample/async_echo"
+					use="literal" />
+			</output>
+		</operation>
+	</binding>
+	
+	<service name="AsyncEchoCaller">
+	</service>
+
+	<service name="AsyncEchoCallback">
+	</service>
+
+	<vprop:property name="echoCorrelationData" type="xsd:string" />
+
+	<plnk:partnerLinkType name="AsyncEchoCaller">
+		<plnk:role name="AsyncEchoCaller" portType="ns1:AsyncEchoCallerPT"/>
+	</plnk:partnerLinkType>
+
+	<plnk:partnerLinkType name="asynctestRequester">
+		<plnk:role name="asynctestProvider" portType="ns2:AsyncEchoService"/>
+		<plnk:role name="asynctestReplyReceiver" portType="ns1:asynctestCallbackPT"/>
+	</plnk:partnerLinkType>
+
+	<vprop:propertyAlias messageType="ns2:initiateEchoRequest"
+		part="echoString" propertyName="ns1:echoCorrelationData" />
+	<vprop:propertyAlias messageType="ns1:asynctestResponseMessage"
+		part="payload" propertyName="ns1:echoCorrelationData" query="/ns1:asynctestResponse/ns1:result" />
+</definitions>

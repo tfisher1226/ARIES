@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process 
+	name="async_echo"
+	suppressJoinFailure="yes"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+	xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+	xmlns:ns1="http://sample/async_echo"
+	xmlns:ns2="http://sample/async_echo_service"
+	targetNamespace="http://sample/async_echo/async_echo.bpel" 
+	expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0"
+	queryLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath2.0">
+
+	<import 
+		location="async_echo.wsdl"
+		namespace="http://sample/async_echo"
+		importType="http://schemas.xmlsoap.org/wsdl/" />
+          
+	<import 
+		location="async_echo_service.wsdl"
+		namespace="http://sample/async_echo_service"
+		importType="http://schemas.xmlsoap.org/wsdl/" />
+
+	<partnerLinks>
+		<partnerLink 
+			name="AsyncEchoCaller"
+			myRole="AsyncEchoCaller" 
+			partnerLinkType="ns1:AsyncEchoCaller"/>
+		
+		<partnerLink 
+			name="asynctestRequester"
+			myRole="asynctestReplyReceiver"
+			partnerRole="asynctestProvider"
+			partnerLinkType="ns1:asynctestRequester"/>
+	</partnerLinks>
+  
+	<variables>
+		<variable messageType="ns1:asynctestRequestMessage" name="asynctestRequestMessage" />
+		<variable messageType="ns1:asynctestResponseMessage" name="asynctestResponseMessage" />
+		<variable messageType="ns2:initiateEchoRequest" name="initateEchoRequest" />
+	</variables>
+
+	<correlationSets>
+		<correlationSet name="CS1" properties="ns1:echoCorrelationData" />
+	</correlationSets>
+	
+	<sequence>
+		<receive 
+			createInstance="yes" 
+			operation="echo" 
+			partnerLink="AsyncEchoCaller"
+			portType="ns1:AsyncEchoCallerPT" 
+			variable="asynctestRequestMessage" />
+	
+		<assign name="assignEchoString">
+			<copy>
+				<from part="payload" variable="asynctestRequestMessage">
+					<query>ns1:input</query>
+				</from>
+				<to part="echoString" variable="initateEchoRequest" />
+			</copy>
+		</assign>
+	
+		<invoke inputVariable="initateEchoRequest" operation="initiateEcho"
+			partnerLink="asynctestRequester" portType="ns2:AsyncEchoService">
+			<correlations>
+				<correlation initiate="yes" set="CS1" />
+			</correlations>
+		</invoke>
+	
+		<receive operation="onResult" partnerLink="asynctestRequester"
+			portType="ns1:asynctestCallbackPT" variable="asynctestResponseMessage">
+			<correlations>
+				<correlation initiate="no" set="CS1" />
+			</correlations>
+		</receive>
+	
+		<reply operation="echo" partnerLink="AsyncEchoCaller" portType="ns1:AsyncEchoCallerPT"
+			variable="asynctestResponseMessage" />
+	</sequence>
+</process>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project
+	xmlns="http://nam/model/0.0.1" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ns2="http://sample/async_echo_service"
+	xmlns:ns1="http://sample/async_echo"
+	xsi:schemaLocation="http://nam/model/0.0.1 file:/workspace/ARIES/nam-model/source/main/resources/schema/model-0.0.1.xsd">
+
+	<name>AsyncEcho</name>
+	<version>0.0.1.SNAPSHOT</version>
+	
+	<imports>
+		<import file="async_echo.bpel" type="bpel"/>
+	</imports>
+
+	<providers>
+		<provider
+			type="jndi" 
+			name="@jndi.provider.name@"
+			connection-url="@jndi.provider.url@"
+			context-factory="@jndi.provider.context-factory@" 
+			url-pkg-prefixes="@jndi.provider.url-pkg-prefixes@"
+			security-principal="@jndi.provider.username@"
+			security-credentials="@jndi.provider.password@"/>
+	</providers>
+
+	<links>
+		<!-- 
+		<link name="AsyncEchoCaller" type="AsyncEchoCaller">
+			<role name="AsyncEchoCaller" transport="ws" transferMode="text" portType="ns1:AsyncEchoCallerPT" />
+			<role name="AsyncEchoCallerJMS" transport="jms" transferMode="text" portType="ns1:AsyncEchoCallerPT" provider="@jms.provider.name@" connectionFactory="@jms.provider.connection-factory@"/>
+		</link>
+		-->
+		
+		<link name="AsyncEchoCaller" type="AsyncEchoCaller">
+			<role name="AsyncEchoCaller">
+				<defaultTransport>EJB</defaultTransport>
+				<!--  
+				<invocation-policy ref="ejb, jms, ws"/>
+				-->
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/sample.async_echo.AsyncEchoCallerPT/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.asyncEchoCaller.destination@"/>
+				<http-transport type="ws" portType="ns1:AsyncEchoCallerPT"/>
+				<handler type="JDBCException" name="exceptionHandler"/>
+			</role>
+		</link>
+
+		<link name="asynctestRequester" type="asynctestRequester">
+			<role name="asynctestProvider">
+				<defaultTransport>EJB</defaultTransport>
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/sample.async_echo_service.AsyncEchoService/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.asynctestRequester.destination@"/>
+				<http-transport portType="ns2:AsyncEchoService"/>
+				<!--  
+				-->
+			</role>
+
+			<role name="asynctestReplyReceiver">
+				<defaultTransport>EJB</defaultTransport>
+				<ejb-transport type="ejb" 
+					providerName="@jndi.provider.name@"
+					jndiName="deploy/sample.async_echo.AsynctestCallbackPT/remote"/>
+				<jms-transport type="jms" 
+					transferMode="TEXT" 
+					providerName="@jndi.provider.name@" 
+					connectionFactory="@jms.connection-factory@"
+					destinationName="@jms.asynctestReplyReceiver.destination@"/>
+				<http-transport portType="ns1:asynctestCallbackPT"/>
+				<!-- 
+				-->
+			</role>
+		</link>
+	</links>
+	
+	<applications>
+		<application>
+			<name>asynch_echo</name>
+			<groupId>org.simple</groupId>
+			<artifactId>aries-demo-asynch_echo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+
+			<modules>
+				<!--  
+				<module>
+					<type>model</type>
+					<name>asynch_echo-model</name>
+				</module>
+
+				<module>
+					<type>client</type>
+					<name>asynch_echo-client</name>
+				</module>
+				-->
+				
+				<module>
+					<type>service</type>
+					<name>asynch_echo</name>
+					<services>
+						<service ref="AsyncEchoCallerPT">
+							<listener link="AsyncEchoCaller" role="AsyncEchoCaller"/>
+							<link name="asynctestRequester" role="asynctestReplyReceiver"/>
+						</service>
+
+						<service ref="AsyncEchoService">
+							<listener link="asynctestRequester" role="asynctestProvider"/>
+							<link name="asynctestRequester" role="asynctestReplyReceiver"/>
+						</service>
+
+						<service ref="asynctestCallbackPT">
+							<listener link="asynctestRequester" role="asynctestReplyReceiver"/>
+						</service>
+					</services>
+				</module>
+			</modules>
+		</application>
+	</applications>
+</project>

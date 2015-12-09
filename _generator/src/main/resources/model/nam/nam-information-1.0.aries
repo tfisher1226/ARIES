@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	Information section
+	*******************
+ -->
+	
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+	
+	<import file="/common/aries-common-1.0.aries" />
+	<import file="/nam/nam-common-1.0.aries" />
+
+	<domain>org.aries</domain>
+	<name>nam</name>
+
+	<namespace 
+        prefix="nam" 
+        name="nam-model" 
+        uri="http://nam/model">
+
+		<!--
+			Information related structures
+			******************************
+		 -->
+
+		<element name="Information" root="true" hierarchical="true">
+			<item name="import" type="Import" />
+			<item name="domain" type="xs:string" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<listItem name="namespace" type="Namespace" />
+			<item name="imported" type="xs:boolean" />
+			<item name="included" type="xs:boolean" />
+			<item name="exposed" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		
+		<!--
+			Namespace related structures
+			****************************
+		 -->
+
+		<element name="Namespace" extends="Type" root="true" hierarchical="true">
+			<item name="uri" type="xs:string" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="prefix" type="xs:string" />
+			<item name="schema" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="filePath" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<listItem name="imports" type="Namespace" />
+			<listItem name="types" type="Type" />
+			<item name="imported" type="xs:boolean" />
+			<item name="included" type="xs:boolean" />
+			<item name="exposed" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+
+        <!--
+			Messaging related structures
+			****************************
+		 -->
+
+		<element name="Messaging" root="true">
+			<listItem name="imports" type="nam:Import" />
+			<item name="domain" type="xs:string" />
+			<item name="name" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<listItem name="members" type="java.io.Serializable">
+				<itemType>Resource</itemType>
+				<itemType>Provider</itemType>
+				<itemType>Channels</itemType>
+				<itemType>Listeners</itemType>
+				<itemType>Links</itemType>
+				<itemType>Intereactors</itemType>
+				<itemType>Transports</itemType>
+			</listItem>
+			<item name="imported" type="xs:boolean" default="false" />
+			<item name="included" type="xs:boolean" />
+			<item name="exposed" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		
+		<!--
+			Cache related structures
+			************************
+		 -->
+
+		<element name="Cache" extends="Element">
+			<item name="scope" type="xs:string" />
+			<item name="level" type="xs:string" />
+			<item name="transacted" type="Transacted" />
+			<item name="items" type="Items" />
+		</element>
+		
+
+		<!--
+			Type related structures
+			***********************
+		 -->
+
+		<element name="Type" abstract="false">
+			<item name="name" type="xs:string" required="true" useForEquals="true" />
+			<item name="label" type="xs:string" />
+			<item name="plural" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="type" type="xs:string" required="true" useForEquals="true" />
+			<item name="key" type="xs:string" />
+			<item name="structure" type="xs:string" />
+			<item name="cached" type="xs:boolean" />
+			<item name="public" type="xs:boolean" />
+			<item name="description" type="xs:string" />
+		</element>
+		
+		
+		<!--
+			Element related structures
+			**************************
+		 -->
+
+		<element name="Enumeration" extends="Type">
+			<listItem name="literals" type="Literal" required="true" />
+			<item name="default" type="Literal" />
+		</element>
+
+		<element name="Literal">
+			<item name="name" type="xs:string" required="true" />
+			<item name="label" type="xs:string" required="true" />
+			<item name="value" type="xs:anyType" />
+		</element>
+
+		<element name="Elements">
+			<listItem name="elements" type="Element" />
+		</element>
+
+		<element name="Element" extends="Type">
+			<item name="root" type="xs:boolean" />
+			<item name="abstract" type="xs:boolean" />
+			<item name="transient" type="xs:boolean" />
+			<item name="persisted" type="xs:boolean" />
+			<item name="hierarchical" type="xs:boolean" />
+			<item name="sortable" type="xs:boolean" />
+			
+			<item name="extends" type="xs:string" useForEquals="true" />
+			<item name="parentType" type="xs:string" />
+			<listItem name="superTypes" type="xs:string" />
+			<listItem name="subTypes" type="xs:string" />
+			<listItem name="referencedBy" type="ReferencedBy" />
+			<listItem name="containedBy" type="ContainedBy" />
+			<listItem name="annotations" type="Annotation" />
+
+			<listItem name="idsAndItemsAndSecrets" type="java.io.Serializable">
+				<itemType>Id</itemType>
+				<itemType>Item</itemType>
+				<itemType>Secret</itemType>
+				<itemType>ListItem</itemType>
+				<itemType>SetItem</itemType>
+				<itemType>MapItem</itemType>
+				<itemType>Grouping</itemType>
+			</listItem>
+			
+			<listItem name="attributesAndReferencesAndGroups" type="java.io.Serializable">
+				<itemType>Attribute</itemType>
+				<itemType>Reference</itemType>
+				<itemType>Grouping</itemType>
+			</listItem>
+			
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		
+		<!--
+			Field element
+			*************
+		 -->
+		 
+		<element name="Field" extends="Type" abstract="true">
+			<item name="simple" type="xs:boolean" />
+			<item name="unique" type="xs:boolean" />
+			<item name="nullable" type="xs:boolean" />
+			<item name="required" type="xs:boolean" />
+			<item name="transient" type="xs:boolean" />
+			<item name="volatile" type="xs:boolean" />
+			<item name="indexed" type="xs:boolean" />
+			<item name="derived" type="xs:boolean" />
+			<item name="changeable" type="xs:boolean" />
+			<item name="unsettable" type="xs:boolean" />
+			<item name="ordered" type="xs:boolean" />
+			<item name="managed" type="xs:boolean" />
+			<item name="minOccurs" type="xs:int" />
+			<item name="maxOccurs" type="xs:int" />
+			<item name="many" type="xs:boolean" />
+			<item name="column" type="xs:string" />
+			<item name="fetch" type="FetchType" />
+			<item name="cascade" type="xs:string" />
+			<item name="enact" type="xs:string" />
+			<item name="hash" type="HashType" />
+			<item name="default" type="xs:string" />
+			<item name="useForLabel" type="xs:boolean" />
+			<item name="useForEquals" type="xs:boolean" />
+			<item name="placeholder" type="xs:string" />
+			<listItem name="annotations" type="Annotation" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		<element name="Attribute" extends="Field">
+		</element>
+		
+		<element name="Reference" extends="Field">
+		</element>
+		
+		<element name="Event" extends="Element">
+			<item name="message" type="xs:string" useForEquals="true" />
+		</element>
+
+		<element name="Items">
+			<listItem name="idsAndItemsAndSecrets" type="java.io.Serializable">
+				<itemType>Id</itemType>
+				<itemType>Item</itemType>
+				<itemType>Secret</itemType>
+				<itemType>ListItem</itemType>
+				<itemType>SetItem</itemType>
+				<itemType>MapItem</itemType>
+			</listItem>
+		</element>
+
+		<element name="Id" extends="Attribute" root="true">
+			<item name="source" type="IdSourceType" />
+			<item name="initialValue" type="xs:long" default="1" />
+			<item name="allocationSize" type="xs:long" default="1" />
+		</element>
+		
+		<element name="Item" extends="Reference" root="true">
+			<item name="ascend" type="xs:boolean" default="true"/>
+		</element>
+
+		<element name="ListItem" extends="Reference" root="true">
+		</element>
+
+		<element name="SetItem" extends="Reference" root="true">
+		</element>
+
+		<element name="MapItem" extends="Reference" root="true">
+		</element>
+
+
+		<element name="Query" root="true">
+			<item name="name" type="xs:string" />
+			<item name="from" type="xs:string" />
+			<item name="orderBy" type="OrderBy" />
+			<listItem name="conditionsAndCriterias" type="java.io.Serializable">
+				<itemType>Condition</itemType>
+				<itemType>Criteria</itemType>
+			</listItem>
+			<item name="distinct" type="xs:boolean" default="false"/>
+		</element>
+		
+		
+		<element name="OrderBy">
+			<listItem name="items" type="Item" />
+		</element>
+		
+		
+		<element name="Condition">
+			<listItem name="insAndLikes" type="java.io.Serializable">
+				<itemType>In</itemType>
+				<itemType>Like</itemType>
+			</listItem>
+		</element>
+
+
+		<element name="Criteria">
+			<listItem name="insAndLikes" type="java.io.Serializable">
+				<itemType>In</itemType>
+				<itemType>Like</itemType>
+			</listItem>
+		</element>
+
+
+		<element name="ReferencedBy">
+			<item name="name" type="xs:string" />
+			<item name="type" type="xs:string" />
+			<item name="structure" type="xs:string" />
+		</element>
+		
+		
+		<element name="ContainedBy">
+			<item name="name" type="xs:string" />
+			<item name="type" type="xs:string" />
+			<item name="structure" type="xs:string" />
+		</element>
+		
+		
+		<!--  
+			Operators and operator meaning
+			******************************
+			
+			ALL - TRUE if all of a set of comparisons are TRUE.
+		
+			AND - TRUE if both Boolean expressions are TRUE.
+		
+			ANY - TRUE if any one of a set of comparisons are TRUE.
+		
+			BETWEEN - TRUE if the operand is within a range.
+		
+			EXISTS - TRUE if a subquery contains any rows.
+		
+			IN - TRUE if the operand is equal to one of a list of expressions.
+		
+			LIKE - TRUE if the operand matches a pattern.
+		
+			NOT - Reverses the value of any other Boolean operator.
+		
+			OR - TRUE if either Boolean expression is TRUE.
+		
+			SOME - TRUE if some of a set of comparisons are TRUE.
+		-->	
+
+
+		<element name="In">
+			<listItem name="field" type="xs:string" />
+			<listItem name="type" type="xs:string" />
+			<listItem name="required" type="xs:boolean" default="false" />
+		</element>
+		
+		
+		<element name="Like">
+			<listItem name="field" type="xs:string" />
+			<listItem name="type" type="xs:string" />
+			<listItem name="required" type="xs:boolean" default="false" />
+		</element>
+
+
+		<enumeration name="IdSourceType" default="NONE">
+			<literal name="NONE" label="none" />
+			<literal name="AUTO" label="auto" />
+			<literal name="IDENTITY" label="identity" />
+			<literal name="SEQUENCE" label="sequence" />
+			<literal name="TABLE" label="table" />
+		</enumeration>
+		
+	</namespace>
+</information>
+

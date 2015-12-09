@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="qualified"  
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ns1="http://sample/async_echo"
+	targetNamespace="http://sample/async_echo">
+	
+	<!--  
+	<xs:element name="asynctestRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="input" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="asynctestResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="result" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	-->
+
+	<xs:element name="asynctestRequest" type="ns1:AsynctestRequest"/>
+	<xs:complexType name="AsynctestRequest">
+		<xs:sequence>
+			<xs:element name="input" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="asynctestResponse" type="ns1:AsynctestResponse"/>
+	<xs:complexType name="AsynctestResponse">
+		<xs:sequence>
+			<xs:element name="result" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<!--  
+	-->
+</xs:schema>

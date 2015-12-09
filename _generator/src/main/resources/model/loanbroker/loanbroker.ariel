@@ -1,0 +1,51 @@
+import loanbroker-elements.aries;
+import loanbroker-messaging.aries;
+import loanbroker-persistence.aries;
+
+protocol LoanBroker {
+	set domain("sample");
+	set name("loan-broker");
+	set namespace("http://www.sample.com/loan-broker");
+
+    agent TestClient {
+	}
+
+    agent LoanBroker {
+        add channel("public");
+        
+        receive lookupItem(Long id) {
+        	set synchronous(true);
+        	
+        }
+	}
+
+    agent CreditBureau {
+    	receive creditCheck(CreditRequest request) {
+        	set synchronous(true);
+        	
+        }
+	}
+
+    contract Bank {
+    	receive lookupItem(Long id) {
+        	set synchronous(true);
+        	
+        }
+	}
+	
+    agent WellsFargo implements Bank {
+	}
+
+    agent BankOfAmerica {
+	}
+
+    agent JPMorganChase {
+	}
+
+    agent ManagementConsole {
+	}
+
+    router CreditRequestRouter {
+	}
+
+}

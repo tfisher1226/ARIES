@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<domain>redhat</domain>
+	<name>jee-migration-example</name>
+
+	<namespace 
+		prefix="redhat" 
+		name="redhat" 
+		uri="http://www.redhat.com/jee-migration-example">
+		
+		<element name="Item" root="true">
+			<id name="id" type="xs:long" />
+			<item name="name" type="xs:string" required="true" unique="true" />
+		</element>
+
+		<element name="Event">
+			<item name="date" type="xs:date" required="true" eq="true" />
+			<item name="message" type="xs:string" required="true" />
+		</element>
+	</namespace>
+</information>

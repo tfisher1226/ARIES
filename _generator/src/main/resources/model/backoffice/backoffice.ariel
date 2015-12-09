@@ -1,0 +1,142 @@
+import admin.admin_service.aries;
+import bookshop.bookshop_information.aries;
+import bookshop.bookshop_messaging.aries;
+import bookshop.bookshop_persistence.aries;
+import bookshop.bookshop_seller_information.aries;
+import bookshop.bookshop_seller_persistence.aries;
+import bookshop.bookshop_supplier_persistence.aries;
+
+
+network Backoffice {
+	set domain("test");
+
+	role tradeDesk {
+	}
+
+	role frontOffice {
+	}
+	
+	role backOffice {
+	}
+	
+	link XXX {
+	}
+	
+	channel {
+	}
+	
+	channel Backoffice {
+		add link Backoffice;
+		add sender role="tradeDesk";
+		add receiver role="backOffice";
+    }
+
+	link Backoffice {
+		add role tradeDesk;
+		add transport BackofficeJMS;
+		add transport invalidMessagesJMS;
+	}
+			
+	transport BackofficeJMS {
+		set provider "hornetq";
+		set maxDeliveryAttempts "3";
+		set transferMode "TEXT";
+	}
+	
+	transport InvalidMessagesJMS {
+		set provider "hornetq";
+		set maxDeliveryAttempts "3";
+		set transferMode "TEXT";
+	}
+			
+		
+    participant Gateway {
+        add channel("Gateway");
+
+        receive receiveTransactions(Trades trades) {
+        	join transaction("receiveTrades");
+            send Receiver.handleIncomingTrades(trades);
+        }
+    }
+
+    participant Receiver {
+		add channel("Receiver");
+
+        receive handleIncomingTrades(Trades trades) {
+        	join transaction("saveTransactions");
+   	        TransactionDatabase.saveTrades(trades);
+       	    List<Transaction> transactions = trades.getTransactions();
+            send Handler.handleIncomingTransactions(transactions);
+        }
+
+        receive handleIncomingTransactions(List<Transaction> transactions) {
+        	join transaction("saveTransactions");
+       	    List<Transaction> transactions = trades.getTransactions();
+   	        TransactionDatabase.saveTransactions(transactions);
+            done;
+        }
+
+		persist TransactionDatabase {
+		    import namespace("backoffice");
+		    set source("backoffice");
+		    set adapter("hibernate");
+			items {
+				Map<String, Transaction> transactions {
+					index(transactionId);
+					index(sourceId);
+				}
+			}
+		}
+    }
+
+	participant PostingService {
+		add channel("Posting");
+		
+		boolean done = false;
+		while (!done) {
+			List<Transaction> transactions = TransactionDatabase.readTransactions();
+			//enrich transactions
+			//forward some transactions for confirmation
+			//"post" transactions into booking system
+		}
+	}
+	
+	participant ConfirmationService {
+		add channel("Confirmation");
+		
+	}
+	
+	participant InstructionService {
+		add channel("Instruction");
+		
+	}
+	
+    participant Monitor {
+        add channel("Events");
+
+        receive logEvent(Event event) {
+        	join transaction("logEvent");
+   	        EventLog.saveEvent(event);
+            done;
+        }
+
+       	listen SystemEvent {
+           	set timeout(never);
+            EventLog.saveEvent(systemEvent);
+        }
+
+		persist EventLog {
+		    import namespace("backoffice");
+		    set source("backoffice");
+		    set adapter("hibernate");
+			items {
+				List<Event> events {
+					index(sourceId);
+					index(eventType);
+					index(dateTime);
+				}
+			}
+		}
+    }
+
+}

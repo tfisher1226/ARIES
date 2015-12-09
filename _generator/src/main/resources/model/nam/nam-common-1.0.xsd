@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xs:schema 
+	version="1.0"
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns="http://nam/model"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:common="http://www.aries.org/common"
+	targetNamespace="http://nam/model">
+	
+	<!--  
+	-->
+
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.xsd" />
+
+
+	<!--
+		Import type
+	-->
+	
+	<xs:element name="imports">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="import" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="import" type="Import" />
+	<xs:complexType name="Import">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The specification of an imported file.
+			</xs:documentation>
+		</xs:annotation>
+		
+		<xs:sequence>
+			<xs:element name="imports" type="Import" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="object" type="xs:anyType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="dir" type="xs:string" />
+		<xs:attribute name="file" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="prefix" type="xs:string" />
+		<xs:attribute name="namespace" type="xs:string" />
+		<xs:attribute name="include" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+
+	<!--
+		Include type
+	-->
+	
+	<xs:element name="include" type="Include" />
+	<xs:complexType name="Include">
+		<xs:sequence/>
+		<xs:attribute name="groupId" type="xs:string" />
+		<xs:attribute name="artifactId" type="xs:string" />
+		<xs:attribute name="version" type="xs:string" />
+		<xs:attribute name="scope" type="xs:string" />
+		<xs:attribute name="file" type="xs:string" />
+		<xs:attribute name="namespace" type="xs:string" />
+		<xs:attribute name="element" type="xs:string" />
+		<xs:attribute name="component" type="xs:string" />
+	</xs:complexType>
+
+
+	<!--
+		Schema type
+	-->
+
+	<xs:element name="schemas">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="schema" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="schema" type="Schema" />
+	<xs:complexType name="Schema">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="SchemaType" />
+			<xs:element minOccurs="0" maxOccurs="1" name="content" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:simpleType name="SchemaType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sql" />
+			<xs:enumeration value="xsd" />
+			<xs:enumeration value="wsdl" />
+			<xs:enumeration value="bpmn" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!--
+		Resource type
+	-->
+
+	<xs:element name="resources">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="resource" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+    <xs:element name="resource" type="Resource" />
+	<xs:complexType name="Resource">
+		<xs:sequence>
+			<xs:element ref="property" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="path" type="xs:string" />
+		<xs:attribute name="url" type="xs:string" />
+	</xs:complexType>	
+
+
+	<!--
+		Provider Type
+	-->
+
+	<xs:element name="providers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="provider" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="provider" type="Provider" />
+	<xs:complexType name="Provider">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="store" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="userName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="jndiName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="jndiContext" type="JndiContext" />
+			<xs:element minOccurs="0" maxOccurs="1" name="connectionUrl" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean" default="true" />
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="jndi-name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="connection-url" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="context-factory" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="url-pkg-prefixes" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+			<xs:element name="default-connection-factory" type="xs:string" minOccurs="1" maxOccurs="1" />
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="ref" type="xs:string" />
+		<!--  
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="jndiName" type="xs:string" />
+		<xs:attribute name="connectionUrl" type="xs:string" />
+		<xs:attribute name="contextFactory" type="xs:string" />
+		<xs:attribute name="packagePrefixes" type="xs:string" />
+		<xs:attribute name="userName" type="xs:string" />
+		<xs:attribute name="password" type="xs:string" />
+		-->
+	</xs:complexType>
+	
+	
+	<!--
+		Adapter Type
+	-->
+
+	<xs:element name="adapters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0" ref="adapter" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="adapter" type="Adapter" />
+	<xs:complexType name="Adapter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="type" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="className" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean" />
+			<xs:element minOccurs="0" maxOccurs="1" name="maxThreads" type="xs:integer" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="connectionPool" />
+			<xs:element minOccurs="0" maxOccurs="1" ref="provider" />
+			<!--  
+			<xs:element minOccurs="0" maxOccurs="1" ref="nam-security:security" />
+			-->
+			<xs:element minOccurs="0" maxOccurs="1" ref="properties" />
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+	<xs:element name="connectionPool" type="ConnectionPool" />
+	<xs:complexType name="ConnectionPool">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="initialSize" type="xs:integer" />
+			<xs:element minOccurs="0" maxOccurs="1" name="minSize" type="xs:integer" />
+			<xs:element minOccurs="0" maxOccurs="1" name="maxSize" type="xs:integer" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--
+		Handler type
+	-->
+
+	<xs:element name="handler" type="Handler" />
+	<xs:complexType name="Handler">
+		<xs:sequence>
+			<xs:element default="360000" minOccurs="0" maxOccurs="1" name="timeout" type="xs:long" />
+			<xs:element default="false" minOccurs="0" maxOccurs="1" name="transacted" type="xs:boolean" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+	</xs:complexType>
+
+
+	<!--
+		Address type
+	-->
+
+	<xs:element name="address" type="Address"/>
+	<xs:complexType name="Address">
+		<xs:simpleContent>
+			<xs:extension base="xs:anyURI">
+				<xs:anyAttribute namespace="##other" processContents="lax"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	
+	<!--
+		Endpoint type
+	-->
+
+	<!--  
+	<xs:element name="endpoint" type="Endpoint"/>
+	<xs:complexType name="Endpoint">
+		<xs:sequence>
+			<xs:element name="address" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="serviceName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="portName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="parameters" type="common:Map" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	-->
+	
+	<xs:element name="endpoint" type="Endpoint"/>
+	<xs:complexType name="Endpoint">
+		<xs:sequence>
+			<xs:element name="instanceId" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="serviceName" type="xs:QName" minOccurs="1" maxOccurs="1" />
+			<xs:element name="endpointName" type="xs:QName" minOccurs="1" maxOccurs="1" />
+			<xs:element name="endpointUri" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<!--  
+			<xs:element ref="metadata" minOccurs="0" />
+			<xs:element ref="parameters" minOccurs="0" />
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+			-->
+		</xs:sequence>
+		<!--  
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		-->
+	</xs:complexType>
+	
+	<!--  
+	<xs:element name="parameters" type="Parameters" />
+	<xs:complexType name="Parameters">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax" />
+	</xs:complexType>
+	
+	<xs:element name="metadata" type="Metadata"/>
+	<xs:complexType name="Metadata">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	-->
+	
+	
+	<!--
+		TransactionContext type
+	-->
+
+	<xs:element name="transactionContext" type="TransactionContext"/>
+	<xs:complexType name="TransactionContext">
+		<xs:sequence>
+			<xs:element name="correlationId" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="transactionId" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="expiration" type="xs:long" minOccurs="1" maxOccurs="1" />
+			<xs:element name="isolationLevel" type="TransactionIsolationLevel" minOccurs="1" maxOccurs="1" />
+			<xs:element name="coordinationType" type="xs:string" minOccurs="1" maxOccurs="1" />
+			<xs:element name="registrationService" type="Endpoint" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+    <xs:simpleType name="TransactionIsolationLevel">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="READ_UNCOMMITTED" />
+			<xs:enumeration value="READ_COMMITTED" />
+			<xs:enumeration value="REPEATABLE_READ" />
+			<xs:enumeration value="SERIALIZABLE" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<!--
+		Transport type
+	-->
+
+	<xs:element name="transport" type="Transport" />
+	<xs:complexType name="Transport">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="type" type="TransportType" minOccurs="0" maxOccurs="1" />
+			<xs:element name="host" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="port" type="xs:int" minOccurs="0" maxOccurs="1" />
+			<xs:element name="scope" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="transferMode" type="TransferMode" minOccurs="0" maxOccurs="1" />
+			<xs:element name="transacted" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="provider" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="ref" type="xs:string" />
+	</xs:complexType>
+
+    <xs:simpleType name="TransportType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RMI" />
+			<xs:enumeration value="EJB" />
+			<xs:enumeration value="HTTP" />
+			<xs:enumeration value="JMS" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	
+	<!--
+		Class type
+	-->
+
+	<xs:element name="class">
+		<xs:complexType>
+			<xs:sequence>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+
+    <xs:simpleType name="BeanType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="POJO" />
+			<xs:enumeration value="CDI" />
+			<xs:enumeration value="EJB" />
+			<xs:enumeration value="SEAM" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+    <xs:simpleType name="TransferMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TEXT" />
+			<xs:enumeration value="BINARY" />
+		</xs:restriction>
+	</xs:simpleType>
+
+
+    <xs:simpleType name="AcknowledgeMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LAZY" />
+			<xs:enumeration value="AUTO" />
+			<xs:enumeration value="CLIENT" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!-- 
+		Transacted type
+	-->
+
+	<xs:element name="transacted" type="Transacted" />
+	<xs:complexType name="Transacted">
+		<xs:attribute name="local" type="xs:boolean" default="false" />
+		<xs:attribute name="use" type="TransactionUsage" />
+		<xs:attribute name="scope" type="TransactionScope" />
+	</xs:complexType>
+
+	<!--
+	event, method, thread, process, workflow 
+	 -->
+    <xs:simpleType name="TransactionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="jta" />
+			<xs:enumeration value="user" />
+			<xs:enumeration value="local" />
+			<xs:enumeration value="global" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="TransactionUsage">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mandatory" />
+			<xs:enumeration value="supported" />
+			<xs:enumeration value="required" />
+			<xs:enumeration value="requiresNew" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="TransactionScope">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="event" />
+			<xs:enumeration value="method" />
+			<xs:enumeration value="thread" />
+			<xs:enumeration value="process" />
+			<xs:enumeration value="workflow" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="TransactionOutcome">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="none" />
+			<xs:enumeration value="commit" />
+			<xs:enumeration value="markedAsRollback" />
+			<xs:enumeration value="rollback" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="UsageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="required" />
+			<xs:enumeration value="optional" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="Direction">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="in" />
+			<xs:enumeration value="out" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+
+	<!-- 
+		Property type
+	-->
+
+	<xs:element name="properties" type="Properties" />
+	<xs:complexType name="Properties">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="property" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="property" type="Property" />
+	<xs:complexType name="Property">
+		<xs:complexContent>
+			<xs:extension base="xs:anyType">
+				<xs:attribute name="id" type="xs:long" />
+				<xs:attribute name="name" type="xs:string" use="required" />
+				<xs:attribute name="value" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<!--
+		Ref type
+	-->
+	
+	<!-- 
+    <xs:element name="reference" type="Reference" />
+	<xs:complexType name="Reference">
+		<xs:attribute name="file" type="xs:string" />
+		<xs:attribute name="namespace" type="xs:string" />
+		<xs:attribute name="element" type="xs:string" />
+		<xs:attribute name="component" type="xs:string" />
+	</xs:complexType>
+	-->
+	
+
+	<!--
+		JNDI Context type
+	-->
+	
+	<xs:element name="jndi-context" type="JndiContext" />
+	<xs:complexType name="JndiContext">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="userName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="1" name="connectionUrl" type="xs:string" />
+			<xs:element minOccurs="1" maxOccurs="1" name="contextFactory" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="contextPackages" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<!--
+		Model type
+	-->
+	
+	<xs:element name="models">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="model" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="model" type="Model" />
+	<xs:complexType name="Model">
+		<xs:complexContent>
+			<xs:extension base="Import">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string" />
+					<xs:element name="package" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
+

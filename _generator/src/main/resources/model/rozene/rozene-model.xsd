@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<xs:schema
+	version="1.0"
+	jaxb:version="2.0"
+	elementFormDefault="qualified"
+	attributeFormDefault="qualified"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	xmlns:admin="http://admin"
+	xmlns:common="http://www.aries.org/common"
+	xmlns:rozene="http://rozene"
+	targetNamespace="http://rozene">
+
+	<xs:import namespace="http://admin" schemaLocation="../admin/admin_model.aries" />
+	
+	<xs:import namespace="http://www.aries.org/common" schemaLocation="../common/aries-common-1.0.aries" />
+
+
+	<!-- 
+		User type
+	-->
+
+	<xs:complexType name="user">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" />
+			<xs:element name="enabled" type="xs:boolean" />
+			<xs:element name="firstName" type="xs:string" minOccurs="0" />
+			<xs:element name="lastName" type="xs:string" minOccurs="0" />
+			<xs:element name="userId" type="xs:string" minOccurs="0" />
+			<xs:element name="password" type="xs:string" minOccurs="0" />
+			<xs:element name="emailAddress" type="common:EmailAddress" minOccurs="0" />
+			<xs:element name="emailAccount" type="common:EmailAccount" minOccurs="0" />
+			<xs:element name="phoneNumber" type="common:PhoneNumber" minOccurs="0" />
+			<xs:element name="organization" type="xs:string" minOccurs="0" />
+			<xs:element name="roles" type="role" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 
+		Role type
+	-->
+
+	<xs:simpleType name="role">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="READ" />
+			<xs:enumeration value="CREATE" />
+			<xs:enumeration value="UPDATE" />
+			<xs:enumeration value="DELETE" />
+			<xs:enumeration value="PRINT" />
+			<xs:enumeration value="EMAIL" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- 
+		Note type
+	-->
+
+	<xs:complexType name="note">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0" />
+			<xs:element name="text" type="xs:string" minOccurs="0" />
+			<xs:element name="author" type="user" minOccurs="0" />
+			<xs:element name="user" type="user" minOccurs="0" />
+			<xs:element name="lastUpdate" type="xs:date" minOccurs="0" />
+			<xs:element name="creationDate" type="xs:date" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

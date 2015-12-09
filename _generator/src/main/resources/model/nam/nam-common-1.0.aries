@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model nam-1.0.xsd">
+	
+	<domain>org.aries</domain>
+	<name>nam</name>
+	
+	<namespace 
+        prefix="nam" 
+        name="nam-model" 
+        uri="http://nam/model">
+
+
+		<element name="Annotation">
+			<item name="source" type="xs:string" />
+			<mapItem name="details" key="xs:string" type="xs:string" />
+		</element>
+
+
+		<!--
+			Adapter related structures
+			**************************
+		 -->
+		 
+		<element name="Adapter" root="true">
+			<item name="type" type="xs:string" />
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="className" type="xs:string" useForEquals="true" />
+			<item name="transacted" type="xs:boolean" default="true" />
+			<item name="maxThreads" type="xs:integer" />
+			<item name="connectionPool" type="ConnectionPool" />
+			<item name="provider" type="Provider" />
+			<item name="properties" type="Properties" />
+		</element>
+		
+
+		<!--
+			ConnectionPool related structures
+			*********************************
+		 -->
+
+		<element name="ConnectionPool" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="initialSize" type="xs:integer" />
+			<item name="minSize" type="xs:integer" />
+			<item name="maxSize" type="xs:integer" />
+			<listItem name="properties" type="Property" contained="true" />
+		</element>
+		
+		
+		<!--
+			Dependency related structures
+			*****************************
+		 -->
+		 
+		<element name="Dependency" root="true">
+			<item name="name" type="xs:string" />
+			<item name="artifactId" type="xs:string" useForEquals="true" />
+			<item name="groupId" type="xs:string" useForEquals="true" />
+			<item name="version" type="xs:string" />
+			<item name="description" type="xs:string" />
+			<item name="scope" type="DependencyScope" />
+			<item name="type" type="DependencyType" />
+		</element>
+
+		<enumeration name="DependencyScope">
+			<literal name="COMPILE" label="compile" />
+			<literal name="PROVIDED" label="provided" />
+			<literal name="IMPORT" label="import" />
+			<literal name="SYSTEM" label="system" />
+			<literal name="TEST" label="test" />
+		</enumeration>
+		
+		<enumeration name="DependencyType">
+			<literal name="EAR" label="ear" />
+			<literal name="EJB" label="ejb" />
+			<literal name="JAR" label="jar" />
+			<literal name="POM" label="pom" />
+			<literal name="RAR" label="rar" />
+			<literal name="SAR" label="sar" />
+			<literal name="WAR" label="war" />
+		</enumeration>
+		
+		
+		<!--
+			Property related structures
+			***************************
+		 -->
+
+		<element name="Properties">
+			<listItem name="properties" type="Property" contained="true" />
+		</element>
+		
+		<element name="Property">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="value" type="xs:string" />
+		</element>
+		
+		
+		<!--
+			Language related structures
+			***************************
+		 -->
+
+		<element name="Languages">
+			<listItem name="languages" type="Language" contained="true" />
+		</element>
+		
+		<element name="Language">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="code" type="xs:string" useForEquals="true" />
+		</element>
+		
+		
+		<!--
+			Property related structures
+			***************************
+		 -->
+
+		<element name="Properties">
+			<listItem name="properties" type="Property" contained="true" />
+		</element>
+		
+		<element name="Property">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="value" type="xs:string" />
+		</element>
+		
+		
+		<!--
+ 			Provider related structures
+			***************************
+		 -->
+
+		<element name="Providers">
+			<listItem name="providers" type="Provider" contained="true" />
+		</element>
+		
+		<element name="Provider" root="true">
+			<item name="type" type="xs:string" useForEquals="true" />
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="store" type="xs:string" />
+			<item name="userName" type="xs:string" />
+			<item name="password" type="xs:string" />
+			<item name="jndiName" type="xs:string" />
+			<item name="jndiContext" type="JndiContext" />
+			<item name="connectionUrl" type="xs:string" />
+			<item name="transacted" type="xs:boolean" default="true" />
+			<item name="properties" type="Properties" />
+		</element>
+
+		<element name="CacheProvider" extends="Provider" root="true">
+		</element>
+
+		<element name="MessagingProvider" extends="Provider" root="true">
+		</element>
+
+		<element name="PersistenceProvider" extends="Provider" root="true">
+		</element>
+		
+		<element name="JndiContext" root="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="userName" type="xs:string" />
+			<item name="password" type="xs:string" />
+			<item name="connectionUrl" type="xs:string" useForEquals="true" />
+			<item name="contextFactory" type="xs:string" />
+			<item name="contextPackages" type="xs:string" />
+			<item name="properties" type="Properties" />
+		</element>
+		
+
+		<!--
+			Import related structures
+			*************************
+		 -->
+
+		<element name="Import" root="true" hierarchical="true">
+			<item name="dir" type="xs:string" useForEquals="true" />
+			<item name="file" type="xs:string" useForEquals="true" />
+			<item name="type" type="xs:string" />
+			<item name="prefix" type="xs:string" />
+			<item name="namespace" type="xs:string" />
+			<item name="value" type="xs:anyType" />
+			<item name="include" type="xs:boolean" default="false" />
+			<listItem name="imports" type="Import" contained="true" />
+		</element>
+		
+		
+		<!--
+			Include related structures
+			**************************
+		 -->
+
+		<element name="Include" root="true">
+			<item name="groupId" type="xs:string" useForEquals="true" />
+			<item name="artifactId" type="xs:string" useForEquals="true" />
+			<item name="version" type="xs:string" useForEquals="true" />
+			<item name="scope" type="xs:string" />
+			<item name="file" type="xs:string" useForEquals="true" />
+			<item name="namespace" type="xs:string" />
+			<item name="element" type="xs:string" />
+			<item name="component" type="xs:string" />
+		</element>
+		
+		
+		<!--
+			IPAddress related structures
+			****************************
+		 -->
+
+		<element name="IPAddress" root="true">
+			<item name="dnsName" type="xs:string" useForEquals="true" />
+			<item name="address" type="xs:string" useForEquals="true" required="true" />
+		</element>
+		
+		
+		<!--
+			Library related structures
+			**************************
+		 -->
+		 
+		<element name="Library" extends="Dependency" root="true">
+			<listItem name="exclusions" type="Dependency" contained="true" />
+			<listItem name="dependencies" type="Dependency" contained="true" />
+		</element>
+		
+		
+		<!--
+			Model related structures
+			************************
+		 -->
+
+		<element name="Model" extends="Import" root="true" hierarchical="true">
+			<item name="name" type="xs:string" useForEquals="true" />
+			<item name="package" type="xs:string" useForEquals="true" />
+		</element>
+
+
+		<element name="Transacted">
+			<item name="local" type="xs:boolean" />
+			<item name="use" type="TransactionUsage" />
+			<item name="scope" type="TransactionScope" />
+		</element>
+		
+		<enumeration name="TransactionUsage">
+			<literal name="MANDATORY" label="mandatory" />
+			<literal name="SUPPORTED" label="supported" />
+			<literal name="REQUIRED" label="required" />
+			<literal name="REQUIRES_NEW" label="requiresNew" />
+		</enumeration>
+		
+		<enumeration name="TransactionScope">
+			<literal name="EVENT" label="event" />
+			<literal name="METHOD" label="method" />
+			<literal name="THREAD" label="thread" />
+			<literal name="PROCESS" label="process" />
+			<literal name="CONVERSATION" label="conversation" />
+		</enumeration>
+		
+
+
+		<enumeration name="HashType">
+			<literal name="MD5" label="none" />
+			<literal name="SHA" label="none" />
+		</enumeration>
+
+
+		<enumeration name="CascadeType">
+			<literal name="ALL" label="none" />
+			<literal name="MERGE" label="none" />
+			<literal name="DETACH" label="none" />
+			<literal name="REFRESH" label="none" />
+			<literal name="PERSIST" label="none" />
+			<literal name="REMOVE" label="none" />
+		</enumeration>
+
+
+		<enumeration name="FetchType">
+			<literal name="LAZY" label="lazy" />
+			<literal name="EAGER" label="eager" />
+		</enumeration>
+	</namespace>
+</information>
+

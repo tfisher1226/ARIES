@@ -1,0 +1,51 @@
+
+import admin.admin_service.aries;
+
+network Border {
+	set domain("backoffice");
+	set namespace("backoffice");
+	import namespace("backoffice");
+
+    participant Gateway {
+        add channel("Public");
+		set namespace("gateway");
+		import namespace("backoffice");
+
+        receive update(Prices prices) {
+        	join transaction("updatePrices");
+            backofficeCache.addToPrices(prices);
+            backofficeData.updatePrices(prices);
+        }
+
+        receive update(Transactions transactions) {
+        	join transaction("updateTransactions");
+            backofficeCache.addToTransactions(prices);
+            backofficeData.updateTransactions(transactions);
+        }
+
+		//local
+   		cache BackofficeCache { 
+    		set scope(invocation); 
+	    	set transaction(required); 
+		    items {
+			    User user; 
+			    Map<String, Price> prices; 
+			    Map<String, Transaction> transactions; 
+		    }
+	    }
+
+		persist BackofficeData {
+			add role("backoffice");
+			set scope(application); 
+		    add role("administrator");
+			set transaction(required); 
+		    set source("bookshop2_supplier");
+		    set adapter("hibernate");
+		    import namespace("bookshop2");
+			items {
+				List<Order> bookOrders;
+			}
+		}
+    }
+
+}

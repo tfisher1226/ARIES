@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messaging
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file:/workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<domain>redhat</domain>
+	<name>jee-migration-example</name>
+	
+	<!--
+	<role name="anvil_user" />
+	-->
+
+	<channels>
+		<channel name="public">
+			<sender name="*" link="anvil" />
+			<receiver name="anvil_user" link="anvil" invalid="invalidLink" />
+		</channel>
+	</channels>
+
+	<links>
+		<link name="anvil">
+			<role name="anvil_user" />
+			<transport ref="anvilJMS" />
+		</link>
+
+		<link name="invalidLink">
+			<role name="system" />
+			<transport ref="invalidJMS" />
+		</link>
+	</links>
+
+	<transports>
+		<jms-transport name="anvilJMS" provider="hornetq" maxDeliveryAttempts="3" transferMode="TEXT" />
+		<jms-transport name="invalidJMS" provider="hornetq" maxDeliveryAttempts="3" transferMode="TEXT" />
+	</transports>
+	
+	<provider name="hornetq">
+		<type>JMS</type>
+		<jndiContext>
+			<userName>testuser</userName>
+			<password>password</password>
+			<connectionUrl>172.18.0.1:9999</connectionUrl>
+			<contextFactory>org.jboss.as.naming.InitialContextFactory</contextFactory>
+			<contextPackages>org.jboss.ejb.client.naming</contextPackages>
+		</jndiContext>
+	</provider>
+</messaging>

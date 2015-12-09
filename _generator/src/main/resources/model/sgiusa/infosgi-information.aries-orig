@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<information
+	xmlns="http://nam/model" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://nam/model file://workspace/ARIES/nam-model/src/main/resources/schema/nam-1.0.xsd">
+
+	<import file="/common/aries-common-1.0.aries" />
+
+	<domain>org.sgiusa</domain>
+	<name>infosgi</name>
+	
+	<namespace name="infosgi" prefix="sgiusa" uri="http://www.sgiusa.org/model">
+
+		<!--  
+		<cachable>read-write</cachable>
+		-->
+
+		<properties>
+			<property name="generate-schema" value="true" />
+		</properties>
+		
+		<!--
+			User related structures
+			***********************
+		 -->
+
+		<element name="Users" transient="true">
+			<listItem name="records" type="User" transient="true" />
+			<!-- 
+			<mapItem name="records" type="User" key="xs:long" transient="true" />
+			-->
+		</element>
+		
+		<element name="User" root="true">
+			<grouping name="User Identity">
+				<id name="id" type="xs:long" />
+				<item name="enabled" type="xs:boolean" enact="userEnabled" default="true" />
+				<item name="firstName" type="xs:string" enact="userFirstName" required="true" />
+				<item name="lastName" type="xs:string" enact="userLastName" required="true" />
+				<item name="userName" type="xs:string" enact="userPrincipal" required="true" unique="true" indexed="true" />
+				<secret name="passwordHash" type="xs:string" enact="userPassword" hash="MD5" required="true" />
+				<item name="passwordSalt" type="xs:string" enact="passwordSalt" />
+			</grouping>
+			<grouping name="Contact information">
+				<item name="emailAccount" type="common:EmailAccount" relation="oneToOne" cascade="all" nullable="true" />
+				<item name="emailAddress" type="common:EmailAddress" relation="manyToOne" cascade="all" required="true" />
+				<item name="streetAddress" type="common:StreetAddress" relation="manyToOne" cascade="all" nullable="true" />
+				<item name="homePhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" nullable="true" />
+				<item name="cellPhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" nullable="true" />
+				<!--  
+				<mapItem name="phoneNumbers" type="common:PhoneNumber" key="common:PhoneLocation" relation="oneToMany" />
+				-->
+			</grouping>
+			<grouping name="Access Control">
+				<setItem name="roles" type="Role" enact="userRoles" relation="manyToMany" required="true" nullable="true" />
+				<listItem name="permissions" type="Permission" relation="oneToMany" cascade="all" nullable="true" />
+			</grouping>
+			<grouping name="Settings">
+				<item name="preferences" type="Preferences" relation="oneToOne" cascade="all" nullable="true" />
+			</grouping>
+			<item name="creationDate" type="xs:dateTime" nullable="true" />
+			<item name="lastUpdate" type="xs:dateTime" nullable="true" />
+		</element>
+
+		<element name="Role">
+			<id name="id" type="xs:long" />
+            <item name="roleType" type="RoleType" enact="roleName" required="true" unique="true" />
+			<item name="conditional" type="xs:boolean" enact="roleConditional" default="true" />
+            <setItem name="groups" type="Role" enact="roleGroups" relation="manyToMany" />
+		</element>
+
+		<enumeration name="RoleType">
+			<literal name="MANAGER" label="Manager" />
+			<literal name="USER" label="User" />
+			<literal name="HOST" label="Host" />
+		</enumeration>
+
+		<enumeration name="Capability">
+			<literal name="ALL" />
+			<literal name="NONE" />
+			<literal name="READ" />
+			<literal name="CREATE" />
+			<literal name="UPDATE" />
+			<literal name="DELETE" />
+			<literal name="EXPORT" />
+			<literal name="EMAIL" />
+			<literal name="PRINT" />
+		</enumeration>
+	
+		<element name="Permission">
+			<id name="id" type="xs:long" />
+			<!--  
+			<item name="userName" type="xs:string" required="true" />
+			-->
+			<item name="user" type="User" relation="manyToOne" required="true" inverse="true" />
+			<item name="enabled" type="xs:boolean" default="true" />
+			<item name="organizationId" type="xs:long" required="true" />
+			<listItem name="divisions" type="Division" nullable="true" />
+			<listItem name="subDivisions" type="SubDivision" nullable="true" />
+			<listItem name="activityGroups" type="ActivityGroup" nullable="true" />
+			<listItem name="capabilities" type="Capability" nullable="true" />
+		</element>
+		
+		<element name="Preferences">
+			<id name="id" type="xs:long" />
+			<!--  
+			<item name="userName" type="xs:string" required="true" unique="true" />
+			-->
+			<item name="user" type="User" relation="oneToOne" required="true" unique="true" inverse="true" />
+			<item name="themeId" type="xs:string" />
+			<listItem name="openViews" type="xs:long" />
+			<mapItem name="openNodes" key="xs:string" type="xs:boolean" />
+			<item name="selectedView" type="xs:long" />
+			<item name="selectedNode" type="xs:long" />
+			<item name="enableTooltips" type="xs:boolean" />
+		</element>
+
+		<element name="View">
+			<id name="id" type="xs:long" />
+			<item name="userName" type="xs:string" />
+			<item name="viewType" type="ViewType" />
+			<item name="organization" type="Organization" relation="manyToOne" required="true" />
+		</element>
+	
+		<enumeration name="ViewType">
+			<literal name="USER_LIST" label="User List" />
+			<literal name="MEMBER_LIST" label="Member List" />
+			<literal name="ORGANIZATION_NODE" label="Organization Node" />
+		</enumeration>
+
+		<!--
+			Organization related structures
+			*******************************
+		 -->
+	
+		<element name="Organization" root="true">
+			<id name="id" type="xs:long" source="table" initialValue="100" />
+			<item name="organizationId" type="xs:string" required="true" unique="true" indexed="true" />
+			<item name="type" type="xs:string" />
+			<item name="level" type="OrganizationLevel" required="true" />
+			<item name="name" type="xs:string" required="true" />
+			<item name="abbrv" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<!--  
+			<item name="parentId" type="xs:long" relation="manyToOne" binding="organizationId" cascade="refresh, merge" inverse="true" />
+			-->
+			<item name="parent" type="Organization" relation="manyToOne" binding="organizationId" cascade="refresh, merge" inverse="true" />
+			<listItem name="children" type="Organization" relation="oneToMany" mappedBy="parent" cascade="all" nullable="true" />
+			<item name="creator" type="User" relation="manyToOne" cascade="refresh" />
+			<item name="provider" type="User" relation="manyToOne" cascade="refresh" />
+			<listItem name="accessors" type="User" relation="oneToMany" cascade="refresh" nullable="true" />
+			<listItem name="zipCodes" type="xs:string" nullable="true" />
+			<item name="permissionId" type="xs:long" />
+			<item name="creationDate" type="xs:dateTime"  />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+
+		<query name="getOrganizationByPermissionList" distinct="true" >
+			<from>Organization</from>
+			<condition>
+				<in field="permission" type="Permission" required="true" />
+			</condition>
+		</query>
+		
+		<enumeration name="OrganizationLevel">
+			<literal name="SGIUSA" label="SGI-USA" />
+			<literal name="TEAM" label="Team" />
+			<literal name="ZONE" label="Zone" />
+			<literal name="REGION" label="Region" />
+			<literal name="AREA" label="Area" />
+			<literal name="CHAPTER" label="Chapter" />
+			<literal name="DISTRICT" label="District" />
+			<literal name="GROUP" label="Group" />
+			<literal name="UNIT" label="Unit" />
+		</enumeration>
+	
+		<enumeration name="Division">
+			<literal name="NONE" label="none" />
+			<literal name="YWD" label="Young Women's Division" />
+			<literal name="YMD" label="Young Men's Division" />
+			<literal name="YD" label="Youth Division" />
+			<literal name="WD" label="Woman's Division" />
+			<literal name="MD" label="Men's Division" />
+			<literal name="ALL" label="All Divisions" />
+		</enumeration>
+		
+		<enumeration name="SubDivision">
+			<literal name="STUDENT" label="Student Division" />
+			<literal name="HIGH_SCHOOL" label="High School Division" />
+			<literal name="JR_HIGH_SCHOOL" label="Jr. High School Division" />
+			<literal name="ELEMENTARY_SCHOOL" label="Elementary School Division" />
+			<literal name="CHILDREN" label="Children's Division" />
+			<literal name="ALL" label="All Sub-Divisions" />
+		</enumeration>
+		
+		<enumeration name="ActivityGroup">
+			<literal name="NONE" label="none" />
+			<literal name="YOUTH_MUSIC_CORP" label="Youth Music Corp." />
+			<literal name="FIFE_AND_DRUM_CORP" label="Fife and Drum Corp." />
+			<literal name="BYAKUREN" label="Byakuren" />
+			<literal name="SOKA_GROUP" label="Soka Group" />
+			<literal name="GAJOKAI" label="Gajokai" />
+			<literal name="CHORUS_GROUP" label="Chorus Group" />
+			<literal name="STUDY_GROUP" label="Study Group" />
+			<literal name="PHONE_TOBAN" label="Phone Toban" />
+			<literal name="BOOKSTORE_TOBAN" label="Bookstore Toban" />
+			<literal name="CLEANUP_COMMITTEE" label="Cleanup Committee" />
+			<literal name="BUILDING_COMMITTEE" label="Building Committee" />
+			<literal name="WELCOMING_COMMITTEE" label="Welcoming Committee" />
+			<literal name="GOLDEN_STAGE_CREW" label="Golden Stage Crew" />
+			<literal name="YOUTH_PEACE_GROUP" label="Youth Peace Group" />
+			<literal name="YOUTH_SUPPORT_GROUP" label="Youth Support Group" />
+			<literal name="SOKA_SPIRIT_GROUP" label="Soka Spirit Group" />
+			<literal name="CULTURE_DEPT" label="Culture Dept." />
+			<literal name="SECRETARIET" label="Secretariet" />
+			<literal name="CENTRAL_EXECUTIVE_COMMITTEE" label="Central Executive Committee" />
+		</enumeration>
+
+		<!--
+			Member related structures
+			*************************
+		 -->
+
+		<element name="Members" transient="true">
+			<listItem name="records" type="Member" transient="true" />
+			<!-- 
+			<mapItem name="records" type="Member" key="xs:long" transient="true" />
+			-->
+		</element>
+			
+		<element name="Member" root="true">
+			<id name="id" type="xs:long" />
+			<!--  
+			<item name="personId" type="xs:string" required="true" unique="true" />
+			-->
+			<item name="firstName" type="xs:string" required="true" />
+			<item name="lastName" type="xs:string" required="true" indexed="true" />
+			<item name="middleInitial" type="xs:string" />
+			<item name="emailAddress" type="common:EmailAddress" relation="manyToOne" cascade="all" />
+			<item name="streetAddress" type="common:StreetAddress" relation="manyToOne" cascade="all" />
+			<item name="homePhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="cellPhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="workPhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="otherPhone" type="common:PhoneNumber" relation="oneToOne" cascade="all" />
+			<item name="organization" type="Organization" relation="manyToOne" cascade="refresh" indexed="true" />
+			<item name="division" type="Division" />
+			<item name="subDivision" type="SubDivision" />
+			<listItem name="activityGroups" type="ActivityGroup" nullable="true" />
+			<item name="leadershipInfo" type="LeadershipInfo" relation="oneToOne" cascade="all" />
+			<item name="studyDeptInfo" type="StudyDeptInfo" relation="oneToOne" cascade="all" />
+			<item name="statusProfile" type="xs:int" />
+			<listItem name="notes" type="Note" relation="oneToMany" cascade="all" nullable="true" />
+			<item name="interests" type="xs:string" />
+			<item name="languages" type="xs:string" />
+			<item name="joinDate" type="xs:dateTime" />
+			<item name="birthDate" type="xs:dateTime" />
+			<listItem name="familyMembers" type="FamilyMember" relation="oneToMany" nullable="true" />
+			<item name="occupation" type="xs:string" />
+			<item name="employer" type="xs:string" />
+			<item name="extraField1" type="xs:string" />
+			<item name="extraField2" type="xs:string" />
+			<item name="visible" type="xs:boolean" default="true" />
+			<item name="unlocatable" type="xs:boolean" />
+			<item name="archived" type="xs:boolean" />
+			<item name="creationDate" type="xs:dateTime"  />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		<query name="getMemberListByMemberCriteria">
+			<from>Member</from>
+			<criteria>
+				<in field="organization" type="Organization" required="true" />
+				<in field="division" type="Division" />
+				<in field="subDivision" type="SubDivision" />
+				<in field="activityGroups" type="ActivityGroup" />
+			</criteria>
+			<orderBy>
+				<item name="lastName" />
+				<item name="firstName" />
+			</orderBy>
+		</query>
+		
+
+		<!--
+			Leadership info
+			*************** 
+		 -->
+	
+		<element name="LeadershipInfo">
+			<id name="id" type="xs:long" />
+			<item name="examPassed" type="xs:boolean" />
+			<item name="examPassedDate" type="xs:dateTime" />
+			<item name="manualSigned" type="xs:boolean" />
+			<item name="manualSignedDate" type="xs:dateTime" />
+			<listItem name="roles" type="LeadershipRole" relation="oneToMany" cascade="all" nullable="true" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<element name="LeadershipRole">
+			<id name="id" type="xs:long" />
+			<item name="active" type="xs:boolean" />
+			<item name="level" type="OrganizationLevel" required="true" />
+			<item name="division" type="Division" required="true" />
+			<item name="subDivision" type="SubDivision" />
+			<item name="activityGroup" type="ActivityGroup" />
+			<item name="position" type="Position" required="true" />
+			<item name="startDate" type="xs:dateTime" />
+			<item name="endDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<enumeration name="Position">
+			<literal name="LEADER" label="Leader" />
+			<literal name="VICE_LEADER" label="Vice-Leader" />
+			<literal name="GUIDANCE" label="Guidance" />
+			<literal name="ADVISOR" label="Advisor" />
+			<literal name="SENIOR_VICE_LEADER" label="Senior Vice-Leader" />
+			<literal name="GENERAL_DIRECTOR" label="General Director" />
+			<literal name="VICE_GENERAL_DIRECTOR" label="Vice-General Director" />
+			<literal name="SENIOR_VICE_GENERAL_DIRECTOR" label="Senior Vice-General Director" />
+			<literal name="SOKA_SPIRIT_COORDINATOR" label="Soka Spirit Coordinator" />
+			<literal name="CULTURE_DEPT_COORDINATOR" label="Culture Dept. Coordinator" />
+			<literal name="MEMBER_CARE_ADVISOR" label="Member Care Advisor" />
+			<literal name="MEMBERSHIP_STATISTICS_ADMINISTRATOR" label="Membership Statistics Administrator" />
+			<literal name="MEMBERSHIP_DATABASE_ADMINISTRATOR" label="Membership Database Administrator" />
+			<literal name="PUBLICATIONS_REPRESENTATIVE" label="Publications Representative" />
+		</enumeration>
+	
+		<!--
+			Study Dept. info
+			**************** 
+		 -->
+		 
+		<element name="StudyDeptInfo">
+			<id name="id" type="xs:long" />
+			<item name="lastUpdate" type="xs:dateTime" />
+			<listItem name="exams" type="StudyDeptExam" relation="oneToMany" cascade="all" nullable="true" />
+		</element>
+	
+		<element name="StudyDeptExam">
+			<id name="id" type="xs:long" />
+			<item name="current" type="xs:boolean" />
+			<item name="examLevel" type="StudyDeptExamLevel" required="true" />
+			<item name="examLanguage" type="StudyDeptLanguage" required="true" />
+			<item name="examLocation" type="xs:string" />
+			<item name="examDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<enumeration name="StudyDeptExamLevel">
+			<literal name="ENTRANCE" label="Entrance" />
+			<literal name="ELEMENTARY" label="Elementary" />
+			<literal name="INTERMEDIATE" label="Intermediate" />
+			<literal name="ADVANCED" label="Advanced" />
+			<literal name="GRADUATE" label="Graduate" />
+			<literal name="POST_GRADUATE" label="Post-Graduate" />
+			<literal name="OTHER" label="Other" />
+		</enumeration>
+	
+		<enumeration name="StudyDeptLanguage">
+			<literal name="ENGLISH" label="English" />
+			<literal name="SPANISH" label="Spanish" />
+			<literal name="FRENCH" label="French" />
+			<literal name="ITALIAN" label="Italian" />
+			<literal name="GERMAN" label="German" />
+			<literal name="PORTUGUESE" label="Portuguese" />
+			<literal name="JAPANESE" label="Japanese" />
+			<literal name="CHINESE" label="Chinese" />
+			<literal name="KOREAN" label="Korean" />
+			<literal name="VIETNAMESE" label="Vietnamese" />
+			<literal name="THAI" label="Thai" />
+			<literal name="OTHER" label="Other" />
+		</enumeration>
+
+		<!--
+			Membership info
+			*************** 
+		 -->
+		 
+		<element name="MembershipInfo">
+			<id name="id" type="xs:long" />
+			<item name="friendOfSgi" type="xs:boolean" />
+			<listItem name="gohonzons" type="GohonzonInfo" relation="oneToMany" nullable="true" />
+			<item name="receivedCertificate" type="xs:boolean" />
+			<item name="notActivated" type="xs:boolean" />
+			<item name="notLocatable" type="xs:boolean" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<element name="GohonzonInfo">
+			<id name="id" type="xs:long" />
+			<item name="gohonzonType" type="GohonzonType" required="true" />
+			<item name="receiveDate" type="xs:dateTime" />
+			<item name="returned" type="xs:boolean" />
+			<item name="returnDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<enumeration name="GohonzonType">
+			<literal name="REGULAR" label="Regular" />
+			<literal name="SMALL" label="Small" />
+			<literal name="LARGE" label="Large" />
+			<literal name="FAMILY" label="Family" />
+			<literal name="OMOMORI" label="Omomori" />
+			<literal name="OKATAGI" label="Okatagi" />
+		</enumeration>
+	
+		<!--
+			Personal info
+			************* 
+		 -->
+		 
+		<element name="EmailList">
+			<id name="id" type="xs:long" />
+			<item name="enabled" type="xs:boolean" />
+			<item name="organization" type="Organization" relation="manyToOne" cascade="refresh" />
+			<listItem name="divisions" type="Division" nullable="true" />
+			<listItem name="subDivisions" type="SubDivision" nullable="true" />
+			<listItem name="activityGroups" type="ActivityGroup" nullable="true" />
+			<listItem name="recipients" type="common:EmailAddress" relation="manyToMany" nullable="true" />
+		</element>
+	
+		<element name="FamilyMember">
+			<id name="id" type="xs:long" />
+			<item name="personName" type="xs:string" required="true" />
+			<item name="familyRelation" type="FamilyRelation" relation="oneToOne" required="true" />
+			<item name="sgiMember" type="xs:boolean" default="true" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<enumeration name="FamilyRelation">
+			<literal name="MOTHER" label="Mother" />
+			<literal name="FATHER" label="Father" />
+			<literal name="SISTER" label="Sister" />
+			<literal name="BROTHER" label="Brother" />
+			<literal name="STEP_SISTER" label="Step Sister" />
+			<literal name="STEP_BROTHER" label="Step Brother" />
+			<literal name="HUSBAND" label="Husband" />
+			<literal name="WIFE" label="Wife" />
+			<literal name="SON" label="Son" />
+			<literal name="DAUGHTER" label="Daughter" />
+			<literal name="GRANDMOTHER" label="Grandmother" />
+			<literal name="GRANDFATHER" label="Grandfather" />
+			<literal name="GRANDSON" label="Grandson" />
+			<literal name="GRANDDAUGHTER" label="Granddaughter" />
+			<literal name="MOTHER_IN_LAW" label="Mother In-Law" />
+			<literal name="FATHER_IN_LAW" label="Father In-Law" />
+			<literal name="SON_IN_LAW" label="Son In-Law" />
+			<literal name="DAUGHTER_IN_LAW" label="Daughter In-Law" />
+			<literal name="AUNT" label="Aunt" />
+			<literal name="UNCLE" label="Uncle" />
+			<literal name="COUSIN" label="Cousin" />
+			<literal name="NIECE" label="Niece" />
+			<literal name="NEPHEW" label="Nephew" />
+			<literal name="EX_HUSBAND" label="Ex-Husband" />
+			<literal name="EX_WIFE" label="Ex-Wife" />
+			<literal name="OTHER" label="Other" />
+		</enumeration>
+		
+		<element name="SchoolInfo">
+			<id name="id" type="xs:long" />
+			<item name="schoolName" type="xs:string" required="true" />
+			<item name="schoolType" type="SchoolType" required="true" />
+			<item name="fieldOfStudy" type="xs:string" />
+			<item name="startDate" type="xs:date" />
+			<item name="endDate" type="xs:date" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+	
+		<enumeration name="SchoolType">
+			<literal name="ELEMENTARY" label="Elementary" />
+   			<literal name="GRAMMER" label="Grammer" />
+			<literal name="JR_HIGH_SCHOOL" label="Jr. High School" />
+			<literal name="HIGH_SCHOOL" label="High School" />
+			<literal name="COLLEGE" label="College" />
+			<literal name="GRADUATE" label="Graduate" />
+			<literal name="OTHER" label="Other" />
+		</enumeration>
+
+		<!--
+			Event info
+			********** 
+		 -->
+		
+		<element name="Event" root="true">
+			<id name="id" type="xs:long" />
+			<item name="userName" type="xs:string" />
+			<item name="status" type="xs:string" />
+			<item name="organization" type="Organization" relation="manyToOne" />
+			<listItem name="divisions" type="Division" nullable="true" />
+			<listItem name="subDivisions" type="SubDivision" nullable="true" />
+			<item name="timestamp" type="xs:dateTime" />
+		</element>
+	
+		<enumeration name="EventStatus">
+			<literal name="MANAGER" label="Manager" />
+			<literal name="USER" label="User" />
+			<literal name="HOST" label="Host" />
+		</enumeration>
+		
+		<query name="getEventListByUserName">
+			<from>Event</from>
+			<condition>
+				<like field="userName" type="xs:string" required="true" />
+			</condition>
+			<orderBy>
+				<item name="timestamp" />
+			</orderBy>
+		</query>
+	
+		<!--
+			Note info
+			********* 
+		 -->
+
+		<element name="Note">
+			<id name="id" type="xs:long" />
+			<item name="text" type="xs:string" />
+			<item name="author" type="User" relation="manyToOne" cascade="refresh" required="false" />
+			<item name="member" type="Member" relation="manyToOne" cascade="refresh" required="false" inverse="true" />
+			<item name="creationDate" type="xs:dateTime" />
+			<item name="lastUpdate" type="xs:dateTime" />
+		</element>
+		
+		<!--
+			Query support
+			*************
+		 -->
+
+		<element name="EventCriteria" transient="true">
+			<item name="userName" type="xs:string" required="true" />
+		</element>
+		
+		<element name="MemberCriteria" transient="true">
+			<setItem name="organizationSet" type="Organization" nullable="true" />
+			<setItem name="divisionSet" type="Division" nullable="true" />
+			<setItem name="subDivisionSet" type="SubDivision" nullable="true" />
+			<setItem name="activityGroupsSet" type="ActivityGroup" nullable="true" />
+
+			<!--  
+			<item name="firstName" type="xs:string" nullable="true" />
+			<item name="lastName" type="xs:string" />
+			<item name="middleInitial" type="xs:string" />
+			<item name="emailAddress" type="common:EmailAddress" />
+			<item name="streetAddress" type="common:StreetAddress" />
+			<item name="organization" type="Organization" />
+			<item name="division" type="Division" />
+			<item name="subDivision" type="SubDivision" />
+			<listItem name="activityGroups" type="ActivityGroup" nullable="true" />
+			<item name="statusProfile" type="xs:int" />
+			<item name="interests" type="xs:string" />
+			<item name="languages" type="xs:string" />
+			<item name="joinDateStart" type="xs:dateTime" />
+			<item name="joinDateEnd" type="xs:dateTime" />
+			<item name="birthStart" type="xs:dateTime" />
+			<item name="birthEnd" type="xs:dateTime" />
+			<item name="occupation" type="xs:string" />
+			<item name="employer" type="xs:string" />
+			<item name="extraField1" type="xs:string" />
+			<item name="extraField2" type="xs:string" />
+			<item name="visible" type="xs:boolean" default="true" />
+			<item name="unlocatable" type="xs:boolean" />
+			<item name="archived" type="xs:boolean" />
+			<item name="creationDateStart" type="xs:dateTime" />
+			<item name="creationDateEnd" type="xs:dateTime" />
+			<item name="lastUpdateStart" type="xs:dateTime" />
+			<item name="lastUpdateEnd" type="xs:dateTime" />
+			-->
+		</element>
+
+		<element name="OrganizationCriteria" transient="true">
+			<setItem name="permissionIdSet" type="xs:long" nullable="true" />
+
+			<item name="organizationId" type="xs:string" />
+			<item name="type" type="xs:string" />
+			<item name="level" type="OrganizationLevel" />
+			<item name="name" type="xs:string" />
+			<item name="abbrv" type="xs:string" />
+			<item name="label" type="xs:string" />
+			<item name="parent" type="Organization" />
+			<item name="creator" type="User" />
+			<item name="provider" type="User" />
+			<listItem name="accessors" type="User" nullable="true" />
+			<listItem name="zipCodes" type="xs:string" nullable="true" />
+			<item name="permissionId" type="xs:long" />
+			<item name="creationDateStart" type="xs:dateTime" />
+			<item name="creationDateEnd" type="xs:dateTime" />
+			<item name="lastUpdateStart" type="xs:dateTime" />
+			<item name="lastUpdateEnd" type="xs:dateTime" />
+		</element>
+
+		<element name="UserCriteria" transient="true">
+			<item name="enabled" type="xs:boolean" default="true" />
+			<item name="firstNames" type="xs:string" />
+			<item name="lastNames" type="xs:string" />
+			<item name="userNames" type="xs:string" />
+			<item name="emailAddresses" type="common:EmailAddress" nullable="true" />
+			<item name="streetAddresses" type="common:StreetAddress" nullable="true" />
+			<setItem name="roles" type="Role" nullable="true" />
+			<item name="creationDateStart" type="xs:dateTime" />
+			<item name="creationDateEnd" type="xs:dateTime" />
+			<item name="lastUpdateStart" type="xs:dateTime" />
+			<item name="lastUpdateEnd" type="xs:dateTime" />
+		</element>
+		
+		<!--
+			Message Support
+			***************
+		 -->
+		
+	</namespace>
+</information>

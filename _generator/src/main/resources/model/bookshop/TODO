@@ -1,0 +1,17 @@
+
+make exception classes JAXB? make them not have ApplicationException?
+
+make Criteria classes generated and JAXB, get rid of AbstractCriteria
+
+make Fixture class uptodate
+
+make ElementKey classes be generated automatic *only* if not specified
+
+make ElementCriteria classes be generated automatic *only* if not specified
+
+make Message classes be generated automatic *only* if not specified
+
+make Event classes be generated automatic *only* if not specified
+
+make Exception classes be generated automatic *only* if not specified
+
