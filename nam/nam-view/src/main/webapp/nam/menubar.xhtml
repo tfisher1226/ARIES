@@ -222,7 +222,7 @@
 				icon="/icons/common/Configure16.gif">
 				
 				<aries:menuItem 
-					value="Change Theme..."
+					label="Change Theme..."
 					tooltip="Change User-Interface Theme"
 					icon="/icons/common/Table16.gif"
 					rendered="true"
@@ -250,18 +250,18 @@
 				<aries:menuItem
 					id="resetItem" 
 					name="reset"
-					value="Reset"
+					label="Reset"
 					tooltip="Reset server-side user-state"
 					icon="/icons/common/refresh-document.gif"
 					execute="@this"
 					manager="#{adminManager}"
 					action="reset"
-					onclick="setCursorWait(this); showProgress('BOOKSHOP', 'Server-side user-state', 'Resetting...')"
-					oncomplete="setCursorDefault(this); hideProgress()" 
+					onclick="setCursorWait(this); showProgress('Nam', 'Server-side user-state', 'Resetting...')"
+					oncomplete="setCursorDefault(this); " 
 					render="nothing" />
 					
 				<aries:menuItem 
-					value="About..."
+					label="About..."
 					tooltip="About the Nam Application"
 					icon="/icons/common/Speak16.gif"
 					rendered="true"

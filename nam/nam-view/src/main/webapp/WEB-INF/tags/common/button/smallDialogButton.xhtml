@@ -52,6 +52,7 @@
 	</c:if>
 
 	<c:if test="#{empty action}">
+		<c:set var="manager" value="#{globals}" /> 
 		<c:set var="action" value="doNothing" /> 
 	</c:if>
 
@@ -59,15 +60,17 @@
 		<c:set var="render" value="nothing" />
 	</c:if>
 	
-	<!--
-	<c:if test="#{empty icon}">
-		<c:set var="icon" value="resource://graphics/icons/common/Default16.gif" /> 
+	<c:if test="#{empty library}">
+		<c:set var="library" value="graphics" /> 
+	</c:if>
+	
+	<c:if test="#{empty styleClass}">
+		<c:set var="styleClass" value="toolItem" /> 
 	</c:if>
 
-	<c:if test="#{empty iconDisabled}">
-		<c:set var="iconDisabled" value="resource://graphics/icons/common/DefaultDisabled16.gif" /> 
+	<c:if test="#{empty labelClass}">
+		<c:set var="labelClass" value="toolLabel" /> 
 	</c:if>
-	-->
 	
 	<c:if test="#{enabled}">
 		<c:set var="enabledDisplay" value="block" />
@@ -82,10 +85,6 @@
 	<c:if test="#{not empty offset and offset and rendered}">
 		<span class="hspace8" />
 	</c:if>
-
-	<c:set var="horizontalPadding" value="#{empty label ? '1px' : '6px'}" />
-
-	<c:set var="columnCount" value="#{empty icon ? '1' : '2'}" />
 
 	<!-- 
 		onmousedown="this.style.paddingTop=4; this.style.paddingBottom=2; this.style.paddingLeft=11; this.style.paddingRight=9"
@@ -109,29 +108,36 @@
 			onmouseup="#{onmouseup}"
 			onmouseover="#{onmouseover}"
 			onmouseout="#{onmouseout}"
-			onclickXXX="alert('#{mode}'); alert('#{execute}'); alert('#{bypassUpdates}'); alert('#{immediate}'); alert('#{render}'); #{onclick}"
-			onclickXX="alert('#{render}'); #{onclick}"
 			onclick="#{onclick}"
 			oncomplete="#{oncomplete}"
 			render="#{render}"
 			styleClass="smallDialogButton"
-			style="margin: 0px; padding: 0px #{horizontalPadding} 0px #{horizontalPadding}; display: #{enabledDisplay}; cursor: pointer; #{style}">
+			style="width: auto; height: auto; padding: 2px 2px 2px 2px; display: #{enabledDisplay}; cursor: pointer; #{style}; background-color: inherit">
 	
 			<f:facet name="icon">
-				<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
+				<h:panelGroup layout="block" style="background-color: inherit">
 					<center>
 					
-					<h:panelGrid layout="block" columns="#{columnCount}" columnClasses="formColumnAlignMiddle" style="margin: 0px; padding: 0px; background-color: inherit">
-						<c:if test="#{not empty icon}">
-							<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
-								<h:graphicImage library="graphics" name="#{icon}" />
-								<c:if test="#{not empty label}">
-									<aries:spacer width="4" />
-								</c:if>
+					<h:panelGrid layout="block" columns="2" columnClasses="formColumnAlignMiddle, formColumnAlignMiddle" cellpadding="0" cellspacing="0" style="height: 16px; background-color: inherit">
+						<c:if test="#{not empty icon and empty label}">
+							<h:panelGroup layout="block">
+								<h:graphicImage library="graphics" name="#{icon}" style="background-color: inherit" />
 							</h:panelGroup>
 						</c:if>
-						<c:if test="#{not empty label}">
-							<h:outputText value="#{label}" styleClass="smallDialogButtonLabel" style="background-color: inherit" />
+	
+						<c:if test="#{empty icon and not empty label}">
+							<h:panelGroup layout="block">
+								<h:outputText value="#{label}" styleClass="smallDialogButtonLabel" style="margin-right: 1px; white-space: nowrap"/>
+							</h:panelGroup>
+						</c:if>
+	
+						<c:if test="#{not empty icon and not empty label}">
+							<h:panelGroup layout="block">
+								<h:graphicImage library="graphics" name="#{icon}" style="background-color: inherit" />
+							</h:panelGroup>
+							<h:panelGroup layout="block">
+								<h:outputText value="#{label}" styleClass="smallDialogButtonLabel" style="margin-left: 4px; margin-right: 1px; white-space: nowrap"/>
+							</h:panelGroup>
 						</c:if>
 					</h:panelGrid>
 					</center>
@@ -153,26 +159,32 @@
 			disabled="true"
 			iconDisabled="#{iconDisabled}"
 			styleClass="smallDialogButtonDisabled"
-			style="padding: 2px #{horizontalPadding} 2px #{horizontalPadding}; display: #{disabledDisplay}; cursor: pointer; #{style}">
+			style="width: auto; height: auto; padding: 2px 2px 2px 2px; display: #{disabledDisplay}; cursor: default; background-color: inherit; #{style}">
 			
 			<f:facet name="iconDisabled">
 				<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
 					<center>
 					
-					<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumnAlignMiddle" style="margin: 0px; padding: 0px; background-color: inherit">
-						<c:if test="#{empty iconDisabled}">
-							<aries:spacer height="16" />
-						</c:if>
-						<c:if test="#{not empty iconDisabled}">
-							<h:panelGroup layout="block" style="margin: 0px; padding: 0px; background-color: inherit">
-								<h:graphicImage library="graphics" name="#{iconDisabled}" />
-								<c:if test="#{not empty label}">
-									<aries:spacer width="2" />
-								</c:if>
+					<h:panelGrid layout="block" columns="2" columnClasses="formColumn, formColumnAlignMiddle" cellpadding="0" cellspacing="0" style="background-color: inherit">
+						<c:if test="#{not empty iconDisabled and empty label}">
+							<h:panelGroup layout="block">
+								<h:graphicImage library="graphics" name="#{iconDisabled}" style="background-color: inherit" />
 							</h:panelGroup>
 						</c:if>
-						<c:if test="#{not empty label}">
-							<h:outputText value="#{label}" styleClass="smallDialogButtonLabelDisabled" />
+	
+						<c:if test="#{empty iconDisabled and not empty label}">
+							<h:panelGroup layout="block">
+								<h:outputText value="#{label}" styleClass="smallDialogButtonLabelDisabled" style="margin-right: 1px; white-space: nowrap"/>
+							</h:panelGroup>
+						</c:if>
+	
+						<c:if test="#{not empty iconDisabled and not empty label}">
+							<h:panelGroup layout="block">
+								<h:graphicImage library="graphics" name="#{iconDisabled}" style="background-color: inherit" />
+							</h:panelGroup>
+							<h:panelGroup layout="block">
+								<h:outputText value="#{label}" styleClass="smallDialogButtonLabelDisabled" style="margin-left: 4px; margin-right: 1px; white-space: nowrap"/>
+							</h:panelGroup>
 						</c:if>
 					</h:panelGrid>
 					</center>

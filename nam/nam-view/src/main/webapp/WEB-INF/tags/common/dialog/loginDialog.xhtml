@@ -97,6 +97,7 @@
 				<!-- Login Dialog -->
 				<rich:popupPanel 
 					id="#{dialog}" 
+					modal="true"
 					resizeable="false"
 					autosized="true" 
 					domElementAttachment="form"
@@ -117,7 +118,7 @@
 					<!-- CONTENT -->
 					<a4j:region>
 						<a4j:outputPanel id="#{section}Content" layout="block" >
-							<h:panelGroup layout="block" style="background-color: inherit">
+							<h:panelGroup style="display: table; width: auto; float: left; background-color: #eef">
 					
 								<!--  
 								<rich:hotKey 
@@ -142,7 +143,9 @@
 								</h:panelGrid>
 					
 								<!-- CONTROL -->
-								<ui:include src="loginControl.xhtml"/>
+								<h:panelGroup style="width: 100%; display: table; float: right; background-color: blue">
+									<ui:include src="loginControl.xhtml"/>
+								</h:panelGroup>
 							</h:panelGroup>
 						</a4j:outputPanel>
 					</a4j:region>

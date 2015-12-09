@@ -22,24 +22,19 @@
 		columns="1"
 		columnClasses="formColumn" 
 		styleClass="formPanel"
-		style="#{style}">
+		style="">
 		
 		<aries:label 
 			value="#{label}" 
-			height="20"
 			fontSize="#{fontSize}"
-			backgroundColor="inherit" />
-			
-		<!--  
-			width="#{width-20}" 
-			height="#{height-20}" 
-		-->
+			backgroundColor="inherit" 
+			style="height: 20px" />
 
 		<aries:panel 
 			width="#{width}" 
 			height="#{height}"  
 			backgroundColor="inherit"
-			style="marginTop: 6px; padding: 10px; padding-top: 6px; border: 1px solid #ddd">
+			style="margin-top: 6px; padding: 10px; padding-top: 6px; border: 1px solid #ddd; #{style}">
 
 			<ui:insert/>
 		</aries:panel>
