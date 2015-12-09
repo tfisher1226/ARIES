@@ -17,6 +17,7 @@ import org.aries.util.ExceptionUtil;
 
 import admin.User;
 import admin.entity.RegistrationEntity;
+import admin.entity.UserEntity;
 
 
 @Stateless
@@ -130,6 +131,9 @@ public class RegistrationDaoImpl<T extends RegistrationEntity> extends DaoImpl<T
 			transactionHelper.open();
 			entityManager.joinTransaction();
 		
+			UserEntity user = entityManager.merge(registrationRecord.getUser());
+			registrationRecord.setUser(user);
+			
 			registrationRecord = entityManager.merge(registrationRecord);
 			entityManager.persist(registrationRecord);
 			transactionHelper.close();
