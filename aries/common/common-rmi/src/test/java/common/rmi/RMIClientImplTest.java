@@ -12,8 +12,8 @@ import org.aries.Handler;
 import org.aries.util.IdGenerator;
 import org.aries.util.concurrent.ConcurrentExecutor;
 import org.aries.util.concurrent.ConcurrentExecutorImpl;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -28,10 +28,11 @@ public class RMIClientImplTest extends AbstractRMIHandshakeTest {
 		initializeClient();
 	}
 
-//	@After
-//	public void tearDown() throws Exception {
-//		super.tearDown();
-//	}
+	@After
+	public void tearDown() throws Exception {
+		shutdownClient();
+		super.tearDown();
+	}
 
 	@Test
 	//@Ignore

@@ -10,6 +10,8 @@ import org.aries.client.Client;
 public interface RMIClient extends Client {
 
 	public void initialize() throws Exception;
+	
+	public void close() throws Exception;
 
 	public void send(Serializable message);
 

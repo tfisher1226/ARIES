@@ -102,4 +102,10 @@ public abstract class AbstractRMIHandshakeTest extends TestCase {
 		}
 	}
 
+	protected void shutdownClient() throws Exception {
+		if (client != null) {
+			client.close();
+		}
+	}
+	
 }

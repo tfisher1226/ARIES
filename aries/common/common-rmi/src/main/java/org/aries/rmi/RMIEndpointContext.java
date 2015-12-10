@@ -119,7 +119,6 @@ public class RMIEndpointContext {
 		return client;
 	}
 
-    
 	public String toXML(Message message) {
 		try {
 			JAXBSessionCache jaxbSessionCache = getJAXBSessionCache(serviceId);
@@ -142,4 +141,11 @@ public class RMIEndpointContext {
 		}
 	}
 	
+	protected void shutdown() throws Exception {
+		if (client != null)
+			client.close();
+		if (service != null)
+			service.close();
+	}
+    
 }

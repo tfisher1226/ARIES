@@ -69,6 +69,8 @@ public class RMIMessageInvokerTest extends TestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		shutdownServer();
+		shutdownClient();
 		server = null;
 	}
 
@@ -196,5 +198,12 @@ public class RMIMessageInvokerTest extends TestCase {
 		};
 	}
 	
-    
+	protected void shutdownClient() throws Exception {
+		client.close();
+	}
+	
+	protected void shutdownServer() throws Exception {
+		server.close();
+	}
+	
 }

@@ -127,5 +127,9 @@ public class RMIMessageInvoker<T> implements MessageInvoker<T> {
 		return responseCount;
 	}
 
+	public void close() throws Exception {
+		context.shutdown();
+	}
+	
 }
 

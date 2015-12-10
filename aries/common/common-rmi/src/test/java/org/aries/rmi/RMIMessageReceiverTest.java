@@ -72,6 +72,8 @@ public class RMIMessageReceiverTest extends TestCase {
 
 	@After
 	public void tearDown() throws Exception {
+		shutdownClient();
+		shutdownServer();
 		client = null;
 	}
 
@@ -216,5 +218,13 @@ public class RMIMessageReceiverTest extends TestCase {
 		executor.prestartAllCoreThreads();
 		return executor;
     }
-    
+
+	protected void shutdownClient() throws Exception {
+		client.close();
+	}
+	
+	protected void shutdownServer() throws Exception {
+		server.close();
+	}
+	
 }

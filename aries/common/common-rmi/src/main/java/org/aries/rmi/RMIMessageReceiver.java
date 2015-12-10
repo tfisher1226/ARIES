@@ -158,5 +158,9 @@ public class RMIMessageReceiver<T> implements MessageReceiver<T> {
 		return responseCount;
 	}
 
+	public void close() throws Exception {
+		context.shutdown();
+	}
+	
 }
 

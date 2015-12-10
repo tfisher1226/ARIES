@@ -10,7 +10,6 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -37,7 +36,7 @@ public class RMIServiceImpl implements RMIServiceRemote, RMIService {
 
 	private String serviceId;
 	
-	private Executor executor;
+	private ExecutorService executor;
 
 	private Processor<Serializable, Serializable> processor;
 	
@@ -402,4 +401,9 @@ public class RMIServiceImpl implements RMIServiceRemote, RMIService {
 		return executor;
     }
 
+	@Override
+	public void close() throws Exception {
+		executor.shutdown();
+	}
+	
 }

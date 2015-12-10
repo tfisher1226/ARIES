@@ -342,6 +342,9 @@ public class RMIClientImpl extends AbstractClient implements RMIClientRemote, RM
 			log.error("Error", e);
 			//TODO should we throw this here?
 			throw new RuntimeException(e);
+			
+		} finally {
+			futureResult.cancel(true);
 		}
 	}
 
@@ -599,7 +602,6 @@ public class RMIClientImpl extends AbstractClient implements RMIClientRemote, RM
 		return executor;
     }
 
-	
 	protected SubscriberDescripter createSubscriberDescripter(String correlationId) {
 		SubscriberDescripter descripter = new SubscriberDescripter();
 		descripter.setHostName(InetUtil.getHostName());
@@ -619,6 +621,7 @@ public class RMIClientImpl extends AbstractClient implements RMIClientRemote, RM
 
 	@Override
 	public void close() throws Exception {
+		executor.shutdown();
 	}
-
+	
 }
